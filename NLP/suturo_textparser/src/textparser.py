@@ -23,7 +23,7 @@ rpc_server = RPCServer(
 )
 
 # parser used to parse/ interpred the given text
-parser = sling.Parser(sys.argv[1] + "/caspar.flow")
+parser = sling.Parser(sys.argv[1] + "/current.flow")
 
 
 @dispatcher.public
