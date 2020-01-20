@@ -17,9 +17,12 @@ _data = None
 def test_perception():
     rospy.Subscriber("perception_actionserver/result", message.ExtractObjectInfoActionResult, callback)
 
+    toSend = True
     while _data is None:
         i = 1
-        rospy.loginfo("doin' nothing")
+        if toSend:
+            rospy.loginfo("waiting for Data at topic perception_actionserver/result...")
+            toSend = False
         # do nothing
 
     client = actionlib.SimpleActionClient('store_object_info_server', action.StoreObjectInfoAction)
