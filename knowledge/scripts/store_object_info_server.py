@@ -9,6 +9,9 @@ import knowledge_msgs.msg as action
 prolog = rosprolog_client.Prolog()
 
 
+# This Script is an Actionserver that takes the Action knowledge_msgs/StoreObjectInfo.action
+# The sent data will one by one be stored in the knowledgebase. Unless this process is being
+# preempted or fails, this Server will return succeeded=true.
 class StoreObjectInfoServer(object):
     _feedback = action.StoreObjectInfoFeedback()
     _result = action.StoreObjectInfoResult()
@@ -34,13 +37,13 @@ class StoreObjectInfoServer(object):
             rospy.wait_for_service('/rosprolog/query')
 
             obj_class = str(data.obj_class)
-            if obj_class and float(data.confidence) > 0.5:
+            if obj_class and float(data.confidence_class) > 0.5:
                 obj_class = obj_class.capitalize().replace('_', '')
             else:
                 rospy.loginfo("The given class name is empty. Setting to OTHER.")
                 obj_class = "Other"
 
-            # confidence = '1.0' if data.confidence == 0.0 else data.confidence
+            # confidence_class = '1.0' if data.confidence_class == 0.0 else data.confidence_class
             # shape = str(data.shape)
             source_frame = 'map'
             depth = str(data.depth)
