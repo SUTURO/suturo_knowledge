@@ -5,7 +5,7 @@
 
   <group ns="/suturo_speech_recognition">
     <param name="voice_ns_prefix" value="voice" />
-    <param name="voice/julius_config_file" value="$(find tmc_rosjulius)/conf/common.jconf"/>
+    <param name="voice/julius_config_file" value="$(find suturo_julius)/julius_conf/common.jconf"/>
     <param name="voice/lm_grammar_mode" value="true" />
     <param name="voice/lm_locale" value="en" />
     <param name="voice/acoustic_model_en" value="-h /usr/share/julius-voxforge/acoustic/hmmdefs -hlist /usr/share/julius-voxforge/acoustic/tiedlist" />
