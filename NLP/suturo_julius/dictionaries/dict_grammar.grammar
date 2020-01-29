@@ -94,3 +94,22 @@ ITEM : Cleaning stuff
 ITEM : Drink
 ITEM : Food
 ITEM : Snack
+
+
+# Added by Paul
+
+COMMANDS : STARTSTOP
+STARTSTOP : START1
+STARTSTOP : STOP1
+
+START1 : ROBOT START
+START1 : sudo tidy up my room
+START : start
+
+STOP1 : ROBOT STOP
+STOP : stop
+
+ROBOT : hsr
+ROBOT : toya
+ROBOT : robot
+
