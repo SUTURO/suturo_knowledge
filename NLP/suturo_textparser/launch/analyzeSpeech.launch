@@ -1,6 +1,0 @@
-<launch>
-  <node pkg="suturo_speech_recognition" type="speechRecognition.py"  name="speechRecognition" />
-  <remap from="tp_input" to="speechToText"/>
-  <node pkg="suturo_textparser" type="textparserRosInterface.py" name="textParser"/>
-
-</launch>
