@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import rospy
+import rospkg
 from tmc_rosjulius_msgs.msg import RecognitionResult
 from nlp_msgs.msg import StaticCommand
 
@@ -27,11 +28,11 @@ def isStatic(sentence):
 
 
 def isStop(sentence):
-    return isInFile(sentence, '../commands/stop.txt')
+    return isInFile(sentence, wd + '/commands/stop.txt')
 
 
 def isStart(sentence):
-    return isInFile(sentence, '../commands/start.txt')
+    return isInFile(sentence, wd + '/commands/start.txt')
 
 
 def isInFile(sentence, filepath):
@@ -56,6 +57,8 @@ def findFirst(data):
 
 if __name__ == '__main__':
     try:
+        rospack = rospkg.RosPack()
+        wd = rospack.get_path('suturo_textparser')
         rospy.init_node('textparser', anonymous=False)
         pub = rospy.Publisher('hard_commands', StaticCommand, queue_size=10)
         rospy.Subscriber('input', RecognitionResult, callback)
