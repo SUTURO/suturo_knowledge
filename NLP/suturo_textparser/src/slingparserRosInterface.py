@@ -47,7 +47,7 @@ if __name__ == '__main__':
         pub = rospy.Publisher('tp_output', String, queue_size=10)
         # Start the subscriber node
         rospy.Subscriber('tp_input', String, callback)
-        subprocess.call('python3 src/textparser.py ' + wd + '/src', cwd=wd, shell=True)
+        subprocess.call('python3 src/slingparser.py3 ' + wd + '/src', cwd=wd, shell=True)
         rospy.spin()
     except rospy.ROSInterruptException:
         pass
