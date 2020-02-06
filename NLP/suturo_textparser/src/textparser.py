@@ -24,6 +24,12 @@ def isStatic(sentence):
         command.command = StaticCommand.START
         pub.publish(command)
         return True
+    elif isContinue(sentence):
+        command = StaticCommand()
+        command.command = StaticCommand.CONTINUE
+        pub.publish(command)
+        return True
+
     return False
 
 
@@ -33,6 +39,9 @@ def isStop(sentence):
 
 def isStart(sentence):
     return isInFile(sentence, wd + '/commands/start.txt')
+
+def isContinue(sentence):
+    return isInFile(sentence, wd + '/commands/continue.txt')
 
 
 def isInFile(sentence, filepath):
