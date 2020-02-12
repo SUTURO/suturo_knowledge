@@ -107,6 +107,8 @@ class StoreObjectInfoServer(object):
                 rospy.loginfo('Send query: \n' + query_string)
                 solutions = prolog.all_solutions(query_string)
                 rospy.loginfo(solutions)
+                if not solutions:
+                    rospy.logwarn("This Object couldn't have been added: " + obj_class)
             else:
                 rospy.loginfo("IGNORING object of class: " + obj_class)
 
