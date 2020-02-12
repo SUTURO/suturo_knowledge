@@ -3,7 +3,7 @@
   <arg name="mongodb_whipe" default="false" />
   
 
-  <include file="$(find iai_hsr_robocup)/launch/hsr_robocup_with_state_publisher.launch" />
+  <include file="$(find suturo_urdf_publisher)/launch/lab_publisher.launch" />
   <include file="$(find knowledge)/launch/rosprolog.launch" />
   <!-- param name="initial_package" type="string" value="knowrob_refills" />
   <param name="initial_goal" type="string" value="register_ros_package(robosherlock_knowrob),owl_parser:owl_parse('package://knowrob_refills/owl/iai-shop.owl'),owl_parser:owl_parse('package://knowrob_refills/owl/product-catalog.owl')" />
