@@ -23,7 +23,7 @@
 
   <node name="store_object_info_server" pkg="knowledge" type="store_object_info_server.py" output="screen"/>
 
-  <node name="gripping_subscriber_for_attachment" pkg="object_state" type="gripping_subscriber.py" output="screen"/>-->
+  <node name="gripping_subscriber_for_attachment" pkg="knowledge" type="gripping_subscriber.py" output="screen"/>-->
 
   
   <group if="$(arg mongodb_log)">
