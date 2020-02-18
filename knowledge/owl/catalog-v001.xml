@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog prefer="public" xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
+    <uri id="User Entered Import Resolution" name="package://srdl/owl/srdl2-cap.owl" uri="file:/home/paul/kl_ws/src/knowledge_deps/knowrob/srdl/owl/srdl2-cap.owl"/>
+    <uri id="User Entered Import Resolution" name="package://rosowl/owl/ROS.owl" uri="file:/home/paul/kl_ws/src/knowledge_deps/rosowl/owl/ROS.owl"/>
+    <uri id="User Entered Import Resolution" name="package://srdl/owl/srdl2-comp.owl" uri="file:/home/paul/kl_ws/src/knowledge_deps/knowrob/srdl/owl/srdl2.owl"/>
+    <uri id="User Entered Import Resolution" name="package://iai_hsr_robocup/owl/HSR_robocup.owl" uri="file:/home/paul/kl_ws/src/knowledge_deps/iai_maps/iai_hsr_robocup/owl/HSR_robocup.owl"/>
+    <uri id="User Entered Import Resolution" name="package://knowrob_common/owl/knowrob.owl" uri="file:/home/paul/kl_ws/src/knowledge_deps/knowrob/knowrob_objects/owl/knowrob_rel_coord_test.owl"/>
+    <group id="Folder Repository, directory=, recursive=true, Auto-Update=true, version=2" prefer="public" xml:base="">
+        <uri id="Automatically generated entry, Timestamp=1581499670752" name="duplicate:http://www.semanticweb.org/suturo/ontologies/2018/10/objects" uri="objects.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1581499670752" name="duplicate:http://www.semanticweb.org/suturo/ontologies/2018/10/objects" uri="objects_wo_dul.owl"/>
+    </group>
+</catalog>

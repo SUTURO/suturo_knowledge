@@ -2,8 +2,6 @@
   <param name="initial_package" type="string" value="knowledge" />
   <param name="initial_goal" type="string"
          value="owl_parse('package://knowledge/owl/objects.owl'), tf_lookup_transform(map, map, _)" />
-  <!-- <param name="num_pl_threads" type="int" value="$(arg num_pl_threads)" />
-  <param name="num_ros_threads" type="int" value="$(arg num_ros_threads)" /> -->
 
   <node name="rosprolog" pkg="rosprolog" type="rosprolog_node" cwd="node" output="screen" />
 </launch>

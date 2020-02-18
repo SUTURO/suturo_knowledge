@@ -2,9 +2,6 @@
   <arg name="mongodb_log" default="false" />
   <arg name="mongodb_whipe" default="false" />
 
-  <!--
-    <node name="urdfcompile" pkg="xacro" type="xacro" args="$(find suturo_urdf_publisher)/urdf/hsrb_lab.urdf.xacro"/>
-  -->
 
   <include file="$(find suturo_urdf_publisher)/launch/lab_publisher.launch" />
   <include file="$(find knowledge)/launch/rosprolog.launch" />
