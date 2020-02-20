@@ -43,6 +43,12 @@ class StoreObjectInfoServer(object):
                 rospy.loginfo("The given class name is empty. Setting to OTHER.")
                 obj_class = "Other"
 
+            class_test_query = "kb_is_class(hsr_objects:'" + obj_class + "')."
+            solutions = prolog.all_solutions(class_test_query)
+            if not solutions:
+                rospy.logwarn("The class '" + obj_class + "' has no equivalent in kowledge-ontology. Setting class to Other.")
+                obj_class = "Other"
+
             # confidence_class = '1.0' if data.confidence_class == 0.0 else data.confidence_class
             # shape = str(data.shape)
             source_frame = 'map'
@@ -92,8 +98,12 @@ class StoreObjectInfoServer(object):
             # if float(data.depth) > 0.3 or float(data.width) > 0.3 or float(data.height) > 0.3:
             #     rospy.loginfo("One of the dimensions is bigger than 30 cm.")
             #     valid = False
+
+
+
             if valid:
                 # rospy.loginfo("Object is at valid height and of valid volume")
+
                 query_string = (surface_query +
                                 "create_object_at(hsr_objects:'" +
                                 obj_class + "'," +
