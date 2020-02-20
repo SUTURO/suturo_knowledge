@@ -115,7 +115,7 @@ object_goal_surface(Instance, Surface, Context, ShelfObj) :-
     kb_type_of(Instance, Class),
     all_objects_in_whole_shelf(ShelfObjs),
     member(ShelfObj, ShelfObjs),
-    rdfs_instance_of(ShelfObj, Class),
+    kb_type_of(ShelfObj, Class),
     object_current_surface(ShelfObj, Surface),
     rdf_split_url(_, CName, Class),
     string_concat('I will put this to the other ', CName, Context).
@@ -127,7 +127,7 @@ object_goal_surface(Instance, Surface, Context, ShelfObj) :-
     not(rdf_equal(Super, hsr_objects:'Robocupitems')),
     all_objects_in_whole_shelf(ShelfObjs),
     member(ShelfObj, ShelfObjs),
-    rdfs_instance_of(ShelfObj, Super),
+    kb_type_of(ShelfObj, Super),
     object_current_surface(ShelfObj, Surface),
     rdf_split_url(_, CName, Super),
     string_concat('I will put this to the similar ', CName, Context).
@@ -141,7 +141,7 @@ object_goal_surface(Instance, Surface, Context, ShelfObj) :-
     not(rdf_equal(Supersuper, hsr_objects:'Robocupitems')),
     all_objects_in_whole_shelf(ShelfObjs),
     member(ShelfObj, ShelfObjs),
-    rdfs_instance_of(ShelfObj, Supersuper),
+    kb_type_of(ShelfObj, Supersuper),
     object_current_surface(ShelfObj, Surface),
     rdf_split_url(_, CName, Supersuper),
     string_concat('I will put this to the somehow similar ', CName, Context).
