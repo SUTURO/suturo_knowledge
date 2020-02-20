@@ -1,5 +1,6 @@
 :- module(surfaces,
     [
+      next_object/1,
       offsets/1,
       object_current_surface/2,
       object_goal_pose/2,
@@ -24,6 +25,7 @@
 :- rdf_db:rdf_register_ns(srdl2_comp, 'http://knowrob.org/kb/srdl2-comp.owl#', [keep(true)]).
 
 :- rdf_meta
+    next_object(?),
     offsets(?),
     object_current_surface(?,?),
     object_goal_pose(r,?),
@@ -115,7 +117,7 @@ object_goal_surface(Instance, Surface, Context, ShelfObj) :-
     kb_type_of(Instance, Class),
     all_objects_in_whole_shelf(ShelfObjs),
     member(ShelfObj, ShelfObjs),
-    rdfs_instance_of(ShelfObj, Class),
+    kb_type_of(ShelfObj, Class),
     object_current_surface(ShelfObj, Surface),
     rdf_split_url(_, CName, Class),
     string_concat('I will put this to the other ', CName, Context).
@@ -127,7 +129,7 @@ object_goal_surface(Instance, Surface, Context, ShelfObj) :-
     not(rdf_equal(Super, hsr_objects:'Robocupitems')),
     all_objects_in_whole_shelf(ShelfObjs),
     member(ShelfObj, ShelfObjs),
-    rdfs_instance_of(ShelfObj, Super),
+    kb_type_of(ShelfObj, Super),
     object_current_surface(ShelfObj, Surface),
     rdf_split_url(_, CName, Super),
     string_concat('I will put this to the similar ', CName, Context).
@@ -141,7 +143,7 @@ object_goal_surface(Instance, Surface, Context, ShelfObj) :-
     not(rdf_equal(Supersuper, hsr_objects:'Robocupitems')),
     all_objects_in_whole_shelf(ShelfObjs),
     member(ShelfObj, ShelfObjs),
-    rdfs_instance_of(ShelfObj, Supersuper),
+    kb_type_of(ShelfObj, Supersuper),
     object_current_surface(ShelfObj, Surface),
     rdf_split_url(_, CName, Supersuper),
     string_concat('I will put this to the somehow similar ', CName, Context).
@@ -227,8 +229,6 @@ surface_pose_in_map(Surface, [Translation, Rotation]) :-
 %    owl_instance_from_class(knowrob:'Pose', [pose=PoseTerm], Pose),
 %    transform_data(Pose,(Translation, Rotation)).
 
-
-
 test_surfaces :-
     owl_instance_from_class(hsr_objects:'Other', Instance),
     rdf_equal(Shelf, robocup:'kitchen_description_shelf_floor_1_piece'),
@@ -246,3 +246,7 @@ test_surfaces :-
     rdf_equal(Shelf, OtherSurface),
     srdl_matrix(Shelf, _).
 
+next_object(BestObj) :-
+    table_surface(Table),
+    objects_on_surface(Objs, Table),
+    member(BestObj, Objs).
