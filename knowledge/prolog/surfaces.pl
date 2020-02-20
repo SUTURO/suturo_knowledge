@@ -1,5 +1,6 @@
 :- module(surfaces,
     [
+      next_object/1,
       offsets/1,
       object_current_surface/2,
       object_goal_pose/2,
@@ -24,6 +25,7 @@
 :- rdf_db:rdf_register_ns(srdl2_comp, 'http://knowrob.org/kb/srdl2-comp.owl#', [keep(true)]).
 
 :- rdf_meta
+    next_object(?),
     offsets(?),
     object_current_surface(?,?),
     object_goal_pose(r,?),
@@ -227,8 +229,6 @@ surface_pose_in_map(Surface, [Translation, Rotation]) :-
 %    owl_instance_from_class(knowrob:'Pose', [pose=PoseTerm], Pose),
 %    transform_data(Pose,(Translation, Rotation)).
 
-
-
 test_surfaces :-
     owl_instance_from_class(hsr_objects:'Other', Instance),
     rdf_equal(Shelf, robocup:'kitchen_description_shelf_floor_1_piece'),
@@ -246,3 +246,7 @@ test_surfaces :-
     rdf_equal(Shelf, OtherSurface),
     srdl_matrix(Shelf, _).
 
+next_object(BestObj) :-
+    table_surface(Table),
+    objects_on_surface(Objs, Table),
+    member(BestObj, Objs).
