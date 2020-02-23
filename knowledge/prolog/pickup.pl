@@ -14,9 +14,9 @@
 
 
 next_object(BestObj) :- % Todo
-%    table_surface(Table),
-%    objects_on_surface(Objs, Table),
-    hsr_existing_objects(Objs),
+    table_surface(Table),
+    objects_on_surface(Objs, Table),
+    %hsr_existing_objects(Objs),
     maplist(distance_to_robot, Objs, Distances),
     min_list(Distances, MinDistance),
     nth0(Index, Distances, MinDistance),
