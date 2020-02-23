@@ -42,7 +42,13 @@ class StoreObjectInfoServer(object):
             else:
                 rospy.loginfo("The given class name is empty. Setting to OTHER.")
                 obj_class = "Other"
-
+            
+            class_test_query = "kb_is_class(hsr_objects:'" + obj_class + "')."
+            solutions = prolog.all_solutions(class_test_query)
+            if not solutions:
+                rospy.logwarn("The class '" + obj_class + "' has no equivalent in kowledge-ontology. Setting class to Other.")
+                obj_class = "Other"
+            
             # confidence_class = '1.0' if data.confidence_class == 0.0 else data.confidence_class
             # shape = str(data.shape)
             source_frame = 'map'
