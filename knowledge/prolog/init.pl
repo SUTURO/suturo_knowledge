@@ -25,6 +25,7 @@
 %:- use_module(library('knowrob/owl_export')).
 
 :- use_module(library('config')).
+:- use_module(library('pickup')).
 :- use_module(library('object_state')).
 :- use_module(library('surfaces')).
 :- use_module(library('beliefstate')).

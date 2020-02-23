@@ -21,13 +21,13 @@ allowed_class_distance(Distance) :-
 %% Context is the Speech, the Robot should hold depending on the distance of the
 %% next Objects Class.
 context_speech_sort_by_class(Object, SimilarObject, Distance, Context) :-
-    Distance < 2, %% exactly the same class
+    Distance =< 1, %% exactly the same class
     string_concat('I will put this ', Object, Part1),
     string_concat('to the other', SimilarObject, Part2),
     string_concat(Part1, Part2, Context).
 
 context_speech_sort_by_class(Object, SimilarObject, Distance, Context) :-
-    Distance < 4, %% direct superclass or child of the same super class
+    Distance =< 3, %% direct superclass or child of the same super class
     Distance >=2,
     string_concat('I will put this ', Object, Part1),
     string_concat('to the similar ', SimilarObject, Part2),
@@ -46,7 +46,6 @@ context_speech_sort_by_color(Object, SimilarObject, Context) :-
     string_concat(Part1, ' Object to the other ', Part2),
     string_concat(Part2, SimilarColor, Part3),
     string_concat(Part3, ' object.', Context).
-
 
 context_speech_sort_by_size(Object, SimilarObject, Context) :-
     rdf_has(Object, hsr_objects:'size', ObjSize),

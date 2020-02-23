@@ -108,6 +108,7 @@ object_goal_surface(Instance, Surface, Context, ShelfObj) :-
     object_current_surface(ShelfObj, Surface),
     context_speech_sort_by_color(Instance, ShelfObj, Context).
 
+% Sort by class, if classes are similar enough
 object_goal_surface(Instance, Surface, Context, ShelfObj) :-
     most_related_class(Instance, ShelfObj, Distance),
     context_speech_sort_by_class(Instance, ShelfObj, Distance, Context),

@@ -2,7 +2,6 @@
     [
       most_related_class/3,
       most_related_object/2,
-      next_object/1,
       best_place/2
     ]).
 
@@ -13,7 +12,6 @@
 :- rdf_meta
     most_related_class(-,?,?),
     most_related_object(-,?),
-    next_object(?),
     best_place(-,?).
 
 
@@ -21,7 +19,7 @@ best_place(Source, Target) :-
     Target = 6. %% Todo
 
 most_related_object(Source, Target) :-
-    most_related_class(Source, Target, Distance).
+    most_related_class(Source, Target, _).
 
 most_related_class(Source, Target, Distance) :-
     findall(Dist, distance_to_object(Source, _, Dist), Distances),
@@ -46,8 +44,3 @@ distance_of(SourceType, TargetType, Distance) :-
 distance_of(SourceType, TargetType, Distance) :-
     not(owl_same_as(SourceType, TargetType)),
     rdf_shortest_path(SourceType, TargetType, Distance).
-
-next_object(BestObj) :- % Todo
-    table_surface(Table),
-    objects_on_surface(Objs, Table),
-    member(BestObj, Objs).
