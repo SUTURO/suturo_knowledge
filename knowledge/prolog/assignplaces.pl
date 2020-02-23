@@ -1,7 +1,9 @@
 :- module(assignplaces,
     [
-      offsets2/1
-      most_related_class/2
+      most_related_class/3,
+      most_related_object/2,
+      next_object/1,
+      best_place/2
     ]).
 
 :- rdf_db:rdf_register_ns(hsr_objects, 'http://www.semanticweb.org/suturo/ontologies/2018/10/objects#', [keep(true)]).
@@ -9,14 +11,43 @@
 :- rdf_db:rdf_register_ns(srdl2_comp, 'http://knowrob.org/kb/srdl2-comp.owl#', [keep(true)]).
 
 :- rdf_meta
-    offsets2(?).
+    most_related_class(-,?,?),
+    most_related_object(-,?),
+    next_object(?),
+    best_place(-,?).
 
-offsets2(Offset) :-
-    Offset = [0, -0.05, 0.05, -0.1, 0.1, -0.15, 0.15, -0.2, 0.2, -0.25, 0.25, -0.3, 0.3, 0.35, 0.35].
+
+best_place(Source, Target) :-
+    Target = 6. %% Todo
+
+most_related_object(Source, Target) :-
+    most_related_class(Source, Target, Distance).
 
 most_related_class(Source, Target, Distance) :-
-    all_objects_in_whole_shelf(Objs),
+    findall(Dist, distance_to_object(Source, _, Dist), Distances),
+    min_member(Distance, Distances),
+    distance_to_object(Source, Target, Distance),
+    allowed_class_distance(MaxDist),
+    MaxDist >= Distance.
+
+distance_to_object(Source, Target, Distance) :-
+    all_objects_in_whole_shelf(Objs), %% should be used insted of hsr_existing_objects
     member(Target, Objs),
+    member(Source, Objs),
+    not(owl_same_as(Source, Target)),
     kb_type_of(Target, TargetType),
     kb_type_of(Source, SourceType),
-    rdf_shortest_path()
+    distance_of(SourceType, TargetType, Distance).
+
+distance_of(SourceType, TargetType, Distance) :-
+    owl_same_as(SourceType, TargetType),
+    Distance = 1.
+
+distance_of(SourceType, TargetType, Distance) :-
+    not(owl_same_as(SourceType, TargetType)),
+    rdf_shortest_path(SourceType, TargetType, Distance).
+
+next_object(BestObj) :- % Todo
+    table_surface(Table),
+    objects_on_surface(Objs, Table),
+    member(BestObj, Objs).
