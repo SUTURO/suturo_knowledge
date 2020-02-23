@@ -24,11 +24,14 @@
 %:- use_module(library('knowrob/comp_spatial')).
 %:- use_module(library('knowrob/owl_export')).
 
+:- use_module(library('config')).
+:- use_module(library('pickup')).
 :- use_module(library('object_state')).
 :- use_module(library('surfaces')).
 :- use_module(library('beliefstate')).
 :- use_module(library('spatial_comp')).
 %:- use_module(library('static_preset')).
+:- use_module(library('assignplaces')).
 
 :- owl_parse('package://knowrob_common/owl/knowrob.owl').
 :- owl_parse('package://knowledge/owl/objects.owl').
