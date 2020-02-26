@@ -29,7 +29,7 @@
 :- use_module(library('beliefstate')).
 :- use_module(library('spatial_comp')).
 %:- use_module(library('static_preset')).
-% :- use_module(library('assignplaces')).
+:- use_module(library('assignplaces')).
 
 :- rdf_db:rdf_register_ns(hsr_objects, 'http://www.semanticweb.org/suturo/ontologies/2018/10/objects#', [keep(true)]).
 :- rdf_db:rdf_register_ns(urdf, 'http://knowrob.org/kb/urdf.owl#', [keep(true)]).
@@ -40,14 +40,9 @@
 :- owl_parser:owl_parse('package://knowledge/owl/objects.owl').
 :- owl_parser:owl_parse('package://urdfprolog/owl/urdf.owl').
 
-:- ros_package_path('knowledge', X),
+:- ros_package_path('knowledge', X), % TODO Change to load form param
     atom_concat(X, '/urdf/hsrb_lab.urdf', FileURL),
     kb_create(urdf:'Robot', Robot),
     rdf_urdf_load_file(Robot, FileURL).
 
-:- supporting_surface(SurfaceLink), assert_surface_types(SurfaceLink).
-
-
-    %findall(Y,rdf_has(_,Y,_),_Back), sort(_Back,_BS), member(P,_BS)
-
-    %findall(S,rdf_has(S,urdf:hasOrigin,_),_Back), sort(_Back,_BS), member(J,_BS),rdf_urdf_joint_origin(J,Or).
+:- forall(supporting_surface(SurfaceLink), assert_surface_types(SurfaceLink)).

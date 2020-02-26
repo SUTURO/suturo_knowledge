@@ -64,7 +64,7 @@ assert_object_on(ObjectInstance, SurfaceLink) :-
     kb_assert(ObjectInstance, hsr_objects:'supportedBy', SurfaceLink).
 
 
-shelf_floor_at_height(Height, TargetShelfLink) :- % TODO make this work
+shelf_floor_at_height(Height, TargetShelfLink) :-
     findall(ShelfFloorLink, (
         shelf_surfaces(AllFloorsLinks),
         member(ShelfFloorLink, AllFloorsLinks),
