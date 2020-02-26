@@ -23,6 +23,8 @@
 :- use_module(library('rdf_urdf')).
 :- use_module(library('urdf_parser')).
 
+:- use_module(library('config')).
+:- use_module(library('pickup')).
 :- use_module(library('object_state')).
 % :- use_module(library('surfaces')).
 :- use_module(library('surfaces2')).
@@ -44,5 +46,6 @@
     atom_concat(X, '/urdf/hsrb_lab.urdf', FileURL),
     kb_create(urdf:'Robot', Robot),
     rdf_urdf_load_file(Robot, FileURL).
+
 
 :- forall(supporting_surface(SurfaceLink), assert_surface_types(SurfaceLink)).

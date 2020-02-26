@@ -95,8 +95,7 @@ object_goal_surface(Instance, Surface, Context, ShelfObj) :-
     rdf_has(Instance, hsr_objects:'size', Size),
     rdf_has(ShelfObj, hsr_objects:'size', Size),
     object_current_surface(ShelfObj, Surface),
-    string_concat('I will put this to the other ', Size, Stringpart1),
-    string_concat(Stringpart1, ' object.', Context).
+    context_speech_sort_by_size(Instance, ShelfObj, Context).
 
 % Sort by color, if object class is OTHER
 object_goal_surface(Instance, Surface, Context, ShelfObj) :-
@@ -106,45 +105,14 @@ object_goal_surface(Instance, Surface, Context, ShelfObj) :-
     rdf_has(Instance, hsr_objects:'colour', Color),
     rdf_has(ShelfObj, hsr_objects:'colour', Color),
     object_current_surface(ShelfObj, Surface),
-    string_concat('I will put this to the other ', Color, Stringpart1),
-    string_concat(Stringpart1, ' object.', Context).
+    context_speech_sort_by_color(Instance, ShelfObj, Context).
 
-%% Same obj class
+% Sort by class, if classes are similar enough
 object_goal_surface(Instance, Surface, Context, ShelfObj) :-
-    kb_type_of(Instance, Class),
-    all_objects_in_whole_shelf(ShelfObjs),
-    member(ShelfObj, ShelfObjs),
-    rdfs_instance_of(ShelfObj, Class),
-    object_current_surface(ShelfObj, Surface),
-    rdf_split_url(_, CName, Class),
-    string_concat('I will put this to the other ', CName, Context).
-
-%% Same direct superclass
-object_goal_surface(Instance, Surface, Context, ShelfObj) :-
-    kb_type_of(Instance, Class),
-    owl_direct_subclass_of(Class, Super),
-    not(rdf_equal(Super, hsr_objects:'Robocupitems')),
-    all_objects_in_whole_shelf(ShelfObjs),
-    member(ShelfObj, ShelfObjs),
-    rdfs_instance_of(ShelfObj, Super),
-    object_current_surface(ShelfObj, Surface),
-    rdf_split_url(_, CName, Super),
-    string_concat('I will put this to the similar ', CName, Context).
-
-%% Same superclass 2 levels up
-object_goal_surface(Instance, Surface, Context, ShelfObj) :-
-    kb_type_of(Instance, Class),
-    owl_direct_subclass_of(Class, Super),
-    not(rdf_equal(Super, hsr_objects:'Robocupitems')),
-    owl_direct_subclass_of(Super, Supersuper),
-    not(rdf_equal(Supersuper, hsr_objects:'Robocupitems')),
-    all_objects_in_whole_shelf(ShelfObjs),
-    member(ShelfObj, ShelfObjs),
-    rdfs_instance_of(ShelfObj, Supersuper),
-    object_current_surface(ShelfObj, Surface),
-    rdf_split_url(_, CName, Supersuper),
-    string_concat('I will put this to the somehow similar ', CName, Context).
-
+    most_related_class(Instance, ShelfObj, Distance),
+    context_speech_sort_by_class(Instance, ShelfObj, Distance, Context),
+    object_current_surface(ShelfObj, Surface).
+    
 
 %% If there is no corresponding class, take some shelf in the middle
 object_goal_surface(Instance, Surface, Context, Self) :-
@@ -226,8 +194,6 @@ surface_pose_in_map(Surface, [Translation, Rotation]) :-
 %    owl_instance_from_class(knowrob:'Pose', [pose=PoseTerm], Pose),
 %    transform_data(Pose,(Translation, Rotation)).
 
-
-
 test_surfaces :-
     owl_instance_from_class(hsr_objects:'Other', Instance),
     rdf_equal(Shelf, robocup:'kitchen_description_shelf_floor_1_piece'),
@@ -244,4 +210,3 @@ test_surfaces :-
     object_goal_surface(OtherInstance, OtherSurface),
     rdf_equal(Shelf, OtherSurface),
     srdl_matrix(Shelf, _).
-

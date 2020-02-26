@@ -24,8 +24,8 @@
     version: master
 - git:
     local-name: knowrob
-    uri: https://github.com/daniel86/knowrob.git
-    version: dd0b86338af393a6a11ba0821e43128e3eb0388a
+    uri: https://github.com/JeremiasThun/knowrob.git
+    version: master
 - git:
     local-name: pr2_kinematics
     uri: https://github.com/code-iai/pr2_kinematics.git
