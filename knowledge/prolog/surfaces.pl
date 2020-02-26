@@ -20,7 +20,6 @@
     ]).
 
 :- rdf_db:rdf_register_ns(hsr_objects, 'http://www.semanticweb.org/suturo/ontologies/2018/10/objects#', [keep(true)]).
-:- rdf_db:rdf_register_ns(robocup, 'http://knowrob.org/kb/robocup.owl#', [keep(true)]).
 :- rdf_db:rdf_register_ns(srdl2_comp, 'http://knowrob.org/kb/srdl2-comp.owl#', [keep(true)]).
 
 :- rdf_meta
@@ -131,7 +130,7 @@ object_goal_surface(Instance, Surface, Context, Self) :-
     Self = Instance,
     Context = 'I will create a new group for this'.
 
-
+%% list all objects on one current surface
 objects_on_surface(Instances, Surface) :-
     findall(Instance,
         object_current_surface(Instance, Surface),
