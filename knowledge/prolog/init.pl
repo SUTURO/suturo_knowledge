@@ -5,7 +5,9 @@
 :- register_ros_package(srdl).
 :- register_ros_package(knowrob_vis).
 :- register_ros_package(knowrob_memory).
+:- register_ros_package(rosprolog).
 :- register_ros_package(urdfprolog).
+:- register_ros_package(iai_kitchen).
 
 :- use_module(library('semweb/rdf_db')).
 :- use_module(library('semweb/rdfs')).
@@ -22,7 +24,8 @@
 :- use_module(library('urdf_parser')).
 
 :- use_module(library('object_state')).
-:- use_module(library('surfaces')).
+% :- use_module(library('surfaces')).
+:- use_module(library('surfaces2')).
 :- use_module(library('beliefstate')).
 :- use_module(library('spatial_comp')).
 
@@ -33,10 +36,16 @@
 
 :- owl_parser:owl_parse('package://knowrob_common/owl/knowrob.owl').
 :- owl_parser:owl_parse('package://knowledge/owl/objects.owl').
-
-:- owl_parser:owl_parse('package://urdfprolog/owl/urdf.owl'). %would be used if we got rdf_urdf to work
+:- owl_parser:owl_parse('package://urdfprolog/owl/urdf.owl').
 
 :- ros_package_path('knowledge', X),
     atom_concat(X, '/urdf/hsrb_lab.urdf', FileURL),
     kb_create(urdf:'Robot', Robot),
-    rdf_urdf_load(Robot, FileURL).
+    rdf_urdf_load_file(Robot, FileURL).
+
+:- supporting_surface(SurfaceLink), assert_surface_types(SurfaceLink).
+
+
+    %findall(Y,rdf_has(_,Y,_),_Back), sort(_Back,_BS), member(P,_BS)
+
+    %findall(S,rdf_has(S,urdf:hasOrigin,_),_Back), sort(_Back,_BS), member(J,_BS),rdf_urdf_joint_origin(J,Or).

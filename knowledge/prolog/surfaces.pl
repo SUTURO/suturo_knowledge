@@ -162,7 +162,7 @@ object_goal_surface(Instance, Surface, Context, Self) :-
     Self = Instance,
     Context = 'I will create a new group for this'.
 
-
+%% list all objects on one current surface
 objects_on_surface(Instances, Surface) :-
     findall(Instance,
         object_current_surface(Instance, Surface),
