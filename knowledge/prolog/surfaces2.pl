@@ -15,13 +15,17 @@
     object_supportable_by_surface/2,
     position_supportable_by_surface/2,
     point_in_rectangle/5,
-    assert_surface_types/1
+    assert_surface_types/1,
+    assert_object_on/2,
+    shelf_surfaces/1,
+    table_surfaces/1,
+    shelf_floor_at_height/2
     ]).
 
 :- rdf_db:rdf_register_ns(urdf, 'http://knowrob.org/kb/urdf.owl#', [keep(true)]).
 :- owl_parser:owl_parse('package://urdfprolog/owl/urdf.owl').
 
-:- rdf_meta
+:- rdf_meta % TODO FIX ME
     supporting_surface(?),
     surface_big_enough(?),
     surface_big_enough(r,?),
@@ -33,16 +37,11 @@
     assert_surface_types(?).
 
 
-assert_surface_types(SurfaceLink):-
-    supporting_surface(SurfaceLink),
-    rdf_urdf_name(SurfaceLink,Name),
-    ( sub_string(Name,_,_,_,shelf)
-    ->rdf_assert(SurfaceLink,hsr_objects:'isSurfaceType',shelf)
-    ;
-    ( sub_string(Name,_,_,_,table)
-    ->rdf_assert(SurfaceLink,hsr_objects:'isSurfaceType',table)
-    ; rdf_assert(SurfaceLink,hsr_objects:'isSurfaceType',other)
-    )).
+
+
+/**
+*****************************************object - surface relation******************************************************
+*/
 
 objects_on_surface(ObjectInstances, SurfaceLink) :-
     findall(ObjectInstance,
@@ -63,6 +62,33 @@ assert_object_on(ObjectInstance, SurfaceLink) :-
     supporting_surface(SurfaceLink),
     kb_retract(ObjectInstance, hsr_objects:'supportedBy', _),
     kb_assert(ObjectInstance, hsr_objects:'supportedBy', SurfaceLink).
+
+
+shelf_floor_at_height(Height, TargetShelfLink) :- % TODO make this work
+    findall(ShelfFloorLink, (
+        shelf_surfaces(AllFloorsLinks),
+        member(ShelfFloorLink, AllFloorsLinks),
+        rdf_urdf_has_child(Joint,ShelfFloorLink),
+        joint_position(Joint,[_,_,Z]),
+        Z < Height
+    ), ShelfFloorsLinks),
+    reverse(ShelfFloorsLinks, [TargetShelfLink|_]).
+
+/**
+***************************************************find and assert surfaces*********************************************
+*/
+
+assert_surface_types(SurfaceLink):-
+    supporting_surface(SurfaceLink),
+    rdf_urdf_name(SurfaceLink,Name),
+    ( sub_string(Name,_,_,_,shelf)
+    ->rdf_assert(SurfaceLink,hsr_objects:'isSurfaceType',shelf)
+    ;
+    ( sub_string(Name,_,_,_,table)
+    ->rdf_assert(SurfaceLink,hsr_objects:'isSurfaceType',table)
+    ; rdf_assert(SurfaceLink,hsr_objects:'isSurfaceType',other)
+    )).
+
 
 %% supporting_surface(?Surface).
 %
@@ -85,6 +111,11 @@ square_big_enough(X,Y):- %TODO Support other shapes
     ; fail
     ).
 
+/**
+****************************************find what surface object is on**************************************************
+*/
+
+
 joint_position(Joint,Position) :-
   rdf_has(_,'http://knowrob.org/kb/urdf.owl#hasRootLink',RootLink),
   (  not(rdf_urdf_has_parent(Joint, RootLink)) % rdf_urdf_has_parent(Joint, _),
@@ -100,7 +131,6 @@ joint_position(Joint,Position) :-
   ;  mem_retrieve_triple(Joint,urdf:hasOrigin,Origin),
        transform_data(Origin,(Position,_))
   ).
-
 
 
 object_supportable_by_surface(Object, SurfaceLink):-
@@ -203,3 +233,91 @@ quaternion_to_euler(X, Y, Z, W, Roll, Pitch, Yaw)  :- % Axis: Roll = X, Pitch = 
     T4 is 1.0 - (2.0 * ((Y * Y) + (Z * Z))),
     Yaw is atan(T3,T4),
     true.
+
+
+
+
+/**
+*****************************************object_goal_surface***********************************************************
+*/
+
+object_goal_surface(Instance, Surface) :-
+    object_goal_surface(Instance, Surface, _).
+
+object_goal_surface(Instance, Surface, Context) :-
+    object_goal_surface(Instance, Surface, Context, _).
+
+% Sort by size if object class is OTHER
+object_goal_surface(Instance, Surface, Context, ShelfObj) :-
+    kb_type_of(Instance, hsr_objects:'Other'),
+    all_objects_in_whole_shelf(ShelfObjs),
+    member(ShelfObj, ShelfObjs),
+    rdf_has(Instance, hsr_objects:'size', Size),
+    rdf_has(ShelfObj, hsr_objects:'size', Size),
+    object_current_surface(ShelfObj, Surface),
+    string_concat('I will put this to the other ', Size, Stringpart1),
+    string_concat(Stringpart1, ' object.', Context).
+
+% Sort by color, if object class is OTHER
+object_goal_surface(Instance, Surface, Context, ShelfObj) :-
+    kb_type_of(Instance, hsr_objects:'Other'),
+    all_objects_in_whole_shelf(ShelfObjs),
+    member(ShelfObj, ShelfObjs),
+    rdf_has(Instance, hsr_objects:'colour', Color),
+    rdf_has(ShelfObj, hsr_objects:'colour', Color),
+    object_current_surface(ShelfObj, Surface),
+    string_concat('I will put this to the other ', Color, Stringpart1),
+    string_concat(Stringpart1, ' object.', Context).
+
+%% Same obj class
+object_goal_surface(Instance, Surface, Context, ShelfObj) :-
+    kb_type_of(Instance, Class),
+    all_objects_in_whole_shelf(ShelfObjs),
+    member(ShelfObj, ShelfObjs),
+    rdfs_instance_of(ShelfObj, Class),
+    object_current_surface(ShelfObj, Surface),
+    rdf_split_url(_, CName, Class),
+    string_concat('I will put this to the other ', CName, Context).
+
+%% Same direct superclass
+object_goal_surface(Instance, Surface, Context, ShelfObj) :-
+    kb_type_of(Instance, Class),
+    owl_direct_subclass_of(Class, Super),
+    not(rdf_equal(Super, hsr_objects:'Robocupitems')),
+    all_objects_in_whole_shelf(ShelfObjs),
+    member(ShelfObj, ShelfObjs),
+    rdfs_instance_of(ShelfObj, Super),
+    object_current_surface(ShelfObj, Surface),
+    rdf_split_url(_, CName, Super),
+    string_concat('I will put this to the similar ', CName, Context).
+
+%% Same superclass 2 levels up
+object_goal_surface(Instance, Surface, Context, ShelfObj) :-
+    kb_type_of(Instance, Class),
+    owl_direct_subclass_of(Class, Super),
+    not(rdf_equal(Super, hsr_objects:'Robocupitems')),
+    owl_direct_subclass_of(Super, Supersuper),
+    not(rdf_equal(Supersuper, hsr_objects:'Robocupitems')),
+    all_objects_in_whole_shelf(ShelfObjs),
+    member(ShelfObj, ShelfObjs),
+    rdfs_instance_of(ShelfObj, Supersuper),
+    object_current_surface(ShelfObj, Surface),
+    rdf_split_url(_, CName, Supersuper),
+    string_concat('I will put this to the somehow similar ', CName, Context).
+
+
+%% If there is no corresponding class, take some shelf in the middle
+object_goal_surface(Instance, Surface, Context, Self) :-
+    (shelf_floor_at_height(0.9, Surface);
+    shelf_floor_at_height(0.6, Surface)),
+    objects_on_surface([], Surface),
+    Self = Instance,
+    Context = 'I will create a new group for this'.
+
+%% If middle shelves also occupied, take rest (lowest level first). WARNING: HSR may not be able to reach upper levels
+object_goal_surface(Instance, Surface, Context, Self) :-
+    shelf_floors(ShelfFloors),
+    member(Surface,ShelfFloors),
+    objects_on_surface([], Surface),
+    Self = Instance,
+    Context = 'I will create a new group for this'.
