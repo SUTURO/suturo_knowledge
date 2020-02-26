@@ -28,6 +28,8 @@
 :- use_module(library('surfaces2')).
 :- use_module(library('beliefstate')).
 :- use_module(library('spatial_comp')).
+%:- use_module(library('static_preset')).
+:- use_module(library('assignplaces')).
 
 :- rdf_db:rdf_register_ns(hsr_objects, 'http://www.semanticweb.org/suturo/ontologies/2018/10/objects#', [keep(true)]).
 :- rdf_db:rdf_register_ns(urdf, 'http://knowrob.org/kb/urdf.owl#', [keep(true)]).
