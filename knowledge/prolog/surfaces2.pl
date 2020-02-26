@@ -20,13 +20,13 @@
     shelf_surfaces/1,
     table_surfaces/1,
     shelf_floor_at_height/2,
-    object_goal_pose/2,
-    object_goal_pose/3,
-    object_goal_pose/4,
     object_goal_surface/2,
     object_goal_surface/3,
     object_goal_surface/4,
-    objects_on_surface/2
+    objects_on_surface/2,
+    object_goal_pose/2,
+    object_goal_pose/3,
+    object_goal_pose/4
     ]).
 
 :- rdf_db:rdf_register_ns(urdf, 'http://knowrob.org/kb/urdf.owl#', [keep(true)]).
@@ -42,12 +42,12 @@
     position_supportable_by_surface(r,r),
     point_in_rectangle(r,r,r,r,r),
     assert_surface_types(?),
-    object_goal_pose(r,?),
-    object_goal_pose(r,?,?),
-    object_goal_pose(r,?,?,?),
     object_goal_surface(r,?),
     object_goal_surface(r,?,?),
-    object_goal_surface(r,?,?,?).
+    object_goal_surface(r,?,?,?),
+    object_goal_pose(r,?),
+    object_goal_pose(r,?,?),
+    object_goal_pose(r,?,?,?).
 
 
 
@@ -337,3 +337,50 @@ object_goal_surface(Instance, SurfaceLink, Context, Self) :-
 
 offsets(Offset) :-
     Offset = [0, -0.05, 0.05, -0.1, 0.1, -0.15, 0.15, -0.2, 0.2, -0.25, 0.25, -0.3, 0.3, 0.35, 0.35].
+
+
+
+
+/**
+*********************************************object_goal_pose***********************************************************
+*/
+object_goal_pose(Instance, [Translation, Rotation]) :-
+    object_goal_pose(Instance, [Translation, Rotation], _).
+
+object_goal_pose(Instance, [Translation, Rotation], Context) :-
+    object_goal_pose(Instance, [Translation, Rotation], Context, _).
+
+%% In case a reference group in the shelf is found
+object_goal_pose(Instance, [Translation, Rotation], Context, RefObject) :-
+    object_goal_surface(Instance, Surface, Context, RefObject),
+    not(rdf_equal(Instance, RefObject)),
+    surface_pose_in_map(Surface, [_, Rotation]),
+    rdf_has(RefObject, hsr_objects:'inGroup', Group),
+    group_mean_pose(Group, [X,Y,Z], _),
+    offsets(Offset),
+    member(XOffset, Offset),
+    hsr_lookup_transform(map, 'environment/shelf_left_side_piece', [LeftBorder,_,_], _),
+    hsr_lookup_transform(map, 'environment/shelf_right_side_piece', [RightBorder,_,_], _),
+    NewX is X + XOffset,
+    NewX < LeftBorder - 0.1,
+    NewX > RightBorder + 0.1,
+    not(hsr_existing_object_at([map,_,[NewX, Y, Z + 0.1], Rotation], 0.2, _)),
+    Translation = [NewX, Y, Z] ,!.
+
+%% When a new group is opened the RefObject is equal to the Instance
+object_goal_pose(Instance, [Translation, Rotation], Context, RefObject) :-
+    object_goal_surface(Instance, Surface, Context, RefObject),
+    rdf_equal(Instance, RefObject),
+    surface_pose_in_map(Surface, [[X,Y,Z], Rotation]),
+    offsets(Offset),
+    member(XOffset, Offset),
+    NewX is X + XOffset,
+    not(hsr_existing_object_at([map,_,[NewX, Y, Z + 0.1], Rotation], 0.2, _)),
+    Translation = [NewX, Y, Z].
+
+
+surface_pose_in_map(SurfaceLink, [Translation, Rotation]) :-
+    df_urdf_has_child(Joint,SurfaceLink),
+        joint_position(Joint,Translation),
+        rdf_urdf_joint_origin(Joint,[_,_,_,Rotation]).
+
