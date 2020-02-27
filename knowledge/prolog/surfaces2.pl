@@ -27,7 +27,8 @@
     object_goal_pose/2,
     object_goal_pose/3,
     object_goal_pose/4,
-    all_objects_in_whole_shelf/1
+    all_objects_in_whole_shelf/1,
+    all_surfaces/1 %replaces all_srdl_objects
     ]).
 
 :- rdf_db:rdf_register_ns(urdf, 'http://knowrob.org/kb/urdf.owl#', [keep(true)]).
@@ -103,7 +104,12 @@ shelf_floor_at_height(Height, TargetShelfLink) :-
 ***************************************************find and assert surfaces*********************************************
 */
 
+
+/**
+* is called in init.pl
+*/
 assert_surface_types(SurfaceLink):-
+    rdf_assert(ground,hsr_objects:'isSurfaceType',ground),
     supporting_surface(SurfaceLink),
     rdf_urdf_name(SurfaceLink,Name),
     ( sub_string(Name,_,_,_,shelf)
@@ -114,6 +120,13 @@ assert_surface_types(SurfaceLink):-
     ; rdf_assert(SurfaceLink,hsr_objects:'isSurfaceType',other)
     )).
 
+
+
+all_surfaces(SurfaceLinks):-
+    findall(SurfaceLink,
+        rdf_has(SurfaceLink,hsrobjects:'isSurfaceType',_),
+        SurfaceLinks
+    )
 
 %% supporting_surface(?Surface).
 %
