@@ -283,7 +283,7 @@ object_goal_surface(Instance, Surface, Context, ShelfObj) :-
 object_goal_surface(Instance, Surface, Context, ShelfObj) :-
     kb_type_of(Instance, Class),
     owl_direct_subclass_of(Class, Super),
-    not(rdf_equal(Super, hsr_objects:'Robocupitems')),
+    not(rdf_equal(Super, hsr_objects:'Items')),
     all_objects_in_whole_shelf(ShelfObjs),
     member(ShelfObj, ShelfObjs),
     rdfs_instance_of(ShelfObj, Super),
@@ -295,9 +295,9 @@ object_goal_surface(Instance, Surface, Context, ShelfObj) :-
 object_goal_surface(Instance, Surface, Context, ShelfObj) :-
     kb_type_of(Instance, Class),
     owl_direct_subclass_of(Class, Super),
-    not(rdf_equal(Super, hsr_objects:'Robocupitems')),
+    not(rdf_equal(Super, hsr_objects:'Items')),
     owl_direct_subclass_of(Super, Supersuper),
-    not(rdf_equal(Supersuper, hsr_objects:'Robocupitems')),
+    not(rdf_equal(Supersuper, hsr_objects:'Items')),
     all_objects_in_whole_shelf(ShelfObjs),
     member(ShelfObj, ShelfObjs),
     rdfs_instance_of(ShelfObj, Supersuper),
