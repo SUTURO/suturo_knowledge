@@ -29,6 +29,8 @@
     object_goal_pose/4,
     all_objects_in_whole_shelf/1,
     all_objects_on_tables/1,
+    all_objects_on_ground/1,
+    ground_surface/1,
     all_surfaces/1 %replaces all_srdl_objects
     ]).
 
@@ -74,6 +76,9 @@ table_surfaces(TableLinks):-
 shelf_surfaces(ShelfLinks):-
     findall(ShelfLink, rdf_has(ShelfLink, hsr_objects:'isSurfaceType',shelf),ShelfLinks).
 
+ground_surface(GroundSurface):-
+    GroundSurface = ground.
+
 
 
 all_objects_in_whole_shelf(Instances) :-
@@ -91,6 +96,13 @@ all_objects_on_tables(Instances) :-
         member(Table, TableLinks),
         objects_on_surface(ObjPerTable, Table),
         member(Instance, ObjPerTable)
+        ), Instances).
+
+all_objects_on_ground(Instances) :-
+    findall(Instance, (
+        ground_surface(Ground),
+        objects_on_surface(ObjOnGround, Ground),
+        member(Instance, ObjOnGround)
         ), Instances).
 
 
