@@ -6,6 +6,9 @@
       context_speech_sort_by_size/3
     ]).
 
+:- rdf_db:rdf_register_ns(hsr_objects, 'http://www.semanticweb.org/suturo/ontologies/2018/10/objects#', [keep(true)]).
+
+
 :- rdf_meta
     allowed_class_distance(?),
     context_speech_sort_by_class(-,-,-,?),
