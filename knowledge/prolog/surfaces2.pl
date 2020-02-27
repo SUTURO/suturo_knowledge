@@ -28,6 +28,7 @@
     object_goal_pose/3,
     object_goal_pose/4,
     all_objects_in_whole_shelf/1,
+    all_objects_on_tables/1,
     all_surfaces/1 %replaces all_srdl_objects
     ]).
 
@@ -84,6 +85,15 @@ all_objects_in_whole_shelf(Instances) :-
         ), Instances).
 
 
+all_objects_on_tables(Instances) :-
+    findall(Instance, (
+        table_surfaces(TableLinks),
+        member(Table, TableLinks),
+        objects_on_surface(ObjPerTable, Table),
+        member(Instance, ObjPerTable)
+        ), Instances).
+
+
 assert_object_on(ObjectInstance, SurfaceLink) :-
     all_surfaces(SurfaceLinks),
     member(SurfaceLink,SurfaceLinks),
@@ -125,9 +135,9 @@ assert_surface_types(SurfaceLink):-
 
 all_surfaces(SurfaceLinks):-
     findall(SurfaceLink,
-        rdf_has(SurfaceLink,hsrobjects:'isSurfaceType',_),
+        rdf_has(SurfaceLink,hsr_objects:'isSurfaceType',_),
         SurfaceLinks
-    )
+    ).
 
 %% supporting_surface(?Surface).
 %
@@ -173,36 +183,32 @@ joint_position(Joint,Position) :-
 
 
 object_supportable_by_surface(Object, SurfaceLink):-
-    object_pose(Object,[X,Y,Z],_),
+    all_surfaces(SurfaceLinks),
+    member(SurfaceLink,SurfaceLinks),
+    object_pose(Object,[_,_,[X,Y,Z],_]),
     position_supportable_by_surface([X,Y,Z], SurfaceLink).
 
 position_supportable_by_surface([X,Y,Z], SurfaceLink):-
-    writeln(position_supportable_by_surface),
     rdf_urdf_link_collision(SurfaceLink,ShapeTerm,_),
     rdf_urdf_has_child(Joint, SurfaceLink),
     position_above_surface(Joint, ShapeTerm, [X,Y,Z], Distance),
-    writeln((distance,Distance)),
-    ( (Distance < 0.5, Distance > -0.05)
+    ( (Distance < 0.25, Distance > -0.05) % TODO Find a good threshold
     -> true
     ; fail).
 
 position_above_surface(Joint, ShapeTerm, [X,Y,Z], Distance):-
-    writeln(position_abbove_surface),
     joint_position(Joint,[JPosX,JPosY,JPosZ]),
     mem_retrieve_triple(Joint,urdf:hasOrigin,JOrigin),
     transform_data(JOrigin,(_,[QuatX, QuatY, QuatZ, QuatW])),
     ( point_on_surface([JPosX, JPosY, _], [QuatX, QuatY, QuatZ, QuatW], ShapeTerm, [X,Y,_])
-    -> Distance is Z - JPosZ
+    -> Distance is Z - JPosZ, true
     ; fail
-    ),
-    true.
+    ).
 
 % Origin contains Centerpoint and Rotation of the Object
 point_on_surface([PosX, PosY, _], [QuatX, QuatY, QuatZ, QuatW], box(X, Y, Z), [XP,YP,_]) :-
-    writeln(([PosX, PosY, _], [QuatX, QuatY, QuatZ, QuatW], box(X, Y, Z), [XP,YP,_])),
     quaternion_to_euler(QuatX,QuatY,QuatZ,QuatW, Roll, Pitch, Yaw),
     find_corners([PosX,PosY,_], [Roll,Pitch,Yaw], box(X,Y,Z), [X1,Y1], [X2,Y2], [X3,Y3], [X4,Y4]),
-    writeln((corners, [X1,Y1], [X2,Y2], [X3,Y3], [X4,Y4])),
     point_in_rectangle([X1,Y1], [X2,Y2], [X3,Y3], [X4,Y4], [XP,YP]).
 
 
