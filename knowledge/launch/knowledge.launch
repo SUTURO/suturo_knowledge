@@ -11,7 +11,7 @@
     <param name="object_types" value="knowrob:'EnduringThing-Localized'" />
   </node>
 
-  <node name="store_object_info_server2" pkg="knowledge" type="store_object_info_server2.py" output="screen"/>
+  <node name="store_object_info_server" pkg="knowledge" type="store_object_info_server2.py" output="screen"/>
 
   <node name="gripping_subscriber_for_attachment" pkg="knowledge" type="gripping_subscriber.py" output="screen"/>-->
 
