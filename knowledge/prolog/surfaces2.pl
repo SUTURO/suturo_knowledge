@@ -26,7 +26,8 @@
     objects_on_surface/2,
     object_goal_pose/2,
     object_goal_pose/3,
-    object_goal_pose/4
+    object_goal_pose/4,
+    all_objects_in_whole_shelf/1
     ]).
 
 :- rdf_db:rdf_register_ns(urdf, 'http://knowrob.org/kb/urdf.owl#', [keep(true)]).
@@ -47,6 +48,7 @@
     object_goal_surface(r,?,?,?),
     object_goal_pose(r,?),
     object_goal_pose(r,?,?),
+    all_objects_in_whole_shelf(?),
     object_goal_pose(r,?,?,?).
 
 
@@ -69,6 +71,16 @@ table_surfaces(TableLinks):-
 
 shelf_surfaces(ShelfLinks):-
     findall(ShelfLink, rdf_has(ShelfLink, hsr_objects:'isSurfaceType',shelf),ShelfLinks).
+
+
+
+all_objects_in_whole_shelf(Instances) :-
+    findall(Instance, (
+        shelf_surfaces(ShelveLinks),
+        member(Shelf, ShelveLinks),
+        objects_on_surface(ObjPerShelf, Shelf),
+        member(Instance, ObjPerShelf)
+        ), Instances).
 
 
 assert_object_on(ObjectInstance, SurfaceLink) :-
