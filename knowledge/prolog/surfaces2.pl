@@ -17,7 +17,7 @@
     point_in_rectangle/5,
     assert_surface_types/1,
     assert_object_on/2,
-    shelf_surfaces/1,
+    shelf_surfaces/1, %shelf_floors/1
     table_surfaces/1,
     shelf_floor_at_height/2,
     object_goal_surface/2,
@@ -85,7 +85,8 @@ all_objects_in_whole_shelf(Instances) :-
 
 
 assert_object_on(ObjectInstance, SurfaceLink) :-
-    supporting_surface(SurfaceLink),
+    all_surfaces(SurfaceLinks),
+    member(SurfaceLink,SurfaceLinks),
     kb_retract(ObjectInstance, hsr_objects:'supportedBy', _),
     kb_assert(ObjectInstance, hsr_objects:'supportedBy', SurfaceLink).
 
@@ -354,7 +355,7 @@ object_goal_surface(Instance, SurfaceLink, Context, Self) :-
 
 %% If middle shelves also occupied, take rest (lowest level first). WARNING: HSR may not be able to reach upper levels
 object_goal_surface(Instance, SurfaceLink, Context, Self) :-
-    shelf_floors(ShelfFloors),
+    shelf_surfaces(ShelfFloors),
     member(SurfaceLink,ShelfFloors),
     objects_on_surface([], SurfaceLink),
     Self = Instance,
