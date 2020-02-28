@@ -13,10 +13,8 @@
 
 
 
-next_object(BestObj) :- % Todo
-    table_surface(Table),
-    objects_on_surface(Objs, Table),
-    %hsr_existing_objects(Objs),
+next_object(BestObj) :- % Todo create and use surface start/goal attribute
+    all_objects_on_tables(Objs),
     maplist(distance_to_robot, Objs, Distances),
     min_list(Distances, MinDistance),
     nth0(Index, Distances, MinDistance),
