@@ -50,7 +50,7 @@ new_perceived_at(ObjType, Transform, _, Instance) :-
 
 hsr_existing_object_at(_, Transform, Threshold, Instance) :-
     rdf(Instance, rdf:type, owl:'NamedIndividual', belief_state),
-    rdfs_individual_of(Instance, hsr_objects:'Robocupthings'),
+    rdfs_individual_of(Instance, hsr_objects:'Items'),
     belief_object_at_location(Instance, Transform, Threshold), !.
 
 attach_object_to_gripper(Instance) :-

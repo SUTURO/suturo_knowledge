@@ -24,7 +24,7 @@
 
 
 hsr_existing_objects(Objects) :-
-    belief_existing_objects(Objects, [hsr_objects:'Robocupitems']).
+    belief_existing_objects(Objects, [hsr_objects:'Items']).
 
 object_at(ObjectType, Transform, Threshold, Instance) :-
 	hsr_existing_objects(Objectlist),
@@ -38,11 +38,11 @@ object_of_type(ObjectType, Instance) :-
 	belief_existing_objects(Instance, [ObjectType]).
 
 create_object(ObjectType, Instance) :-
- 	owl_subclass_of(ObjectType, hsr_objects:'Robocupitems'),
+ 	owl_subclass_of(ObjectType, hsr_objects:'Items'),
 	belief_new_object(ObjectType, Instance).
 
 create_object_at(ObjectType, Transform, Threshold, Instance, [Width, Depth, Height], [R,G,B,A]) :-
-    owl_subclass_of(ObjectType, hsr_objects:'Robocupitems'),
+    owl_subclass_of(ObjectType, hsr_objects:'Items'),
     new_perceived_at(ObjectType, Transform, Threshold, Instance),
     object_assert_dimensions(Instance, Width, Depth, Height),
     set_dimension_semantics(Instance, Width, Depth, Height),

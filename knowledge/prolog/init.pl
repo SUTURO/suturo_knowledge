@@ -20,19 +20,19 @@
 :- use_module(library('knowrob/transforms')).
 :- use_module(library('knowrob/vis')).
 
-:- use_module(library('rdf_urdf')).
-:- use_module(library('urdf_parser')).
+% :- use_module(library('rdf_urdf')).
+% :- use_module(library('urdf_parser')).
 
 :- use_module(library('config')).
 :- use_module(library('pickup')).
 :- use_module(library('object_state')).
-% :- use_module(library('surfaces')).
-:- use_module(library('surfaces2')).
+:- use_module(library('surfaces')).
+% :- use_module(library('surfaces2')).
 :- use_module(library('beliefstate')).
 :- use_module(library('spatial_comp')).
-%:- use_module(library('static_preset')).
+% :- use_module(library('static_preset')).
 :- use_module(library('assignplaces')).
-
+/**
 :- rdf_db:rdf_register_ns(hsr_objects, 'http://www.semanticweb.org/suturo/ontologies/2018/10/objects#', [keep(true)]).
 :- rdf_db:rdf_register_ns(urdf, 'http://knowrob.org/kb/urdf.owl#', [keep(true)]).
 :- rdf_db:rdf_register_ns(srdl2_comp, 'http://knowrob.org/kb/srdl2-comp.owl#', [keep(true)]).
@@ -49,4 +49,4 @@
 
 
 :- forall(supporting_surface(SurfaceLink), assert_surface_types(SurfaceLink)).
-
+*/
