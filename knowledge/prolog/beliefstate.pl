@@ -84,9 +84,9 @@ release_object_from_gripper :-
 select_surface([X,Y,Z], Surface) :-
     table_surface(Table),
     object_frame_name(Table, UrdfName),
-    string_concat('environment/', UrdfName, TableFrame),
+    string_concat('iai_kitchen/', UrdfName, TableFrame),
     hsr_lookup_transform(map, TableFrame, [TX,TY,_], _),
-    hsr_lookup_transform(map, environment/shelf_base_center, [SX,SY,_], _),
+    hsr_lookup_transform(map, iai_kitchen/shelf_base_center, [SX,SY,_], _),
     DTable is sqrt((TX-X)*(TX-X) + (TY-Y)*(TY-Y)),
     DShelf is sqrt((SX-X)*(SX-X) + (SY-Y)*(SY-Y)),
     ((DShelf < DTable, shelf_floor_at_height(Z, Surface));
