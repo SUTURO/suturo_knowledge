@@ -9,7 +9,7 @@
     supporting_surface/1,
     surface_big_enough/1,
     square_big_enough/2,
-    joint_position/2,
+    joint_abs_position/2,
     quaternion_to_euler/7,
     rotate_around_axis/4,
     object_supportable_by_surface/2,
@@ -31,7 +31,7 @@
     all_objects_on_tables/1,
     all_objects_on_ground/1,
     ground_surface/1,
-    all_surfaces/1 %replaces all_srdl_objects
+    all_surfaces/1 %replaces all_srdl_objects contains ground
     ]).
 
 :- rdf_db:rdf_register_ns(urdf, 'http://knowrob.org/kb/urdf.owl#', [keep(true)]).
@@ -41,7 +41,7 @@
     supporting_surface(?),
     surface_big_enough(?),
     surface_big_enough(r,?),
-    joint_position(r,?),
+    joint_abs_position(r,?),
     quaternion_to_euler(r,r,r,r,?,?,?),
     object_supportable_by_surface(r,r),
     position_supportable_by_surface(r,r),
@@ -118,7 +118,7 @@ shelf_floor_at_height(Height, TargetShelfLink) :-
         shelf_surfaces(AllFloorsLinks),
         member(ShelfFloorLink, AllFloorsLinks),
         rdf_urdf_has_child(Joint,ShelfFloorLink),
-        joint_position(Joint,[_,_,Z]),
+        joint_abs_position(Joint,[_,_,Z]),
         Z < Height
     ), ShelfFloorsLinks),
     reverse(ShelfFloorsLinks, [TargetShelfLink|_]).
@@ -162,7 +162,7 @@ supporting_surface(SurfaceLink):-
 surface_big_enough(box(X, Y, _)):- %TODO Support other shapes
     square_big_enough(X,Y).
 
-%surface_big_enough(mesh(_,[X,Y,_])):- % TODO Support Meshes (They are all asserted with size 1, 1, 1)
+%surface_big_enough(mesh(_,[X,Y,_])):- % TODO? Support Meshes (They are all asserted with size 1, 1, 1)
 %    square_big_enough(X,Y).
 
 square_big_enough(X,Y):- %TODO Support other shapes
@@ -177,28 +177,12 @@ square_big_enough(X,Y):- %TODO Support other shapes
 */
 
 
-joint_position(Joint,Position) :-
-  rdf_has(_,'http://knowrob.org/kb/urdf.owl#hasRootLink',RootLink),
-  (  not(rdf_urdf_has_parent(Joint, RootLink)) % rdf_urdf_has_parent(Joint, _),
-  -> rdf_urdf_has_parent(Joint, Link), rdf_urdf_has_child(SubJoint,Link),
-       mem_retrieve_triple(Joint,urdf:hasOrigin,JOrigin),
-       transform_data(JOrigin,([JPosX,JPosY,JPosZ],_)),
-       mem_retrieve_triple(SubJoint,urdf:hasOrigin,SOrigin),
-       transform_data(SOrigin,([SPosX,SPosY,SPosZ],_)),
-       PosX is JPosX + SPosX,
-       PosY is JPosY + SPosY,
-       PosZ is JPosZ + SPosZ,
-       Position = [PosX,PosY,PosZ]
-  ;  mem_retrieve_triple(Joint,urdf:hasOrigin,Origin),
-       transform_data(Origin,(Position,_))
-  ).
-
-
 object_supportable_by_surface(Object, SurfaceLink):-
     all_surfaces(SurfaceLinks),
     member(SurfaceLink,SurfaceLinks),
     object_pose(Object,[_,_,[X,Y,Z],_]),
     position_supportable_by_surface([X,Y,Z], SurfaceLink).
+
 
 position_supportable_by_surface([X,Y,Z], SurfaceLink):-
     rdf_urdf_link_collision(SurfaceLink,ShapeTerm,_),
@@ -208,20 +192,56 @@ position_supportable_by_surface([X,Y,Z], SurfaceLink):-
     -> true
     ; fail).
 
+%% Joint supporting ShapeTerm, the ShapeTerm, Position of the object, return Distance vertical distance
 position_above_surface(Joint, ShapeTerm, [X,Y,Z], Distance):-
-    joint_position(Joint,[JPosX,JPosY,JPosZ]),
-    mem_retrieve_triple(Joint,urdf:hasOrigin,JOrigin),
-    transform_data(JOrigin,(_,[QuatX, QuatY, QuatZ, QuatW])),
-    ( point_on_surface([JPosX, JPosY, _], [QuatX, QuatY, QuatZ, QuatW], ShapeTerm, [X,Y,_])
+    joint_abs_position(Joint,[JPosX,JPosY,JPosZ]),
+    joint_abs_rotation(Joint,[Roll,Pitch,Yaw]),
+    ( point_on_surface([JPosX, JPosY, _], [Roll,Pitch,Yaw], ShapeTerm, [X,Y,_])
     -> Distance is Z - JPosZ, true
     ; fail
     ).
 
+
+
+%Manually tested using RViz
+%used to find corners of a surface
+joint_abs_position(Joint,[PosX,PosY,PosZ]) :-
+  rdf_has(_,'http://knowrob.org/kb/urdf.owl#hasRootLink',RootLink),
+  (  not(rdf_urdf_has_parent(Joint, RootLink)) % rdf_urdf_has_parent(Joint, _),
+  -> rdf_urdf_has_parent(Joint, Link), rdf_urdf_has_child(SubJoint,Link),
+       rdf_urdf_joint_origin(Joint,[_,_,[JPosX,JPosY,JPosZ],_]),
+       rdf_urdf_joint_origin(SubJoint,[_,_,_,[SQuatX,SQuatY,SQuatZ,SQuatW]]),
+       joint_abs_position(SubJoint,[SPosX,SPosY,SPosZ]),
+       quaternion_to_euler(SQuatX,SQuatY,SQuatZ,SQuatW,Roll,Pitch,Yaw),
+       rotate_around_axis(x,Roll,[JPosX,JPosY,JPosZ],[NX1,NY1,NZ1]),
+       rotate_around_axis(y,Pitch,[NX1,NY1,NZ1],[NX2,NY2,NZ2]),
+       rotate_around_axis(z,Yaw,[NX2,NY2,NZ2],[NX,NY,NZ]),
+       PosX is SPosX + NX,
+       PosY is SPosY + NY,
+       PosZ is SPosZ + NZ
+  ;  mem_retrieve_triple(Joint,urdf:hasOrigin,Origin),
+     transform_data(Origin,([PosX,PosY,PosZ],_))
+  ).
+%used to find corners of a surface
+joint_abs_rotation(Joint,[Roll,Pitch,Yaw]) :-
+    rdf_has(_,'http://knowrob.org/kb/urdf.owl#hasRootLink',RootLink),
+  (  not(rdf_urdf_has_parent(Joint, RootLink)) % rdf_urdf_has_parent(Joint, _),
+  -> rdf_urdf_has_parent(Joint, Link), rdf_urdf_has_child(SubJoint,Link),
+       rdf_urdf_joint_origin(Joint,[_,_,_,[QuatX,QuatY,QuatZ,QuatW]]),
+       quaternion_to_euler(QuatX,QuatY,QuatZ,QuatW,JR,JP,JY),
+       joint_abs_rotation(SubJoint,[SRoll,SPitch,SYaw]),
+       Roll  is JR + SRoll,
+       Pitch is JP + SPitch,
+       Yaw   is JY + SYaw
+  ;  rdf_urdf_joint_origin(Joint,[_,_,_,[QuatX,QuatY,QuatZ,QuatW]]),
+     quaternion_to_euler(QuatX,QuatY,QuatZ,QuatW,Roll,Pitch,Yaw)
+  ).
+
 % Origin contains Centerpoint and Rotation of the Object
-point_on_surface([PosX, PosY, _], [QuatX, QuatY, QuatZ, QuatW], box(X, Y, Z), [XP,YP,_]) :-
-    quaternion_to_euler(QuatX,QuatY,QuatZ,QuatW, Roll, Pitch, Yaw),
+point_on_surface([PosX, PosY, _], [Roll,Pitch,Yaw], box(X, Y, Z), [XP,YP,_]) :-
     find_corners([PosX,PosY,_], [Roll,Pitch,Yaw], box(X,Y,Z), [X1,Y1], [X2,Y2], [X3,Y3], [X4,Y4]),
     point_in_rectangle([X1,Y1], [X2,Y2], [X3,Y3], [X4,Y4], [XP,YP]).
+
 
 
 
@@ -240,16 +260,20 @@ find_corners([PosX,PosY,_], [Roll, Pitch, Yaw], box(X, Y, Z), [X1,Y1],[X2,Y2],[X
     Y4 is PosY + NY/2.
 
 
+
+
+%Tested using an online calculator
+%% rotates a given vector around a given axis around the X axis
 rotate_around_axis(x,Alpha,[X,Y,Z],[X1,Y1,Z1]):- % Alpha is in Radian
     X1 is X,
     Y1 is Y * cos(Alpha) - Z * sin(Alpha),
-    Z1 is Z * sin(Alpha) + Z * cos(Alpha).
-
+    Z1 is Y * sin(Alpha) + Z * cos(Alpha).
+%% rotates a given vector around a given axis around the Y axis
 rotate_around_axis(y,Alpha,[X,Y,Z],[X1,Y1,Z1]):-
     X1 is X * cos(Alpha) + Z * sin(Alpha),
     Y1 is Y,
-    Z1 is 0 - X * sin(Alpha) + Z* cos(Alpha).
-
+    Z1 is (0 - X) * sin(Alpha) + Z* cos(Alpha).
+%% rotates a given vector around a given axis around the Z axis
 rotate_around_axis(z,Alpha,[X,Y,Z],[X1,Y1,Z1]):-
     X1 is X * cos(Alpha) - Y * sin(Alpha),
     Y1 is X * sin(Alpha) + Y * cos(Alpha),
@@ -272,6 +296,9 @@ size_of_triangle([AX,AY],[BX,BY],[CX,CY],Size):-
 
 
 
+%%
+%Calculates the euler representation of a given quaternion rotation
+% Tested using an only calculator.
 quaternion_to_euler(X, Y, Z, W, Roll, Pitch, Yaw)  :- % Axis: Roll = X, Pitch = Y, Yaw = Z
     T0 is 2.0 * ((W * X) + (Y * Z)),
     T1 is 1.0 - 2.0 * ((X * X) + (Y * Y)),
@@ -424,6 +451,5 @@ object_goal_pose(Instance, [Translation, Rotation], Context, RefObject) :-
 
 
 surface_pose_in_map(SurfaceLink, [Translation, Rotation]) :-
-    df_urdf_has_child(Joint,SurfaceLink),
-        joint_position(Joint,Translation),
-        rdf_urdf_joint_origin(Joint,[_,_,_,Rotation]).
+    rdf_urdf_has_child(Joint,SurfaceLink),
+    rdf_urdf_joint_origin(Joint,[_,_,Translation,Rotation]).
