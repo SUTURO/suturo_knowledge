@@ -79,8 +79,7 @@ class StoreObjectInfoServer(object):
                                 threshold + ", ObjectInstance," +
                                 "[" + ", ".join([depth, width, height]) + "], " +
                                 "[" + ", ".join([r, g, b, a]) + "])," +
-                            "object_supportable_by_surface(ObjectInstance, SurfaceLink)," +
-                            "assert_object_on(ObjectInstance, SurfaceLink).")
+                            "place_object(ObjectInstance).")
             rospy.loginfo('Send query: \n' + query_string)
             solutions = prolog.all_solutions(query_string)
             rospy.loginfo(solutions)

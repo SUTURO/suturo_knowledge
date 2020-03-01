@@ -31,6 +31,7 @@
     all_objects_on_tables/1,
     all_objects_on_ground/1,
     ground_surface/1,
+    place_object/1,
     all_surfaces/1 %replaces all_srdl_objects contains ground
     ]).
 
@@ -53,6 +54,7 @@
     object_goal_pose(r,?),
     object_goal_pose(r,?,?),
     all_objects_in_whole_shelf(?),
+    place_object(r),
     object_goal_pose(r,?,?,?).
 
 
@@ -175,6 +177,14 @@ square_big_enough(X,Y):- %TODO Support other shapes
 /**
 ****************************************find what surface object is on**************************************************
 */
+
+place_object(Object):-
+    (  object_supportable_by_surface(Object, Surface)
+    -> assert_object_on(Object,Surface)
+    ;  object_pose(Object,[_,_,[_,_,Z],_]),
+       Z < 0.5,
+       assert_object_on(Object,ground)
+    ).
 
 
 object_supportable_by_surface(Object, SurfaceLink):-
