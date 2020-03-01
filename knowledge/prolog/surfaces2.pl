@@ -462,4 +462,5 @@ object_goal_pose(Instance, [Translation, Rotation], Context, RefObject) :-
 
 surface_pose_in_map(SurfaceLink, [Translation, Rotation]) :-
     rdf_urdf_has_child(Joint,SurfaceLink),
-    rdf_urdf_joint_origin(Joint,[_,_,Translation,Rotation]).
+    rdf_urdf_joint_origin(Joint,[_,_,_,Rotation]),
+    joint_abs_position(Joint,Translation). %TODO do we need abs_rotation here? we wolud have to turn euler to quat then
