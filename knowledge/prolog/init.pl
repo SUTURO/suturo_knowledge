@@ -6,7 +6,6 @@
 :- register_ros_package(knowrob_memory).
 :- register_ros_package(rosprolog).
 :- register_ros_package(urdfprolog).
-:- register_ros_package(iai_kitchen).
 
 :- use_module(library('semweb/rdf_db')).
 :- use_module(library('semweb/rdfs')).
@@ -30,8 +29,6 @@
 :- use_module(library('spatial_comp')).
 :- use_module(library('assignplaces')).
 
-:- rdf_db:rdf_register_ns(hsr_objects, 'http://www.semanticweb.org/suturo/ontologies/2018/10/objects#', [keep(true)]).
-:- rdf_db:rdf_register_ns(urdf, 'http://knowrob.org/kb/urdf.owl#', [keep(true)]).
 
 
 :- owl_parser:owl_parse('package://knowrob_common/owl/knowrob.owl').
