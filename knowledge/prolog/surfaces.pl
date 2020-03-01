@@ -6,6 +6,7 @@
     square_big_enough/2,
     joint_abs_position/2,
     quaternion_to_euler/7,
+    euler_to_quaternion/7,
     rotate_around_axis/4,
     object_supportable_by_surface/2,
     position_supportable_by_surface/2,
@@ -39,6 +40,7 @@
     surface_big_enough(r,?),
     joint_abs_position(r,?),
     quaternion_to_euler(r,r,r,r,?,?,?),
+    euler_to_quaternion(r,r,r,?,?,?,?),
     object_supportable_by_surface(r,r),
     position_supportable_by_surface(r,r),
     point_in_rectangle(r,r,r,r,r),
@@ -304,7 +306,7 @@ size_of_triangle([AX,AY],[BX,BY],[CX,CY],Size):-
 %%
 %Calculates the euler representation of a given quaternion rotation
 % Tested using an only calculator.
-quaternion_to_euler(X, Y, Z, W, Roll, Pitch, Yaw)  :- % Axis: Roll = X, Pitch = Y, Yaw = Z
+quaternion_to_euler(X, Y, Z, W, Roll, Pitch, Yaw)  :- % Axis: Roll = X, Pitch = Y, Yaw = Z TODO convert to array
     T0 is 2.0 * ((W * X) + (Y * Z)),
     T1 is 1.0 - 2.0 * ((X * X) + (Y * Y)),
     Roll is atan(T0,T1),
@@ -323,6 +325,12 @@ quaternion_to_euler(X, Y, Z, W, Roll, Pitch, Yaw)  :- % Axis: Roll = X, Pitch = 
     Yaw is atan(T3,T4),
     true.
 
+
+euler_to_quaternion(Roll, Pitch, Yaw, X, Y, Z, W) :- % TODO convert to arrays
+    W is cos(Yaw/2) * cos(Pitch/2) * cos(Roll/2) - sin(Yaw/2) * sin(Pitch/2) * sin(Roll/2),
+    X is sin(Yaw/2) * sin(Pitch/2) * cos(Roll/2) + cos(Yaw/2) * cos(Pitch/2) * sin(Roll/2),
+    Y is sin(Yaw/2) * cos(Pitch/2) * cos(Roll/2) + cos(Yaw/2) * sin(Pitch/2) * sin(Roll/2),
+    Z is cos(Yaw/2) * sin(Pitch/2) * cos(Roll/2) - sin(Yaw/2) * cos(Pitch/2) * sin(Roll/2).
 
 
 
@@ -455,7 +463,9 @@ object_goal_pose(Instance, [Translation, Rotation], Context, RefObject) :-
     Translation = [NewX, Y, Z].
 
 
-surface_pose_in_map(SurfaceLink, [Translation, Rotation]) :-
+surface_pose_in_map(SurfaceLink, [Translation, [X,Y,Z,W]]) :-
     rdf_urdf_has_child(Joint,SurfaceLink),
-    rdf_urdf_joint_origin(Joint,[_,_,_,Rotation]),
-    joint_abs_position(Joint,Translation). %TODO do we need abs_rotation here? we wolud have to turn euler to quat then
+    joint_abs_position(Joint,Translation),
+    joint_abs_rotation(Joint,Roll,Pitch,Yaw),
+    euler_to_quaternion(Roll,Pitch,Yaw, X,Y,Z,W).
+
