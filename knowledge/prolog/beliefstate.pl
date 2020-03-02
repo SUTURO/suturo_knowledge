@@ -73,13 +73,13 @@ release_object_from_gripper :-
     transform_data(Pose,([X,Y,Z], Rotation)),
     hsr_belief_at_update(Instance, [map, _, [X,Y,Z], Rotation]),
     rdf_retractall(Instance, hsr_objects:'supportedBy', _),
-    select_surface[X,Y,Z], Surface),
+    select_surface([X,Y,Z], Surface),
     rdf_assert(Instance, hsr_objects:'supportedBy', Surface),
     group_shelf_objects.
 
 
 select_surface([X,Y,Z], Surface) :-
-    position_supportable_by_surface([X,Y,Z], Surface)
+    position_supportable_by_surface([X,Y,Z], Surface).
 
 
 % No groups nearby
