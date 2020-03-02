@@ -29,7 +29,10 @@
     ground_surface/1,
     place_object/1,
     all_surfaces/1, %replaces all_srdl_objects contains ground
-    surface_pose_in_map/2
+    surface_pose_in_map/2,
+    make_tables_source/0,
+    make_ground_source/0,
+    make_shelves_source/0
     ]).
 
 :- rdf_db:rdf_register_ns(urdf, 'http://knowrob.org/kb/urdf.owl#', [keep(true)]).
@@ -150,6 +153,32 @@ all_surfaces(SurfaceLinks):-
         rdf_has(SurfaceLink,hsr_objects:'isSurfaceType',_),
         SurfaceLinks
     ).
+
+
+all_objects_on_source_surfaces(Objs):-
+    findall(Obj,
+    hsr_existing_objects(ExistingObjs),
+    member(Obj, ExistingObjs),
+    rdf_has(Obj,hsr_objects:'supportedBy',Surf), rdf_has(Surf,hsr_objects:'sourceOrTarget',source),
+    Objs).
+
+
+make_ground_source:-
+    rdf_retractall(ground, hsr_objects:'sourceOrTarget',_),
+    rdf_assert(ground,hsr_objects:'sourceOrTarget', source).
+
+make_tables_source:-
+    table_surfaces(Tables),
+    member(Table, Tables),
+    rdf_retractall(Table, hsr_objects:'sourceOrTarget',_),
+    rdf_assert(Table,hsr_objects:'sourceOrTarget', source).
+
+make_shelves_source:-
+    shelf_surfaces(Shelves),
+    member(Shelf, Shelves),
+    rdf_retractall(Shelf, hsr_objects:'sourceOrTarget',_),
+    rdf_assert(Shelf,hsr_objects:'sourceOrTarget', source).
+
 
 %% supporting_surface(?Surface).
 %
