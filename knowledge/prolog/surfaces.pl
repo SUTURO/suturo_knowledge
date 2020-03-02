@@ -204,6 +204,11 @@ position_supportable_by_surface([X,Y,Z], SurfaceLink):-
 position_above_surface(Joint, ShapeTerm, [X,Y,Z], Distance):-
     joint_abs_position(Joint,[JPosX,JPosY,JPosZ]),
     joint_abs_rotation(Joint,[Roll,Pitch,Yaw]),
+     %TODO THIS IS F*CKING UGLY AND A STUPID WORK AROUND MAKE THE URDF MORE CONSISTANT
+    (rdf_urdf_name(Joint,Name),sub_string(Name,_,_,_,center)
+    -> Z is Z *2
+    ; Z is Z
+    ),
     ( point_on_surface([JPosX, JPosY, _], [Roll,Pitch,Yaw], ShapeTerm, [X,Y,_])
     -> Distance is Z - JPosZ, true
     ; fail
@@ -464,9 +469,16 @@ object_goal_pose(Instance, [Translation, Rotation], Context, RefObject) :-
     Translation = [NewX, Y, Z].
 
 
-surface_pose_in_map(SurfaceLink, [Translation, [X,Y,Z,W]]) :-
+surface_pose_in_map(SurfaceLink, [[PX,PY,PZ], [X,Y,Z,W]]) :-
     rdf_urdf_has_child(Joint,SurfaceLink),
-    joint_abs_position(Joint,Translation),
+    joint_abs_position(Joint,[PX,PY,PZ]),
+    %TODO THIS IS F*CKING UGLY AND A STUPID WORK AROUND MAKE THE URDF MORE CONSISTANT
+    (rdf_urdf_name(SurfaceLink,Name),sub_string(Name,_,_,_,center)
+    -> PZ is PZ *2
+    ; PZ is PZ
+    ),
     joint_abs_rotation(Joint,[Roll,Pitch,Yaw]),
     euler_to_quaternion(Roll,Pitch,Yaw, X,Y,Z,W).
+
+
 
