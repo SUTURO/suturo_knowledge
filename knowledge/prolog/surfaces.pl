@@ -29,7 +29,7 @@
     ground_surface/1,
     place_object/1,
     all_surfaces/1, %replaces all_srdl_objects contains ground
-    surface_pose_in_map/2
+    surface_pose_in_map/2T
     ]).
 
 :- rdf_db:rdf_register_ns(urdf, 'http://knowrob.org/kb/urdf.owl#', [keep(true)]).
@@ -467,6 +467,6 @@ object_goal_pose(Instance, [Translation, Rotation], Context, RefObject) :-
 surface_pose_in_map(SurfaceLink, [Translation, [X,Y,Z,W]]) :-
     rdf_urdf_has_child(Joint,SurfaceLink),
     joint_abs_position(Joint,Translation),
-    joint_abs_rotation(Joint,Roll,Pitch,Yaw),
+    joint_abs_rotation(Joint,[Roll,Pitch,Yaw]),
     euler_to_quaternion(Roll,Pitch,Yaw, X,Y,Z,W).
 
