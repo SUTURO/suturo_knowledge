@@ -29,7 +29,7 @@
     ground_surface/1,
     place_object/1,
     all_surfaces/1, %replaces all_srdl_objects contains ground
-    surface_pose_in_map/3
+    surface_pose_in_map/2
     ]).
 
 :- rdf_db:rdf_register_ns(urdf, 'http://knowrob.org/kb/urdf.owl#', [keep(true)]).
