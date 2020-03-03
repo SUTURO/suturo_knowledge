@@ -173,7 +173,7 @@ all_objects_on_source_surfaces(Objs):-
     (
         hsr_existing_objects(ExistingObjs),
         member(Obj, ExistingObjs),
-        rdf_has(Obj,hsr_objects:'supportedBy',Surf), rdf_has(Surf,hsr_objects:'sourceOrTarget',source),
+        rdf_has(Obj,hsr_objects:'supportedBy',Surf), rdf_has(Surf,hsr_objects:'sourceOrTarget',source)
     ),
     Objs).
 
