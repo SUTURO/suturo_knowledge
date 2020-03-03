@@ -10,8 +10,6 @@
     next_object(?).
     
 
-
-
 next_object(BestObj) :-
     all_objects_on_source_surfaces(Objs),
     maplist(distance_to_robot, Objs, Distances),
@@ -21,4 +19,10 @@ next_object(BestObj) :-
     BestObj = NearestObject.
 
 distance_to_robot(Obj, Distance) :-
-    object_distance(base_footprint, Obj, Distance).
+    map_frame_name(MapFrame),
+    current_object_pose(Obj, [MapFrame,_,[OX,OY,OZ],_]),
+    tf_lookup_transform(map,'odom/base_footprint',[_,[BX,BY,BZ],_]),
+    DX is OX - BX,
+    DY is OY - BY,
+    DZ is OZ - BZ,
+    Distance is sqrt( ((DX*DX) + (DY*DY)) + (DZ*DZ)), !.
