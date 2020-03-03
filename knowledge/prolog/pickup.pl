@@ -25,4 +25,5 @@ distance_to_robot(Obj, Distance) :-
     DX is OX - BX,
     DY is OY - BY,
     DZ is OZ - BZ,
-    Distance is sqrt( ((DX*DX) + (DY*DY)) + (DZ*DZ)), !.
+    sqrt(((DX*DX) + (DY*DY) + (DZ*DZ)), Distance),
+    !.
