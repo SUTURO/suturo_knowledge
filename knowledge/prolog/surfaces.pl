@@ -14,6 +14,7 @@
     assert_surface_types/1,
     assert_object_on/2,
     shelf_surfaces/1, %shelf_floors/1
+    big_shelf_surfaces/1,
     table_surfaces/1,
     shelf_floor_at_height/2,
     object_goal_surface/2,
@@ -79,6 +80,15 @@ table_surfaces(TableLinks):-
 shelf_surfaces(ShelfLinks):-
     findall(ShelfLink, rdf_has(ShelfLink, hsr_objects:'isSurfaceType',shelf),ShelfLinks).
 
+big_shelf_surfaces(ShelfLinks) :-
+    findall(ShelfLink,
+    (
+        rdf_has(ShelfLink, hsr_objects:'isSurfaceType',shelf),
+        rdf_urdf_name(ShelfLink,Name),
+        not(sub_string(Name,_,_,_,small))
+    ),
+    ShelfLinks).
+
 ground_surface(GroundSurface):-
     GroundSurface = ground.
 
@@ -116,9 +126,10 @@ assert_object_on(ObjectInstance, SurfaceLink) :-
     kb_assert(ObjectInstance, hsr_objects:'supportedBy', SurfaceLink).
 
 
+%TODO
 shelf_floor_at_height(Height, TargetShelfLink) :-
     findall(ShelfFloorLink, (
-        shelf_surfaces(AllFloorsLinks),
+        big_shelf_surfaces(AllFloorsLinks),
         member(ShelfFloorLink, AllFloorsLinks),
         rdf_urdf_has_child(Joint,ShelfFloorLink),
         joint_abs_position(Joint,[_,_,Z]),
@@ -470,7 +481,7 @@ object_goal_surface(Instance, SurfaceLink, Context, Self) :-
 
 %% If middle shelves also occupied, take rest (lowest level first). WARNING: HSR may not be able to reach upper levels
 object_goal_surface(Instance, SurfaceLink, Context, Self) :-
-    shelf_surfaces(ShelfFloors),
+    big_shelf_surfaces(ShelfFloors),
     member(SurfaceLink,ShelfFloors),
     objects_on_surface([], SurfaceLink),
     Self = Instance,
