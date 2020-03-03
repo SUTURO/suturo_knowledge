@@ -201,10 +201,27 @@ square_big_enough(X,Y):- %TODO Support other shapes
     ; fail
     ).
 
+
+surface_pose_in_map(SurfaceLink, [[PX,PY,PZR], [X,Y,Z,W]]) :-
+    rdf_urdf_has_child(Joint,SurfaceLink),
+    joint_abs_position(Joint,[PX,PY,PZ]),
+    %TODO THIS IS A WORKAROUND. MAKE THE URDF MORE CONSISTANT
+    (rdf_urdf_name(SurfaceLink,Name),sub_string(Name,_,_,_,center)
+    -> PZR is PZ *2
+    ; PZR is PZ
+    ),
+    joint_abs_rotation(Joint,[Roll,Pitch,Yaw]),
+    euler_to_quaternion(Roll,Pitch,Yaw, X,Y,Z,W).
+
+
 /**
 ****************************************find what surface object is on**************************************************
 */
 
+
+%%
+% finds the surface an object was seen on. When there is no surface supporting the object and
+% the center point of the object < 0.5 the object is placed on the ground. Otherwise the query resolves to false.
 place_object(Object):-
     (  object_supportable_by_surface(Object, Surface)
     -> assert_object_on(Object,Surface)
@@ -213,7 +230,7 @@ place_object(Object):-
        assert_object_on(Object,ground)
     ).
 
-
+% finds and returns surfaces the object might be standing on.
 object_supportable_by_surface(Object, SurfaceLink):-
     all_surfaces(SurfaceLinks),
     member(SurfaceLink,SurfaceLinks),
@@ -229,11 +246,11 @@ position_supportable_by_surface([X,Y,Z], SurfaceLink):-
     -> true
     ; fail).
 
-%% Joint supporting ShapeTerm, the ShapeTerm, Position of the object, return Distance vertical distance
+%% Joint supporting the ShapeTerm, the ShapeTerm, Position of the object, return Distance vertical distance
 position_above_surface(Joint, ShapeTerm, [X,Y,Z], Distance):-
     joint_abs_position(Joint,[JPosX,JPosY,JPosZ]),
     joint_abs_rotation(Joint,[Roll,Pitch,Yaw]),
-     %TODO THIS IS F*CKING UGLY AND A STUPID WORK AROUND MAKE THE URDF MORE CONSISTANT
+     %TODO THIS IS A STUPID WORK AROUND. MAKE THE URDF MORE CONSISTANT
     (rdf_urdf_name(Joint,Name),sub_string(Name,_,_,_,center)
     -> JPosZR is JPosZ *2
     ; JPosZR is JPosZ
@@ -247,6 +264,8 @@ position_above_surface(Joint, ShapeTerm, [X,Y,Z], Distance):-
 
 %Manually tested using RViz
 %used to find corners of a surface
+% calculates the position of a a joint relative to map;
+%Iterating over all of its parents and adding their relativ position.
 joint_abs_position(Joint,[PosX,PosY,PosZ]) :-
   rdf_has(_,'http://knowrob.org/kb/urdf.owl#hasRootLink',RootLink),
   (  not(rdf_urdf_has_parent(Joint, RootLink)) % rdf_urdf_has_parent(Joint, _),
@@ -302,26 +321,27 @@ find_corners([PosX,PosY,_], [Roll, Pitch, Yaw], box(X, Y, Z), [X1,Y1],[X2,Y2],[X
     Y4 is PosY + NY/2.
 
 
-
+%TODO Function to rotate around all axis
 
 %Tested using an online calculator
-%% rotates a given vector around a given axis around the X axis
+%% rotates a given vector around the X axis by a given radian angle
 rotate_around_axis(x,Alpha,[X,Y,Z],[X1,Y1,Z1]):- % Alpha is in Radian
     X1 is X,
     Y1 is Y * cos(Alpha) - Z * sin(Alpha),
     Z1 is Y * sin(Alpha) + Z * cos(Alpha).
-%% rotates a given vector around a given axis around the Y axis
+%% rotates a given vector around the Y axis by a given radian angle
 rotate_around_axis(y,Alpha,[X,Y,Z],[X1,Y1,Z1]):-
     X1 is X * cos(Alpha) + Z * sin(Alpha),
     Y1 is Y,
     Z1 is (0 - X) * sin(Alpha) + Z* cos(Alpha).
-%% rotates a given vector around a given axis around the Z axis
+%% rotates a given vector around the Z axis by a given radian angle
 rotate_around_axis(z,Alpha,[X,Y,Z],[X1,Y1,Z1]):-
     X1 is X * cos(Alpha) - Y * sin(Alpha),
     Y1 is X * sin(Alpha) + Y * cos(Alpha),
     Z1 is Z.
 
 
+% Determines if a 2D point is inside a 2D rectangle points are represented as [floatx, floaty]
 point_in_rectangle(P1,P2,P3,P4,PX):-
     size_of_triangle(P1,P4,PX,Size1),
     size_of_triangle(P3,P4,PX,Size2),
@@ -332,7 +352,7 @@ point_in_rectangle(P1,P2,P3,P4,PX):-
     SizeOfRec is SizeRec2 * 2,
     SumOfTria < SizeOfRec.
 
-
+% calulates the size of a triangle represented as 3 points in 2D space.
 size_of_triangle([AX,AY],[BX,BY],[CX,CY],Size):-
    Size is abs((AX * (BY - CY) + BX * (CY - AY) + CX * (AY - BY)) / 2).
 
@@ -340,7 +360,7 @@ size_of_triangle([AX,AY],[BX,BY],[CX,CY],Size):-
 
 %%
 %Calculates the euler representation of a given quaternion rotation
-% Tested using an only calculator.
+% Tested using an online calculator.
 quaternion_to_euler(X, Y, Z, W, Roll, Pitch, Yaw)  :- % Axis: Roll = X, Pitch = Y, Yaw = Z TODO convert to array
     T0 is 2.0 * ((W * X) + (Y * Z)),
     T1 is 1.0 - 2.0 * ((X * X) + (Y * Y)),
@@ -360,7 +380,7 @@ quaternion_to_euler(X, Y, Z, W, Roll, Pitch, Yaw)  :- % Axis: Roll = X, Pitch = 
     Yaw is atan(T3,T4),
     true.
 
-% Tested using an only calculator.
+% Tested using an online calculator.
 euler_to_quaternion(Roll, Pitch, Yaw, X, Y, Z, W) :- % TODO convert to arrays
     W is cos(Yaw/2) * cos(Pitch/2) * cos(Roll/2) - sin(Yaw/2) * sin(Pitch/2) * sin(Roll/2),
     X is sin(Yaw/2) * sin(Pitch/2) * cos(Roll/2) + cos(Yaw/2) * cos(Pitch/2) * sin(Roll/2),
@@ -372,6 +392,8 @@ euler_to_quaternion(Roll, Pitch, Yaw, X, Y, Z, W) :- % TODO convert to arrays
 /**
 *****************************************object_goal_surface***********************************************************
 */
+
+%TODO limit to the big shelf
 
 object_goal_surface(Instance, SurfaceLink) :-
     object_goal_surface(Instance, SurfaceLink, _).
@@ -496,18 +518,3 @@ object_goal_pose(Instance, [Translation, Rotation], Context, RefObject) :-
     NewX is X + XOffset,
     not(hsr_existing_object_at([map,_,[NewX, Y, Z + 0.1], Rotation], 0.2, _)),
     Translation = [NewX, Y, Z].
-
-
-surface_pose_in_map(SurfaceLink, [[PX,PY,PZR], [X,Y,Z,W]]) :-
-    rdf_urdf_has_child(Joint,SurfaceLink),
-    joint_abs_position(Joint,[PX,PY,PZ]),
-    %TODO THIS IS F*CKING UGLY AND A STUPID WORK AROUND MAKE THE URDF MORE CONSISTANT
-    (rdf_urdf_name(SurfaceLink,Name),sub_string(Name,_,_,_,center)
-    -> PZR is PZ *2
-    ; PZR is PZ
-    ),
-    joint_abs_rotation(Joint,[Roll,Pitch,Yaw]),
-    euler_to_quaternion(Roll,Pitch,Yaw, X,Y,Z,W).
-
-
-
