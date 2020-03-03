@@ -27,6 +27,7 @@
     all_objects_in_whole_shelf/1,
     all_objects_on_tables/1,
     all_objects_on_ground/1,
+    all_objects_on_source_surfaces/1,
     ground_surface/1,
     place_object/1,
     all_surfaces/1, %replaces all_srdl_objects contains ground
@@ -56,6 +57,7 @@
     object_goal_pose(r,?),
     object_goal_pose(r,?,?),
     all_objects_in_whole_shelf(?),
+    all_objects_on_source_surfaces(?),
     place_object(r),
     object_goal_pose(r,?,?,?).
 
