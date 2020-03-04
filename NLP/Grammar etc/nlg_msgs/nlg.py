@@ -26,6 +26,8 @@ lexicon = Lexicon().getDefaultLexicon()
 nlgFactory = NLGFactory(lexicon)
 realiser = Realiser(lexicon)
 
+print("Oi! Started.")
+
 def randomString(strings):
     return strings[random.randint(0, len(strings) - 1)]
 
@@ -88,6 +90,5 @@ def generate_text(data):
         message=(TaskRoutine(dataPie, decision))
     return message
 
-while True:
-    time.sleep(100)
+rpc_server.serve_forever()
 
