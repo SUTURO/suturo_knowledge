@@ -18,7 +18,7 @@
   </material>
   <link name="world"/>
   <joint name="world_room_joint" type="fixed">
-    <origin rpy="0 0 0" xyz="0.0 0.0 0 "/>
+    <origin rpy="0 0 0" xyz="0.0 0.12 0 "/>
     <parent link="world"/>
     <child link="room_link"/>
   </joint>
@@ -281,7 +281,7 @@
   <link name="table_2_front_edge_center"/>
   <!-- JOINTS -->
   <joint name="table_2_origin_joint" type="fixed">
-    <origin rpy="0 0 3.14159265359" xyz="-1.7025 1.2 0"/>
+    <origin rpy="0 0 3.14159265359" xyz="-1.6 1.2 0"/>
     <parent link="room_link"/>
     <child link="table_2_origin"/>
   </joint>

@@ -5,7 +5,7 @@
       hsr_existing_object_at/4,
       attach_object_to_gripper/1,
       release_object_from_gripper/0,
-      %select_surface/2,
+      select_surface/2,
       belief_object_at_location/3,
       belief_class_of/2,
       hsr_belief_at_update/2,
@@ -16,7 +16,6 @@
 
 :- rdf_db:rdf_register_ns(hsr_objects, 'http://www.semanticweb.org/suturo/ontologies/2018/10/objects#', [keep(true)]).
 :- rdf_db:rdf_register_ns(robocup, 'http://knowrob.org/kb/robocup.owl#', [keep(true)]).
-:- rdf_db:rdf_register_ns(srdl2_comp, 'http://knowrob.org/kb/srdl2-comp.owl#', [keep(true)]).
 
 :- rdf_meta
     gripper(+),
@@ -24,7 +23,7 @@
     hsr_existing_object_at(r,+,+,r),
     attach_object_to_gripper(r),
     release_object_from_gripper,
-    %select_surface(r,?),
+    select_surface(r,?),
     belief_object_at_location(r,+,+),
     belief_class_of(r,r),
     hsr_belief_at_update(r,r),
@@ -74,24 +73,14 @@ release_object_from_gripper :-
     transform_data(Pose,([X,Y,Z], Rotation)),
     hsr_belief_at_update(Instance, [map, _, [X,Y,Z], Rotation]),
     rdf_retractall(Instance, hsr_objects:'supportedBy', _),
-    position_supportable_by_surface([X,Y,Z], Surface),
+    select_surface([X,Y,Z], Surface),
     rdf_assert(Instance, hsr_objects:'supportedBy', Surface),
     group_shelf_objects.
 
 
-/**
-*
 select_surface([X,Y,Z], Surface) :-
-    table_surface(Table),
-    object_frame_name(Table, UrdfName),
-    string_concat('iai_kitchen/', UrdfName, TableFrame),
-    hsr_lookup_transform(map, TableFrame, [TX,TY,_], _),
-    hsr_lookup_transform(map, iai_kitchen/shelf_base_center, [SX,SY,_], _),
-    DTable is sqrt((TX-X)*(TX-X) + (TY-Y)*(TY-Y)),
-    DShelf is sqrt((SX-X)*(SX-X) + (SY-Y)*(SY-Y)),
-    ((DShelf < DTable, shelf_floor_at_height(Z, Surface));
-    rdf_equal(Surface, Table)), ! .
-*/
+    position_supportable_by_surface([X,Y,Z], Surface).
+
 
 % No groups nearby
 hsr_belief_at_update(Instance, Transform) :-

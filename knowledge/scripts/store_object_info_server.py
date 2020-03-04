@@ -42,13 +42,14 @@ class StoreObjectInfoServer(object):
             else:
                 rospy.loginfo("The given class name is empty. Setting to OTHER.")
                 obj_class = "Other"
-            
+
             class_test_query = "kb_is_class(hsr_objects:'" + obj_class + "')."
             solutions = prolog.all_solutions(class_test_query)
             if not solutions:
-                rospy.logwarn("The class '" + obj_class + "' has no equivalent in kowledge-ontology. Setting class to Other.")
+                rospy.logwarn(
+                    "The class '" + obj_class + "' has no equivalent in kowledge-ontology. Setting class to Other.")
                 obj_class = "Other"
-            
+
             # confidence_class = '1.0' if data.confidence_class == 0.0 else data.confidence_class
             # shape = str(data.shape)
             source_frame = 'map'
@@ -69,43 +70,8 @@ class StoreObjectInfoServer(object):
             qw = str(data.pose.pose.orientation.w)
             threshold = "0.05"
             region_splits = str(data.region).split('_')
-            surface_query = ""
-            if str(data.region).endswith("table"):
-                surface_query = 'table_surface(Surface),'
-            elif "shelf" in region_splits:
-                rospy.loginfo("Asserting object on shelf floors " + str(region_splits))
-                surface_query = "rdf_equal(Surface, 'http://knowrob.org/kb/robocup.owl#kitchen_description_shelf_floor_%s_piece')," \
-                                % region_splits.pop()
-            else:
-                rospy.loginfo("Issue with region: %s" % data.region)
 
-            # rospy.loginfo(prolog.all_solutions(surface_query + " true."))
-
-            # filter_plane_noise_query = "{}" \
-            #                            "surface_pose_in_map(Surface, [[_,_,Z],_]), " \
-            #                            "ZOffset is {} - Z," \
-            #                            "ZOffset > 0.015.".format(surface_query, z)
-            #
-            # plane_solutions_raw = prolog.all_solutions(filter_plane_noise_query)
-            # # print(plane_solutions_raw)
-            valid = True
-            # if not plane_solutions_raw:
-            #     rospy.loginfo("Invalid Z-pose of the object. Would be under or in the surface.")
-            #     valid = False
-            # # if not volume < 8.0:
-            # #     rospy.loginfo("Volume: {} is too high to be a valid object.".format(volume))
-            # #     valid = False
-            # if float(data.depth) > 0.3 or float(data.width) > 0.3 or float(data.height) > 0.3:
-            #     rospy.loginfo("One of the dimensions is bigger than 30 cm.")
-            #     valid = False
-
-
-
-            if valid:
-                # rospy.loginfo("Object is at valid height and of valid volume")
-
-                query_string = (surface_query +
-                                "create_object_at(hsr_objects:'" +
+            query_string = ("create_object_at(hsr_objects:'" +
                                 obj_class + "'," +
                                 "['" + source_frame +
                                 "', _, [" + ", ".join([x, y, z]) + "]," +
@@ -113,14 +79,12 @@ class StoreObjectInfoServer(object):
                                 threshold + ", ObjectInstance," +
                                 "[" + ", ".join([depth, width, height]) + "], " +
                                 "[" + ", ".join([r, g, b, a]) + "])," +
-                                "assert_object_on(ObjectInstance, Surface).")
-                rospy.loginfo('Send query: \n' + query_string)
-                solutions = prolog.all_solutions(query_string)
-                rospy.loginfo(solutions)
-                if not solutions:
-                    rospy.logwarn("This Object couldn't have been added: " + obj_class)
-            else:
-                rospy.loginfo("IGNORING object of class: " + obj_class)
+                            "place_object(ObjectInstance).")
+            rospy.loginfo('Send query: \n' + query_string)
+            solutions = prolog.all_solutions(query_string)
+            rospy.loginfo(solutions)
+            if not solutions:
+                rospy.logwarn("This Object couldn't have been added: " + obj_class)
 
         rospy.loginfo("Grouping objects.")
         prolog.all_solutions("group_shelf_objects.")
