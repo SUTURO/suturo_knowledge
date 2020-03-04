@@ -14,6 +14,9 @@ from tinyrpc import RPCClient
 from tinyrpc.protocols.jsonrpc import JSONRPCProtocol
 from tinyrpc.transports.zmq import ZmqClientTransport
 
+from tmc_msgs.msg import Voice, TalkRequestGoal, TalkRequestActionGoal, TalkRequestAction
+import actionlib 
+
 print("Starting up ...")
 
 ctx = zmq.Context()
@@ -37,8 +40,19 @@ def callback(data):
             dataPie[rv.key] = int(dataPie[rv.value])
         else:
             dataPie[rv.key] = dataPie[rv.value]
+    print(dataPie)
     message = str_server.generate_text(dataPie)
     pub.publish(message)
+    client = actionlib.SimpleActionClient('talk_request', TalkRequestAction)
+    # Waits until the action server has started up and started
+    # listening for goals.
+    client.wait_for_server()
+    # Creates a goal to send to the action server.
+    goal = TalkRequestActionGoal(goal=TalkRequestGoal(data=Voice(language=1, sentence=message)))
+    # Sends the goal to the action server.
+    client.send_goal(goal)
+    # Waits for the server to finish performing the action.
+    client.wait_for_result()
     return
 
 rospack = rospkg.RosPack()
@@ -52,10 +66,10 @@ rospy.Subscriber("nlg_requests", MeaningRepresentation, callback)
 #subprocess.call('python3 nlg.py', cwd=wd, shell=True)
 #subprocess.Popen(["python3", os.path.join(wd, "nlg.py")])
 
-time.sleep(5)
-for x in ["reject", "task", "waiting", "failed", "finished", "complications"]:
-    print("    Trying out", {"action": "bring", "patient": "pills", "patientNumber":300, "destination": "cabinet"}, x)
-    pub.publish(str_server.generate_text({"action": "bring", "patient": "pills", "patientNumber":300, "destination": "cabinet"}, x))
+#time.sleep(5)
+#for x in ["reject", "task", "waiting", "failed", "finished", "complications"]:
+#    print("    Trying out", {"action": "bring", "patient": "pills", "patientNumber":300, "destination": "cabinet"}, x)
+#    pub.publish(str_server.generate_text({"action": "bring", "patient": "pills", "patientNumber":300, "destination": "cabinet", "decision": x}))
 
 # spin() simply keeps python from exiting until this node is stopped
 rospy.spin()
