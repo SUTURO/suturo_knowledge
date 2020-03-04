@@ -23,7 +23,7 @@
 
 
 hsr_existing_objects(Objects) :-
-    belief_existing_objects(Objects, [hsr_objects:'Items']).
+    belief_existing_objects(Objects, [hsr_objects:'Item']).
 
 object_at(ObjectType, Transform, Threshold, Instance) :-
 	hsr_existing_objects(Objectlist),
