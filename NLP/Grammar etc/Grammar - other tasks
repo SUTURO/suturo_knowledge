@@ -108,17 +108,17 @@ ITEMSC : cup
 ITEMP : instant coffee powder 
 ITEMSC : banana
 #Furniture_piece
-FURNITURE_PIECE : Shelf
-FURNITURE_PIECE : Table1 #small
-FURNITURE_PIECE : Table2 #big
+FURNITURE_PIECE : shelf
+FURNITURE_PIECE : small table
+FURNITURE_PIECE : big table
 
 #2
 #Question
 COMMAND : What is on the [FURNITURE_PIECE]?
 #Furniture_piece
-FURNITURE_PIECE : Shelf
-FURNITURE_PIECE : Table1 #small
-FURNITURE_PIECE : Table2 #big
+FURNITURE_PIECE : shelf
+FURNITURE_PIECE : small table
+FURNITURE_PIECE : big table
 
 #3
 #Question
