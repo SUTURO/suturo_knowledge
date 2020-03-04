@@ -21,7 +21,7 @@
     object_goal_surface/3,
     object_goal_surface/4,
     objects_on_surface/2,
-    object_goal_pose_offset/2,
+    object_goal_pose_offset/3,
     all_objects_in_whole_shelf/1,
     all_objects_on_tables/1,
     all_objects_on_ground/1,
@@ -52,7 +52,7 @@
     object_goal_surface(r,?),
     object_goal_surface(r,?,?),
     object_goal_surface(r,?,?,?),
-    object_goal_pose_offset(r,?),
+    object_goal_pose_offset(r,?,?),
     all_objects_in_whole_shelf(?),
     all_objects_on_source_surfaces(?),
     place_object(r),
@@ -498,8 +498,8 @@ offsets(Offset) :-
 *********************************************object_goal_pose***********************************************************
 */
 
-object_goal_pose_offset(Instance, [[X,Y,Z], Rotation]):-
-    object_goal_pose(Instance, [[X,Y,OZ], Rotation]),
+object_goal_pose_offset(Instance, [[X,Y,Z], Rotation],Context):-
+    object_goal_pose(Instance, [[X,Y,OZ], Rotation],Context),
     object_dimensions(Instance,_,_,H),
     Z is OZ + H/2 + 0.03.
 
