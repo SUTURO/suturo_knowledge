@@ -37,7 +37,7 @@ class GripperSubscriber(rospy.Subscriber):
     def release_object_from_gripper(self):
         """Call beliefstate to release the object from the gripper."""
         self.gripper_closed = False
-        held_object_query = "gripper(Gripper), objects_on_surface(Objs, Gripper), member(Obj, Objs), object_frame_name(Obj, Name)."
+        held_object_query = "objects_in_gripper(Objs), member(Obj, Objs), object_frame_name(Obj, Name)."
         object_in_gripper_raw = prolog.all_solutions(held_object_query)
         if object_in_gripper_raw:
             object_in_gripper = str(object_in_gripper_raw[0]['Name']).split('_')[0]
@@ -80,7 +80,9 @@ class GripperSubscriber(rospy.Subscriber):
                     if dist < 0.15 and dist < closest_object[1]:
                         closest_object = (frame, dist)
                     print (closest_object)
+
                 if closest_object[0]:
+                '''    
                     superclass_query = "object_frame_name(_Instance, '{}'), " \
                                        "rdfs_type_of(_Instance, _Class)," \
                                        "owl_direct_subclass_of(_Class, _Super)," \
@@ -94,11 +96,14 @@ class GripperSubscriber(rospy.Subscriber):
                     else:
                         rospy.loginfo("Grasping the " + closest_object[0].split('_')[0])
                         self.talker_goal.data.sentence = "Grasping the " + closest_object[0].split('_')[0]
+                '''
+
                     self.talker.send_goal(self.talker_goal)
                     attach_to_gripper_query = "object_frame_name(Object, '"+closest_object[0]+"'), attach_object_to_gripper(Object)."
                     solution = prolog.all_solutions(attach_to_gripper_query)
                 else:
                     rospy.loginfo("No object nearby the gripper to attach.")
+
             else:
                 rospy.loginfo("No object nearby the gripper to attach.")
 

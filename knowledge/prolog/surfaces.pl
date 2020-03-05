@@ -102,6 +102,14 @@ all_objects_in_whole_shelf(Instances) :-
         ), Instances).
 
 
+all_objects_in_gripper(Instances):-
+    findall(Instance, (
+        objects_on_surface(Objs, gripper),
+        member(Instance, Objs)
+        ), Instances).
+
+
+
 all_objects_on_tables(Instances) :-
     findall(Instance, (
         table_surfaces(TableLinks),
