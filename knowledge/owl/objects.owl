@@ -780,17 +780,17 @@
     
 
 
-    <!-- http://www.semanticweb.org/suturo/ontologies/2018/10/objects#FeurichStapelChipsPaprika -->
+    <!-- http://www.semanticweb.org/suturo/ontologies/2018/10/objects#Feurichstapelchipspaprika -->
 
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2018/10/objects#FeurichStapelChipsPaprika">
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2018/10/objects#Feurichstapelchipspaprika">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2018/10/objects#Feurich"/>
     </owl:Class>
     
 
 
-    <!-- http://www.semanticweb.org/suturo/ontologies/2018/10/objects#FeurichStapelChipsSourCreamOnion -->
+    <!-- http://www.semanticweb.org/suturo/ontologies/2018/10/objects#Feurichstapelchipssourcreamonion -->
 
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2018/10/objects#FeurichStapelChipsSourCreamOnion">
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2018/10/objects#Feurichstapelchipssourcreamonion">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2018/10/objects#Feurich"/>
     </owl:Class>
     
@@ -1348,17 +1348,17 @@
     
 
 
-    <!-- http://www.semanticweb.org/suturo/ontologies/2018/10/objects#MondaminPfannkuchen -->
+    <!-- http://www.semanticweb.org/suturo/ontologies/2018/10/objects#Mondaminpancakemix -->
 
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2018/10/objects#MondaminPfannkuchen">
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2018/10/objects#Mondaminpancakemix">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2018/10/objects#PancakeMix"/>
     </owl:Class>
     
 
 
-    <!-- http://www.semanticweb.org/suturo/ontologies/2018/10/objects#Mondaminpancakemix -->
+    <!-- http://www.semanticweb.org/suturo/ontologies/2018/10/objects#Mondaminpfannkuchen -->
 
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2018/10/objects#Mondaminpancakemix">
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2018/10/objects#Mondaminpfannkuchen">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2018/10/objects#PancakeMix"/>
     </owl:Class>
     
