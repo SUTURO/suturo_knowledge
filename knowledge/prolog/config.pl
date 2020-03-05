@@ -6,11 +6,15 @@
       context_speech_sort_by_size/3
     ]).
 
+
 :- rdf_meta
     allowed_class_distance(?),
     context_speech_sort_by_class(-,-,-,?),
     context_speech_sort_by_color(-,-,?),
     context_speech_sort_by_size(-,-,?).
+
+
+:- rdf_db:rdf_register_ns(hsr_objects, 'http://www.semanticweb.org/suturo/ontologies/2018/10/objects#', [keep(true)]).
 
 %% Distance is the maximum Distance (rdf_shortest_path) to another Object
 %% where the Object should still be sorted by class rather than other properties

@@ -16,7 +16,6 @@
 
 :- rdf_db:rdf_register_ns(hsr_objects, 'http://www.semanticweb.org/suturo/ontologies/2018/10/objects#', [keep(true)]).
 :- rdf_db:rdf_register_ns(robocup, 'http://knowrob.org/kb/robocup.owl#', [keep(true)]).
-:- rdf_db:rdf_register_ns(srdl2_comp, 'http://knowrob.org/kb/srdl2-comp.owl#', [keep(true)]).
 
 :- rdf_meta
     gripper(+),
@@ -50,7 +49,7 @@ new_perceived_at(ObjType, Transform, _, Instance) :-
 
 hsr_existing_object_at(_, Transform, Threshold, Instance) :-
     rdf(Instance, rdf:type, owl:'NamedIndividual', belief_state),
-    rdfs_individual_of(Instance, hsr_objects:'Robocupthings'),
+    rdfs_individual_of(Instance, hsr_objects:'Item'),
     belief_object_at_location(Instance, Transform, Threshold), !.
 
 attach_object_to_gripper(Instance) :-
@@ -78,16 +77,10 @@ release_object_from_gripper :-
     rdf_assert(Instance, hsr_objects:'supportedBy', Surface),
     group_shelf_objects.
 
+
 select_surface([X,Y,Z], Surface) :-
-    table_surface(Table),
-    object_frame_name(Table, UrdfName),
-    string_concat('environment/', UrdfName, TableFrame),
-    hsr_lookup_transform(map, TableFrame, [TX,TY,_], _),
-    hsr_lookup_transform(map, environment/shelf_base_center, [SX,SY,_], _),
-    DTable is sqrt((TX-X)*(TX-X) + (TY-Y)*(TY-Y)),
-    DShelf is sqrt((SX-X)*(SX-X) + (SY-Y)*(SY-Y)),
-    ((DShelf < DTable, shelf_floor_at_height(Z, Surface));
-    rdf_equal(Surface, Table)), ! .
+    position_supportable_by_surface([X,Y,Z], Surface).
+
 
 % No groups nearby
 hsr_belief_at_update(Instance, Transform) :-

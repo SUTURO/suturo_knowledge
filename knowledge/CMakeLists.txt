@@ -9,6 +9,8 @@ find_package(catkin REQUIRED COMPONENTS
   geometry_msgs
   std_msgs
   message_generation
+  knowrob_common
+  urdfprolog
   )
 
 add_message_files(
@@ -16,12 +18,12 @@ add_message_files(
     # DetectedObject.msg
     )
 
- generate_messages(
-   DEPENDENCIES
-   actionlib_msgs
-   geometry_msgs
-   std_msgs
- )
+ #generate_messages(
+ #  DEPENDENCIES
+ #  actionlib_msgs
+ #  geometry_msgs
+ #  std_msgs
+ #)
 
 include_directories(
 # include

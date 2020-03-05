@@ -12,7 +12,6 @@
 
 :- rdf_db:rdf_register_ns(hsr_objects, 'http://www.semanticweb.org/suturo/ontologies/2018/10/objects#', [keep(true)]).
 :- rdf_db:rdf_register_ns(robocup, 'http://knowrob.org/kb/robocup.owl#', [keep(true)]).
-:- rdf_db:rdf_register_ns(srdl2_comp, 'http://knowrob.org/kb/srdl2-comp.owl#', [keep(true)]).
 
 :- rdf_meta
     create_object(r,?),
@@ -24,7 +23,7 @@
 
 
 hsr_existing_objects(Objects) :-
-    belief_existing_objects(Objects, [hsr_objects:'Robocupitems']).
+    belief_existing_objects(Objects, [hsr_objects:'Item']).
 
 object_at(ObjectType, Transform, Threshold, Instance) :-
 	hsr_existing_objects(Objectlist),
@@ -32,17 +31,17 @@ object_at(ObjectType, Transform, Threshold, Instance) :-
 	belief_existing_object_at(ObjectType, Transform, Threshold, Instance).
 
 object_at_table(Instance) :-
-	object_at(_, ['map', _, [1,0,0.8],[0,0,0,1]], 0.4, Instance).
+	all_objects_on_tables(Instances),once(member(Instance,Instances)).
 
 object_of_type(ObjectType, Instance) :-
 	belief_existing_objects(Instance, [ObjectType]).
 
 create_object(ObjectType, Instance) :-
- 	owl_subclass_of(ObjectType, hsr_objects:'Robocupitems'),
+ 	owl_subclass_of(ObjectType, hsr_objects:'Item'),
 	belief_new_object(ObjectType, Instance).
 
 create_object_at(ObjectType, Transform, Threshold, Instance, [Width, Depth, Height], [R,G,B,A]) :-
-    owl_subclass_of(ObjectType, hsr_objects:'Robocupitems'),
+    owl_subclass_of(ObjectType, hsr_objects:'Item'),
     new_perceived_at(ObjectType, Transform, Threshold, Instance),
     object_assert_dimensions(Instance, Width, Depth, Height),
     set_dimension_semantics(Instance, Width, Depth, Height),
