@@ -71,27 +71,27 @@ def knowledge_result_2():
     if knowledge == False:
         return "There is nothing on the [input_furniture_piece]"
 
-def DemoAnswers():
-    if question "Is there [input_qitem] on the [input_furniture_piece]?" == True:
-        return knowledge_result_1
-    if question "Is there [input_qitem] on the [input_furniture_piece]?" == False:
-        return ""
-    if question "What is on the [input_furniture_piece]?" == True:
-        return knowledge_result_2
-    if question "What is on the [input_furniture_piece]?" == False:
-        return ""
-    if question "Where is the [input_item] supposed to go?" == True:
-        return "The [input_item] is supposed to go on the [input_furniture_piece]"
-    if question "Where is the [input_item] supposed to go?" == False:
-        return ""
+#def DemoAnswers():
+#    if question "Is there [input_qitem] on the [input_furniture_piece]?" == True:
+ #       return knowledge_result_1
+  #  if question "Is there [input_qitem] on the [input_furniture_piece]?" == False:
+   #     return ""
+    #if question "What is on the [input_furniture_piece]?" == True:
+     #   return knowledge_result_2
+    #if question "What is on the [input_furniture_piece]?" == False:
+     #   return ""
+    #if question "Where is the [input_item] supposed to go?" == True:
+    #    return "The [input_item] is supposed to go on the [input_furniture_piece]"
+    #if question "Where is the [input_item] supposed to go?" == False:
+     #   return ""
 
 @dispatcher.public
 def generate_text(knowledge):
-    if "answer" in knowledge:
+    if "question" in knowledge:
         return "huh?"
-    query = knowledge["answer"]
+    query = knowledge["question"]
     if "is there" == query:
-        if "yes" == knowledge["result"]:
+        if "yes" == knowledge["answer"]:
             return "yes"
 	else: 
 	    return "no" 
