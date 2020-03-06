@@ -7,7 +7,7 @@
   <maintainer email="bommariusm@gmail.com">Merete Bommarius</maintainer>
   <license>BSD</license>
 
-  <url>http://ros.org/wiki/nlg_msgs</url>
+  <url>http://ros.org/wiki/suturo_nlg</url>
   <author>Merete Bommarius</author>
 
   <buildtool_depend>catkin</buildtool_depend>

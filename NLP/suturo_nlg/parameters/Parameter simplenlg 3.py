@@ -7,7 +7,7 @@ from simplenlg.features import *
 import random
 import rospy
 from std_msgs.msg import String
-from nlg_msgss.mgs import MeaningRepresentation 
+from suturo_nlg.mgs import MeaningRepresentation 
 
 lexicon = Lexicon().getDefaultLexicon()
 nlgFactory = NLGFactory(lexicon)

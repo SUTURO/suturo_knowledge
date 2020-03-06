@@ -2,7 +2,7 @@
 import rospy
 import rospkg
 from std_msgs.msg import String
-from nlg_msgs.msg import MeaningRepresentation
+from suturo_nlg.msg import MeaningRepresentation
 
 import subprocess
 import os
@@ -56,7 +56,7 @@ def callback(data):
     return
 
 rospack = rospkg.RosPack()
-wd = rospack.get_path('nlg_msgs')
+wd = rospack.get_path('suturo_nlg')
 
 rospy.Subscriber("nlg_requests", MeaningRepresentation, callback)
 

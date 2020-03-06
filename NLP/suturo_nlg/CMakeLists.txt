@@ -19,7 +19,9 @@ add_message_files(
 
 
 
-generate_messages()
+generate_messages(
+    DEPENDENCIES
+)
 
 
 
@@ -28,7 +30,7 @@ catkin_package(
 
 
 
-install(DIRECTORY include/nlg_msgs/
+install(DIRECTORY include/suturo_nlg/
 
   DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
 
