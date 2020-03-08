@@ -1,16 +1,11 @@
 
-:- module(surfaces2, % TODO SORT MEEEEEEEEEE
+:- module(surfaces2, % TODO SORT ME
     [
     supporting_surface/1,
+    select_surface/2,
     surface_big_enough/1,
     square_big_enough/2,
-    joint_abs_position/2,
-    quaternion_to_euler/7,
-    euler_to_quaternion/7,
-    rotate_around_axis/4,
     object_supportable_by_surface/2,
-    position_supportable_by_surface/2,
-    point_in_rectangle/5,
     assert_surface_types/1,
     assert_object_on/2,
     shelf_surfaces/1, %shelf_floors/1
@@ -57,6 +52,7 @@
     all_objects_in_whole_shelf(?),
     all_objects_on_source_surfaces(?),
     place_object(r),
+    select_surface(r,?),
     object_goal_pose(r,?,?,?).
 
 
@@ -233,6 +229,15 @@ surface_pose_in_map(SurfaceLink, [[PX,PY,PZR], [X,Y,Z,W]]) :-
     ),
     joint_abs_rotation(Joint,[Roll,Pitch,Yaw]),
     euler_to_quaternion(Roll,Pitch,Yaw, X,Y,Z,W).
+
+
+
+select_surface([X,Y,Z], Surface) :-
+    (  position_supportable_by_surface([X,Y,Z], Surface1)
+    -> Surface is Surface1
+    ;  Surface is ground
+    ).
+
 
 
 /**
