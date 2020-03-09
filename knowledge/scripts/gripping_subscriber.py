@@ -68,7 +68,7 @@ class GripperSubscriber(rospy.Subscriber):
 
                 if closest_object[0]:
                     superclass_query = "object_frame_name(_Instance, '{}'), " \
-                                       "once(rdfs_instance_of(_Instance, _Class))," \
+                                       "once(rdfs_individual_of(_Instance, _Class))," \
                                        "owl_direct_subclass_of(_Class, _Super)," \
                                        "rdf_split_url(_, SuperclassName, _Super)".format(closest_object[0])
                     superclass_result_raw = prolog.all_solutions(superclass_query)
