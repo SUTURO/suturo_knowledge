@@ -1,5 +1,6 @@
 :- module(config,
     [
+      offsets/1,
       allowed_class_distance/1,
       context_speech_sort_by_class/4,
       context_speech_sort_by_color/3,
@@ -8,6 +9,7 @@
 
 
 :- rdf_meta
+    offests(?),
     allowed_class_distance(?),
     context_speech_sort_by_class(-,-,-,?),
     context_speech_sort_by_color(-,-,?),
@@ -15,6 +17,10 @@
 
 
 :- rdf_db:rdf_register_ns(hsr_objects, 'http://www.semanticweb.org/suturo/ontologies/2018/10/objects#', [keep(true)]).
+
+
+offsets(Offset) :-
+    Offset = [0, -0.05, 0.05, -0.1, 0.1, -0.15, 0.15, -0.2, 0.2, -0.25, 0.25, -0.3, 0.3, 0.35, 0.35].
 
 %% Distance is the maximum Distance (rdf_shortest_path) to another Object
 %% where the Object should still be sorted by class rather than other properties
