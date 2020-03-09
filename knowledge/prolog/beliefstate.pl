@@ -148,7 +148,7 @@ belief_class_of(Obj, NewObjType) :-
     current_time(Now),
      ignore(once((
         % withdraw old beliefs about object type
-        rdfs_type_of(Obj, CurrObjType),
+        once(rdfs_instance_of(Obj, CurrObjType)),
          rdfs_subclass_of(CurrObjType, Parent),
         rdfs_subclass_of(NewObjType, Parent),
          assert_temporal_part_end(Obj, rdf:type, CurrObjType, Now, belief_state)
