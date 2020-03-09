@@ -18,6 +18,7 @@
     objects_on_surface/2,
     object_goal_pose_offset/3,
     all_objects_in_whole_shelf/1,
+    all_objects_in_gripper/1,   
     all_objects_on_tables/1,
     all_objects_on_ground/1,
     all_objects_on_source_surfaces/1,
