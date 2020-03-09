@@ -29,7 +29,8 @@
     make_tables_source/0,
     make_ground_source/0,
     make_shelves_source/0,
-    object_current_surface/2
+    object_current_surface/2,
+    forget_objects_on_surface/1
     ]).
 
 :- rdf_db:rdf_register_ns(urdf, 'http://knowrob.org/kb/urdf.owl#', [keep(true)]).
