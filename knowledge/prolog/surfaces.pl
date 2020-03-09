@@ -2,34 +2,35 @@
 :- module(surfaces,
     [
     assert_surface_types/1,
-    place_object/1,
-    surface_type_of/2,
     supporting_surface/1,
-    object_supportable_by_surface/2,
-    position_supportable_by_surface/2,
     assert_object_on/2,
+    surface_type_of/2,
     %% FIND SURFACES
+    all_surfaces/1, %replaces all_srdl_objects contains ground
+    all_source_surfaces/1,
+    all_target_surfaces/1,
     ground_surface/1,
     shelf_surfaces/1, 
     big_shelf_surfaces/1, % will soon be deprecated
-    table_surfaces/1, 
     shelf_floor_at_height/2, % will soon be deprecated
-    all_surfaces/1, %replaces all_srdl_objects contains ground
+    table_surfaces/1, 
+    object_current_surface/2,
     %% FIND OBJs
     objects_on_surface/2,
-    all_objects_in_whole_shelf/1, % will soon be deprecated
-    all_objects_on_tables/1,
-    all_objects_on_ground/1,
     all_objects_on_source_surfaces/1,
     all_objects_on_target_surfaces/1,
-    all_source_surfaces/1,
-    all_target_surfaces/1,
-    object_current_surface/2,
+    all_objects_on_ground/1,
+    all_objects_in_whole_shelf/1, % will soon be deprecated
+    all_objects_on_tables/1,
+    all_objects_in_gripper/1,
+    place_object/1,
+    object_supportable_by_surface/2,
+    position_supportable_by_surface/2,
     %% ROLES
-    make_all_surface_type_role/2,
-    make_all_tables_source/0,
-    make_all_shelves_target/0,
     make_ground_source/0,
+    make_all_shelves_target/0,
+    make_all_tables_source/0,
+    make_all_surface_type_role/2,
     make_role/2,
     get_surface_role/2
     ]).
@@ -56,106 +57,6 @@
 
 
 
-surface_type_of(Surface, Type):-
-    rdf_has(Surface, hsr_objects:'isSurfaceType', Type).
-
-
-/**
-*****************************************object - surface relation******************************************************
-*/
-
-objects_on_surface(ObjectInstances, SurfaceLink) :-
-    findall(ObjectInstance,
-        object_current_surface(ObjectInstance, SurfaceLink),
-        ObjectInstances).
-
-objects_on_list_of_surfaces(ObjectInstances, SurfaceList):-
-    findall(Obj,
-    ( 
-        member(Surface, SurfaceList),
-        objects_on_surface(Objects, Surface),
-        member(Obj, Objects)
-    ),
-        ObjectInstances).
-
-object_current_surface(ObjectInstance, SurfaceLink) :-
-    rdf_has(ObjectInstance, hsr_objects:'supportedBy', SurfaceLink).
-
-table_surfaces(TableLinks):-
-    findall(TableLink, rdf_has(TableLink, hsr_objects:'isSurfaceType',table), TableLinks).
-
-shelf_surfaces(ShelfLinks):-
-    findall(ShelfLink, rdf_has(ShelfLink, hsr_objects:'isSurfaceType',shelf),ShelfLinks).
-
-big_shelf_surfaces(ShelfLinks) :-
-    findall(ShelfLink,
-    (
-        rdf_has(ShelfLink, hsr_objects:'isSurfaceType',shelf),
-        rdf_urdf_name(ShelfLink,Name),
-        not(sub_string(Name,_,_,_,small))
-    ),
-    ShelfLinks).
-
-ground_surface(GroundSurface):-
-    GroundSurface = ground.
-
-
-all_objects_in_whole_shelf(Instances) :-
-    findall(Instance, (
-        shelf_surfaces(ShelveLinks),
-        member(Shelf, ShelveLinks),
-        objects_on_surface(ObjPerShelf, Shelf),
-        member(Instance, ObjPerShelf)
-        ), Instances).
-
-
-all_objects_in_gripper(Instances):-
-    findall(Instance, (
-        objects_on_surface(Objs, gripper),
-        member(Instance, Objs)
-        ), Instances).
-
-
-
-all_objects_on_tables(Instances) :-
-    findall(Instance, (
-        table_surfaces(TableLinks),
-        member(Table, TableLinks),
-        objects_on_surface(ObjPerTable, Table),
-        member(Instance, ObjPerTable)
-        ), Instances).
-
-all_objects_on_ground(Instances) :-
-    findall(Instance, (
-        ground_surface(Ground),
-        objects_on_surface(ObjOnGround, Ground),
-        member(Instance, ObjOnGround)
-        ), Instances).
-
-
-assert_object_on(ObjectInstance, SurfaceLink) :-
-    all_surfaces(SurfaceLinks),
-    member(SurfaceLink,SurfaceLinks),
-    kb_retract(ObjectInstance, hsr_objects:'supportedBy', _),
-    kb_assert(ObjectInstance, hsr_objects:'supportedBy', SurfaceLink).
-
-
-% Deprecated
-shelf_floor_at_height(Height, TargetShelfLink) :-
-    findall(ShelfFloorLink, (
-        big_shelf_surfaces(AllFloorsLinks),
-        member(ShelfFloorLink, AllFloorsLinks),
-        rdf_urdf_has_child(Joint,ShelfFloorLink),
-        joint_abs_position(Joint,[_,_,Z]),
-        Z < Height
-    ), ShelfFloorsLinks),
-    reverse(ShelfFloorsLinks, [TargetShelfLink|_]).
-
-/**
-***************************************************find and assert surfaces*********************************************
-*/
-
-
 /**
 * is called in init.pl
 */
@@ -170,71 +71,6 @@ assert_surface_types(SurfaceLink):-
     ->rdf_assert(SurfaceLink,hsr_objects:'isSurfaceType',table)
     ; rdf_assert(SurfaceLink,hsr_objects:'isSurfaceType',other)
     )).
-
-
-
-all_surfaces(SurfaceLinks):-
-    findall(SurfaceLink,
-        rdf_has(SurfaceLink,hsr_objects:'isSurfaceType',_),
-        SurfaceLinks
-    ).
-
-% Objs is a list of all Objects on all source surfaces.
-all_objects_on_source_surfaces(Objs):-
-    all_source_surfaces(Surfaces),
-    objects_on_list_of_surfaces(Objs, Surfaces).
-
-% Objs is a list of all Objects on all target surfaces.
-all_objects_on_target_surfaces(Objs):-
-    all_target_surfaces(Surfaces),
-    objects_on_list_of_surfaces(Objs, Surfaces).
-
-% Surfaces is a list of all SurfaceLinks that are source
-all_source_surfaces(Surfaces):-
-    all_surfaces(ExistingSurfaces),
-    findall(Surface,
-    (
-        member(Surface, ExistingSurfaces),
-        rdf_has(Surface, hsr_objects:'sourceOrTarget', source)
-    ),
-        Surfaces).
-
-% Surfaces is a list of all SurfaceLinks that are target
-all_target_surfaces(Surfaces):-
-    all_surfaces(ExistingSurfaces),
-    findall(Surface,
-    (
-        member(Surface, ExistingSurfaces),
-        rdf_has(Surface, hsr_objects:'sourceOrTarget', target)
-    ),
-        Surfaces.
-
-
-make_all_tables_source:-
-    make_all_surface_type_role(table, source).
-
-make_all_shelves_target:-
-    make_all_surface_type_role(shelf, target).
-
-make_ground_source:-
-    make_all_surface_type_role(ground, source).
-
-% Gives all surfaces with given name (ground, table or shelf) the Role (target or source)
-make_all_surface_type_role(SurfaceType, Role):-
-    SurfaceType = ground,
-    make_role(SurfaceType, Role).
-
-make_all_surface_type_role(SurfaceType, Role):-
-    forall(rdf_has(SurfaceLink, hsr_objects:'isSurfaceType',SurfaceType), make_role(SurfaceLink,Role)).
-
-% Gives the gives SurfaceLink the Role (target or source)
-make_role(SurfaceLink, Role):-
-    rdf_retractall(SurfaceLink, hsr_objects:'sourceOrTarget',_),
-    rdf_assert(SurfaceLink, hsr_objects:'sourceOrTarget', Role).
-
-% Role is the role (target or source) of the given SurfaceLink
-get_surface_role(SurfaceLink, Role):-
-    rdf_has(SurfaceLink, hsr_objects:'sourceOrTarget', Role).
 
 
 %% supporting_surface(?Surface).
@@ -259,10 +95,152 @@ square_big_enough(X,Y):- %TODO Support other shapes
     ).
 
 
+assert_object_on(ObjectInstance, SurfaceLink) :-
+    all_surfaces(SurfaceLinks),
+    member(SurfaceLink,SurfaceLinks),
+    kb_retract(ObjectInstance, hsr_objects:'supportedBy', _),
+    kb_assert(ObjectInstance, hsr_objects:'supportedBy', SurfaceLink).
+
+
+surface_type_of(Surface, Type):-
+    rdf_has(Surface, hsr_objects:'isSurfaceType', Type).
+
 
 /**
-****************************************find what surface object is on**************************************************
+*****************************************FIND SURFACES******************************************************
 */
+
+all_surfaces(SurfaceLinks):-
+    findall(SurfaceLink,
+        rdf_has(SurfaceLink,hsr_objects:'isSurfaceType',_),
+        SurfaceLinks
+    ).
+
+
+% Surfaces is a list of all SurfaceLinks that are source
+all_source_surfaces(Surfaces):-
+    all_surfaces(ExistingSurfaces),
+    findall(Surface,
+    (
+        member(Surface, ExistingSurfaces),
+        rdf_has(Surface, hsr_objects:'sourceOrTarget', source)
+    ),
+        Surfaces).
+
+
+% Surfaces is a list of all SurfaceLinks that are target
+all_target_surfaces(Surfaces):-
+    all_surfaces(ExistingSurfaces),
+    findall(Surface,
+    (
+        member(Surface, ExistingSurfaces),
+        rdf_has(Surface, hsr_objects:'sourceOrTarget', target)
+    ),
+        Surfaces).
+
+
+ground_surface(GroundSurface):-
+    GroundSurface = ground.
+
+
+shelf_surfaces(ShelfLinks):-
+    findall(ShelfLink, rdf_has(ShelfLink, hsr_objects:'isSurfaceType',shelf),ShelfLinks).
+
+
+big_shelf_surfaces(ShelfLinks) :-
+    findall(ShelfLink,
+    (
+        rdf_has(ShelfLink, hsr_objects:'isSurfaceType',shelf),
+        rdf_urdf_name(ShelfLink,Name),
+        not(sub_string(Name,_,_,_,small))
+    ),
+    ShelfLinks).
+
+
+% Deprecated
+shelf_floor_at_height(Height, TargetShelfLink) :-
+    findall(ShelfFloorLink, (
+        big_shelf_surfaces(AllFloorsLinks),
+        member(ShelfFloorLink, AllFloorsLinks),
+        rdf_urdf_has_child(Joint,ShelfFloorLink),
+        joint_abs_position(Joint,[_,_,Z]),
+        Z < Height
+    ), ShelfFloorsLinks),
+    reverse(ShelfFloorsLinks, [TargetShelfLink|_]).
+
+
+table_surfaces(TableLinks):-
+    findall(TableLink, rdf_has(TableLink, hsr_objects:'isSurfaceType',table), TableLinks).
+
+
+object_current_surface(ObjectInstance, SurfaceLink) :-
+    rdf_has(ObjectInstance, hsr_objects:'supportedBy', SurfaceLink).
+
+
+/**
+*****************************************FIND OBJs******************************************************
+*/
+
+objects_on_surface(ObjectInstances, SurfaceLink) :-
+    findall(ObjectInstance,
+        object_current_surface(ObjectInstance, SurfaceLink),
+        ObjectInstances).
+
+
+% Objs is a list of all Objects on all source surfaces.
+all_objects_on_source_surfaces(Objs):-
+    all_source_surfaces(Surfaces),
+    objects_on_list_of_surfaces(Objs, Surfaces).
+
+
+% Objs is a list of all Objects on all target surfaces.
+all_objects_on_target_surfaces(Objs):-
+    all_target_surfaces(Surfaces),
+    objects_on_list_of_surfaces(Objs, Surfaces).
+
+
+
+objects_on_list_of_surfaces(ObjectInstances, SurfaceList):-
+    findall(Obj,
+    ( 
+        member(Surface, SurfaceList),
+        objects_on_surface(Objects, Surface),
+        member(Obj, Objects)
+    ),
+        ObjectInstances).
+
+
+all_objects_on_ground(Instances) :-
+    findall(Instance, (
+        ground_surface(Ground),
+        objects_on_surface(ObjOnGround, Ground),
+        member(Instance, ObjOnGround)
+        ), Instances).
+
+
+all_objects_in_whole_shelf(Instances) :-
+    findall(Instance, (
+        shelf_surfaces(ShelveLinks),
+        member(Shelf, ShelveLinks),
+        objects_on_surface(ObjPerShelf, Shelf),
+        member(Instance, ObjPerShelf)
+        ), Instances).
+
+
+all_objects_on_tables(Instances) :-
+    findall(Instance, (
+        table_surfaces(TableLinks),
+        member(Table, TableLinks),
+        objects_on_surface(ObjPerTable, Table),
+        member(Instance, ObjPerTable)
+        ), Instances).
+
+
+all_objects_in_gripper(Instances):-
+    findall(Instance, (
+        objects_on_surface(Objs, gripper),
+        member(Instance, Objs)
+        ), Instances).
 
 
 %%
@@ -275,6 +253,7 @@ place_object(Object):-
        Z < 0.5,
        assert_object_on(Object,ground)
     ).
+
 
 % finds and returns surfaces the object might be standing on.
 object_supportable_by_surface(Object, SurfaceLink):-
@@ -292,6 +271,7 @@ position_supportable_by_surface([X,Y,Z], SurfaceLink):-
     -> true
     ; fail).
 
+
 %% Joint supporting the ShapeTerm, the ShapeTerm, Position of the object, return Distance vertical distance
 position_above_surface(Joint, ShapeTerm, [X,Y,Z], Distance):-
     joint_abs_position(Joint,[JPosX,JPosY,JPosZ]),
@@ -305,3 +285,38 @@ position_above_surface(Joint, ShapeTerm, [X,Y,Z], Distance):-
     -> Distance is Z - JPosZR, true
     ; fail
     ).
+
+/**
+***************************************************ROLES*********************************************
+*/
+
+make_ground_source:-
+    make_all_surface_type_role(ground, source).
+
+
+make_all_shelves_target:-
+    make_all_surface_type_role(shelf, target).
+
+
+make_all_tables_source:-
+    make_all_surface_type_role(table, source).
+
+
+% Gives all surfaces with given name (ground, table or shelf) the Role (target or source)
+make_all_surface_type_role(SurfaceType, Role):-
+    SurfaceType = ground,
+    make_role(SurfaceType, Role).
+
+make_all_surface_type_role(SurfaceType, Role):-
+    forall(rdf_has(SurfaceLink, hsr_objects:'isSurfaceType',SurfaceType), make_role(SurfaceLink,Role)).
+
+
+% Gives the gives SurfaceLink the Role (target or source)
+make_role(SurfaceLink, Role):-
+    rdf_retractall(SurfaceLink, hsr_objects:'sourceOrTarget',_),
+    rdf_assert(SurfaceLink, hsr_objects:'sourceOrTarget', Role).
+
+
+% Role is the role (target or source) of the given SurfaceLink
+get_surface_role(SurfaceLink, Role):-
+    rdf_has(SurfaceLink, hsr_objects:'sourceOrTarget', Role).
