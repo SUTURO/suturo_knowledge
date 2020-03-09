@@ -45,7 +45,7 @@ object_goal_surface(Instance, NearestSurface, Context, Self) :-
     maplist(distance_to_robot, Surfaces, Distances),
     min_list(Distances, MinDistance),
     nth0(Index, Distances, MinDistance),
-    nth0(Index, ReachableSurfaces, NearestSurface),
+    nth0(Index, Surfaces, NearestSurface),
     objects_on_surface([], NearestSurface),
     Self = Instance,
     context_speech_new_class(Context).
