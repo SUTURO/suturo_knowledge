@@ -1,6 +1,7 @@
 
 :- module(surfaces2, % TODO SORT ME
     [
+    get_surface_id_by_name/2,
     supporting_surface/1,
     select_surface/2,
     surface_big_enough/1,
@@ -37,6 +38,7 @@
 :- owl_parser:owl_parse('package://urdfprolog/owl/urdf.owl').
 
 :- rdf_meta % TODO FIX ME
+    get_surface_id_by_name(r,?),
     supporting_surface(?),
     surface_big_enough(?),
     surface_big_enough(r,?),
@@ -64,11 +66,20 @@
 *****************************************object - surface relation******************************************************
 */
 
+get_surface_id_by_name(Name, SurfaceId):-
+    (rdf_urdf_name(SurfaceId, Name), all_surfaces(Surfaces), member(SurfaceId, Surfaces)
+        -> true
+        ;  (Name = ground
+            -> SurfaceId = ground
+            ; false
+        )
+    ).
+
+
 objects_on_surface(ObjectInstances, SurfaceLink) :-
     findall(ObjectInstance,
         object_current_surface(ObjectInstance, SurfaceLink),
         ObjectInstances).
-
 
 forget_objects_on_surface(SurfaceLink) :-
     objects_on_surface(Objs,SurfaceLink),
