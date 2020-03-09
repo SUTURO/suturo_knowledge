@@ -235,7 +235,7 @@ surface_pose_in_map(SurfaceLink, [[PX,PY,PZR], [X,Y,Z,W]]) :-
 select_surface([X,Y,Z], Surface) :-
     (  position_supportable_by_surface([X,Y,Z], Surface1)
     -> Surface is Surface1
-    ;  Surface is ground
+    ;  Surface = ground
     ).
 
 
