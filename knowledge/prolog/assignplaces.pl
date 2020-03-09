@@ -38,13 +38,18 @@ object_goal_surface(Instance, NearestReachableSurface, Context, Self) :-
     Self = Instance,
     context_speech_new_class(Context).
 
-%% If middle shelves also occupied, take rest (lowest level first). WARNING: HSR may not be able to reach upper levels
-%object_goal_surface(Instance, SurfaceLink, Context, Self) :-
-%    big_shelf_surfaces(ShelfFloors),
-%    member(SurfaceLink,ShelfFloors),
-%    objects_on_surface([], SurfaceLink),
-%    Self = Instance,
-%    context_speech_new_class(Context).
+%% If there is no corresponding class and there is no easy reachable target surface, 
+%% take the nearest target surface (that is not easily reachable).
+object_goal_surface(Instance, NearestSurface, Context, Self) :-
+    all_target_surfaces(Surfaces),
+    maplist(distance_to_robot, Surfaces, Distances),
+    min_list(Distances, MinDistance),
+    nth0(Index, Distances, MinDistance),
+    nth0(Index, ReachableSurfaces, NearestSurface),
+    objects_on_surface([], NearestSurface),
+    Self = Instance,
+    context_speech_new_class(Context).
+
 
 most_related_object(Source, Target, Context):-
     kb_type_of(Source, hsr_objects:'Other'),
