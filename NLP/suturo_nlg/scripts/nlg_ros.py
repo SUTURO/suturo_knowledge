@@ -2,7 +2,7 @@
 import rospy
 import rospkg
 from std_msgs.msg import String
-from suturo_nlg.msg import MeaningRepresentation
+from suturo_nlg.msg import MeaningRepresentation, KeyValuePair
 
 import subprocess
 import os
@@ -37,18 +37,19 @@ def callback(data):
     for rv in data.role_values:
         isNumber = (rv.key.rfind("Number") != -1)
         if isNumber:
-            dataPie[rv.key] = int(dataPie[rv.value])
+            dataPie[rv.key] = int(rv.value)
         else:
-            dataPie[rv.key] = dataPie[rv.value]
+            dataPie[rv.key] = rv.value
     print(dataPie)
     message = str_server.generate_text(dataPie)
     pub.publish(message)
-    client = actionlib.SimpleActionClient('talk_request', TalkRequestAction)
+    client = actionlib.SimpleActionClient('talk_request_action', TalkRequestAction)
     # Waits until the action server has started up and started
     # listening for goals.
     client.wait_for_server()
+    print("Action available")
     # Creates a goal to send to the action server.
-    goal = TalkRequestActionGoal(goal=TalkRequestGoal(data=Voice(language=1, sentence=message)))
+    goal = TalkRequestGoal(data=Voice(language=1, sentence=message))
     # Sends the goal to the action server.
     client.send_goal(goal)
     # Waits for the server to finish performing the action.
@@ -70,6 +71,17 @@ rospy.Subscriber("nlg_requests", MeaningRepresentation, callback)
 #for x in ["reject", "task", "waiting", "failed", "finished", "complications"]:
 #    print("    Trying out", {"action": "bring", "patient": "pills", "patientNumber":300, "destination": "cabinet"}, x)
 #    pub.publish(str_server.generate_text({"action": "bring", "patient": "pills", "patientNumber":300, "destination": "cabinet", "decision": x}))
+
+message = MeaningRepresentation()
+
+message.role_values.append(KeyValuePair(key = "action", value = "bring"))
+message.role_values.append(KeyValuePair(key = "patient", value = "pills"))
+message.role_values.append(KeyValuePair(key = "patientNumber", value = "300"))
+message.role_values.append(KeyValuePair(key = "destination", value = "cabinet"))
+message.role_values.append(KeyValuePair(key = "decision", value = "task"))
+
+callback(message)
+
 
 # spin() simply keeps python from exiting until this node is stopped
 rospy.spin()
