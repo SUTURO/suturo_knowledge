@@ -43,3 +43,5 @@ distance_of(SourceType, TargetType, Distance) :-
 distance_of(SourceType, TargetType, Distance) :-
     not(owl_same_as(SourceType, TargetType)),
     rdf_shortest_path(SourceType, TargetType, Distance).
+
+

@@ -22,11 +22,11 @@
 % :- use_module(library('urdf_parser')).
 
 :- use_module(library('config')).
+:- use_module(library('spatial_comp')).
 :- use_module(library('pickup')).
 :- use_module(library('object_state')).
 :- use_module(library('surfaces')).
 :- use_module(library('beliefstate')).
-:- use_module(library('spatial_comp')).
 :- use_module(library('assignplaces')).
 
 
