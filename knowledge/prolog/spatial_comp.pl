@@ -9,7 +9,8 @@
         rotate_around_axis/4,
         point_in_rectangle/5,
         surface_pose_in_map/2,
-        point_on_surface/4
+        point_on_surface/4,
+        distance_to_robot/2
     ]).
 
 :- rdf_meta
@@ -175,3 +176,14 @@ euler_to_quaternion(Roll, Pitch, Yaw, X, Y, Z, W) :- % TODO convert to arrays
     Y is sin(Yaw/2) * cos(Pitch/2) * cos(Roll/2) + cos(Yaw/2) * sin(Pitch/2) * sin(Roll/2),
     Z is cos(Yaw/2) * sin(Pitch/2) * cos(Roll/2) - sin(Yaw/2) * cos(Pitch/2) * sin(Roll/2).
 
+
+distance_to_robot(Obj, Distance) :-
+    map_frame_name(MapFrame),
+    current_object_pose(Obj, [MapFrame,_,[OX,OY,OZ],_]),
+    hsr_lookup_transform(map,base_footprint,[BX,BY,BZ],_),
+    writeln(([OX,OY,OZ],[BX,BY,BZ])),
+    DX is (OX - BX),
+    DY is (OY - BY),
+    DZ is (OZ - BZ),
+    sqrt(((DX*DX) + (DY*DY) + (DZ*DZ)), Distance),
+    !.

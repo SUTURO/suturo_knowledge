@@ -1,33 +1,37 @@
 
-:- module(surfaces, % TODO SORT MEEEEEEEEEE
+:- module(surfaces,
     [
+    assert_surface_types/1,
+    place_object/1,
     surface_type_of/2,
     supporting_surface/1,
-    surface_big_enough/1,
-    square_big_enough/2,
     object_supportable_by_surface/2,
     position_supportable_by_surface/2,
-    assert_surface_types/1,
     assert_object_on/2,
-    shelf_surfaces/1, %shelf_floors/1
-    big_shelf_surfaces/1,
-    table_surfaces/1,
-    shelf_floor_at_height/2,
+    %% FIND SURFACES
+    ground_surface/1,
+    shelf_surfaces/1, 
+    big_shelf_surfaces/1, % will soon be deprecated
+    table_surfaces/1, 
+    shelf_floor_at_height/2, % will soon be deprecated
+    all_surfaces/1, %replaces all_srdl_objects contains ground
+    %% FIND OBJs
     objects_on_surface/2,
-    all_objects_in_whole_shelf/1,
+    all_objects_in_whole_shelf/1, % will soon be deprecated
     all_objects_on_tables/1,
     all_objects_on_ground/1,
     all_objects_on_source_surfaces/1,
     all_objects_on_target_surfaces/1,
     all_source_surfaces/1,
     all_target_surfaces/1,
-    ground_surface/1,
-    place_object/1,
-    all_surfaces/1, %replaces all_srdl_objects contains ground
     object_current_surface/2,
+    %% ROLES
     make_all_surface_type_role/2,
-    get_surface_role/2,
-    make_role/2
+    make_all_tables_source/0,
+    make_all_shelves_target/0,
+    make_ground_source/0,
+    make_role/2,
+    get_surface_role/2
     ]).
 
 :- rdf_db:rdf_register_ns(urdf, 'http://knowrob.org/kb/urdf.owl#', [keep(true)]).
@@ -96,7 +100,6 @@ ground_surface(GroundSurface):-
     GroundSurface = ground.
 
 
-
 all_objects_in_whole_shelf(Instances) :-
     findall(Instance, (
         shelf_surfaces(ShelveLinks),
@@ -137,7 +140,7 @@ assert_object_on(ObjectInstance, SurfaceLink) :-
     kb_assert(ObjectInstance, hsr_objects:'supportedBy', SurfaceLink).
 
 
-%TODO
+% Deprecated
 shelf_floor_at_height(Height, TargetShelfLink) :-
     findall(ShelfFloorLink, (
         big_shelf_surfaces(AllFloorsLinks),
@@ -204,7 +207,17 @@ all_target_surfaces(Surfaces):-
         member(Surface, ExistingSurfaces),
         rdf_has(Surface, hsr_objects:'sourceOrTarget', target)
     ),
-        Surfaces).
+        Surfaces.
+
+
+make_all_tables_source:-
+    make_all_surface_type_role(table, source).
+
+make_all_shelves_target:-
+    make_all_surface_type_role(shelf, target).
+
+make_ground_source:-
+    make_all_surface_type_role(ground, source).
 
 % Gives all surfaces with given name (ground, table or shelf) the Role (target or source)
 make_all_surface_type_role(SurfaceType, Role):-
@@ -222,6 +235,7 @@ make_role(SurfaceLink, Role):-
 % Role is the role (target or source) of the given SurfaceLink
 get_surface_role(SurfaceLink, Role):-
     rdf_has(SurfaceLink, hsr_objects:'sourceOrTarget', Role).
+
 
 %% supporting_surface(?Surface).
 %

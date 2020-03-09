@@ -20,23 +20,31 @@ object_goal_surface(Instance, Surface, Context, RefObject):-
     object_current_surface(RefObject, Surface).
 
 
-%******************************
-%% If there is no corresponding class, take some shelf in the middle
-object_goal_surface(Instance, SurfaceLink, Context, Self) :-
-    (shelf_floor_at_height(0.9, SurfaceLink);
-    shelf_floor_at_height(0.6, SurfaceLink)),
-    objects_on_surface([], SurfaceLink),
+%% If there is no corresponding class, take the nearest easy reachable target surface that is empty
+object_goal_surface(Instance, NearestReachableSurface, Context, Self) :-
+    all_target_surfaces(Surfaces),
+    findall(Surface,
+    (
+        member(Surface, Surfaces),
+        surface_pose_in_map(Surface, [[_,_,Z],_]),
+        Z < 1 % Surfaces higher than 1m might be hard to reach by the HSR
+    ),
+        ReachableSurfaces),
+    maplist(distance_to_robot, ReachableSurfaces, Distances),
+    min_list(Distances, MinDistance),
+    nth0(Index, Distances, MinDistance),
+    nth0(Index, ReachableSurfaces, NearestReachableSurface),
+    objects_on_surface([], NearestReachableSurface),
     Self = Instance,
     context_speech_new_class(Context).
 
 %% If middle shelves also occupied, take rest (lowest level first). WARNING: HSR may not be able to reach upper levels
-object_goal_surface(Instance, SurfaceLink, Context, Self) :-
-    big_shelf_surfaces(ShelfFloors),
-    member(SurfaceLink,ShelfFloors),
-    objects_on_surface([], SurfaceLink),
-    Self = Instance,
-    context_speech_new_class(Context).
-%***********************************
+%object_goal_surface(Instance, SurfaceLink, Context, Self) :-
+%    big_shelf_surfaces(ShelfFloors),
+%    member(SurfaceLink,ShelfFloors),
+%    objects_on_surface([], SurfaceLink),
+%    Self = Instance,
+%    context_speech_new_class(Context).
 
 most_related_object(Source, Target, Context):-
     kb_type_of(Source, hsr_objects:'Other'),
@@ -105,8 +113,8 @@ object_goal_pose(Instance, [Translation, Rotation], Context, RefObject) :-
     group_mean_pose(Group, [X,Y,Z], _),
     offsets(Offset),
     member(XOffset, Offset),
-    hsr_lookup_transform(map, 'iai_kitchen/shelf_left_side_piece', [LeftBorder,_,_], _),
-    hsr_lookup_transform(map, 'iai_kitchen/shelf_right_side_piece', [RightBorder,_,_], _),
+    hsr_lookup_transform(map, 'iai_kitchen/shelf_left_side_piece', [LeftBorder,_,_], _), % TODO: should be left corner of target-surfaces
+    hsr_lookup_transform(map, 'iai_kitchen/shelf_right_side_piece', [RightBorder,_,_], _), % TODO: should be right corner of target-surfaces
     NewX is X + XOffset,
     NewX < LeftBorder - 0.1,
     NewX > RightBorder + 0.1,

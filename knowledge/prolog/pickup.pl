@@ -17,14 +17,3 @@ next_object(BestObj) :-
     nth0(Index, Distances, MinDistance),
     nth0(Index, Objs, NearestObject),
     BestObj = NearestObject.
-
-distance_to_robot(Obj, Distance) :-
-    map_frame_name(MapFrame),
-    current_object_pose(Obj, [MapFrame,_,[OX,OY,OZ],_]),
-    hsr_lookup_transform(map,base_footprint,[BX,BY,BZ],_),
-    writeln(([OX,OY,OZ],[BX,BY,BZ])),
-    DX is (OX - BX),
-    DY is (OY - BY),
-    DZ is (OZ - BZ),
-    sqrt(((DX*DX) + (DY*DY) + (DZ*DZ)), Distance),
-    !.
