@@ -32,7 +32,7 @@ class GripperSubscriber(rospy.Subscriber):
     def release_object_from_gripper(self):
         """Call beliefstate to release the object from the gripper."""
         self.gripper_closed = False
-        held_object_query = "objects_in_gripper(Objs), member(Obj, Objs), object_frame_name(Obj, Name)."
+        held_object_query = "all_objects_in_gripper(Objs), member(Obj, Objs), object_frame_name(Obj, Name)."
         object_in_gripper_raw = prolog.all_solutions(held_object_query)
         if object_in_gripper_raw:
             object_in_gripper = str(object_in_gripper_raw[0]['Name']).split('_')[0]  # gets the class of the object
