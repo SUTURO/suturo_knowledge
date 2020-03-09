@@ -7,7 +7,8 @@
       object_at_table/1,
       object_of_type/2,
       create_object_at/6,
-      hsr_existing_objects/1
+      hsr_existing_objects/1,
+      hsr_forget_object/1
     ]).
 
 :- rdf_db:rdf_register_ns(hsr_objects, 'http://www.semanticweb.org/suturo/ontologies/2018/10/objects#', [keep(true)]).
@@ -24,6 +25,12 @@
 
 hsr_existing_objects(Objects) :-
     belief_existing_objects(Objects, [hsr_objects:'Item']).
+
+
+hsr_forget_object(Object) :-
+    rdf_retractall(Object,_,_).
+
+
 
 object_at(ObjectType, Transform, Threshold, Instance) :-
 	hsr_existing_objects(Objectlist),

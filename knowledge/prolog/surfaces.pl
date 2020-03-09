@@ -18,7 +18,7 @@
     objects_on_surface/2,
     object_goal_pose_offset/3,
     all_objects_in_whole_shelf/1,
-    all_objects_in_gripper/1,   
+    all_objects_in_gripper/1,
     all_objects_on_tables/1,
     all_objects_on_ground/1,
     all_objects_on_source_surfaces/1,
@@ -67,6 +67,14 @@ objects_on_surface(ObjectInstances, SurfaceLink) :-
     findall(ObjectInstance,
         object_current_surface(ObjectInstance, SurfaceLink),
         ObjectInstances).
+
+
+forget_objects_on_surface(SurfaceLink) :-
+    objects_on_surface(Objs,SurfaceLink),
+    member(Obj,Objs),
+    hsr_forget_object(Obj).
+
+
 
 object_current_surface(ObjectInstance, SurfaceLink) :-
     rdf_has(ObjectInstance, hsr_objects:'supportedBy', SurfaceLink).
