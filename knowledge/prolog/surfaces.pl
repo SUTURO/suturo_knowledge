@@ -1,6 +1,7 @@
 
 :- module(surfaces, % TODO SORT MEEEEEEEEEE
     [
+    surface_type_of/2,
     supporting_surface/1,
     surface_big_enough/1,
     square_big_enough/2,
@@ -50,6 +51,9 @@
     object_goal_pose(r,?,?,?).
 
 
+
+surface_type_of(Surface, Type):-
+    rdf_has(Surface, hsr_objects:'isSurfaceType', Type).
 
 
 /**

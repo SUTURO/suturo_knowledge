@@ -4,7 +4,8 @@
       allowed_class_distance/1,
       context_speech_sort_by_class/4,
       context_speech_sort_by_color/3,
-      context_speech_sort_by_size/3
+      context_speech_sort_by_size/3,
+      context_speech_new_class/1
     ]).
 
 
@@ -13,7 +14,8 @@
     allowed_class_distance(?),
     context_speech_sort_by_class(-,-,-,?),
     context_speech_sort_by_color(-,-,?),
-    context_speech_sort_by_size(-,-,?).
+    context_speech_sort_by_size(-,-,?),
+    context_speech_new_class(?).
 
 
 :- rdf_db:rdf_register_ns(hsr_objects, 'http://www.semanticweb.org/suturo/ontologies/2018/10/objects#', [keep(true)]).
@@ -64,3 +66,6 @@ context_speech_sort_by_size(Object, SimilarObject, Context) :-
     string_concat(Part1, ' Object to the other ', Part2),
     string_concat(Part2, SimilarSize, Part3),
     string_concat(Part3, ' object.', Context).
+
+context_speech_new_class(Context):-
+    Context = 'I will create a new group for this'.

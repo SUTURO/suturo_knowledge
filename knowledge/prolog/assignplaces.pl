@@ -27,7 +27,7 @@ object_goal_surface(Instance, SurfaceLink, Context, Self) :-
     shelf_floor_at_height(0.6, SurfaceLink)),
     objects_on_surface([], SurfaceLink),
     Self = Instance,
-    Context = 'I will create a new group for this'.
+    context_speech_new_class(Context).
 
 %% If middle shelves also occupied, take rest (lowest level first). WARNING: HSR may not be able to reach upper levels
 object_goal_surface(Instance, SurfaceLink, Context, Self) :-
@@ -35,7 +35,7 @@ object_goal_surface(Instance, SurfaceLink, Context, Self) :-
     member(SurfaceLink,ShelfFloors),
     objects_on_surface([], SurfaceLink),
     Self = Instance,
-    Context = 'I will create a new group for this'.
+    context_speech_new_class(Context).
 %***********************************
 
 most_related_object(Source, Target, Context):-
