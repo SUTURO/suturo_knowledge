@@ -60,24 +60,15 @@ class GripperSubscriber(rospy.Subscriber):
                 objects_nearby = [str(solution['Frame']).replace('\'', '') for solution in objects_nearby_gripper_raw]
                 closest_object = ("", 1)
                 for frame in objects_nearby:
+                    print("checking if is near: " + frame)
                     trans = safe_lookup_transform("hand_palm_link", frame).transform.translation
                     dist = np.linalg.norm(np.array([trans.x, trans.y, trans.z]))
                     if dist < 0.15 and dist < closest_object[1]:
                         closest_object = (frame, dist)
-                    print(closest_object)
+                    print("Closest object to gripper is: " + closest_object)
 
                 if closest_object[0]:
-                    superclass_query = "object_frame_name(_Instance, '{}'), " \
-                                       "once(rdfs_individual_of(_Instance, _Class))," \
-                                       "owl_direct_subclass_of(_Class, _Super)," \
-                                       "rdf_split_url(_, SuperclassName, _Super)".format(closest_object[0])
-                    superclass_result_raw = prolog.all_solutions(superclass_query)
-                    if superclass_result_raw:
-                        rospy.loginfo(str(superclass_result_raw))
-                        superclass = str(superclass_result_raw[0]['SuperclassName']).replace('\'', '')
-                        rospy.loginfo("Grasping the " + superclass)
-                    else:
-                        rospy.loginfo("Grasping the " + closest_object[0].split('_')[0])
+                    rospy.loginfo("Grasping the " + closest_object[0])
                     attach_to_gripper_query = "object_frame_name(Object, '" + closest_object[0] + \
                                               "'), attach_object_to_gripper(Object)."
                     prolog.all_solutions(attach_to_gripper_query)
