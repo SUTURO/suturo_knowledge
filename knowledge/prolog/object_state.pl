@@ -48,6 +48,7 @@ create_object(ObjectType, Instance) :-
 	belief_new_object(ObjectType, Instance).
 
 create_object_at(ObjectType, Transform, Threshold, Instance, [Width, Depth, Height], [R,G,B,A]) :-
+    object_size_ok([Width, Depth, Height]),
     owl_subclass_of(ObjectType, hsr_objects:'Item'),
     new_perceived_at(ObjectType, Transform, Threshold, Instance),
     object_assert_dimensions(Instance, Width, Depth, Height),
@@ -55,6 +56,11 @@ create_object_at(ObjectType, Transform, Threshold, Instance, [Width, Depth, Heig
     set_object_colour(Instance, [R,G,B,A]).
 %    hsr_existing_objects(Objects),
 %    belief_republish_objects(Objects).
+
+
+
+object_size_ok([Width,Depth,Height]):-
+    Width > 0.01
 
 set_dimension_semantics(Instance, _, _, Height) :-
     Height > 0.16,
