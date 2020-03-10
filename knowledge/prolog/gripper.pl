@@ -5,13 +5,18 @@ module(gripper, % TODO SORT ME
     gripper_init/1,
     attach_object_to_gripper/1,
     release_object_from_gripper/0,
-    ]
+    ]).
+
+:- rdf_db:rdf_register_ns(urdf, 'http://knowrob.org/kb/urdf.owl#', [keep(true)]).
+:- owl_parser:owl_parse('package://urdfprolog/owl/urdf.owl').
+
 
 :- rdf_meta
     gripper(+),
     gripper_int(r),
     attach_object_to_gripper(r),
-    release_object_from_gripper(r).
+    release_object_from_gripper(r)
+    .
 
 
 
