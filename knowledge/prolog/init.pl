@@ -28,7 +28,7 @@
 :- use_module(library('beliefstate')).
 :- use_module(library('spatial_comp')).
 :- use_module(library('assignplaces')).
-
+:- use_module(library('gripper')).
 
 
 :- owl_parser:owl_parse('package://knowrob_common/owl/knowrob.owl').
