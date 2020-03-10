@@ -18,7 +18,7 @@
   </material>
   <link name="world"/>
   <joint name="world_room_joint" type="fixed">
-    <origin rpy="0 0 0" xyz="0.0 0.12 0 "/>
+    <origin rpy="0 0 0" xyz="0.0 0 0 "/>
     <parent link="world"/>
     <child link="room_link"/>
   </joint>
@@ -28,7 +28,7 @@
   <link name="shelf_center"/>
   <link name="shelf_base_center"/>
   <joint name="shelf_origin_joint" type="fixed">
-    <origin rpy="0 0 -1.570796327" xyz="0.0 -0.1 0"/>
+    <origin rpy="0 0 -1.570796327" xyz="0.1 -0.1 0"/>
     <parent link="room_link"/>
     <child link="shelf_origin"/>
   </joint>
