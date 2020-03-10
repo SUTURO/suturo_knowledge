@@ -1,6 +1,7 @@
 :- module(beliefstate,
     [
       gripper/1,
+      gripper_init/1,
       new_perceived_at/4,
       hsr_existing_object_at/4,
       attach_object_to_gripper/1,
@@ -18,6 +19,7 @@
 
 :- rdf_meta
     gripper(+),
+    gripper_int(r),
     new_perceived_at(r,+,+,r),
     hsr_existing_object_at(r,+,+,r),
     attach_object_to_gripper(r),
@@ -30,10 +32,10 @@
     group_mean_pose(r,?,?).
 
 gripper(Gripper) :-
-    belief_existing_objects([Gripper|_]), ! .
+    Gripper = gripper.
 
-gripper(Gripper) :-
-    rdf_instance_from_class(knowrob:'EnduringThing-Localized', belief_state, Gripper),
+gripper_init(Gripper) :-
+    %rdf_instance_from_class(knowrob:'EnduringThing-Localized', belief_state, Gripper),
     rdf_assert(Gripper, rdf:type, owl:'NamedIndividual', belief_state),
     rdf_assert(Gripper, knowrob:'frameName', hand_palm_link, belief_state).
 
@@ -55,7 +57,7 @@ attach_object_to_gripper(Instance) :-
     gripper(Gripper),
     rdf_assert(Instance, hsr_objects:'supportedBy', Gripper),
     object_frame_name(Instance, InstanceFrame),
-    object_frame_name(Gripper, GripperFrame),
+    get_gripper_frame(GripperFrame),
     tf_lookup_transform(GripperFrame, InstanceFrame, PoseTerm),
     owl_instance_from_class(knowrob:'Pose', [pose=PoseTerm], Pose),
     transform_data(Pose,(Translation, Rotation)),

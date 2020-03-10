@@ -40,6 +40,8 @@ class GripperSubscriber(rospy.Subscriber):
             solutions = prolog.all_solutions(release_object_query)
             if solutions:
                 rospy.loginfo("Putting down: " + object_in_gripper)
+            else:
+                rospy.loginfo("release object from gripper failed")
         else:
             rospy.loginfo("No object in gripper to release.")
 
@@ -59,13 +61,13 @@ class GripperSubscriber(rospy.Subscriber):
             if objects_nearby_gripper_raw:
                 objects_nearby = [str(solution['Frame']).replace('\'', '') for solution in objects_nearby_gripper_raw]
                 closest_object = ("", 1)
-                for frame in objects_nearby:
-                    print("checking if is near: " + frame)
-                    trans = safe_lookup_transform("hand_palm_link", frame).transform.translation
+                for objframe in objects_nearby:
+                    print("checking if is near: " + objframe)
+                    trans = safe_lookup_transform("hand_palm_link", objframe).transform.translation
                     dist = np.linalg.norm(np.array([trans.x, trans.y, trans.z]))
                     if dist < 0.15 and dist < closest_object[1]:
-                        closest_object = (frame, dist)
-                    print("Closest object to gripper is: " + closest_object)
+                        closest_object = (objframe, dist)
+                    print("Closest object to gripper is: " + str(closest_object))
 
                 if closest_object[0]:
                     rospy.loginfo("Grasping the " + closest_object[0])

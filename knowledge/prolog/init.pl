@@ -42,3 +42,4 @@
 
 
 :- forall(supporting_surface(SurfaceLink), assert_surface_types(SurfaceLink)).
+:- gripper(Gripper),gripper_init(Gripper).
