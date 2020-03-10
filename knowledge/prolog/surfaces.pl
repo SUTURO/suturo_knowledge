@@ -19,7 +19,6 @@
     objects_on_surface/2,
     object_goal_pose_offset/3,
     all_objects_in_whole_shelf/1,
-    all_objects_in_gripper/1,
     all_objects_on_tables/1,
     all_objects_on_ground/1,
     all_objects_on_source_surfaces/1,
@@ -117,13 +116,6 @@ all_objects_in_whole_shelf(Instances) :-
         member(Shelf, ShelveLinks),
         objects_on_surface(ObjPerShelf, Shelf),
         member(Instance, ObjPerShelf)
-        ), Instances).
-
-
-all_objects_in_gripper(Instances):-
-    findall(Instance, (
-        objects_on_surface(Objs, gripper),
-        member(Instance, Objs)
         ), Instances).
 
 
