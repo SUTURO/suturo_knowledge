@@ -18,7 +18,7 @@ def callback(data):
         posy = position.y
         posz = position.z
 
-        quaternion = data.goal_pose.pose.quaternion
+        quaternion = data.goal_pose.pose.orientation
         quatx = quaternion.x
         quaty = quaternion.y
         quatz = quaternion.z
