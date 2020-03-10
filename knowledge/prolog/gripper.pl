@@ -1,10 +1,10 @@
-module(gripper, % TODO SORT ME
+module(gripper,
     [
     all_objects_in_gripper/1,
     gripper/1,
     gripper_init/1,
     attach_object_to_gripper/1,
-    release_object_from_gripper/0,
+    release_object_from_gripper/0
     ]).
 
 :- rdf_db:rdf_register_ns(urdf, 'http://knowrob.org/kb/urdf.owl#', [keep(true)]).
