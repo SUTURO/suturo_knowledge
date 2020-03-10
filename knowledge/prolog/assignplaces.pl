@@ -27,7 +27,7 @@ object_goal_surface(Instance, NearestReachableSurface, Context, Self) :-
     (
         member(Surface, Surfaces),
         surface_pose_in_map(Surface, [[_,_,Z],_]),
-        Z < 1 % Surfaces higher than 1m might be hard to reach by the HSR
+        Z < 1.3 % Surfaces higher than 1.3m might be hard to reach by the HSR
     ),
         ReachableSurfaces),
     maplist(distance_to_robot, ReachableSurfaces, Distances),
@@ -49,6 +49,8 @@ object_goal_surface(Instance, NearestSurface, Context, Self) :-
     objects_on_surface([], NearestSurface),
     Self = Instance,
     context_speech_new_class(Context).
+
+
 
 
 most_related_object(Source, Target, Context):-

@@ -23,6 +23,7 @@
     all_objects_in_whole_shelf/1, % will soon be deprecated
     all_objects_on_tables/1,
     all_objects_in_gripper/1,
+    %% CREATE OBJECT
     place_object/1,
     object_supportable_by_surface/2,
     position_supportable_by_surface/2,
@@ -178,7 +179,7 @@ object_current_surface(ObjectInstance, SurfaceLink) :-
 
 
 /**
-*****************************************FIND OBJs******************************************************
+*****************************************CREATE OBJECTS******************************************************
 */
 
 objects_on_surface(ObjectInstances, SurfaceLink) :-
@@ -241,6 +242,11 @@ all_objects_in_gripper(Instances):-
         objects_on_surface(Objs, gripper),
         member(Instance, Objs)
         ), Instances).
+
+
+/**
+*****************************************FIND OBJs******************************************************
+*/
 
 
 %%

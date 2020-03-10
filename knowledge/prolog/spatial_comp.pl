@@ -10,7 +10,8 @@
         point_in_rectangle/5,
         surface_pose_in_map/2,
         point_on_surface/4,
-        distance_to_robot/2
+        distance_to_robot/2,
+        find_corners/7
     ]).
 
 :- rdf_meta
