@@ -7,8 +7,8 @@
     release_object_from_gripper/1
     ]).
 
-:- rdf_db:rdf_register_ns(urdf, 'http://knowrob.org/kb/urdf.owl#', [keep(true)]).
-:- owl_parser:owl_parse('package://urdfprolog/owl/urdf.owl').
+:- rdf_db:rdf_register_ns(hsr_objects, 'http://www.semanticweb.org/suturo/ontologies/2018/10/objects#', [keep(true)]).
+:- rdf_db:rdf_register_ns(robocup, 'http://knowrob.org/kb/robocup.owl#', [keep(true)]).
 
 
 :- rdf_meta
