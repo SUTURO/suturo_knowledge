@@ -24,7 +24,7 @@ def callback(data):
         quatz = quaternion.z
         quatw = quaternion.w
 
-        query = "release_object_from_gripper([[" + str(posx) + "," + posy + "," + posz + "],[" + quatx + "," + quaty + "," + quatz + "," + quatw "]])."
+        query = "release_object_from_gripper([[" + str(posx) + "," + str(posy) + "," + str(posz) + "],[" + str(quatx) + "," + str(quaty) + "," + str(quatz) + "," + str(quatw) + "]])."
         rospy.loginfo(query)
         prolog.all_solutions(query)
 
