@@ -60,7 +60,13 @@ create_object_at(ObjectType, Transform, Threshold, Instance, [Width, Depth, Heig
 
 
 object_size_ok([Width,Depth,Height]):-
-    Width > 0.01
+    Width > 0.01,
+    Depth > 0.01,
+    Height > 0.01,
+    Width < 0.6,
+    Depth < 0.6,
+    Height < 0.6.
+
 
 set_dimension_semantics(Instance, _, _, Height) :-
     Height > 0.16,
