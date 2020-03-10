@@ -9,12 +9,14 @@
     all_surfaces/1, %replaces all_srdl_objects contains ground
     all_source_surfaces/1,
     all_target_surfaces/1,
+    get_surface_id_by_name/2,
     ground_surface/1,
     shelf_surfaces/1, 
     big_shelf_surfaces/1, % will soon be deprecated
     shelf_floor_at_height/2, % will soon be deprecated
     table_surfaces/1, 
     object_current_surface/2,
+    select_surface/2,
     %% FIND OBJs
     objects_on_surface/2,
     all_objects_on_source_surfaces/1,
@@ -34,12 +36,15 @@
     make_all_surface_type_role/2,
     make_role/2,
     get_surface_role/2
+    %% FUNCTIONS
+    forget_objects_on_surface/1
     ]).
 
 :- rdf_db:rdf_register_ns(urdf, 'http://knowrob.org/kb/urdf.owl#', [keep(true)]).
 :- owl_parser:owl_parse('package://urdfprolog/owl/urdf.owl').
 
 :- rdf_meta % TODO FIX ME
+    get_surface_id_by_name(r,?),
     supporting_surface(?),
     surface_big_enough(?),
     surface_big_enough(r,?),
@@ -54,6 +59,7 @@
     all_objects_in_whole_shelf(?),
     all_objects_on_source_surfaces(?),
     place_object(r),
+    select_surface(r,?),
     object_goal_pose(r,?,?,?).
 
 
@@ -80,6 +86,20 @@ supporting_surface(SurfaceLink):-
     rdf_urdf_link_collision(SurfaceLink,ShapeTerm,_),
     surface_big_enough(ShapeTerm),
     true.
+
+get_surface_id_by_name(Name, SurfaceId):-
+    (rdf_urdf_name(SurfaceId, Name), all_surfaces(Surfaces), member(SurfaceId, Surfaces)
+        -> true
+        ;  (Name = ground
+            -> SurfaceId = ground
+            ; false
+        )
+    ).
+
+forget_objects_on_surface(SurfaceLink) :-
+    objects_on_surface(Objs,SurfaceLink),
+    member(Obj,Objs),
+    hsr_forget_object(Obj).
 
 
 surface_big_enough(box(X, Y, _)):- %TODO Support other shapes
@@ -242,6 +262,18 @@ all_objects_in_gripper(Instances):-
         objects_on_surface(Objs, gripper),
         member(Instance, Objs)
         ), Instances).
+
+
+
+select_surface([X,Y,Z], Surface) :-
+    (  position_supportable_by_surface([X,Y,Z], Surface1)
+    -> Surface = Surface1
+    ;  (Z < 0.5
+         -> Surface = ground
+         ;  false
+       )
+    ).
+
 
 
 /**

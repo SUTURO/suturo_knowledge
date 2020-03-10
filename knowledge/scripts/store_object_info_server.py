@@ -71,7 +71,7 @@ class StoreObjectInfoServer(object):
             threshold = "0.05"
             region_splits = str(data.region).split('_')
 
-            query_string = ("create_object_at(hsr_objects:'" +
+            query_string = ("select_surface([" + ", ".join([x, y, z]) + "],_),create_object_at(hsr_objects:'" +
                                 obj_class + "'," +
                                 "['" + source_frame +
                                 "', _, [" + ", ".join([x, y, z]) + "]," +
@@ -82,9 +82,8 @@ class StoreObjectInfoServer(object):
                             "place_object(ObjectInstance).")
             rospy.loginfo('Send query: \n' + query_string)
             solutions = prolog.all_solutions(query_string)
-            rospy.loginfo(solutions)
             if not solutions:
-                rospy.logwarn("This Object couldn't have been added: " + obj_class)
+                rospy.logwarn("This Object couldn't have been added: " + data.obj_class)
 
         rospy.loginfo("Grouping objects.")
         prolog.all_solutions("group_shelf_objects.")

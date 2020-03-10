@@ -7,7 +7,8 @@
       object_at_table/1,
       object_of_type/2,
       create_object_at/6,
-      hsr_existing_objects/1
+      hsr_existing_objects/1,
+      hsr_forget_object/1
     ]).
 
 :- rdf_db:rdf_register_ns(hsr_objects, 'http://www.semanticweb.org/suturo/ontologies/2018/10/objects#', [keep(true)]).
@@ -25,6 +26,12 @@
 hsr_existing_objects(Objects) :-
     belief_existing_objects(Objects, [hsr_objects:'Item']).
 
+
+hsr_forget_object(Object) :-
+    rdf_retractall(Object,_,_).
+
+
+
 object_at(ObjectType, Transform, Threshold, Instance) :-
 	hsr_existing_objects(Objectlist),
 	member(Instance, Objectlist),
@@ -41,6 +48,7 @@ create_object(ObjectType, Instance) :-
 	belief_new_object(ObjectType, Instance).
 
 create_object_at(ObjectType, Transform, Threshold, Instance, [Width, Depth, Height], [R,G,B,A]) :-
+    object_size_ok([Width, Depth, Height]),
     owl_subclass_of(ObjectType, hsr_objects:'Item'),
     new_perceived_at(ObjectType, Transform, Threshold, Instance),
     object_assert_dimensions(Instance, Width, Depth, Height),
@@ -48,6 +56,17 @@ create_object_at(ObjectType, Transform, Threshold, Instance, [Width, Depth, Heig
     set_object_colour(Instance, [R,G,B,A]).
 %    hsr_existing_objects(Objects),
 %    belief_republish_objects(Objects).
+
+
+
+object_size_ok([Width,Depth,Height]):-
+    Width > 0.01,
+    Depth > 0.01,
+    Height > 0.01,
+    Width < 0.6,
+    Depth < 0.6,
+    Height < 0.6.
+
 
 set_dimension_semantics(Instance, _, _, Height) :-
     Height > 0.16,
