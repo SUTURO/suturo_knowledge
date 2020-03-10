@@ -4,7 +4,7 @@
     gripper/1,
     gripper_init/1,
     attach_object_to_gripper/1,
-    release_object_from_gripper/0
+    release_object_from_gripper/1
     ]).
 
 :- rdf_db:rdf_register_ns(urdf, 'http://knowrob.org/kb/urdf.owl#', [keep(true)]).
@@ -50,7 +50,7 @@ release_object_from_gripper([NewPose,NewRotation]) :-
     objects_on_surface(Instances, Gripper),
     member(Instance, Instances),
     object_frame_name(Instance, InstanceFrame),
-    hsr_belief_at_update(Instance, [map, _, NewPose, NewRotation]),
+    hsr_belief_at_update(InstanceFrame, [map, _, NewPose, NewRotation]),
     rdf_retractall(Instance, hsr_objects:'supportedBy', _),
     select_surface(NewPose, NewSurface),
     rdf_assert(Instance, hsr_objects:'supportedBy', NewSurface),
