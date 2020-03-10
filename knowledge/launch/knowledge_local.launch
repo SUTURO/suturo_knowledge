@@ -2,22 +2,20 @@
   <arg name="mongodb_log" default="false" />
   <arg name="mongodb_whipe" default="false" />
 
+    <group ns="suturo_knowledge">
+      <include file="$(find suturo_urdf_publisher)/launch/lab_publisher.launch" />
+      <include file="$(find knowledge)/launch/rosprolog.launch" />
 
-  <include file="$(find suturo_urdf_publisher)/launch/lab_publisher.launch" />
-  <include file="$(find knowledge)/launch/rosprolog.launch" />
+      <node name="object_state_publisher" pkg="knowrob_objects" type="object_state_publisher.py" output="screen">
+        <param name="hz" value="10" />
+        <param name="object_types" value="knowrob:'EnduringThing-Localized'" />
+      </node>
 
-
-
-  <node name="object_state_publisher" pkg="knowrob_objects" type="object_state_publisher.py" output="screen">
-    <param name="hz" value="10" />
-    <param name="object_types" value="knowrob:'EnduringThing-Localized'" />
-  </node>
-
-  <node name="store_object_info_server" pkg="knowledge" type="store_object_info_server.py" output="screen"/>
-  
-  <group if="$(arg mongodb_log)">
-    <node name="mongodb_log" pkg="mongodb_log" type="mongodb_log"
-      args="/tf --mongodb-name SUTURO_0" />
-  </group>
-
+      <node name="store_object_info_server" pkg="knowledge" type="store_object_info_server.py" output="screen"/>
+      
+      <group if="$(arg mongodb_log)">
+        <node name="mongodb_log" pkg="mongodb_log" type="mongodb_log"
+          args="/tf --mongodb-name SUTURO_0" />
+      </group>
+    </group>
 </launch>

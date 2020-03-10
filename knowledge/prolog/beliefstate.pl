@@ -57,7 +57,7 @@ attach_object_to_gripper(Instance) :-
     gripper(Gripper),
     rdf_assert(Instance, hsr_objects:'supportedBy', Gripper),
     object_frame_name(Instance, InstanceFrame),
-    get_gripper_frame(GripperFrame),
+    frame_name(Gripper,GripperFrame),
     tf_lookup_transform(GripperFrame, InstanceFrame, PoseTerm),
     owl_instance_from_class(knowrob:'Pose', [pose=PoseTerm], Pose),
     transform_data(Pose,(Translation, Rotation)),
