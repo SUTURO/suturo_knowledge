@@ -52,6 +52,6 @@ release_object_from_gripper([NewPose,NewRotation]) :-
     object_frame_name(Instance, InstanceFrame),
     hsr_belief_at_update(Instance, [map, _, NewPose, NewRotation]),
     rdf_retractall(Instance, hsr_objects:'supportedBy', _),
-    select_surface(NewPose NewSurface),
+    select_surface(NewPose, NewSurface),
     rdf_assert(Instance, hsr_objects:'supportedBy', NewSurface),
     group_shelf_objects.
