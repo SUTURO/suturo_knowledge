@@ -1,4 +1,4 @@
-module(gripper,
+:- module(gripper,
     [
     all_objects_in_gripper/1,
     gripper/1,
