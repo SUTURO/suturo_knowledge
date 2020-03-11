@@ -215,7 +215,7 @@
   <link name="table_front_edge_center"/>
   <!-- JOINTS -->
   <joint name="table_origin_joint" type="fixed">
-    <origin rpy="0 0 3.141" xyz="-0.25 1.7 0"/>
+    <origin rpy="0 0 1.5707" xyz="-0.21 1.66 0"/>
     <parent link="room_link"/>
     <child link="table_origin"/>
   </joint>
