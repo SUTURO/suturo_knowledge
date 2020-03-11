@@ -2,9 +2,9 @@
   <arg name="mongodb_log" default="false" />
   <arg name="mongodb_whipe" default="false" />
   
-  <include file="$(find suturo_urdf_publisher)/launch/lab_publisher.launch" />
+  <include file="$(find suturo_urdf_publisher)/launch/robo_sim_t2.launch" />
   <include file="$(find knowledge)/launch/rosprolog.launch" />
-
+  
   <param name="URDFFile" type="str" value="robocup_sim_t2.urdf" />
 
   <node name="object_state_publisher" pkg="knowrob_objects" type="object_state_publisher.py" output="screen">
