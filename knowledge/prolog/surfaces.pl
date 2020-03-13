@@ -1,16 +1,12 @@
 
-:- module(surfaces2, % TODO SORT MEEEEEEEEEE
+:- module(surfaces2, % TODO SORT ME
     [
+    get_surface_id_by_name/2,
     supporting_surface/1,
+    select_surface/2,
     surface_big_enough/1,
     square_big_enough/2,
-    joint_abs_position/2,
-    quaternion_to_euler/7,
-    euler_to_quaternion/7,
-    rotate_around_axis/4,
     object_supportable_by_surface/2,
-    position_supportable_by_surface/2,
-    point_in_rectangle/5,
     assert_surface_types/1,
     assert_object_on/2,
     shelf_surfaces/1, %shelf_floors/1
@@ -33,13 +29,15 @@
     make_tables_source/0,
     make_ground_source/0,
     make_shelves_source/0,
-    object_current_surface/2
+    object_current_surface/2,
+    forget_objects_on_surface/1
     ]).
 
 :- rdf_db:rdf_register_ns(urdf, 'http://knowrob.org/kb/urdf.owl#', [keep(true)]).
 :- owl_parser:owl_parse('package://urdfprolog/owl/urdf.owl').
 
 :- rdf_meta % TODO FIX ME
+    get_surface_id_by_name(r,?),
     supporting_surface(?),
     surface_big_enough(?),
     surface_big_enough(r,?),
@@ -57,6 +55,7 @@
     all_objects_in_whole_shelf(?),
     all_objects_on_source_surfaces(?),
     place_object(r),
+    select_surface(r,?),
     object_goal_pose(r,?,?,?).
 
 
@@ -66,10 +65,27 @@
 *****************************************object - surface relation******************************************************
 */
 
+get_surface_id_by_name(Name, SurfaceId):-
+    (rdf_urdf_name(SurfaceId, Name), all_surfaces(Surfaces), member(SurfaceId, Surfaces)
+        -> true
+        ;  (Name = ground
+            -> SurfaceId = ground
+            ; false
+        )
+    ).
+
+
 objects_on_surface(ObjectInstances, SurfaceLink) :-
     findall(ObjectInstance,
         object_current_surface(ObjectInstance, SurfaceLink),
         ObjectInstances).
+
+forget_objects_on_surface(SurfaceLink) :-
+    objects_on_surface(Objs,SurfaceLink),
+    member(Obj,Objs),
+    hsr_forget_object(Obj).
+
+
 
 object_current_surface(ObjectInstance, SurfaceLink) :-
     rdf_has(ObjectInstance, hsr_objects:'supportedBy', SurfaceLink).
@@ -100,13 +116,6 @@ all_objects_in_whole_shelf(Instances) :-
         member(Shelf, ShelveLinks),
         objects_on_surface(ObjPerShelf, Shelf),
         member(Instance, ObjPerShelf)
-        ), Instances).
-
-
-all_objects_in_gripper(Instances):-
-    findall(Instance, (
-        objects_on_surface(Objs, gripper),
-        member(Instance, Objs)
         ), Instances).
 
 
@@ -233,6 +242,18 @@ surface_pose_in_map(SurfaceLink, [[PX,PY,PZR], [X,Y,Z,W]]) :-
     ),
     joint_abs_rotation(Joint,[Roll,Pitch,Yaw]),
     euler_to_quaternion(Roll,Pitch,Yaw, X,Y,Z,W).
+
+
+
+select_surface([X,Y,Z], Surface) :-
+    (  position_supportable_by_surface([X,Y,Z], Surface1)
+    -> Surface = Surface1
+    ;  (Z < 0.5
+         -> Surface = ground
+         ;  false
+       )
+    ).
+
 
 
 /**

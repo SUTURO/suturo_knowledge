@@ -28,17 +28,20 @@
 :- use_module(library('beliefstate')).
 :- use_module(library('spatial_comp')).
 :- use_module(library('assignplaces')).
-
+:- use_module(library('gripper')).
 
 
 :- owl_parser:owl_parse('package://knowrob_common/owl/knowrob.owl').
 :- owl_parser:owl_parse('package://knowledge/owl/objects.owl').
 :- owl_parser:owl_parse('package://urdfprolog/owl/urdf.owl').
 
-:- ros_package_path('knowledge', X), % TODO Change to load form param
-    atom_concat(X, '/urdf/hsrb_lab.urdf', FileURL),
+:- ros_package_path('knowledge', PkgPath), % TODO Change to load form param
+    ros_param_get_string("URDFFile", File),
+    atom_concat(PkgPath, "/urdf/", PkgPath2),
+    atom_concat(PkgPath2, File, FileURL),
     kb_create(urdf:'Robot', Robot),
     rdf_urdf_load_file(Robot, FileURL).
 
 
 :- forall(supporting_surface(SurfaceLink), assert_surface_types(SurfaceLink)).
+:- gripper(Gripper),gripper_init(Gripper).
