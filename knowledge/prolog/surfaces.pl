@@ -88,6 +88,8 @@ supporting_surface(SurfaceLink):-
     surface_big_enough(ShapeTerm),
     true.
 
+%% takes names like table_1_center or shelf_floor_4_piece or ground.
+%% Returns false if name is not a registered surface.
 get_surface_id_by_name(Name, SurfaceId):-
     (rdf_urdf_name(SurfaceId, Name), all_surfaces(Surfaces), member(SurfaceId, Surfaces)
         -> true
