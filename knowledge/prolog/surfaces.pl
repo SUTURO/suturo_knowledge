@@ -24,7 +24,6 @@
     all_objects_on_ground/1,
     all_objects_in_whole_shelf/1, % will soon be deprecated
     all_objects_on_tables/1,
-    all_objects_in_gripper/1,
     %% CREATE OBJECT
     place_object/1,
     object_supportable_by_surface/2,
@@ -35,7 +34,7 @@
     make_all_tables_source/0,
     make_all_surface_type_role/2,
     make_role/2,
-    get_surface_role/2
+    get_surface_role/2,
     %% FUNCTIONS
     forget_objects_on_surface/1
     ]).
