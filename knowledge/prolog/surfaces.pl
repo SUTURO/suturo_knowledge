@@ -33,6 +33,8 @@
     make_all_shelves_target/0,
     make_all_tables_source/0,
     make_all_surface_type_role/2,
+    make_surfaces_source/1,
+    make_surfaces_target/1,
     make_role/2,
     get_surface_role/2,
     %% FUNCTIONS
@@ -337,6 +339,12 @@ make_all_shelves_target:-
 
 make_all_tables_source:-
     make_all_surface_type_role(table, source).
+
+make_surfaces_source(Surfaces):-
+    forall(member(Surface, Surfaces), make_role(Surface, source)).
+
+make_surfaces_target(Surfaces):-
+    forall(member(Surface, Surfaces), make_role(Surface, target)).
 
 
 % Gives all surfaces with given name (ground, table or shelf) the Role (target or source)
