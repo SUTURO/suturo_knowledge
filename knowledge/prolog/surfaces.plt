@@ -85,6 +85,25 @@ test(allTargetSurfaces3, [setup(create_some_roles3)]) :-
 	all_target_surfaces(Surfaces),
 	forall(member(Surface, Surfaces), get_surface_role(Surface, target)).
 
+%%%%% testing get_surface_id_by_name/2
+
+test(getSurfaceIDByName, [blocked("For some reason, this test unit can not find rdf_urdf_name/2.")]):-
+	all_surfaces(Surfaces),
+	forall(member(Surface, Surfaces), (get_surface_id_by_name(Name, Surface), rdf_urdf_name(Surface, Name))). %% Todo: case get_surface_id_by_name(ground, ground) should also be true
+
+%%%%% testing ground_surface/1, shelf_surfaces/1 and table_surfaces/1.
+
+test(groundSurface) :-
+	ground_surface(ground).
+
+test(shelfSurfaces) :-
+	shelf_surfaces(Surfaces),
+	forall(member(Surface, Surfaces), rdf_has(Surface, hsr_objects:'isSurfaceType',shelf)).
+
+test(table) :-
+	table_surfaces(Surfaces),
+	forall(member(Surface, Surfaces), rdf_has(Surface, hsr_objects:'isSurfaceType',table)).
+
 
 
 
