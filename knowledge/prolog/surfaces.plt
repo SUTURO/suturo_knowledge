@@ -45,6 +45,52 @@ create_some_roles3:-
 	member(Shelf, Shelves),
 	make_role(Shelf, source).
 
+add_object1:-
+	select_surface([-1.61029851437, 0.543939828873, 0.862352252007],_),
+	create_object_at(hsr_objects:'Banana',
+		['map', _, [-1.61029851437, 0.543939828873, 0.862352252007],[0.0, 0.0, 0.707106781187, 0.707106781187]],
+		0.05, ObjectInstance,
+		[0.0379999987781, 0.0920000001788, 0.214167177677], 
+		[255.0, 0.0, 0.0, 1.0]),
+	place_object(ObjectInstance).
+
+add_object2:-
+	select_surface([-1.63762760162, 0.716774463654, 0.855516195297],_),
+	create_object_at(hsr_objects:'Barneysbestcrunchy',
+		['map', _, [-1.63762760162, 0.716774463654, 0.855516195297],[0.0, 0.0, -0.707106781187, 0.707106781187]],
+		0.05, ObjectInstance,
+		[0.0370000004768, 0.0810000002384, 0.224583685398], 
+		[0.0, 0.0, 255.0, 1.0]),
+	place_object(ObjectInstance).
+
+add_object3:-
+	select_surface([-1.65453457832, 0.895302891731, 0.824507713318],_),
+	create_object_at(hsr_objects:'Applejuice',
+		['map', _, [-1.65453457832, 0.895302891731, 0.824507713318],[0.0, 0.0, -0.707106781187, 0.707106781187]],
+		0.05, ObjectInstance,
+		[0.0340000018477, 0.0649999976158, 0.188862502575], 
+		[255.0, 255.0, 0.0, 1.0]),
+	place_object(ObjectInstance).
+
+add_some_objects:-
+	add_object1,
+	add_object2,
+	add_object3.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%% ACTUAL TESTS %%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+test(forgettingObjects, [setup(add_some_objects),
+	blocked("For some reason, this test unit can not execure select_surface or anything that uses object_supportable_by_surface/2.")]) :- % todo: do for other setups.
+	hsr_existing_objects(Objs),
+	member(Obj, Objs),
+	object_current_surface(Obj, Surface),
+	objects_on_surface(O, Surface),
+	not(O = []),
+	forget_objects_on_surface(Surface),
+	objects_on_surface([], Surface).
+	
 
 %%% FIND SURFACES %%%%%%%%%%%
 
@@ -104,7 +150,16 @@ test(table) :-
 	table_surfaces(Surfaces),
 	forall(member(Surface, Surfaces), rdf_has(Surface, hsr_objects:'isSurfaceType',table)).
 
-
+test(areAllSurfacesTablesShelvesAndGround) :-
+	ground_surface(G),
+	GList = [G],
+	shelf_surfaces(S),
+	table_surfaces(T),
+	append(GList, S, Part1),
+	append(Part1, T, AllDefinedSurfaces),
+	length(AllDefinedSurfaces, Count),
+	all_surfaces(AllSurfaces),
+	length(AllSurfaces, Count).
 
 
 test(makeTablesSource) :-

@@ -83,7 +83,7 @@ assert_surface_types(SurfaceLink):-
 
 %% supporting_surface(?Surface).
 %
-supporting_surface(SurfaceLink):-
+supporting_surface(SurfaceLink):- % has not been tested yet.
     rdf_urdf_link_collision(SurfaceLink,ShapeTerm,_),
     surface_big_enough(ShapeTerm),
     true.
@@ -103,7 +103,7 @@ forget_objects_on_surface(SurfaceLink) :-
     hsr_forget_object(Obj).
 
 
-surface_big_enough(box(X, Y, _)):- %TODO Support other shapes
+surface_big_enough(box(X, Y, _)):- %TODO Support other shapes, has not been tested yet.
     square_big_enough(X,Y).
 
 %surface_big_enough(mesh(_,[X,Y,_])):- % TODO? Support Meshes (They are all asserted with size 1, 1, 1)
@@ -117,14 +117,14 @@ square_big_enough(X,Y):- %TODO Support other shapes
     ).
 
 
-assert_object_on(ObjectInstance, SurfaceLink) :-
+assert_object_on(ObjectInstance, SurfaceLink) :- % has not been tested yet.
     all_surfaces(SurfaceLinks),
     member(SurfaceLink,SurfaceLinks),
     kb_retract(ObjectInstance, hsr_objects:'supportedBy', _),
     kb_assert(ObjectInstance, hsr_objects:'supportedBy', SurfaceLink).
 
 
-surface_type_of(Surface, Type):-
+surface_type_of(Surface, Type):- % has not been tested yet.
     rdf_has(Surface, hsr_objects:'isSurfaceType', Type).
 
 
@@ -169,7 +169,7 @@ shelf_surfaces(ShelfLinks):-
     findall(ShelfLink, rdf_has(ShelfLink, hsr_objects:'isSurfaceType',shelf),ShelfLinks).
 
 
-big_shelf_surfaces(ShelfLinks) :-
+big_shelf_surfaces(ShelfLinks) :- % has not been tested yet.
     findall(ShelfLink,
     (
         rdf_has(ShelfLink, hsr_objects:'isSurfaceType',shelf),
@@ -180,7 +180,7 @@ big_shelf_surfaces(ShelfLinks) :-
 
 
 % Deprecated
-shelf_floor_at_height(Height, TargetShelfLink) :-
+shelf_floor_at_height(Height, TargetShelfLink) :- % has not been tested yet.
     findall(ShelfFloorLink, (
         big_shelf_surfaces(AllFloorsLinks),
         member(ShelfFloorLink, AllFloorsLinks),
@@ -195,7 +195,7 @@ table_surfaces(TableLinks):-
     findall(TableLink, rdf_has(TableLink, hsr_objects:'isSurfaceType',table), TableLinks).
 
 
-object_current_surface(ObjectInstance, SurfaceLink) :-
+object_current_surface(ObjectInstance, SurfaceLink) :- % has not been tested yet.
     rdf_has(ObjectInstance, hsr_objects:'supportedBy', SurfaceLink).
 
 
