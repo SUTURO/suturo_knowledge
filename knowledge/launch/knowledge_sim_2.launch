@@ -1,0 +1,24 @@
+<launch>
+  <arg name="mongodb_log" default="false" />
+  <arg name="mongodb_whipe" default="false" />
+  
+  <include file="$(find suturo_urdf_publisher)/launch/robo_sim_t2.launch" />
+  <include file="$(find knowledge)/launch/rosprolog.launch" />
+  
+  <param name="URDFFile" type="str" value="robocup_sim_t2.urdf" />
+
+  <node name="object_state_publisher" pkg="knowrob_objects" type="object_state_publisher.py" output="screen">
+    <param name="hz" value="10" />
+    <param name="object_types" value="knowrob:'EnduringThing-Localized'" />
+  </node>
+
+  <node name="store_object_info_server" pkg="knowledge" type="store_object_info_server.py" output="screen"/>
+
+  <node name="manipulation_listener" pkg="knowledge" type="manipulation_listener.py" output="screen"/>-->
+
+  
+  <group if="$(arg mongodb_log)">
+    <node name="mongodb_log" pkg="mongodb_log" type="mongodb_log"
+      args="/tf --mongodb-name SUTURO_0" />
+  </group>
+</launch>
