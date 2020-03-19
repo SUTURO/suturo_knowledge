@@ -149,25 +149,27 @@ size_of_triangle([AX,AY],[BX,BY],[CX,CY],Size):-
 
 
 %%
-%Calculates the euler representation of a given quaternion rotation
+% Calculates the euler representation of a given quaternion rotation
+% based on https://en.wikipedia.org/wiki/Conversion_between_quaternions_and_Euler_angles#Source_Code_2
 quaternion_to_euler([X, Y, Z, W], [Roll, Pitch, Yaw])  :- % Axis: Roll = X, Pitch = Y, Yaw = Z
-    T0 is 2.0 * ((W * X) + (Y * Z)),
-    T1 is 1.0 - 2.0 * ((X * X) + (Y * Y)),
-    Roll is atan(T0,T1),
-    T2 is 2.0 * ((W * Y) - (Z * X)),
-    ( T2 > 1
-        -> T2 is 1
-        ; T2 is T2
+    % roll (x-axis rotation)
+    SINR_COSP is 2.0 * ((W * X) + (Y * Z)),
+    COSR_COSP is 1.0 - 2.0 * ((X * X) + (Y * Y)),
+    Roll is atan2(SINR_COSP,COSR_COSP),
+
+    % pitch (y-axis rotation)
+    SINP is 2.0 * ((W * Y) - (Z * X)),
+    SINP_ABS is abs(SINP),
+    INP1 is pi / 2,
+    ( SINP_ABS >= 1
+        -> Pitc ihs copysign(INP1, SINP)
+        ; Pitch is asin(SINP)
     ),
-    ( T2 < -1
-        -> T2 is -1
-        ; T2 is T2
-    ),
-    Pitch is asin(T2),
-    T3 is 2.0 * ((W * Z) + (X * Y)),
-    T4 is 1.0 - (2.0 * ((Y * Y) + (Z * Z))),
-    Yaw is atan(T3,T4),
-    true.
+
+    % yaw (z-achis rotation)
+    SINY_COSP is 2.0 * ((W * Z) + (X * Y)),
+    COSY_COSP is 1.0 - 2.0 * ((Y * Y) + (Z * Z)),
+    Yaw is atan2(SINY_COSP, COSY_COSP).
 
 euler_to_quaternion([Roll, Pitch, Yaw], [X, Y, Z, W]) :-
     W is cos(Yaw/2) * cos(Pitch/2) * cos(Roll/2) - sin(Yaw/2) * sin(Pitch/2) * sin(Roll/2),
