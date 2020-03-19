@@ -4,8 +4,8 @@
         hsr_existing_object_at/3,
         joint_abs_position/2,
         joint_abs_rotation/2,
-        quaternion_to_euler/7,
-        euler_to_quaternion/7,
+        quaternion_to_euler/2,
+        euler_to_quaternion/2,
         rotate_around_axis/4,
         point_in_rectangle/5,
         surface_pose_in_map/2,
@@ -18,8 +18,8 @@
     hsr_lookup_transform(r,r,?,?),
     hsr_existing_object_at(r,r,?),
     joint_abs_position(r,?),
-    quaternion_to_euler(r,r,r,r,?,?,?),
-    euler_to_quaternion(r,r,r,?,?,?,?).
+    quaternion_to_euler(r,?),
+    euler_to_quaternion(r,?).
 
 
 
@@ -48,7 +48,7 @@ surface_pose_in_map(SurfaceLink, [[PX,PY,PZR], [X,Y,Z,W]]) :-
     ; PZR is PZ
     ),
     joint_abs_rotation(Joint,[Roll,Pitch,Yaw]),
-    euler_to_quaternion(Roll,Pitch,Yaw, X,Y,Z,W).
+    euler_to_quaternion([Roll,Pitch,Yaw], [X,Y,Z,W]).
 
 
 
@@ -63,7 +63,7 @@ joint_abs_position(Joint,[PosX,PosY,PosZ]) :-
        rdf_urdf_joint_origin(Joint,[_,_,[JPosX,JPosY,JPosZ],_]),
        rdf_urdf_joint_origin(SubJoint,[_,_,_,[SQuatX,SQuatY,SQuatZ,SQuatW]]),
        joint_abs_position(SubJoint,[SPosX,SPosY,SPosZ]),
-       quaternion_to_euler(SQuatX,SQuatY,SQuatZ,SQuatW,Roll,Pitch,Yaw),
+       quaternion_to_euler([SQuatX,SQuatY,SQuatZ,SQuatW],[Roll,Pitch,Yaw]),
        rotate_around_axis(x,Roll,[JPosX,JPosY,JPosZ],[NX1,NY1,NZ1]),
        rotate_around_axis(y,Pitch,[NX1,NY1,NZ1],[NX2,NY2,NZ2]),
        rotate_around_axis(z,Yaw,[NX2,NY2,NZ2],[NX,NY,NZ]),
@@ -79,13 +79,13 @@ joint_abs_rotation(Joint,[Roll,Pitch,Yaw]) :-
   (  not(rdf_urdf_has_parent(Joint, RootLink)) % rdf_urdf_has_parent(Joint, _),
   -> rdf_urdf_has_parent(Joint, Link), rdf_urdf_has_child(SubJoint,Link),
        rdf_urdf_joint_origin(Joint,[_,_,_,[QuatX,QuatY,QuatZ,QuatW]]),
-       quaternion_to_euler(QuatX,QuatY,QuatZ,QuatW,JR,JP,JY),
+       quaternion_to_euler([QuatX,QuatY,QuatZ,QuatW],[JR,JP,JY]),
        joint_abs_rotation(SubJoint,[SRoll,SPitch,SYaw]),
        Roll  is JR + SRoll,
        Pitch is JP + SPitch,
        Yaw   is JY + SYaw
   ;  rdf_urdf_joint_origin(Joint,[_,_,_,[QuatX,QuatY,QuatZ,QuatW]]),
-     quaternion_to_euler(QuatX,QuatY,QuatZ,QuatW,Roll,Pitch,Yaw)
+     quaternion_to_euler([QuatX,QuatY,QuatZ,QuatW],[Roll,Pitch,Yaw])
   ).
 
 % Origin contains Centerpoint and Rotation of the Object
@@ -150,8 +150,7 @@ size_of_triangle([AX,AY],[BX,BY],[CX,CY],Size):-
 
 %%
 %Calculates the euler representation of a given quaternion rotation
-% Tested using an online calculator.
-quaternion_to_euler(X, Y, Z, W, Roll, Pitch, Yaw)  :- % Axis: Roll = X, Pitch = Y, Yaw = Z TODO convert to array
+quaternion_to_euler([X, Y, Z, W], [Roll, Pitch, Yaw])  :- % Axis: Roll = X, Pitch = Y, Yaw = Z
     T0 is 2.0 * ((W * X) + (Y * Z)),
     T1 is 1.0 - 2.0 * ((X * X) + (Y * Y)),
     Roll is atan(T0,T1),
@@ -170,8 +169,7 @@ quaternion_to_euler(X, Y, Z, W, Roll, Pitch, Yaw)  :- % Axis: Roll = X, Pitch = 
     Yaw is atan(T3,T4),
     true.
 
-% Tested using an online calculator.
-euler_to_quaternion(Roll, Pitch, Yaw, X, Y, Z, W) :- % TODO convert to arrays
+euler_to_quaternion([Roll, Pitch, Yaw], [X, Y, Z, W]) :-
     W is cos(Yaw/2) * cos(Pitch/2) * cos(Roll/2) - sin(Yaw/2) * sin(Pitch/2) * sin(Roll/2),
     X is sin(Yaw/2) * sin(Pitch/2) * cos(Roll/2) + cos(Yaw/2) * cos(Pitch/2) * sin(Roll/2),
     Y is sin(Yaw/2) * cos(Pitch/2) * cos(Roll/2) + cos(Yaw/2) * sin(Pitch/2) * sin(Roll/2),
