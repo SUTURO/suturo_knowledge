@@ -1,9 +1,19 @@
 <launch>
   <arg name="mongodb_log" default="false" />
   <arg name="mongodb_whipe" default="false" />
-  
+  <arg name="urdf_param" default="/hsrb_lab" />
+
   <include file="$(find suturo_urdf_publisher)/launch/lab_publisher.launch" />
-  <include file="$(find knowledge)/launch/rosprolog.launch" />
+
+  <node name="rosprolog" pkg="rosprolog" type="rosprolog_node" cwd="node" output="screen">
+    <param name="param_to_load_URDF_from" type="str" value="$(arg urdf_param)" />
+    <param name="initial_package" type="string" value="knowledge" />
+    <param name="initial_goal" type="string"
+           value="owl_parse('package://knowledge/owl/objects.owl'),
+                  tf_lookup_transform(map, map, _),
+                  ros_param_get_string('/rosprolog/param_to_load_URDF_from', Param),
+                  load_surfaces_from_param(Param)." />
+  </node>
 
   <node name="object_state_publisher" pkg="knowrob_objects" type="object_state_publisher.py" output="screen">
     <param name="hz" value="10" />

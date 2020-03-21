@@ -59,7 +59,13 @@
     object_goal_pose(r,?,?,?).
 
 
-
+load_surfaces_from_param(Param):-
+    (once(rdfs_individual_of(_, urdf:'Robot'))
+    -> write("Surfaces are allready loaded. Restart the knowledgebase to load a diffrent URDF")
+    ;  kb_create(urdf:'Robot', RobotNew),rdf_urdf_load_param(RobotNew, Param),
+        forall(supporting_surface(SurfaceLink),
+        assert_surface_types(SurfaceLink))
+    ).
 
 /**
 *****************************************object - surface relation******************************************************
@@ -159,9 +165,6 @@ shelf_floor_at_height(Height, TargetShelfLink) :-
 */
 
 
-/**
-* is called in init.pl
-*/
 assert_surface_types(SurfaceLink):-
     rdf_assert(ground,hsr_objects:'isSurfaceType',ground),
     supporting_surface(SurfaceLink),
