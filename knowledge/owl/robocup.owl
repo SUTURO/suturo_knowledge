@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
-<rdf:RDF xmlns="http://www.semanticweb.org/fabian/ontologies/2020/2/untitled-ontology-52#"
-     xml:base="http://www.semanticweb.org/fabian/ontologies/2020/2/untitled-ontology-52"
+<rdf:RDF xmlns="http://www.semanticweb.org/suturo/ontologies/2020/2/Robocup#"
+     xml:base="http://www.semanticweb.org/suturo/ontologies/2020/2/Robocup"
      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
      xmlns:owl="http://www.w3.org/2002/07/owl#"
      xmlns:xml="http://www.w3.org/XML/1998/namespace"
@@ -23,9 +23,9 @@
     
 
 
-    <!-- http://www.semanticweb.org/fabian/ontologies/2020/2/untitled-ontology-52#supports -->
+    <!-- http://www.semanticweb.org/suturo/ontologies/2020/2/Robocup#supports -->
 
-    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/fabian/ontologies/2020/2/untitled-ontology-52#supports">
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/2/Robocup#supports">
         <owl:inverseOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2018/10/objects#supportedBy"/>
     </owl:ObjectProperty>
     
@@ -54,17 +54,17 @@
     
 
 
-    <!-- http://www.semanticweb.org/fabian/ontologies/2020/2/untitled-ontology-52#Shelffloorlink -->
+    <!-- http://www.semanticweb.org/suturo/ontologies/2020/2/Robocup#Shelffloorlink -->
 
-    <owl:Class rdf:about="http://www.semanticweb.org/fabian/ontologies/2020/2/untitled-ontology-52#Shelffloorlink">
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/2/Robocup#Shelffloorlink">
         <rdfs:subClassOf rdf:resource="http://knowrob.org/kb/urdf.owl#Link"/>
     </owl:Class>
     
 
 
-    <!-- http://www.semanticweb.org/fabian/ontologies/2020/2/untitled-ontology-52#Tablelink -->
+    <!-- http://www.semanticweb.org/suturo/ontologies/2020/2/Robocup#Tablelink -->
 
-    <owl:Class rdf:about="http://www.semanticweb.org/fabian/ontologies/2020/2/untitled-ontology-52#Tablelink">
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/2/Robocup#Tablelink">
         <rdfs:subClassOf rdf:resource="http://knowrob.org/kb/urdf.owl#Link"/>
     </owl:Class>
 </rdf:RDF>
