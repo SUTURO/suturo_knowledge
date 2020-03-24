@@ -139,5 +139,8 @@ set_colour_semantics(Instance, [0.0, 1.0, 1.0]) :-
 set_colour_semantics(Instance, [1.0, 1.0, 1.0]) :-
     rdf_assert(Instance, hsr_objects:'colour', 'bright').
 
+set_colour_semantics(_, _) :-
+    true.
+    
 clear :-
 	belief_forget.
