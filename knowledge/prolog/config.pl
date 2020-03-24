@@ -3,6 +3,7 @@
       offsets/1,
       threshold_for_group/1,
       allowed_class_distance/1,
+      min_class_confidence/1, 
       context_speech_sort_by_class/4,
       context_speech_sort_by_color/3,
       context_speech_sort_by_size/3,
@@ -34,6 +35,11 @@ threshold_for_group(Threshold) :-
 %% like Color or Size.
 allowed_class_distance(Distance) :-
     Distance = 5.
+
+%% Minimum Confidence where the perceived Object class should still be stored.
+%% Classes with lower confidence get 'Other' as fallback.
+min_class_confidence(Confidence) :-
+    Confidence = 0.5.
 
 %% Context is the Speech, the Robot should hold depending on the distance of the
 %% next Objects Class.

@@ -8,7 +8,12 @@
       object_of_type/2,
       create_object_at/6,
       hsr_existing_objects/1,
-      hsr_forget_object/1
+      hsr_forget_object/1,
+
+      %%% DEBUG %%%
+      set_dimension_semantics/4,
+      set_object_colour/2,
+      object_type_handling/3
     ]).
 
 :- rdf_db:rdf_register_ns(hsr_objects, 'http://www.semanticweb.org/suturo/ontologies/2018/10/objects#', [keep(true)]).
@@ -49,15 +54,13 @@ create_object(ObjectType, Instance) :-
 
 create_object_at(ObjectType, Transform, Threshold, Instance, [Width, Depth, Height], [R,G,B,A]) :-
     object_size_ok([Width, Depth, Height]),
+    %object_type_handling(PerceivedObjectType, TypeConfidence, ObjectType),
     owl_subclass_of(ObjectType, hsr_objects:'Item'),
     new_perceived_at(ObjectType, Transform, Threshold, Instance),
     object_assert_dimensions(Instance, Width, Depth, Height),
     set_dimension_semantics(Instance, Width, Depth, Height),
     set_object_colour(Instance, [R,G,B,A]).
-%    hsr_existing_objects(Objects),
-%    belief_republish_objects(Objects).
-
-
+    %kb_assert(Instance, )
 
 object_size_ok([Width,Depth,Height]):-
     Width > 0.01,
@@ -67,6 +70,12 @@ object_size_ok([Width,Depth,Height]):-
     Depth < 0.6,
     Height < 0.6.
 
+object_type_handling(PerceivedObjectType, TypeConfidence, ObjectType) :-
+    min_class_confidence(MinConf),
+    (TypeConfidence >= MinConf
+        -> ObjectType = PerceivedObjectType
+        ; ObjectType = hsr_objects:'Other'
+        ).
 
 set_dimension_semantics(Instance, _, _, Height) :-
     Height > 0.16,
