@@ -162,7 +162,7 @@ quaternion_to_euler([X, Y, Z, W], [Roll, Pitch, Yaw])  :- % Axis: Roll = X, Pitc
     SINP_ABS is abs(SINP),
     INP1 is pi / 2,
     ( SINP_ABS >= 1
-        -> Pitc ihs copysign(INP1, SINP)
+        -> Pitc is copysign(INP1, SINP)
         ; Pitch is asin(SINP)
     ),
 
