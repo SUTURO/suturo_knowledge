@@ -19,11 +19,13 @@
     select_surface/2,
     %% FIND OBJs
     objects_on_surface/2,
+    objects_on_list_of_surfaces/2,
     all_objects_on_source_surfaces/1,
     all_objects_on_target_surfaces/1,
     all_objects_on_ground/1,
     all_objects_in_whole_shelf/1, % will soon be deprecated
     all_objects_on_tables/1,
+    all_objects_on_table/1, % DEPRECATED! Use only for backward compatibility reasons
     %% CREATE OBJECT
     place_object/1,
     object_supportable_by_surface/2,
@@ -256,6 +258,10 @@ all_objects_on_tables(Instances) :-
         objects_on_surface(ObjPerTable, Table),
         member(Instance, ObjPerTable)
         ), Instances).
+
+ % DEPRECATED! Use only for backward compatibility reasons
+all_objects_on_table(Instances) :- 
+    all_objects_on_tables(Instances).
 
 
 all_objects_in_gripper(Instances):-
