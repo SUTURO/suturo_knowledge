@@ -12,7 +12,8 @@ create_objects_on_table :-
     create_banana_on_table,
     create_milk_on_table,
     create_coffee_on_table,
-    create_unknown_on_table.
+    create_unknown_on_table,
+    group_table_objects.
 
 
 create_banana_on_table :-
