@@ -62,7 +62,7 @@ group_shelf_objects :-
     group_objects(Objs).
 
 group_table_objects :-
-    all_objects_in_whole_shelf(Objs),
+    all_objects_on_tables(Objs),
     group_objects(Objs).
 
 group_objects(Objs) :-
