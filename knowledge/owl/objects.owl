@@ -128,9 +128,33 @@
     
 
 
+    <!-- http://knowrob.org/kb/knowrob.owl#TextileArtifact -->
+
+    <owl:Class rdf:about="http://knowrob.org/kb/knowrob.owl#TextileArtifact"/>
+    
+
+
     <!-- http://www.ease-crc.org/ont/EASE-OBJ.owl#Shape -->
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/EASE-OBJ.owl#Shape"/>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/EASE.owl#DesignedContainer -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/EASE.owl#DesignedContainer"/>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/EASE.owl#DesignedFurniture -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/EASE.owl#DesignedFurniture"/>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/EASE.owl#DesignedTool -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/EASE.owl#DesignedTool"/>
     
 
 
@@ -143,6 +167,18 @@
     <!-- http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#Description -->
 
     <owl:Class rdf:about="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#Description"/>
+    
+
+
+    <!-- http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#DesignedArtifact -->
+
+    <owl:Class rdf:about="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#DesignedArtifact"/>
+    
+
+
+    <!-- http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#DesignedSubstance -->
+
+    <owl:Class rdf:about="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#DesignedSubstance"/>
     
 
 
@@ -495,7 +531,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2018/10/objects#CleaningSupply -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2018/10/objects#CleaningSupply">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2018/10/objects#Item"/>
+        <rdfs:subClassOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#DesignedSubstance"/>
     </owl:Class>
     
 
@@ -503,7 +539,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2018/10/objects#Cloth -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2018/10/objects#Cloth">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2018/10/objects#CleaningSupply"/>
+        <rdfs:subClassOf rdf:resource="http://knowrob.org/kb/knowrob.owl#TextileArtifact"/>
     </owl:Class>
     
 
@@ -511,7 +547,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2018/10/objects#Clothes -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2018/10/objects#Clothes">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2018/10/objects#Item"/>
+        <rdfs:subClassOf rdf:resource="http://knowrob.org/kb/knowrob.owl#TextileArtifact"/>
     </owl:Class>
     
 
@@ -799,7 +835,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2018/10/objects#Electronic -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2018/10/objects#Electronic">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2018/10/objects#Item"/>
+        <rdfs:subClassOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#DesignedArtifact"/>
     </owl:Class>
     
 
@@ -975,7 +1011,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2018/10/objects#Furniture -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2018/10/objects#Furniture">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2018/10/objects#Item"/>
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/EASE.owl#DesignedFurniture"/>
     </owl:Class>
     
 
@@ -1063,7 +1099,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2018/10/objects#Groceries -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2018/10/objects#Groceries">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2018/10/objects#Item"/>
+        <rdfs:subClassOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#DesignedSubstance"/>
     </owl:Class>
     
 
@@ -1583,7 +1619,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2018/10/objects#PersonalHygiene -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2018/10/objects#PersonalHygiene">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2018/10/objects#Item"/>
+        <rdfs:subClassOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#DesignedArtifact"/>
     </owl:Class>
     
 
@@ -1703,7 +1739,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2018/10/objects#Receptacle -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2018/10/objects#Receptacle">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2018/10/objects#Item"/>
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/EASE.owl#DesignedContainer"/>
     </owl:Class>
     
 
@@ -2010,7 +2046,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2018/10/objects#Tableware -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2018/10/objects#Tableware">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2018/10/objects#Item"/>
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/EASE.owl#DesignedTool"/>
     </owl:Class>
     
 
@@ -2090,7 +2126,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2018/10/objects#Tool -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2018/10/objects#Tool">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2018/10/objects#Item"/>
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/EASE.owl#DesignedTool"/>
     </owl:Class>
     
 
@@ -2122,15 +2158,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2018/10/objects#Toy -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2018/10/objects#Toy">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2018/10/objects#Item"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2018/10/objects#Traderjoeswalnusskerne -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2018/10/objects#Traderjoeswalnusskerne">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2018/10/objects#Nut"/>
+        <rdfs:subClassOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#DesignedArtifact"/>
     </owl:Class>
     
 
@@ -2138,6 +2166,14 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2018/10/objects#Traderjoespecankerne -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2018/10/objects#Traderjoespecankerne">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2018/10/objects#Nut"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2018/10/objects#Traderjoeswalnusskerne -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2018/10/objects#Traderjoeswalnusskerne">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2018/10/objects#Nut"/>
     </owl:Class>
     
@@ -2250,7 +2286,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2018/10/objects#WritingMaterial -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2018/10/objects#WritingMaterial">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2018/10/objects#Item"/>
+        <rdfs:subClassOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#DesignedArtifact"/>
     </owl:Class>
     
 
