@@ -62,11 +62,9 @@
 
 
 load_surfaces_from_param(Param):-
-    write("Test"),
     (once(rdfs_individual_of(_, urdf:'Robot'))
     -> write("Surfaces are allready loaded. Restart the knowledgebase to load a diffrent URDF")
     ;  kb_create(urdf:'Robot', RobotNew),rdf_urdf_load_param(RobotNew, Param),
-        write("Called"),
         forall(supporting_surface(SurfaceLink),
         assert_surface_types(SurfaceLink))
     ).

@@ -1,4 +1,3 @@
-:- writeln("Called init").
 :- register_ros_package(knowrob_common).
 :- register_ros_package(knowrob_objects).
 :- register_ros_package(knowrob_actions).

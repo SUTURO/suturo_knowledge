@@ -6,9 +6,12 @@
   <include file="$(find suturo_urdf_publisher)/launch/lab_publisher.launch" />
 
   <param name="param_to_load_URDF_from" type="str" value="$(arg urdf_param)" />
+
+  <param name="initial_package" type="string" value="knowledge" />
+  <param name="initial_goal" type="string" value="ros_param_get_string('/param_to_load_URDF_from', Param),
+    load_surfaces_from_param(Param)." />
+
   <node name="rosprolog" pkg="rosprolog" type="rosprolog_node" cwd="node" output="screen">
-    <param name="initial_package" type="string" value="knowledge" />
-    <param name="initial_goal" type="string" value="writeln('called initial goals'), owl_parse('package://knowledge/owl/objects.owl'), tf_lookup_transform(map, map, _)." />
   </node>
 
 
