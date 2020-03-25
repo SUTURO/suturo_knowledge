@@ -31,7 +31,7 @@
     position_supportable_by_surface/2,
     %% ROLES
     make_ground_source/0,
-    load_surfaces_from_param/1
+    load_surfaces_from_param/1,
     make_all_shelves_target/0,
     make_all_tables_source/0,
     make_all_surface_type_role/2,
