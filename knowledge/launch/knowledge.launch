@@ -15,6 +15,9 @@
   </node>
 
 
+  <param name="URDFFile" type="str" value="hsrb_lab.urdf" />
+
+
   <node name="object_state_publisher" pkg="knowrob_objects" type="object_state_publisher.py" output="screen">
     <param name="hz" value="10" />
     <param name="object_types" value="knowrob:'EnduringThing-Localized'" />

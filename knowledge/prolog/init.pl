@@ -25,13 +25,14 @@
 :- use_module(library('urdf_parser')).
 
 :- use_module(library('config')).
+:- use_module(library('spatial_comp')).
 :- use_module(library('pickup')).
 :- use_module(library('object_state')).
 :- use_module(library('surfaces')).
 :- use_module(library('beliefstate')).
-:- use_module(library('spatial_comp')).
 :- use_module(library('assignplaces')).
 :- use_module(library('gripper')).
+:- use_module(library('mocking')).
 
 :- owl_parser:owl_parse('package://knowrob_common/owl/knowrob.owl').
 :- owl_parser:owl_parse('package://knowledge/owl/objects.owl').
