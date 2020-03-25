@@ -5,15 +5,12 @@
 
   <include file="$(find suturo_urdf_publisher)/launch/lab_publisher.launch" />
 
+  <param name="param_to_load_URDF_from" type="str" value="$(arg urdf_param)" />
   <node name="rosprolog" pkg="rosprolog" type="rosprolog_node" cwd="node" output="screen">
-    <param name="param_to_load_URDF_from" type="str" value="$(arg urdf_param)" />
     <param name="initial_package" type="string" value="knowledge" />
-    <param name="initial_goal" type="string"
-           value="owl_parse('package://knowledge/owl/objects.owl'),
-                  tf_lookup_transform(map, map, _),
-                  ros_param_get_string('/rosprolog/param_to_load_URDF_from', Param),
-                  load_surfaces_from_param(Param)." />
+    <param name="initial_goal" type="string" value="writeln('called initial goals'), owl_parse('package://knowledge/owl/objects.owl'), tf_lookup_transform(map, map, _)." />
   </node>
+
 
   <node name="object_state_publisher" pkg="knowrob_objects" type="object_state_publisher.py" output="screen">
     <param name="hz" value="10" />
