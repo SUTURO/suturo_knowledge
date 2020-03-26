@@ -23,17 +23,17 @@
     
 
 
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/2/Robocup#supports -->
+    <!-- http://www.semanticweb.org/suturo/ontologies/2018/10/objects#supportedBy -->
 
-    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/2/Robocup#supports">
-        <owl:inverseOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2018/10/objects#supportedBy"/>
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/suturo/ontologies/2018/10/objects#supportedBy">
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/2/Robocup#supports"/>
     </owl:ObjectProperty>
     
 
 
-    <!-- http://www.semanticweb.org/suturo/ontologies/2018/10/objects#supportedBy -->
+    <!-- http://www.semanticweb.org/suturo/ontologies/2020/2/Robocup#supports -->
 
-    <rdf:Description rdf:about="http://www.semanticweb.org/suturo/ontologies/2018/10/objects#supportedBy"/>
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/2/Robocup#supports"/>
     
 
 
@@ -54,10 +54,18 @@
     
 
 
+    <!-- http://www.semanticweb.org/fabian/ontologies/2020/2/Robocup#Surface -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/fabian/ontologies/2020/2/Robocup#Surface">
+        <rdfs:subClassOf rdf:resource="http://knowrob.org/kb/urdf.owl#Link"/>
+    </owl:Class>
+    
+
+
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/2/Robocup#Shelffloorlink -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/2/Robocup#Shelffloorlink">
-        <rdfs:subClassOf rdf:resource="http://knowrob.org/kb/urdf.owl#Link"/>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/fabian/ontologies/2020/2/Robocup#Surface"/>
     </owl:Class>
     
 
@@ -65,7 +73,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/2/Robocup#Tablelink -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/2/Robocup#Tablelink">
-        <rdfs:subClassOf rdf:resource="http://knowrob.org/kb/urdf.owl#Link"/>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/fabian/ontologies/2020/2/Robocup#Surface"/>
     </owl:Class>
 </rdf:RDF>
 
