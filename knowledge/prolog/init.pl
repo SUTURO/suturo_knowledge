@@ -7,6 +7,9 @@
 :- register_ros_package(rosprolog).
 :- register_ros_package(urdfprolog).
 
+:- rdf_db:rdf_register_ns(hsr_objects, 'http://www.semanticweb.org/suturo/ontologies/2018/10/objects#', [keep(true)]).
+:- rdf_db:rdf_register_ns(urdf, 'http://knowrob.org/kb/urdf.owl#', [keep(true)]).
+
 :- use_module(library('semweb/rdf_db')).
 :- use_module(library('semweb/rdfs')).
 :- use_module(library('semweb/owl_parser')).
@@ -18,8 +21,8 @@
 :- use_module(library('knowrob/transforms')).
 :- use_module(library('knowrob/vis')).
 
-% :- use_module(library('rdf_urdf')).
-% :- use_module(library('urdf_parser')).
+:- use_module(library('rdf_urdf')).
+:- use_module(library('urdf_parser')).
 
 :- use_module(library('config')).
 :- use_module(library('spatial_comp')).
@@ -31,18 +34,9 @@
 :- use_module(library('gripper')).
 :- use_module(library('mocking')).
 
-
 :- owl_parser:owl_parse('package://knowrob_common/owl/knowrob.owl').
 :- owl_parser:owl_parse('package://knowledge/owl/objects.owl').
 :- owl_parser:owl_parse('package://urdfprolog/owl/urdf.owl').
 
-:- ros_package_path('knowledge', PkgPath), % TODO Change to load form param
-    ros_param_get_string("URDFFile", File),
-    atom_concat(PkgPath, "/urdf/", PkgPath2),
-    atom_concat(PkgPath2, File, FileURL),
-    kb_create(urdf:'Robot', Robot),
-    rdf_urdf_load_file(Robot, FileURL).
-
-
-:- forall(supporting_surface(SurfaceLink), assert_surface_types(SurfaceLink)).
-:- gripper(Gripper),gripper_init(Gripper).
+:- ros_param_get_string('/param_to_load_URDF_from', Param),
+    load_surfaces_from_param(Param).
