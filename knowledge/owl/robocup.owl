@@ -23,6 +23,33 @@
     
 
 
+    <!-- http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#associatedWith -->
+
+    <owl:ObjectProperty rdf:about="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#associatedWith"/>
+    
+
+
+    <!-- http://www.semanticweb.org/fabian/ontologies/2020/2/Robocup#hassurfacelink -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/fabian/ontologies/2020/2/Robocup#hassurfacelink">
+        <rdfs:subPropertyOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#associatedWith"/>
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/fabian/ontologies/2020/2/Robocup#issurfacelink"/>
+        <rdfs:domain rdf:resource="http://www.ease-crc.org/ont/EASE.owl#Surface"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/fabian/ontologies/2020/2/Robocup#Surfacelink"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/fabian/ontologies/2020/2/Robocup#issurfacelink -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/fabian/ontologies/2020/2/Robocup#issurfacelink">
+        <rdfs:subPropertyOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#associatedWith"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/fabian/ontologies/2020/2/Robocup#Surfacelink"/>
+        <rdfs:range rdf:resource="http://www.ease-crc.org/ont/EASE.owl#Surface"/>
+    </owl:ObjectProperty>
+    
+
+
     <!-- http://www.semanticweb.org/suturo/ontologies/2018/10/objects#supportedBy -->
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/suturo/ontologies/2018/10/objects#supportedBy">
@@ -54,9 +81,15 @@
     
 
 
-    <!-- http://www.semanticweb.org/fabian/ontologies/2020/2/Robocup#Surface -->
+    <!-- http://www.ease-crc.org/ont/EASE.owl#Surface -->
 
-    <owl:Class rdf:about="http://www.semanticweb.org/fabian/ontologies/2020/2/Robocup#Surface">
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/EASE.owl#Surface"/>
+    
+
+
+    <!-- http://www.semanticweb.org/fabian/ontologies/2020/2/Robocup#Surfacelink -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/fabian/ontologies/2020/2/Robocup#Surfacelink">
         <rdfs:subClassOf rdf:resource="http://knowrob.org/kb/urdf.owl#Link"/>
     </owl:Class>
     
@@ -65,7 +98,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/2/Robocup#Shelffloorlink -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/2/Robocup#Shelffloorlink">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/fabian/ontologies/2020/2/Robocup#Surface"/>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/fabian/ontologies/2020/2/Robocup#Surfacelink"/>
     </owl:Class>
     
 
@@ -73,7 +106,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/2/Robocup#Tablelink -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/2/Robocup#Tablelink">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/fabian/ontologies/2020/2/Robocup#Surface"/>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/fabian/ontologies/2020/2/Robocup#Surfacelink"/>
     </owl:Class>
 </rdf:RDF>
 
