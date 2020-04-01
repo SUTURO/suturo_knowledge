@@ -193,7 +193,11 @@ distance_to_robot(Obj, Distance) :-
     sqrt(((DX*DX) + (DY*DY) + (DZ*DZ)), Distance),
     !.
 
-object_frame(Frame, Object):-
+object_frame(Frame, Object) :-
     split_string(Obj, "#", "", [_,ObjFrameString]),
     atom_string(ObjFrame,ObjFrameString).
     
+surface_frame(Frame, Surface) :-
+    rdf_urdf_name(Surface, Name),
+    Prefix = 'iai_kitchen/',
+    atom_concat(Prefix, Name, Frame).
