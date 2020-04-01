@@ -11,7 +11,9 @@
         surface_pose_in_map/2,
         point_on_surface/4,
         distance_to_robot/2,
-        find_corners/4
+        find_corners/4,
+        % Type cast
+        object_frame/2
     ]).
 
 :- rdf_meta
@@ -94,8 +96,6 @@ point_on_surface([PosX, PosY, _], [Roll,Pitch,Yaw], box(X, Y, Z), [XP,YP,_]) :-
     point_in_rectangle([X1,Y1], [X2,Y2], [X3,Y3], [X4,Y4], [XP,YP]).
 
 
-
-
 %% find_corners(Position, EulerRotation, ShapeTerm, [X1,Y1],[X2,Y2],[X3,Y3],[X4,Y4]) || (r,r,r, ?)
 find_corners([PosX,PosY,_], [Roll, Pitch, Yaw], box(X, Y, Z), [[X1,Y1],[X2,Y2],[X3,Y3],[X4,Y4]]):- % Position is the center of the Box|Axis: Roll = X, Pitch = Y, Yaw = Z
     rotate_around_axis(x,Roll,[X,Y,Z],[NX1,NY1,NZ1]),
@@ -109,6 +109,10 @@ find_corners([PosX,PosY,_], [Roll, Pitch, Yaw], box(X, Y, Z), [[X1,Y1],[X2,Y2],[
     Y3 is PosY + NY/2,
     X4 is PosX + NX/2,
     Y4 is PosY + NY/2.
+
+find_corners(Pos, Quaternion, Shape, Result) :-
+    quaternion_to_euler(Quaternion, Euler),
+    find_corners(Pos, Euler, Shape, Result).
 
 
 %TODO Function to rotate around all axis
@@ -179,8 +183,8 @@ euler_to_quaternion([Roll, Pitch, Yaw], [X, Y, Z, W]) :-
 
 
 distance_to_robot(Obj, Distance) :-
-    map_frame_name(MapFrame),
-    current_object_pose(Obj, [MapFrame,_,[OX,OY,OZ],_]),
+    object_frame(Frame, Obj),
+    hsr_lookup_transform(map, ObjFrameAtom, [OX, OY, OZ], _),
     hsr_lookup_transform(map,base_footprint,[BX,BY,BZ],_),
     writeln(([OX,OY,OZ],[BX,BY,BZ])),
     DX is (OX - BX),
@@ -188,3 +192,8 @@ distance_to_robot(Obj, Distance) :-
     DZ is (OZ - BZ),
     sqrt(((DX*DX) + (DY*DY) + (DZ*DZ)), Distance),
     !.
+
+object_frame(Frame, Object):-
+    split_string(Obj, "#", "", [_,ObjFrameString]),
+    atom_string(ObjFrame,ObjFrameString).
+    
