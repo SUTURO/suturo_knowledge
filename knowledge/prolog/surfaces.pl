@@ -16,6 +16,7 @@
     shelf_floor_at_height/2, % will soon be deprecated
     table_surfaces/1, 
     select_surface/2,
+    find_supporting_surface/2,
     %% FIND OBJs
     objects_on_surface/2,
     objects_on_list_of_surfaces/2,
@@ -208,6 +209,9 @@ table_surfaces(TableLinks):-
 
 object_current_surface(ObjectInstance, SurfaceLink) :- % has not been tested yet.
     rdf_has(ObjectInstance, hsr_objects:'supportedBy', SurfaceLink).
+
+find_supporting_surface(Object, Surface) :-
+    rdf_has(Object, hsr_objects:'supportedBy', Surface).
 
 
 
