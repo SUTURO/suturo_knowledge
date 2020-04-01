@@ -15,21 +15,24 @@
     big_shelf_surfaces/1, % will soon be deprecated
     shelf_floor_at_height/2, % will soon be deprecated
     table_surfaces/1, 
-    object_current_surface/2,
     select_surface/2,
+    find_supporting_surface/2,
     %% FIND OBJs
     objects_on_surface/2,
+    objects_on_list_of_surfaces/2,
     all_objects_on_source_surfaces/1,
     all_objects_on_target_surfaces/1,
     all_objects_on_ground/1,
     all_objects_in_whole_shelf/1, % will soon be deprecated
     all_objects_on_tables/1,
+    all_objects_on_table/1, % DEPRECATED! Use only for backward compatibility reasons
     %% CREATE OBJECT
     place_object/1,
     object_supportable_by_surface/2,
     position_supportable_by_surface/2,
     %% ROLES
     make_ground_source/0,
+    load_surfaces_from_param/1,
     make_all_shelves_target/0,
     make_all_tables_source/0,
     make_all_surface_type_role/2,
@@ -45,6 +48,7 @@
 :- owl_parser:owl_parse('package://urdfprolog/owl/urdf.owl').
 
 :- rdf_meta % TODO FIX ME
+    load_surfaces_from_param(r),
     get_surface_id_by_name(r,?),
     supporting_surface(?),
     surface_big_enough(?),
@@ -64,10 +68,18 @@
     object_goal_pose(r,?,?,?).
 
 
-
 /**
-* is called in init.pl
+* is called as inital_goal in the launch file
 */
+load_surfaces_from_param(Param):-
+    (once(rdfs_individual_of(_, urdf:'Robot'))
+    -> write("Surfaces are allready loaded. Restart the knowledgebase to load a diffrent URDF")
+    ;  kb_create(urdf:'Robot', RobotNew),rdf_urdf_load_param(RobotNew, Param),
+        forall(supporting_surface(SurfaceLink),
+        assert_surface_types(SurfaceLink))
+    ).
+
+
 assert_surface_types(SurfaceLink):-
     rdf_assert(ground,hsr_objects:'isSurfaceType',ground),
     supporting_surface(SurfaceLink),
@@ -198,6 +210,10 @@ table_surfaces(TableLinks):-
 object_current_surface(ObjectInstance, SurfaceLink) :- % has not been tested yet.
     rdf_has(ObjectInstance, hsr_objects:'supportedBy', SurfaceLink).
 
+find_supporting_surface(Object, Surface) :-
+    rdf_has(Object, hsr_objects:'supportedBy', Surface).
+
+
 
 /**
 *****************************************CREATE OBJECTS******************************************************
@@ -256,6 +272,10 @@ all_objects_on_tables(Instances) :-
         objects_on_surface(ObjPerTable, Table),
         member(Instance, ObjPerTable)
         ), Instances).
+
+ % DEPRECATED! Use only for backward compatibility reasons
+all_objects_on_table(Instances) :- 
+    all_objects_on_tables(Instances).
 
 
 all_objects_in_gripper(Instances):-

@@ -11,7 +11,7 @@
         surface_pose_in_map/2,
         point_on_surface/4,
         distance_to_robot/2,
-        find_corners/7
+        find_corners/4
     ]).
 
 :- rdf_meta
@@ -90,14 +90,14 @@ joint_abs_rotation(Joint,[Roll,Pitch,Yaw]) :-
 
 % Origin contains Centerpoint and Rotation of the Object
 point_on_surface([PosX, PosY, _], [Roll,Pitch,Yaw], box(X, Y, Z), [XP,YP,_]) :-
-    find_corners([PosX,PosY,_], [Roll,Pitch,Yaw], box(X,Y,Z), [X1,Y1], [X2,Y2], [X3,Y3], [X4,Y4]),
+    find_corners([PosX,PosY,_], [Roll,Pitch,Yaw], box(X,Y,Z), [[X1,Y1], [X2,Y2], [X3,Y3], [X4,Y4]]),
     point_in_rectangle([X1,Y1], [X2,Y2], [X3,Y3], [X4,Y4], [XP,YP]).
 
 
 
 
-%% find_corners(Position, EulerRotation, ShapeTerm, [X1,Y1],[X2,Y2],[X3,Y3],[X4,Y4])
-find_corners([PosX,PosY,_], [Roll, Pitch, Yaw], box(X, Y, Z), [X1,Y1],[X2,Y2],[X3,Y3],[X4,Y4]):- % Position is the center of the Box|Axis: Roll = X, Pitch = Y, Yaw = Z
+%% find_corners(Position, EulerRotation, ShapeTerm, [X1,Y1],[X2,Y2],[X3,Y3],[X4,Y4]) || (r,r,r, ?)
+find_corners([PosX,PosY,_], [Roll, Pitch, Yaw], box(X, Y, Z), [[X1,Y1],[X2,Y2],[X3,Y3],[X4,Y4]]):- % Position is the center of the Box|Axis: Roll = X, Pitch = Y, Yaw = Z
     rotate_around_axis(x,Roll,[X,Y,Z],[NX1,NY1,NZ1]),
     rotate_around_axis(y,Pitch,[NX1,NY1,NZ1],[NX2,NY2,NZ2]),
     rotate_around_axis(z,Yaw,[NX2,NY2,NZ2],[NX,NY,_]),

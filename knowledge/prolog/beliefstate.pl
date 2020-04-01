@@ -7,6 +7,8 @@
       hsr_belief_at_update/2,
       merge_object_into_group/1,
       group_shelf_objects/0,
+      group_table_objects/0,
+      group_objects/1,
       group_mean_pose/3
     ]).
 
@@ -47,7 +49,8 @@ hsr_belief_at_update(Instance, Transform) :-
 merge_object_into_group(Instance) :-
     current_object_pose(Instance, Transform),
     findall(NearbyObj, (
-        hsr_existing_object_at(Transform, 0.15, NearbyObj)),
+        threshold_for_group(Threshold),
+        hsr_existing_object_at(Transform, Threshold, NearbyObj)),
         [Obj|Rest]),
     rdf_has(Obj, hsr_objects:'inGroup', WG),
     member(Other, Rest),
@@ -57,9 +60,17 @@ merge_object_into_group(Instance) :-
 
 group_shelf_objects :-
     all_objects_in_whole_shelf(Objs),
+    group_objects(Objs).
+
+group_table_objects :-
+    all_objects_on_tables(Objs),
+    group_objects(Objs).
+
+group_objects(Objs) :-
     member(Obj, Objs),
     current_object_pose(Obj, Transform),
-    hsr_existing_object_at(Transform, 0.15, NearbyObj),
+    threshold_for_group(Threshold),
+    hsr_existing_object_at(Transform, Threshold, NearbyObj),
     rdf_has(Obj, hsr_objects:'inGroup', Group1),
     rdf_has(NearbyObj, hsr_objects:'inGroup', Group2),
     not(rdf_equal(Obj, NearbyObj)),
@@ -67,7 +78,7 @@ group_shelf_objects :-
     rdf_has(Member, hsr_objects:'inGroup', Group1),
     rdf_retractall(Member, hsr_objects:'inGroup', _),
     rdf_assert(Member, hsr_objects:'inGroup', Group2),
-    not(group_shelf_objects).
+    not(group_objects(Objs)).
 
 group_mean_pose(Group, Transform, Rotation) :-
     findall(X, (
