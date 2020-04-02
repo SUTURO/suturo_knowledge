@@ -16,6 +16,7 @@
 :- use_module(library('semweb/owl')).
 :- use_module(library('knowrob/knowrob')).
 :- use_module(library('knowrob/computable')).
+:- use_module(library('knowrob/objects')).
 :- use_module(library('knowrob/temporal')).
 :- use_module(library('knowrob/beliefstate')).
 :- use_module(library('knowrob/transforms')).

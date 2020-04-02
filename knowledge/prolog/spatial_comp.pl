@@ -3,7 +3,7 @@
         hsr_lookup_transform/4,
         hsr_existing_object_at/3,
         joint_abs_position/2, % deprecated
-        joint_abs_rotation/2,
+        joint_abs_rotation/2, % deprecated
         quaternion_to_euler/2,
         euler_to_quaternion/2,
         rotate_around_axis/4,
@@ -87,19 +87,25 @@ joint_abs_position(Joint, Pos) :-
     surface_pose_in_map(Frame, [Pos, _]).
 
 %used to find corners of a surface
-joint_abs_rotation(Joint,[Roll,Pitch,Yaw]) :-
-    rdf_has(_,'http://knowrob.org/kb/urdf.owl#hasRootLink',RootLink),
-  (  not(rdf_urdf_has_parent(Joint, RootLink)) % rdf_urdf_has_parent(Joint, _),
-  -> rdf_urdf_has_parent(Joint, Link), rdf_urdf_has_child(SubJoint,Link),
-       rdf_urdf_joint_origin(Joint,[_,_,_,[QuatX,QuatY,QuatZ,QuatW]]),
-       quaternion_to_euler([QuatX,QuatY,QuatZ,QuatW],[JR,JP,JY]),
-       joint_abs_rotation(SubJoint,[SRoll,SPitch,SYaw]),
-       Roll  is JR + SRoll,
-       Pitch is JP + SPitch,
-       Yaw   is JY + SYaw
-  ;  rdf_urdf_joint_origin(Joint,[_,_,_,[QuatX,QuatY,QuatZ,QuatW]]),
-     quaternion_to_euler([QuatX,QuatY,QuatZ,QuatW],[Roll,Pitch,Yaw])
-  ).
+%joint_abs_rotation(Joint,[Roll,Pitch,Yaw]) :-
+%    rdf_has(_,'http://knowrob.org/kb/urdf.owl#hasRootLink',RootLink),
+%  (  not(rdf_urdf_has_parent(Joint, RootLink)) % rdf_urdf_has_parent(Joint, _),
+%  -> rdf_urdf_has_parent(Joint, Link), rdf_urdf_has_child(SubJoint,Link),
+%       rdf_urdf_joint_origin(Joint,[_,_,_,[QuatX,QuatY,QuatZ,QuatW]]),
+%       quaternion_to_euler([QuatX,QuatY,QuatZ,QuatW],[JR,JP,JY]),
+%       joint_abs_rotation(SubJoint,[SRoll,SPitch,SYaw]),
+%       Roll  is JR + SRoll,
+%       Pitch is JP + SPitch,
+%       Yaw   is JY + SYaw
+%  ;  rdf_urdf_joint_origin(Joint,[_,_,_,[QuatX,QuatY,QuatZ,QuatW]]),
+%     quaternion_to_euler([QuatX,QuatY,QuatZ,QuatW],[Roll,Pitch,Yaw])
+%  ).
+
+% deprecated
+joint_abs_rotation(Joint, [Roll, Pitch, Yaw]) :-
+    rdf_urdf_has_child(Joint, Frame),
+    surface_pose_in_map(Frame, [_, Rot]),
+    quaternion_to_euler(Rot, [Roll, Pitch, Yaw]).
 
 % Origin contains Centerpoint and Rotation of the Object
 point_on_surface([PosX, PosY, _], [Roll,Pitch,Yaw], box(X, Y, Z), [XP,YP,_]) :-
