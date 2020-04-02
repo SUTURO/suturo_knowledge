@@ -170,7 +170,7 @@ quaternion_to_euler([X, Y, Z, W], [Roll, Pitch, Yaw])  :- % Axis: Roll = X, Pitc
     SINP_ABS is abs(SINP),
     INP1 is pi / 2,
     ( SINP_ABS >= 1
-        -> Pitc is copysign(INP1, SINP)
+        -> Pitch is copysign(INP1, SINP)
         ; Pitch is asin(SINP)
     ),
 
@@ -188,7 +188,7 @@ euler_to_quaternion([Roll, Pitch, Yaw], [X, Y, Z, W]) :-
 
 distance_to_robot(Obj, Distance) :-
     object_frame(Frame, Obj),
-    hsr_lookup_transform(map, ObjFrameAtom, [OX, OY, OZ], _),
+    hsr_lookup_transform(map, Frame, [OX, OY, OZ], _),
     hsr_lookup_transform(map,base_footprint,[BX,BY,BZ],_),
     writeln(([OX,OY,OZ],[BX,BY,BZ])),
     DX is (OX - BX),
@@ -198,8 +198,8 @@ distance_to_robot(Obj, Distance) :-
     !.
 
 object_frame(Object, Frame) :-
-    split_string(Obj, "#", "", [_,ObjFrameString]),
-    atom_string(ObjFrame,ObjFrameString).
+    split_string(Object, "#", "", [_,ObjFrameString]),
+    atom_string(Frame,ObjFrameString).
     
 surface_frame(Surface, Frame) :-
     rdf_urdf_name(Surface, Name),
