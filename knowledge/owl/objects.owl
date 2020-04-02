@@ -37,7 +37,7 @@
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#hassurface">
         <rdfs:subPropertyOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#associatedWith"/>
         <owl:inverseOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#issurfaceof"/>
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Furniture"/>
+        <rdfs:domain rdf:resource="http://www.ease-crc.org/ont/EASE.owl#DesignedFurniture"/>
         <rdfs:range rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#FurnitureSurface"/>
     </owl:ObjectProperty>
     
@@ -56,7 +56,7 @@
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#issurfaceof">
         <rdfs:subPropertyOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#associatedWith"/>
         <rdfs:domain rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#FurnitureSurface"/>
-        <rdfs:range rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Furniture"/>
+        <rdfs:range rdf:resource="http://www.ease-crc.org/ont/EASE.owl#DesignedFurniture"/>
     </owl:ObjectProperty>
     
 
@@ -1034,14 +1034,6 @@
     
 
 
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Furniture -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Furniture">
-        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/EASE.owl#DesignedFurniture"/>
-    </owl:Class>
-    
-
-
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#FurnitureSurface -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#FurnitureSurface">
@@ -1885,8 +1877,8 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Shelf -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Shelf">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/EASE.owl#DesignedFurniture"/>
         <rdfs:subClassOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#PhysicalPlace"/>
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Furniture"/>
     </owl:Class>
     
 
@@ -2062,7 +2054,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Table -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Table">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Furniture"/>
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/EASE.owl#DesignedFurniture"/>
     </owl:Class>
     
 
