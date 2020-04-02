@@ -13,7 +13,8 @@
         distance_to_robot/2,
         find_corners/4,
         % Type cast
-        object_frame/2
+        object_frame/2,
+        surface_frame/2
     ]).
 
 :- rdf_meta
@@ -38,19 +39,22 @@ hsr_existing_object_at(Pose, Threshold, Instance) :-
     transform_close_to(Pose, OldPose, Threshold).
 
 
+surface_pose_in_map(SurfaceLink, Pose) :-
+    surface_frame(Frame, SurfaceLink),
+    hsr_lookup_transform(map, Frame, Translation, Rotation),
+    Pose = [Translation, Rotation].
 
 
-
-surface_pose_in_map(SurfaceLink, [[PX,PY,PZR], [X,Y,Z,W]]) :-
-    rdf_urdf_has_child(Joint,SurfaceLink),
-    joint_abs_position(Joint,[PX,PY,PZ]),
-    %TODO THIS IS A WORKAROUND. MAKE THE URDF MORE CONSISTANT
-    (rdf_urdf_name(SurfaceLink,Name),sub_string(Name,_,_,_,center)
-    -> PZR is PZ *2
-    ; PZR is PZ
-    ),
-    joint_abs_rotation(Joint,[Roll,Pitch,Yaw]),
-    euler_to_quaternion([Roll,Pitch,Yaw], [X,Y,Z,W]).
+%surface_pose_in_map(SurfaceLink, [[PX,PY,PZR], [X,Y,Z,W]]) :-
+%    rdf_urdf_has_child(Joint,SurfaceLink),
+%    joint_abs_position(Joint,[PX,PY,PZ]),
+%    %TODO THIS IS A WORKAROUND. MAKE THE URDF MORE CONSISTANT
+%    (rdf_urdf_name(SurfaceLink,Name),sub_string(Name,_,_,_,center)
+%    -> PZR is PZ *2
+%    ; PZR is PZ
+%    ),
+%    joint_abs_rotation(Joint,[Roll,Pitch,Yaw]),
+%    euler_to_quaternion([Roll,Pitch,Yaw], [X,Y,Z,W]).
 
 
 
@@ -193,11 +197,11 @@ distance_to_robot(Obj, Distance) :-
     sqrt(((DX*DX) + (DY*DY) + (DZ*DZ)), Distance),
     !.
 
-object_frame(Frame, Object) :-
+object_frame(Object, Frame) :-
     split_string(Obj, "#", "", [_,ObjFrameString]),
     atom_string(ObjFrame,ObjFrameString).
     
-surface_frame(Frame, Surface) :-
+surface_frame(Surface, Frame) :-
     rdf_urdf_name(Surface, Name),
     Prefix = 'iai_kitchen/',
     atom_concat(Prefix, Name, Frame).
