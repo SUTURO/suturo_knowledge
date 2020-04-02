@@ -2,7 +2,7 @@
     [
         hsr_lookup_transform/4,
         hsr_existing_object_at/3,
-        joint_abs_position/2,
+        joint_abs_position/2, % deprecated
         joint_abs_rotation/2,
         quaternion_to_euler/2,
         euler_to_quaternion/2,
@@ -62,23 +62,30 @@ surface_pose_in_map(SurfaceLink, Pose) :-
 %used to find corners of a surface
 % calculates the position of a a joint relative to map;
 %Iterating over all of its parents and adding their relativ position.
-joint_abs_position(Joint,[PosX,PosY,PosZ]) :-
-  rdf_has(_,'http://knowrob.org/kb/urdf.owl#hasRootLink',RootLink),
-  (  not(rdf_urdf_has_parent(Joint, RootLink)) % rdf_urdf_has_parent(Joint, _),
-  -> rdf_urdf_has_parent(Joint, Link), rdf_urdf_has_child(SubJoint,Link),
-       rdf_urdf_joint_origin(Joint,[_,_,[JPosX,JPosY,JPosZ],_]),
-       rdf_urdf_joint_origin(SubJoint,[_,_,_,[SQuatX,SQuatY,SQuatZ,SQuatW]]),
-       joint_abs_position(SubJoint,[SPosX,SPosY,SPosZ]),
-       quaternion_to_euler([SQuatX,SQuatY,SQuatZ,SQuatW],[Roll,Pitch,Yaw]),
-       rotate_around_axis(x,Roll,[JPosX,JPosY,JPosZ],[NX1,NY1,NZ1]),
-       rotate_around_axis(y,Pitch,[NX1,NY1,NZ1],[NX2,NY2,NZ2]),
-       rotate_around_axis(z,Yaw,[NX2,NY2,NZ2],[NX,NY,NZ]),
-       PosX is SPosX + NX,
-       PosY is SPosY + NY,
-       PosZ is SPosZ + NZ
-  ;  mem_retrieve_triple(Joint,urdf:hasOrigin,Origin),
-     transform_data(Origin,([PosX,PosY,PosZ],_))
-  ).
+%joint_abs_position(Joint,[PosX,PosY,PosZ]) :-
+%  rdf_has(_,'http://knowrob.org/kb/urdf.owl#hasRootLink',RootLink),
+%  (  not(rdf_urdf_has_parent(Joint, RootLink)) % rdf_urdf_has_parent(Joint, _),
+%  -> rdf_urdf_has_parent(Joint, Link), rdf_urdf_has_child(SubJoint,Link),
+%       rdf_urdf_joint_origin(Joint,[_,_,[JPosX,JPosY,JPosZ],_]),
+%       rdf_urdf_joint_origin(SubJoint,[_,_,_,[SQuatX,SQuatY,SQuatZ,SQuatW]]),
+%       joint_abs_position(SubJoint,[SPosX,SPosY,SPosZ]),
+%       quaternion_to_euler([SQuatX,SQuatY,SQuatZ,SQuatW],[Roll,Pitch,Yaw]),
+%       rotate_around_axis(x,Roll,[JPosX,JPosY,JPosZ],[NX1,NY1,NZ1]),
+%       rotate_around_axis(y,Pitch,[NX1,NY1,NZ1],[NX2,NY2,NZ2]),
+%       rotate_around_axis(z,Yaw,[NX2,NY2,NZ2],[NX,NY,NZ]),
+%       PosX is SPosX + NX,
+%       PosY is SPosY + NY,
+%       PosZ is SPosZ + NZ
+%  ;  mem_retrieve_triple(Joint,urdf:hasOrigin,Origin),
+%     transform_data(Origin,([PosX,PosY,PosZ],_))
+%  ).
+
+
+% deprecated
+joint_abs_position(Joint, Pos) :-
+    rdf_urdf_has_child(Joint, Frame),
+    surface_pose_in_map(Frame, [Pos, _]).
+
 %used to find corners of a surface
 joint_abs_rotation(Joint,[Roll,Pitch,Yaw]) :-
     rdf_has(_,'http://knowrob.org/kb/urdf.owl#hasRootLink',RootLink),

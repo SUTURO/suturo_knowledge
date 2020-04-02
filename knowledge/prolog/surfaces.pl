@@ -196,8 +196,7 @@ shelf_floor_at_height(Height, TargetShelfLink) :- % has not been tested yet.
     findall(ShelfFloorLink, (
         big_shelf_surfaces(AllFloorsLinks),
         member(ShelfFloorLink, AllFloorsLinks),
-        rdf_urdf_has_child(Joint,ShelfFloorLink),
-        joint_abs_position(Joint,[_,_,Z]),
+        surface_pose_in_map(ShelfFloorLink, [[_,_,Z],_]),
         Z < Height
     ), ShelfFloorsLinks),
     reverse(ShelfFloorsLinks, [TargetShelfLink|_]).
