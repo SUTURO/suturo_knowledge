@@ -40,7 +40,7 @@ hsr_existing_object_at(Pose, Threshold, Instance) :-
 
 
 surface_pose_in_map(SurfaceLink, Pose) :-
-    surface_frame(Frame, SurfaceLink),
+    surface_frame(SurfaceLink, Frame),
     hsr_lookup_transform(map, Frame, Translation, Rotation),
     Pose = [Translation, Rotation].
 
@@ -187,7 +187,7 @@ euler_to_quaternion([Roll, Pitch, Yaw], [X, Y, Z, W]) :-
 
 
 distance_to_robot(Obj, Distance) :-
-    object_frame(Frame, Obj),
+    object_frame(Obj, Frame),
     hsr_lookup_transform(map, Frame, [OX, OY, OZ], _),
     hsr_lookup_transform(map,base_footprint,[BX,BY,BZ],_),
     writeln(([OX,OY,OZ],[BX,BY,BZ])),
