@@ -283,9 +283,11 @@ surface_frame(Surface, Frame) :-
 
 surface_front_edge_center_frame(Surface, FrontEdgeCenterFrame) :-
     rdf_urdf_name(Surface, FullName),
-    split_string(FullName, "_", "", [Name, _]),
+    sub_atom(FullName, 0, _, 7, Name), % cuts away the Suffix "_center" (the last 7 letters)
     urdf_surface_prefix(Prefix),
     atom_concat(Prefix, Name, Part1),
     Suffix = "_front_edge_center",
     atom_concat(Part1, Suffix, FrontEdgeCenterFrame).
+
+
 
