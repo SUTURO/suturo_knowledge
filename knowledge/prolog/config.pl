@@ -2,6 +2,8 @@
     [
       offsets/1,
       threshold_for_group/1,
+      threshold_surface/2,
+      urdf_surface_prefix/1,
       allowed_class_distance/1,
       min_class_confidence/1, 
       context_speech_sort_by_class/4,

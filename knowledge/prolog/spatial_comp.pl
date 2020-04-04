@@ -13,7 +13,8 @@
         %find_corners/4,
         % Type cast
         object_frame/2,
-        surface_frame/2
+        surface_frame/2,
+        surface_front_edge_center_frame/2
     ]).
 
 :- rdf_meta
@@ -49,12 +50,14 @@ surface_pose_in_map(SurfaceLink, Pose) :-
 object_supportable_by_surface(Object, Surface):-
     all_surfaces(Surfaces),
     member(Surface,Surfaces),
-    surface_front_edge_center_frame(Surface, Frame),
-    hsr_lookup_transform(Frame, Object, Position, _),
+    surface_front_edge_center_frame(Surface, SurfaceFrame),
+    object_frame(Object, ObjectFrame),
+    hsr_lookup_transform(SurfaceFrame, ObjectFrame, Position, _),
     relative_position_supportable_by_surface(Position, Surface).
     
 object_supportable_by_surface(Object, ground):-
-    hsr_lookup_transform(map, Object, [_,_,Z], _),
+    object_frame(Object, Frame),
+    hsr_lookup_transform(map, Frame, [_,_,Z], _),
     position_supportable_by_ground(Z).
 
 position_supportable_by_surface(Position, Surface) :-
@@ -73,7 +76,10 @@ relative_position_supportable_by_surface([X,Y,Z],Surface) :-
     ThAbove >= Z,
     ThBelow =< Z,
     Width/2 >= abs(X),
-    Depth >= (-1) * Y.
+    0 >= Y,
+    Depth*(-1) =< Y,
+    writeln(Depth),
+    writeln([X,Y,Z]).
 
 position_supportable_by_ground(ZPos) :-
     threshold_surface(ThAbove, ThBelow),
@@ -260,7 +266,7 @@ find_corners(Surface, Corners) :-
 distance_to_robot(Obj, Distance) :-
     object_frame(Obj, Frame),
     hsr_lookup_transform(map, Frame, [OX, OY, OZ], _),
-    hsr_lookup_transform(map,base_footprint,[BX,BY,BZ],_),
+    hsr_lookup_transform(map,'base_footprint',[BX,BY,BZ],_),
     writeln(([OX,OY,OZ],[BX,BY,BZ])),
     DX is (OX - BX),
     DY is (OY - BY),
