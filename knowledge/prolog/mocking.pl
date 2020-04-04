@@ -22,7 +22,6 @@ create_object_on_surface(Surface) :-
     XMax is (Width/2) - 0.1,
     YMin is Depth*(-1) + 0.1,
     YMax is - 0.1,
-    write("YMin: "), write(YMin), write("YMax: "), writeln(YMax),
     surface_front_edge_center_frame(Surface, Frame),
     find_random_suitable_pos_(XMin, XMax, YMin, YMax, Frame, [RelativeX,RelativeY]),
     tf_transform_point(Frame, map, [RelativeX, RelativeY, 0], Pos),

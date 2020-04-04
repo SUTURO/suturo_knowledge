@@ -77,9 +77,7 @@ relative_position_supportable_by_surface([X,Y,Z],Surface) :-
     ThBelow =< Z,
     Width/2 >= abs(X),
     0 >= Y,
-    Depth*(-1) =< Y,
-    writeln(Depth),
-    writeln([X,Y,Z]).
+    Depth*(-1) =< Y.
 
 position_supportable_by_ground(ZPos) :-
     threshold_surface(ThAbove, ThBelow),
