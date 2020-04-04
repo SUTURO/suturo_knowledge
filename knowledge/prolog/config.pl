@@ -30,6 +30,13 @@ offsets(Offset) :-
 threshold_for_group(Threshold) :-
     Threshold = 0.15.
 
+threshold_surface(ThresholdAbove, ThresholdBelow) :-
+    ThresholdAbove = 0.25,
+    ThresholdBelow = -0.05.
+
+urdf_surface_prefix(Prefix) :-
+    Prefix = 'iai_kitchen/'.
+
 %% Distance is the maximum Distance (rdf_shortest_path) to another Object
 %% where the Object should still be sorted by class rather than other properties
 %% like Color or Size.

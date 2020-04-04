@@ -28,8 +28,6 @@
     all_objects_on_table/1, % DEPRECATED! Use only for backward compatibility reasons
     %% CREATE OBJECT
     place_object/1,
-    object_supportable_by_surface/2,
-    position_supportable_by_surface/2,
     %% ROLES
     make_ground_source/0,
     load_surfaces_from_param/1,
@@ -53,8 +51,6 @@
     supporting_surface(?),
     surface_big_enough(?),
     surface_big_enough(r,?),
-    object_supportable_by_surface(r,r),
-    position_supportable_by_surface(r,r),
     point_in_rectangle(r,r,r,r,r),
     assert_surface_types(?),
     object_goal_surface(r,?),
@@ -286,13 +282,7 @@ all_objects_in_gripper(Instances):-
 
 
 select_surface([X,Y,Z], Surface) :-
-    (  position_supportable_by_surface([X,Y,Z], Surface1)
-    -> Surface = Surface1
-    ;  (Z < 0.5
-         -> Surface = ground
-         ;  false
-       )
-    ).
+    position_supportable_by_surface([X,Y,Z], Surface).
 
 
 
@@ -305,44 +295,9 @@ select_surface([X,Y,Z], Surface) :-
 % finds the surface an object was seen on. When there is no surface supporting the object and
 % the center point of the object < 0.5 the object is placed on the ground. Otherwise the query resolves to false.
 place_object(Object):-
-    (  object_supportable_by_surface(Object, Surface)
-    -> assert_object_on(Object,Surface)
-    ;  object_pose(Object,[_,_,[_,_,Z],_]),
-       Z < 0.5,
-       assert_object_on(Object,ground)
-    ).
+    object_supportable_by_surface(Object, Surface),
+    assert_object_on(Object,Surface).
 
-
-% finds and returns surfaces the object might be standing on.
-object_supportable_by_surface(Object, SurfaceLink):-
-    all_surfaces(SurfaceLinks),
-    member(SurfaceLink,SurfaceLinks),
-    object_pose(Object,[_,_,[X,Y,Z],_]),
-    position_supportable_by_surface([X,Y,Z], SurfaceLink).
-
-
-position_supportable_by_surface([X,Y,Z], SurfaceLink):-
-    rdf_urdf_link_collision(SurfaceLink,ShapeTerm,_),
-    rdf_urdf_has_child(Joint, SurfaceLink),
-    position_above_surface(Joint, ShapeTerm, [X,Y,Z], Distance),
-    ( (Distance < 0.25, Distance > -0.05) % TODO Find a good threshold
-    -> true
-    ; fail).
-
-
-%% Joint supporting the ShapeTerm, the ShapeTerm, Position of the object, return Distance vertical distance
-position_above_surface(Joint, ShapeTerm, [X,Y,Z], Distance):-
-    joint_abs_position(Joint,[JPosX,JPosY,JPosZ]),
-    joint_abs_rotation(Joint,[Roll,Pitch,Yaw]),
-     %TODO THIS IS A STUPID WORK AROUND. MAKE THE URDF MORE CONSISTANT
-    (rdf_urdf_name(Joint,Name),sub_string(Name,_,_,_,center)
-    -> JPosZR is JPosZ *2
-    ; JPosZR is JPosZ
-    ),
-    ( point_on_surface([JPosX, JPosY, _], [Roll,Pitch,Yaw], ShapeTerm, [X,Y,_])
-    -> Distance is Z - JPosZR, true
-    ; fail
-    ).
 
 /**
 ***************************************************ROLES*********************************************
