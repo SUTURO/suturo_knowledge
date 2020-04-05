@@ -58,7 +58,7 @@ setup :-
 
 advanced_setup :-
     table_surfaces(A),
-    member(B,A),
+    member(B,A), !,
     create_object_on_surface(B),
     create_object_on_surface(B),
     create_object_on_surface(B),
