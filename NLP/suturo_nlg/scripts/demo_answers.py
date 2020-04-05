@@ -87,21 +87,22 @@ def knowledge_result_2():
 
 @dispatcher.public
 def generate_text(knowledge):
-    if "question" in knowledge:
+    print("Called generate_text in demo_answers.py", knowledge)
+    if not("question" in knowledge):
         return "huh?"
     query = knowledge["question"]
     if "is there" == query:
         if "yes" == knowledge["answer"]:
             return "yes"
-	else: 
-	    return "no" 
+        else:
+            return "no"
     elif query == "supposed to go":
-	item = knowledge["item"]
-	location = knowledge["location"]
+        item = knowledge["item"]
+        location = knowledge["location"]
         return "the %s is supposed to go on the %s"%(item, location)
     elif query == "what is on":
-	item = knowledge["item"]
-	location = knowledge["location"]
+        item = knowledge["item"]
+        location = knowledge["location"]
         return "there is a %s on the %s"%(item, location)
     return "huh?"
     

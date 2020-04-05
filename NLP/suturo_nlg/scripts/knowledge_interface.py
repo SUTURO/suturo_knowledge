@@ -7,7 +7,12 @@ prolog = rosprolog_client.Prolog()
 
 
 def is_there(location, item):
-    item = item.capitalize()
+    if item == "red pringles can":
+        item = "Pringlesoriginal"
+    elif item == "blue pringles can":
+        item = "Pringlessaltvinegar"
+    elif item == "banana":
+        item = "Banana"
     query_string = "rdfs_individual_of(_X,hsr_objects:'" + item + "'), rdf_has(_X, hsr_objects:'supportedBy',_Link), rdf_urdf_name(_Link,Name)."
     solutions = prolog.all_solutions(query_string)
 
@@ -25,9 +30,11 @@ def what_is_on(location):
     rospy.wait_for_service('/rosprolog/query')
 
     if location == "shelf":
-        query_string = "once((all_objects_on_shelves(_Objs), member(Obj,_Objs)))."
-    elif location == "table":
-        query_string = "once((rdf_urdf_name(_Table, table_2_center),rdf_has(Obj, hsr_objects:'supportedBy', _Table)))."
+        query_string = "once((all_objects_in_whole_shelf(_Objs), member(Obj,_Objs)))."
+    elif location == "big table":
+        query_string = "once((rdf_urdf_name(_Table, table_0_center),rdf_has(Obj, hsr_objects:'supportedBy', _Table)))."
+    elif location == "small table":
+        query_string = "once((rdf_urdf_name(_Table, table_1_center),rdf_has(Obj, hsr_objects:'supportedBy', _Table)))."
     elif location == "ground":
         query_string = "once((rdf_has(hsr_objects:'supportedBy', ground)))."
     else:
@@ -90,6 +97,6 @@ def pub(datadict):
 
 if __name__ == '__main__':
     rospy.init_node('knowledge_interface')
-    publisher = rospy.Publisher('kinterface_out', MeaningRepresentation, queue_size=10)
     rospy.Subscriber("kinterface_in", MeaningRepresentation, callback)
+    publisher = rospy.Publisher('kinterface_out', MeaningRepresentation, queue_size=10)
     rospy.spin()
