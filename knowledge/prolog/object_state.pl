@@ -7,8 +7,16 @@
       object_at_table/1,
       object_of_type/2,
       create_object_at/6,
+      create_object_at/10,
       hsr_existing_objects/1,
-      hsr_forget_object/1
+      hsr_forget_object/1,
+
+      %%% DEBUG %%%
+      set_dimension_semantics/4,
+      set_object_colour/2,
+      object_type_handling/3,
+      object_size_ok/1,
+      set_colour_semantics/2
     ]).
 
 :- rdf_db:rdf_register_ns(hsr_objects, 'http://www.semanticweb.org/suturo/ontologies/2018/10/objects#', [keep(true)]).
@@ -47,17 +55,26 @@ create_object(ObjectType, Instance) :-
  	owl_subclass_of(ObjectType, hsr_objects:'Item'),
 	belief_new_object(ObjectType, Instance).
 
-create_object_at(ObjectType, Transform, Threshold, Instance, [Width, Depth, Height], [R,G,B,A]) :-
+% deprecated. buggy, too.
+create_object_at(ObjectType, Transform, Threshold, Instance, Dimensions, Color) :-
+    create_object_at(ObjectType, _, Transform, Threshold, Instance, Dimensions, _, _, Color, _).
+
+create_object_at(PerceivedObjectType, TypeConfidence, Transform, Threshold, Instance, [Width, Depth, Height], Shape, ShapeConfidence, [R,G,B,A], ColorCondidence) :-
     object_size_ok([Width, Depth, Height]),
+    object_type_handling(PerceivedObjectType, TypeConfidence, ObjectType),
     owl_subclass_of(ObjectType, hsr_objects:'Item'),
     new_perceived_at(ObjectType, Transform, Threshold, Instance),
+    atom_number(TypeConfidenceAtom, TypeConfidence),
+    rdf_assert(Instance, hsr_objects:'ConfidenceClassValue', TypeConfidenceAtom),
     object_assert_dimensions(Instance, Width, Depth, Height),
     set_dimension_semantics(Instance, Width, Depth, Height),
+    rdf_assert(Instance, 'http://www.ease-crc.org/ont/EASE-OBJ.owl#Shape', Shape),
+    atom_number(ShapeConfidenceAtom, ShapeConfidence),
+    rdf_assert(Instance, hsr_objects:'ConfidenceShapeValue', ShapeConfidenceAtom),
+    atom_number(ColorCondidenceAtom, ColorCondidence),
+    rdf_assert(Instance, hsr_objects:'ConfidenceColorValue', ColorCondidenceAtom),
     set_object_colour(Instance, [R,G,B,A]).
-%    hsr_existing_objects(Objects),
-%    belief_republish_objects(Objects).
-
-
+    
 
 object_size_ok([Width,Depth,Height]):-
     Width > 0.01,
@@ -67,6 +84,13 @@ object_size_ok([Width,Depth,Height]):-
     Depth < 0.6,
     Height < 0.6.
 
+object_type_handling(PerceivedObjectType, TypeConfidence, ObjectType) :-
+    min_class_confidence(MinConf),
+    (   number(TypeConfidence),
+        TypeConfidence >= MinConf
+        -> ObjectType = PerceivedObjectType
+        ; ObjectType = 'http://www.semanticweb.org/suturo/ontologies/2018/10/objects#Other'
+        ).
 
 set_dimension_semantics(Instance, _, _, Height) :-
     Height > 0.16,
@@ -100,9 +124,7 @@ set_object_colour(Instance, [0.0, 0.0, 0.0, 0.0]) :-
     rdf_assert(Instance, hsr_objects:'colour', 'grey'), !.
 
 set_object_colour(Instance, [R,G,B,_]) :-
-    RConv is R/255,
-    GConv is G/255,
-    BConv is B/255,
+    RConv is R/255,    GConv is G/255,    BConv is B/255,
     object_assert_color(Instance, [RConv,GConv,BConv,0.8]),
     set_colour_semantics(Instance, [RConv,GConv,BConv]).
 
@@ -130,5 +152,8 @@ set_colour_semantics(Instance, [0.0, 1.0, 1.0]) :-
 set_colour_semantics(Instance, [1.0, 1.0, 1.0]) :-
     rdf_assert(Instance, hsr_objects:'colour', 'bright').
 
+set_colour_semantics(_, _) :-
+    true.
+    
 clear :-
 	belief_forget.

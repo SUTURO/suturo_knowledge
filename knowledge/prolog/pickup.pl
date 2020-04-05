@@ -17,3 +17,11 @@ next_object(BestObj) :-
     nth0(Index, Distances, MinDistance),
     nth0(Index, Objs, NearestObject),
     BestObj = NearestObject.
+
+next_object(noSourceSurfaces) :-
+    all_source_surfaces([]),
+    writeln("You haven't declared any surfaces to be source surfaces"), !.
+
+next_object(noObjectsOnSourceSurfaces) :-
+    all_objects_on_source_surfaces([]),
+    writeln("There aren't any objects on source surfaces").

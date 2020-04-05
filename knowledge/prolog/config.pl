@@ -1,7 +1,11 @@
 :- module(config,
     [
       offsets/1,
+      threshold_for_group/1,
+      threshold_surface/2,
+      urdf_surface_prefix/1,
       allowed_class_distance/1,
+      min_class_confidence/1, 
       context_speech_sort_by_class/4,
       context_speech_sort_by_color/3,
       context_speech_sort_by_size/3,
@@ -24,11 +28,27 @@
 offsets(Offset) :-
     Offset = [0, -0.05, 0.05, -0.1, 0.1, -0.15, 0.15, -0.2, 0.2, -0.25, 0.25, -0.3, 0.3, 0.35, 0.35].
 
+% max physical Distance between objects for them to be in a group
+threshold_for_group(Threshold) :-
+    Threshold = 0.15.
+
+threshold_surface(ThresholdAbove, ThresholdBelow) :-
+    ThresholdAbove = 0.25,
+    ThresholdBelow = -0.05.
+
+urdf_surface_prefix(Prefix) :-
+    Prefix = 'iai_kitchen/'.
+
 %% Distance is the maximum Distance (rdf_shortest_path) to another Object
 %% where the Object should still be sorted by class rather than other properties
 %% like Color or Size.
 allowed_class_distance(Distance) :-
     Distance = 5.
+
+%% Minimum Confidence where the perceived Object class should still be stored.
+%% Classes with lower confidence get 'Other' as fallback.
+min_class_confidence(Confidence) :-
+    Confidence = 0.5.
 
 %% Context is the Speech, the Robot should hold depending on the distance of the
 %% next Objects Class.

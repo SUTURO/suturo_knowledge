@@ -7,6 +7,9 @@
     surface_type_of/2,
     %% FIND SURFACES
     all_surfaces/1, %replaces all_srdl_objects contains ground
+    is_surface/1,
+    is_table/1,
+    is_shelf/1,
     all_source_surfaces/1,
     all_target_surfaces/1,
     get_surface_id_by_name/2,
@@ -15,21 +18,23 @@
     big_shelf_surfaces/1, % will soon be deprecated
     shelf_floor_at_height/2, % will soon be deprecated
     table_surfaces/1, 
-    object_current_surface/2,
     select_surface/2,
+    find_supporting_surface/2,
     %% FIND OBJs
     objects_on_surface/2,
+    is_object/1,
+    objects_on_list_of_surfaces/2,
     all_objects_on_source_surfaces/1,
     all_objects_on_target_surfaces/1,
     all_objects_on_ground/1,
     all_objects_in_whole_shelf/1, % will soon be deprecated
     all_objects_on_tables/1,
+    all_objects_on_table/1, % DEPRECATED! Use only for backward compatibility reasons
     %% CREATE OBJECT
     place_object/1,
-    object_supportable_by_surface/2,
-    position_supportable_by_surface/2,
     %% ROLES
     make_ground_source/0,
+    load_surfaces_from_param/1,
     make_all_shelves_target/0,
     make_all_tables_source/0,
     make_all_surface_type_role/2,
@@ -45,12 +50,11 @@
 :- owl_parser:owl_parse('package://urdfprolog/owl/urdf.owl').
 
 :- rdf_meta % TODO FIX ME
+    load_surfaces_from_param(r),
     get_surface_id_by_name(r,?),
     supporting_surface(?),
     surface_big_enough(?),
     surface_big_enough(r,?),
-    object_supportable_by_surface(r,r),
-    position_supportable_by_surface(r,r),
     point_in_rectangle(r,r,r,r,r),
     assert_surface_types(?),
     object_goal_surface(r,?),
@@ -64,10 +68,18 @@
     object_goal_pose(r,?,?,?).
 
 
-
 /**
-* is called in init.pl
+* is called as inital_goal in the launch file
 */
+load_surfaces_from_param(Param):-
+    (once(rdfs_individual_of(_, urdf:'Robot'))
+    -> write("Surfaces are allready loaded. Restart the knowledgebase to load a diffrent URDF")
+    ;  kb_create(urdf:'Robot', RobotNew),rdf_urdf_load_param(RobotNew, Param),
+        forall(supporting_surface(SurfaceLink),
+        assert_surface_types(SurfaceLink))
+    ).
+
+
 assert_surface_types(SurfaceLink):-
     rdf_assert(ground,hsr_objects:'isSurfaceType',ground),
     supporting_surface(SurfaceLink),
@@ -83,7 +95,7 @@ assert_surface_types(SurfaceLink):-
 
 %% supporting_surface(?Surface).
 %
-supporting_surface(SurfaceLink):-
+supporting_surface(SurfaceLink):- % has not been tested yet.
     rdf_urdf_link_collision(SurfaceLink,ShapeTerm,_),
     surface_big_enough(ShapeTerm),
     true.
@@ -105,7 +117,7 @@ forget_objects_on_surface(SurfaceLink) :-
     hsr_forget_object(Obj).
 
 
-surface_big_enough(box(X, Y, _)):- %TODO Support other shapes
+surface_big_enough(box(X, Y, _)):- %TODO Support other shapes, has not been tested yet.
     square_big_enough(X,Y).
 
 %surface_big_enough(mesh(_,[X,Y,_])):- % TODO? Support Meshes (They are all asserted with size 1, 1, 1)
@@ -119,16 +131,27 @@ square_big_enough(X,Y):- %TODO Support other shapes
     ).
 
 
-assert_object_on(ObjectInstance, SurfaceLink) :-
+assert_object_on(ObjectInstance, SurfaceLink) :- % has not been tested yet.
     all_surfaces(SurfaceLinks),
     member(SurfaceLink,SurfaceLinks),
     kb_retract(ObjectInstance, hsr_objects:'supportedBy', _),
     kb_assert(ObjectInstance, hsr_objects:'supportedBy', SurfaceLink).
 
 
-surface_type_of(Surface, Type):-
+surface_type_of(Surface, Type):- % has not been tested yet.
     rdf_has(Surface, hsr_objects:'isSurfaceType', Type).
 
+is_surface(Surface) :-
+    all_surfaces(Surfaces),
+    member(Surface, Surfaces).
+
+is_table(Table) :-
+    table_surfaces(Tables),
+    member(Table, Tables).
+
+is_shelf(Shelf) :-
+    shelf_surfaces(Shelves),
+    member(Shelf, Shelves).
 
 /**
 *****************************************FIND SURFACES******************************************************
@@ -171,7 +194,7 @@ shelf_surfaces(ShelfLinks):-
     findall(ShelfLink, rdf_has(ShelfLink, hsr_objects:'isSurfaceType',shelf),ShelfLinks).
 
 
-big_shelf_surfaces(ShelfLinks) :-
+big_shelf_surfaces(ShelfLinks) :- % has not been tested yet.
     findall(ShelfLink,
     (
         rdf_has(ShelfLink, hsr_objects:'isSurfaceType',shelf),
@@ -182,12 +205,11 @@ big_shelf_surfaces(ShelfLinks) :-
 
 
 % Deprecated
-shelf_floor_at_height(Height, TargetShelfLink) :-
+shelf_floor_at_height(Height, TargetShelfLink) :- % has not been tested yet.
     findall(ShelfFloorLink, (
         big_shelf_surfaces(AllFloorsLinks),
         member(ShelfFloorLink, AllFloorsLinks),
-        rdf_urdf_has_child(Joint,ShelfFloorLink),
-        joint_abs_position(Joint,[_,_,Z]),
+        surface_pose_in_map(ShelfFloorLink, [[_,_,Z],_]),
         Z < Height
     ), ShelfFloorsLinks),
     reverse(ShelfFloorsLinks, [TargetShelfLink|_]).
@@ -196,10 +218,12 @@ shelf_floor_at_height(Height, TargetShelfLink) :-
 table_surfaces(TableLinks):-
     findall(TableLink, rdf_has(TableLink, hsr_objects:'isSurfaceType',table), TableLinks).
 
+find_supporting_surface(Object, Surface) :-
+    rdf_has(Object, hsr_objects:'supportedBy', Surface).
 
-object_current_surface(ObjectInstance, SurfaceLink) :-
-    rdf_has(ObjectInstance, hsr_objects:'supportedBy', SurfaceLink).
-
+is_object(Object) :-
+    hsr_existing_objects(Objects),
+    member(Object, Objects).
 
 /**
 *****************************************CREATE OBJECTS******************************************************
@@ -207,7 +231,7 @@ object_current_surface(ObjectInstance, SurfaceLink) :-
 
 objects_on_surface(ObjectInstances, SurfaceLink) :-
     findall(ObjectInstance,
-        object_current_surface(ObjectInstance, SurfaceLink),
+        find_supporting_surface(ObjectInstance, SurfaceLink),
         ObjectInstances).
 
 
@@ -259,6 +283,10 @@ all_objects_on_tables(Instances) :-
         member(Instance, ObjPerTable)
         ), Instances).
 
+ % DEPRECATED! Use only for backward compatibility reasons
+all_objects_on_table(Instances) :- 
+    all_objects_on_tables(Instances).
+
 
 all_objects_in_gripper(Instances):-
     findall(Instance, (
@@ -269,13 +297,7 @@ all_objects_in_gripper(Instances):-
 
 
 select_surface([X,Y,Z], Surface) :-
-    (  position_supportable_by_surface([X,Y,Z], Surface1)
-    -> Surface = Surface1
-    ;  (Z < 0.5
-         -> Surface = ground
-         ;  false
-       )
-    ).
+    position_supportable_by_surface([X,Y,Z], Surface).
 
 
 
@@ -288,44 +310,9 @@ select_surface([X,Y,Z], Surface) :-
 % finds the surface an object was seen on. When there is no surface supporting the object and
 % the center point of the object < 0.5 the object is placed on the ground. Otherwise the query resolves to false.
 place_object(Object):-
-    (  object_supportable_by_surface(Object, Surface)
-    -> assert_object_on(Object,Surface)
-    ;  object_pose(Object,[_,_,[_,_,Z],_]),
-       Z < 0.5,
-       assert_object_on(Object,ground)
-    ).
+    object_supportable_by_surface(Object, Surface),
+    assert_object_on(Object,Surface).
 
-
-% finds and returns surfaces the object might be standing on.
-object_supportable_by_surface(Object, SurfaceLink):-
-    all_surfaces(SurfaceLinks),
-    member(SurfaceLink,SurfaceLinks),
-    object_pose(Object,[_,_,[X,Y,Z],_]),
-    position_supportable_by_surface([X,Y,Z], SurfaceLink).
-
-
-position_supportable_by_surface([X,Y,Z], SurfaceLink):-
-    rdf_urdf_link_collision(SurfaceLink,ShapeTerm,_),
-    rdf_urdf_has_child(Joint, SurfaceLink),
-    position_above_surface(Joint, ShapeTerm, [X,Y,Z], Distance),
-    ( (Distance < 0.25, Distance > -0.05) % TODO Find a good threshold
-    -> true
-    ; fail).
-
-
-%% Joint supporting the ShapeTerm, the ShapeTerm, Position of the object, return Distance vertical distance
-position_above_surface(Joint, ShapeTerm, [X,Y,Z], Distance):-
-    joint_abs_position(Joint,[JPosX,JPosY,JPosZ]),
-    joint_abs_rotation(Joint,[Roll,Pitch,Yaw]),
-     %TODO THIS IS A STUPID WORK AROUND. MAKE THE URDF MORE CONSISTANT
-    (rdf_urdf_name(Joint,Name),sub_string(Name,_,_,_,center)
-    -> JPosZR is JPosZ *2
-    ; JPosZR is JPosZ
-    ),
-    ( point_on_surface([JPosX, JPosY, _], [Roll,Pitch,Yaw], ShapeTerm, [X,Y,_])
-    -> Distance is Z - JPosZR, true
-    ; fail
-    ).
 
 /**
 ***************************************************ROLES*********************************************
