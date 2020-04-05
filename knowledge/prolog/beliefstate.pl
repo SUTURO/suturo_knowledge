@@ -49,7 +49,8 @@ hsr_belief_at_update(Instance, Transform) :-
 merge_object_into_group(Instance) :-
     current_object_pose(Instance, Transform),
     findall(NearbyObj, (
-        hsr_existing_object_at(Transform, 0.15, NearbyObj)),
+        threshold_for_group(Threshold),
+        hsr_existing_object_at(Transform, Threshold, NearbyObj)),
         [Obj|Rest]),
     rdf_has(Obj, hsr_objects:'inGroup', WG),
     member(Other, Rest),
@@ -101,7 +102,7 @@ group_mean_pose(Group, Transform, Rotation) :-
     Zmean is Ztotal / L,
     Transform = [Xmean, Ymean, Zmean],
     once(rdf_has(Member, hsr_objects:'inGroup', Group)),
-    object_current_surface(Member, Surface),
+    find_supporting_surface(Member, Surface),
     surface_pose_in_map(Surface, [_, Rotation]),
     object_frame_name(Group, Frame),
     object_pose_update(Group, ['map', Frame, Transform, Rotation]).

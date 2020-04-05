@@ -1,12 +1,14 @@
 :- module(mocking,
     [
-      create_objects_on_table/0
+      create_object_on_surface/1,
+      setup/0,
+      advanced_setup/0
     ]).
 
 :- rdf_db:rdf_register_ns(hsr_objects, 'http://www.semanticweb.org/suturo/ontologies/2018/10/objects#', [keep(true)]).
 
 :- rdf_meta
-    create_objects_on_table.
+    create_object_on_surface(?).
 
 
 create_objects_on_table :-
@@ -16,69 +18,49 @@ create_objects_on_table :-
     create_unknown_on_table.
     %group_table_objects.
 
+create_object_on_surface(Surface) :-
+    rdf_urdf_link_collision(Surface, box(Width, Depth, _), _),
+    XMin is (-1) * (Width/2) + 0.1,
+    XMax is (Width/2) - 0.1,
+    YMin is Depth*(-1) + 0.1,
+    YMax is - 0.1,
+    surface_front_edge_center_frame(Surface, Frame),
+    find_random_suitable_pos_(XMin, XMax, YMin, YMax, Frame, [RelativeX,RelativeY]),
+    tf_transform_point(Frame, map, [RelativeX, RelativeY, 0], Pos),
 
-create_banana_on_table_old :-
-    select_surface([2.025, 0.85, 0.47],_),
+    Transform = ['map', _, Pos, [0,0,1,0]],
     create_object_at('http://www.semanticweb.org/suturo/ontologies/2018/10/objects#Banana',
-        ['map', _, [2.025, 0.85, 0.47],[0.0, 0.0, -0.28, 0.96]],
+        0.8, 
+        Transform,
         0.05, 
-        ObjectInstance,
-        [0.2, 0.075, 0.075], 
-        [0.153, 0.17, 0.187, 1.0]),
-    place_object(ObjectInstance).
-
-create_banana_on_table :-
-    select_surface([2.025, 0.85, 0.47],_),
-    create_object_at('http://www.semanticweb.org/suturo/ontologies/2018/10/objects#Banana',
+        ObjectInstance, 
+        [0.2, 0.075, 0.2], 
+        box,
         0.8,
-        ['map', _, [2.025, 0.85, 0.47],[0.0, 0.0, -0.28, 0.96]],
-        0.05, 
-        ObjectInstance,
-        [0.2, 0.075, 0.075], 
-        box,
-        0.4,
-        [0.153, 0.17, 0.187, 1.0],
+        [0.0,0.0,0.0,0.0],
         0.9),
-    place_object(ObjectInstance).
+    place_object(ObjectInstance),
+    !.
 
-create_milk_on_table :-
-    select_surface([2.17, 0.9, 0.47],_),
-    create_object_at('http://www.semanticweb.org/suturo/ontologies/2018/10/objects#Vollmilch',
-        0.7,
-        ['map', _, [2.17, 0.9, 0.47],[0.0, 0.0, -0.28, 0.96]],
-        0.05, 
-        ObjectInstance,
-        [0.075, 0.075, 0.23], 
-        box,
-        0.3,
-        [0.0, 0.0, 0.0, 1.0],
-        0.2),
-    place_object(ObjectInstance).
 
-create_coffee_on_table :-
-    select_surface([2.275, 1.1, 0.47],_),
-    create_object_at('http://www.semanticweb.org/suturo/ontologies/2018/10/objects#Magicokaffetypfamilycappuccino',
-        0.6,
-        ['map', _, [2.275, 1.1, 0.47],[0.0, 0.0, -0.28, 0.96]],
-        0.05, 
-        ObjectInstance,
-        [0.0551572740078, 0.113258674741, 0.134232342243], 
-        box,
-        0.5,
-        [0.0, 0.0, 0.0, 1.0],
-        0.18),
-    place_object(ObjectInstance).
+find_random_suitable_pos_(XMin, XMax, YMin, YMax, Frame, Pos) :-
+    random(XMin, XMax, X),
+    random(YMin, YMax, Y),
+    Transform = [Frame, _, [X,Y,0], [0,0,1,0]],
+    (   hsr_existing_object_at(Transform, 0.01, _)
+        -> find_random_suitable_pos_(XMin, XMax, YMin, YMax, Pos)
+        ; Pos = [X,Y]
+    ).
 
-create_unknown_on_table :-
-    select_surface([2.275, 0.65, 0.47],_),
-    create_object_at('http://www.semanticweb.org/suturo/ontologies/2018/10/objects#Vollmilch',
-        0.3,
-        ['map', _, [2.275, 0.65, 0.47],[0.0, 0.0, -0.28, 0.96]],
-        0.05, 
-        ObjectInstance,
-        [0.09, 0.06, 0.12], 
-        box,
-        0.4,
-        [0.0, 0.0, 0.0, 1.0],
-        0.3),
-    place_object(ObjectInstance).
+setup :-
+    make_all_tables_source,
+    make_all_shelves_target.
+
+advanced_setup :-
+    table_surfaces(A),
+    member(B,A), !,
+    create_object_on_surface(B),
+    create_object_on_surface(B),
+    create_object_on_surface(B),
+    create_object_on_surface(B),
+    setup.

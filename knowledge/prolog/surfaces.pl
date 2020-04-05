@@ -7,6 +7,9 @@
     surface_type_of/2,
     %% FIND SURFACES
     all_surfaces/1, %replaces all_srdl_objects contains ground
+    is_surface/1,
+    is_table/1,
+    is_shelf/1,
     all_source_surfaces/1,
     all_target_surfaces/1,
     get_surface_id_by_name/2,
@@ -16,8 +19,10 @@
     shelf_floor_at_height/2, % will soon be deprecated
     table_surfaces/1, 
     select_surface/2,
+    find_supporting_surface/2,
     %% FIND OBJs
     objects_on_surface/2,
+    is_object/1,
     objects_on_list_of_surfaces/2,
     all_objects_on_source_surfaces/1,
     all_objects_on_target_surfaces/1,
@@ -27,8 +32,6 @@
     all_objects_on_table/1, % DEPRECATED! Use only for backward compatibility reasons
     %% CREATE OBJECT
     place_object/1,
-    object_supportable_by_surface/2,
-    position_supportable_by_surface/2,
     %% ROLES
     make_ground_source/0,
     load_surfaces_from_param/1,
@@ -52,8 +55,6 @@
     supporting_surface(?),
     surface_big_enough(?),
     surface_big_enough(r,?),
-    object_supportable_by_surface(r,r),
-    position_supportable_by_surface(r,r),
     point_in_rectangle(r,r,r,r,r),
     assert_surface_types(?),
     object_goal_surface(r,?),
@@ -99,6 +100,8 @@ supporting_surface(SurfaceLink):- % has not been tested yet.
     surface_big_enough(ShapeTerm),
     true.
 
+%% takes names like table_1_center or shelf_floor_4_piece or ground.
+%% Returns false if name is not a registered surface.
 get_surface_id_by_name(Name, SurfaceId):-
     (rdf_urdf_name(SurfaceId, Name), all_surfaces(Surfaces), member(SurfaceId, Surfaces)
         -> true
@@ -138,6 +141,17 @@ assert_object_on(ObjectInstance, SurfaceLink) :- % has not been tested yet.
 surface_type_of(Surface, Type):- % has not been tested yet.
     rdf_has(Surface, hsr_objects:'isSurfaceType', Type).
 
+is_surface(Surface) :-
+    all_surfaces(Surfaces),
+    member(Surface, Surfaces).
+
+is_table(Table) :-
+    table_surfaces(Tables),
+    member(Table, Tables).
+
+is_shelf(Shelf) :-
+    shelf_surfaces(Shelves),
+    member(Shelf, Shelves).
 
 /**
 *****************************************FIND SURFACES******************************************************
@@ -195,8 +209,7 @@ shelf_floor_at_height(Height, TargetShelfLink) :- % has not been tested yet.
     findall(ShelfFloorLink, (
         big_shelf_surfaces(AllFloorsLinks),
         member(ShelfFloorLink, AllFloorsLinks),
-        rdf_urdf_has_child(Joint,ShelfFloorLink),
-        joint_abs_position(Joint,[_,_,Z]),
+        surface_pose_in_map(ShelfFloorLink, [[_,_,Z],_]),
         Z < Height
     ), ShelfFloorsLinks),
     reverse(ShelfFloorsLinks, [TargetShelfLink|_]).
@@ -205,11 +218,12 @@ shelf_floor_at_height(Height, TargetShelfLink) :- % has not been tested yet.
 table_surfaces(TableLinks):-
     findall(TableLink, rdf_has(TableLink, hsr_objects:'isSurfaceType',table), TableLinks).
 
+find_supporting_surface(Object, Surface) :-
+    rdf_has(Object, hsr_objects:'supportedBy', Surface).
 
-object_current_surface(ObjectInstance, SurfaceLink) :- % has not been tested yet.
-    rdf_has(ObjectInstance, hsr_objects:'supportedBy', SurfaceLink).
-
-
+is_object(Object) :-
+    hsr_existing_objects(Objects),
+    member(Object, Objects).
 
 /**
 *****************************************CREATE OBJECTS******************************************************
@@ -217,7 +231,7 @@ object_current_surface(ObjectInstance, SurfaceLink) :- % has not been tested yet
 
 objects_on_surface(ObjectInstances, SurfaceLink) :-
     findall(ObjectInstance,
-        object_current_surface(ObjectInstance, SurfaceLink),
+        find_supporting_surface(ObjectInstance, SurfaceLink),
         ObjectInstances).
 
 
@@ -283,13 +297,7 @@ all_objects_in_gripper(Instances):-
 
 
 select_surface([X,Y,Z], Surface) :-
-    (  position_supportable_by_surface([X,Y,Z], Surface1)
-    -> Surface = Surface1
-    ;  (Z < 0.5
-         -> Surface = ground
-         ;  false
-       )
-    ).
+    position_supportable_by_surface([X,Y,Z], Surface).
 
 
 
@@ -302,29 +310,8 @@ select_surface([X,Y,Z], Surface) :-
 % finds the surface an object was seen on. When there is no surface supporting the object and
 % the center point of the object < 0.5 the object is placed on the ground. Otherwise the query resolves to false.
 place_object(Object):-
-    (  object_supportable_by_surface(Object, Surface)
-    -> assert_object_on(Object,Surface)
-    ;  object_pose(Object,[_,_,[_,_,Z],_]),
-       Z < 0.5,
-       assert_object_on(Object,ground)
-    ).
-
-
-% finds and returns surfaces the object might be standing on.
-object_supportable_by_surface(Object, SurfaceLink):-
-    all_surfaces(SurfaceLinks),
-    member(SurfaceLink,SurfaceLinks),
-    object_pose(Object,[_,_,[X,Y,Z],_]),
-    position_supportable_by_surface([X,Y,Z], SurfaceLink).
-
-
-position_supportable_by_surface([X,Y,Z], SurfaceLink):-
-    rdf_urdf_link_collision(SurfaceLink,ShapeTerm,_),
-    rdf_urdf_has_child(Joint, SurfaceLink),
-    position_above_surface(Joint, ShapeTerm, [X,Y,Z], Distance),
-    ( (Distance < 0.25, Distance > -0.05) % TODO Find a good threshold
-    -> true
-    ; fail).
+    object_supportable_by_surface(Object, Surface),
+    assert_object_on(Object,Surface).
 
 
 %% Joint supporting the ShapeTerm, the ShapeTerm, Position of the object, return Distance vertical distance

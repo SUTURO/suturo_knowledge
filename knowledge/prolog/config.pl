@@ -2,6 +2,8 @@
     [
       offsets/1,
       threshold_for_group/1,
+      threshold_surface/2,
+      urdf_surface_prefix/1,
       allowed_class_distance/1,
       min_class_confidence/1, 
       context_speech_sort_by_class/4,
@@ -29,6 +31,13 @@ offsets(Offset) :-
 % max physical Distance between objects for them to be in a group
 threshold_for_group(Threshold) :-
     Threshold = 0.15.
+
+threshold_surface(ThresholdAbove, ThresholdBelow) :-
+    ThresholdAbove = 0.25,
+    ThresholdBelow = -0.05.
+
+urdf_surface_prefix(Prefix) :-
+    Prefix = 'iai_kitchen/'.
 
 %% Distance is the maximum Distance (rdf_shortest_path) to another Object
 %% where the Object should still be sorted by class rather than other properties
