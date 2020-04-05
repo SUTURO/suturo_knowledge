@@ -121,13 +121,16 @@ object_goal_pose(Instance, [Translation, Rotation], Context, RefObject) :-
     group_mean_pose(Group, [X,Y,Z], _),
     offsets(Offset),
     member(XOffset, Offset),
-    hsr_lookup_transform(map, 'iai_kitchen/shelf_left_side_piece', [LeftBorder,_,_], _), % TODO: should be left corner of target-surfaces
-    hsr_lookup_transform(map, 'iai_kitchen/shelf_right_side_piece', [RightBorder,_,_], _), % TODO: should be right corner of target-surfaces
-    NewX is X + XOffset,
-    NewX < LeftBorder - 0.1,
-    NewX > RightBorder + 0.1,
-    not(hsr_existing_object_at([map,_,[NewX, Y, Z + 0.1], Rotation], 0.2, _)),
-    Translation = [NewX, Y, Z] ,!.
+    rdf_urdf_link_collision(Surface, box(Width, _, _), _),
+    %hsr_lookup_transform(map, 'iai_kitchen/shelf_left_side_piece', [LeftBorder,_,_], _), % TODO: should be left corner of target-surfaces
+    %hsr_lookup_transform(map, 'iai_kitchen/shelf_right_side_piece', [RightBorder,_,_], _), % TODO: should be right corner of target-surfaces
+    NewX is X - (Width / 2) + XOffset,
+    NewX < (Width / 2) - 0.1,
+    NewX > (Width / -2) + 0.1,
+    surface_front_edge_center_frame(Surface, Frame),
+    tf_transform_point(Frame, map, [NewX, 0, 0], [AbsX, _,_]),
+    not(hsr_existing_object_at([map,_,[AbsX, Y, Z + 0.1], Rotation], 0.2, _)),
+    Translation = [AbsX, Y, Z] ,!.
 
 %% When a new group is opened the RefObject is equal to the Instance
 object_goal_pose(Instance, [Translation, Rotation], Context, RefObject) :-
