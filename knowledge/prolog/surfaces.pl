@@ -331,13 +331,8 @@ position_supportable_by_surface([X,Y,Z], SurfaceLink):-
 position_above_surface(Joint, ShapeTerm, [X,Y,Z], Distance):-
     joint_abs_position(Joint,[JPosX,JPosY,JPosZ]),
     joint_abs_rotation(Joint,[Roll,Pitch,Yaw]),
-     %TODO THIS IS A STUPID WORK AROUND. MAKE THE URDF MORE CONSISTANT
-    (rdf_urdf_name(Joint,Name),sub_string(Name,_,_,_,center)
-    -> JPosZR is JPosZ *2
-    ; JPosZR is JPosZ
-    ),
     ( point_on_surface([JPosX, JPosY, _], [Roll,Pitch,Yaw], ShapeTerm, [X,Y,_])
-    -> Distance is Z - JPosZR, true
+    -> Distance is Z - JPosZ, true
     ; fail
     ).
 
