@@ -7,6 +7,9 @@
     surface_type_of/2,
     %% FIND SURFACES
     all_surfaces/1, %replaces all_srdl_objects contains ground
+    is_surface/1,
+    is_table/1,
+    is_shelf/1,
     all_source_surfaces/1,
     all_target_surfaces/1,
     get_surface_id_by_name/2,
@@ -19,6 +22,7 @@
     find_supporting_surface/2,
     %% FIND OBJs
     objects_on_surface/2,
+    is_object/1,
     objects_on_list_of_surfaces/2,
     all_objects_on_source_surfaces/1,
     all_objects_on_target_surfaces/1,
@@ -135,6 +139,17 @@ assert_object_on(ObjectInstance, SurfaceLink) :- % has not been tested yet.
 surface_type_of(Surface, Type):- % has not been tested yet.
     rdf_has(Surface, hsr_objects:'isSurfaceType', Type).
 
+is_surface(Surface) :-
+    all_surfaces(Surfaces),
+    member(Surface, Surfaces).
+
+is_table(Table) :-
+    table_surfaces(Tables),
+    member(Table, Tables).
+
+is_shelf(Shelf) :-
+    shelf_surfaces(Shelves),
+    member(Shelf, Shelves).
 
 /**
 *****************************************FIND SURFACES******************************************************
@@ -201,14 +216,12 @@ shelf_floor_at_height(Height, TargetShelfLink) :- % has not been tested yet.
 table_surfaces(TableLinks):-
     findall(TableLink, rdf_has(TableLink, hsr_objects:'isSurfaceType',table), TableLinks).
 
-
-object_current_surface(ObjectInstance, SurfaceLink) :- % has not been tested yet.
-    rdf_has(ObjectInstance, hsr_objects:'supportedBy', SurfaceLink).
-
 find_supporting_surface(Object, Surface) :-
     rdf_has(Object, hsr_objects:'supportedBy', Surface).
 
-
+is_object(Object) :-
+    hsr_existing_objects(Objects),
+    member(Object, Objects).
 
 /**
 *****************************************CREATE OBJECTS******************************************************
@@ -216,7 +229,7 @@ find_supporting_surface(Object, Surface) :-
 
 objects_on_surface(ObjectInstances, SurfaceLink) :-
     findall(ObjectInstance,
-        object_current_surface(ObjectInstance, SurfaceLink),
+        find_supporting_surface(ObjectInstance, SurfaceLink),
         ObjectInstances).
 
 

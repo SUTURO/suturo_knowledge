@@ -1,6 +1,8 @@
 :- module(mocking,
     [
-      create_object_on_surface/1
+      create_object_on_surface/1,
+      setup/0,
+      advanced_setup/0
     ]).
 
 :- rdf_db:rdf_register_ns(hsr_objects, 'http://www.semanticweb.org/suturo/ontologies/2018/10/objects#', [keep(true)]).
@@ -49,3 +51,16 @@ find_random_suitable_pos_(XMin, XMax, YMin, YMax, Frame, Pos) :-
         -> find_random_suitable_pos_(XMin, XMax, YMin, YMax, Pos)
         ; Pos = [X,Y]
     ).
+
+setup :-
+    make_all_tables_source,
+    make_all_shelves_target.
+
+advanced_setup :-
+    table_surfaces(A),
+    member(B,A),
+    create_object_on_surface(B),
+    create_object_on_surface(B),
+    create_object_on_surface(B),
+    create_object_on_surface(B),
+    setup.
