@@ -6,13 +6,17 @@ from suturo_nlg.msg import KeyValuePair, MeaningRepresentation
 prolog = rosprolog_client.Prolog()
 
 
-def is_there(location, item):
+def item_translator(item):
     if item == "red pringles can":
-        item = "Pringlesoriginal"
+        return "Pringlesoriginal"
     elif item == "blue pringles can":
-        item = "Pringlessaltvinegar"
+        return "Pringlessaltvinegar"
     elif item == "banana":
-        item = "Banana"
+        return "Banana"
+
+
+def is_there(location, item):
+    item = item_translator(item)
     query_string = "rdfs_individual_of(_X,hsr_objects:'" + item + "'), rdf_has(_X, hsr_objects:'supportedBy',_Link), rdf_urdf_name(_Link,Name)."
     solutions = prolog.all_solutions(query_string)
 
