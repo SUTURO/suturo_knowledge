@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import simplenlg
 from simplenlg.lexicon import *
 from simplenlg.framework import *
