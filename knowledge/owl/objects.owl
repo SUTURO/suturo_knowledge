@@ -154,9 +154,39 @@
     
 
 
+    <!-- http://knowrob.org/kb/knowrob.owl#Battery -->
+
+    <owl:Class rdf:about="http://knowrob.org/kb/knowrob.owl#Battery"/>
+    
+
+
+    <!-- http://knowrob.org/kb/knowrob.owl#ElectricalDevice -->
+
+    <owl:Class rdf:about="http://knowrob.org/kb/knowrob.owl#ElectricalDevice"/>
+    
+
+
+    <!-- http://knowrob.org/kb/knowrob.owl#ElectricalLightingDevice -->
+
+    <owl:Class rdf:about="http://knowrob.org/kb/knowrob.owl#ElectricalLightingDevice"/>
+    
+
+
     <!-- http://knowrob.org/kb/knowrob.owl#TextileArtifact -->
 
     <owl:Class rdf:about="http://knowrob.org/kb/knowrob.owl#TextileArtifact"/>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/EASE-OBJ.owl#Crockery -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/EASE-OBJ.owl#Crockery"/>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/EASE-OBJ.owl#Cutlery -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/EASE-OBJ.owl#Cutlery"/>
     
 
 
@@ -333,7 +363,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Battery -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Battery">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#ElectricityStorage"/>
+        <rdfs:subClassOf rdf:resource="http://knowrob.org/kb/knowrob.owl#Battery"/>
     </owl:Class>
     
 
@@ -421,7 +451,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Bowl -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Bowl">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Crockery"/>
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/EASE-OBJ.owl#Crockery"/>
     </owl:Class>
     
 
@@ -453,7 +483,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Calculator -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Calculator">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Device"/>
+        <rdfs:subClassOf rdf:resource="http://knowrob.org/kb/knowrob.owl#ElectricalDevice"/>
     </owl:Class>
     
 
@@ -461,7 +491,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Camera -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Camera">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Device"/>
+        <rdfs:subClassOf rdf:resource="http://knowrob.org/kb/knowrob.owl#ElectricalDevice"/>
     </owl:Class>
     
 
@@ -501,7 +531,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Cellphone -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Cellphone">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Device"/>
+        <rdfs:subClassOf rdf:resource="http://knowrob.org/kb/knowrob.owl#ElectricalDevice"/>
     </owl:Class>
     
 
@@ -674,14 +704,6 @@
     
 
 
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Crockery -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Crockery">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Tableware"/>
-    </owl:Class>
-    
-
-
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Cuboid -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Cuboid">
@@ -693,7 +715,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Cup -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Cup">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Crockery"/>
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/EASE-OBJ.owl#Crockery"/>
     </owl:Class>
     
 
@@ -702,14 +724,6 @@
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Cupecoorange">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Cup"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Cutlery -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Cutlery">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Tableware"/>
     </owl:Class>
     
 
@@ -742,14 +756,6 @@
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Dessert">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Food"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Device -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Device">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Electronic"/>
     </owl:Class>
     
 
@@ -821,7 +827,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Drybattery -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Drybattery">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#ElectricityStorage"/>
+        <rdfs:subClassOf rdf:resource="http://knowrob.org/kb/knowrob.owl#Battery"/>
     </owl:Class>
     
 
@@ -846,22 +852,6 @@
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Elbrygcoffee">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Coffee"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#ElectricityStorage -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#ElectricityStorage">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Electronic"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Electronic -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Electronic">
-        <rdfs:subClassOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#DesignedArtifact"/>
     </owl:Class>
     
 
@@ -933,7 +923,8 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Flashlight -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Flashlight">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Device"/>
+        <rdfs:subClassOf rdf:resource="http://knowrob.org/kb/knowrob.owl#ElectricalLightingDevice"/>
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/EASE.owl#DesignedTool"/>
     </owl:Class>
     
 
@@ -981,7 +972,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Fork -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Fork">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Cutlery"/>
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/EASE-OBJ.owl#Cutlery"/>
     </owl:Class>
     
 
@@ -1301,7 +1292,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Keyboard -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Keyboard">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Device"/>
+        <rdfs:subClassOf rdf:resource="http://knowrob.org/kb/knowrob.owl#ElectricalDevice"/>
     </owl:Class>
     
 
@@ -1325,7 +1316,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Knife -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Knife">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Cutlery"/>
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/EASE-OBJ.owl#Cutlery"/>
     </owl:Class>
     
 
@@ -1373,7 +1364,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Lightbulb -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Lightbulb">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Device"/>
+        <rdfs:subClassOf rdf:resource="http://knowrob.org/kb/knowrob.owl#ElectricalDevice"/>
     </owl:Class>
     
 
@@ -1677,7 +1668,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Plate -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Plate">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Crockery"/>
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/EASE-OBJ.owl#Crockery"/>
     </owl:Class>
     
 
@@ -1982,7 +1973,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Spatula -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Spatula">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Cutlery"/>
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/EASE-OBJ.owl#Cutlery"/>
     </owl:Class>
     
 
@@ -2022,7 +2013,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Spoon -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Spoon">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Cutlery"/>
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/EASE-OBJ.owl#Cutlery"/>
     </owl:Class>
     
 
@@ -2063,14 +2054,6 @@
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Tabletop">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#FurnitureSurface"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Tableware -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Tableware">
-        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/EASE.owl#DesignedTool"/>
     </owl:Class>
     
 
