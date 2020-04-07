@@ -87,6 +87,42 @@
     
 
 
+    <!-- http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#Action -->
+
+    <owl:Class rdf:about="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#Action"/>
+    
+
+
+    <!-- http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#Task -->
+
+    <owl:Class rdf:about="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#Task"/>
+    
+
+
+    <!-- http://www.semanticweb.org/fabian/ontologies/2020/2/Robocup#CleanUp -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/fabian/ontologies/2020/2/Robocup#CleanUp">
+        <rdfs:subClassOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#Task"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/fabian/ontologies/2020/2/Robocup#Robocup -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/fabian/ontologies/2020/2/Robocup#Robocup">
+        <rdfs:subClassOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#Action"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/fabian/ontologies/2020/2/Robocup#StoringGroceries -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/fabian/ontologies/2020/2/Robocup#StoringGroceries">
+        <rdfs:subClassOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#Task"/>
+    </owl:Class>
+    
+
+
     <!-- http://www.semanticweb.org/fabian/ontologies/2020/2/Robocup#Surfacelink -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/fabian/ontologies/2020/2/Robocup#Surfacelink">
