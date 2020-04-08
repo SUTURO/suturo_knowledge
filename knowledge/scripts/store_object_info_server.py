@@ -37,7 +37,7 @@ class StoreObjectInfoServer(object):
             rospy.wait_for_service('/rosprolog/query')
 
             obj_class = str(data.obj_class)
-            if obj_class and float(data.confidence_class) > 0.5:
+            if obj_class:
                 obj_class = obj_class.capitalize().replace('_', '')
             else:
                 rospy.loginfo("The given class name is empty. Setting to OTHER.")
@@ -50,7 +50,6 @@ class StoreObjectInfoServer(object):
                     "The class '" + obj_class + "' has no equivalent in kowledge-ontology. Setting class to Other.")
                 obj_class = "Other"
 
-            # confidence_class = '1.0' if data.confidence_class == 0.0 else data.confidence_class
             # shape = str(data.shape)
             source_frame = 'map'
             depth = str(data.depth)
@@ -60,7 +59,6 @@ class StoreObjectInfoServer(object):
             g = str(data.color.g)
             b = str(data.color.b)
             a = str(data.color.a)
-            volume = float(data.depth) * float(data.width) * float(data.height) * 1000
             x = str(data.pose.pose.position.x)
             y = str(data.pose.pose.position.y)
             z = str(data.pose.pose.position.z)

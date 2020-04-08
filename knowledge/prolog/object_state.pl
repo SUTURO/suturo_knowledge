@@ -62,7 +62,7 @@ create_object_at(ObjectType, Transform, Threshold, Instance, Dimensions, Color) 
     min_color_confidence(MinColorConf),
     create_object_at(ObjectType, MinClassConf, Transform, Threshold, Instance, Dimensions, '', MinShapeConf, Color, MinColorConf).
 
-create_object_at(PerceivedObjectType, TypeConfidence, Transform, Threshold, Instance, [Width, Depth, Height], Shape, ShapeConfidence, [R,G,B,A], ColorCondidence) :-
+create_object_at(PerceivedObjectType, TypeConfidence, Transform, Threshold, Instance, [Width, Depth, Height], Shape, ShapeConfidence, Color, ColorCondidence) :-
     object_size_ok([Width, Depth, Height]),
     object_type_handling(PerceivedObjectType, TypeConfidence, ObjectType),
     owl_subclass_of(ObjectType, hsr_objects:'Item'),
@@ -71,13 +71,12 @@ create_object_at(PerceivedObjectType, TypeConfidence, Transform, Threshold, Inst
     rdf_assert(Instance, hsr_objects:'ConfidenceClassValue', TypeConfidenceAtom),
     object_assert_dimensions(Instance, Width, Depth, Height),
     set_dimension_semantics(Instance, Width, Depth, Height),
-    rdf_assert(Instance, 'http://www.ease-crc.org/ont/EASE-OBJ.owl#Shape', Shape),
+    object_shape_handling(Instance, Shape, ShapeConfidence),
     atom_number(ShapeConfidenceAtom, ShapeConfidence),
     rdf_assert(Instance, hsr_objects:'ConfidenceShapeValue', ShapeConfidenceAtom),
     atom_number(ColorCondidenceAtom, ColorCondidence),
     rdf_assert(Instance, hsr_objects:'ConfidenceColorValue', ColorCondidenceAtom),
-    set_object_colour(Instance, [R,G,B,A]).
-    
+    set_object_colour(Instance, Color, ColorCondidence).    
 
 object_size_ok([Width,Depth,Height]):-
     Width > 0.01,
@@ -122,11 +121,27 @@ set_dimension_semantics(Instance, Width, Depth, Height) :-
 set_dimension_semantics(_Instance,_W,_D,_H) :-
     true.
 
-set_object_colour(Instance, [0.0, 0.0, 0.0, 0.0]) :-
+object_shape_handling(Instance, Shape, Confidence) :-
+    min_shape_confidence(MinConf),
+    Confidence > MinConf,
+    rdf_assert(Instance, 'http://www.ease-crc.org/ont/EASE-OBJ.owl#Shape', Shape).
+
+object_shape_handling(Instance, _, Confidence) :-
+    min_shape_confidence(MinConf),
+    Confidence =< MinConf,
+    rdf_assert(Instance, 'http://www.ease-crc.org/ont/EASE-OBJ.owl#Shape', '').
+
+set_object_colour(Instance, _, Confidence) :-
+    min_color_confidence(MinConf),
+    Confidence < MinConf,
+    rdf_assert(Instance, hsr_objects:'colour', ''),
+    object_assert_color(Instance, '').
+
+set_object_colour(Instance, [0.0, 0.0, 0.0, 0.0], Confidence) :-
     object_assert_color(Instance, [0.8, 0.8, 0.8, 0.8]),
     rdf_assert(Instance, hsr_objects:'colour', 'grey'), !.
 
-set_object_colour(Instance, [R,G,B,_]) :-
+set_object_colour(Instance, [R,G,B,_], Confidence) :-
     RConv is R/255,    GConv is G/255,    BConv is B/255,
     object_assert_color(Instance, [RConv,GConv,BConv,0.8]),
     set_colour_semantics(Instance, [RConv,GConv,BConv]).
