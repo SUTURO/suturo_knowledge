@@ -314,6 +314,15 @@ place_object(Object):-
     assert_object_on(Object,Surface).
 
 
+%% Joint supporting the ShapeTerm, the ShapeTerm, Position of the object, return Distance vertical distance
+position_above_surface(Joint, ShapeTerm, [X,Y,Z], Distance):-
+    joint_abs_position(Joint,[JPosX,JPosY,JPosZ]),
+    joint_abs_rotation(Joint,[Roll,Pitch,Yaw]),
+    ( point_on_surface([JPosX, JPosY, _], [Roll,Pitch,Yaw], ShapeTerm, [X,Y,_])
+    -> Distance is Z - JPosZ, true
+    ; fail
+    ).
+
 /**
 ***************************************************ROLES*********************************************
 */
