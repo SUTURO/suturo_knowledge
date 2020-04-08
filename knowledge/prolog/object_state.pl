@@ -57,7 +57,10 @@ create_object(ObjectType, Instance) :-
 
 % deprecated. buggy, too.
 create_object_at(ObjectType, Transform, Threshold, Instance, Dimensions, Color) :-
-    create_object_at(ObjectType, _, Transform, Threshold, Instance, Dimensions, _, _, Color, _).
+    min_class_confidence(MinClassConf),
+    min_shape_confidence(MinShapeConf),
+    min_color_confidence(MinColorConf),
+    create_object_at(ObjectType, MinClassConf, Transform, Threshold, Instance, Dimensions, '', MinShapeConf, Color, MinColorConf).
 
 create_object_at(PerceivedObjectType, TypeConfidence, Transform, Threshold, Instance, [Width, Depth, Height], Shape, ShapeConfidence, [R,G,B,A], ColorCondidence) :-
     object_size_ok([Width, Depth, Height]),
