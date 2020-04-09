@@ -84,7 +84,7 @@ class StoreObjectInfoServer(object):
                 rospy.logwarn("This Object couldn't have been added: " + data.obj_class)
 
         rospy.loginfo("Grouping objects.")
-        prolog.all_solutions("group_shelf_objects.")
+        prolog.all_solutions("group_objects_at([" + ", ".join([x,y,z]) + "]).")
 
         self._result.succeeded = success
         self._as.set_succeeded(self._result)

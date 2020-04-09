@@ -13,7 +13,7 @@
 
       %%% DEBUG %%%
       set_dimension_semantics/4,
-      set_object_colour/2,
+      set_object_colour/3,
       object_type_handling/3,
       object_size_ok/1,
       set_colour_semantics/2
@@ -137,11 +137,11 @@ set_object_colour(Instance, _, Confidence) :-
     rdf_assert(Instance, hsr_objects:'colour', ''),
     object_assert_color(Instance, '').
 
-set_object_colour(Instance, [0.0, 0.0, 0.0, 0.0], Confidence) :-
+set_object_colour(Instance, [0.0, 0.0, 0.0, 0.0], _) :-
     object_assert_color(Instance, [0.8, 0.8, 0.8, 0.8]),
     rdf_assert(Instance, hsr_objects:'colour', 'grey'), !.
 
-set_object_colour(Instance, [R,G,B,_], Confidence) :-
+set_object_colour(Instance, [R,G,B,_], _) :-
     RConv is R/255,    GConv is G/255,    BConv is B/255,
     object_assert_color(Instance, [RConv,GConv,BConv,0.8]),
     set_colour_semantics(Instance, [RConv,GConv,BConv]).
