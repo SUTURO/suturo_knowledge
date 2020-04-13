@@ -34,10 +34,8 @@
 hsr_existing_objects(Objects) :-
     belief_existing_objects(Objects, [hsr_objects:'Item']).
 
-
 hsr_forget_object(Object) :-
     rdf_retractall(Object,_,_).
-
 
 
 object_at(ObjectType, Transform, Threshold, Instance) :-
@@ -57,12 +55,12 @@ create_object(ObjectType, Instance) :-
 
 % deprecated. buggy, too.
 create_object_at(ObjectType, Transform, Threshold, Instance, Dimensions, Color) :-
-    min_class_confidence(MinClassConf),
-    min_shape_confidence(MinShapeConf),
-    min_color_confidence(MinColorConf),
-    create_object_at(ObjectType, MinClassConf, Transform, Threshold, Instance, Dimensions, '', MinShapeConf, Color, MinColorConf).
+    create_object_at(ObjectType, _, Transform, Threshold, Instance, Dimensions, '', _, Color, _).
 
-create_object_at(PerceivedObjectType, TypeConfidence, Transform, Threshold, Instance, [Width, Depth, Height], Shape, ShapeConfidence, Color, ColorCondidence) :-
+create_object_at(PerceivedObjectType, PercTypeConfidence, Transform, Threshold, Instance, [Width, Depth, Height], Shape, PercShapeConfidence, Color, PercColorCondidence) :-
+    validate_confidence(class, PercTypeConfidence, TypeConfidence),
+    validate_confidence(shape, PercShapeConfidence, ShapeConfidence),
+    validate_confidence(color, PercColorCondidence, ColorCondidence),
     object_size_ok([Width, Depth, Height]),
     object_type_handling(PerceivedObjectType, TypeConfidence, ObjectType),
     owl_subclass_of(ObjectType, hsr_objects:'Item'),
@@ -76,7 +74,22 @@ create_object_at(PerceivedObjectType, TypeConfidence, Transform, Threshold, Inst
     rdf_assert(Instance, hsr_objects:'ConfidenceShapeValue', ShapeConfidenceAtom),
     atom_number(ColorCondidenceAtom, ColorCondidence),
     rdf_assert(Instance, hsr_objects:'ConfidenceColorValue', ColorCondidenceAtom),
-    set_object_colour(Instance, Color, ColorCondidence).    
+    set_object_colour(Instance, Color, ColorCondidence).
+
+validate_confidence(class, Is, Should) :-
+    var(Is),
+    min_class_confidence(Should).
+
+validate_confidence(shape, Is, Should) :-
+    var(Is),
+    min_shape_confidence(Should).
+
+validate_confidence(color, Is, Should) :-
+    var(Is),
+    min_color_confidence(Should).
+
+validate_confidence(_, Is, Should) :-
+    Should = Is.
 
 object_size_ok([Width,Depth,Height]):-
     Width > 0.01,

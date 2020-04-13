@@ -50,7 +50,9 @@ class StoreObjectInfoServer(object):
                     "The class '" + obj_class + "' has no equivalent in kowledge-ontology. Setting class to Other.")
                 obj_class = "Other"
 
-            # shape = str(data.shape)
+            confidence_class = str(data.confidence_class)
+            shape = str(data.shape)
+            confidence_shape = str(data.confidence_shape)
             source_frame = 'map'
             depth = str(data.depth)
             width = str(data.width)
