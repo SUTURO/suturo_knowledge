@@ -52,5 +52,5 @@ if __name__ == '__main__':
     rospy.Subscriber("nlg_requests", MeaningRepresentation, callback)
     rospack = rospkg.RosPack()
     wd = rospack.get_path('suturo_nlg') + "/scripts"
-    subprocess.call('python3 nlg.py3', cwd=wd, shell=True)
+    subprocess.call('python3 demo_answers.py3', cwd=wd, shell=True)
     rospy.spin()
