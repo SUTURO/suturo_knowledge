@@ -2,13 +2,13 @@
     <!--
     	<include file ="$(find suturo_julius)/launch/julius_qa_system.launch"/>
     -->
-    <!--
-	    <node pkg="suturo_textparser" name="textparser" type="textparser.py" respawn="true" output="screen">
-		    <remap from="input" to="suturo_speech_recognition/voice/text"/>
-	    	<remap from="hard_commands" to="hard_commands"/>
-		    <remap from="to_slingparser" to="to_slingparser"/>			
-	    </node>	
-	-->	
+    
+    <node pkg="suturo_textparser" name="textparser" type="textparser.py" respawn="true" output="screen">
+	    <remap from="input" to="suturo_speech_recognition/voice/text"/>
+    	<remap from="hard_commands" to="hard_commands"/>
+	    <remap from="to_slingparser" to="to_slingparser"/>			
+    </node>	
+    
 	<node pkg="suturo_textparser" name="slingparserRosInterface" type="slingparserRosInterface.py" respawn="true" output="screen">
 		<remap from="sp_input" to="to_slingparser"/>
 		<remap from="sp_output" to="to_knowledge_interface"/>		
@@ -23,7 +23,10 @@
 	
 
     <include file="$(find suturo_urdf_publisher_rework)/launch/hsr_lab_simple.launch" />
-
+    
+    <node pkg="tf" type="static_transform_publisher" name="base_footprint_broadcaster"
+        args="0 0 0 0 0 0 /map /base_footprint 25">
+    </node>
 
     <param name="param_to_load_URDF_from" type="str" value="/enviorment_urdf" />
     <param name="initial_package" type="string" value="knowledge" />
