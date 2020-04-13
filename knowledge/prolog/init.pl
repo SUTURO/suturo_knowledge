@@ -41,3 +41,5 @@
 
 :- ros_param_get_string('/param_to_load_URDF_from', Param),
     load_surfaces_from_param(Param).
+
+:- tf_lookup_transform(map, map, _).
