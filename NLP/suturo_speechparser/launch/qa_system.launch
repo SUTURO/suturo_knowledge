@@ -17,7 +17,8 @@
 		<remap from="kinterface_in" to="to_knowledge_interface"/>
 		<remap from="kinterface_out" to="nlg_requests"/>
 	</node>
-	<node pkg="suturo_nlg" name="nlg_ros" type="nlg_ros.py" respawn="true" output="screen">
+	<node pkg="suturo_nlg" name="demo_answers_ros" type="demo_answers_ros.py" respawn="true" output="screen">
+        <param name="use_action" value="False"/>
 		<remap from="nlg_requests" to="nlg_requests"/>
 	</node>	
 	

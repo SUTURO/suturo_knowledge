@@ -25,8 +25,8 @@ def errordict():
 
 
 def is_there(location, item):
-    item = item_translator(item)
-    query_string = "rdfs_individual_of(_X,hsr_objects:'" + item + "'), rdf_has(_X, hsr_objects:'supportedBy',_Link), rdf_urdf_name(_Link,Name)."
+    item_t = item_translator(item)
+    query_string = "rdfs_individual_of(_X,hsr_objects:'" + item_t + "'), rdf_has(_X, hsr_objects:'supportedBy',_Link), rdf_urdf_name(_Link,Name)."
     solutions = prolog.all_solutions(query_string)
 
     if not solutions:
@@ -60,8 +60,8 @@ def what_is_on(location):
 
 
 def supposed_to_go(item):
-    item = item_translator(item)
-    query_string = "hsr_existing_objects(Objs), member(Obj,Objs), rdfs_individual_of(Obj, hsr_objects:'" + item + "'), object_goal_surface(Obj,_Surf), rdf_urdf_name(_Surf,SurfName)"
+    item_t = item_translator(item)
+    query_string = "hsr_existing_objects(Objs), member(Obj,Objs), rdfs_individual_of(Obj, hsr_objects:'" + item_t + "'), object_goal_surface(Obj,_Surf), rdf_urdf_name(_Surf,SurfName)"
     solutions = prolog.all_solutions(query_string)
     if not solutions:
         return False
