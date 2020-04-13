@@ -69,7 +69,7 @@ class StoreObjectInfoServer(object):
             threshold = "0.05"
             region_splits = str(data.region).split('_')
 
-            query_string = ("select_surface([" + ", ".join([x, y, z]) + "],_),create_object_at(hsr_objects:'" +
+            query_string = ("is_legal_obj_position([" + ", ".join([x, y, z]) + "]),create_object_at(hsr_objects:'" +
                                 obj_class + "'," +
                                 "['" + source_frame +
                                 "', _, [" + ", ".join([x, y, z]) + "]," +

@@ -18,7 +18,7 @@
     big_shelf_surfaces/1, % will soon be deprecated
     shelf_floor_at_height/2, % will soon be deprecated
     table_surfaces/1, 
-    select_surface/2,
+    is_legal_obj_position/1,
     find_supporting_surface/2,
     %% FIND OBJs
     objects_on_surface/2,
@@ -296,8 +296,8 @@ all_objects_in_gripper(Instances):-
 
 
 
-select_surface([X,Y,Z], Surface) :-
-    position_supportable_by_surface([X,Y,Z], Surface).
+is_legal_obj_position([X,Y,Z]) :-
+    position_supportable_by_surface([X,Y,Z], _).
 
 
 
