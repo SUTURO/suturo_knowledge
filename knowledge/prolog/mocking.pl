@@ -6,7 +6,7 @@
       advanced_setup/0
     ]).
 
-:- rdf_db:rdf_register_ns(hsr_objects, 'http://www.semanticweb.org/suturo/ontologies/2018/10/objects#', [keep(true)]).
+:- rdf_db:rdf_register_ns(hsr_objects, 'http://www.semanticweb.org/suturo/ontologies/2020/3/objects#', [keep(true)]).
 
 :- rdf_meta
     create_object_on_surface(?).
@@ -29,7 +29,7 @@ create_object_on_surface(Surface) :-
     find_random_suitable_pos_(XMin, XMax, YMin, YMax, Frame, [RelativeX,RelativeY]),
     tf_transform_point(Frame, map, [RelativeX, RelativeY, 0], Pos),
     Transform = ['map', _, Pos, [0,0,1,0]],
-    create_object_at('http://www.semanticweb.org/suturo/ontologies/2018/10/objects#Banana',
+    create_object_at('http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Banana',
         0.8, 
         Transform,
         0.05, 
@@ -52,7 +52,7 @@ create_object_on_surface_old(Surface) :-
     find_random_suitable_pos_(XMin, XMax, YMin, YMax, Frame, [RelativeX,RelativeY]),
     tf_transform_point(Frame, map, [RelativeX, RelativeY, 0], Pos),
     Transform = ['map', _, Pos, [0,0,1,0]],
-    create_object_at('http://www.semanticweb.org/suturo/ontologies/2018/10/objects#Banana',
+    create_object_at('http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Banana',
         Transform,
         0.05, 
         ObjectInstance, 

@@ -27,7 +27,7 @@ hsr_lookup_transform(SourceFrame, TargetFrame, Translation, Rotation) :-
 
 hsr_existing_object_at(Pose, Threshold, Instance) :-
     rdf(Instance, rdf:type, owl:'NamedIndividual', belief_state),
-    rdfs_individual_of(Instance, hsr_objects:'Item'),
+    rdfs_individual_of(Instance, dul:'DesignedArtifact'),
     object_pose(Instance, OldPose),
     transform_close_to(Pose, OldPose, Threshold).
 
