@@ -37,7 +37,7 @@ class StoreObjectInfoServer(object):
             rospy.wait_for_service('/rosprolog/query')
 
             obj_class = str(data.obj_class)
-            if obj_class and float(data.confidence_class) > 0.5:
+            if obj_class:
                 obj_class = obj_class.capitalize().replace('_', '')
             else:
                 rospy.loginfo("The given class name is empty. Setting to OTHER.")
@@ -50,8 +50,8 @@ class StoreObjectInfoServer(object):
                     "The class '" + obj_class + "' has no equivalent in kowledge-ontology. Setting class to Other.")
                 obj_class = "Other"
 
-            # confidence_class = '1.0' if data.confidence_class == 0.0 else data.confidence_class
-            # shape = str(data.shape)
+            confidence_class = str(data.confidence_class)
+            shape = str(data.shape)
             source_frame = 'map'
             depth = str(data.depth)
             width = str(data.width)
@@ -60,7 +60,7 @@ class StoreObjectInfoServer(object):
             g = str(data.color.g)
             b = str(data.color.b)
             a = str(data.color.a)
-            volume = float(data.depth) * float(data.width) * float(data.height) * 1000
+            confidence_color = str(data.confidence_color)
             x = str(data.pose.pose.position.x)
             y = str(data.pose.pose.position.y)
             z = str(data.pose.pose.position.z)
@@ -71,14 +71,14 @@ class StoreObjectInfoServer(object):
             threshold = "0.05"
             region_splits = str(data.region).split('_')
 
-            query_string = ("select_surface([" + ", ".join([x, y, z]) + "],_),create_object_at(hsr_objects:'" +
-                                obj_class + "'," +
+            query_string = ("is_legal_obj_position([" + ", ".join([x, y, z]) + "]),create_object_at(hsr_objects:'" +
+                                obj_class + "'," + confidence_class + ", " +
                                 "['" + source_frame +
                                 "', _, [" + ", ".join([x, y, z]) + "]," +
                                 "[" + ", ".join([qx, qy, qz, qw]) + "]]," +
                                 threshold + ", ObjectInstance," +
-                                "[" + ", ".join([depth, width, height]) + "], " +
-                                "[" + ", ".join([r, g, b, a]) + "])," +
+                                "[" + ", ".join([depth, width, height]) + "], " + shape + ", _, " +
+                                "[" + ", ".join([r, g, b, a]) + "], " + confidence_color + ")," +
                             "place_object(ObjectInstance).")
             rospy.loginfo('Send query: \n' + query_string)
             solutions = prolog.all_solutions(query_string)
@@ -86,7 +86,7 @@ class StoreObjectInfoServer(object):
                 rospy.logwarn("This Object couldn't have been added: " + data.obj_class)
 
         rospy.loginfo("Grouping objects.")
-        prolog.all_solutions("group_shelf_objects.")
+        prolog.all_solutions("group_objects_at([" + ", ".join([x,y,z]) + "]).")
 
         self._result.succeeded = success
         self._as.set_succeeded(self._result)

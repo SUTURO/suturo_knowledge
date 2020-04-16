@@ -1,6 +1,7 @@
 :- module(assignplaces,
     [
       object_goal_surface/4,
+      object_goal_surface/2,
       object_goal_pose/4, 
       object_goal_pose/3, % recommendet to be used by Planning
       object_goal_pose/2,
@@ -13,6 +14,9 @@
 :- rdf_meta
     most_related_class(-,?,?),
     most_related_object(-,?).
+
+object_goal_surface(Instance, Surface) :-
+    object_goal_surface(Instance, Surface, _, _).
 
 
 object_goal_surface(Instance, Surface, Context, RefObject):-

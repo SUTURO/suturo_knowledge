@@ -24,7 +24,6 @@ str_server = rpc_client.get_proxy()
 
 
 def callback(data):
-    rospy.loginfo("called callback")
     input_str = data.data
 
     input_array = input_str.split('\\')

@@ -8,6 +8,7 @@
       merge_object_into_group/1,
       group_shelf_objects/0,
       group_table_objects/0,
+      group_objects_at/1,
       group_objects/1,
       group_mean_pose/3
     ]).
@@ -65,6 +66,14 @@ group_shelf_objects :-
 group_table_objects :-
     all_objects_on_tables(Objs),
     group_objects(Objs).
+
+group_objects_at([X,Y,Z]) :-
+    Transform = ['map', _, [X,Y,Z], [0,0,1,0]],
+    hsr_existing_object_at(Transform, 0.05, Obj),
+    find_supporting_surface(Obj, Surface),
+    objects_on_surface(Objs, Surface),
+    group_objects(Objs).
+
 
 group_objects(Objs) :-
     member(Obj, Objs),

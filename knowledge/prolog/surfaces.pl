@@ -18,8 +18,12 @@
     big_shelf_surfaces/1, % will soon be deprecated
     shelf_floor_at_height/2, % will soon be deprecated
     table_surfaces/1, 
-    select_surface/2,
+    is_legal_obj_position/1,
     find_supporting_surface/2,
+    % Get poses 
+    pose_of_tables/1,
+    pose_of_shelves/1,
+    pose_of_surfaces/2,
     %% FIND OBJs
     objects_on_surface/2,
     is_object/1,
@@ -225,6 +229,28 @@ is_object(Object) :-
     hsr_existing_objects(Objects),
     member(Object, Objects).
 
+%%%%%%%%%%% Get Poses %%%%%%%%%%%%%%%%%%%%%%%%%%
+
+pose_of_tables(Positions) :-
+    table_surfaces(Tables),
+    pose_of_surfaces(Tables, Positions).
+
+pose_of_shelves(Positions):-
+    shelf_surfaces(Shelves),
+    pose_of_surfaces(Shelves, Positions).
+
+% Sorts the surfaces by Distance to the robot and returns a List of their positions in that order.
+pose_of_surfaces(Surfaces, Positions) :-
+    predsort(compareDistances, Surfaces, SortedSurfaces),
+    maplist(surface_pose_in_map, SortedSurfaces, Positions).
+
+% compares the Distance of two things (Surface or Object) to the Robot based on compare/3.
+compareDistances(Order, Thing1, Thing2) :-
+    distance_to_robot(Thing1, Dist1),
+    distance_to_robot(Thing2, Dist2),
+    compare(Order, Dist1, Dist2).
+
+
 /**
 *****************************************CREATE OBJECTS******************************************************
 */
@@ -296,8 +322,8 @@ all_objects_in_gripper(Instances):-
 
 
 
-select_surface([X,Y,Z], Surface) :-
-    position_supportable_by_surface([X,Y,Z], Surface).
+is_legal_obj_position([X,Y,Z]) :-
+    position_supportable_by_surface([X,Y,Z], _).
 
 
 

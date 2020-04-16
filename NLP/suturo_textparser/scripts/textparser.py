@@ -7,25 +7,23 @@ from std_msgs.msg import String
 
 
 def callback(data):
-    sentence = findFirst(data)
-    if not sentence == "" and not isStatic(sentence):
+    sentence = find_first(data)
+    if not sentence == "" and not is_static(sentence):
         sc_pub.publish(sentence)
-        
 
 
-
-def isStatic(sentence):
-    if isStop(sentence):
+def is_static(sentence):
+    if is_stop(sentence):
         command = StaticCommand()
         command.command = StaticCommand.STOP
         pub.publish(command)
         return True
-    elif isStart(sentence):
+    elif is_start(sentence):
         command = StaticCommand()
         command.command = StaticCommand.START
         pub.publish(command)
         return True
-    elif isContinue(sentence):
+    elif is_continue(sentence):
         command = StaticCommand()
         command.command = StaticCommand.CONTINUE
         pub.publish(command)
@@ -34,18 +32,19 @@ def isStatic(sentence):
     return False
 
 
-def isStop(sentence):
-    return isInFile(sentence, wd + '/commands/stop.txt')
+def is_stop(sentence):
+    return is_in_file(sentence, wd + '/commands/stop.txt')
 
 
-def isStart(sentence):
-    return isInFile(sentence, wd + '/commands/start.txt')
-
-def isContinue(sentence):
-    return isInFile(sentence, wd + '/commands/continue.txt')
+def is_start(sentence):
+    return is_in_file(sentence, wd + '/commands/start.txt')
 
 
-def isInFile(sentence, filepath):
+def is_continue(sentence):
+    return is_in_file(sentence, wd + '/commands/continue.txt')
+
+
+def is_in_file(sentence, filepath):
     with open(filepath) as f:
         if sentence in f.read():
             return True
@@ -53,7 +52,7 @@ def isInFile(sentence, filepath):
             return False
 
 
-def findFirst(data):
+def find_first(data):
     mostliklySentence = data.sentences[0]
     score1 = data.scores[0]
 

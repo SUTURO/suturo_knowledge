@@ -13,11 +13,20 @@ def item_translator(item):
         return "Pringlessaltvinegar"
     elif item == "banana":
         return "Banana"
+    elif item == "cup":
+        return "Cup"
+    else:
+        return item.capitalize()
+
+
+def errordict():
+    dict = {"error": "Something went wrong"}
+    return dict
 
 
 def is_there(location, item):
-    item = item_translator(item)
-    query_string = "rdfs_individual_of(_X,hsr_objects:'" + item + "'), rdf_has(_X, hsr_objects:'supportedBy',_Link), rdf_urdf_name(_Link,Name)."
+    item_t = item_translator(item)
+    query_string = "rdfs_individual_of(_X,hsr_objects:'" + item_t + "'), rdf_has(_X, hsr_objects:'supportedBy',_Link), rdf_urdf_name(_Link,Name)."
     solutions = prolog.all_solutions(query_string)
 
     if not solutions:
@@ -50,6 +59,16 @@ def what_is_on(location):
     return solution
 
 
+def supposed_to_go(item):
+    item_t = item_translator(item)
+    query_string = "hsr_existing_objects(Objs), member(Obj,Objs), rdfs_individual_of(Obj, hsr_objects:'" + item_t + "'), object_goal_surface(Obj,_Surf), rdf_urdf_name(_Surf,SurfName)"
+    solutions = prolog.all_solutions(query_string)
+    if not solutions:
+        return False
+    solution = solutions[0]['SurfName'].split('_')[0]
+    return solution
+
+
 def callback(data):
     datadict = {}
     for keyvaluep in data.role_values:
@@ -61,6 +80,8 @@ def callback(data):
 
             if not datadict.keys().__contains__("location"):
                 rospy.logerr("Message didn't contain location")
+                datadict = errordict()
+                pub(datadict)
                 return
             datadict["item"] = what_is_on(datadict["location"])
 
@@ -68,18 +89,35 @@ def callback(data):
 
             if not datadict.keys().__contains__("item"):
                 rospy.logerr("Message didn't contain item")
+                datadict = errordict()
+                pub(datadict)
                 return
             if not datadict.keys().__contains__("location"):
                 rospy.logerr("Message didn't contain location")
+                datadict = errordict()
+                pub(datadict)
                 return
-
             if is_there(datadict["location"], datadict["item"]):
                 datadict["answer"] = "yes"
             else:
                 datadict["answer"] = "no"
-        #TODO predicate "supposed to go
+
+        elif datadict["predicate"] == "supposed to go":
+            if not datadict.keys().__contains__("item"):
+                rospy.logerr("Message didn't contain item")
+                datadict = errordict()
+                pub(datadict)
+                return
+            if not supposed_to_go(datadict["item"]):
+                datadict = errordict()
+                pub(datadict)
+                return
+            datadict["location"] = supposed_to_go(datadict["item"])
+
         else:
             rospy.logerr("Message didn't contain any known predicates")
+            datadict = errordict()
+            pub(datadict)
             return
 
         datadict["question"] = datadict["predicate"]

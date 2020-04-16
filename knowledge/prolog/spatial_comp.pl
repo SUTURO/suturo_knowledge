@@ -7,6 +7,7 @@
         position_supportable_by_surface/2,
         distance_to_robot/2,
         % Type cast
+        urdf_frame/2,
         object_frame/2,
         surface_frame/2,
         surface_front_edge_center_frame/2
@@ -32,7 +33,7 @@ hsr_existing_object_at(Pose, Threshold, Instance) :-
 
 
 surface_pose_in_map(SurfaceLink, Pose) :-
-    surface_frame(SurfaceLink, Frame),
+    urdf_frame(SurfaceLink, Frame),
     hsr_lookup_transform(map, Frame, Translation, Rotation),
     Pose = [Translation, Rotation].
 
@@ -72,6 +73,7 @@ relative_position_supportable_by_surface([X,Y,Z],Surface) :-
     Depth*(-1) =< Y.
 
 position_supportable_by_ground(ZPos) :-
+    number(ZPos),
     threshold_surface(ThAbove, ThBelow),
     ThAbove >= ZPos,
     ThBelow =< ZPos.
@@ -82,8 +84,8 @@ position_supportable_by_ground([_,_,Z]) :-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-distance_to_robot(Obj, Distance) :-
-    get_frame(Obj, Frame),
+distance_to_robot(Thing, Distance) :-
+    urdf_frame(Thing, Frame),
     hsr_lookup_transform(map, Frame, [OX, OY, OZ], _),
     hsr_lookup_transform(map,'base_footprint',[BX,BY,BZ],_),
     DX is (OX - BX),
@@ -92,22 +94,13 @@ distance_to_robot(Obj, Distance) :-
     sqrt(((DX*DX) + (DY*DY) + (DZ*DZ)), Distance),
     !.
 
-get_frame(Thing, Frame):-
+urdf_frame(Thing, Frame):-
     is_object(Thing),
     object_frame(Thing, Frame).
 
-get_frame(Thing, Frame):-
+urdf_frame(Thing, Frame):-
     is_surface(Thing),
-    surface_frame(Thing, Frame).
-
-object_frame(Object, Frame) :-
-    split_string(Object, "#", "", [_,ObjFrameString]),
-    atom_string(Frame,ObjFrameString).
-    
-surface_frame(Surface, Frame) :-
-    rdf_urdf_name(Surface, Name),
-    urdf_surface_prefix(Prefix),
-    atom_concat(Prefix, Name, Frame).
+    surface_front_edge_center_frame(Thing, Frame).
 
 surface_front_edge_center_frame(Surface, FrontEdgeCenterFrame) :- % in case it's a Shelf
     is_shelf(Surface),
@@ -122,3 +115,11 @@ surface_front_edge_center_frame(Surface, FrontEdgeCenterFrame) :- % in case it's
     Suffix = "_front_edge_center",
     atom_concat(Part1, Suffix, FrontEdgeCenterFrame).
 
+object_frame(Object, Frame) :-
+    split_string(Object, "#", "", [_,ObjFrameString]),
+    atom_string(Frame,ObjFrameString).
+    
+surface_frame(Surface, Frame) :-
+    rdf_urdf_name(Surface, Name),
+    urdf_surface_prefix(Prefix),
+    atom_concat(Prefix, Name, Frame).
