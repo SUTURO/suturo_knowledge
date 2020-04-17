@@ -32,6 +32,29 @@
     
 
 
+    <!-- http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#hasRole -->
+
+    <owl:ObjectProperty rdf:about="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#hasRole"/>
+    
+
+
+    <!-- http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#isRoleOf -->
+
+    <owl:ObjectProperty rdf:about="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#isRoleOf"/>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#hasLocation -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#hasLocation">
+        <rdfs:subPropertyOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#hasRole"/>
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#isLocationOf"/>
+        <rdfs:domain rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#PhysicalArtifact"/>
+        <rdfs:range rdf:resource="http://www.ease-crc.org/ont/EASE-OBJ.owl#Location"/>
+    </owl:ObjectProperty>
+    
+
+
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#hassurface -->
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#hassurface">
@@ -47,6 +70,16 @@
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#inGroup">
         <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#isLocationOf -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#isLocationOf">
+        <rdfs:subPropertyOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#isRoleOf"/>
+        <rdfs:domain rdf:resource="http://www.ease-crc.org/ont/EASE-OBJ.owl#Location"/>
+        <rdfs:range rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#PhysicalArtifact"/>
     </owl:ObjectProperty>
     
 
@@ -190,6 +223,28 @@
     
 
 
+    <!-- http://www.ease-crc.org/ont/EASE-OBJ.owl#Destination -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/EASE-OBJ.owl#Destination">
+        <owl:equivalentClass rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Target"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/EASE-OBJ.owl#Location -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/EASE-OBJ.owl#Location"/>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/EASE-OBJ.owl#Origin -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/EASE-OBJ.owl#Origin">
+        <owl:equivalentClass rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Source"/>
+    </owl:Class>
+    
+
+
     <!-- http://www.ease-crc.org/ont/EASE-OBJ.owl#Shape -->
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/EASE-OBJ.owl#Shape"/>
@@ -235,6 +290,12 @@
     <!-- http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#DesignedSubstance -->
 
     <owl:Class rdf:about="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#DesignedSubstance"/>
+    
+
+
+    <!-- http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#PhysicalArtifact -->
+
+    <owl:Class rdf:about="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#PhysicalArtifact"/>
     
 
 
@@ -1964,6 +2025,14 @@
     
 
 
+    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Source -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Source">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/EASE-OBJ.owl#Location"/>
+    </owl:Class>
+    
+
+
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Sparklingwater -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Sparklingwater">
@@ -2056,6 +2125,14 @@
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Tabletop">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#FurnitureSurface"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Target -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Target">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/EASE-OBJ.owl#Location"/>
     </owl:Class>
     
 
