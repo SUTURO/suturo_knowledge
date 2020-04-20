@@ -5,6 +5,7 @@
     supporting_surface/1,
     assert_object_on/2,
     surface_type_of/2,
+    is_legal_obj_position/1,
     %% FIND SURFACES
     all_surfaces/1, %replaces all_srdl_objects contains ground
     is_surface/1,
@@ -17,7 +18,6 @@
     big_shelf_surfaces/1, % will soon be deprecated
     shelf_floor_at_height/2, % will soon be deprecated
     table_surfaces/1, 
-    is_legal_obj_position/1,
     find_supporting_surface/2,
     % Get poses 
     pose_of_tables/1,
@@ -228,7 +228,7 @@ compareDistances(Order, Thing1, Thing2) :-
 
 
 /**
-*****************************************CREATE OBJECTS******************************************************
+*****************************************FIND OBJECTS******************************************************
 */
 
 objects_on_surface(ObjectInstances, SurfaceLink) :-
@@ -304,7 +304,7 @@ is_legal_obj_position([X,Y,Z]) :-
 
 
 /**
-*****************************************FIND OBJs******************************************************
+*****************************************CREATE OBJs******************************************************
 */
 
 
