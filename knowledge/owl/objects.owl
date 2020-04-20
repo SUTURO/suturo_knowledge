@@ -243,6 +243,12 @@
     
 
 
+    <!-- http://www.ease-crc.org/ont/EASE-OBJ.owl#ColorRegion -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/EASE-OBJ.owl#ColorRegion"/>
+    
+
+
     <!-- http://www.ease-crc.org/ont/EASE-OBJ.owl#Crockery -->
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/EASE-OBJ.owl#Crockery"/>
@@ -267,6 +273,22 @@
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/EASE-OBJ.owl#DishwasherTab">
         <owl:equivalentClass rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Dishwashertab"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/EASE-OBJ.owl#Fork -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/EASE-OBJ.owl#Fork">
+        <owl:equivalentClass rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Fork"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/EASE-OBJ.owl#Knife -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/EASE-OBJ.owl#Knife">
+        <owl:equivalentClass rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Knife"/>
     </owl:Class>
     
 
@@ -301,9 +323,25 @@
     
 
 
+    <!-- http://www.ease-crc.org/ont/EASE-OBJ.owl#RedColor -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/EASE-OBJ.owl#RedColor">
+        <owl:equivalentClass rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#RedColor"/>
+    </owl:Class>
+    
+
+
     <!-- http://www.ease-crc.org/ont/EASE-OBJ.owl#Shape -->
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/EASE-OBJ.owl#Shape"/>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/EASE-OBJ.owl#Spatula -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/EASE-OBJ.owl#Spatula">
+        <owl:equivalentClass rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Spatula"/>
+    </owl:Class>
     
 
 
@@ -533,10 +571,26 @@
     
 
 
+    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#BlackColor -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#BlackColor">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/EASE-OBJ.owl#ColorRegion"/>
+    </owl:Class>
+    
+
+
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Blackceramicbowl -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Blackceramicbowl">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Bowl"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#BlueColor -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#BlueColor">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/EASE-OBJ.owl#ColorRegion"/>
     </owl:Class>
     
 
@@ -665,6 +719,14 @@
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Cellphone">
         <rdfs:subClassOf rdf:resource="http://knowrob.org/kb/knowrob.owl#ElectricalDevice"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Ceramic -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Ceramic">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#MaterialRegion"/>
     </owl:Class>
     
 
@@ -1559,6 +1621,14 @@
     
 
 
+    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#MaterialRegion -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#MaterialRegion">
+        <rdfs:subClassOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#Region"/>
+    </owl:Class>
+    
+
+
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Meersalz -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Meersalz">
@@ -1571,6 +1641,14 @@
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Messmergruenerteevanille">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Tea"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Metal -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Metal">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#MaterialRegion"/>
     </owl:Class>
     
 
@@ -1675,6 +1753,14 @@
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Orange">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Fruit"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#OrangeColor -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#OrangeColor">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/EASE-OBJ.owl#ColorRegion"/>
     </owl:Class>
     
 
@@ -1791,6 +1877,14 @@
     
 
 
+    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Plastic -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Plastic">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#MaterialRegion"/>
+    </owl:Class>
+    
+
+
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Plate -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Plate">
@@ -1875,6 +1969,14 @@
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Receptacle">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/EASE.owl#DesignedContainer"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#RedColor -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#RedColor">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/EASE-OBJ.owl#ColorRegion"/>
     </owl:Class>
     
 
@@ -2401,6 +2503,14 @@
     
 
 
+    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#WhiteColor -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#WhiteColor">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/EASE-OBJ.owl#ColorRegion"/>
+    </owl:Class>
+    
+
+
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Whitebottle -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Whitebottle">
@@ -2453,6 +2563,14 @@
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Ycbknife">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Knife"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#YellowColor -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#YellowColor">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/EASE-OBJ.owl#ColorRegion"/>
     </owl:Class>
     
 
