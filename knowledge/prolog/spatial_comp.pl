@@ -13,6 +13,8 @@
         surface_front_edge_center_frame/2
     ]).
 
+:-rdf_db:rdf_register_ns(dul, 'http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#', [keep(true)]).
+
 :- rdf_meta
     hsr_lookup_transform(r,r,?,?),
     hsr_existing_object_at(r,r,?),
