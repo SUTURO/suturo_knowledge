@@ -7,6 +7,7 @@
      xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
      xmlns:knowrob="http://ias.cs.tum.edu/kb/knowrob.owl#"
      xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:dul="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#"
      xmlns:hsr_objects="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#">
     <owl:Ontology rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects">
         <owl:imports rdf:resource="package://knowrob_common/owl/knowrob.owl"/>
