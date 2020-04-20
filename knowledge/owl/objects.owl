@@ -163,7 +163,6 @@
 
     <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#size">
         <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Item"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
     </owl:DatatypeProperty>
     
@@ -194,6 +193,14 @@
     
 
 
+    <!-- http://knowrob.org/kb/knowrob.owl#Cloth -->
+
+    <owl:Class rdf:about="http://knowrob.org/kb/knowrob.owl#Cloth">
+        <owl:equivalentClass rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Cloth"/>
+    </owl:Class>
+    
+
+
     <!-- http://knowrob.org/kb/knowrob.owl#ElectricalDevice -->
 
     <owl:Class rdf:about="http://knowrob.org/kb/knowrob.owl#ElectricalDevice"/>
@@ -206,9 +213,33 @@
     
 
 
+    <!-- http://knowrob.org/kb/knowrob.owl#Flashlight -->
+
+    <owl:Class rdf:about="http://knowrob.org/kb/knowrob.owl#Flashlight">
+        <owl:equivalentClass rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Flashlight"/>
+    </owl:Class>
+    
+
+
+    <!-- http://knowrob.org/kb/knowrob.owl#Lightbulb -->
+
+    <owl:Class rdf:about="http://knowrob.org/kb/knowrob.owl#Lightbulb">
+        <owl:equivalentClass rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Lightbulb"/>
+    </owl:Class>
+    
+
+
     <!-- http://knowrob.org/kb/knowrob.owl#TextileArtifact -->
 
     <owl:Class rdf:about="http://knowrob.org/kb/knowrob.owl#TextileArtifact"/>
+    
+
+
+    <!-- http://knowrob.org/kb/knowrob.owl#Towel -->
+
+    <owl:Class rdf:about="http://knowrob.org/kb/knowrob.owl#Towel">
+        <owl:equivalentClass rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Towel"/>
+    </owl:Class>
     
 
 
@@ -232,6 +263,14 @@
     
 
 
+    <!-- http://www.ease-crc.org/ont/EASE-OBJ.owl#DishwasherTab -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/EASE-OBJ.owl#DishwasherTab">
+        <owl:equivalentClass rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Dishwashertab"/>
+    </owl:Class>
+    
+
+
     <!-- http://www.ease-crc.org/ont/EASE-OBJ.owl#Location -->
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/EASE-OBJ.owl#Location"/>
@@ -246,9 +285,33 @@
     
 
 
+    <!-- http://www.ease-crc.org/ont/EASE-OBJ.owl#PancakeMix -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/EASE-OBJ.owl#PancakeMix">
+        <owl:equivalentClass rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#PancakeMix"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/EASE-OBJ.owl#Plate -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/EASE-OBJ.owl#Plate">
+        <owl:equivalentClass rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Plate"/>
+    </owl:Class>
+    
+
+
     <!-- http://www.ease-crc.org/ont/EASE-OBJ.owl#Shape -->
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/EASE-OBJ.owl#Shape"/>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/EASE.owl#Bowl -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/EASE.owl#Bowl">
+        <owl:equivalentClass rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Bowl"/>
+    </owl:Class>
     
 
 
@@ -273,6 +336,14 @@
     <!-- http://www.ease-crc.org/ont/EASE.owl#Surface -->
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/EASE.owl#Surface"/>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/EASE.owl#Table -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/EASE.owl#Table">
+        <owl:equivalentClass rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Table"/>
+    </owl:Class>
     
 
 
@@ -1171,7 +1242,6 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Groceries -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Groceries">
-        <rdfs:subClassOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#DesignedArtifact"/>
         <rdfs:subClassOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#DesignedSubstance"/>
     </owl:Class>
     
@@ -1269,14 +1339,6 @@
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Isodrink">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Soda"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Item -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Item">
-        <rdfs:subClassOf rdf:resource="http://ias.cs.tum.edu/kb/knowrob.owl#EnduringThing-Localized"/>
     </owl:Class>
     
 
@@ -2269,7 +2331,8 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Unknown -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Unknown">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Item"/>
+        <rdfs:subClassOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#DesignedArtifact"/>
+        <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">A DesignedArtifact for which the exact specifications are unknown. todo: ideally a class for unknown objects should not exist. Unknown objects should probably be instances of DesignedArtifact.</rdfs:comment>
     </owl:Class>
     
 
