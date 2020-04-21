@@ -19,7 +19,7 @@ next_object(BestObj) :-
     nth0(Index, Objs, NearestObject),
     BestObj = NearestObject.
 
-place_objects() :-
+place_objects :-
     hsr_existing_objects(Objs),
     forall(member(Obj, Objs), place_object(Obj)).
 
