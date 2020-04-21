@@ -75,12 +75,7 @@ create_object_at(PerceivedObjectType, PercTypeConfidence, Transform, Threshold, 
     atom_number(ColorCondidenceAtom, ColorCondidence),
     rdf_assert(Instance, hsr_objects:'ConfidenceColorValue', ColorCondidenceAtom),
     set_object_colour(Instance, Color, ColorCondidence),
-    !,
-    place_objects.
-
-place_objects :-
-    hsr_existing_objects(Objs),
-    forall(member(Obj, Objs),place_object(Obj)).
+    !.
 
 validate_confidence(class, Is, Should) :-
     var(Is),
