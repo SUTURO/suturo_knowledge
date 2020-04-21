@@ -13,8 +13,10 @@
       group_mean_pose/3
     ]).
 
-:- rdf_db:rdf_register_ns(hsr_objects, 'http://www.semanticweb.org/suturo/ontologies/2018/10/objects#', [keep(true)]).
-:- rdf_db:rdf_register_ns(robocup, 'http://knowrob.org/kb/robocup.owl#', [keep(true)]).
+:-rdf_db:rdf_register_ns(dul, 'http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#', [keep(true)]).
+:- rdf_db:rdf_register_ns(hsr_objects, 'http://www.semanticweb.org/suturo/ontologies/2020/3/objects#', [keep(true)]).
+:- rdf_db:rdf_register_ns(robocup, 'http://www.semanticweb.org/suturo/ontologies/2020/2/Robocup#', [keep(true)]).
+
 
 :- rdf_meta
     new_perceived_at(r,+,+,r),
@@ -36,7 +38,7 @@ new_perceived_at(ObjType, Transform, _, Instance) :-
 
 hsr_existing_object_at(_, Transform, Threshold, Instance) :-
     rdf(Instance, rdf:type, owl:'NamedIndividual', belief_state),
-    rdfs_individual_of(Instance, hsr_objects:'Item'),
+    rdfs_individual_of(Instance, dul:'DesignedArtifact'),
     belief_object_at_location(Instance, Transform, Threshold), !.
 
 

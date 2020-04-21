@@ -7,7 +7,7 @@
 :- register_ros_package(rosprolog).
 :- register_ros_package(urdfprolog).
 
-:- rdf_db:rdf_register_ns(hsr_objects, 'http://www.semanticweb.org/suturo/ontologies/2018/10/objects#', [keep(true)]).
+:- rdf_db:rdf_register_ns(hsr_objects, 'http://www.semanticweb.org/suturo/ontologies/2020/3/objects#', [keep(true)]).
 :- rdf_db:rdf_register_ns(urdf, 'http://knowrob.org/kb/urdf.owl#', [keep(true)]).
 
 :- use_module(library('semweb/rdf_db')).
@@ -35,6 +35,7 @@
 :- use_module(library('gripper')).
 :- use_module(library('mocking')).
 
+:- owl_parser:owl_parse('package://dul/owl/DUL.owl').
 :- owl_parser:owl_parse('package://knowrob_common/owl/knowrob.owl').
 :- owl_parser:owl_parse('package://knowledge/owl/objects.owl').
 :- owl_parser:owl_parse('package://urdfprolog/owl/urdf.owl').
