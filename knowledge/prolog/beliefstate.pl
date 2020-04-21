@@ -76,6 +76,7 @@ group_objects_at([X,Y,Z]) :-
 
 
 group_objects(Objs) :-
+    place_objects(Objs),
     member(Obj, Objs),
     current_object_pose(Obj, Transform),
     threshold_for_group(Threshold),
@@ -88,6 +89,9 @@ group_objects(Objs) :-
     rdf_retractall(Member, hsr_objects:'inGroup', _),
     rdf_assert(Member, hsr_objects:'inGroup', Group2),
     not(group_objects(Objs)).
+
+place_objects(Objs) :-
+    forall(member(Obj, Objs), place_object(Obj)).
 
 group_mean_pose(Group, Transform, Rotation) :-
     findall(X, (
