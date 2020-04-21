@@ -70,16 +70,12 @@ group_table_objects :-
 group_objects_at([X,Y,Z]) :-
     Transform = ['map', _, [X,Y,Z], [0,0,1,0]],
     hsr_existing_object_at(Transform, 0.05, Obj),
-    place_object(Obj),
     find_supporting_surface(Obj, Surface),
     objects_on_surface(Objs, Surface),
     group_objects(Objs).
 
 
 group_objects(Objs) :-
-    writeln("These are the objects: "),
-    writeln(Objs),
-    place_objects(Objs),
     member(Obj, Objs),
     current_object_pose(Obj, Transform),
     threshold_for_group(Threshold),
@@ -93,8 +89,6 @@ group_objects(Objs) :-
     rdf_assert(Member, hsr_objects:'inGroup', Group2),
     not(group_objects(Objs)).
 
-place_objects(Objs) :-
-    forall(member(Obj, Objs), place_object(Obj)).
 
 group_mean_pose(Group, Transform, Rotation) :-
     findall(X, (

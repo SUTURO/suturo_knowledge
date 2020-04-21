@@ -11,12 +11,17 @@
     
 
 next_object(BestObj) :-
+    place_objects,
     all_objects_on_source_surfaces(Objs),
     maplist(distance_to_robot, Objs, Distances),
     min_list(Distances, MinDistance),
     nth0(Index, Distances, MinDistance),
     nth0(Index, Objs, NearestObject),
     BestObj = NearestObject.
+
+place_objects() :-
+    hsr_existing_objects(Objs),
+    forall(member(Obj, Objs), place_object(Obj)).
 
 next_object(noSourceSurfaces) :-
     all_source_surfaces([]),
