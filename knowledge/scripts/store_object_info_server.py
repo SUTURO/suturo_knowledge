@@ -83,15 +83,16 @@ class StoreObjectInfoServer(object):
             solutions = prolog.all_solutions(query_string)
             if not solutions:
                 rospy.logwarn("This Object couldn't have been added: " + data.obj_class)
-            else:
-                instance = solutions[0]['ObjectInstance']
-                query_place_string = ("place_object('" + instance + "').")
-                place_solutions = prolog.all_solutions(query_place_string)
-                if not place_solutions:
-                    rospy.logwarn("This Object couldn't have been PLACED: " + data.obj_class + " it is stored as: + " + instance)
+            
 
         rospy.loginfo("Grouping objects.")
         prolog.all_solutions("group_objects_at([" + ", ".join([x,y,z]) + "]).")
+
+        instance = solutions[0]['ObjectInstance']
+        query_place_string = ("place_object('" + instance + "').")
+        place_solutions = prolog.all_solutions(query_place_string)
+        if not place_solutions:
+            rospy.logwarn("This Object couldn't have been PLACED: " + data.obj_class + " it is stored as: + " + instance)
 
         self._result.succeeded = success
         self._as.set_succeeded(self._result)
