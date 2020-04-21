@@ -89,6 +89,7 @@ group_objects(Objs) :-
     rdf_assert(Member, hsr_objects:'inGroup', Group2),
     not(group_objects(Objs)).
 
+
 group_mean_pose(Group, Transform, Rotation) :-
     findall(X, (
         rdf_has(Member, hsr_objects:'inGroup', Group),
