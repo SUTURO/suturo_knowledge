@@ -77,6 +77,11 @@ create_object_at(PerceivedObjectType, PercTypeConfidence, Transform, Threshold, 
     set_object_colour(Instance, Color, ColorCondidence),
     !.
 
+place_objects :-
+    forall(hsr_existing_objects(Objs),
+    member(Obj, Objs),
+    place_object(Obj)).
+
 validate_confidence(class, Is, Should) :-
     var(Is),
     min_class_confidence(Should).
