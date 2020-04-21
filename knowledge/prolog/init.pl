@@ -35,6 +35,7 @@
 :- use_module(library('gripper')).
 :- use_module(library('mocking')).
 
+:- owl_parser:owl_parse('package://dul/owl/DUL.owl').
 :- owl_parser:owl_parse('package://knowrob_common/owl/knowrob.owl').
 :- owl_parser:owl_parse('package://knowledge/owl/objects.owl').
 :- owl_parser:owl_parse('package://urdfprolog/owl/urdf.owl').
