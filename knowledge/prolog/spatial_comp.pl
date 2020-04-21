@@ -13,6 +13,8 @@
         surface_front_edge_center_frame/2
     ]).
 
+:-rdf_db:rdf_register_ns(dul, 'http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#', [keep(true)]).
+
 :- rdf_meta
     hsr_lookup_transform(r,r,?,?),
     hsr_existing_object_at(r,r,?),
@@ -27,7 +29,7 @@ hsr_lookup_transform(SourceFrame, TargetFrame, Translation, Rotation) :-
 
 hsr_existing_object_at(Pose, Threshold, Instance) :-
     rdf(Instance, rdf:type, owl:'NamedIndividual', belief_state),
-    rdfs_individual_of(Instance, hsr_objects:'Item'),
+    rdfs_individual_of(Instance, dul:'DesignedArtifact'),
     object_pose(Instance, OldPose),
     transform_close_to(Pose, OldPose, Threshold).
 
