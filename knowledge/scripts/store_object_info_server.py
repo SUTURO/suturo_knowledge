@@ -78,8 +78,7 @@ class StoreObjectInfoServer(object):
                                 "[" + ", ".join([qx, qy, qz, qw]) + "]]," +
                                 threshold + ", ObjectInstance," +
                                 "[" + ", ".join([depth, width, height]) + "], " + shape + ", _, " +
-                                "[" + ", ".join([r, g, b, a]) + "], " + confidence_color + ")," +
-                            "place_object(ObjectInstance).")
+                                "[" + ", ".join([r, g, b, a]) + "], " + confidence_color + ").")
             rospy.loginfo('Send query: \n' + query_string)
             solutions = prolog.all_solutions(query_string)
             if not solutions:
