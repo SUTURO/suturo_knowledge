@@ -76,6 +76,8 @@ group_objects_at([X,Y,Z]) :-
 
 
 group_objects(Objs) :-
+    writeln("These are the objects: "),
+    writeln(Objs),
     place_objects(Objs),
     member(Obj, Objs),
     current_object_pose(Obj, Transform),
