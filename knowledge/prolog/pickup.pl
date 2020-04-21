@@ -19,9 +19,6 @@ next_object(BestObj) :-
     nth0(Index, Objs, NearestObject),
     BestObj = NearestObject.
 
-place_objects :-
-    hsr_existing_objects(Objs),
-    forall(member(Obj, Objs), place_object(Obj)).
 
 next_object(noSourceSurfaces) :-
     all_source_surfaces([]),
@@ -30,3 +27,7 @@ next_object(noSourceSurfaces) :-
 next_object(noObjectsOnSourceSurfaces) :-
     all_objects_on_source_surfaces([]),
     writeln("There aren't any objects on source surfaces").
+
+place_objects :-
+    hsr_existing_objects(Objs),
+    forall(member(Obj, Objs), place_object(Obj)).
