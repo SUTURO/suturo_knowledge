@@ -70,6 +70,7 @@ group_table_objects :-
 group_objects_at([X,Y,Z]) :-
     Transform = ['map', _, [X,Y,Z], [0,0,1,0]],
     hsr_existing_object_at(Transform, 0.05, Obj),
+    place_object(Obj),
     find_supporting_surface(Obj, Surface),
     objects_on_surface(Objs, Surface),
     group_objects(Objs).
