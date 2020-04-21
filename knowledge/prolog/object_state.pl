@@ -79,9 +79,8 @@ create_object_at(PerceivedObjectType, PercTypeConfidence, Transform, Threshold, 
     place_objects.
 
 place_objects :-
-    forall(hsr_existing_objects(Objs),
-    member(Obj, Objs),
-    place_object(Obj)).
+    hsr_existing_objects(Objs),
+    forall(member(Obj, Objs),place_object(Obj)).
 
 validate_confidence(class, Is, Should) :-
     var(Is),
