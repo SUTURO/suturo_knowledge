@@ -1,16 +1,15 @@
 :- module(beliefstate,
     [
-      gripper/1,
       new_perceived_at/4,
       hsr_existing_object_at/4,
-      attach_object_to_gripper/1,
-      release_object_from_gripper/0,
-      select_surface/2,
       belief_object_at_location/3,
       belief_class_of/2,
       hsr_belief_at_update/2,
       merge_object_into_group/1,
       group_shelf_objects/0,
+      group_table_objects/0,
+      group_objects_at/1,
+      group_objects/1,
       group_mean_pose/3
     ]).
 
@@ -18,26 +17,14 @@
 :- rdf_db:rdf_register_ns(robocup, 'http://knowrob.org/kb/robocup.owl#', [keep(true)]).
 
 :- rdf_meta
-    gripper(+),
     new_perceived_at(r,+,+,r),
     hsr_existing_object_at(r,+,+,r),
-    attach_object_to_gripper(r),
-    release_object_from_gripper,
-    select_surface(r,?),
     belief_object_at_location(r,+,+),
     belief_class_of(r,r),
     hsr_belief_at_update(r,r),
     merge_object_into_group(r),
     group_shelf_objects,
     group_mean_pose(r,?,?).
-
-gripper(Gripper) :-
-    belief_existing_objects([Gripper|_]), ! .
-
-gripper(Gripper) :-
-    rdf_instance_from_class(knowrob:'EnduringThing-Localized', belief_state, Gripper),
-    rdf_assert(Gripper, rdf:type, owl:'NamedIndividual', belief_state),
-    rdf_assert(Gripper, knowrob:'frameName', hand_palm_link, belief_state).
 
 new_perceived_at(ObjType, Transform, Threshold, Instance) :-
     hsr_existing_object_at(ObjType, Transform, Threshold, Instance),
@@ -52,35 +39,6 @@ hsr_existing_object_at(_, Transform, Threshold, Instance) :-
     rdfs_individual_of(Instance, hsr_objects:'Item'),
     belief_object_at_location(Instance, Transform, Threshold), !.
 
-attach_object_to_gripper(Instance) :-
-    rdf_retractall(Instance, hsr_objects:'supportedBy', _),
-    gripper(Gripper),
-    rdf_assert(Instance, hsr_objects:'supportedBy', Gripper),
-    object_frame_name(Instance, InstanceFrame),
-    object_frame_name(Gripper, GripperFrame),
-    tf_lookup_transform(GripperFrame, InstanceFrame, PoseTerm),
-    owl_instance_from_class(knowrob:'Pose', [pose=PoseTerm], Pose),
-    transform_data(Pose,(Translation, Rotation)),
-    belief_at_update(Instance, [GripperFrame, _, Translation, Rotation]).
-
-release_object_from_gripper :-
-    gripper(Gripper),
-    objects_on_surface(Instances, Gripper),
-    member(Instance, Instances),
-    object_frame_name(Instance, InstanceFrame),
-    tf_lookup_transform(map, InstanceFrame, PoseTerm),
-    owl_instance_from_class(knowrob:'Pose', [pose=PoseTerm], Pose),
-    transform_data(Pose,([X,Y,Z], Rotation)),
-    hsr_belief_at_update(Instance, [map, _, [X,Y,Z], Rotation]),
-    rdf_retractall(Instance, hsr_objects:'supportedBy', _),
-    select_surface([X,Y,Z], Surface),
-    rdf_assert(Instance, hsr_objects:'supportedBy', Surface),
-    group_shelf_objects.
-
-
-select_surface([X,Y,Z], Surface) :-
-    position_supportable_by_surface([X,Y,Z], Surface).
-
 
 % No groups nearby
 hsr_belief_at_update(Instance, Transform) :-
@@ -92,7 +50,8 @@ hsr_belief_at_update(Instance, Transform) :-
 merge_object_into_group(Instance) :-
     current_object_pose(Instance, Transform),
     findall(NearbyObj, (
-        hsr_existing_object_at(Transform, 0.15, NearbyObj)),
+        threshold_for_group(Threshold),
+        hsr_existing_object_at(Transform, Threshold, NearbyObj)),
         [Obj|Rest]),
     rdf_has(Obj, hsr_objects:'inGroup', WG),
     member(Other, Rest),
@@ -102,9 +61,25 @@ merge_object_into_group(Instance) :-
 
 group_shelf_objects :-
     all_objects_in_whole_shelf(Objs),
+    group_objects(Objs).
+
+group_table_objects :-
+    all_objects_on_tables(Objs),
+    group_objects(Objs).
+
+group_objects_at([X,Y,Z]) :-
+    Transform = ['map', _, [X,Y,Z], [0,0,1,0]],
+    hsr_existing_object_at(Transform, 0.05, Obj),
+    find_supporting_surface(Obj, Surface),
+    objects_on_surface(Objs, Surface),
+    group_objects(Objs).
+
+
+group_objects(Objs) :-
     member(Obj, Objs),
     current_object_pose(Obj, Transform),
-    hsr_existing_object_at(Transform, 0.15, NearbyObj),
+    threshold_for_group(Threshold),
+    hsr_existing_object_at(Transform, Threshold, NearbyObj),
     rdf_has(Obj, hsr_objects:'inGroup', Group1),
     rdf_has(NearbyObj, hsr_objects:'inGroup', Group2),
     not(rdf_equal(Obj, NearbyObj)),
@@ -112,7 +87,7 @@ group_shelf_objects :-
     rdf_has(Member, hsr_objects:'inGroup', Group1),
     rdf_retractall(Member, hsr_objects:'inGroup', _),
     rdf_assert(Member, hsr_objects:'inGroup', Group2),
-    not(group_shelf_objects).
+    not(group_objects(Objs)).
 
 group_mean_pose(Group, Transform, Rotation) :-
     findall(X, (
@@ -136,7 +111,7 @@ group_mean_pose(Group, Transform, Rotation) :-
     Zmean is Ztotal / L,
     Transform = [Xmean, Ymean, Zmean],
     once(rdf_has(Member, hsr_objects:'inGroup', Group)),
-    object_current_surface(Member, Surface),
+    find_supporting_surface(Member, Surface),
     surface_pose_in_map(Surface, [_, Rotation]),
     object_frame_name(Group, Frame),
     object_pose_update(Group, ['map', Frame, Transform, Rotation]).
@@ -154,7 +129,7 @@ belief_class_of(Obj, NewObjType) :-
     current_time(Now),
      ignore(once((
         % withdraw old beliefs about object type
-        rdfs_type_of(Obj, CurrObjType),
+        once(rdfs_individual_of(Obj, CurrObjType)),
          rdfs_subclass_of(CurrObjType, Parent),
         rdfs_subclass_of(NewObjType, Parent),
          assert_temporal_part_end(Obj, rdf:type, CurrObjType, Now, belief_state)
