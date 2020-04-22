@@ -19,9 +19,9 @@ object_goal_surface(Instance, Surface) :-
     object_goal_surface(Instance, Surface, _, _).
 
 
-object_goal_surface(Instance, Surface, Context, RefObject):-
-    most_related_object(Instance, RefObject, Context),
-    find_supporting_surface(RefObject, Surface).
+%object_goal_surface(Instance, Surface, Context, RefObject):-
+%    most_related_object(Instance, RefObject, Context),
+%    find_supporting_surface(RefObject, Surface).
 
 
 %% If there is no corresponding class, take the nearest easy reachable target surface that is empty
@@ -58,54 +58,6 @@ object_goal_surface(_, _, "You haven't defined any target surfaces", _) :-
     all_target_surfaces([]),
     writeln("You haven't defined any target surfaces").
 
-most_related_object(Source, Target, Context):-
-    kb_type_of(Source, hsr_objects:'Other'),
-    same_color(Source, Target),
-    context_speech_sort_by_color(Source, Target, Context).
-
-most_related_object(Source, Target, Context):-
-    kb_type_of(Source, hsr_objects:'Other'),
-    same_size(Source, Target),
-    context_speech_sort_by_size(Source, Target, Context).
-
-most_related_object(Source, Target, Context) :-
-    most_related_class(Source, Target, Distance),
-    context_speech_sort_by_class(Source, Target, Distance, Context).
-
-most_related_class(Source, Target, Distance) :-
-    findall(Dist, distance_to_object(Source, _, Dist), Distances),
-    min_member(Distance, Distances),
-    distance_to_object(Source, Target, Distance),
-    allowed_class_distance(MaxDist),
-    MaxDist >= Distance.
-
-distance_to_object(Source, Target, Distance) :-
-    all_objects_on_target_surfaces(Objs),
-    member(Target, Objs),
-    not(owl_same_as(Source, Target)),
-    kb_type_of(Target, TargetType),
-    kb_type_of(Source, SourceType),
-    distance_of(SourceType, TargetType, Distance).
-
-distance_of(SourceType, TargetType, Distance) :-
-    owl_same_as(SourceType, TargetType),
-    Distance = 1.
-
-distance_of(SourceType, TargetType, Distance) :-
-    not(owl_same_as(SourceType, TargetType)),
-    rdf_shortest_path(SourceType, TargetType, Distance).
-
-same_color(Source, Target):-
-    all_objects_on_target_surfaces(Objects),
-    member(Target, Objects),
-    rdf_has(Source, hsr_objects:'colour', Color),
-    rdf_has(Target, hsr_objects:'colour', Color).
-    
-same_size(Source, Target):-
-    all_objects_on_target_surfaces(Objects),
-    member(Target, Objects),
-    rdf_has(Source, hsr_objects:'size', Size),
-    rdf_has(Target, hsr_objects:'size', Size).
 
 
 %******************** GOAL POSE **********************
@@ -155,3 +107,6 @@ object_goal_pose_offset(Instance, [[X,Y,Z], Rotation],Context):-
     object_goal_pose(Instance, [[X,Y,OZ], Rotation],Context),
     object_dimensions(Instance,_,_,H),
     Z is OZ + H/2 + 0.03.
+
+
+

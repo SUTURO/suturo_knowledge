@@ -135,3 +135,146 @@ belief_class_of(Obj, NewObjType) :-
          assert_temporal_part_end(Obj, rdf:type, CurrObjType, Now, belief_state)
     ))),
     assert_temporal_part(Obj, rdf:type, nontemporal(NewObjType), Now, belief_state).
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%% Assign a surface %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%% Defining the distance of their Relationship %%%%%%%%%%%%%%%%%%%%%%%%%%
+
+most_related_object(Source, Target, Distance) :-
+    most_related_class(Source, Target, Distance),
+    allowed_class_distance(MaxDistance),
+    MaxDistance >= Distance,
+    context_speech_sort_by_class(Source, Target, Distance, Context), 
+    assert_distance(Source, Distance, Context),
+    !.
+
+most_related_object(Source, Target, Value):-
+    same_color(Source, Target),
+    context_speech_sort_by_color(Source, Target, Context),
+    allowed_class_distance(MaxDist),
+    Value = MaxDist + 1,
+    assert_distance(Source, Distance, Context),
+    !.
+
+most_related_object(Source, Target, Value):-
+    same_size(Source, Target),
+    context_speech_sort_by_size(Source, Target, Context),
+    allowed_class_distance(MaxDist),
+    Value = MaxDist + 2,
+    assert_distance(Source, Distance, Context),
+    !.
+
+
+most_related_class(Source, Target, Distance) :-
+    findall(Dist, distance_to_object(Source, _, Dist), Distances),
+    min_member(Distance, Distances),
+    distance_to_object(Source, Target, Distance).
+
+distance_to_object(Source, Target, Distance) :-
+    all_objects_on_target_surfaces(Objs),
+    member(Target, Objs),
+    not(owl_same_as(Source, Target)),
+    kb_type_of(Target, TargetType),
+    kb_type_of(Source, SourceType),
+    distance_of(SourceType, TargetType, Distance).
+
+% in case Source and Target are of the same class,
+% rdf_shortest_path/3 would return 3 instead of 1. 
+% This overload fixes that.
+distance_of(SourceType, TargetType, Distance) :-
+    owl_same_as(SourceType, TargetType),
+    Distance = 1.
+
+% Returns the logical distance between two classes.
+distance_of(SourceType, TargetType, Distance) :-
+    not(owl_same_as(SourceType, TargetType)),
+    rdf_shortest_path(SourceType, TargetType, Distance).
+
+same_color(Source, Target):-
+    all_objects_on_target_surfaces(Objects),
+    member(Target, Objects),
+    rdf_has(Source, hsr_objects:'colour', Color),
+    rdf_has(Target, hsr_objects:'colour', Color).
+    
+same_size(Source, Target):-
+    all_objects_on_target_surfaces(Objects),
+    member(Target, Objects),
+    rdf_has(Source, hsr_objects:'size', Size),
+    rdf_has(Target, hsr_objects:'size', Size).
+
+assert_distance(Object, Distance, Context) :-
+    atom_number(DistanceAtom, Distance),
+    rdf_retractall(Object, distance, _),
+    rdf_assert(Object, distance, DistanceAtom),
+    atom_string(Context, ContextString),
+    rdf_retractall(Object, context, _),
+    rdf_assert(Object, context, ContextString).
+
+%%%%%%%%% The relation to other Objects on same surface %%%%%%%%%%%%%%%%%%%
+
+% Returns the supposed Surface for the Object and
+% stores the surface and the distance to it's RefObject in RDF.
+ object_most_similar_surface(Object, Surface) :-
+    most_related_object(Object, RefObject, Distance, Context),
+    find_supporting_surface(RefObject, Surface),
+    rdf_retractall(Object, supposedSurface, _),
+    rdf_assert(Object, supposedSurface, Surface).
+
+% Object is the reference object. OtherObjects returns a list of 
+% all the objects, that one day would be put on same surface as Object.
+objects_on_same_surface_in_future(Surface, OtherObjects) :-
+    objects_on_surface(AlreadyPlacedObjects, Surface),
+    all_objects_on_source_surfaces(SourceObjects),
+    findall(Obj,
+    (
+        member(Obj, SourceObjects),
+        object_most_similar_surface(Obj, Surface)
+    ),
+        FutureObjects),
+
+    append(AlreadyPlacedObjects, FutureObjects, OtherObjectsUnsorted),
+    predsort(compareLogicalDistances, OtherObjectsUnsorted, OtherObjects).
+
+% compares the logical Distance of two Objects to their ReferenceObject on Target-Surface based on compare/3.
+compareLogicalDistances(Order, Object1, Object2) :-
+    rdf_has(Object1, distance, Dist1),
+    rdf_has(Object2, distance, Dist2),
+    atom_number(Dist1, Dist1N),
+    atom_number(Dist2, Dist2N)
+    compare(Order, Dist1N, Dist2N).
+
+objects_fit_on_surface(Objects, Surface) :-
+    findall(WidthPlus,
+    (
+        member(Object, Objects),
+        object_dimensions(Object, X,Y,Z),
+        (   X >= Y
+            -> Width = X
+            ; Width = Y  ),
+        WidthPlus = Width + 0.1
+    ),
+        ListOfWidths),
+    sumlist(ListOfWidths, Sum),
+    
+
+
+
+assert_object_supposed_surface(Object) :-
+    object_most_similar_surface(Object, Surface),
+    objects_on_same_surface_in_future(Surface, OtherObjects),
+
+
+    
+
+
+
+
+
+    % TO DO
+    % -> Run new assertions for every new object
+    % -> assert distance=0 and actual surface for places objects when they are placed OR percieved at target surface

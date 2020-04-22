@@ -8,6 +8,7 @@
       min_class_confidence/1, 
       min_shape_confidence/1,
       min_color_confidence/1,
+      max_shelf_capacity/1,
       context_speech_sort_by_class/4,
       context_speech_sort_by_color/3,
       context_speech_sort_by_size/3,
@@ -45,7 +46,7 @@ urdf_surface_prefix(Prefix) :-
 %% where the Object should still be sorted by class rather than other properties
 %% like Color or Size.
 allowed_class_distance(Distance) :-
-    Distance = 5.
+    Distance = 7.
 
 %% Minimum Confidence where the perceived Object class should still be stored.
 %% Classes with lower confidence get 'Other' as fallback.
@@ -57,6 +58,9 @@ min_shape_confidence(Confidence) :-
 
 min_color_confidence(Confidence) :-
     Confidence = 0.5.
+
+max_shelf_capacity(Capacity) :-
+    Capacity = 4.
 
 %% Context is the Speech, the Robot should hold depending on the distance of the
 %% next Objects Class.
