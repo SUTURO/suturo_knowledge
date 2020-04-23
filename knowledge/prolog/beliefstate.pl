@@ -10,7 +10,9 @@
       group_table_objects/0,
       group_objects_at/1,
       group_objects/1,
-      group_mean_pose/3
+      group_mean_pose/3,
+      assert_object_supposed_surface/1,
+      object_goal_surface/3
     ]).
 
 :- rdf_db:rdf_register_ns(hsr_objects, 'http://www.semanticweb.org/suturo/ontologies/2018/10/objects#', [keep(true)]).
@@ -145,7 +147,7 @@ belief_class_of(Obj, NewObjType) :-
 
 %%%%%%%%% Defining the distance of their Relationship %%%%%%%%%%%%%%%%%%%%%%%%%%
 
-most_related_object(Source, Target, Distance) :-
+most_related_object(Source, Target) :-
     most_related_class(Source, Target, Distance),
     allowed_class_distance(MaxDistance),
     MaxDistance >= Distance,
@@ -153,19 +155,19 @@ most_related_object(Source, Target, Distance) :-
     assert_distance(Source, Distance, Context),
     !.
 
-most_related_object(Source, Target, Value):-
+most_related_object(Source, Target):-
     same_color(Source, Target),
     context_speech_sort_by_color(Source, Target, Context),
     allowed_class_distance(MaxDist),
-    Value = MaxDist + 1,
+    Distance = MaxDist + 1,
     assert_distance(Source, Distance, Context),
     !.
 
-most_related_object(Source, Target, Value):-
+most_related_object(Source, Target):-
     same_size(Source, Target),
     context_speech_sort_by_size(Source, Target, Context),
     allowed_class_distance(MaxDist),
-    Value = MaxDist + 2,
+    Distance = MaxDist + 2,
     assert_distance(Source, Distance, Context),
     !.
 
@@ -207,6 +209,11 @@ same_size(Source, Target):-
     rdf_has(Source, hsr_objects:'size', Size),
     rdf_has(Target, hsr_objects:'size', Size).
 
+assert_all_planning(Object, Surface, Distance, Context) :-
+    rdf_retractall(Object, supposedSurface, _),
+    rdf_assert(Object, supposedSurface, Surface),
+    assert_distance(Object, Distance, Context).
+
 assert_distance(Object, Distance, Context) :-
     atom_number(DistanceAtom, Distance),
     rdf_retractall(Object, distance, _),
@@ -215,12 +222,17 @@ assert_distance(Object, Distance, Context) :-
     rdf_retractall(Object, context, _),
     rdf_assert(Object, context, ContextString).
 
+retract_all_planning(Object) :-
+    rdf_retractall(Object, distance, _),
+    rdf_retractall(Object, context, _),
+    rdf_retractall(Object, supposedSurface, _).
+
 %%%%%%%%% The relation to other Objects on same surface %%%%%%%%%%%%%%%%%%%
 
 % Returns the supposed Surface for the Object and
 % stores the surface and the distance to it's RefObject in RDF.
  object_most_similar_surface(Object, Surface) :-
-    most_related_object(Object, RefObject, Distance, Context),
+    most_related_object(Object, RefObject),
     find_supporting_surface(RefObject, Surface),
     rdf_retractall(Object, supposedSurface, _),
     rdf_assert(Object, supposedSurface, Surface).
@@ -245,14 +257,27 @@ compareLogicalDistances(Order, Object1, Object2) :-
     rdf_has(Object1, distance, Dist1),
     rdf_has(Object2, distance, Dist2),
     atom_number(Dist1, Dist1N),
-    atom_number(Dist2, Dist2N)
+    atom_number(Dist2, Dist2N),
     compare(Order, Dist1N, Dist2N).
 
-objects_fit_on_surface(Objects, Surface) :-
+% Takes a list of objects and divides it into the first n objects that fit on
+% the given surface and the rest.
+objects_fit_on_surface(Objects, Surface, FittingObjects, NotFittingObjects) :-
+    objects_fit_on_surface_(Objects, Surface),
+    FittingObjects = Objects,
+    NotFittingObjects = [].
+    
+objects_fit_on_surface(Objects, Surface, FittingObjects, NotFittingObjects) :-
+    last(Objects,LastObject), 
+    delete(Objects,LastObject, ShorterList),
+    objects_fit_on_surface(ShorterList, Surface, FittingObjects, NotFittingObjectsButLast),
+    append(NotFittingObjectsButLast, [LastObject], NotFittingObjects).
+
+objects_fit_on_surface_(Objects, Surface) :-
     findall(WidthPlus,
     (
         member(Object, Objects),
-        object_dimensions(Object, X,Y,Z),
+        object_dimensions(Object, X,Y,_),
         (   X >= Y
             -> Width = X
             ; Width = Y  ),
@@ -260,15 +285,43 @@ objects_fit_on_surface(Objects, Surface) :-
     ),
         ListOfWidths),
     sumlist(ListOfWidths, Sum),
-    
+    surface_dimensions(Surface, SurfaceWidth, _, _),
+    SurfaceWidth >= Sum.
 
+next_empty_surface(Surface) :-
+    all_target_surfaces(Surfaces),
+    predsort(compareDistances, Surfaces, SortedSurfaces),
+    next_empty_surface_(SortedSurfaces, Surface).
 
+next_empty_surface(Surface) :- %% to do
+    writeln("There is no free surface left"),
+    Surface=error.
+
+next_empty_surface_(Surfaces, Surface) :-
+    member(Surface, Surfaces),
+    not(rdf_has(_, supposedSurface, Surface)).
 
 assert_object_supposed_surface(Object) :-
     object_most_similar_surface(Object, Surface),
     objects_on_same_surface_in_future(Surface, OtherObjects),
+    objects_fit_on_surface(OtherObjects, Surface, _, NotFittingObjects),
+    forall(member(NotFittingObject, NotFittingObjects), retract_all_planning(NotFittingObject)),
+    (   member(Object, NotFittingObjects)
+        -> next_empty_surface(AlternativeSurface),
+        context_speech_new_class(Context),
+        assert_all_planning(Object, AlternativeSurface, 0, Context)
+        ).
 
 
+object_goal_surface(Object, Surface, Context) :-
+    rdf_has(Object, supposedSurface, Surface),
+    rdf_has(Object, context, Context),
+    !.
+
+object_goal_surface(Object, Surface, Context) :-
+    assert_object_supposed_surface(Object),
+    object_goal_surface(Object, Surface, Context),
+    !.
     
 
 

@@ -24,6 +24,7 @@
     pose_of_tables/1,
     pose_of_shelves/1,
     pose_of_surfaces/2,
+    compareDistances/3,
     %% FIND OBJs
     objects_on_surface/2,
     is_object/1,

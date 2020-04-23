@@ -1,7 +1,5 @@
 :- module(assignplaces,
     [
-      object_goal_surface/4,
-      object_goal_surface/2,
       object_goal_pose/4, 
       object_goal_pose/3, % recommendet to be used by Planning
       object_goal_pose/2,

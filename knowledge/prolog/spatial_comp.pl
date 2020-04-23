@@ -10,7 +10,8 @@
         urdf_frame/2,
         object_frame/2,
         surface_frame/2,
-        surface_front_edge_center_frame/2
+        surface_front_edge_center_frame/2,
+        surface_dimensions/4
     ]).
 
 :- rdf_meta
@@ -123,3 +124,6 @@ surface_frame(Surface, Frame) :-
     rdf_urdf_name(Surface, Name),
     urdf_surface_prefix(Prefix),
     atom_concat(Prefix, Name, Frame).
+
+surface_dimensions(Surface, Width, Depth, Height) :-
+    rdf_urdf_link_collision(Surface, box(Width, Depth, Height), _).
