@@ -1,6 +1,6 @@
 <launch>
   <arg name="dic_list_en_word"
-       default="$(find suturo_julius)/dictionaries/dic_list_word.txt" />
+       default="$(find suturo_julius)/dictionaries/examples/word/dic-list_word.txt" />
 
 
   <group ns="/suturo_speech_recognition">

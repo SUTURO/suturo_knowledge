@@ -1,7 +1,6 @@
 <launch>
-    <!--
-    	<include file ="$(find suturo_julius)/launch/julius_qa_system.launch"/>
-    -->
+    <arg name="sim" default="False"/>
+    <include file ="$(find suturo_julius)/launch/julius_qa_system.launch"/>
     
     <node pkg="suturo_textparser" name="textparser" type="textparser.py" respawn="true" output="screen">
 	    <remap from="input" to="suturo_speech_recognition/voice/text"/>
@@ -21,23 +20,17 @@
         <param name="use_action" value="False"/>
 		<remap from="nlg_requests" to="nlg_requests"/>
 	</node>	
+	<node pkg="suturo_nlg" name="demo_object_data_adder" type="qa_demo_data_adder.py" respawn="true" output="screen">
+	</node>	
 	
+	<group if="$(arg sim)">
+	    <arg name="map_file" default="$(find maps)/corona_sim/sim_v1.yaml"/>
+        <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" />
+	    <node pkg="rviz" type="rviz" name="nlg_rviz"/>
+        <node pkg="tf" type="static_transform_publisher" name="robot_footprint_broadcaster" args="0 0 0 0 0 0 /map /base_footprint 25"></node>
+    </group>	
+	
+    <include file="$(find knowledge)/launch/knowledge.launch" />
 
-    <include file="$(find suturo_urdf_publisher_rework)/launch/hsr_lab_simple.launch" />
-    
-    <node pkg="tf" type="static_transform_publisher" name="base_footprint_broadcaster"
-        args="0 0 0 0 0 0 /map /base_footprint 25">
-    </node>
-
-    <param name="param_to_load_URDF_from" type="str" value="/enviorment_urdf" />
-    <param name="initial_package" type="string" value="knowledge" />
-    <param name="initial_goal" type="string" value="ros_param_get_string('/param_to_load_URDF_from', Param), load_surfaces_from_param(Param)." />
-    <node name="rosprolog" pkg="rosprolog" type="rosprolog_node" cwd="node" output="screen"/>
-
-    
-    <node name="object_state_publisher" pkg="knowrob_objects" type="object_state_publisher.py" output="screen">
-        <param name="hz" value="10" />
-        <param name="object_types" value="knowrob:'EnduringThing-Localized'" />
-    </node>
     
 </launch>
