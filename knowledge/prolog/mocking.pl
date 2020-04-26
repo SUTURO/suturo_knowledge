@@ -33,7 +33,7 @@ create_object_on_surface(Surface) :-
         0.8, 
         Transform,
         0.05, 
-        ObjectInstance, 
+        _, 
         [0.2, 0.075, 0.2], 
         box,
         0.8,
@@ -54,7 +54,7 @@ create_object_on_surface_old(Surface) :-
     create_object_at('http://www.semanticweb.org/suturo/ontologies/2018/10/objects#Banana',
         Transform,
         0.05, 
-        ObjectInstance, 
+        _, 
         [0.2, 0.075, 0.2], 
         [0.0,0.0,0.0,0.0]),
     !.
