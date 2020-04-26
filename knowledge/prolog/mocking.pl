@@ -39,7 +39,6 @@ create_object_on_surface(Surface) :-
         0.8,
         [0.0,0.0,0.0,0.0],
         0.9),
-    place_object(ObjectInstance),
     !.
 
 create_object_on_surface_old(Surface) :-
@@ -58,7 +57,6 @@ create_object_on_surface_old(Surface) :-
         ObjectInstance, 
         [0.2, 0.075, 0.2], 
         [0.0,0.0,0.0,0.0]),
-    place_object(ObjectInstance),
     !.
 
 

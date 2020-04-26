@@ -13,6 +13,8 @@
         surface_front_edge_center_frame/2
     ]).
 
+:-rdf_db:rdf_register_ns(dul, 'http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#', [keep(true)]).
+
 :- rdf_meta
     hsr_lookup_transform(r,r,?,?),
     hsr_existing_object_at(r,r,?),
@@ -107,7 +109,7 @@ surface_front_edge_center_frame(Surface, FrontEdgeCenterFrame) :- % in case it's
     surface_frame(Surface, FrontEdgeCenterFrame).
 
 surface_front_edge_center_frame(Surface, FrontEdgeCenterFrame) :- % in case it's a table
-    is_table(Surface),
+    (is_table(Surface) ; is_bucket(Surface) ),
     rdf_urdf_name(Surface, FullName),
     sub_atom(FullName, 0, _, 7, Name), % cuts away the Suffix "_center" (the last 7 letters)
     urdf_surface_prefix(Prefix),
