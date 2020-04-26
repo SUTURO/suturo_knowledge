@@ -109,10 +109,9 @@ assert_surface_types(SurfaceLink):-
 
 %% supporting_surface(?Surface).
 %
-supporting_surface(SurfaceLink):- % has not been tested yet.
+supporting_surface(SurfaceLink):-
     rdf_urdf_link_collision(SurfaceLink,ShapeTerm,_),
-    surface_big_enough(ShapeTerm),
-    true.
+    surface_big_enough(ShapeTerm).
 
 %% takes names like table_1_center or shelf_floor_4_piece or ground.
 %% Returns false if name is not a registered surface.
