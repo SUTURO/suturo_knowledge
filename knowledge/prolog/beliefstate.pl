@@ -39,6 +39,7 @@ new_perceived_at(ObjType, Transform, _, Instance) :-
 hsr_existing_object_at(_, Transform, Threshold, Instance) :-
     rdf(Instance, rdf:type, owl:'NamedIndividual', belief_state),
     rdfs_individual_of(Instance, dul:'DesignedArtifact'),
+    rdf_has(Instance, hsr_objects:'supportable', true),
     belief_object_at_location(Instance, Transform, Threshold), !.
 
 
