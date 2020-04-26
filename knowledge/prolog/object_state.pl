@@ -33,7 +33,13 @@
 
 
 hsr_existing_objects(Objects) :-
-    belief_existing_objects(Objects, [dul:'DesignedArtifact']).
+    belief_existing_objects(L, [dul:'DesignedArtifact']),
+  findall(J, (
+      rdf(J, _, _, belief_state),
+      rdf_has(J, hsr_objects:'supportable', true),
+      member(J, L)
+  ), X),
+  list_to_set(X,Objects).
 
 hsr_forget_object(Object) :-
     rdf_retractall(Object,_,_).
@@ -76,6 +82,7 @@ create_object_at(PerceivedObjectType, PercTypeConfidence, Transform, Threshold, 
     atom_number(ColorCondidenceAtom, ColorCondidence),
     rdf_assert(Instance, hsr_objects:'ConfidenceColorValue', ColorCondidenceAtom),
     set_object_colour(Instance, Color, ColorCondidence),
+    rdf_assert(Instance, hsr_objects:'supportable', true),
     !.
 
 validate_confidence(class, Is, Should) :-
