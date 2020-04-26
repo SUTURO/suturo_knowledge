@@ -58,7 +58,8 @@ object_of_type(ObjectType, Instance) :-
 
 create_object(ObjectType, Instance) :-
  	owl_subclass_of(ObjectType, dul:'DesignedArtifact'),
-	belief_new_object(ObjectType, Instance).
+	belief_new_object(ObjectType, Instance),
+        rdf_assert(Instance, hsr_objects:'supportable', true).
 
 % deprecated. buggy, too.
 create_object_at(ObjectType, Transform, Threshold, Instance, Dimensions, Color) :-
