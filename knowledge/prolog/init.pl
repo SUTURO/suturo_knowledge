@@ -44,3 +44,6 @@
     load_surfaces_from_param(Param).
 
 :- tf_lookup_transform(map, map, _).
+
+:- gripper(Gripper), gripper_init(Gripper).
+

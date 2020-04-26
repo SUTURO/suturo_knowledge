@@ -39,7 +39,7 @@ threshold_surface(ThresholdAbove, ThresholdBelow) :-
     ThresholdBelow = -0.05.
 
 urdf_surface_prefix(Prefix) :-
-    Prefix = 'enviorment/'.
+    Prefix = 'iai_kitchen/'.
 
 %% Distance is the maximum Distance (rdf_shortest_path) to another Object
 %% where the Object should still be sorted by class rather than other properties
