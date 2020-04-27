@@ -123,7 +123,7 @@ surface_suffix(Surface, Suffix) :-
     is_table(Surface),
     Suffix = "_front_edge_center".
 
-szrface_suffix(Surface, Suffix) :-
+surface_suffix(Surface, Suffix) :-
     is_bucket(Surface),
     Suffix = "_surface_center".
 

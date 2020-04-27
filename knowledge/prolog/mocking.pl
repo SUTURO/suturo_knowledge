@@ -20,10 +20,10 @@ create_objects_on_table :-
 
 create_object_on_surface(Surface) :-
     rdf_urdf_link_collision(Surface, box(Depth, Width, _), _),
-    XMin is (-1) * (Width/2) + 0.1,
-    XMax is (Width/2) - 0.1,
-    YMin is Depth*(-1) + 0.1,
-    YMax is - 0.1,
+    YMin is (-1) * (Width/2) + 0.1,
+    YMax is (Width/2) - 0.1,
+    XMin is Depth - 0.1,
+    XMax is + 0.1,
     surface_front_edge_center_frame(Surface, Frame),
     find_random_suitable_pos_(XMin, XMax, YMin, YMax, Frame, [RelativeX,RelativeY]),
     tf_transform_point(Frame, map, [RelativeX, RelativeY, 0], Pos),
