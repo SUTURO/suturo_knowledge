@@ -37,8 +37,11 @@ hsr_existing_object_at(Pose, Threshold, Instance) :-
 
 surface_pose_in_map(SurfaceLink, Pose) :-
     urdf_frame(SurfaceLink, Frame),
-    hsr_lookup_transform(map, Frame, Translation, Rotation),
-    Pose = [Translation, Rotation].
+    hsr_lookup_transform(map, Frame, [X,Y,Z], Rotation),
+    (is_bucket(SurfaceLink)
+        -> NewX is X - 0.1 % remove this if you use suturo_urdf_publisher_rework!
+        ; NewX = X),
+    Pose = [[NewX,Y,Z], Rotation].
 
 %%%%%%%%%%%%%%%  Supportable by surface  %%%%%%%%%%%%%%%%%5
 
@@ -71,9 +74,9 @@ relative_position_supportable_by_surface([X,Y,Z],Surface) :-
     threshold_surface(ThAbove, ThBelow),
     ThAbove >= Z,
     ThBelow =< Z,
-    Width/2 >= abs(X),
-    0 >= Y,
-    Depth*(-1) =< Y.
+    Width/2 >= abs(Y),
+    0 < X,
+    Depth >= X.
 
 position_supportable_by_ground(ZPos) :-
     number(ZPos),

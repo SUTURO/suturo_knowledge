@@ -6,6 +6,7 @@
       belief_class_of/2,
       hsr_belief_at_update/2,
       merge_object_into_group/1,
+      group_target_objects/0,
       group_shelf_objects/0,
       group_table_objects/0,
       group_objects_at/1,
@@ -61,6 +62,9 @@ merge_object_into_group(Instance) :-
     rdf_retractall(Other, hsr_objects:'inGroup', _),
     rdf_assert(Other, hsr_objects:'inGroup', WG).
 
+group_target_objects :-
+    all_objects_on_target_surfaces(Objs),
+    group_objects(Objs).
 
 group_shelf_objects :-
     all_objects_in_whole_shelf(Objs),
