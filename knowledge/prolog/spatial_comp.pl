@@ -10,7 +10,9 @@
         urdf_frame/2,
         object_frame/2,
         surface_frame/2,
-        surface_front_edge_center_frame/2
+        surface_front_edge_center_frame/2,
+        %Debug
+        relative_position_supportable_by_surface/2
     ]).
 
 :-rdf_db:rdf_register_ns(dul, 'http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#', [keep(true)]).
@@ -70,7 +72,7 @@ position_supportable_by_surface(Position, ground) :-
     position_supportable_by_ground(Position).
 
 relative_position_supportable_by_surface([X,Y,Z],Surface) :-
-    rdf_urdf_link_collision(Surface, box(Width, Depth, _), _),
+    rdf_urdf_link_collision(Surface, box(Depth, Width, _), _),
     threshold_surface(ThAbove, ThBelow),
     ThAbove >= Z,
     ThBelow =< Z,
