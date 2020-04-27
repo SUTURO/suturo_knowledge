@@ -40,10 +40,7 @@ hsr_existing_object_at(Pose, Threshold, Instance) :-
 surface_pose_in_map(SurfaceLink, Pose) :-
     urdf_frame(SurfaceLink, Frame),
     hsr_lookup_transform(map, Frame, [X,Y,Z], Rotation),
-    (is_bucket(SurfaceLink)
-        -> NewX is X - 0.1 % remove this if you use suturo_urdf_publisher_rework!
-        ; NewX = X),
-    Pose = [[NewX,Y,Z], Rotation].
+    Pose = [[X,Y,Z], Rotation].
 
 %%%%%%%%%%%%%%%  Supportable by surface  %%%%%%%%%%%%%%%%%5
 
@@ -115,13 +112,20 @@ surface_front_edge_center_frame(Surface, FrontEdgeCenterFrame) :- % in case it's
     surface_frame(Surface, FrontEdgeCenterFrame).
 
 surface_front_edge_center_frame(Surface, FrontEdgeCenterFrame) :- % in case it's a table
-    (is_table(Surface) ; is_bucket(Surface) ),
     rdf_urdf_name(Surface, FullName),
     sub_atom(FullName, 0, _, 7, Name), % cuts away the Suffix "_center" (the last 7 letters)
     urdf_surface_prefix(Prefix),
     atom_concat(Prefix, Name, Part1),
-    Suffix = "_front_edge_center",
+    surface_suffix(Surface, Suffix),
     atom_concat(Part1, Suffix, FrontEdgeCenterFrame).
+
+surface_suffix(Surface, Suffix) :-
+    is_table(Surface),
+    Suffix = "_front_edge_center".
+
+szrface_suffix(Surface, Suffix) :-
+    is_bucket(Surface),
+    Suffix = "_surface_center".
 
 object_frame(Object, Frame) :-
     split_string(Object, "#", "", [_,ObjFrameString]),
