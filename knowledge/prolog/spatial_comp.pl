@@ -70,9 +70,9 @@ relative_position_supportable_by_surface([X,Y,Z],Surface) :-
     threshold_surface(ThAbove, ThBelow),
     ThAbove >= Z,
     ThBelow =< Z,
-    Width/2 >= abs(X),
-    0 >= Y,
-    Depth*(-1) =< Y.
+    Width/2 >= abs(Y),
+    0 < X,
+    Depth >= X.
 
 position_supportable_by_ground(ZPos) :-
     number(ZPos),
