@@ -36,8 +36,11 @@ hsr_existing_object_at(Pose, Threshold, Instance) :-
 
 surface_pose_in_map(SurfaceLink, Pose) :-
     urdf_frame(SurfaceLink, Frame),
-    hsr_lookup_transform(map, Frame, Translation, Rotation),
-    Pose = [Translation, Rotation].
+    hsr_lookup_transform(map, Frame, [X,Y,Z], Rotation),
+    (is_bucket(SurfaceLink)
+        -> NewX is X - 0.1 % remove this if you use suturo_urdf_publisher_rework!
+        ; NewX = X),
+    Pose = [[NewX,Y,Z], Rotation].
 
 %%%%%%%%%%%%%%%  Supportable by surface  %%%%%%%%%%%%%%%%%5
 
