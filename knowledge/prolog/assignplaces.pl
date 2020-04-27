@@ -6,8 +6,8 @@
       object_goal_pose_offset/3
     ]).
 
-:- rdf_db:rdf_register_ns(hsr_objects, 'http://www.semanticweb.org/suturo/ontologies/2018/10/objects#', [keep(true)]).
-:- rdf_db:rdf_register_ns(robocup, 'http://knowrob.org/kb/robocup.owl#', [keep(true)]).
+:- rdf_db:rdf_register_ns(hsr_objects, 'http://www.semanticweb.org/suturo/ontologies/2020/3/objects#', [keep(true)]).
+:- rdf_db:rdf_register_ns(robocup, 'http://www.semanticweb.org/suturo/ontologies/2020/2/Robocup#', [keep(true)]).
 
 :- rdf_meta
     most_related_class(-,?,?),
@@ -105,6 +105,3 @@ object_goal_pose_offset(Instance, [[X,Y,Z], Rotation],Context):-
     object_goal_pose(Instance, [[X,Y,OZ], Rotation],Context),
     object_dimensions(Instance,_,_,H),
     Z is OZ + H/2 + 0.03.
-
-
-

@@ -28,21 +28,24 @@ TABLE : table
 QITEM : an ITESV
 QITEM : some ITEP
 QITEM : a ITESC
+QITEM : oreos
 #Itesc
-ITESC : COLOR pringles can
 ITESC : COLOR pringles can
 ITESC : cup
 ITESC : banana
 #Itesv
-ITESV : apple
+ITESV : orange
 #Itep
 ITEP : instant coffee powder
 #Item
 ITEM : red pringles can
 ITEM : blue pringles can
+ITEM : pink pringles can
+ITEM : orange
 ITEM : cup
 ITEM : instant coffee powder
 ITEM : banana
 #COLOR
 COLOR : red
 COLOR : blue
+COLOR : pink

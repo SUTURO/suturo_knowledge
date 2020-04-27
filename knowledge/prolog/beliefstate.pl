@@ -6,6 +6,7 @@
       belief_class_of/2,
       hsr_belief_at_update/2,
       merge_object_into_group/1,
+      group_target_objects/0,
       group_shelf_objects/0,
       group_table_objects/0,
       group_objects_at/1,
@@ -15,8 +16,10 @@
       object_goal_surface/3
     ]).
 
-:- rdf_db:rdf_register_ns(hsr_objects, 'http://www.semanticweb.org/suturo/ontologies/2018/10/objects#', [keep(true)]).
-:- rdf_db:rdf_register_ns(robocup, 'http://knowrob.org/kb/robocup.owl#', [keep(true)]).
+:-rdf_db:rdf_register_ns(dul, 'http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#', [keep(true)]).
+:- rdf_db:rdf_register_ns(hsr_objects, 'http://www.semanticweb.org/suturo/ontologies/2020/3/objects#', [keep(true)]).
+:- rdf_db:rdf_register_ns(robocup, 'http://www.semanticweb.org/suturo/ontologies/2020/2/Robocup#', [keep(true)]).
+
 
 :- rdf_meta
     new_perceived_at(r,+,+,r),
@@ -38,7 +41,8 @@ new_perceived_at(ObjType, Transform, _, Instance) :-
 
 hsr_existing_object_at(_, Transform, Threshold, Instance) :-
     rdf(Instance, rdf:type, owl:'NamedIndividual', belief_state),
-    rdfs_individual_of(Instance, hsr_objects:'Item'),
+    rdfs_individual_of(Instance, dul:'DesignedArtifact'),
+    rdf_has(Instance, hsr_objects:'supportable', true),
     belief_object_at_location(Instance, Transform, Threshold), !.
 
 
@@ -60,6 +64,9 @@ merge_object_into_group(Instance) :-
     rdf_retractall(Other, hsr_objects:'inGroup', _),
     rdf_assert(Other, hsr_objects:'inGroup', WG).
 
+group_target_objects :-
+    all_objects_on_target_surfaces(Objs),
+    group_objects(Objs).
 
 group_shelf_objects :-
     all_objects_in_whole_shelf(Objs),
@@ -90,6 +97,7 @@ group_objects(Objs) :-
     rdf_retractall(Member, hsr_objects:'inGroup', _),
     rdf_assert(Member, hsr_objects:'inGroup', Group2),
     not(group_objects(Objs)).
+
 
 group_mean_pose(Group, Transform, Rotation) :-
     findall(X, (
