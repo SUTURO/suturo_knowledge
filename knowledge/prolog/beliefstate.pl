@@ -335,7 +335,8 @@ assert_object_supposed_surface(Object) :- % to do: what happens when there alrea
 assert_object_new_empty_surface(Object) :-
     next_empty_surface(Surface),
     context_speech_new_class(Context),
-    assert_all_planning(Object, Surface, 0, Context).
+    atom_string(ContextAtom, Context),
+    assert_all_planning(Object, Surface, 0, ContextAtom).
 
 
 
