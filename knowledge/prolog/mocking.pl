@@ -5,18 +5,9 @@
       advanced_setup/0
     ]).
 
-:- rdf_db:rdf_register_ns(hsr_objects, 'http://www.semanticweb.org/suturo/ontologies/2020/3/objects#', [keep(true)]).
-
 :- rdf_meta
     create_object_on_surface(?).
 
-
-create_objects_on_table :-
-    create_banana_on_table,
-    create_milk_on_table,
-    create_coffee_on_table,
-    create_unknown_on_table.
-    %group_table_objects.
 
 create_object_on_surface(Surface) :-
     rdf_urdf_link_collision(Surface, box(Depth, Width, _), _),

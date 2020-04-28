@@ -409,6 +409,12 @@
     
 
 
+    <!-- http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#BiologicalObject -->
+
+    <owl:Class rdf:about="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#BiologicalObject"/>
+    
+
+
     <!-- http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#Description -->
 
     <owl:Class rdf:about="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#Description"/>
@@ -510,7 +516,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#BakingMix -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#BakingMix">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Food"/>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#ProcessedFood"/>
     </owl:Class>
     
 
@@ -590,7 +596,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Biscuit -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Biscuit">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Food"/>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#ProcessedFood"/>
     </owl:Class>
     
 
@@ -695,7 +701,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Candy -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Candy">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Food"/>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#ProcessedFood"/>
     </owl:Class>
     
 
@@ -727,7 +733,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Cereal -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Cereal">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Food"/>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#ProcessedFood"/>
     </owl:Class>
     
 
@@ -759,7 +765,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Chips -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Chips">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Food"/>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#ProcessedFood"/>
     </owl:Class>
     
 
@@ -929,7 +935,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#DairyProduct -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#DairyProduct">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Food"/>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#ProcessedFood"/>
     </owl:Class>
     
 
@@ -945,7 +951,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Dessert -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Dessert">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Food"/>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#ProcessedFood"/>
     </owl:Class>
     
 
@@ -953,7 +959,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#DietarySupplement -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#DietarySupplement">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Food"/>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#ProcessedFood"/>
     </owl:Class>
     
 
@@ -977,7 +983,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Drink -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Drink">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Groceries"/>
+        <rdfs:subClassOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#DesignedSubstance"/>
     </owl:Class>
     
 
@@ -1026,14 +1032,6 @@
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Edekabowl">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Bowl"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#EdiblePlant -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#EdiblePlant">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Food"/>
     </owl:Class>
     
 
@@ -1119,14 +1117,6 @@
     
 
 
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Food -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Food">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Groceries"/>
-    </owl:Class>
-    
-
-
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Foodbag -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Foodbag">
@@ -1170,7 +1160,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Fruit -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Fruit">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#EdiblePlant"/>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#NaturalFood"/>
     </owl:Class>
     
 
@@ -1242,7 +1232,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Garnishment -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Garnishment">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Food"/>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#ProcessedFood"/>
     </owl:Class>
     
 
@@ -1291,14 +1281,6 @@
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Greens">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Vegetable"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Groceries -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Groceries">
-        <rdfs:subClassOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#DesignedSubstance"/>
     </owl:Class>
     
 
@@ -1394,7 +1376,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#InfantFood -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#InfantFood">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Food"/>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#ProcessedFood"/>
     </owl:Class>
     
 
@@ -1698,7 +1680,15 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Mushroom -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Mushroom">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#EdiblePlant"/>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#NaturalFood"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#NaturalFood -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#NaturalFood">
+        <rdfs:subClassOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#BiologicalObject"/>
     </owl:Class>
     
 
@@ -1714,7 +1704,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Noodle -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Noodle">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Food"/>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#ProcessedFood"/>
     </owl:Class>
     
 
@@ -1730,7 +1720,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Nut -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Nut">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#EdiblePlant"/>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#NaturalFood"/>
     </owl:Class>
     
 
@@ -1810,7 +1800,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#PancakeMix -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#PancakeMix">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Food"/>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#ProcessedFood"/>
     </owl:Class>
     
 
@@ -1858,7 +1848,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Pesto -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Pesto">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Food"/>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#ProcessedFood"/>
     </owl:Class>
     
 
@@ -1906,7 +1896,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Pliers -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Pliers">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Tool"/>
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/EASE.owl#DesignedTool"/>
     </owl:Class>
     
 
@@ -1914,7 +1904,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Potato -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Potato">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#EdiblePlant"/>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#NaturalFood"/>
     </owl:Class>
     
 
@@ -1963,6 +1953,14 @@
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Pringlesvinegar">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Pringles"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#ProcessedFood -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#ProcessedFood">
+        <rdfs:subClassOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#DesignedSubstance"/>
     </owl:Class>
     
 
@@ -2050,7 +2048,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Sauce -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Sauce">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Food"/>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#ProcessedFood"/>
     </owl:Class>
     
 
@@ -2058,7 +2056,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Sauerkraut -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Sauerkraut">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#EdiblePlant"/>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#NaturalFood"/>
     </owl:Class>
     
 
@@ -2171,7 +2169,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Soup -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Soup">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Food"/>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#ProcessedFood"/>
     </owl:Class>
     
 
@@ -2211,7 +2209,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Spice -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Spice">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Food"/>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#ProcessedFood"/>
     </owl:Class>
     
 
@@ -2243,7 +2241,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Spread -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Spread">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Food"/>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#ProcessedFood"/>
     </owl:Class>
     
 
@@ -2361,14 +2359,6 @@
     
 
 
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Tool -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Tool">
-        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/EASE.owl#DesignedTool"/>
-    </owl:Class>
-    
-
-
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Toothbrush -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Toothbrush">
@@ -2396,7 +2386,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Toy -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Toy">
-        <rdfs:subClassOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#DesignedArtifact"/>
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/EASE.owl#DesignedTool"/>
     </owl:Class>
     
 
@@ -2420,8 +2410,8 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Unknown -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Unknown">
-        <rdfs:subClassOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#DesignedArtifact"/>
-        <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">A DesignedArtifact for which the exact specifications are unknown. todo: ideally a class for unknown objects should not exist. Unknown objects should probably be instances of DesignedArtifact.</rdfs:comment>
+        <rdfs:subClassOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#PhysicalObject"/>
+        <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">A PhysicalObject for which the exact specifications are unknown. todo: ideally a class for unknown objects should not exist. Unknown objects should probably be instances of DesignedArtifact.</rdfs:comment>
     </owl:Class>
     
 
@@ -2437,7 +2427,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Vegetable -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Vegetable">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#EdiblePlant"/>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#NaturalFood"/>
     </owl:Class>
     
 
@@ -2509,7 +2499,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#WritingMaterial -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#WritingMaterial">
-        <rdfs:subClassOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#DesignedArtifact"/>
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/EASE.owl#DesignedTool"/>
     </owl:Class>
     
 
