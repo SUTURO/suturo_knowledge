@@ -347,7 +347,7 @@ assert_object_new_empty_surface(Object) :-
 object_goal_surface(Object, Surface, Context, RefObject) :-
     rdf_has(Object, supposedSurface, Surface),
     rdf_has(Object, context, Context),
-    rdf_has(Object, refObject, RefObject).
+    rdf_has(Object, refObject, RefObject),
     !.
 
 object_goal_surface(Object, Surface, Context, RefObject) :-
