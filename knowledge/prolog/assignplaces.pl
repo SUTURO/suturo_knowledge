@@ -41,7 +41,8 @@ object_goal_pose(Instance, [Translation, Rotation], Context, RefObject) :-
     surface_front_edge_center_frame(Surface, Frame),
     tf_transform_point(Frame, map, [NewX, 0, 0], [AbsX, _,_]),
     not(hsr_existing_object_at([map,_,[AbsX, Y, Z + 0.1], Rotation], 0.2, _)),
-    Translation = [AbsX, Y, Z] ,!.
+    Translation = [AbsX, Y, Z],
+    !.
 
 %% When a new group is opened the RefObject is equal to the Instance
 object_goal_pose(Instance, [Translation, Rotation], Context, RefObject) :-
@@ -52,7 +53,8 @@ object_goal_pose(Instance, [Translation, Rotation], Context, RefObject) :-
     member(XOffset, Offset),
     NewX is X + XOffset,
     not(hsr_existing_object_at([map,_,[NewX, Y, Z + 0.1], Rotation], 0.2, _)),
-    Translation = [NewX, Y, Z].
+    Translation = [NewX, Y, Z],
+    !.
 
 object_goal_pose(_, _, "You haven't defined any target surfaces", _) :-
     all_target_surfaces([]),
