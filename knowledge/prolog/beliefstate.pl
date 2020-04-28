@@ -232,14 +232,16 @@ assert_all_planning(Object, Surface, Distance, Context, RefObject) :-
     rdf_assert(Object, supposedSurface, Surface),
     rdf_retractall(Object, refObject, _),
     rdf_assert(Object, refObject, RefObject),
-    assert_distance(Object, Distance, Context).
+    atom_string(ContextAtom, Context),
+    assert_distance(Object, Distance, ContextAtom).
 
 assert_distance(Object, Distance, Context) :-
     atom_number(DistanceAtom, Distance),
     rdf_retractall(Object, distance, _),
     rdf_assert(Object, distance, DistanceAtom),
+    atom_string(ContextAtom, Context),
     rdf_retractall(Object, context, _),
-    rdf_assert(Object, context, Context).
+    rdf_assert(Object, context, ContextAtom).
 
 retract_all_planning(Object) :-
     rdf_retractall(Object, distance, _),
