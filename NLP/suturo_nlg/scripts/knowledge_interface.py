@@ -14,17 +14,17 @@ def item_translator_to_knowledge(item):
     with open(filepath) as f:
         for line in f:
             if item == line.split(",")[0]:
-                return line.split(",")[1]
-        pub(errordict("I have no idea what you mean with an object called " + item + " is"))
-        return False
+                return str(line.split(",")[1])
+    pub(errordict("I have no idea what you mean with an object called " + item))
+    return False
 
 
 def item_translator_from_knowledge(item):
     with open(filepath) as f:
         for line in f:
-            if item == line.split(",")[1]:
-                return line.split(",")[0]
-        return False
+            if str(item) == str(line.split(",")[1]):
+                return str(line.split(",")[0])
+    return False
 
 
 def errordict(text="Something went wrong"):
@@ -51,9 +51,12 @@ def is_there(dict):
 
     location = dict["location"].replace(" ", "_")
     # TODO this isn't nice
+    print(solutions)
     for solution in solutions:
-        if location in solution['Name']:
+        if solution['Name'].contains(location):
             dict["answer"] = "yes"
+            pub(dict)
+            return
     dict["answer"] = "no"
     pub(dict)
 
@@ -65,9 +68,9 @@ def what_is_on(dict):
         return False
 
     if dict["location"] == "hcr shelf":
-        query_string = "once((hsr_existing_objects(_Objs), member(Obj,_Objs), rdf_has(Obj, hsr_objects:'supportedBy', _S), rdf_urdf_name(_S,_SN), sub_string(_SN,_,_,_,\"hcr_shefl\")))."
+        query_string = "hsr_existing_objects(_Objs), member(Obj,_Objs), rdf_has(Obj, hsr_objects:'supportedBy', _S), rdf_urdf_name(_S,_SN), sub_string(_SN,_,_,_,\"hcr_shefl\")."
     elif dict["location"] == "bookshelf":
-        query_string = "once((hsr_existing_objects(_Objs), member(Obj,_Objs), rdf_has(Obj, hsr_objects:'supportedBy', _S), rdf_urdf_name(_S,_SN), sub_string(_SN,_,_,_,\"bookshelf_floor\")))."
+        query_string = "hsr_existing_objects(_Objs), member(Obj,_Objs), rdf_has(Obj, hsr_objects:'supportedBy', _S), rdf_urdf_name(_S,_SN), sub_string(_SN,_,_,_,\"bookshelf_floor\")."
     elif dict["location"] == "big table":
         query_string = "once((rdf_urdf_name(_Table, table_center),rdf_has(Obj, hsr_objects:'supportedBy', _Table)))."
     elif dict["location"] == "small table":
@@ -83,7 +86,9 @@ def what_is_on(dict):
     if not solutions:
         pub(errordict("I don't know of any objects on the " + dict["location"]))
         return
-    dict["item"] = item_translator_from_knowledge(solutions[0]['Obj'].split('#')[1].split('_')[0])
+    print(solutions[0]['Obj'].split('#')[1].split('_')[0])
+    # dict["item"] = str(item_translator_from_knowledge(solutions[0]['Obj'].split('#')[1].split('_')[0]))
+    dict["item"] = solutions[0]['Obj'].split('#')[1].split('_')[0]
     pub(dict)
     return True
 
@@ -95,11 +100,13 @@ def supposed_to_go(dict):
         pub(datadict)
         return
     item_t = item_translator_to_knowledge(dict["item"])
-    query_string = "hsr_existing_objects(Objs), member(Obj,Objs), rdfs_individual_of(Obj, hsr_objects:'" + item_t + "'), object_goal_surface(Obj,_Surf), rdf_urdf_name(_Surf,SurfName)"
+    query_string = "hsr_existing_objects(_Objs), member(_Obj,_Objs), rdfs_individual_of(_Obj, hsr_objects:'" + item_t + "'), object_goal_surface(_Obj,_Surf), rdf_urdf_name(_Surf,Name)."
     solutions = prolog.all_solutions(query_string)
-    if not solutions:
+    print(solutions)
+    if not solutions or solutions == []:
         pub(errordict("I don't know where that item is supposed to go"))
-    dict["location"] = solutions[0]['SurfName'].split('_')[0]
+        return
+    dict["location"] = solutions[0]['Name'].split('_')[0]
     pub(dict)
 
 
