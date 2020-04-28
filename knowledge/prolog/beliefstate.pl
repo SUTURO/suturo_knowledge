@@ -227,9 +227,11 @@ same_size(Source, Target):-
     rdf_has(Source, hsr_objects:'size', Size),
     rdf_has(Target, hsr_objects:'size', Size).
 
-assert_all_planning(Object, Surface, Distance, Context) :-
+assert_all_planning(Object, Surface, Distance, Context, RefObject) :-
     rdf_retractall(Object, supposedSurface, _),
     rdf_assert(Object, supposedSurface, Surface),
+    rdf_retractall(Object, refObject, _),
+    rdf_assert(Object, refObject, RefObject),
     assert_distance(Object, Distance, Context).
 
 assert_distance(Object, Distance, Context) :-
@@ -242,7 +244,8 @@ assert_distance(Object, Distance, Context) :-
 retract_all_planning(Object) :-
     rdf_retractall(Object, distance, _),
     rdf_retractall(Object, context, _),
-    rdf_retractall(Object, supposedSurface, _).
+    rdf_retractall(Object, supposedSurface, _),
+    rdf_retractall(Object, refObject, _).
 
 %%%%%%%%% The relation to other Objects on same surface %%%%%%%%%%%%%%%%%%%
 
@@ -252,7 +255,9 @@ retract_all_planning(Object) :-
     most_related_object(Object, RefObject),
     find_supporting_surface(RefObject, Surface),
     rdf_retractall(Object, supposedSurface, _),
-    rdf_assert(Object, supposedSurface, Surface).
+    rdf_assert(Object, supposedSurface, Surface),
+    rdf_retractall(Object, refObject, _),
+    rdf_assert(Object, refObject, RefObject).
 
 % Object is the reference object. OtherObjects returns a list of 
 % all the objects, that one day would be put on same surface as Object.
@@ -334,19 +339,20 @@ assert_object_supposed_surface(Object) :- % to do: what happens when there alrea
 assert_object_new_empty_surface(Object) :-
     next_empty_surface(Surface),
     context_speech_new_class(Context),
-    assert_all_planning(Object, Surface, 0, Context).
+    assert_all_planning(Object, Surface, 0, Context, Object).
 
 
 
 
-object_goal_surface(Object, Surface, Context) :-
+object_goal_surface(Object, Surface, Context, RefObject) :-
     rdf_has(Object, supposedSurface, Surface),
     rdf_has(Object, context, Context),
+    rdf_has(Object, refObject, RefObject).
     !.
 
-object_goal_surface(Object, Surface, Context) :-
+object_goal_surface(Object, Surface, Context, RefObject) :-
     assert_object_supposed_surface(Object),
-    object_goal_surface(Object, Surface, Context),
+    object_goal_surface(Object, Surface, Context, RefObject),
     !.
     
 

@@ -112,7 +112,7 @@ surface_front_edge_center_frame(Surface, FrontEdgeCenterFrame) :- % in case it's
     is_shelf(Surface),
     surface_frame(Surface, FrontEdgeCenterFrame).
 
-surface_front_edge_center_frame(Surface, FrontEdgeCenterFrame) :- % in case it's a table
+surface_front_edge_center_frame(Surface, FrontEdgeCenterFrame) :- % in case it's a Table or a Bucket
     rdf_urdf_name(Surface, FullName),
     sub_atom(FullName, 0, _, 7, Name), % cuts away the Suffix "_center" (the last 7 letters)
     urdf_surface_prefix(Prefix),

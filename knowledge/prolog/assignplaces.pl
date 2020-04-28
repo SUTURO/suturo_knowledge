@@ -13,49 +13,6 @@
     most_related_class(-,?,?),
     most_related_object(-,?).
 
-object_goal_surface(Instance, Surface) :-
-    object_goal_surface(Instance, Surface, _, _).
-
-
-%object_goal_surface(Instance, Surface, Context, RefObject):-
-%    most_related_object(Instance, RefObject, Context),
-%    find_supporting_surface(RefObject, Surface).
-
-
-%% If there is no corresponding class, take the nearest easy reachable target surface that is empty
-object_goal_surface(Instance, NearestReachableSurface, Context, Self) :-
-    all_target_surfaces(Surfaces),
-    findall(Surface,
-    (
-        member(Surface, Surfaces),
-        surface_pose_in_map(Surface, [[_,_,Z],_]),
-        Z < 1.3 % Surfaces higher than 1.3m might be hard to reach by the HSR
-    ),
-        ReachableSurfaces),
-    maplist(distance_to_robot, ReachableSurfaces, Distances),
-    min_list(Distances, MinDistance),
-    nth0(Index, Distances, MinDistance),
-    nth0(Index, ReachableSurfaces, NearestReachableSurface),
-    objects_on_surface([], NearestReachableSurface),
-    Self = Instance,
-    context_speech_new_class(Context).
-
-%% If there is no corresponding class and there is no easy reachable target surface, 
-%% take the nearest target surface (that is not easily reachable).
-object_goal_surface(Instance, NearestSurface, Context, Self) :-
-    all_target_surfaces(Surfaces),
-    maplist(distance_to_robot, Surfaces, Distances),
-    min_list(Distances, MinDistance),
-    nth0(Index, Distances, MinDistance),
-    nth0(Index, Surfaces, NearestSurface),
-    objects_on_surface([], NearestSurface),
-    Self = Instance,
-    context_speech_new_class(Context).
-
-object_goal_surface(_, _, "You haven't defined any target surfaces", _) :-
-    all_target_surfaces([]),
-    writeln("You haven't defined any target surfaces").
-
 
 
 %******************** GOAL POSE **********************
