@@ -13,7 +13,17 @@
       group_objects/1,
       group_mean_pose/3,
       assert_object_supposed_surface/1,
-      object_goal_surface/3
+      object_goal_surface/4,
+        %DEBUG
+        assert_object_supposed_surface/1,
+        next_empty_surface/1,
+        objects_fit_on_surface/4,
+        objects_on_same_surface_in_future/2,
+        object_most_similar_surface/2,
+        compareLogicalDistances/3,
+        most_related_object/2,
+        most_related_class/3,
+        distance_to_object/3
     ]).
 
 :-rdf_db:rdf_register_ns(dul, 'http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#', [keep(true)]).
@@ -217,9 +227,11 @@ same_size(Source, Target):-
     rdf_has(Source, hsr_objects:'size', Size),
     rdf_has(Target, hsr_objects:'size', Size).
 
-assert_all_planning(Object, Surface, Distance, Context) :-
+assert_all_planning(Object, Surface, Distance, Context, RefObject) :-
     rdf_retractall(Object, supposedSurface, _),
     rdf_assert(Object, supposedSurface, Surface),
+    rdf_retractall(Object, refObject, _),
+    rdf_assert(Object, refObject, RefObject),
     atom_string(ContextAtom, Context),
     assert_distance(Object, Distance, ContextAtom).
 
@@ -234,7 +246,8 @@ assert_distance(Object, Distance, Context) :-
 retract_all_planning(Object) :-
     rdf_retractall(Object, distance, _),
     rdf_retractall(Object, context, _),
-    rdf_retractall(Object, supposedSurface, _).
+    rdf_retractall(Object, supposedSurface, _),
+    rdf_retractall(Object, refObject, _).
 
 %%%%%%%%% The relation to other Objects on same surface %%%%%%%%%%%%%%%%%%%
 
@@ -244,7 +257,9 @@ retract_all_planning(Object) :-
     most_related_object(Object, RefObject),
     find_supporting_surface(RefObject, Surface),
     rdf_retractall(Object, supposedSurface, _),
-    rdf_assert(Object, supposedSurface, Surface).
+    rdf_assert(Object, supposedSurface, Surface),
+    rdf_retractall(Object, refObject, _),
+    rdf_assert(Object, refObject, RefObject).
 
 % Object is the reference object. OtherObjects returns a list of 
 % all the objects, that one day would be put on same surface as Object.
@@ -316,22 +331,33 @@ assert_object_supposed_surface(Object) :-
     objects_fit_on_surface(OtherObjects, Surface, _, NotFittingObjects),
     forall(member(NotFittingObject, NotFittingObjects), retract_all_planning(NotFittingObject)),
     (   member(Object, NotFittingObjects)
-        -> next_empty_surface(AlternativeSurface),
-        context_speech_new_class(Context),
-        assert_all_planning(Object, AlternativeSurface, 0, Context)
+        -> assert_object_new_empty_surface(Object)
         ).
 
+assert_object_supposed_surface(Object) :- % to do: what happens when there already are supposedSurfaces, but the according objects are not placed yet?
+    all_objects_on_target_surfaces([]),
+    assert_object_new_empty_surface(Object).
 
-object_goal_surface(Object, Surface, Context) :-
+assert_object_new_empty_surface(Object) :-
+    next_empty_surface(Surface),
+    context_speech_new_class(Context),
+    assert_all_planning(Object, Surface, 0, Context, Object).
+
+
+
+
+object_goal_surface(Object, Surface, Context, RefObject) :-
     rdf_has(Object, supposedSurface, Surface),
     rdf_has(Object, context, Context),
+    rdf_has(Object, refObject, RefObject),
     !.
 
-object_goal_surface(Object, Surface, Context) :-
+object_goal_surface(Object, Surface, Context, RefObject) :-
     assert_object_supposed_surface(Object),
-    object_goal_surface(Object, Surface, Context),
+    object_goal_surface(Object, Surface, Context, RefObject),
     !.
     
+
 
 
 
@@ -340,3 +366,4 @@ object_goal_surface(Object, Surface, Context) :-
     % TO DO
     % -> Run new assertions for every new object
     % -> assert distance=0 and actual surface for places objects when they are placed OR percieved at target surface
+    % -> what happens when there already are supposedSurfaces, but the according objects are not placed yet?
