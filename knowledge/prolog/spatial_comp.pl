@@ -49,12 +49,12 @@ object_supportable_by_surface(Object, Surface):-
     all_surfaces(Surfaces),
     member(Surface,Surfaces),
     surface_front_edge_center_frame(Surface, SurfaceFrame),
-    object_frame(Object, ObjectFrame),
+    object_frame_name(Object, ObjectFrame),
     hsr_lookup_transform(SurfaceFrame, ObjectFrame, Position, _),
     relative_position_supportable_by_surface(Position, Surface).
     
 object_supportable_by_surface(Object, ground):-
-    object_frame(Object, Frame),
+    object_frame_name(Object, Frame),
     hsr_lookup_transform(map, Frame, [_,_,Z], _),
     position_supportable_by_ground(Z).
 
@@ -101,7 +101,7 @@ distance_to_robot(Thing, Distance) :-
 
 urdf_frame(Thing, Frame):-
     is_object(Thing),
-    object_frame(Thing, Frame).
+    object_frame_name(Thing, Frame).
 
 urdf_frame(Thing, Frame):-
     is_surface(Thing),
@@ -127,9 +127,10 @@ surface_suffix(Surface, Suffix) :-
     is_bucket(Surface),
     Suffix = "_surface_center".
 
+% deprecated.
+% Should be deleted if not used.
 object_frame(Object, Frame) :-
-    split_string(Object, "#", "", [_,ObjFrameString]),
-    atom_string(Frame,ObjFrameString).
+    object_frame_name(Object, Frame).
     
 surface_frame(Surface, Frame) :-
     rdf_urdf_name(Surface, Name),
