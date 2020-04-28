@@ -69,6 +69,16 @@ advanced_setup :-
 % attach_object_to_gripper(Object),
 % release_object_from_gripper([Translation, Rotation]).
 mock_new_object_place(Object, [Translation, Rotation]) :-
+    position_supportable_by_surface(Translation, _),
     hsr_belief_at_update(Object, [map, _, Translation, Rotation]),
     place_object(Object),
-    group_target_objects.
+    group_target_objects,
+    !.
+
+mock_new_object_place(Object, [Translation, Rotation]) :-
+    not(position_supportable_by_surface(Translation, _)),
+    writeln("The Position is not above any surface"),
+    !.
+
+mock_new_object_place(_, _) :-
+    writeln("The Position is o.k., but place_object/1 or group_target_objects/0 return false.").
