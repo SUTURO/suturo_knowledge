@@ -220,15 +220,16 @@ same_size(Source, Target):-
 assert_all_planning(Object, Surface, Distance, Context) :-
     rdf_retractall(Object, supposedSurface, _),
     rdf_assert(Object, supposedSurface, Surface),
-    assert_distance(Object, Distance, Context).
+    atom_string(ContextAtom, Context),
+    assert_distance(Object, Distance, ContextAtom).
 
 assert_distance(Object, Distance, Context) :-
     atom_number(DistanceAtom, Distance),
     rdf_retractall(Object, distance, _),
     rdf_assert(Object, distance, DistanceAtom),
-    atom_string(Context, ContextString),
+    atom_string(ContextAtom, Context),
     rdf_retractall(Object, context, _),
-    rdf_assert(Object, context, ContextString).
+    rdf_assert(Object, context, ContextAtom).
 
 retract_all_planning(Object) :-
     rdf_retractall(Object, distance, _),

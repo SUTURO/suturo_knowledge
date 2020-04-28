@@ -66,21 +66,27 @@ max_shelf_capacity(Capacity) :-
 %% next Objects Class.
 context_speech_sort_by_class(Object, SimilarObject, Distance, Context) :-
     Distance =< 1, %% exactly the same class
-    string_concat('I will put this ', Object, Part1),
-    string_concat('to the other', SimilarObject, Part2),
+    object_classname(Object, ObjectClass),
+    object_classname(SimilarObject, SimilarObjectClass),
+    string_concat('I will put this ', ObjectClass, Part1),
+    string_concat(' to the other', SimilarObjectClass, Part2),
     string_concat(Part1, Part2, Context).
 
 context_speech_sort_by_class(Object, SimilarObject, Distance, Context) :-
     Distance =< 3, %% direct superclass or child of the same super class
     Distance >=2,
-    string_concat('I will put this ', Object, Part1),
-    string_concat('to the similar ', SimilarObject, Part2),
+    object_classname(Object, ObjectClass),
+    object_classname(SimilarObject, SimilarObjectClass),
+    string_concat('I will put this ', ObjectClass, Part1),
+    string_concat(' to the similar ', SimilarObjectClass, Part2),
     string_concat(Part1, Part2, Context).
 
 context_speech_sort_by_class(Object, SimilarObject, Distance, Context) :-
     Distance >= 4,
-    string_concat('I will put this ', Object, Part1),
-    string_concat('to the somehow similar ', SimilarObject, Part2),
+    object_classname(Object, ObjectClass),
+    object_classname(SimilarObject, SimilarObjectClass),
+    string_concat('I will put this ', ObjectClass, Part1),
+    string_concat(' to the somehow similar ', SimilarObjectClass, Part2),
     string_concat(Part1, Part2, Context).
 
 context_speech_sort_by_color(Object, SimilarObject, Context) :-
@@ -99,5 +105,13 @@ context_speech_sort_by_size(Object, SimilarObject, Context) :-
     string_concat(Part2, SimilarSize, Part3),
     string_concat(Part3, ' object.', Context).
 
+% Object is an actual Object, where
+% Classname is the Name of it's class without the hsr_objects: in front of it.
+object_classname(Object, Classname) :-
+    kb_type_of(Object, Type),
+    split_string(ObjectType, "#", "", [_,ClassnameString]),
+    atom_string(Classname, ClassnameString)
+
+
 context_speech_new_class(Context):-
-    Context = 'I will create a new group for this'.
+    Context = "I will create a new group for this".
