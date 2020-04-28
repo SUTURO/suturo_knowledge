@@ -75,7 +75,7 @@ mock_new_object_place(Object, [Translation, Rotation]) :-
     group_target_objects,
     !.
 
-mock_new_object_place(Object, [Translation, Rotation]) :-
+mock_new_object_place(_, [Translation, _]) :-
     not(position_supportable_by_surface(Translation, _)),
     writeln("The Position is not above any surface"),
     !.

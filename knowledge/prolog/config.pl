@@ -110,8 +110,7 @@ context_speech_sort_by_size(Object, SimilarObject, Context) :-
 object_classname(Object, Classname) :-
     kb_type_of(Object, Type),
     split_string(ObjectType, "#", "", [_,ClassnameString]),
-    atom_string(Classname, ClassnameString)
-
+    atom_string(Classname, ClassnameString).
 
 context_speech_new_class(Context):-
     Context = "I will create a new group for this".
