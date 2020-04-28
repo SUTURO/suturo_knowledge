@@ -13,7 +13,7 @@
       group_objects/1,
       group_mean_pose/3,
       assert_object_supposed_surface/1,
-      object_goal_surface/3,
+      object_goal_surface/4,
         %DEBUG
         assert_object_supposed_surface/1,
         next_empty_surface/1,
