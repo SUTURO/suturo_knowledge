@@ -13,7 +13,17 @@
       group_objects/1,
       group_mean_pose/3,
       assert_object_supposed_surface/1,
-      object_goal_surface/3
+      object_goal_surface/3,
+        %DEBUG
+        assert_object_supposed_surface/1,
+        next_empty_surface/1,
+        objects_fit_on_surface/4,
+        objects_on_same_surface_in_future/2,
+        object_most_similar_surface/2,
+        compareLogicalDistances/3,
+        most_related_object/2,
+        most_related_class/3,
+        distance_to_object/3
     ]).
 
 :-rdf_db:rdf_register_ns(dul, 'http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#', [keep(true)]).
@@ -331,6 +341,7 @@ object_goal_surface(Object, Surface, Context) :-
     object_goal_surface(Object, Surface, Context),
     !.
     
+
 
 
 
