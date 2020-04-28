@@ -9,7 +9,7 @@
 
   <node name="object_state_publisher" pkg="knowrob_objects" type="object_state_publisher.py" output="screen">
     <param name="hz" value="10" />
-    <param name="object_types" value="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#DesignedArtifact" />
+    <param name="object_types" value="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#PhysicalObject" />
   </node>
 
   <node name="store_object_info_server" pkg="knowledge" type="store_object_info_server.py" output="screen"/>

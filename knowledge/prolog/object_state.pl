@@ -33,7 +33,7 @@
 
 
 hsr_existing_objects(Objects) :-
-    belief_existing_objects(L, [dul:'DesignedArtifact']),
+    belief_existing_objects(L, [dul:'PhysicalObject']),
   findall(J, (
       rdf(J, _, _, belief_state),
       rdf_has(J, hsr_objects:'supportable', true),
@@ -57,7 +57,7 @@ object_of_type(ObjectType, Instance) :-
 	belief_existing_objects(Instance, [ObjectType]).
 
 create_object(ObjectType, Instance) :-
- 	owl_subclass_of(ObjectType, dul:'DesignedArtifact'),
+ 	owl_subclass_of(ObjectType, dul:'PhysicalObject'),
 	belief_new_object(ObjectType, Instance),
         rdf_assert(Instance, hsr_objects:'supportable', true).
 
@@ -71,7 +71,7 @@ create_object_at(PerceivedObjectType, PercTypeConfidence, Transform, Threshold, 
     validate_confidence(color, PercColorCondidence, ColorCondidence),
     object_size_ok([Width, Depth, Height]),
     object_type_handling(PerceivedObjectType, TypeConfidence, ObjectType),
-    owl_subclass_of(ObjectType, dul:'DesignedArtifact'),
+    owl_subclass_of(ObjectType, dul:'PhysicalObject'),
     new_perceived_at(ObjectType, Transform, Threshold, Instance),
     atom_number(TypeConfidenceAtom, TypeConfidence),
     rdf_assert(Instance, hsr_objects:'ConfidenceClassValue', TypeConfidenceAtom),
