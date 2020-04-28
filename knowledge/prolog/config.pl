@@ -109,7 +109,7 @@ context_speech_sort_by_size(Object, SimilarObject, Context) :-
 % Classname is the Name of it's class without the hsr_objects: in front of it.
 object_classname(Object, Classname) :-
     kb_type_of(Object, Type),
-    split_string(ObjectType, "#", "", [_,ClassnameString]),
+    split_string(Type, "#", "", [_,ClassnameString]),
     atom_string(Classname, ClassnameString).
 
 context_speech_new_class(Context):-
