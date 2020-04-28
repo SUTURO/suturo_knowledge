@@ -325,10 +325,19 @@ assert_object_supposed_surface(Object) :-
     objects_fit_on_surface(OtherObjects, Surface, _, NotFittingObjects),
     forall(member(NotFittingObject, NotFittingObjects), retract_all_planning(NotFittingObject)),
     (   member(Object, NotFittingObjects)
-        -> next_empty_surface(AlternativeSurface),
-        context_speech_new_class(Context),
-        assert_all_planning(Object, AlternativeSurface, 0, Context)
+        -> assert_object_new_empty_surface(Object)
         ).
+
+assert_object_supposed_surface(Object) :- % to do: what happens when there already are supposedSurfaces, but the according objects are not placed yet?
+    all_objects_on_target_surfaces([]),
+    assert_object_new_empty_surface(Object).
+
+assert_object_new_empty_surface(Object) :-
+    next_empty_surface(Surface),
+    context_speech_new_class(Context),
+    assert_all_planning(Object, Surface, 0, Context).
+
+
 
 
 object_goal_surface(Object, Surface, Context) :-
@@ -350,3 +359,4 @@ object_goal_surface(Object, Surface, Context) :-
     % TO DO
     % -> Run new assertions for every new object
     % -> assert distance=0 and actual surface for places objects when they are placed OR percieved at target surface
+    % -> what happens when there already are supposedSurfaces, but the according objects are not placed yet?
