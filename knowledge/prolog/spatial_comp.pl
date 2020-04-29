@@ -69,6 +69,7 @@ position_supportable_by_surface(Position, ground) :-
     position_supportable_by_ground(Position).
 
 relative_position_supportable_by_surface([X,Y,Z],Surface) :-
+    is_table(Surface),
     rdf_urdf_link_collision(Surface, box(Depth, Width, _), _),
     threshold_surface(ThAbove, ThBelow),
     ThAbove >= Z,
@@ -76,6 +77,15 @@ relative_position_supportable_by_surface([X,Y,Z],Surface) :-
     Width/2 >= abs(Y),
     0 < X,
     Depth >= X.
+
+relative_position_supportable_by_surface([X,Y,Z], Surface) :-
+    ( is_shelf(Surface) ; is_bucket(Surface) ),
+    rdf_urdf_link_collision(Surface, box(Depth, Width, _), _),
+    threshold_surface(ThAbove, ThBelow),
+    ThAbove >= Z,
+    ThBelow =< Z,
+    Width/2 >= abs(Y),
+    Depth/2 >= abs(X).
 
 position_supportable_by_ground(ZPos) :-
     number(ZPos),
