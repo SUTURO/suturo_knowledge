@@ -52,7 +52,8 @@ object_goal_pose(Instance, [Translation, Rotation], Context, Instance) :-
     member(XOffset, Offset),
     NewX is X + XOffset,
     ( not(is_bucket(Surface))
-        -> not(hsr_existing_object_at([map,_,[NewX, Y, Z + 0.1], Rotation], 0.2, _))),
+        -> not(hsr_existing_object_at([map,_,[NewX, Y, Z + 0.1], Rotation], 0.2, _))
+        ; true ),
     Translation = [NewX, Y, Z],
     !.
 
