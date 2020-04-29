@@ -374,7 +374,7 @@ is_legal_obj_position([X,Y,Z]) :-
 % the center point of the object < 0.5 the object is placed on the ground. Otherwise the query resolves to false.
 place_object(Object):-
     object_supportable_by_surface(Object, Surface),
-    place_object_on_surface(Object, Surface).
+    assert_object_on(Object,Surface).
 
 
 %% Joint supporting the ShapeTerm, the ShapeTerm, Position of the object, return Distance vertical distance

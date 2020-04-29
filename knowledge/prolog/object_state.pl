@@ -37,7 +37,6 @@ hsr_existing_objects(Objects) :-
   findall(J, (
       rdf(J, _, _, belief_state),
       rdf_has(J, hsr_objects:'supportable', true),
-      object_is_alive(J),
       member(J, L)
   ), X),
   list_to_set(X,Objects).
