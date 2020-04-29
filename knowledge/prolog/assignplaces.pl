@@ -26,7 +26,8 @@ object_goal_pose(Instance, [Translation, Rotation], Context) :-
 object_goal_pose(Instance, [Translation, Rotation], Context, Instance) :-
     object_goal_surface(Instance, Surface, Context, Instance),
     is_bucket(Surface),
-    surface_pose_in_map(Surface, [Translation, Rotation]).
+    surface_pose_in_map(Surface, [Translation, Rotation]),
+    !.
 
 %% In case a reference group in the shelf is found
 object_goal_pose(Instance, [Translation, Rotation], Context, RefObject) :-
