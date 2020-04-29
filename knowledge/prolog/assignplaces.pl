@@ -23,6 +23,10 @@ object_goal_pose(Instance, [Translation, Rotation]) :-
 object_goal_pose(Instance, [Translation, Rotation], Context) :-
     object_goal_pose(Instance, [Translation, Rotation], Context, _).
 
+object_goal_pose(Instance, [Translation, Rotation], Context, RefObject) :-
+    object_goal_surface(Instance, Surface, Context, RefObject),
+    is_bucket(Surface),
+
 %% In case a reference group in the shelf is found
 object_goal_pose(Instance, [Translation, Rotation], Context, RefObject) :-
     object_goal_surface(Instance, Surface, Context, RefObject),
@@ -45,9 +49,8 @@ object_goal_pose(Instance, [Translation, Rotation], Context, RefObject) :-
     !.
 
 %% When a new group is opened the RefObject is equal to the Instance
-object_goal_pose(Instance, [Translation, Rotation], Context, RefObject) :-
-    object_goal_surface(Instance, Surface, Context, RefObject),
-    rdf_equal(Instance, RefObject),
+object_goal_pose(Instance, [Translation, Rotation], Context, Instance) :-
+    object_goal_surface(Instance, Surface, Context, Instance),
     surface_pose_in_map(Surface, [[X,Y,Z], Rotation]),
     offsets(Offset),
     member(XOffset, Offset),

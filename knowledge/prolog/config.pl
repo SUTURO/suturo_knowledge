@@ -12,7 +12,8 @@
       context_speech_sort_by_class/4,
       context_speech_sort_by_color/3,
       context_speech_sort_by_size/3,
-      context_speech_new_class/1
+      context_speech_new_class/1,
+      context_speech_basket/1
     ]).
 
 
@@ -112,5 +113,8 @@ object_classname(Object, Classname) :-
     split_string(Type, "#", "", [_,ClassnameString]),
     atom_string(Classname, ClassnameString).
 
-context_speech_new_class(Context):-
+context_speech_new_class(Context) :-
     Context = "I will create a new group for this".
+
+context_speech_basket(Context) :-
+    Context = "I will put this in the Basket".

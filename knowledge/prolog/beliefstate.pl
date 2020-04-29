@@ -325,6 +325,14 @@ next_empty_surface_(Surfaces, Surface) :-
     member(Surface, Surfaces),
     not(rdf_has(_, supposedSurface, Surface)).
 
+assert_object_supposed_surface(_) :-
+    all_target_surfaces(Surfaces),
+    member(Surface, Surfaces),
+    is_bucket(Surface),
+    all_objects_on_source_surfaces(Objs),
+    context_speech_basket(Context),
+    forall(member(Obj, Objs), assert_all_planning(Obj, Surface, 0, Context, Obj)).
+
 assert_object_supposed_surface(Object) :-
     object_most_similar_surface(Object, Surface),
     objects_on_same_surface_in_future(Surface, OtherObjects),
@@ -342,8 +350,6 @@ assert_object_new_empty_surface(Object) :-
     next_empty_surface(Surface),
     context_speech_new_class(Context),
     assert_all_planning(Object, Surface, 0, Context, Object).
-
-
 
 
 object_goal_surface(Object, Surface, Context, RefObject) :-
