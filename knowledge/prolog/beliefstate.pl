@@ -18,6 +18,7 @@
         assert_object_supposed_surface/1,
         next_empty_surface/1,
         objects_fit_on_surface/4,
+        objects_fit_on_surface_/2,
         objects_on_same_surface_in_future/2,
         object_most_similar_surface/2,
         compareLogicalDistances/3,
@@ -311,11 +312,11 @@ objects_fit_on_surface_(Objects, Surface) :-
         (   X >= Y
             -> Width = X
             ; Width = Y  ),
-        WidthPlus = Width + 0.1
+        WidthPlus = Width + 0.05
     ),
         ListOfWidths),
     sumlist(ListOfWidths, Sum),
-    surface_dimensions(Surface, SurfaceWidth, _, _),
+    surface_dimensions(Surface, _, SurfaceWidth, _),
     SurfaceWidth >= Sum.
 
 next_empty_surface(Surface) :-

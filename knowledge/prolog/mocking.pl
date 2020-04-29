@@ -25,7 +25,7 @@ create_object_on_surface(Surface) :-
         Transform,
         0.05, 
         _, 
-        [0.2, 0.075, 0.2], 
+        [0.05, 0.075, 0.2], 
         box,
         0.8,
         [0.0,0.0,0.0,0.0],
