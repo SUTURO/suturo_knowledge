@@ -11,7 +11,7 @@
     
 
 next_object(BestObj) :-
-    ( not(place_objects) -> writeln("Not all Objects could have been placed") ),
+    not(place_objects),
     all_objects_on_source_surfaces(Objs),
     maplist(distance_to_robot, Objs, Distances),
     min_list(Distances, MinDistance),
@@ -34,4 +34,7 @@ next_object(noObjectsOnSourceSurfaces) :-
 
 place_objects :-
     hsr_existing_objects(Objs),
-    forall(member(Obj, Objs), place_object(Obj)).
+    forall(member(Obj, Objs), place_object(Obj)), !.
+
+place_objects :-
+    writeln("Not all objects could have been added.").
