@@ -325,6 +325,8 @@ next_empty_surface_(Surfaces, Surface) :-
     member(Surface, Surfaces),
     not(rdf_has(_, supposedSurface, Surface)).
 
+% In case there is a bucket, put everything in it
+% To Do: Can't handle multiple buckets right now.
 assert_object_supposed_surface(Object) :-
     all_target_surfaces(Surfaces),
     member(Surface, Surfaces),
@@ -332,7 +334,7 @@ assert_object_supposed_surface(Object) :-
     all_objects_on_source_surfaces(Objs),
     context_speech_basket(Context),
     forall(member(Obj, Objs), assert_all_planning(Obj, Surface, 0, Context, Obj)),
-    assert_all_planning(Object, Surface, 0, Context, Obj).
+    assert_all_planning(Object, Surface, 0, Context, Object).
 
 assert_object_supposed_surface(Object) :-
     object_most_similar_surface(Object, Surface),
