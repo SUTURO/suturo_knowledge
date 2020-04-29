@@ -78,6 +78,12 @@ group_target_objects :-
     all_objects_on_target_surfaces(Objs),
     group_objects(Objs).
 
+% Returns always true if the bucket is target.
+group_target_objects :-
+    all_target_surfaces(Surfaces),
+    member(Surface, Surfaces),
+    is_bucket(Surface).
+
 group_shelf_objects :-
     all_objects_in_whole_shelf(Objs),
     group_objects(Objs).
