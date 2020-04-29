@@ -55,7 +55,7 @@ object_goal_pose(Instance, [Translation, Rotation], Context, Instance) :-
     Translation = [NewX, Y, Z],
     !.
 
-object_goal_pose(Intance, [Translation, Rotation], Context, Instance) :-
+object_goal_pose(Instance, [Translation, Rotation], Context, Instance) :-
     object_goal_surface(Instance, Surface, Context, Instance),
     is_bucket(Surface),
     surface_pose_in_map(Surface, [Translation, Rotation]).
