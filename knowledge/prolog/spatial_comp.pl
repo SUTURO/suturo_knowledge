@@ -35,6 +35,7 @@ hsr_existing_object_at(Pose, Threshold, Instance) :-
     rdfs_individual_of(Instance, dul:'PhysicalObject'),
     rdf_has(Instance, hsr_objects:'supportable', true),
     object_pose(Instance, OldPose),
+    object_is_alive(Instance),
     transform_close_to(Pose, OldPose, Threshold).
 
 

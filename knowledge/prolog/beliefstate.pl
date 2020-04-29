@@ -1,5 +1,6 @@
 :- module(beliefstate,
     [
+      place_object_on_surface/2,
       new_perceived_at/4,
       hsr_existing_object_at/4,
       belief_object_at_location/3,
@@ -40,6 +41,15 @@
     merge_object_into_group(r),
     group_shelf_objects,
     group_mean_pose(r,?,?).
+
+place_object_on_surface(Object, Surface) :-
+    not(is_bucket(Surface)),
+    assert_object_on(Object,Surface).
+
+place_object_on_surface(Object, Surface) :-
+    is_bucket(Surface),
+    get_time(Time),
+    object_set_lifetime_end(Object, Time).
 
 new_perceived_at(ObjType, Transform, Threshold, Instance) :-
     hsr_existing_object_at(ObjType, Transform, Threshold, Instance),
