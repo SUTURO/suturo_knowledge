@@ -51,11 +51,15 @@ object_goal_pose(Instance, [Translation, Rotation], Context, Instance) :-
     offsets(Offset),
     member(XOffset, Offset),
     NewX is X + XOffset,
-    ( not(is_bucket(Surface))
-        -> not(hsr_existing_object_at([map,_,[NewX, Y, Z + 0.1], Rotation], 0.2, _))
-        ; true ),
+    not(hsr_existing_object_at([map,_,[NewX, Y, Z + 0.1], Rotation], 0.2, _)),
     Translation = [NewX, Y, Z],
     !.
+
+object_goal_pose(Intance, [Translation, Rotation], Context, Instance) :-
+    object_goal_surface(Instance, Surface, Context, Instance),
+    is_bucket(Surface),
+    surface_pose_in_map(Surface, [Translation, Rotation]).
+
 
 object_goal_pose(_, _, "You haven't defined any target surfaces", _) :-
     all_target_surfaces([]),
