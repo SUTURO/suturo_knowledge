@@ -23,6 +23,11 @@ object_goal_pose(Instance, [Translation, Rotation]) :-
 object_goal_pose(Instance, [Translation, Rotation], Context) :-
     object_goal_pose(Instance, [Translation, Rotation], Context, _).
 
+object_goal_pose(Instance, [Translation, Rotation], Context, Instance) :-
+    object_goal_surface(Instance, Surface, Context, Instance),
+    is_bucket(Surface),
+    surface_pose_in_map(Surface, [Translation, Rotation]).
+
 %% In case a reference group in the shelf is found
 object_goal_pose(Instance, [Translation, Rotation], Context, RefObject) :-
     object_goal_surface(Instance, Surface, Context, RefObject),
@@ -54,12 +59,6 @@ object_goal_pose(Instance, [Translation, Rotation], Context, Instance) :-
     not(hsr_existing_object_at([map,_,[NewX, Y, Z + 0.1], Rotation], 0.2, _)),
     Translation = [NewX, Y, Z],
     !.
-
-object_goal_pose(Instance, [Translation, Rotation], Context, Instance) :-
-    object_goal_surface(Instance, Surface, Context, Instance),
-    is_bucket(Surface),
-    surface_pose_in_map(Surface, [Translation, Rotation]).
-
 
 object_goal_pose(_, _, "You haven't defined any target surfaces", _) :-
     all_target_surfaces([]),
