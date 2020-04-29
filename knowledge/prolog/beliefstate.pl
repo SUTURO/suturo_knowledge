@@ -294,15 +294,16 @@ compareLogicalDistances(Order, Object1, Object2) :-
 % Takes a list of objects and divides it into the first n objects that fit on
 % the given surface and the rest.
 objects_fit_on_surface(Objects, Surface, FittingObjects, NotFittingObjects) :-
-    objects_fit_on_surface_(Objects, Surface),
-    FittingObjects = Objects,
-    NotFittingObjects = [].
-    
-objects_fit_on_surface(Objects, Surface, FittingObjects, NotFittingObjects) :-
     last(Objects,LastObject), 
     delete(Objects,LastObject, ShorterList),
     objects_fit_on_surface(ShorterList, Surface, FittingObjects, NotFittingObjectsButLast),
     append(NotFittingObjectsButLast, [LastObject], NotFittingObjects).
+
+objects_fit_on_surface(Objects, Surface, FittingObjects, NotFittingObjects) :-
+    objects_fit_on_surface_(Objects, Surface),
+    FittingObjects = Objects,
+    NotFittingObjects = [],
+    !.
 
 objects_fit_on_surface_(Objects, Surface) :-
     findall(WidthPlus,
