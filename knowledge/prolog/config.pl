@@ -69,7 +69,7 @@ context_speech_sort_by_class(Object, SimilarObject, Distance, Context) :-
     object_classname(Object, ObjectClass),
     object_classname(SimilarObject, SimilarObjectClass),
     string_concat('I will put this ', ObjectClass, Part1),
-    string_concat(' to the other', SimilarObjectClass, Part2),
+    string_concat(' to the other ', SimilarObjectClass, Part2),
     string_concat(Part1, Part2, Context).
 
 context_speech_sort_by_class(Object, SimilarObject, Distance, Context) :-

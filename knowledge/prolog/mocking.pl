@@ -81,4 +81,4 @@ mock_new_object_place(_, [Translation, _]) :-
     !.
 
 mock_new_object_place(_, _) :-
-    writeln("The Position is o.k., but place_object/1 or group_target_objects/0 return false.").
+    writeln("The Position is o.k., but place_object/1 or group_target_objects/0 returned false.").
