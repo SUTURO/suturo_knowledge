@@ -11,6 +11,7 @@
         object_frame/2,
         surface_frame/2,
         surface_front_edge_center_frame/2,
+        surface_dimensions/4,
         %Debug
         relative_position_supportable_by_surface/2
     ]).
@@ -111,7 +112,7 @@ surface_front_edge_center_frame(Surface, FrontEdgeCenterFrame) :- % in case it's
     is_shelf(Surface),
     surface_frame(Surface, FrontEdgeCenterFrame).
 
-surface_front_edge_center_frame(Surface, FrontEdgeCenterFrame) :- % in case it's a table
+surface_front_edge_center_frame(Surface, FrontEdgeCenterFrame) :- % in case it's a Table or a Bucket
     rdf_urdf_name(Surface, FullName),
     sub_atom(FullName, 0, _, 7, Name), % cuts away the Suffix "_center" (the last 7 letters)
     urdf_surface_prefix(Prefix),
@@ -136,3 +137,6 @@ surface_frame(Surface, Frame) :-
     rdf_urdf_name(Surface, Name),
     urdf_surface_prefix(Prefix),
     atom_concat(Prefix, Name, Frame).
+
+surface_dimensions(Surface, Width, Depth, Height) :-
+    rdf_urdf_link_collision(Surface, box(Width, Depth, Height), _).

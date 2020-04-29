@@ -29,6 +29,7 @@
     pose_of_target_surfaces/1,
     pose_of_source_surfaces/1,
     pose_of_surfaces/2,
+    compareDistances/3,
     %% FIND OBJs
     objects_on_surface/2,
     is_object/1,
@@ -143,9 +144,9 @@ square_big_enough(X,Y):- %TODO Support other shapes
     ; fail
     ).
 
-
+% needs to be put in beliefstate
 assert_object_on(ObjectInstance, SurfaceLink) :- % has not been tested yet.
-    all_surfaces(SurfaceLinks),
+    all_surfaces(SurfaceLinks), % this makes sure, we actually have a surface here
     member(SurfaceLink,SurfaceLinks),
     kb_retract(ObjectInstance, hsr_objects:'supportedBy', _),
     kb_assert(ObjectInstance, hsr_objects:'supportedBy', SurfaceLink).

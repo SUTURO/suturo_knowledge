@@ -19,6 +19,10 @@ next_object(BestObj) :-
     nth0(Index, Objs, NearestObject),
     BestObj = NearestObject.
 
+    % This can probably all be done in two lines:
+    % predsort(compareDistances, Objs, SortedObjs),
+    % nth0(0, SortedObjs, BestObj).
+
 
 next_object(noSourceSurfaces) :-
     all_source_surfaces([]),

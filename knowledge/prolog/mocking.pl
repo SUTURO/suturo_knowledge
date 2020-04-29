@@ -2,7 +2,8 @@
     [
       create_object_on_surface/1,
       setup/0,
-      advanced_setup/0
+      advanced_setup/0,
+      mock_new_object_place/2
     ]).
 
 :- rdf_meta
@@ -52,3 +53,23 @@ advanced_setup :-
     create_object_on_surface(B),
     create_object_on_surface(B),
     setup.
+
+% This simulates the behavior of an Object, that gets taken by the 
+% Gripper and than released at a different place.
+% i.e. it simulates the result of
+% attach_object_to_gripper(Object),
+% release_object_from_gripper([Translation, Rotation]).
+mock_new_object_place(Object, [Translation, Rotation]) :-
+    position_supportable_by_surface(Translation, _),
+    hsr_belief_at_update(Object, [map, _, Translation, Rotation]),
+    place_object(Object),
+    group_target_objects,
+    !.
+
+mock_new_object_place(_, [Translation, _]) :-
+    not(position_supportable_by_surface(Translation, _)),
+    writeln("The Position is not above any surface"),
+    !.
+
+mock_new_object_place(_, _) :-
+    writeln("The Position is o.k., but place_object/1 or group_target_objects/0 returned false.").
