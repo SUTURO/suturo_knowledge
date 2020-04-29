@@ -11,7 +11,7 @@
     
 
 next_object(BestObj) :-
-    place_objects,
+    ( not(place_objects) -> writeln("Not all Objects could have been placed") ),
     all_objects_on_source_surfaces(Objs),
     maplist(distance_to_robot, Objs, Distances),
     min_list(Distances, MinDistance),
