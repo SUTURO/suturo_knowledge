@@ -16,17 +16,17 @@ def is_static(sentence):
     if is_stop(sentence):
         command = StaticCommand()
         command.command = StaticCommand.STOP
-        pub.publish(command)
+        hc_pub.publish(command)
         return True
     elif is_start(sentence):
         command = StaticCommand()
         command.command = StaticCommand.START
-        pub.publish(command)
+        hc_pub.publish(command)
         return True
     elif is_continue(sentence):
         command = StaticCommand()
         command.command = StaticCommand.CONTINUE
-        pub.publish(command)
+        hc_pub.publish(command)
         return True
 
     return False
@@ -58,9 +58,9 @@ def find_first(data):
 
     if len(data.scores) == 1 and score1 > 0.7:
         return mostliklySentence
-    elif len(data.scores) == 2: 
+    elif len(data.scores) > 1:
         score2 = data.scores[1]
-        if score1 > 0.93 and score1 - score2 > 0.1:
+        if score1 > 0.85 and score1 - score2 > 0.1:
             return mostliklySentence
     return ""
 
