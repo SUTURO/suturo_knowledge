@@ -14,7 +14,7 @@ def item_translator_to_knowledge(item):
     with open(filepath) as f:
         for line in f:
             if item == line.split(",")[0]:
-                return str(line.split(",")[1])
+                return line.split(",")[1].rstrip("\n")
     pub(errordict("I have no idea what you mean with an object called " + item))
     return False
 
@@ -22,7 +22,7 @@ def item_translator_to_knowledge(item):
 def item_translator_from_knowledge(item):
     with open(filepath) as f:
         for line in f:
-            if str(item) == str(line.split(",")[1]):
+            if str(item) == line.split(",")[1].rstrip("\n"):
                 return str(line.split(",")[0])
     return False
 
@@ -43,17 +43,28 @@ def is_there(dict):
         pub(datadict)
         return
     item_t = item_translator_to_knowledge(dict["item"])
+    if not item_t:
+        pub(errordict("Item not known in the knowledge base"))
+        return
+    item_t = item_translator_to_knowledge(dict["item"])
     query_string = "rdfs_individual_of(_X,hsr_objects:'" + item_t + "'), rdf_has(_X, hsr_objects:'supportedBy',_Link), rdf_urdf_name(_Link,Name)."
+    rospy.loginfo("Query for supposed to go:\n" + query_string)
     solutions = prolog.all_solutions(query_string)
+    rospy.loginfo(solutions)
 
     if not solutions:
         dict["answer"] = "no"
 
     location = dict["location"].replace(" ", "_")
-    # TODO this isn't nice
+
+    # TODO change this to a diffrent file and expand
+    if location == "big_table":
+        location = "table_center"
+    elif location == "hcr_shelf":
+        location = "hcr_shefl"
     print(solutions)
     for solution in solutions:
-        if solution['Name'].contains(location):
+        if solution['Name'].__contains__(location):
             dict["answer"] = "yes"
             pub(dict)
             return
@@ -101,10 +112,11 @@ def supposed_to_go(dict):
         return
     item_t = item_translator_to_knowledge(dict["item"])
     query_string = "hsr_existing_objects(_Objs), member(_Obj,_Objs), rdfs_individual_of(_Obj, hsr_objects:'" + item_t + "'), object_goal_surface(_Obj,_Surf), rdf_urdf_name(_Surf,Name)."
+    rospy.loginfo("Query for supposed to go:\n" + query_string)
     solutions = prolog.all_solutions(query_string)
-    print(solutions)
+    rospy.loginfo(solutions)
     if not solutions or solutions == []:
-        pub(errordict("I don't know where that item is supposed to go"))
+        pub(errordict("Didn't get any solution"))
         return
     dict["location"] = solutions[0]['Name'].split('_')[0]
     pub(dict)
