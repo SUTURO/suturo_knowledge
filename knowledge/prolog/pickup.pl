@@ -1,16 +1,16 @@
 :- module(pickup,
     [
-      next_object/1
+      next_object_/1
     ]).
 
 :- rdf_db:rdf_register_ns(hsr_objects, 'http://www.semanticweb.org/suturo/ontologies/2020/3/objects#', [keep(true)]).
 :- rdf_db:rdf_register_ns(robocup, 'http://www.semanticweb.org/suturo/ontologies/2020/2/Robocup#', [keep(true)]).
 
 :- rdf_meta
-    next_object(?).
+    next_object_(?).
     
 
-next_object(BestObj) :-
+next_object_(BestObj) :-
     place_objects,
     all_objects_on_source_surfaces(Objs),
     maplist(distance_to_robot, Objs, Distances),
@@ -24,11 +24,11 @@ next_object(BestObj) :-
     % nth0(0, SortedObjs, BestObj).
 
 
-next_object(noSourceSurfaces) :-
+next_object_(noSourceSurfaces) :-
     all_source_surfaces([]),
     writeln("You haven't declared any surfaces to be source surfaces"), !.
 
-next_object(noObjectsOnSourceSurfaces) :-
+next_object_(noObjectsOnSourceSurfaces) :-
     all_objects_on_source_surfaces([]),
     writeln("There aren't any objects on source surfaces").
 

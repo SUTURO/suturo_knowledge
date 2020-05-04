@@ -37,18 +37,14 @@
     all_objects_on_source_surfaces/1,
     all_objects_on_target_surfaces/1,
     all_objects_on_ground/1,
-    all_objects_in_whole_shelf/1, % will soon be deprecated
-    all_objects_on_tables/1,
+    all_objects_in_whole_shelf_/1, % will soon be deprecated
+    all_objects_on_tables_/1,
     all_objects_in_buckets/1,
     all_objects_on_table/1, % DEPRECATED! Use only for backward compatibility reasons
     %% CREATE OBJECT
     place_object/1,
     %% ROLES
-    make_ground_source/0,
     load_surfaces_from_param/1,
-    make_all_shelves_target/0,
-    make_all_tables_source/0,
-    make_all_buckets_target/0,
     make_all_surface_type_role/2,
     make_surfaces_source/1,
     make_surfaces_target/1,
@@ -321,7 +317,7 @@ all_objects_on_ground(Instances) :-
         ), Instances).
 
 
-all_objects_in_whole_shelf(Instances) :-
+all_objects_in_whole_shelf_(Instances) :-
     findall(Instance, (
         shelf_surfaces(ShelveLinks),
         member(Shelf, ShelveLinks),
@@ -330,7 +326,7 @@ all_objects_in_whole_shelf(Instances) :-
         ), Instances).
 
 
-all_objects_on_tables(Instances) :-
+all_objects_on_tables_(Instances) :-
     findall(Instance, (
         table_surfaces(TableLinks),
         member(Table, TableLinks),
@@ -348,7 +344,7 @@ all_objects_in_buckets(Instances) :-
 
  % DEPRECATED! Use only for backward compatibility reasons
 all_objects_on_table(Instances) :- 
-    all_objects_on_tables(Instances).
+    all_objects_on_tables_(Instances).
 
 
 all_objects_in_gripper(Instances):-
@@ -389,19 +385,6 @@ position_above_surface(Joint, ShapeTerm, [X,Y,Z], Distance):-
 /**
 ***************************************************ROLES*********************************************
 */
-
-make_ground_source:-
-    make_all_surface_type_role(ground, source).
-
-
-make_all_shelves_target:-
-    make_all_surface_type_role(shelf, target).
-
-make_all_tables_source:-
-    make_all_surface_type_role(table, source).
-
-make_all_buckets_target:-
-    make_all_surface_type_role(bucket, target).
 
 make_surfaces_source(Surfaces):-
     forall(member(Surface, Surfaces), make_role(Surface, source)).
