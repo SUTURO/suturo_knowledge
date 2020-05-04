@@ -8,10 +8,11 @@
 
   <license>TODO</license>
 
-
   <buildtool_depend>catkin</buildtool_depend>
-
+  <build_depend>tmc_rosjulius</build_depend>
+  <build_export_depend>tmc_rosjulius</build_export_depend>
+  <exec_depend>tmc_rosjulius</exec_depend>
+  
   <export>
-
   </export>
 </package>
