@@ -51,7 +51,7 @@ object_at(ObjectType, Transform, Threshold, Instance) :-
 	belief_existing_object_at(ObjectType, Transform, Threshold, Instance).
 
 object_at_table(Instance) :-
-	all_objects_on_tables(Instances),once(member(Instance,Instances)).
+	all_objects_on_tables_(Instances),once(member(Instance,Instances)).
 
 object_of_type(ObjectType, Instance) :-
 	belief_existing_objects(Instance, [ObjectType]).
