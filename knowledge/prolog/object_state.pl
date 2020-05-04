@@ -11,7 +11,7 @@
       hsr_existing_objects/1,
       hsr_forget_object/1,
       forget_objects_on_surface_/1,
-
+      place_object/1,
       %%% DEBUG %%%
       set_dimension_semantics/4,
       set_object_colour/3,
@@ -49,6 +49,13 @@ forget_objects_on_surface_(SurfaceLink) :-
     objects_on_surface(Objs,SurfaceLink),
     member(Obj,Objs),
     hsr_forget_object(Obj).
+
+%%
+% finds the surface an object was seen on. When there is no surface supporting the object and
+% the center point of the object < 0.5 the object is placed on the ground. Otherwise the query resolves to false.
+place_object(Object):-
+    object_supportable_by_surface(Object, Surface),
+    assert_object_on(Object,Surface).
 
 object_at(ObjectType, Transform, Threshold, Instance) :-
 	hsr_existing_objects(Objectlist),

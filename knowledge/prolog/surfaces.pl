@@ -321,34 +321,9 @@ all_objects_in_gripper(Instances):-
         member(Instance, Objs)
         ), Instances).
 
-
-
 is_legal_obj_position([X,Y,Z]) :-
     position_supportable_by_surface([X,Y,Z], _).
 
-
-
-/**
-*****************************************CREATE OBJs******************************************************
-*/
-
-
-%%
-% finds the surface an object was seen on. When there is no surface supporting the object and
-% the center point of the object < 0.5 the object is placed on the ground. Otherwise the query resolves to false.
-place_object(Object):-
-    object_supportable_by_surface(Object, Surface),
-    assert_object_on(Object,Surface).
-
-
-%% Joint supporting the ShapeTerm, the ShapeTerm, Position of the object, return Distance vertical distance
-position_above_surface(Joint, ShapeTerm, [X,Y,Z], Distance):-
-    joint_abs_position(Joint,[JPosX,JPosY,JPosZ]),
-    joint_abs_rotation(Joint,[Roll,Pitch,Yaw]),
-    ( point_on_surface([JPosX, JPosY, _], [Roll,Pitch,Yaw], ShapeTerm, [X,Y,_])
-    -> Distance is Z - JPosZ, true
-    ; fail
-    ).
 
 /**
 ***************************************************ROLES*********************************************
