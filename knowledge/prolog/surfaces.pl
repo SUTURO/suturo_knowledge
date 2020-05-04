@@ -48,9 +48,7 @@
     make_surfaces_source/1,
     make_surfaces_target/1,
     make_role/2,
-    get_surface_role/2,
-    %% FUNCTIONS
-    forget_objects_on_surface/1
+    get_surface_role/2
     ]).
 
 :- rdf_db:rdf_register_ns(urdf, 'http://knowrob.org/kb/urdf.owl#', [keep(true)]).
@@ -96,13 +94,6 @@ assert_surface_types(SurfaceLink):-
 supporting_surface(SurfaceLink):-
     rdf_urdf_link_collision(SurfaceLink,ShapeTerm,_),
     surface_big_enough(ShapeTerm).
-
-
-forget_objects_on_surface(SurfaceLink) :-
-    objects_on_surface(Objs,SurfaceLink),
-    member(Obj,Objs),
-    hsr_forget_object(Obj).
-
 
 surface_big_enough(box(X, Y, _)):- %TODO Support other shapes, has not been tested yet.
     square_big_enough(X,Y).

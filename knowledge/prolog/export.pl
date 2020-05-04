@@ -19,7 +19,8 @@
       pose_of_shelves/1,
       % Find Surfaces
       table_surfaces/1,
-      gripper/1,
+      % Beliefstate
+      forget_objects_on_surface/1,
       % Mocking
       create_object_on_surface/1
 
@@ -62,6 +63,11 @@ object_goal_pose_offset(Object, Pose, Context) :-
 
 next_object(Object) :-
     next_object_(Object).
+
+%%% BELIEFSTATE %%%
+
+forget_objects_on_surface(Surface) :-
+    forget_objects_on_surface_(Surface).
 
 %%% URDF %%%
 

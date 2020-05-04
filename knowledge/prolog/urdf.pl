@@ -4,7 +4,7 @@
         get_surface_id_by_name/2,
         urdf_frame/2,
         object_frame/2,
-        surface_frame/2,
+        surface_frame_/2,
         surface_front_edge_center_frame/2,
         surface_dimensions/4
     ]).
@@ -72,7 +72,7 @@ surface_suffix(Surface, Suffix) :-
 object_frame(Object, Frame) :-
     object_frame_name(Object, Frame).
     
-surface_frame(Surface, Frame) :-
+surface_frame_(Surface, Frame) :-
     rdf_urdf_name(Surface, Name),
     urdf_surface_prefix(Prefix),
     atom_concat(Prefix, Name, Frame).

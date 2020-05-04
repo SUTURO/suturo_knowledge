@@ -10,6 +10,7 @@
       create_object_at/10,
       hsr_existing_objects/1,
       hsr_forget_object/1,
+      forget_objects_on_surface_/1,
 
       %%% DEBUG %%%
       set_dimension_semantics/4,
@@ -44,6 +45,10 @@ hsr_existing_objects(Objects) :-
 hsr_forget_object(Object) :-
     rdf_retractall(Object,_,_).
 
+forget_objects_on_surface_(SurfaceLink) :-
+    objects_on_surface(Objs,SurfaceLink),
+    member(Obj,Objs),
+    hsr_forget_object(Obj).
 
 object_at(ObjectType, Transform, Threshold, Instance) :-
 	hsr_existing_objects(Objectlist),
