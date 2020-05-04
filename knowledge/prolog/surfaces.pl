@@ -10,6 +10,7 @@
     all_surfaces/1, %replaces all_srdl_objects contains ground
     is_surface/1,
     is_table/1,
+    is_bucket/1,
     is_shelf/1,
     all_source_surfaces/1,
     all_target_surfaces/1,
@@ -18,11 +19,17 @@
     big_shelf_surfaces/1, % will soon be deprecated
     shelf_floor_at_height/2, % will soon be deprecated
     table_surfaces/1, 
+    bucket_surfaces/1,
+    is_legal_obj_position/1,
     find_supporting_surface/2,
     % Get poses 
     pose_of_tables/1,
     pose_of_shelves/1,
+    pose_of_buckets/1,
+    pose_of_target_surfaces/1,
+    pose_of_source_surfaces/1,
     pose_of_surfaces/2,
+    compareDistances/3,
     %% FIND OBJs
     objects_on_surface/2,
     is_object/1,
@@ -32,6 +39,7 @@
     all_objects_on_ground/1,
     all_objects_in_whole_shelf/1, % will soon be deprecated
     all_objects_on_tables/1,
+    all_objects_in_buckets/1,
     all_objects_on_table/1, % DEPRECATED! Use only for backward compatibility reasons
     %% CREATE OBJECT
     place_object/1,
@@ -39,6 +47,7 @@
     make_ground_source/0,
     make_all_shelves_target/0,
     make_all_tables_source/0,
+    make_all_buckets_target/0,
     make_all_surface_type_role/2,
     make_surfaces_source/1,
     make_surfaces_target/1,
@@ -79,16 +88,18 @@ assert_surface_types(SurfaceLink):-
     ;
     ( sub_string(Name,_,_,_,table)
     ->rdf_assert(SurfaceLink,hsr_objects:'isSurfaceType',table)
-    ; rdf_assert(SurfaceLink,hsr_objects:'isSurfaceType',other)
+    ;
+    ( sub_string(Name,_,_,_,bucket)
+    ->rdf_assert(SurfaceLink,hsr_objects:'isSurfaceType',bucket)
+    ;rdf_assert(SurfaceLink,hsr_objects:'isSurfaceType',other))
     )).
 
 
 %% supporting_surface(?Surface).
 %
-supporting_surface(SurfaceLink):- % has not been tested yet.
+supporting_surface(SurfaceLink):-
     rdf_urdf_link_collision(SurfaceLink,ShapeTerm,_),
-    surface_big_enough(ShapeTerm),
-    true.
+    surface_big_enough(ShapeTerm).
 
 
 forget_objects_on_surface(SurfaceLink) :-
@@ -110,9 +121,9 @@ square_big_enough(X,Y):- %TODO Support other shapes
     ; fail
     ).
 
-
+% needs to be put in beliefstate
 assert_object_on(ObjectInstance, SurfaceLink) :- % has not been tested yet.
-    all_surfaces(SurfaceLinks),
+    all_surfaces(SurfaceLinks), % this makes sure, we actually have a surface here
     member(SurfaceLink,SurfaceLinks),
     kb_retract(ObjectInstance, hsr_objects:'supportedBy', _),
     kb_assert(ObjectInstance, hsr_objects:'supportedBy', SurfaceLink).
@@ -132,6 +143,10 @@ is_table(Table) :-
 is_shelf(Shelf) :-
     shelf_surfaces(Shelves),
     member(Shelf, Shelves).
+
+is_bucket(Bucket) :-
+    bucket_surfaces(Buckets),
+    member(Bucket, Buckets).
 
 /**
 *****************************************FIND SURFACES******************************************************
@@ -198,6 +213,9 @@ shelf_floor_at_height(Height, TargetShelfLink) :- % has not been tested yet.
 table_surfaces(TableLinks):-
     findall(TableLink, rdf_has(TableLink, hsr_objects:'isSurfaceType',table), TableLinks).
 
+bucket_surfaces(BucketLinks):-
+    findall(BucketLink, rdf_has(BucketLink, hsr_objects:'isSurfaceType',bucket), BucketLinks).
+
 find_supporting_surface(Object, Surface) :-
     rdf_has(Object, hsr_objects:'supportedBy', Surface).
 
@@ -214,6 +232,18 @@ pose_of_tables(Positions) :-
 pose_of_shelves(Positions):-
     shelf_surfaces(Shelves),
     pose_of_surfaces(Shelves, Positions).
+
+pose_of_buckets(Positions) :-
+    bucket_surfaces(Buckets),
+    pose_of_surfaces(Buckets, Positions).
+
+pose_of_target_surfaces(Positions) :-
+    all_target_surfaces(Surfaces),
+    pose_of_surfaces(Surfaces, Positions).
+
+pose_of_source_surfaces(Positions) :-
+    all_source_surfaces(Surfaces),
+    pose_of_surfaces(Surfaces, Positions).
 
 % Sorts the surfaces by Distance to the robot and returns a List of their positions in that order.
 pose_of_surfaces(Surfaces, Positions) :-
@@ -285,6 +315,14 @@ all_objects_on_tables(Instances) :-
         member(Instance, ObjPerTable)
         ), Instances).
 
+all_objects_in_buckets(Instances) :-
+    findall(Instance, (
+        bucket_surfaces(Buckets),
+        member(Bucket, Buckets),
+        objects_on_surface(ObjPerBucket, Bucket),
+        member(Instance, ObjPerBucket)
+        ), Instances).    
+
  % DEPRECATED! Use only for backward compatibility reasons
 all_objects_on_table(Instances) :- 
     all_objects_on_tables(Instances).
@@ -336,9 +374,11 @@ make_ground_source:-
 make_all_shelves_target:-
     make_all_surface_type_role(shelf, target).
 
-
 make_all_tables_source:-
     make_all_surface_type_role(table, source).
+
+make_all_buckets_target:-
+    make_all_surface_type_role(bucket, target).
 
 make_surfaces_source(Surfaces):-
     forall(member(Surface, Surfaces), make_role(Surface, source)).

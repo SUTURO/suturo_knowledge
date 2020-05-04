@@ -1,16 +1,16 @@
 <launch>
   <arg name="dic_list_en_word"
-       default="$(find suturo_julius)/dictionaries/examples/word/dic-list_word.txt" />
+       default="$(find suturo_julius)/dictionaries/dic_list_hard_commands.txt" />
 
 
   <group ns="/suturo_speech_recognition">
     <param name="voice_ns_prefix" value="voice" />
     <param name="voice/julius_config_file" value="$(find suturo_julius)/julius_conf/common.jconf"/>
-    <param name="voice/lm_grammar_mode" value="false" />
+    <param name="voice/lm_grammar_mode" value="true" />
     <param name="voice/lm_locale" value="en" />
     <param name="voice/acoustic_model_en" value="-h /usr/share/julius-voxforge/acoustic/hmmdefs -hlist /usr/share/julius-voxforge/acoustic/tiedlist" />
     <param name="voice/dic_list" value="" />
-    <param name="voice/dic_list_en_word" value="$(arg dic_list_en_word)" />
+    <param name="voice/dic_list_en_grammar" value="$(arg dic_list_en_word)" />
     <param name="voice/other_options_en" value="-wsil sil sil NULL -sb 200.0" />
     <param name="voice/run_julius_cmd" value="rosrun tmc_julius julius" />
     <param name="voice/moduleport" value="10500" />

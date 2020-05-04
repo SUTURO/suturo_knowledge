@@ -4,6 +4,7 @@ project(suturo_textparser)
 find_package(catkin REQUIRED COMPONENTS
   rospy
   std_msgs
+  tmc_rosjulius_msgs
 )
 
 

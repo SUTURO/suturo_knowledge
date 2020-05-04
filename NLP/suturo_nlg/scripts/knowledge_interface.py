@@ -1,72 +1,125 @@
 #!/usr/bin/env python
 import rospy
+import rospkg
 import rosprolog_client
 from suturo_nlg.msg import KeyValuePair, MeaningRepresentation
 
 prolog = rosprolog_client.Prolog()
+rospack = rospkg.RosPack()
+wd = rospack.get_path('suturo_nlg')
+filepath = wd + "/scripts/object_translate"
 
 
-def item_translator(item):
-    if item == "red pringles can":
-        return "Pringlesoriginal"
-    elif item == "blue pringles can":
-        return "Pringlessaltvinegar"
-    elif item == "banana":
-        return "Banana"
-    elif item == "cup":
-        return "Cup"
-    else:
-        return item.capitalize()
-
-
-def errordict():
-    dict = {"error": "Something went wrong"}
-    return dict
-
-
-def is_there(location, item):
-    item_t = item_translator(item)
-    query_string = "rdfs_individual_of(_X,hsr_objects:'" + item_t + "'), rdf_has(_X, hsr_objects:'supportedBy',_Link), rdf_urdf_name(_Link,Name)."
-    solutions = prolog.all_solutions(query_string)
-
-    if not solutions:
-        return False
-
-    location = location.replace(" ", "_")
-    for solution in solutions:
-        if location in solution['Name']:
-            return True
+def item_translator_to_knowledge(item):
+    with open(filepath) as f:
+        for line in f:
+            if item == line.split(",")[0]:
+                return line.split(",")[1].rstrip("\n")
+    pub(errordict("I have no idea what you mean with an object called " + item))
     return False
 
 
-def what_is_on(location):
-    rospy.wait_for_service('/rosprolog/query')
+def item_translator_from_knowledge(item):
+    with open(filepath) as f:
+        for line in f:
+            if str(item) == line.split(",")[1].rstrip("\n"):
+                return str(line.split(",")[0])
+    return False
 
-    if location == "shelf":
-        query_string = "once((all_objects_in_whole_shelf(_Objs), member(Obj,_Objs)))."
-    elif location == "big table":
-        query_string = "once((rdf_urdf_name(_Table, table_0_center),rdf_has(Obj, hsr_objects:'supportedBy', _Table)))."
-    elif location == "small table":
-        query_string = "once((rdf_urdf_name(_Table, table_1_center),rdf_has(Obj, hsr_objects:'supportedBy', _Table)))."
-    elif location == "ground":
+
+def errordict(text="Something went wrong"):
+    return {"error": text}
+
+
+def is_there(dict):
+    if not dict.keys().__contains__("item"):
+        rospy.logerr("Message didn't contain item")
+        datadict = errordict("I didn't get the object you meant.")
+        pub(datadict)
+        return
+    if not dict.keys().__contains__("location"):
+        rospy.logerr("Message didn't contain location")
+        datadict = errordict()
+        pub(datadict)
+        return
+    item_t = item_translator_to_knowledge(dict["item"])
+    if not item_t:
+        pub(errordict("Item not known in the knowledge base"))
+        return
+    item_t = item_translator_to_knowledge(dict["item"])
+    query_string = "rdfs_individual_of(_X,hsr_objects:'" + item_t + "'), rdf_has(_X, hsr_objects:'supportedBy',_Link), rdf_urdf_name(_Link,Name)."
+    rospy.loginfo("Query for supposed to go:\n" + query_string)
+    solutions = prolog.all_solutions(query_string)
+    rospy.loginfo(solutions)
+
+    if not solutions:
+        dict["answer"] = "no"
+
+    location = dict["location"].replace(" ", "_")
+
+    # TODO change this to a diffrent file and expand
+    if location == "big_table":
+        location = "table_center"
+    elif location == "hcr_shelf":
+        location = "hcr_shefl"
+    print(solutions)
+    for solution in solutions:
+        if solution['Name'].__contains__(location):
+            dict["answer"] = "yes"
+            pub(dict)
+            return
+    dict["answer"] = "no"
+    pub(dict)
+
+
+def what_is_on(dict):
+    if not dict.keys().__contains__("location"):
+        rospy.logerr("Message didn't contain location")
+        pub(errordict("What location did you mean?"))
+        return False
+
+    if dict["location"] == "hcr shelf":
+        query_string = "hsr_existing_objects(_Objs), member(Obj,_Objs), rdf_has(Obj, hsr_objects:'supportedBy', _S), rdf_urdf_name(_S,_SN), sub_string(_SN,_,_,_,\"hcr_shefl\")."
+    elif dict["location"] == "bookshelf":
+        query_string = "hsr_existing_objects(_Objs), member(Obj,_Objs), rdf_has(Obj, hsr_objects:'supportedBy', _S), rdf_urdf_name(_S,_SN), sub_string(_SN,_,_,_,\"bookshelf_floor\")."
+    elif dict["location"] == "big table":
+        query_string = "once((rdf_urdf_name(_Table, table_center),rdf_has(Obj, hsr_objects:'supportedBy', _Table)))."
+    elif dict["location"] == "small table":
+        query_string = "once((rdf_urdf_name(_Table, bed_table_center),rdf_has(Obj, hsr_objects:'supportedBy', _Table)))."
+    elif dict["location"] == "ground":
         query_string = "once((rdf_has(hsr_objects:'supportedBy', ground)))."
     else:
+        rospy.logerr("Message didn't contain location")
+        dict = errordict("What location did you mean?")
+        pub(dict)
         return False
-
-    solutions = prolog.all_solutions(query_string)
-
-    solution = solutions[0]['Obj'].split('#')[1].split('_')[0]
-    return solution
-
-
-def supposed_to_go(item):
-    item_t = item_translator(item)
-    query_string = "hsr_existing_objects(Objs), member(Obj,Objs), rdfs_individual_of(Obj, hsr_objects:'" + item_t + "'), object_goal_surface(Obj,_Surf), rdf_urdf_name(_Surf,SurfName)"
     solutions = prolog.all_solutions(query_string)
     if not solutions:
-        return False
-    solution = solutions[0]['SurfName'].split('_')[0]
-    return solution
+        pub(errordict("I don't know of any objects on the " + dict["location"]))
+        return
+    print(solutions[0]['Obj'].split('#')[1].split('_')[0])
+    # dict["item"] = str(item_translator_from_knowledge(solutions[0]['Obj'].split('#')[1].split('_')[0]))
+    dict["item"] = solutions[0]['Obj'].split('#')[1].split('_')[0]
+    pub(dict)
+    return True
+
+
+def supposed_to_go(dict):
+    if not dict.keys().__contains__("item"):
+        rospy.logerr("Message didn't contain item")
+        datadict = errordict("What item did you mean?")
+        pub(datadict)
+        return
+    item_t = item_translator_to_knowledge(dict["item"])
+    query_string = "hsr_existing_objects(_Objs), member(_Obj,_Objs), rdfs_individual_of(_Obj, hsr_objects:'" + item_t + "'), object_goal_surface(_Obj,_Surf), rdf_urdf_name(_Surf,Name)."
+    rospy.loginfo("Query for supposed to go:\n" + query_string)
+    solutions = prolog.all_solutions(query_string)
+    rospy.loginfo(solutions)
+    if not solutions or solutions == []:
+        pub(errordict("Didn't get any solution"))
+        return
+    dict["location"] = solutions[0]['Name'].split('_')[0]
+    pub(dict)
 
 
 def callback(data):
@@ -75,59 +128,26 @@ def callback(data):
         datadict[keyvaluep.key] = keyvaluep.value
 
     if datadict.keys().__contains__("predicate"):
-
         if datadict["predicate"] == "what is on":
-
-            if not datadict.keys().__contains__("location"):
-                rospy.logerr("Message didn't contain location")
-                datadict = errordict()
-                pub(datadict)
-                return
-            datadict["item"] = what_is_on(datadict["location"])
-
+            what_is_on(datadict)
         elif datadict["predicate"] == "is there":
-
-            if not datadict.keys().__contains__("item"):
-                rospy.logerr("Message didn't contain item")
-                datadict = errordict()
-                pub(datadict)
-                return
-            if not datadict.keys().__contains__("location"):
-                rospy.logerr("Message didn't contain location")
-                datadict = errordict()
-                pub(datadict)
-                return
-            if is_there(datadict["location"], datadict["item"]):
-                datadict["answer"] = "yes"
-            else:
-                datadict["answer"] = "no"
-
+            is_there(datadict)
         elif datadict["predicate"] == "supposed to go":
-            if not datadict.keys().__contains__("item"):
-                rospy.logerr("Message didn't contain item")
-                datadict = errordict()
-                pub(datadict)
-                return
-            if not supposed_to_go(datadict["item"]):
-                datadict = errordict()
-                pub(datadict)
-                return
-            datadict["location"] = supposed_to_go(datadict["item"])
-
+            supposed_to_go(datadict)
         else:
             rospy.logerr("Message didn't contain any known predicates")
-            datadict = errordict()
+            datadict = errordict("The last sentence was not a question that I can understand")
             pub(datadict)
             return
-
-        datadict["question"] = datadict["predicate"]
-        del datadict["predicate"]
-        pub(datadict)
     else:
         rospy.logerr("Message didn't contain any predicates")
 
 
 def pub(datadict):
+    if datadict.keys().__contains__("predicate"):
+        datadict["question"] = datadict["predicate"]
+        del datadict["predicate"]
+
     dict_meaning_rep = MeaningRepresentation()
     for key in datadict:
         nkvp = KeyValuePair()
@@ -141,4 +161,7 @@ if __name__ == '__main__':
     rospy.init_node('knowledge_interface')
     rospy.Subscriber("kinterface_in", MeaningRepresentation, callback)
     publisher = rospy.Publisher('kinterface_out', MeaningRepresentation, queue_size=10)
+    rospy.loginfo("Knowledge Interface: Waiting for rosprolog service")
+    rospy.wait_for_service('/rosprolog/query')
+    rospy.loginfo("Knowledge Interface: rosprolog service is running knowledge interface now running")
     rospy.spin()

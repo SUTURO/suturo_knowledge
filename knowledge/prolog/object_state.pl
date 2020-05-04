@@ -19,8 +19,9 @@
       set_colour_semantics/2
     ]).
 
-:- rdf_db:rdf_register_ns(hsr_objects, 'http://www.semanticweb.org/suturo/ontologies/2018/10/objects#', [keep(true)]).
-:- rdf_db:rdf_register_ns(robocup, 'http://knowrob.org/kb/robocup.owl#', [keep(true)]).
+:- rdf_db:rdf_register_ns(hsr_objects, 'http://www.semanticweb.org/suturo/ontologies/2020/3/objects#', [keep(true)]).
+:- rdf_db:rdf_register_ns(robocup, 'http://www.semanticweb.org/suturo/ontologies/2020/2/Robocup#', [keep(true)]).
+:-rdf_db:rdf_register_ns(dul, 'http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#', [keep(true)]).
 
 :- rdf_meta
     create_object(r,?),
@@ -32,7 +33,13 @@
 
 
 hsr_existing_objects(Objects) :-
-    belief_existing_objects(Objects, [hsr_objects:'Item']).
+    belief_existing_objects(L, [dul:'PhysicalObject']),
+  findall(J, (
+      rdf(J, _, _, belief_state),
+      rdf_has(J, hsr_objects:'supportable', true),
+      member(J, L)
+  ), X),
+  list_to_set(X,Objects).
 
 hsr_forget_object(Object) :-
     rdf_retractall(Object,_,_).
@@ -50,8 +57,9 @@ object_of_type(ObjectType, Instance) :-
 	belief_existing_objects(Instance, [ObjectType]).
 
 create_object(ObjectType, Instance) :-
- 	owl_subclass_of(ObjectType, hsr_objects:'Item'),
-	belief_new_object(ObjectType, Instance).
+ 	owl_subclass_of(ObjectType, dul:'PhysicalObject'),
+	belief_new_object(ObjectType, Instance),
+        rdf_assert(Instance, hsr_objects:'supportable', true).
 
 % deprecated. buggy, too.
 create_object_at(ObjectType, Transform, Threshold, Instance, Dimensions, Color) :-
@@ -63,7 +71,7 @@ create_object_at(PerceivedObjectType, PercTypeConfidence, Transform, Threshold, 
     validate_confidence(color, PercColorCondidence, ColorCondidence),
     object_size_ok([Width, Depth, Height]),
     object_type_handling(PerceivedObjectType, TypeConfidence, ObjectType),
-    owl_subclass_of(ObjectType, hsr_objects:'Item'),
+    owl_subclass_of(ObjectType, dul:'PhysicalObject'),
     new_perceived_at(ObjectType, Transform, Threshold, Instance),
     atom_number(TypeConfidenceAtom, TypeConfidence),
     rdf_assert(Instance, hsr_objects:'ConfidenceClassValue', TypeConfidenceAtom),
@@ -75,6 +83,7 @@ create_object_at(PerceivedObjectType, PercTypeConfidence, Transform, Threshold, 
     atom_number(ColorCondidenceAtom, ColorCondidence),
     rdf_assert(Instance, hsr_objects:'ConfidenceColorValue', ColorCondidenceAtom),
     set_object_colour(Instance, Color, ColorCondidence),
+    rdf_assert(Instance, hsr_objects:'supportable', true),
     !.
 
 validate_confidence(class, Is, Should) :-
@@ -105,7 +114,7 @@ object_type_handling(PerceivedObjectType, TypeConfidence, ObjectType) :-
     (   number(TypeConfidence),
         TypeConfidence >= MinConf
         -> ObjectType = PerceivedObjectType
-        ; ObjectType = 'http://www.semanticweb.org/suturo/ontologies/2018/10/objects#Other'
+        ; ObjectType = 'http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Other'
         ).
 
 set_dimension_semantics(Instance, _, _, Height) :-

@@ -7,8 +7,8 @@
     release_object_from_gripper/1
     ]).
 
-:- rdf_db:rdf_register_ns(hsr_objects, 'http://www.semanticweb.org/suturo/ontologies/2018/10/objects#', [keep(true)]).
-:- rdf_db:rdf_register_ns(robocup, 'http://knowrob.org/kb/robocup.owl#', [keep(true)]).
+:- rdf_db:rdf_register_ns(hsr_objects, 'http://www.semanticweb.org/suturo/ontologies/2020/3/objects#', [keep(true)]).
+:- rdf_db:rdf_register_ns(robocup, 'http://www.semanticweb.org/suturo/ontologies/2020/2/Robocup#', [keep(true)]).
 
 
 :- rdf_meta
@@ -49,9 +49,7 @@ release_object_from_gripper([NewPose,NewRotation]) :-
     gripper(Gripper),
     objects_on_surface(Instances, Gripper),
     member(Instance, Instances),
-    object_frame_name(Instance, InstanceFrame),
-    hsr_belief_at_update(InstanceFrame, [map, _, NewPose, NewRotation]),
-    rdf_retractall(Instance, hsr_objects:'supportedBy', _),
-    select_surface(NewPose, NewSurface),
-    rdf_assert(Instance, hsr_objects:'supportedBy', NewSurface),
-    group_shelf_objects.
+    %object_frame_name(Instance, InstanceFrame),
+    hsr_belief_at_update(Instance, [map, _, NewPose, NewRotation]),
+    place_object(Instance),
+    group_target_objects.

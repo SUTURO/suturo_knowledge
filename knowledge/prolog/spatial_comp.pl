@@ -6,7 +6,11 @@
         object_supportable_by_surface/2,
         position_supportable_by_surface/2,
         distance_to_robot/2
+        %Debug
+        relative_position_supportable_by_surface/2
     ]).
+
+:-rdf_db:rdf_register_ns(dul, 'http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#', [keep(true)]).
 
 :- rdf_meta
     hsr_lookup_transform(r,r,?,?),
@@ -22,15 +26,16 @@ hsr_lookup_transform(SourceFrame, TargetFrame, Translation, Rotation) :-
 
 hsr_existing_object_at(Pose, Threshold, Instance) :-
     rdf(Instance, rdf:type, owl:'NamedIndividual', belief_state),
-    rdfs_individual_of(Instance, hsr_objects:'Item'),
+    rdfs_individual_of(Instance, dul:'PhysicalObject'),
+    rdf_has(Instance, hsr_objects:'supportable', true),
     object_pose(Instance, OldPose),
     transform_close_to(Pose, OldPose, Threshold).
 
 
 surface_pose_in_map(SurfaceLink, Pose) :-
     urdf_frame(SurfaceLink, Frame),
-    hsr_lookup_transform(map, Frame, Translation, Rotation),
-    Pose = [Translation, Rotation].
+    hsr_lookup_transform(map, Frame, [X,Y,Z], Rotation),
+    Pose = [[X,Y,Z], Rotation].
 
 %%%%%%%%%%%%%%%  Supportable by surface  %%%%%%%%%%%%%%%%%5
 
@@ -39,12 +44,12 @@ object_supportable_by_surface(Object, Surface):-
     all_surfaces(Surfaces),
     member(Surface,Surfaces),
     surface_front_edge_center_frame(Surface, SurfaceFrame),
-    object_frame(Object, ObjectFrame),
+    object_frame_name(Object, ObjectFrame),
     hsr_lookup_transform(SurfaceFrame, ObjectFrame, Position, _),
     relative_position_supportable_by_surface(Position, Surface).
     
 object_supportable_by_surface(Object, ground):-
-    object_frame(Object, Frame),
+    object_frame_name(Object, Frame),
     hsr_lookup_transform(map, Frame, [_,_,Z], _),
     position_supportable_by_ground(Z).
 
@@ -59,13 +64,23 @@ position_supportable_by_surface(Position, ground) :-
     position_supportable_by_ground(Position).
 
 relative_position_supportable_by_surface([X,Y,Z],Surface) :-
-    rdf_urdf_link_collision(Surface, box(Width, Depth, _), _),
+    is_table(Surface),
+    rdf_urdf_link_collision(Surface, box(Depth, Width, _), _),
     threshold_surface(ThAbove, ThBelow),
     ThAbove >= Z,
     ThBelow =< Z,
-    Width/2 >= abs(X),
-    0 >= Y,
-    Depth*(-1) =< Y.
+    Width/2 >= abs(Y),
+    0 < X,
+    Depth >= X.
+
+relative_position_supportable_by_surface([X,Y,Z], Surface) :-
+    ( is_shelf(Surface) ; is_bucket(Surface) ),
+    rdf_urdf_link_collision(Surface, box(Depth, Width, _), _),
+    threshold_surface(ThAbove, ThBelow),
+    ThAbove >= Z,
+    ThBelow =< Z,
+    Width/2 >= abs(Y),
+    Depth/2 >= abs(X).
 
 position_supportable_by_ground(ZPos) :-
     number(ZPos),
