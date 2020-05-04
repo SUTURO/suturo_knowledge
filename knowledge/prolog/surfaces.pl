@@ -329,14 +329,16 @@ is_legal_obj_position([X,Y,Z]) :-
 ***************************************************ROLES*********************************************
 */
 
+% Gives a list of surfaces the role source
 make_surfaces_source(Surfaces):-
     forall(member(Surface, Surfaces), make_role(Surface, source)).
 
+% Gives a list of surfaces the role target
 make_surfaces_target(Surfaces):-
     forall(member(Surface, Surfaces), make_role(Surface, target)).
 
 
-% Gives all surfaces with given name (ground, table or shelf) the Role (target or source)
+% Gives all surfaces with given name (ground, table, basket or shelf) the Role (target or source)
 make_all_surface_type_role(SurfaceType, Role):-
     SurfaceType = ground,
     make_role(SurfaceType, Role).
