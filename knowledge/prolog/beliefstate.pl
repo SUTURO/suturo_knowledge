@@ -153,6 +153,11 @@ belief_class_of(Obj, ObjType) :-
     % nothing to do if current classification matches beliefs
     kb_type_of(Obj, ObjType), !.
 
+% Careful! assert_temporal_part and assert_temporal_part_end were part of an old knowrob
+% https://github.com/daniel86/knowrob.git
+% Version: 7fa6e074a6af312bc235d5ede5d092921af61095
+% under knowrob_common/prolog/knowrob/temporal.pl
+% With our new version of knowrob, this produces errors.
 belief_class_of(Obj, NewObjType) :-
     current_time(Now),
      ignore(once((

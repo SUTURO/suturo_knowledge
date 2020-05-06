@@ -7,8 +7,8 @@
      xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
      xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
     <owl:Ontology rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/2/Robocup">
-        <owl:imports rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects"/>
         <owl:imports rdf:resource="package://srdl/owl/srdl2-comp.owl"/>
+        <owl:imports rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects"/>
     </owl:Ontology>
     
 
@@ -55,6 +55,8 @@
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/2/Robocup#supports">
         <owl:inverseOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#supportedBy"/>
+        <rdfs:domain rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#PhysicalObject"/>
+        <rdfs:range rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#PhysicalObject"/>
     </owl:ObjectProperty>
     
 
@@ -91,6 +93,19 @@
     <!-- http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#Action -->
 
     <owl:Class rdf:about="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#Action"/>
+    
+
+
+    <!-- http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#PhysicalObject -->
+
+    <rdf:Description rdf:about="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#PhysicalObject">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/2/Robocup#supports"/>
+                <owl:allValuesFrom rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#PhysicalObject"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </rdf:Description>
     
 
 
