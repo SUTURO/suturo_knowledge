@@ -12,6 +12,7 @@
       group_objects_at/1,
       group_objects/1,
       group_mean_pose/3,
+      % Placing Objects
       assert_object_supposed_surface/1,
       object_goal_surface_/4,
         %DEBUG
