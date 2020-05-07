@@ -1992,6 +1992,14 @@
     
 
 
+    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#PringlesYellow -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#PringlesYellow">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Pringles"/>
+    </owl:Class>
+    
+
+
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Pringlesoriginal -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Pringlesoriginal">
@@ -2213,6 +2221,14 @@
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Soda">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Drink"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#SodaCan -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#SodaCan">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Soda"/>
     </owl:Class>
     
 
