@@ -33,7 +33,7 @@ object_goal_pose(Instance, [Translation, Rotation], Context, Instance) :-
 object_goal_pose(Instance, [Translation, Rotation], Context, RefObject) :-
     object_goal_surface(Instance, Surface, Context, RefObject),
     not(rdf_equal(Instance, RefObject)),
-    surface_pose_in_map(Surface, [_, Rotation]),
+    surface_pose_in_map(Surface, [[_,_,SurfaceZ], Rotation]),
     rdf_has(RefObject, hsr_objects:'inGroup', Group),
     group_mean_pose(Group, [GroupX,GroupY,GroupZ], _),
     surface_front_edge_center_frame(Surface, Frame),
@@ -48,7 +48,7 @@ object_goal_pose(Instance, [Translation, Rotation], Context, RefObject) :-
     NewY > (Width / -2) + 0.1,
     tf_transform_point(Frame, map, [0, NewY, 0], [AbsX, AbsY,_]),
     not(hsr_existing_object_at([map,_,[AbsX, AbsY, GroupZ + 0.1], Rotation], 0.2, _)),
-    Translation = [AbsX, AbsY, GroupZ],
+    Translation = [AbsX, AbsY, SurfaceZ],
     !.
 
 %% When a new group is opened the RefObject is equal to the Instance
