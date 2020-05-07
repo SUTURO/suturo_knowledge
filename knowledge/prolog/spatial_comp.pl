@@ -64,7 +64,8 @@ position_supportable_by_surface(Position, Surface) :-
     member(Surface, Surfaces),
     surface_front_edge_center_frame(Surface, Frame),
     tf_transform_point(map, Frame, Position, RelativePosition),
-    relative_position_supportable_by_surface(RelativePosition, Surface).
+    relative_position_supportable_by_surface(RelativePosition, Surface),
+    !.
     
 position_supportable_by_surface(Position, ground) :-
     position_supportable_by_ground(Position).
