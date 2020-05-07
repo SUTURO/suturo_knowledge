@@ -38,7 +38,7 @@ object_goal_pose(Instance, [Translation, Rotation], Context, RefObject) :-
     group_mean_pose(Group, [X,Y,Z], _),
     offsets(Offset),
     member(XOffset, Offset),
-    rdf_urdf_link_collision(Surface, box(Width, _, _), _),
+    rdf_urdf_link_collision(Surface, box(_, Width, _), _),
     %hsr_lookup_transform(map, 'iai_kitchen/shelf_left_side_piece', [LeftBorder,_,_], _), % TODO: should be left corner of target-surfaces
     %hsr_lookup_transform(map, 'iai_kitchen/shelf_right_side_piece', [RightBorder,_,_], _), % TODO: should be right corner of target-surfaces
     NewX is X - (Width / 2) + XOffset,
