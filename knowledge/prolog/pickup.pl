@@ -13,15 +13,8 @@
 next_object(BestObj) :-
     place_objects,
     all_objects_on_source_surfaces(Objs),
-    maplist(distance_to_robot, Objs, Distances),
-    min_list(Distances, MinDistance),
-    nth0(Index, Distances, MinDistance),
-    nth0(Index, Objs, NearestObject),
-    BestObj = NearestObject.
-
-    % This can probably all be done in two lines:
-    % predsort(compareDistances, Objs, SortedObjs),
-    % nth0(0, SortedObjs, BestObj).
+    predsort(compareDistances, Objs, SortedObjs),
+    nth0(0, SortedObjs, BestObj).
 
 
 next_object(noSourceSurfaces) :-
