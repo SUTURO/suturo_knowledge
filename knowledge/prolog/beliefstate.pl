@@ -189,7 +189,7 @@ most_related_object(Source, Target):-
     same_color(Source, Target),
     context_speech_sort_by_color(Source, Target, Context),
     allowed_class_distance(MaxDist),
-    Distance = MaxDist + 1,
+    Distance is MaxDist + 1,
     assert_distance(Source, Distance, Context),
     !.
 
@@ -197,7 +197,7 @@ most_related_object(Source, Target):-
     same_size(Source, Target),
     context_speech_sort_by_size(Source, Target, Context),
     allowed_class_distance(MaxDist),
-    Distance = MaxDist + 2,
+    Distance is MaxDist + 2,
     assert_distance(Source, Distance, Context),
     !.
 
