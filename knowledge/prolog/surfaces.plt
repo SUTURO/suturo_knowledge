@@ -150,13 +150,15 @@ test(table) :-
 	table_surfaces(Surfaces),
 	forall(member(Surface, Surfaces), rdf_has(Surface, hsr_objects:'isSurfaceType',table)).
 
-test(areAllSurfacesTablesShelvesAndGround) :-
+test(areAllSurfacesTablesShelvesAndGroundAndBasket) :-
 	ground_surface(G),
 	GList = [G],
 	shelf_surfaces(S),
 	table_surfaces(T),
+	bucket_surfaces(B),
 	append(GList, S, Part1),
-	append(Part1, T, AllDefinedSurfaces),
+	append(Part1, T, Part2),
+	append(Part2, B, AllDefinedSurfaces),
 	length(AllDefinedSurfaces, Count),
 	all_surfaces(AllSurfaces),
 	length(AllSurfaces, Count).
