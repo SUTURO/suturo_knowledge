@@ -173,6 +173,7 @@ belief_class_of(Obj, NewObjType) :-
 %%%%%%%%% Defining the distance of their Relationship %%%%%%%%%%%%%%%%%%%%%%%%%%
 
 most_related_object(Source, Target) :-
+    not(kb_type_of(Source, hsr_objects:'Other')),
     most_related_class(Source, Target, Distance),
     allowed_class_distance(MaxDistance),
     MaxDistance >= Distance,
