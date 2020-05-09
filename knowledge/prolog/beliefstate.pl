@@ -318,7 +318,7 @@ objects_fit_on_surface_(Objects, Surface) :-
         (   X >= Y
             -> Width = X
             ; Width = Y  ),
-        WidthPlus = Width + 0.2
+        WidthPlus = Width + 0.05
     ),
         ListOfWidths),
     sumlist(ListOfWidths, Sum),
