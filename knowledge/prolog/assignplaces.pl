@@ -47,6 +47,10 @@ object_goal_pose(Instance, [Translation, Rotation], Context, RefObject) :-
     NewY < (Width / 2) - 0.1,
     NewY > (Width / -2) + 0.1,
     tf_transform_point(Frame, map, [0, NewY, 0], [AbsX, AbsY,_]),
+    % To do! This will crash in some cases:
+    % Objects are put on the same surface by object_goal_surface based on their 
+    % width plus 0.05 meter. If this is less than this 0.2 meter threshold between
+    % the CENTER of two objects, it will reject puting the object on it's supposed surface.
     not(hsr_existing_object_at([map,_,[AbsX, AbsY, GroupZ + 0.1], Rotation], 0.2, _)),
     Translation = [AbsX, AbsY, SurfaceZ],
     !.
