@@ -33,38 +33,44 @@ object_goal_pose(Instance, [Translation, Rotation], Context, Instance) :-
 object_goal_pose(Instance, [Translation, Rotation], Context, RefObject) :-
     object_goal_surface(Instance, Surface, Context, RefObject),
     not(rdf_equal(Instance, RefObject)),
-    surface_pose_in_map(Surface, [[_,_,SurfaceZ], Rotation]),
+    surface_pose_in_map(Surface, [_, Rotation]),
     rdf_has(RefObject, hsr_objects:'inGroup', Group),
     group_mean_pose(Group, [GroupX,GroupY,GroupZ], _),
     surface_front_edge_center_frame(Surface, Frame),
     tf_transform_point(map, Frame, [GroupX,GroupY,GroupZ], [_, GroupYOnS,_]),
     offsets(Offset),
     member(YOffset, Offset),
-    rdf_urdf_link_collision(Surface, box(_, Width, _), _),
-    %hsr_lookup_transform(map, 'iai_kitchen/shelf_left_side_piece', [LeftBorder,_,_], _), % TODO: should be left corner of target-surfaces
-    %hsr_lookup_transform(map, 'iai_kitchen/shelf_right_side_piece', [RightBorder,_,_], _), % TODO: should be right corner of target-surfaces
+    rdf_urdf_link_collision(Surface, box(Length, Width, _), _),
     NewY is (GroupYOnS + YOffset),
     NewY < (Width / 2) - 0.1,
     NewY > (Width / -2) + 0.1,
-    tf_transform_point(Frame, map, [0, NewY, 0], [AbsX, AbsY,_]),
+    NewX is Length / 4,
+    tf_transform_point(Frame, map, [NewX, NewY, 0], [AbsX, AbsY,AbsZ]),
     % To do! This will crash in some cases:
     % Objects are put on the same surface by object_goal_surface based on their 
     % width plus 0.05 meter. If this is less than this 0.2 meter threshold between
     % the CENTER of two objects, it will reject puting the object on it's supposed surface.
-    not(hsr_existing_object_at([map,_,[AbsX, AbsY, GroupZ + 0.1], Rotation], 0.2, _)),
-    Translation = [AbsX, AbsY, SurfaceZ],
+    not(hsr_existing_object_at([map,_,[AbsX, AbsY, AbsZ + 0.1], Rotation], 0.2, _)),
+    Translation = [AbsX, AbsY, AbsZ],
     !.
 
 %% When a new group is opened the RefObject is equal to the Instance
 object_goal_pose(Instance, [Translation, Rotation], Context, Instance) :-
     write("object_goal_pose new Group"),
     object_goal_surface(Instance, Surface, Context, Instance),
-    surface_pose_in_map(Surface, [[X,Y,Z], Rotation]),
+    surface_front_edge_center_frame(Surface, Frame),
+    surface_pose_in_map(Surface, [[SX,SY,SZ], Rotation]),
+    tf_transform_point(map, Frame, [SX,SY,SZ], [ _, YOnS,_]),  
     offsets(Offset),
-    member(XOffset, Offset),
-    NewX is X + XOffset,
-    not(hsr_existing_object_at([map,_,[NewX, Y, Z + 0.1], Rotation], 0.2, _)),
-    Translation = [NewX, Y, Z],
+    member(YOffset, Offset),
+    rdf_urdf_link_collision(Surface, box(Length, Width, _), _),
+    NewYOnS is YOnS + YOffset,
+    NewYOnS < (Width / 2) - 0.1,
+    NewYOnS > (Width / -2) + 0.1,
+    NewXOnS is Length / 4,
+    tf_transform_point(Frame, map, [NewXOnS, NewYOnS, 0], [AbsX, AbsY,AbsZ]),
+    not(hsr_existing_object_at([map,_,[AbsX, AbsY,AbsZ], Rotation], 0.2, _)),
+    Translation = [AbsX, AbsY,AbsZ],
     !.
 
 object_goal_pose(_, _, "You haven't defined any target surfaces", _) :-
