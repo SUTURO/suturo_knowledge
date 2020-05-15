@@ -77,6 +77,11 @@ object_goal_pose(_, _, "You haven't defined any target surfaces", _) :-
     all_target_surfaces([]),
     writeln("You haven't defined any target surfaces").
 
+% Returns True if the object can be placed in that position without colliding
+% with another object.
+enough_free_space([X,Y,Z], Rotation, Object) :-
+    
+
 object_goal_pose_offset(Instance, [[X,Y,Z], Rotation],Context):-
     object_goal_pose(Instance, [[X,Y,OZ], Rotation],Context),
     object_dimensions(Instance,_,_,H),

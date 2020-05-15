@@ -50,13 +50,6 @@ new_perceived_at(ObjType, Transform, _, Instance) :-
     belief_new_object(ObjType, Instance),
     hsr_belief_at_update(Instance, Transform).
 
-hsr_existing_object_at(_, Transform, Threshold, Instance) :-
-    rdf(Instance, rdf:type, owl:'NamedIndividual', belief_state),
-    rdfs_individual_of(Instance, dul:'PhysicalObject'),
-    rdf_has(Instance, hsr_objects:'supportable', true),
-    belief_object_at_location(Instance, Transform, Threshold), !.
-
-
 % No groups nearby
 hsr_belief_at_update(Instance, Transform) :-
     kb_create(hsr_objects:'Group', Group, _{graph:groups}),
@@ -152,7 +145,7 @@ belief_class_of(Obj, ObjType) :-
     % nothing to do if current classification matches beliefs
     kb_type_of(Obj, ObjType), !.
 
-% Careful! assert_temporal_part and assert_temporal_part_end were part of an old knowrob
+% To Do! assert_temporal_part and assert_temporal_part_end were part of an old knowrob
 % https://github.com/daniel86/knowrob.git
 % Version: 7fa6e074a6af312bc235d5ede5d092921af61095
 % under knowrob_common/prolog/knowrob/temporal.pl
