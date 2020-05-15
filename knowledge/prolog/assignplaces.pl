@@ -44,7 +44,7 @@ object_goal_pose(Instance, [Translation, Rotation], Context, RefObject) :-
     NewY is (GroupYOnS + YOffset),
     NewY < (Width / 2) - 0.1,
     NewY > (Width / -2) + 0.1,
-    NewX is - Length / 4,
+    NewX is - Length / 2,
     tf_transform_point(Frame, map, [NewX, NewY, 0], [AbsX, AbsY,AbsZ]),
     % To do! This will crash in some cases:
     % Objects are put on the same surface by object_goal_surface based on their 
@@ -67,7 +67,7 @@ object_goal_pose(Instance, [Translation, Rotation], Context, Instance) :-
     NewYOnS is YOnS + YOffset,
     NewYOnS < (Width / 2) - 0.1,
     NewYOnS > (Width / -2) + 0.1,
-    NewXOnS is - Length / 4,
+    NewXOnS is - Length / 2,
     tf_transform_point(Frame, map, [NewXOnS, NewYOnS, 0], [AbsX, AbsY,AbsZ]),
     not(hsr_existing_object_at([map,_,[AbsX, AbsY,AbsZ], Rotation], 0.2, _)),
     Translation = [AbsX, AbsY,AbsZ],
