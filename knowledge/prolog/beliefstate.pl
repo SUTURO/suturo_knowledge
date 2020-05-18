@@ -275,7 +275,9 @@ retract_all_planning(Object) :-
 % all the objects, that one day would be put on same surface as Object.
 objects_on_same_surface_in_future(Surface, OtherObjects) :-
     objects_on_surface(AlreadyPlacedObjects, Surface),
-    all_objects_on_source_surfaces(SourceObjects),
+    all_objects_on_source_surfaces(SourceObjects1),
+    all_objects_in_gripper(SourceObjects2),
+    append(SourceObjects1, SourceObjects2, SourceObjects),
     findall(Obj,
     (
         member(Obj, SourceObjects),
