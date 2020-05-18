@@ -1,7 +1,8 @@
 :- module(spatial_comp,
     [
         hsr_lookup_transform/4,
-        hsr_existing_object_at/3,
+        hsr_existing_object_at/3, % deprecated
+        hsr_existing_object_at/2,
         surface_pose_in_map/2,
         object_supportable_by_surface/2,
         position_supportable_by_surface/2,
@@ -20,16 +21,13 @@
 
 :- rdf_meta
     hsr_lookup_transform(r,r,?,?),
-    hsr_existing_object_at(r,r,?),
-    joint_abs_position(r,?),
-    quaternion_to_euler(r,?),
-    euler_to_quaternion(r,?).
-
+    hsr_existing_object_at(r,r,?).
 
 
 hsr_lookup_transform(SourceFrame, TargetFrame, Translation, Rotation) :-
     tf_lookup_transform(SourceFrame, TargetFrame, pose(Translation,Rotation)).
 
+% deprecated. Use hsr_existing_object_at/2.
 hsr_existing_object_at(Pose, Threshold, Instance) :-
     rdf(Instance, rdf:type, owl:'NamedIndividual', belief_state),
     rdfs_individual_of(Instance, dul:'PhysicalObject'),
@@ -37,6 +35,19 @@ hsr_existing_object_at(Pose, Threshold, Instance) :-
     object_pose(Instance, OldPose),
     transform_close_to(Pose, OldPose, Threshold).
 
+hsr_existing_object_at(Pos, Instance) :-
+    hsr_existing_objects(Objects),
+    member(Instance, Objects),
+    object_dimensions(Instance, Depth, Width, Height),
+    urdf_frame(Instance, InstanceFrame),
+    tf_transform_point(map, InstanceFrame, Pos, [RelX, RelY, RelZ]),
+    (Depth >= Width % ignore the orientation of the object
+        -> Size = Depth
+        ; Size = Width),
+    min_space_between_objects(Threshold),
+    abs(RelX) > (Size / 2) + Threshold,
+    abs(RelY) > (Size / 2) + Threshold,
+    abs(RelZ) > Height / 2.
 
 surface_pose_in_map(SurfaceLink, Pose) :-
     urdf_frame(SurfaceLink, Frame),
@@ -149,5 +160,5 @@ surface_frame(Surface, Frame) :-
     urdf_surface_prefix(Prefix),
     atom_concat(Prefix, Name, Frame).
 
-surface_dimensions(Surface, Width, Depth, Height) :-
-    rdf_urdf_link_collision(Surface, box(Width, Depth, Height), _).
+surface_dimensions(Surface, Depth, Width, Height) :-
+    rdf_urdf_link_collision(Surface, box(Depth, Width, Height), _).

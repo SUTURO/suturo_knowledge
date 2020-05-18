@@ -1,7 +1,6 @@
 :- module(beliefstate,
     [
-      new_perceived_at/4,
-      hsr_existing_object_at/4,
+      new_perceived_at/3,
       belief_object_at_location/3,
       belief_class_of/2,
       hsr_belief_at_update/2,
@@ -34,7 +33,6 @@
 
 :- rdf_meta
     new_perceived_at(r,+,+,r),
-    hsr_existing_object_at(r,+,+,r),
     belief_object_at_location(r,+,+),
     belief_class_of(r,r),
     hsr_belief_at_update(r,r),
@@ -42,11 +40,16 @@
     group_shelf_objects,
     group_mean_pose(r,?,?).
 
-new_perceived_at(ObjType, Transform, Threshold, Instance) :-
-    hsr_existing_object_at(ObjType, Transform, Threshold, Instance),
+new_perceived_at(ObjType, Transform, Instance) :-
+    hsr_existing_object_at(Transform, Instance),
+    % To do:
+    % This part is called when an object in perceived, that
+    % is already in the knowledge base.
+    % Find a way to work with that and handle all the new data
+    % rather than work on the class only.
     belief_class_of(Instance, ObjType), !.
 
-new_perceived_at(ObjType, Transform, _, Instance) :-
+new_perceived_at(ObjType, Transform, Instance) :-
     belief_new_object(ObjType, Instance),
     hsr_belief_at_update(Instance, Transform).
 
@@ -304,6 +307,7 @@ objects_fit_on_surface(Objects, Surface, FittingObjects, NotFittingObjects) :-
     !.
 
 objects_fit_on_surface_(Objects, Surface) :-
+    min_space_between_objects(Threshold),
     findall(WidthPlus,
     (
         member(Object, Objects),
@@ -311,7 +315,7 @@ objects_fit_on_surface_(Objects, Surface) :-
         (   X >= Y
             -> Width = X
             ; Width = Y  ),
-        WidthPlus = Width + 0.05
+        WidthPlus = Width + Threshold
     ),
         ListOfWidths),
     sumlist(ListOfWidths, Sum),

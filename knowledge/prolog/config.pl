@@ -3,6 +3,7 @@
       offsets/1,
       threshold_for_group/1,
       threshold_surface/2,
+      min_space_between_objects/1,
       urdf_surface_prefix/1,
       allowed_class_distance/1,
       min_class_confidence/1, 
@@ -39,6 +40,9 @@ threshold_for_group(Threshold) :-
 threshold_surface(ThresholdAbove, ThresholdBelow) :-
     ThresholdAbove = 0.25,
     ThresholdBelow = -0.05.
+
+min_space_between_objects(Meters) :-
+    Meters = 0.05.
 
 urdf_surface_prefix(Prefix) :-
     Prefix = 'iai_kitchen/'.

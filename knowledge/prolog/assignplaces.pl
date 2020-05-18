@@ -46,11 +46,8 @@ object_goal_pose(Instance, [Translation, Rotation], Context, RefObject) :-
     NewY > (Width / -2) + 0.1,
     NewX is - Length / 2 + 0.03,
     tf_transform_point(Frame, map, [NewX, NewY, 0], [AbsX, AbsY,AbsZ]),
-    % To do! This will crash in some cases:
-    % Objects are put on the same surface by object_goal_surface based on their 
-    % width plus 0.05 meter. If this is less than this 0.2 meter threshold between
-    % the CENTER of two objects, it will reject puting the object on it's supposed surface.
-    not(hsr_existing_object_at([map,_,[AbsX, AbsY, AbsZ + 0.1], Rotation], 0.2, _)),
+    not(hsr_existing_object_at([AbsX, AbsY, AbsZ], _)),
+    % not(hsr_existing_object_at([map,_,[AbsX, AbsY, AbsZ + 0.1], Rotation], 0.2, _)),
     Translation = [AbsX, AbsY, AbsZ],
     !.
 
@@ -76,11 +73,6 @@ object_goal_pose(Instance, [Translation, Rotation], Context, Instance) :-
 object_goal_pose(_, _, "You haven't defined any target surfaces", _) :-
     all_target_surfaces([]),
     writeln("You haven't defined any target surfaces").
-
-% Returns True if the object can be placed in that position without colliding
-% with another object.
-enough_free_space([X,Y,Z], Rotation, Object) :-
-    
 
 object_goal_pose_offset(Instance, [[X,Y,Z], Rotation],Context):-
     object_goal_pose(Instance, [[X,Y,OZ], Rotation],Context),

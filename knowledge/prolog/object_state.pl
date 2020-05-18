@@ -2,12 +2,11 @@
 :- module(object_state,
     [
       create_object/2,
-      object_at/4,
       clear/0,
       object_at_table/1,
       object_of_type/2,
-      create_object_at/6,
-      create_object_at/10,
+      create_object_at/5,
+      create_object_at/9,
       hsr_existing_objects/1,
       hsr_forget_object/1,
 
@@ -44,11 +43,11 @@ hsr_existing_objects(Objects) :-
 hsr_forget_object(Object) :-
     rdf_retractall(Object,_,_).
 
-
+% deprecated. Use hsr_existing_object_at/2.
 object_at(ObjectType, Transform, Threshold, Instance) :-
 	hsr_existing_objects(Objectlist),
 	member(Instance, Objectlist),
-	belief_existing_object_at(ObjectType, Transform, Threshold, Instance).
+	belief_existing_object_at(ObjectType, Transform, Threshold, Instance). % non-existant anymore.
 
 object_at_table(Instance) :-
 	all_objects_on_tables(Instances),once(member(Instance,Instances)).
@@ -62,17 +61,17 @@ create_object(ObjectType, Instance) :-
         rdf_assert(Instance, hsr_objects:'supportable', true).
 
 % deprecated. buggy, too.
-create_object_at(ObjectType, Transform, Threshold, Instance, Dimensions, Color) :-
-    create_object_at(ObjectType, _, Transform, Threshold, Instance, Dimensions, '', _, Color, _).
+create_object_at(ObjectType, Transform, Instance, Dimensions, Color) :-
+    create_object_at(ObjectType, _, Transform, Instance, Dimensions, '', _, Color, _).
 
-create_object_at(PerceivedObjectType, PercTypeConfidence, Transform, Threshold, Instance, [Width, Depth, Height], Shape, PercShapeConfidence, Color, PercColorCondidence) :-
+create_object_at(PerceivedObjectType, PercTypeConfidence, Transform, Instance, [Width, Depth, Height], Shape, PercShapeConfidence, Color, PercColorCondidence) :-
     validate_confidence(class, PercTypeConfidence, TypeConfidence),
     validate_confidence(shape, PercShapeConfidence, ShapeConfidence),
     validate_confidence(color, PercColorCondidence, ColorCondidence),
     object_size_ok([Width, Depth, Height]),
     object_type_handling(PerceivedObjectType, TypeConfidence, ObjectType),
     owl_subclass_of(ObjectType, dul:'PhysicalObject'),
-    new_perceived_at(ObjectType, Transform, Threshold, Instance),
+    new_perceived_at(ObjectType, Transform, Instance),
     atom_number(TypeConfidenceAtom, TypeConfidence),
     rdf_assert(Instance, hsr_objects:'ConfidenceClassValue', TypeConfidenceAtom),
     object_assert_dimensions(Instance, Width, Depth, Height),
