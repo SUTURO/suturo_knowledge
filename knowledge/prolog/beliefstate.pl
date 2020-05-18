@@ -177,6 +177,7 @@ belief_class_of(Obj, NewObjType) :-
 %%%%%%%%% Defining the distance of their Relationship %%%%%%%%%%%%%%%%%%%%%%%%%%
 
 most_related_object(Source, Target) :-
+    not(kb_type_of(Source, hsr_objects:'Other')),
     most_related_class(Source, Target, Distance),
     allowed_class_distance(MaxDistance),
     MaxDistance >= Distance,
@@ -272,8 +273,8 @@ retract_all_planning(Object) :-
     rdf_retractall(Object, refObject, _),
     rdf_assert(Object, refObject, RefObject).
 
-% Object is the reference object. OtherObjects returns a list of 
-% all the objects, that one day would be put on same surface as Object.
+% OtherObjects returns a list of all the objects, that one day 
+% would be put on Surface.
 objects_on_same_surface_in_future(Surface, OtherObjects) :-
     objects_on_surface(AlreadyPlacedObjects, Surface),
     all_objects_on_source_surfaces(SourceObjects1),
