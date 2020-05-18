@@ -41,13 +41,15 @@
     group_mean_pose(r,?,?).
 
 new_perceived_at(ObjType, Transform, Instance) :-
-    hsr_existing_object_at(Transform, Instance),
+    hsr_existing_object_at(Transform, Instance).
     % To do:
     % This part is called when an object in perceived, that
     % is already in the knowledge base.
     % Find a way to work with that and handle all the new data
     % rather than work on the class only.
-    belief_class_of(Instance, ObjType), !.
+    %
+    % belief_class_of needs to be fixed before it can be used.
+    % belief_class_of(Instance, ObjType), !.
 
 new_perceived_at(ObjType, Transform, Instance) :-
     belief_new_object(ObjType, Instance),
