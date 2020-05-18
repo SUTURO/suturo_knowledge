@@ -5,6 +5,7 @@
     supporting_surface/1,
     assert_object_on/2,
     surface_type_of/2,
+    is_legal_obj_position/1,
     %% FIND SURFACES
     all_surfaces/1, %replaces all_srdl_objects contains ground
     is_surface/1,
@@ -13,7 +14,6 @@
     is_shelf/1,
     all_source_surfaces/1,
     all_target_surfaces/1,
-    get_surface_id_by_name/2,
     ground_surface/1,
     shelf_surfaces/1, 
     big_shelf_surfaces/1, % will soon be deprecated
@@ -37,32 +37,24 @@
     all_objects_on_source_surfaces/1,
     all_objects_on_target_surfaces/1,
     all_objects_on_ground/1,
-    all_objects_in_whole_shelf/1, % will soon be deprecated
-    all_objects_on_tables/1,
+    all_objects_in_whole_shelf_/1, % will soon be deprecated
+    all_objects_on_tables_/1,
     all_objects_in_buckets/1,
     all_objects_on_table/1, % DEPRECATED! Use only for backward compatibility reasons
     %% CREATE OBJECT
     place_object/1,
     %% ROLES
-    make_ground_source/0,
-    load_surfaces_from_param/1,
-    make_all_shelves_target/0,
-    make_all_tables_source/0,
-    make_all_buckets_target/0,
     make_all_surface_type_role/2,
     make_surfaces_source/1,
     make_surfaces_target/1,
     make_role/2,
-    get_surface_role/2,
-    %% FUNCTIONS
-    forget_objects_on_surface/1
+    get_surface_role/2
     ]).
 
 :- rdf_db:rdf_register_ns(urdf, 'http://knowrob.org/kb/urdf.owl#', [keep(true)]).
 :- owl_parser:owl_parse('package://urdfprolog/owl/urdf.owl').
 
 :- rdf_meta % TODO FIX ME
-    load_surfaces_from_param(r),
     get_surface_id_by_name(r,?),
     supporting_surface(?),
     surface_big_enough(?),
@@ -79,17 +71,6 @@
     select_surface(r,?),
     object_goal_pose(r,?,?,?).
 
-
-/**
-* is called as inital_goal in the launch file
-*/
-load_surfaces_from_param(Param):-
-    (once(rdfs_individual_of(_, urdf:'Robot'))
-    -> write("Surfaces are allready loaded. Restart the knowledgebase to load a diffrent URDF")
-    ;  kb_create(urdf:'Robot', RobotNew),rdf_urdf_load_param(RobotNew, Param),
-        forall(supporting_surface(SurfaceLink),
-        assert_surface_types(SurfaceLink))
-    ).
 
 
 assert_surface_types(SurfaceLink):-
@@ -113,23 +94,6 @@ assert_surface_types(SurfaceLink):-
 supporting_surface(SurfaceLink):-
     rdf_urdf_link_collision(SurfaceLink,ShapeTerm,_),
     surface_big_enough(ShapeTerm).
-
-%% takes names like table_1_center or shelf_floor_4_piece or ground.
-%% Returns false if name is not a registered surface.
-get_surface_id_by_name(Name, SurfaceId):-
-    (rdf_urdf_name(SurfaceId, Name), all_surfaces(Surfaces), member(SurfaceId, Surfaces)
-        -> true
-        ;  (Name = ground
-            -> SurfaceId = ground
-            ; false
-        )
-    ).
-
-forget_objects_on_surface(SurfaceLink) :-
-    objects_on_surface(Objs,SurfaceLink),
-    member(Obj,Objs),
-    hsr_forget_object(Obj).
-
 
 surface_big_enough(box(X, Y, _)):- %TODO Support other shapes, has not been tested yet.
     square_big_enough(X,Y).
@@ -281,7 +245,7 @@ compareDistances(Order, Thing1, Thing2) :-
 
 
 /**
-*****************************************CREATE OBJECTS******************************************************
+*****************************************FIND OBJECTS******************************************************
 */
 
 objects_on_surface(ObjectInstances, SurfaceLink) :-
@@ -321,7 +285,7 @@ all_objects_on_ground(Instances) :-
         ), Instances).
 
 
-all_objects_in_whole_shelf(Instances) :-
+all_objects_in_whole_shelf_(Instances) :-
     findall(Instance, (
         shelf_surfaces(ShelveLinks),
         member(Shelf, ShelveLinks),
@@ -330,7 +294,7 @@ all_objects_in_whole_shelf(Instances) :-
         ), Instances).
 
 
-all_objects_on_tables(Instances) :-
+all_objects_on_tables_(Instances) :-
     findall(Instance, (
         table_surfaces(TableLinks),
         member(Table, TableLinks),
@@ -348,7 +312,7 @@ all_objects_in_buckets(Instances) :-
 
  % DEPRECATED! Use only for backward compatibility reasons
 all_objects_on_table(Instances) :- 
-    all_objects_on_tables(Instances).
+    all_objects_on_tables_(Instances).
 
 
 all_objects_in_gripper(Instances):-
@@ -357,60 +321,24 @@ all_objects_in_gripper(Instances):-
         member(Instance, Objs)
         ), Instances).
 
-
-
 is_legal_obj_position([X,Y,Z]) :-
     position_supportable_by_surface([X,Y,Z], _).
 
-
-
-/**
-*****************************************FIND OBJs******************************************************
-*/
-
-
-%%
-% finds the surface an object was seen on. When there is no surface supporting the object and
-% the center point of the object < 0.5 the object is placed on the ground. Otherwise the query resolves to false.
-place_object(Object):-
-    object_supportable_by_surface(Object, Surface),
-    assert_object_on(Object,Surface).
-
-
-%% Joint supporting the ShapeTerm, the ShapeTerm, Position of the object, return Distance vertical distance
-position_above_surface(Joint, ShapeTerm, [X,Y,Z], Distance):-
-    joint_abs_position(Joint,[JPosX,JPosY,JPosZ]),
-    joint_abs_rotation(Joint,[Roll,Pitch,Yaw]),
-    ( point_on_surface([JPosX, JPosY, _], [Roll,Pitch,Yaw], ShapeTerm, [X,Y,_])
-    -> Distance is Z - JPosZ, true
-    ; fail
-    ).
 
 /**
 ***************************************************ROLES*********************************************
 */
 
-make_ground_source:-
-    make_all_surface_type_role(ground, source).
-
-
-make_all_shelves_target:-
-    make_all_surface_type_role(shelf, target).
-
-make_all_tables_source:-
-    make_all_surface_type_role(table, source).
-
-make_all_buckets_target:-
-    make_all_surface_type_role(bucket, target).
-
+% Gives a list of surfaces the role source
 make_surfaces_source(Surfaces):-
     forall(member(Surface, Surfaces), make_role(Surface, source)).
 
+% Gives a list of surfaces the role target
 make_surfaces_target(Surfaces):-
     forall(member(Surface, Surfaces), make_role(Surface, target)).
 
 
-% Gives all surfaces with given name (ground, table or shelf) the Role (target or source)
+% Gives all surfaces with given name (ground, table, basket or shelf) the Role (target or source)
 make_all_surface_type_role(SurfaceType, Role):-
     SurfaceType = ground,
     make_role(SurfaceType, Role).

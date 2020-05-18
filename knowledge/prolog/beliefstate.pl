@@ -11,8 +11,9 @@
       group_objects_at/1,
       group_objects/1,
       group_mean_pose/3,
+      % Placing Objects
       assert_object_supposed_surface/1,
-      object_goal_surface/4,
+      object_goal_surface_/4,
         %DEBUG
         assert_object_supposed_surface/1,
         next_empty_surface/1,
@@ -370,15 +371,15 @@ assert_object_new_empty_surface(Object) :-
     context_speech_new_class(Context),
     assert_all_planning(Object, Surface, 0, Context, Object).
 
-object_goal_surface(Object, Surface, Context, RefObject) :-
+object_goal_surface_(Object, Surface, Context, RefObject) :-
     rdf_has(Object, supposedSurface, Surface),
     rdf_has(Object, context, Context),
     rdf_has(Object, refObject, RefObject),
     !.
 
-object_goal_surface(Object, Surface, Context, RefObject) :-
+object_goal_surface_(Object, Surface, Context, RefObject) :-
     assert_object_supposed_surface(Object),
-    object_goal_surface(Object, Surface, Context, RefObject),
+    object_goal_surface_(Object, Surface, Context, RefObject),
     !.
     
 
