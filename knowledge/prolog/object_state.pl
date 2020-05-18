@@ -44,7 +44,6 @@ hsr_existing_objects(Objects) :-
 hsr_forget_object(Object) :-
     rdf_retractall(Object,_,_).
 
-% deprecated. Use hsr_existing_object_at/2.
 forget_objects_on_surface_(SurfaceLink) :-
     objects_on_surface(Objs,SurfaceLink),
     member(Obj,Objs),
@@ -57,7 +56,7 @@ place_object(Object):-
     object_supportable_by_surface(Object, Surface),
     assert_object_on(Object,Surface).
 
->>>>>>> refactor_modules
+% deprecated. Use hsr_existing_object_at/2.
 object_at(ObjectType, Transform, Threshold, Instance) :-
 	hsr_existing_objects(Objectlist),
 	member(Instance, Objectlist),
