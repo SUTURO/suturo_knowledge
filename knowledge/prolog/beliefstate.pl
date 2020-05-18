@@ -40,7 +40,7 @@
     group_shelf_objects,
     group_mean_pose(r,?,?).
 
-new_perceived_at(ObjType, Transform, Instance) :-
+new_perceived_at(_, Transform, Instance) :- % The underscore being ObjType.
     hsr_existing_object_at(Transform, Instance).
     % To do:
     % This part is called when an object in perceived, that
@@ -299,15 +299,16 @@ compareLogicalDistances(Order, Object1, Object2) :-
 % Takes a list of objects and divides it into the first n objects that fit on
 % the given surface and the rest.
 objects_fit_on_surface(Objects, Surface, FittingObjects, NotFittingObjects) :-
-    last(Objects,LastObject), 
-    delete(Objects,LastObject, ShorterList),
-    objects_fit_on_surface(ShorterList, Surface, FittingObjects, NotFittingObjectsButLast),
-    append(NotFittingObjectsButLast, [LastObject], NotFittingObjects).
-
-objects_fit_on_surface(Objects, Surface, FittingObjects, NotFittingObjects) :-
     objects_fit_on_surface_(Objects, Surface),
     FittingObjects = Objects,
     NotFittingObjects = [],
+    !.
+
+objects_fit_on_surface(Objects, Surface, FittingObjects, NotFittingObjects) :-
+    last(Objects,LastObject), 
+    delete(Objects,LastObject, ShorterList),
+    objects_fit_on_surface(ShorterList, Surface, FittingObjects, NotFittingObjectsButLast),
+    append(NotFittingObjectsButLast, [LastObject], NotFittingObjects),
     !.
 
 objects_fit_on_surface_(Objects, Surface) :-
