@@ -154,6 +154,7 @@ object_shape_handling(Instance, _, Confidence) :-
     rdf_assert(Instance, 'http://www.ease-crc.org/ont/EASE-OBJ.owl#Shape', '').
 
 set_object_colour(Instance, _, Confidence) :-
+    not(Confidence = 0), % for cases in which Perception doesn't give confidences.
     min_color_confidence(MinConf),
     Confidence < MinConf,
     rdf_assert(Instance, hsr_objects:'colour', ''),
