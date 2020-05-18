@@ -35,7 +35,8 @@ hsr_existing_object_at(Pose, Threshold, Instance) :-
     object_pose(Instance, OldPose),
     transform_close_to(Pose, OldPose, Threshold).
 
-hsr_existing_object_at(Pos, Instance) :-
+hsr_existing_object_at([X,Y,Z], Instance) :-
+    Pos = [X,Y,Z],
     hsr_existing_objects(Objects),
     member(Instance, Objects),
     object_dimensions(Instance, Depth, Width, Height),
@@ -48,6 +49,9 @@ hsr_existing_object_at(Pos, Instance) :-
     abs(RelX) > (Size / 2) + Threshold,
     abs(RelY) > (Size / 2) + Threshold,
     abs(RelZ) > Height / 2.
+
+hsr_existing_object_at([map,_,Pos, _], Instance) :-
+    hsr_existing_object_at(Pos, Instance).
 
 surface_pose_in_map(SurfaceLink, Pose) :-
     urdf_frame(SurfaceLink, Frame),

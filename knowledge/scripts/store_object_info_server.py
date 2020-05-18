@@ -74,7 +74,7 @@ class StoreObjectInfoServer(object):
                                 obj_class + "'," + confidence_class + ", " +
                                 "['" + source_frame +
                                 "', _, [" + ", ".join([x, y, z]) + "]," +
-                                "[" + ", ".join([qx, qy, qz, qw]) + "]]," + "ObjectInstance," +
+                                "[" + ", ".join([qx, qy, qz, qw]) + "]], _," +
                                 "[" + ", ".join([depth, width, height]) + "], " + shape + ", _, " +
                                 "[" + ", ".join([r, g, b, a]) + "], " + confidence_color + ").")
             rospy.loginfo('Send query: \n' + query_string)
