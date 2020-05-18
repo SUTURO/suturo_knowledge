@@ -336,7 +336,7 @@ next_empty_surface_(Surfaces, Surface) :-
     not(rdf_has(_, supposedSurface, Surface)).
 
 % In case there is a bucket, put everything in it
-% To Do: Can't handle multiple buckets right now.
+% To Do: Can't handle multiple surfaces including at least one bucket right now.
 assert_object_supposed_surface(Object) :-
     all_target_surfaces(Surfaces),
     member(Surface, Surfaces),
@@ -355,6 +355,7 @@ assert_object_supposed_surface(Object) :-
         -> assert_object_new_empty_surface(Object)
         ).
 
+% First object to be placed in case of empty target surfaces
 assert_object_supposed_surface(Object) :- % to do: what happens when there already are supposedSurfaces, but the according objects are not placed yet?
     all_objects_on_target_surfaces([]),
     assert_object_new_empty_surface(Object).
@@ -363,7 +364,6 @@ assert_object_new_empty_surface(Object) :-
     next_empty_surface(Surface),
     context_speech_new_class(Context),
     assert_all_planning(Object, Surface, 0, Context, Object).
-
 
 object_goal_surface(Object, Surface, Context, RefObject) :-
     rdf_has(Object, supposedSurface, Surface),
