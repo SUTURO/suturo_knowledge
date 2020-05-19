@@ -46,7 +46,7 @@ object_goal_pose(Instance, [Translation, Rotation], Context, RefObject) :-
     NewY > (Width / -2) + 0.1,
     NewX is - Length / 2 + 0.03,
     tf_transform_point(Frame, map, [NewX, NewY, 0], [AbsX, AbsY,AbsZ]),
-    not(hsr_existing_object_at([AbsX, AbsY, 0], _)),
+    not(hsr_existing_object_at([AbsX, AbsY, 0], 0.15, _)),
     Translation = [AbsX, AbsY, AbsZ],
     !.
 

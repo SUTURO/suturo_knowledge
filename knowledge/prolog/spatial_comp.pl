@@ -30,6 +30,15 @@ hsr_existing_object_at(Pose, Threshold, Instance) :-
     transform_close_to(Pose, OldPose, Threshold).
 
 hsr_existing_object_at([X,Y,Z], Instance) :-
+    hsr_existing_object_at_thr([X,Y,Z], 0, Instance).
+
+hsr_existing_object_at([map,_,Pos, _], Instance) :-
+    hsr_existing_object_at(Pos, Instance).
+
+hsr_existing_object_at_thr([X,Y,Z], Threshold) :-
+    hsr_existing_object_at_thr([X,Y,Z], Threshold, _).
+
+hsr_existing_object_at_thr([X,Y,Z], Threshold1, Instance) :-
     Pos = [X,Y,Z],
     hsr_existing_objects(Objects),
     member(Instance, Objects),
@@ -39,13 +48,11 @@ hsr_existing_object_at([X,Y,Z], Instance) :-
     (Depth >= Width % ignore the orientation of the object
         -> Size = Depth
         ; Size = Width),
-    min_space_between_objects(Threshold),
+    min_space_between_objects(Threshold2),
+    Threshold = Threshold1 + Threshold2,
     abs(RelX) < (Size / 2) + Threshold,
     abs(RelY) < (Size / 2) + Threshold,
     abs(RelZ) < Height. % assuming, the object we want to place has about the same height as the object already placed.
-
-hsr_existing_object_at([map,_,Pos, _], Instance) :-
-    hsr_existing_object_at(Pos, Instance).
 
 surface_pose_in_map(SurfaceLink, Pose) :-
     urdf_frame(SurfaceLink, Frame),
