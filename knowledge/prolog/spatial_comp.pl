@@ -3,6 +3,8 @@
         hsr_lookup_transform/4,
         hsr_existing_object_at/3, % deprecated
         hsr_existing_object_at/2,
+        hsr_existing_object_at_thr/2,
+        hsr_existing_object_at_thr/3,
         surface_pose_in_map/2,
         object_supportable_by_surface/2,
         position_supportable_by_surface/2,
