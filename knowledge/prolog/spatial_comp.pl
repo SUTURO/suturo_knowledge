@@ -40,9 +40,9 @@ hsr_existing_object_at([X,Y,Z], Instance) :-
         -> Size = Depth
         ; Size = Width),
     min_space_between_objects(Threshold),
-    abs(RelX) > (Size / 2) + Threshold,
-    abs(RelY) > (Size / 2) + Threshold,
-    abs(RelZ) > Height / 2.
+    abs(RelX) < (Size / 2) + Threshold,
+    abs(RelY) < (Size / 2) + Threshold,
+    abs(RelZ) < Height / 2.
 
 hsr_existing_object_at([map,_,Pos, _], Instance) :-
     hsr_existing_object_at(Pos, Instance).
