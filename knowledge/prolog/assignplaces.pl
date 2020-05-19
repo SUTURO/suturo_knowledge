@@ -75,6 +75,7 @@ object_goal_pose(_, _, "You haven't defined any target surfaces", _) :-
     writeln("You haven't defined any target surfaces").
 
 object_goal_pose_offset_(Instance, [[X,Y,Z], Rotation],Context):-
+    place_objects,
     object_goal_pose(Instance, [[X,Y,OZ], Rotation],Context),
     object_dimensions(Instance,_,_,H),
     Z is OZ + H/2 + 0.07.
