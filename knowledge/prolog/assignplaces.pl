@@ -37,7 +37,7 @@ object_goal_pose(Instance, [Translation, Rotation], Context, RefObject) :-
     rdf_has(RefObject, hsr_objects:'inGroup', Group),
     group_mean_pose(Group, [GroupX,GroupY,GroupZ], _),
     surface_front_edge_center_frame(Surface, Frame),
-    tf_transform_point(map, Frame, [GroupX,GroupY,GroupZ], [_, GroupYOnS,GroupZOnS]),
+    tf_transform_point(map, Frame, [GroupX,GroupY,GroupZ], [_, GroupYOnS, _]),
     offsets(Offset),
     member(YOffset, Offset),
     rdf_urdf_link_collision(Surface, box(Length, Width, _), _),
@@ -47,8 +47,7 @@ object_goal_pose(Instance, [Translation, Rotation], Context, RefObject) :-
     NewX is - Length / 2 + 0.03,
     writeln(GroupZOnS),
     tf_transform_point(Frame, map, [NewX, NewY, GroupZOnS], [AbsX, AbsY,AbsZ]),
-    not(hsr_existing_object_at([AbsX, AbsY, AbsZ], _)),
-    % not(hsr_existing_object_at([map,_,[AbsX, AbsY, AbsZ + 0.1], Rotation], 0.2, _)),
+    not(hsr_existing_object_at([AbsX, AbsY, 0], _)),
     Translation = [AbsX, AbsY, AbsZ],
     !.
 

@@ -42,7 +42,7 @@ hsr_existing_object_at([X,Y,Z], Instance) :-
     min_space_between_objects(Threshold),
     abs(RelX) < (Size / 2) + Threshold,
     abs(RelY) < (Size / 2) + Threshold,
-    abs(RelZ) < Height / 2.
+    abs(RelZ) < Height. % assuming, the object we want to place has about the same height as the object already placed.
 
 hsr_existing_object_at([map,_,Pos, _], Instance) :-
     hsr_existing_object_at(Pos, Instance).
