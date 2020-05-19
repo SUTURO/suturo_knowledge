@@ -109,7 +109,7 @@ square_big_enough(X,Y):- %TODO Support other shapes
     ).
 
 % needs to be put in beliefstate
-assert_object_on(ObjectInstance, SurfaceLink) :- % has not been tested yet.
+assert_object_on(ObjectInstance, SurfaceLink) :-
     all_surfaces(SurfaceLinks), % this makes sure, we actually have a surface here
     member(SurfaceLink,SurfaceLinks),
     kb_retract(ObjectInstance, hsr_objects:'supportedBy', _),
