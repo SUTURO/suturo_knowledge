@@ -314,7 +314,8 @@ objects_fit_on_surface(Objects, Surface, FittingObjects, NotFittingObjects) :-
     !.
 
 objects_fit_on_surface_(Objects, Surface) :-
-    min_space_between_objects(Threshold),
+    min_space_between_objects(Threshold1),
+    Threshold = Threshold1 + 0.15,
     findall(WidthPlus,
     (
         member(Object, Objects),
@@ -379,6 +380,7 @@ object_goal_surface_(Object, Surface, Context, RefObject) :-
     !.
 
 object_goal_surface_(Object, Surface, Context, RefObject) :-
+    place_objects,
     assert_object_supposed_surface(Object),
     object_goal_surface_(Object, Surface, Context, RefObject),
     !.
