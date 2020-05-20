@@ -40,7 +40,7 @@ hsr_existing_object_at([map,_,Pos, _], Instance) :-
 hsr_existing_object_at_thr([X,Y,Z], Threshold) :-
     hsr_existing_object_at_thr([X,Y,Z], Threshold, _).
 
-hsr_existing_object_at_thr([X,Y,Z], Threshold1, Instance) :-
+hsr_existing_object_at_thr([X,Y,Z], Threshold1, Instance) :- % to do: we need a variation where the input is the Size of another object that should be placed. Right now we are only computing edge of one obj to center of another.
     Pos = [X,Y,Z],
     hsr_existing_objects(Objects),
     member(Instance, Objects),

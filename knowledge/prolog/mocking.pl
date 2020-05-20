@@ -23,7 +23,6 @@ create_object_on_surface(Surface) :-
     create_object_at('http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Banana',
         0.8, 
         Transform,
-        0.05, 
         _, 
         [0.05, 0.075, 0.2], 
         box,
