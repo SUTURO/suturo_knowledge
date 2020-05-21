@@ -24,7 +24,8 @@
         compareLogicalDistances/3,
         most_related_object/2,
         most_related_class/3,
-        distance_to_object/3
+        distance_to_object/3,
+        retract_all_planning/1
     ]).
 
 :-rdf_db:rdf_register_ns(dul, 'http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#', [keep(true)]).
@@ -297,6 +298,14 @@ compareLogicalDistances(Order, Object1, Object2) :-
     atom_number(Dist1, Dist1N),
     atom_number(Dist2, Dist2N),
     compare(Order, Dist1N, Dist2N).
+
+compareLogicalDistances(Order, Object1, Object2) :- % Objects without a stored distance are Objects that are already placed. They will always come first.
+    not(rdf_has(Object1, distance, _)),
+    compare(Order, 0, 1).
+
+compareLogicalDistances(Order, Object1, Object2) :-
+    not(rdf_has(Object2, distance, _)),
+    compare(Order, 1, 0).
 
 % Takes a list of objects and divides it into the first n objects that fit on
 % the given surface and the rest.
