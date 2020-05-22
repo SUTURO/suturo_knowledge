@@ -40,14 +40,16 @@ object_goal_pose(Instance, [Translation, Rotation], Context, RefObject) :-
     tf_transform_point(map, Frame, [GroupX,GroupY,GroupZ], [_, GroupYOnS, _]),
     offsets(Offset),
     member(YOffset, Offset),
-    rdf_urdf_link_collision(Surface, box(Depth, Width, _), _),
+    rdf_urdf_link_collision(Surface, box(Depth, Width, _), _), % get surface dimensions
     NewY is (GroupYOnS + YOffset),
     NewY < (Width / 2) - 0.1,
     NewY > (Width / -2) + 0.1,
     NewX is - Depth / 2 + 0.03,
     tf_transform_point(Frame, map, [NewX, NewY, 0], [AbsX, AbsY,AbsZ]),
-    not(hsr_existing_object_at_thr([AbsX, AbsY, AbsZ], 0.15)),
-    Translation = [AbsX, AbsY, AbsZ],
+    object_dimensions(Instance,_,_,ObjHeight),
+    AbsZOffset is AbsZ + ObjHeight/2 + 0.07,
+    not(hsr_existing_object_at_thr([AbsX, AbsY, AbsZOffset], 0.15)),
+    Translation = [AbsX, AbsY, AbsZOffset],
     !.
 
 %% When a new group is opened the RefObject is equal to the Instance
@@ -59,22 +61,23 @@ object_goal_pose(Instance, [Translation, Rotation], Context, Instance) :-
     tf_transform_point(map, Frame, [SX,SY,SZ], [ _, YOnS,_]),  
     offsets(Offset),
     member(YOffset, Offset),
-    rdf_urdf_link_collision(Surface, box(Depth, Width, _), _),
+    rdf_urdf_link_collision(Surface, box(Depth, Width, _), _), % get surface dimensions
     NewYOnS is YOnS + YOffset,
     NewYOnS < (Width / 2) - 0.1,
     NewYOnS > (Width / -2) + 0.1,
     NewXOnS is - Depth / 2 + 0.03,
     tf_transform_point(Frame, map, [NewXOnS, NewYOnS, 0], [AbsX, AbsY,AbsZ]),
-    not(hsr_existing_object_at_thr([AbsX, AbsY,AbsZ], 0.15)),
-    Translation = [AbsX, AbsY,AbsZ],
+    object_dimensions(Instance,_,_,ObjHeight),
+    AbsZOffset is AbsZ + ObjHeight/2 + 0.07,
+    not(hsr_existing_object_at_thr([AbsX, AbsY,AbsZOffset], 0.15)),
+    Translation = [AbsX, AbsY,AbsZOffset],
     !.
 
 object_goal_pose(_, _, "You haven't defined any target surfaces", _) :-
     all_target_surfaces([]),
     writeln("You haven't defined any target surfaces").
 
+% deprecated. Use object_goal_pose instead.
 object_goal_pose_offset_(Instance, [[X,Y,Z], Rotation],Context):-
     place_objects,
-    object_goal_pose(Instance, [[X,Y,OZ], Rotation],Context),
-    object_dimensions(Instance,_,_,H),
-    Z is OZ + H/2 + 0.07.
+    object_goal_pose(Instance, [[X,Y,Z], Rotation],Context).

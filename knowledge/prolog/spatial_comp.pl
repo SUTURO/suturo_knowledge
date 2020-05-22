@@ -40,7 +40,12 @@ hsr_existing_object_at([map,_,Pos, _], Instance) :-
 hsr_existing_object_at_thr([X,Y,Z], Threshold) :-
     hsr_existing_object_at_thr([X,Y,Z], Threshold, _).
 
-hsr_existing_object_at_thr([X,Y,Z], Threshold1, Instance) :- % to do: we need a variation where the input is the Size of another object that should be placed. Right now we are only computing edge of one obj to center of another.
+% to do:
+% 1. we need a variation where the input is the Size of another object that should be placed.
+% Right now we are only computing edge of one obj to center of another.
+% 2. This is based on the Object dimensions. It should be using the Group dimensions
+% just like object_goal_pose in assignplaces.pl
+hsr_existing_object_at_thr([X,Y,Z], Threshold1, Instance) :- 
     Pos = [X,Y,Z],
     hsr_existing_objects(Objects),
     member(Instance, Objects),

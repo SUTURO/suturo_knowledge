@@ -103,9 +103,9 @@ group_objects_at([X,Y,Z]) :-
 
 group_objects(Objs) :-
     member(Obj, Objs),
-    current_object_pose(Obj, Transform),
+    current_object_pose(Obj, [map, _, Pos, _]),
     threshold_for_group(Threshold),
-    hsr_existing_object_at(Transform, Threshold, NearbyObj),
+    hsr_existing_object_at_thr(Pos, Threshold, NearbyObj),
     rdf_has(Obj, hsr_objects:'inGroup', Group1),
     rdf_has(NearbyObj, hsr_objects:'inGroup', Group2),
     not(rdf_equal(Obj, NearbyObj)),
@@ -385,7 +385,8 @@ assert_object_supposed_surface(Object) :- % to do: what happens when there alrea
 assert_object_new_empty_surface(Object) :-
     next_empty_surface(Surface),
     context_speech_new_class(Context),
-    assert_all_planning(Object, Surface, 0, Context, Object).
+    assert_all_planning(Object, Surface, 0, Context, Object),
+    !.
 
 object_goal_surface_(Object, Surface, Context, RefObject) :-
     rdf_has(Object, supposedSurface, Surface),
