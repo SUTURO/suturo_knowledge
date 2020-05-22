@@ -21,7 +21,7 @@
 - git:
     local-name: ros-mongodb_log
     uri: https://github.com/code-iai/ros-mongodb_log.git
-    version: master
+    version: onlyPythonSupport
 - git:
     local-name: rosowl
     uri: https://github.com/knowrob/rosowl.git
