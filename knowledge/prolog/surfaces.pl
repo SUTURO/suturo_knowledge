@@ -241,7 +241,10 @@ pose_of_surfaces(Surfaces, Positions) :-
 compareDistances(Order, Thing1, Thing2) :-
     distance_to_robot(Thing1, Dist1),
     distance_to_robot(Thing2, Dist2),
-    compare(Order, Dist1, Dist2).
+    (Dist1 = Dist2 % prevent predsort from deleting duplicate distances
+        -> compare(Order, 0, Dist2)
+        ; compare(Order, Dist1, Dist2))
+    .
 
 
 /**

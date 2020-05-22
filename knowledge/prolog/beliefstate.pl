@@ -297,15 +297,20 @@ compareLogicalDistances(Order, Object1, Object2) :-
     rdf_has(Object2, distance, Dist2),
     atom_number(Dist1, Dist1N),
     atom_number(Dist2, Dist2N),
-    compare(Order, Dist1N, Dist2N).
+    (Dist1N = Dist2N % prevent returning "=" to prevent predsort from deleting duplicate distances.
+        -> compare(Order, 0, Dist2N)
+        ; compare(Order, Dist1N, Dist2N))
+    .
 
-compareLogicalDistances(Order, Object1, Object2) :- % Objects without a stored distance are Objects that are already placed. They will always come first.
+compareLogicalDistances(Order, Object1, _) :- % Objects without a stored distance are Objects that are already placed. They will always come first.
     not(rdf_has(Object1, distance, _)),
-    compare(Order, 0, 1).
+    compare(Order, 0, 1),
+    !.
 
-compareLogicalDistances(Order, Object1, Object2) :-
+compareLogicalDistances(Order, _, Object2) :-
     not(rdf_has(Object2, distance, _)),
-    compare(Order, 1, 0).
+    compare(Order, 1, 0),
+    !.
 
 % Takes a list of objects and divides it into the first n objects that fit on
 % the given surface and the rest.
