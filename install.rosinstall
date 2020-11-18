@@ -2,10 +2,12 @@
     local-name: dul
     uri: https://github.com/ease-crc/dul.git
     version: master
+# loaded in some ontologies
 - git:
     local-name: ease_ontology
     uri: https://github.com/knowrob/ease_ontology.git
     version: master
+# loaded in some ontologies
 - git:
     local-name: genowl
     uri: https://github.com/knowrob/genowl.git
@@ -13,16 +15,21 @@
 - git:
     local-name: iai_common_msgs
     uri: https://github.com/code-iai/iai_common_msgs.git
-    version: 673045b2364e54b569438794b0240486e4afae2b
-- git:
-    local-name: knowrob
-    uri: https://github.com/JeremiasThun/knowrob.git
     version: master
-- git:
-    local-name: ros-mongodb_log
-    uri: https://github.com/code-iai/ros-mongodb_log.git
-    version: onlyPythonSupport
+# required for knowrob. See: https://github.com/knowrob/knowrob/blob/master/rosinstall/knowrob-base.rosinstall
 - git:
     local-name: rosowl
     uri: https://github.com/knowrob/rosowl.git
+    version: master
+# loaded in some ontologies
+
+
+- git:
+    local-name: knowrob
+    uri: https://github.com/Schnippa/knowrob.git
+    version: master
+
+- git: 
+    local-name: rosprolog
+    uri: https://github.com/knowrob/rosprolog.git
     version: master
