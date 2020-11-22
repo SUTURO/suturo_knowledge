@@ -1,11 +1,6 @@
-:- register_ros_package(knowrob_common).
-:- register_ros_package(knowrob_objects).
-:- register_ros_package(knowrob_actions).
+:- register_ros_package(knowrob).
 :- register_ros_package(knowledge).
-:- register_ros_package(knowrob_vis).
-:- register_ros_package(knowrob_memory).
 :- register_ros_package(rosprolog).
-:- register_ros_package(urdfprolog).
 
 :- rdf_db:rdf_register_ns(hsr_objects, 'http://www.semanticweb.org/suturo/ontologies/2020/3/objects#', [keep(true)]).
 :- rdf_db:rdf_register_ns(urdf, 'http://knowrob.org/kb/urdf.owl#', [keep(true)]).
