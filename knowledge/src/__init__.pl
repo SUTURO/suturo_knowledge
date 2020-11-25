@@ -1,9 +1,9 @@
-:- register_ros_package(knowrob_common).
-:- register_ros_package(knowrob_objects).
-:- register_ros_package(knowrob_actions).
+:- register_ros_package(knowrob).
+:- register_ros_package(knowrob).
+:- register_ros_package(knowrob).
 :- register_ros_package(knowledge).
-:- register_ros_package(knowrob_vis).
-:- register_ros_package(knowrob_memory).
+:- register_ros_package(knowrob).
+:- register_ros_package(knowrob).
 :- register_ros_package(rosprolog).
 :- register_ros_package(urdfprolog).
 
