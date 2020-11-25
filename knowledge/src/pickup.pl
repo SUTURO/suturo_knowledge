@@ -7,8 +7,8 @@
 :- rdf_db:rdf_register_ns(hsr_objects, 'http://www.semanticweb.org/suturo/ontologies/2020/3/objects#', [keep(true)]).
 :- rdf_db:rdf_register_ns(robocup, 'http://www.semanticweb.org/suturo/ontologies/2020/2/Robocup#', [keep(true)]).
 
-:- rdf_meta
-    next_object_(?).
+%:- rdf_meta
+%    next_object_(?).
     
 
 next_object_(BestObj) :-

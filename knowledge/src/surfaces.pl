@@ -52,7 +52,7 @@
     ]).
 
 :- rdf_db:rdf_register_ns(urdf, 'http://knowrob.org/kb/urdf.owl#', [keep(true)]).
-:- owl_parser:owl_parse('package://urdfprolog/owl/urdf.owl').
+:- owl_parser:owl_parse('package://knowrob/src/ros/urdfprolog/owl/urdf.owl').
 
 :- rdf_meta % TODO FIX ME
     get_surface_id_by_name(r,?),
