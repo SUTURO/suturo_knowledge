@@ -26,3 +26,7 @@
     local-name: rosowl
     uri: https://github.com/knowrob/rosowl.git
     version: master
+- git:
+    local-name: rosjava_build_tools
+    uri: https://github.com/rosjava/rosjava_build_tools.git
+    version: master
