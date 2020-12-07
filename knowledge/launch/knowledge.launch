@@ -2,7 +2,7 @@
   <arg name="mongodb_log" default="false" />
   <arg name="mongodb_whipe" default="false" />
   <arg name="urdf_param" default="/hsrb_lab" />
-  <arg name="urdf_launch_file" default="hsrb_sim_v1" />
+  <arg name="urdf_launch_file" default="gazebo_E1" />
 
   <include file="$(find suturo_urdf_publisher)/launch/$(arg urdf_launch_file).launch" />
 
