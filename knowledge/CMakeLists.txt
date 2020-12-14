@@ -9,8 +9,8 @@ find_package(catkin REQUIRED COMPONENTS
   geometry_msgs
   std_msgs
   message_generation
-  knowrob
-  rosprolog
+  knowrob_common
+  urdfprolog
   )
 
 add_message_files(
