@@ -16,13 +16,13 @@
     version: 673045b2364e54b569438794b0240486e4afae2b
 - git:
     local-name: knowrob
-    uri: https://github.com/JeremiasThun/knowrob.git
+    uri: https://github.com/knowrob/knowrob.git
     version: master
-- git:
-    local-name: ros-mongodb_log
-    uri: https://github.com/code-iai/ros-mongodb_log.git
-    version: onlyPythonSupport
 - git:
     local-name: rosowl
     uri: https://github.com/knowrob/rosowl.git
+    version: master
+- git: 
+    local-name: rosprolog
+    uri: https://github.com/knowrob/rosprolog.git
     version: master
