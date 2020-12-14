@@ -1,6 +1,15 @@
 :- begin_tests('spatial_comp').
 
-:- use_module(library('knowrob')).
+:- use_module(library('semweb/rdf_db')).
+:- use_module(library('semweb/rdfs')).
+:- use_module(library('semweb/owl_parser')).
+:- use_module(library('semweb/owl')).
+:- use_module(library('knowrob/knowrob')).
+:- use_module(library('knowrob/computable')).
+:- use_module(library('knowrob/temporal')).
+:- use_module(library('knowrob/beliefstate')).
+:- use_module(library('knowrob/transforms')).
+:- use_module(library('knowrob/vis')).
 
 :- use_module(library('config')).
 :- use_module(library('pickup')).

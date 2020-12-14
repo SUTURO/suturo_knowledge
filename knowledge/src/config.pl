@@ -18,13 +18,13 @@
     ]).
 
 
-%:- rdf_meta
-%    offsets(?),
-%    allowed_class_distance(?),
-%    context_speech_sort_by_class(-,-,-,?),
-%    context_speech_sort_by_color(-,-,?),
-%    context_speech_sort_by_size(-,-,?),
-%    context_speech_new_class(?).
+:- rdf_meta
+    offests(?),
+    allowed_class_distance(?),
+    context_speech_sort_by_class(-,-,-,?),
+    context_speech_sort_by_color(-,-,?),
+    context_speech_sort_by_size(-,-,?),
+    context_speech_new_class(?).
 
 
 :- rdf_db:rdf_register_ns(hsr_objects, 'http://www.semanticweb.org/suturo/ontologies/2020/3/objects#', [keep(true)]).

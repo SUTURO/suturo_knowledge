@@ -23,13 +23,13 @@
 :- rdf_db:rdf_register_ns(robocup, 'http://www.semanticweb.org/suturo/ontologies/2020/2/Robocup#', [keep(true)]).
 :-rdf_db:rdf_register_ns(dul, 'http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#', [keep(true)]).
 
-%:- rdf_meta
-%    create_object(r,?),
-%	object_at(r,r,r,?),
-%	object_at_table(?),
-%	object_of_type(r,?),
-%	create_object_at(r,r,r,?,-,-),
-%	hsr_existing_objects(?).
+:- rdf_meta
+    create_object(r,?),
+	object_at(r,r,r,?),
+	object_at_table(?),
+	object_of_type(r,?),
+	create_object_at(r,r,r,?,-,-),
+	hsr_existing_objects(?).
 
 
 hsr_existing_objects(Objects) :-

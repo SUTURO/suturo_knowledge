@@ -5,7 +5,20 @@
 :- rdf_db:rdf_register_ns(hsr_objects, 'http://www.semanticweb.org/suturo/ontologies/2020/3/objects#', [keep(true)]).
 :- rdf_db:rdf_register_ns(urdf, 'http://knowrob.org/kb/urdf.owl#', [keep(true)]).
 
-:- use_module(library('knowrob')).
+:- use_module(library('semweb/rdf_db')).
+:- use_module(library('semweb/rdfs')).
+:- use_module(library('semweb/owl_parser')).
+:- use_module(library('semweb/owl')).
+:- use_module(library('knowrob/knowrob')).
+:- use_module(library('knowrob/computable')).
+:- use_module(library('knowrob/objects')).
+:- use_module(library('knowrob/temporal')).
+:- use_module(library('knowrob/beliefstate')).
+:- use_module(library('knowrob/transforms')).
+:- use_module(library('knowrob/vis')).
+
+:- use_module(library('rdf_urdf')).
+:- use_module(library('urdf_parser')).
 
 :- use_module(library('config')).
 :- use_module(library('urdf')).
@@ -20,9 +33,9 @@
 :- use_module(library('export')).
 
 :- owl_parser:owl_parse('package://dul/owl/DUL.owl').
-:- owl_parser:owl_parse('package://knowrob/owl/knowrob.owl').
+:- owl_parser:owl_parse('package://knowrob_common/owl/knowrob.owl').
 :- owl_parser:owl_parse('package://knowledge/owl/objects.owl').
-:- owl_parser:owl_parse('package://knowrob/src/ros/urdfprolog/owl/urdf.owl').
+:- owl_parser:owl_parse('package://urdfprolog/owl/urdf.owl').
 
 :- ros_param_get_string('/param_to_load_URDF_from', Param),
     load_surfaces_from_param(Param).
