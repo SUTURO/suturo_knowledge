@@ -1,8 +1,8 @@
 
 :- module(surfaces,
     [
-    assert_surface_types/1,
-    supporting_surface/1,
+    assert_surface_types/2,
+    supporting_surface/2,
     assert_object_on/2,
     surface_type_of/2,
     is_legal_obj_position/1,
@@ -51,12 +51,14 @@
     get_surface_role/2
     ]).
 
-:- rdf_db:rdf_register_ns(urdf, 'http://knowrob.org/kb/urdf.owl#', [keep(true)]).
-:- owl_parser:owl_parse('package://urdfprolog/owl/urdf.owl').
+:- tripledb_load(
+	'http://knowrob.org/kb/URDF.owl',
+	[ namespace(urdf, 'http://knowrob.org/kb/urdf.owl#')
+	]).
 
 :- rdf_meta % TODO FIX ME
     get_surface_id_by_name(r,?),
-    supporting_surface(?),
+    supporting_surface(?,?),
     surface_big_enough(?),
     surface_big_enough(r,?),
     point_in_rectangle(r,r,r,r,r),
@@ -73,26 +75,28 @@
 
 
 
-assert_surface_types(SurfaceLink):-
-    rdf_assert(ground,hsr_objects:'isSurfaceType',ground),
-    supporting_surface(SurfaceLink),
-    rdf_urdf_name(SurfaceLink,Name),
-    ( sub_string(Name,_,_,_,shelf)
-    ->rdf_assert(SurfaceLink,hsr_objects:'isSurfaceType',shelf)
+assert_surface_types(Robot, SurfaceLink):-
+    tell(triple(ground,hsr_objects:'isSurfaceType',ground)),
+    supporting_surface(Robot, SurfaceLink),
+    %urdf_link_names(SurfaceLink,Name),
+    ( sub_string(SurfaceLink,_,_,_,shelf)
+    ->tell(triple(SurfaceLink,hsr_objects:'isSurfaceType',shelf))
     ;
-    ( sub_string(Name,_,_,_,table)
-    ->rdf_assert(SurfaceLink,hsr_objects:'isSurfaceType',table)
+    ( sub_string(SurfaceLink,_,_,_,table)
+    ->tell(triple(SurfaceLink,hsr_objects:'isSurfaceType',table))
     ;
-    ( sub_string(Name,_,_,_,bucket)
-    ->rdf_assert(SurfaceLink,hsr_objects:'isSurfaceType',bucket)
-    ;rdf_assert(SurfaceLink,hsr_objects:'isSurfaceType',other))
+    ( sub_string(SurfaceLink,_,_,_,bucket)
+    ->tell(triple(SurfaceLink,hsr_objects:'isSurfaceType',bucket))
+    ;tell(triple(SurfaceLink,hsr_objects:'isSurfaceType',other)))
     )).
 
 
 %% supporting_surface(?Surface).
 %
-supporting_surface(SurfaceLink):-
-    rdf_urdf_link_collision(SurfaceLink,ShapeTerm,_),
+supporting_surface(Robot, SurfaceLink):-
+    write(SurfaceLink),
+    urdf_link_collision_shape(Robot,SurfaceLink,ShapeTerm,_),
+    write(ShapeTerm),
     surface_big_enough(ShapeTerm).
 
 surface_big_enough(box(X, Y, _)):- %TODO Support other shapes, has not been tested yet.
@@ -117,7 +121,7 @@ assert_object_on(ObjectInstance, SurfaceLink) :-
 
 
 surface_type_of(Surface, Type):- % has not been tested yet.
-    rdf_has(Surface, hsr_objects:'isSurfaceType', Type).
+    triple(Surface, hsr_objects:'isSurfaceType', Type).
 
 is_surface(Surface) :-
     all_surfaces(Surfaces),
@@ -141,7 +145,7 @@ is_bucket(Bucket) :-
 
 all_surfaces(SurfaceLinks):-
     findall(SurfaceLink,
-        rdf_has(SurfaceLink,hsr_objects:'isSurfaceType',_),
+        triple(SurfaceLink,hsr_objects:'isSurfaceType',_),
         SurfaceLinks
     ).
 
@@ -152,7 +156,7 @@ all_source_surfaces(Surfaces):-
     findall(Surface,
     (
         member(Surface, ExistingSurfaces),
-        rdf_has(Surface, hsr_objects:'sourceOrTarget', source)
+        triple(Surface, hsr_objects:'sourceOrTarget', source)
     ),
         Surfaces).
 
@@ -163,7 +167,7 @@ all_target_surfaces(Surfaces):-
     findall(Surface,
     (
         member(Surface, ExistingSurfaces),
-        rdf_has(Surface, hsr_objects:'sourceOrTarget', target)
+        triple(Surface, hsr_objects:'sourceOrTarget', target)
     ),
         Surfaces).
 
@@ -173,13 +177,13 @@ ground_surface(GroundSurface):-
 
 
 shelf_surfaces(ShelfLinks):-
-    findall(ShelfLink, rdf_has(ShelfLink, hsr_objects:'isSurfaceType',shelf),ShelfLinks).
+    findall(ShelfLink, triple(ShelfLink, hsr_objects:'isSurfaceType',shelf),ShelfLinks).
 
 
 big_shelf_surfaces(ShelfLinks) :- % has not been tested yet.
     findall(ShelfLink,
     (
-        rdf_has(ShelfLink, hsr_objects:'isSurfaceType',shelf),
+        triple(ShelfLink, hsr_objects:'isSurfaceType',shelf),
         rdf_urdf_name(ShelfLink,Name),
         not(sub_string(Name,_,_,_,small))
     ),
@@ -198,13 +202,13 @@ shelf_floor_at_height(Height, TargetShelfLink) :- % has not been tested yet.
 
 
 table_surfaces(TableLinks):-
-    findall(TableLink, rdf_has(TableLink, hsr_objects:'isSurfaceType',table), TableLinks).
+    findall(TableLink, triple(TableLink, hsr_objects:'isSurfaceType',table), TableLinks).
 
 bucket_surfaces(BucketLinks):-
-    findall(BucketLink, rdf_has(BucketLink, hsr_objects:'isSurfaceType',bucket), BucketLinks).
+    findall(BucketLink, triple(BucketLink, hsr_objects:'isSurfaceType',bucket), BucketLinks).
 
 find_supporting_surface(Object, Surface) :-
-    rdf_has(Object, hsr_objects:'supportedBy', Surface).
+    triple(Object, hsr_objects:'supportedBy', Surface).
 
 is_object(Object) :-
     hsr_existing_objects(Objects),
@@ -347,15 +351,15 @@ make_all_surface_type_role(SurfaceType, Role):-
     make_role(SurfaceType, Role).
 
 make_all_surface_type_role(SurfaceType, Role):-
-    forall(rdf_has(SurfaceLink, hsr_objects:'isSurfaceType',SurfaceType), make_role(SurfaceLink,Role)).
+    forall(triple(SurfaceLink, hsr_objects:'isSurfaceType',SurfaceType), make_role(SurfaceLink,Role)).
 
 
 % Gives the gives SurfaceLink the Role (target or source)
 make_role(SurfaceLink, Role):-
     rdf_retractall(SurfaceLink, hsr_objects:'sourceOrTarget',_),
-    rdf_assert(SurfaceLink, hsr_objects:'sourceOrTarget', Role).
+    tell(triple(SurfaceLink, hsr_objects:'sourceOrTarget', Role)).
 
 
 % Role is the role (target or source) of the given SurfaceLink
 get_surface_role(SurfaceLink, Role):-
-    rdf_has(SurfaceLink, hsr_objects:'sourceOrTarget', Role).
+    triple(SurfaceLink, hsr_objects:'sourceOrTarget', Role).

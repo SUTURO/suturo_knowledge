@@ -35,8 +35,8 @@
 hsr_existing_objects(Objects) :-
     belief_existing_objects(L, [dul:'PhysicalObject']),
   findall(J, (
-      rdf(J, _, _, belief_state),
-      rdf_has(J, hsr_objects:'supportable', true),
+      has_type(J,_),
+      triple(J, hsr_objects:'supportable', true),
       member(J, L)
   ), X),
   list_to_set(X,Objects).
@@ -69,9 +69,9 @@ object_of_type(ObjectType, Instance) :-
 	belief_existing_objects(Instance, [ObjectType]).
 
 create_object(ObjectType, Instance) :-
- 	owl_subclass_of(ObjectType, dul:'PhysicalObject'),
+ 	subclass_of(ObjectType, dul:'PhysicalObject'),
 	belief_new_object(ObjectType, Instance),
-        rdf_assert(Instance, hsr_objects:'supportable', true).
+        tell(triple(Instance, hsr_objects:'supportable', true)).
 
 % deprecated. buggy, too.
 create_object_at(ObjectType, Transform, Instance, Dimensions, Color) :-
@@ -83,19 +83,19 @@ create_object_at(PerceivedObjectType, PercTypeConfidence, Transform, Instance, [
     validate_confidence(color, PercColorCondidence, ColorCondidence),
     object_size_ok([Width, Depth, Height]),
     object_type_handling(PerceivedObjectType, TypeConfidence, ObjectType),
-    owl_subclass_of(ObjectType, dul:'PhysicalObject'),
+    subclass_of(ObjectType, dul:'PhysicalObject'),
     new_perceived_at(ObjectType, Transform, Instance),
     atom_number(TypeConfidenceAtom, TypeConfidence),
-    rdf_assert(Instance, hsr_objects:'ConfidenceClassValue', TypeConfidenceAtom),
+    tell(triple(Instance, hsr_objects:'ConfidenceClassValue', TypeConfidenceAtom)),
     object_assert_dimensions(Instance, Width, Depth, Height),
     set_dimension_semantics(Instance, Width, Depth, Height),
     object_shape_handling(Instance, Shape, ShapeConfidence),
     atom_number(ShapeConfidenceAtom, ShapeConfidence),
-    rdf_assert(Instance, hsr_objects:'ConfidenceShapeValue', ShapeConfidenceAtom),
+    tell(triple(Instance, hsr_objects:'ConfidenceShapeValue', ShapeConfidenceAtom)),
     atom_number(ColorCondidenceAtom, ColorCondidence),
-    rdf_assert(Instance, hsr_objects:'ConfidenceColorValue', ColorCondidenceAtom),
+    tell(triple(Instance, hsr_objects:'ConfidenceColorValue', ColorCondidenceAtom)),
     set_object_colour(Instance, Color, ColorCondidence),
-    rdf_assert(Instance, hsr_objects:'supportable', true),
+    tell(triple(Instance, hsr_objects:'supportable', true)),
     !.
 
 validate_confidence(class, Is, Should) :-
@@ -131,27 +131,27 @@ object_type_handling(PerceivedObjectType, TypeConfidence, ObjectType) :-
 
 set_dimension_semantics(Instance, _, _, Height) :-
     Height > 0.16,
-    rdf_assert(Instance, hsr_objects:'size', 'tall').
+    tell(triple(Instance, hsr_objects:'size', 'tall')).
 
 set_dimension_semantics(Instance, Width, Depth, Height) :-
     Height < Width * 0.9,
     Height < Depth * 0.9,
-    rdf_assert(Instance, hsr_objects:'size', 'flat').
+    tell(triple(Instance, hsr_objects:'size', 'flat')).
 
 set_dimension_semantics(Instance, Width, Depth, Height) :-
     ((Depth > Width * 2, Depth > Height * 2);
      (Width > Depth * 2, Width > Height * 2)),
-    rdf_assert(Instance, hsr_objects:'size', 'long').
+    tell(triple(Instance, hsr_objects:'size', 'long')).
 
 set_dimension_semantics(Instance, Width, Depth, Height) :-
     Volume is Width * Depth * Height * 1000,
     Volume < 0.6,
-    rdf_assert(Instance, hsr_objects:'size', 'small').
+    tell(triple(Instance, hsr_objects:'size', 'small')).
 
 set_dimension_semantics(Instance, Width, Depth, Height) :-
     Volume is Width * Depth * Height * 1000,
     Volume > 2.0,
-    rdf_assert(Instance, hsr_objects:'size', 'big').
+    tell(triple(Instance, hsr_objects:'size', 'big')).
 
 set_dimension_semantics(_Instance,_W,_D,_H) :-
     true.
@@ -159,23 +159,23 @@ set_dimension_semantics(_Instance,_W,_D,_H) :-
 object_shape_handling(Instance, Shape, Confidence) :-
     min_shape_confidence(MinConf),
     Confidence > MinConf,
-    rdf_assert(Instance, 'http://www.ease-crc.org/ont/EASE-OBJ.owl#Shape', Shape).
+    tell(triple(Instance, 'http://www.ease-crc.org/ont/EASE-OBJ.owl#Shape', Shape)).
 
 object_shape_handling(Instance, _, Confidence) :-
     min_shape_confidence(MinConf),
     Confidence =< MinConf,
-    rdf_assert(Instance, 'http://www.ease-crc.org/ont/EASE-OBJ.owl#Shape', '').
+    tell(triple(Instance, 'http://www.ease-crc.org/ont/EASE-OBJ.owl#Shape', '')).
 
 set_object_colour(Instance, _, Confidence) :-
     not(Confidence = 0), % for cases in which Perception doesn't give confidences.
     min_color_confidence(MinConf),
     Confidence < MinConf,
-    rdf_assert(Instance, hsr_objects:'colour', ''),
+    tell(triple(Instance, hsr_objects:'colour', '')),
     object_assert_color(Instance, '').
 
 set_object_colour(Instance, [0.0, 0.0, 0.0, 0.0], _) :-
     object_assert_color(Instance, [0.8, 0.8, 0.8, 0.8]),
-    rdf_assert(Instance, hsr_objects:'colour', 'grey'), !.
+    tell(triple(Instance, hsr_objects:'colour', 'grey')), !.
 
 set_object_colour(Instance, [R,G,B,_], _) :-
     RConv is R/255,    GConv is G/255,    BConv is B/255,
@@ -183,28 +183,28 @@ set_object_colour(Instance, [R,G,B,_], _) :-
     set_colour_semantics(Instance, [RConv,GConv,BConv]).
 
 set_colour_semantics(Instance, [0.0, 0.0, 0.0]) :-
-    rdf_assert(Instance, hsr_objects:'colour', 'dark').
+    tell(triple(Instance, hsr_objects:'colour', 'dark')).
 
 set_colour_semantics(Instance, [1.0, 0.0, 0.0]) :-
-    rdf_assert(Instance, hsr_objects:'colour', 'red').
+    tell(triple(Instance, hsr_objects:'colour', 'red')).
 
 set_colour_semantics(Instance, [0.0, 1.0, 0.0]) :-
-    rdf_assert(Instance, hsr_objects:'colour', 'green').
+    tell(triple(Instance, hsr_objects:'colour', 'green')).
 
 set_colour_semantics(Instance, [1.0, 1.0, 0.0]) :-
-    rdf_assert(Instance, hsr_objects:'colour', 'yellow').
+    tell(triple(Instance, hsr_objects:'colour', 'yellow')).
 
 set_colour_semantics(Instance, [0.0, 0.0, 1.0]) :-
-    rdf_assert(Instance, hsr_objects:'colour', 'dark-blue').
+    tell(triple(Instance, hsr_objects:'colour', 'dark-blue')).
 
 set_colour_semantics(Instance, [1.0, 0.0, 1.0]) :-
-    rdf_assert(Instance, hsr_objects:'colour', 'violet').
+    tell(triple(Instance, hsr_objects:'colour', 'violet')).
 
 set_colour_semantics(Instance, [0.0, 1.0, 1.0]) :-
-    rdf_assert(Instance, hsr_objects:'colour', 'light-blue').
+    tell(triple(Instance, hsr_objects:'colour', 'light-blue')).
 
 set_colour_semantics(Instance, [1.0, 1.0, 1.0]) :-
-    rdf_assert(Instance, hsr_objects:'colour', 'bright').
+    tell(triple(Instance, hsr_objects:'colour', 'bright')).
 
 set_colour_semantics(_, _) :-
     true.

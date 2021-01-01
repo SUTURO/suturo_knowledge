@@ -95,16 +95,16 @@ context_speech_sort_by_class(Object, SimilarObject, Distance, Context) :-
     string_concat(Part1, Part2, Context).
 
 context_speech_sort_by_color(Object, SimilarObject, Context) :-
-    rdf_has(Object, hsr_objects:'colour', ObjColor),
-    rdf_has(SimilarObject, hsr_objects:'colour', SimilarColor),
+    triple(Object, hsr_objects:'colour', ObjColor),
+    triple(SimilarObject, hsr_objects:'colour', SimilarColor),
     string_concat('I will put this ', ObjColor, Part1),
     string_concat(Part1, ' Object to the other ', Part2),
     string_concat(Part2, SimilarColor, Part3),
     string_concat(Part3, ' object.', Context).
 
 context_speech_sort_by_size(Object, SimilarObject, Context) :-
-    rdf_has(Object, hsr_objects:'size', ObjSize),
-    rdf_has(SimilarObject, hsr_objects:'size', SimilarSize),
+    triple(Object, hsr_objects:'size', ObjSize),
+    triple(SimilarObject, hsr_objects:'size', SimilarSize),
     string_concat('I will put this ', ObjSize, Part1),
     string_concat(Part1, ' Object to the other ', Part2),
     string_concat(Part2, SimilarSize, Part3),
