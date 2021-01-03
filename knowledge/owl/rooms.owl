@@ -8,48 +8,74 @@
      xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
     <owl:Ontology rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms">
         <owl:imports rdf:resource="package://knowrob/owl/knowrob.owl"/>
+        <owl:imports rdf:resource="package://knowrob/owl/URDF.owl"/>
     </owl:Ontology>
 
 
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#hasSurface -->
 
-    <!-- http://knowrob.org/kb/knowrob.owl#connectedTo-Rigidly -->
-
-    <owl:ObjectProperty rdf:about="http://knowrob.org/kb/knowrob.owl#connectedTo-Rigidly"/>
-
-
-     <!-- http://knowrob.org/kb/knowrob.owl#doorHingedTo -->
-
-    <owl:ObjectProperty rdf:about="http://knowrob.org/kb/knowrob.owl#doorHingedTo"/>
-
-
-
-     <!-- http://www.ease-crc.org/ont/EASE.owl#Room -->
-
-    <owl:Class rdf:about="http://www.ease-crc.org/ont/EASE.owl#Room"/>
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#hasSurface">
+        <rdfs:subPropertyOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#associatedWith"/>
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#isSurfaceOf"/>
+        <rdfs:domain rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Room"/>
+        <rdfs:range rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#RoomSurface"/>
+        <rdfs:comment>A relation between a room and a room surface</rdfs:comment>
+    </owl:ObjectProperty>
 
 
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#isSurfaceOf -->
 
-     <!-- http://www.ease-crc.org/ont/EASE.owl#Door -->
-
-    <owl:Class rdf:about="http://www.ease-crc.org/ont/EASE.owl#Door"/>
-
-
-
-    <!-- http://www.ease-crc.org/ont/EASE.owl#Floor -->
-
-    <owl:Class rdf:about="http://www.ease-crc.org/ont/EASE.owl#Floor"/>
-
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#isSurfaceOf">
+        <rdfs:subPropertyOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#associatedWith"/>
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#hasSurface"/>
+        <rdfs:domain rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#RoomSurface"/>
+        <rdfs:range rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Room"/>
+        <rdfs:comment>A relation between a room and a room surface</rdfs:comment>
+    </owl:ObjectProperty>
 
 
-    <!-- http://www.ease-crc.org/ont/EASE.owl#Wall -->
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#hasManipulationRole -->
 
-    <owl:Class rdf:about="http://www.ease-crc.org/ont/EASE.owl#Wall"/>
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#hasManipulationRole">
+        <rdfs:subPropertyOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#hasRole"/>
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#isManipulationRoleOf"/>
+        <rdfs:domain rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#PhysicalObject"/>
+        <rdfs:range rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Barrier"/>
+        <rdfs:comment>a relation between a physical object and a barrier preventing access to a space</rdfs:comment>
+    </owl:ObjectProperty>
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#isManipulationRoleOf -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#isManipulationRoleOf">
+        <rdfs:subPropertyOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#isRoleOf"/>
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#hasManipulationRole"/>
+        <rdfs:domain rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#PhysicalObject"/>
+        <rdfs:range rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Barrier"/>
+        <rdfs:comment>a relation between a physical object and a barrier preventing access to a space</rdfs:comment>
+    </owl:ObjectProperty>
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#DoorHandle -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#DoorHandle">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#DesignedHandle"/>
+        <owl:disjointWith rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#DoorKnob"/>
+        <rdfs:comment>Represents the handle of a door used to open or close the door</rdfs:comment>
+    </owl:Class>
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#DoorKnob -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#DoorKnob">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#DesignedHandle"/>
+        <owl:disjointWith rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#DoorHandle"/>
+        <rdfs:comment>Represents a knob of a door used to open or close a door. In comparison to a door handle which is mostly found at room doors door knoby are mostly part of furniture doors.</rdfs:comment>
+    </owl:Class>
 
 
 
-    <!-- http://www.ease-crc.org/ont/EASE.owl#Ceiling -->
 
-    <owl:Class rdf:about="http://www.ease-crc.org/ont/EASE.owl#Ceiling"/>
 </rdf:RDF>
 
 
