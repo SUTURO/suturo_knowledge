@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE rdf:RDF[
+    <!ENTITY ns1 'package://knowledge/owl/objects.owl'>
+    <!ENTITY ns2 'package://knowledge/owl/rooms.owl'>
+    <!ENTITY rdf 'http://www.w3.org/1999/02/22-rdf-syntax-ns#'>
+ ]><rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" 
+            xmlns:ns1="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#"
+            xmlns:n2="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#">
+
+
+    <rdf:Description rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Locations-0">
+        <ns1:object rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Kitchen"></ns1:object>
+        <ns1:subject rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Receptacle"></ns1:subject>
+        <rdf:type rdf:resource="http://ias.cs.tum.edu/kb/knowrob.owl#CsLocations"></rdf:type>
+    </rdf:Description>
+
+    <rdf:Description rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Locations-0">
+        <ns1:object rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Kitchen"></ns1:object>
+        <ns1:subject rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Receptacle"></ns1:subject>
+        <rdf:type rdf:resource="http://ias.cs.tum.edu/kb/knowrob.owl#CsLocations"></rdf:type>
+    </rdf:Description>
+
+    </rdf:RDF>
