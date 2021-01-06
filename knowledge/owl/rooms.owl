@@ -74,7 +74,43 @@
     </owl:Class>
 
 
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Kitchen -->
 
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Kitchen">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Room"/>
+        <rdfs:comment>Represents a kitchen, which is a specific kind of room in an household, where people are cooking</rdfs:comment>
+    </owl:Class>
+
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#DiningRoom -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#DiningRoom">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Room"/>
+        <owl:disjointWith rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Kitchen"/>
+        <rdfs:comment>Represents a kitchen, which is a specific kind of room in an household, where people are eating</rdfs:comment>
+    </owl:Class>
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#LivingRoom -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#LivingRoom">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Room"/>
+        <owl:disjointWith rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Kitchen"/>
+        <owl:disjointWith rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#DiningRoom"/>
+        <rdfs:comment>Represents a living room, which is a specific kind of room in an household, where people are living</rdfs:comment>
+    </owl:Class>
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#SleepingRoom -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#SleepingRoom">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Room"/>
+        <owl:disjointWith rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Kitchen"/>
+        <owl:disjointWith rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#DiningRoom"/>
+        <owl:disjointWith rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#LivingRoom"/>
+        <rdfs:comment>Represents a sleeping room in an household, which is a specific kind of room, where people are sleeping</rdfs:comment>
+    </owl:Class>
 
 </rdf:RDF>
 
