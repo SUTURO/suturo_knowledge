@@ -167,4 +167,9 @@ test(makeTablesSource) :-
 	length(Tables, CountTables),
 	length(Surfaces, CountTables).
 
+test(fail) :-
+    fail.
+
+
+
 :- end_tests(surfaces).

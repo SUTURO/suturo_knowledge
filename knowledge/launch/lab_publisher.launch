@@ -1,7 +1,0 @@
-<launch>
-
-  <include file="$(find knowledge)/launch/knowledge.launch" >
-          <arg name="urdf_launch_file" default="lab_publisher" />
-  </include>
-
-</launch>
