@@ -34,7 +34,7 @@ object_goal_pose(Instance, [Translation, Rotation], Context, RefObject) :-
     object_goal_surface_(Instance, Surface, Context, RefObject),
     not(rdf_equal(Instance, RefObject)),
     surface_pose_in_map(Surface, [_, Rotation]),
-    rdf_has(RefObject, hsr_objects:'inGroup', Group),
+    triple(RefObject, hsr_objects:'inGroup', Group),
     group_mean_pose(Group, [GroupX,GroupY,GroupZ], _),
     urdf_frame(Surface, Frame),
     tf_transform_point(map, Frame, [GroupX,GroupY,GroupZ], [_, GroupYOnS, _]),

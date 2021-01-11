@@ -26,8 +26,8 @@ gripper(Gripper) :-
 
 gripper_init(Gripper) :-
     %rdf_instance_from_class(knowrob:'EnduringThing-Localized', belief_state, Gripper),
-    rdf_assert(Gripper, rdf:type, owl:'NamedIndividual', belief_state),
-    rdf_assert(Gripper, knowrob:'frameName', hand_palm_link, belief_state).
+    tell(has_type(Gripper, owl:'NamedIndividual')),
+    tell(holds(Gripper, knowrob:'frameName', hand_palm_link)).
 
 
 all_objects_in_gripper(Instances):-
@@ -39,7 +39,7 @@ all_objects_in_gripper(Instances):-
 attach_object_to_gripper(Instance) :-
     rdf_retractall(Instance, hsr_objects:'supportedBy', _),
     gripper(Gripper),
-    rdf_assert(Instance, hsr_objects:'supportedBy', Gripper),
+    tell(triple(Instance, hsr_objects:'supportedBy', Gripper)),
     object_frame_name(Instance, InstanceFrame),
     object_frame_name(Gripper,GripperFrame),
     hsr_lookup_transform(GripperFrame, InstanceFrame, PoseTrans, PoseRota),

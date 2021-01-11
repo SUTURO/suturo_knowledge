@@ -25,9 +25,9 @@ hsr_lookup_transform(SourceFrame, TargetFrame, Translation, Rotation) :-
 
 % deprecated. Use hsr_existing_object_at/2.
 hsr_existing_object_at(Pose, Threshold, Instance) :-
-    rdf(Instance, rdf:type, owl:'NamedIndividual', belief_state),
-    rdfs_individual_of(Instance, dul:'PhysicalObject'),
-    rdf_has(Instance, hsr_objects:'supportable', true),
+    has_type(Instance, owl:'NamedIndividual'),
+    instance_of(Instance, dul:'PhysicalObject'),
+    triple(Instance, hsr_objects:'supportable', true),
     object_pose(Instance, OldPose),
     transform_close_to(Pose, OldPose, Threshold).
 

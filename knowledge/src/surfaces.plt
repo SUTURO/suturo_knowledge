@@ -2,14 +2,8 @@
 
 :- use_module(library('semweb/rdf_db')).
 :- use_module(library('semweb/rdfs')).
-:- use_module(library('semweb/owl_parser')).
-:- use_module(library('semweb/owl')).
-:- use_module(library('knowrob/knowrob')).
-:- use_module(library('knowrob/computable')).
-:- use_module(library('knowrob/temporal')).
-:- use_module(library('knowrob/beliefstate')).
-:- use_module(library('knowrob/transforms')).
-:- use_module(library('knowrob/vis')).
+:- use_module(library('db/tripledb')).
+:- use_module(library('knowrob')).
 
 :- use_module(library('config')).
 :- use_module(library('pickup')).
@@ -144,11 +138,11 @@ test(groundSurface) :-
 
 test(shelfSurfaces) :-
 	shelf_surfaces(Surfaces),
-	forall(member(Surface, Surfaces), rdf_has(Surface, hsr_objects:'isSurfaceType',shelf)).
+	forall(member(Surface, Surfaces), triple(Surface, hsr_objects:'isSurfaceType',shelf)).
 
 test(table) :-
 	table_surfaces(Surfaces),
-	forall(member(Surface, Surfaces), rdf_has(Surface, hsr_objects:'isSurfaceType',table)).
+	forall(member(Surface, Surfaces), triple(Surface, hsr_objects:'isSurfaceType',table)).
 
 test(areAllSurfacesTablesShelvesAndGroundAndBasket) :-
 	ground_surface(G),

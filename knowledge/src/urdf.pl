@@ -20,11 +20,16 @@
 * is called as inital_goal in the launch file
 */
 load_surfaces_from_param(Param):-
-    (once(rdfs_individual_of(_, urdf:'Robot'))
+    (once(instance_of(_, urdf:'Robot'))
     -> write("Surfaces are allready loaded. Restart the knowledgebase to load a diffrent URDF")
-    ;  kb_create(urdf:'Robot', RobotNew),rdf_urdf_load_param(RobotNew, Param),
-        forall(supporting_surface(SurfaceLink),
-        assert_surface_types(SurfaceLink))
+    ;   atom_concat("package://knowledge/urdf", Param, Filepath),
+        atom_concat(Filepath, ".urdf", File),
+        tell(instance_of(RobotNew, urdf:'Robot')), urdf_load(RobotNew, File, ['load_rdf']),
+        urdf_link_names(RobotNew,Names),
+        forall(member(Linkname, Names), forall(supporting_surface(RobotNew,Linkname), assert_surface_types(RobotNew,Linkname)))
+        %instance_of(SurfaceLink,urdf:'Link'),
+        %forall(supporting_surface(RobotNew, SurfaceLink),
+        %assert_surface_types(RobotNew, SurfaceLink))
     ).
 
 
