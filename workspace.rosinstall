@@ -30,3 +30,7 @@
     local-name: rosjava_build_tools
     uri: https://github.com/rosjava/rosjava_build_tools.git
     version: kinetic
+- git:
+    local-name: suturo_nlg
+    uri: https://github.com/SUTURO/suturo_nlp.git
+    version: master
