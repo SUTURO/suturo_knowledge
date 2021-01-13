@@ -1,0 +1,150 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://www.semanticweb.org/suturo/ontologies/2021/0/testing#"
+     xml:base="http://www.semanticweb.org/suturo/ontologies/2021/0/testing"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:hsr_objects="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#">
+    <owl:Ontology rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/testing">
+        <owl:imports rdf:resource="package://knowledge/owl/objects.owl"/>
+    </owl:Ontology>
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/testing#Shelffloor-1 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/testing#Shelffloor-1">
+        <rdf:type rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Shelffloor"/>
+        <hsr_objects:isSurfaceType rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/testing#Shelf-1"/>
+    </owl:NamedIndividual>
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/testing#Shelffloor-2 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/testing#Shelffloor-2">
+        <rdf:type rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Shelffloor"/>
+        <hsr_objects:isSurfaceType rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/testing#Shelf-2"/>
+        <hsr_objects:sourceOrTarget rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/testing#Source-Indiv"/>
+    </owl:NamedIndividual>
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/testing#Tabletop-1 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/testing#Tabletop-1">
+        <rdf:type rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Tabletop"/>
+        <hsr_objects:isSurfaceType rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/testing#Table-1"/>
+        <hsr_objects:sourceOrTarget rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/testing#Source-Indiv"/>
+    </owl:NamedIndividual>
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/testing#Tabletop-2 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/testing#Tabletop-2">
+        <rdf:type rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Tabletop"/>
+        <hsr_objects:isSurfaceType rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/testing#Table-2"/>
+    </owl:NamedIndividual>
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/testing#BucketOpening-1 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/testing#BucketOpening-1">
+        <rdf:type rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#BucketOpening"/>
+        <hsr_objects:isSurfaceType rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/testing#Bucket-1"/>
+        <hsr_objects:sourceOrTarget rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/testing#Target-Indiv"/>
+    </owl:NamedIndividual>
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/testing#BucketOpening-2 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/testing#BucketOpening-2">
+        <rdf:type rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#BucketOpening"/>
+        <hsr_objects:isSurfaceType rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/testing#Bucket-2"/>
+    </owl:NamedIndividual>
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/testing#Shelf-1 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/testing#Shelf-1">
+        <rdf:type rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Shelf"/>
+    </owl:NamedIndividual>
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/testing#Shelf-2 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/testing#Shelf-2">
+        <rdf:type rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Shelf"/>
+    </owl:NamedIndividual>
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/testing#Table-1 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/testing#Table-1">
+        <rdf:type rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Table"/>
+    </owl:NamedIndividual>
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/testing#Table-2 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/testing#Table-2">
+        <rdf:type rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Table"/>
+    </owl:NamedIndividual>
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/testing#Bucket-1 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/testing#Bucket-1">
+        <rdf:type rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Bucket"/>
+    </owl:NamedIndividual>
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/testing#Bucket-2 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/testing#Bucket-2">
+        <rdf:type rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Bucket"/>
+    </owl:NamedIndividual>
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/testing#Chips-1 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/testing#Chips-1">
+        <rdf:type rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Chips"/>
+        <hsr_objects:supportedBy rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/testing#BucketOpening-1"/>
+    </owl:NamedIndividual>
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/testing#CoffeeMug-1 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/testing#CoffeeMug-1">
+        <rdf:type rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#CoffeeMug"/>
+        <hsr_objects:supportedBy rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/testing#Tabletop-1"/>
+    </owl:NamedIndividual>
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/testing#IceTea-1-->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/testing#IceTea-1">
+        <rdf:type rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#IceTea"/>
+        <hsr_objects:supportedBy rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/testing#Shelffloor-1"/>
+    </owl:NamedIndividual>
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/testing#Source-Indiv -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/testing#Source-Indiv">
+        <rdf:type rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Source"/>
+    </owl:NamedIndividual>
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/testing#Target-Indiv -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/testing#Target-Indiv">
+        <rdf:type rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Target"/>
+    </owl:NamedIndividual>
+
+
+
+</rdf:RDF>
+
+
+<!-- Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi -->

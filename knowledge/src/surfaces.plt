@@ -1,10 +1,21 @@
-:- begin_tests(surfaces).
+:- use_module(library('db/tripledb_tests')).
+%:- begin_tests(surfaces).
+
+:- begin_tripledb_tests(
+        'surfaces',
+        'package://knowledge/owl/testing.owl',
+        [ namespace('http://www.semanticweb.org/suturo/ontologies/2021/0/testing#')]
+  ).
 
 :- use_module(library('semweb/rdf_db')).
 :- use_module(library('semweb/rdfs')).
-:- use_module(library('db/tripledb')).
+:- use_module(library('db/tripledb'),[tripledb_load/2, ros_package_iri/2]).
+:- use_module(library('lang/terms/triple')).
+:- use_module(library('model/RDFS')).
 :- use_module(library('knowrob')).
+:- use_module(library('rostest.pl')).
 
+:- use_module(library('surfaces')).
 :- use_module(library('config')).
 :- use_module(library('pickup')).
 :- use_module(library('object_state')).
@@ -12,9 +23,15 @@
 :- use_module(library('spatial_comp')).
 :- use_module(library('assignplaces')).
 
-:- include(surfaces).
 
-%%% SETUP PREDICATES %%%%%%%%
+%:- include(surfaces).
+
+
+%:- ros_package_iri(knowledge, 'package://knowledge/owl/testing.owl').
+%:- tripledb_load('package://knowledge/owl/testing.owl',[ namespace(test, 'http://www.semanticweb.org/suturo/ontologies/2021/0/testing#')]).
+
+
+%%% SETUP PREDICATES %%%%%
 
 %% RoboCup Grocery storing
 create_some_roles1:-
@@ -70,6 +87,8 @@ add_some_objects:-
 	add_object1,
 	add_object2,
 	add_object3.
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%% ACTUAL TESTS %%%%%%%%%%%%%%%%%%
@@ -166,5 +185,27 @@ test(makeTablesSource) :-
 	table_surfaces(Tables),
 	length(Tables, CountTables),
 	length(Surfaces, CountTables).
+
+
+test(surface_type_of_shelf) :-
+	has_type(A,hsr_objects:'Shelffloor'),
+	surface_type_of(A, Type),
+	write(Type).
+
+test(is_surface) :-
+	%has_type(A,hsr_objects:'Shelffloor'),
+	is_surface(test:'Shelffloor-1').
+
+test(is_table) :-
+	has_type(A,hsr_objects:'Table'),
+	is_table(A).
+
+test(is_shelf) :-
+	has_type(A,hsr_objects:'Shelf'),
+	is_shelf(A).
+
+test(all_surfaces) :-
+	all_surfaces(Surfaces).
+
 
 :- end_tests(surfaces).
