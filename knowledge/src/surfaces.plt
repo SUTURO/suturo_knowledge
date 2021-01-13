@@ -186,26 +186,9 @@ test(makeTablesSource) :-
 	length(Tables, CountTables),
 	length(Surfaces, CountTables).
 
+test(fail) :-
+    fail.
 
-test(surface_type_of_shelf) :-
-	has_type(A,hsr_objects:'Shelffloor'),
-	surface_type_of(A, Type),
-	write(Type).
-
-test(is_surface) :-
-	%has_type(A,hsr_objects:'Shelffloor'),
-	is_surface(test:'Shelffloor-1').
-
-test(is_table) :-
-	has_type(A,hsr_objects:'Table'),
-	is_table(A).
-
-test(is_shelf) :-
-	has_type(A,hsr_objects:'Shelf'),
-	is_shelf(A).
-
-test(all_surfaces) :-
-	all_surfaces(Surfaces).
 
 
 :- end_tests(surfaces).

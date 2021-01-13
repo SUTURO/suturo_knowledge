@@ -4,7 +4,9 @@
   <arg name="urdf_param" default="/hsrb_lab" />
   <arg name="urdf_launch_file" default="gazebo_E1" />
 
+  <!-- The urdf now starts from suturo_bringup
   <include file="$(find suturo_urdf_publisher)/launch/$(arg urdf_launch_file).launch" />
+  -->
 
   <param name="param_to_load_URDF_from" type="str" value="$(arg urdf_param)" />
   <param name="initial_package" type="string" value="knowledge" />

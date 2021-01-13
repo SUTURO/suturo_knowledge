@@ -26,3 +26,4 @@
     local-name: rosprolog
     uri: https://github.com/knowrob/rosprolog.git
     version: master
+
