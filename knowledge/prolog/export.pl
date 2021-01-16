@@ -20,9 +20,9 @@
       % Find Surfaces
       table_surfaces/1,
       % Beliefstate
-      forget_objects_on_surface/1,
+      forget_objects_on_surface/1
       % Mocking
-      create_object_on_surface/1
+      % create_object_on_surface/1
 
     ]).
 
