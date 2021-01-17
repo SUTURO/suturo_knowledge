@@ -54,7 +54,7 @@ object_goal_pose(Instance, [Translation, Rotation], Context, RefObject) :-
 
 %% When a new group is opened the RefObject is equal to the Instance
 object_goal_pose(Instance, [Translation, Rotation], Context, Instance) :-
-    write("object_goal_pose new Group"),
+    rosinfo("object_goal_pose created new Group"),
     object_goal_surface_(Instance, Surface, Context, Instance),
     urdf_frame(Surface, Frame),
     surface_pose_in_map(Surface, [[SX,SY,SZ], Rotation]),
@@ -75,7 +75,7 @@ object_goal_pose(Instance, [Translation, Rotation], Context, Instance) :-
 
 object_goal_pose(_, _, "You haven't defined any target surfaces", _) :-
     all_target_surfaces([]),
-    writeln("You haven't defined any target surfaces").
+    roswarn("You haven't defined any target surfaces").
 
 % deprecated. Use object_goal_pose instead.
 object_goal_pose_offset_(Instance, [[X,Y,Z], Rotation],Context):-
