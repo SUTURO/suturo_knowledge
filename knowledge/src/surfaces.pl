@@ -94,9 +94,9 @@ assert_surface_types(SurfaceLink):-
 %
 supporting_surface(SurfaceLink):-
     get_urdf_id(URDF),
-    write(SurfaceLink),
+    %write(SurfaceLink),
     urdf_link_collision_shape(URDF,SurfaceLink,ShapeTerm,_),
-    write(ShapeTerm),
+    %write(ShapeTerm),
     surface_big_enough(ShapeTerm).
 
 surface_big_enough(box(X, Y, _)):- %TODO Support other shapes, has not been tested yet.
