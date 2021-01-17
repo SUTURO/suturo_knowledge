@@ -1,6 +1,7 @@
 
 :- module(object_state,
     [
+      object_tf_frame/2,
       create_object/2,
       clear/0,
       object_at_table/1,
@@ -48,6 +49,13 @@ forget_objects_on_surface_(SurfaceLink) :-
     objects_on_surface(Objs,SurfaceLink),
     member(Obj,Objs),
     hsr_forget_object(Obj).
+
+
+%% gets the tf-frame given the Object
+object_tf_frame(Object, Frame):-
+    is_object(Object),
+    object_frame_name(Object, Frame).
+
 
 %%
 % finds the surface an object was seen on. When there is no surface supporting the object and
