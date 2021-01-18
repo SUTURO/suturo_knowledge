@@ -36,11 +36,11 @@ object_goal_pose(Instance, [Translation, Rotation], Context, RefObject) :-
     surface_pose_in_map(Surface, [_, Rotation]),
     triple(RefObject, hsr_objects:'inGroup', Group),
     group_mean_pose(Group, [GroupX,GroupY,GroupZ], _),
-    urdf_frame(Surface, Frame),
-    tf_transform_point(map, Frame, [GroupX,GroupY,GroupZ], [_, GroupYOnS, _]),
+    tf_transform_point(map, Surface, [GroupX,GroupY,GroupZ], [_, GroupYOnS, _]),
     offsets(Offset),
     member(YOffset, Offset),
-    rdf_urdf_link_collision(Surface, box(Depth, Width, _), _), % get surface dimensions
+    get_urdf_id(URDF),
+    urdf_link_collision_shape(URDF, Surface, box(Depth, Width, _), _), % get surface dimensions
     NewY is (GroupYOnS + YOffset),
     NewY < (Width / 2) - 0.1,
     NewY > (Width / -2) + 0.1,
@@ -56,12 +56,12 @@ object_goal_pose(Instance, [Translation, Rotation], Context, RefObject) :-
 object_goal_pose(Instance, [Translation, Rotation], Context, Instance) :-
     rosinfo("object_goal_pose created new Group"),
     object_goal_surface_(Instance, Surface, Context, Instance),
-    urdf_frame(Surface, Frame),
     surface_pose_in_map(Surface, [[SX,SY,SZ], Rotation]),
-    tf_transform_point(map, Frame, [SX,SY,SZ], [ _, YOnS,_]),  
+    tf_transform_point(map, Surface, [SX,SY,SZ], [ _, YOnS,_]),  
     offsets(Offset),
     member(YOffset, Offset),
-    rdf_urdf_link_collision(Surface, box(Depth, Width, _), _), % get surface dimensions
+    get_urdf_id(URDF),
+    urdf_link_collision_shape(URDF, Surface, box(Depth, Width, _), _), % get surface dimensions
     NewYOnS is YOnS + YOffset,
     NewYOnS < (Width / 2) - 0.1,
     NewYOnS > (Width / -2) + 0.1,
