@@ -111,9 +111,9 @@ context_speech_sort_by_size(Object, SimilarObject, Context) :-
     string_concat(Part3, ' object.', Context).
 
 % Object is an actual Object, where
-% Classname is the Name of it's class without the hsr_objects: in front of it.
+% Classname is the Name of its class without the hsr_objects: in front of it.
 object_classname(Object, Classname) :-
-    kb_type_of(Object, Type),
+    has_type(Object, Type),
     split_string(Type, "#", "", [_,ClassnameString]),
     atom_string(Classname, ClassnameString).
 

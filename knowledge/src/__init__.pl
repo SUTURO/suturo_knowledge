@@ -4,8 +4,10 @@
 
 :- use_module(library('semweb/rdf_db')).
 :- use_module(library('semweb/rdfs')).
-:- use_module(library('db/tripledb'), [tripledb_load/1, tripledb_load/2, ros_package_iri/2, tripledb_tell/5]).
+:- use_module(library('db/tripledb'), [tripledb_load/1, tripledb_load/2, ros_package_iri/2, tripledb_tell/5, tripledb_forget/3]).
+:- use_module(library('lang/terms/triple')).
 :- use_module(library('lang/computable')).
+:- use_module(library('model/metrics/WuPalmer')).
 
 :- use_module(library('config')).
 :- use_module(library('urdf')).
@@ -16,11 +18,9 @@
 :- use_module(library('beliefstate')).
 :- use_module(library('assignplaces')).
 :- use_module(library('gripper'), [gripper/1, gripper_init/1]).
-:- use_module(library('mocking')).
 :- use_module(library('export')).
 
 :- ros_package_iri(knowledge, 'package://knowledge/owl/objects.owl').
-:- ros_package_iri(knowledge, 'package://knowledge/owl/testing.owl').
 
 :- tripledb_load(
 	'http://www.ontologydesignpatterns.org/ont/dul/DUL.owl',
@@ -36,10 +36,6 @@
 :- tripledb_load(
 	'http://knowrob.org/kb/URDF.owl',
 	[ namespace(urdf, 'http://knowrob.org/kb/urdf.owl#')
-	]).
-
-:- tripledb_load('package://knowledge/owl/testing.owl',
-	[ namespace(test)
 	]).
 
 :- ros_param_get_string('/param_to_load_URDF_from', Param),

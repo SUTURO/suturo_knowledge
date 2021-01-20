@@ -32,7 +32,7 @@ object_goal_pose(Instance, [Translation, Rotation], Context, Instance) :-
 %% In case a reference group in the shelf is found
 object_goal_pose(Instance, [Translation, Rotation], Context, RefObject) :-
     object_goal_surface_(Instance, Surface, Context, RefObject),
-    not(rdf_equal(Instance, RefObject)),
+    not(same_as(Instance, RefObject)),
     surface_pose_in_map(Surface, [_, Rotation]),
     triple(RefObject, hsr_objects:'inGroup', Group),
     group_mean_pose(Group, [GroupX,GroupY,GroupZ], _),

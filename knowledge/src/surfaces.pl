@@ -94,9 +94,7 @@ assert_surface_types(Robot, SurfaceLink):-
 %% supporting_surface(?Surface).
 %
 supporting_surface(Robot, SurfaceLink):-
-    write(SurfaceLink),
     urdf_link_collision_shape(Robot,SurfaceLink,ShapeTerm,_),
-    write(ShapeTerm),
     surface_big_enough(ShapeTerm).
 
 surface_big_enough(box(X, Y, _)):- %TODO Support other shapes, has not been tested yet.
@@ -116,8 +114,8 @@ square_big_enough(X,Y):- %TODO Support other shapes
 assert_object_on(ObjectInstance, SurfaceLink) :-
     all_surfaces(SurfaceLinks), % this makes sure, we actually have a surface here
     member(SurfaceLink,SurfaceLinks),
-    kb_retract(ObjectInstance, hsr_objects:'supportedBy', _),
-    kb_assert(ObjectInstance, hsr_objects:'supportedBy', SurfaceLink).
+    tripledb_forget(ObjectInstance, hsr_objects:'supportedBy', _),
+    tripledb_tell(ObjectInstance, hsr_objects:'supportedBy', SurfaceLink).
 
 
 surface_type_of(Surface, Type):- % has not been tested yet.
@@ -356,7 +354,8 @@ make_all_surface_type_role(SurfaceType, Role):-
 
 % Gives the gives SurfaceLink the Role (target or source)
 make_role(SurfaceLink, Role):-
-    rdf_retractall(SurfaceLink, hsr_objects:'sourceOrTarget',_),
+    forall(triple(SurfaceLink,hsr_objects:'sourceOrTarget',R), tripledb_forget(SurfaceLink,hsr_objects:'sourceOrTarget',R)),
+    %rdf_retractall(SurfaceLink, hsr_objects:'sourceOrTarget',_),
     tell(triple(SurfaceLink, hsr_objects:'sourceOrTarget', Role)).
 
 

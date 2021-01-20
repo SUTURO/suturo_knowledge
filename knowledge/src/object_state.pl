@@ -42,7 +42,8 @@ hsr_existing_objects(Objects) :-
   list_to_set(X,Objects).
 
 hsr_forget_object(Object) :-
-    rdf_retractall(Object,_,_).
+    forall(triple(Object,_,_), tripledb_forget(Object,_,_)).
+
 
 forget_objects_on_surface_(SurfaceLink) :-
     objects_on_surface(Objs,SurfaceLink),
@@ -69,9 +70,9 @@ object_of_type(ObjectType, Instance) :-
 	belief_existing_objects(Instance, [ObjectType]).
 
 create_object(ObjectType, Instance) :-
- 	subclass_of(ObjectType, dul:'PhysicalObject'),
+ 	transitive(subclass_of(ObjectType, dul:'PhysicalObject')),
 	belief_new_object(ObjectType, Instance),
-        tell(triple(Instance, hsr_objects:'supportable', true)).
+    tell(triple(Instance, hsr_objects:'supportable', true)).
 
 % deprecated. buggy, too.
 create_object_at(ObjectType, Transform, Instance, Dimensions, Color) :-
@@ -83,7 +84,7 @@ create_object_at(PerceivedObjectType, PercTypeConfidence, Transform, Instance, [
     validate_confidence(color, PercColorCondidence, ColorCondidence),
     object_size_ok([Width, Depth, Height]),
     object_type_handling(PerceivedObjectType, TypeConfidence, ObjectType),
-    subclass_of(ObjectType, dul:'PhysicalObject'),
+    transitive(subclass_of(ObjectType, dul:'PhysicalObject')),
     new_perceived_at(ObjectType, Transform, Instance),
     atom_number(TypeConfidenceAtom, TypeConfidence),
     tell(triple(Instance, hsr_objects:'ConfidenceClassValue', TypeConfidenceAtom)),
@@ -167,7 +168,7 @@ object_shape_handling(Instance, _, Confidence) :-
     tell(triple(Instance, 'http://www.ease-crc.org/ont/EASE-OBJ.owl#Shape', '')).
 
 set_object_colour(Instance, _, Confidence) :-
-    not(Confidence = 0), % for cases in which Perception doesn't give confidences.
+    not(Confidence = 0), % for cases in which Perception does not give confidences.
     min_color_confidence(MinConf),
     Confidence < MinConf,
     tell(triple(Instance, hsr_objects:'colour', '')),
