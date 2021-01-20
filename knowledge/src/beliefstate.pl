@@ -350,7 +350,7 @@ next_empty_surface(Surface) :-
     next_empty_surface_(SortedSurfaces, Surface).
 
 next_empty_surface(Surface) :- %% to do
-    writeln("There is no free surface left"),
+    roswarn("There is no free surface left"),
     Surface=error.
 
 next_empty_surface_(Surfaces, Surface) :-
