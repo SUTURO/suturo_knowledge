@@ -38,4 +38,7 @@
     local-name: aliencontrol
     uri: https://github.com/acschaefer/aliencontrol.git
     version: master
-
+- git:
+    local-name: suturo_knowledge
+    uri: https://github.com/SUTURO/suturo_knowledge.git
+    version: master
