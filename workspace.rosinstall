@@ -31,6 +31,11 @@
     uri: https://github.com/rosjava/rosjava_build_tools.git
     version: kinetic
 - git:
-    local-name: suturo_nlg
+    local-name: suturo_nlp
     uri: https://github.com/SUTURO/suturo_nlp.git
     version: master
+- git:
+    local-name: aliencontrol
+    uri: https://github.com/acschaefer/aliencontrol.git
+    version: master
+
