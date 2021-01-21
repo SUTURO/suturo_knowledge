@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 import rospy
-from manipulation_action_msgs.msg import ObjectInGripper
+from manipulation_msgs.msg import ObjectInGripper
 import rosprolog_client
 
 prolog = rosprolog_client.Prolog()
