@@ -43,7 +43,7 @@ class StoreObjectInfoServer(object):
                 rospy.loginfo("The given class name is empty. Setting to OTHER.")
                 obj_class = "Other"
 
-            class_test_query = "kb_is_class(hsr_objects:'" + obj_class + "')."
+            class_test_query = "is_class(hsr_objects:'" + obj_class + "')."
             solutions = prolog.all_solutions(class_test_query)
             if not solutions:
                 rospy.logwarn(
