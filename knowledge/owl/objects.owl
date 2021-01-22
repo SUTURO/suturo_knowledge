@@ -10,8 +10,8 @@
      xmlns:dul="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#"
      xmlns:hsr_objects="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#">
     <owl:Ontology rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects">
-        <owl:imports rdf:resource="package://knowrob_common/owl/knowrob.owl"/>
-        <owl:imports rdf:resource="package://urdfprolog/owl/urdf.owl"/>
+        <owl:imports rdf:resource="package://knowrob/owl/knowrob.owl"/>
+        <owl:imports rdf:resource="package://knowrob/owl/URDF.owl"/>
     </owl:Ontology>
     
 
@@ -51,7 +51,7 @@
         <rdfs:subPropertyOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#hasRole"/>
         <owl:inverseOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#isLocationRoleOf"/>
         <rdfs:domain rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#PhysicalObject"/>
-        <rdfs:range rdf:resource="http://www.ease-crc.org/ont/EASE-OBJ.owl#Location"/>
+        <rdfs:range rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Location"/>
         <rdfs:comment>a relation between a physical object and a location</rdfs:comment>
     </owl:ObjectProperty>
     
@@ -62,7 +62,7 @@
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#hassurface">
         <rdfs:subPropertyOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#associatedWith"/>
         <owl:inverseOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#issurfaceof"/>
-        <rdfs:domain rdf:resource="http://www.ease-crc.org/ont/EASE.owl#DesignedFurniture"/>
+        <rdfs:domain rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#DesignedFurniture"/>
         <rdfs:range rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#FurnitureSurface"/>
         <rdfs:comment>A relation between a piece of designed furniture and a furniture surface</rdfs:comment>
     </owl:ObjectProperty>
@@ -84,7 +84,7 @@
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#isLocationRoleOf">
         <rdfs:subPropertyOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#isRoleOf"/>
-        <rdfs:domain rdf:resource="http://www.ease-crc.org/ont/EASE-OBJ.owl#Location"/>
+        <rdfs:domain rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Location"/>
         <rdfs:range rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#PhysicalObject"/>
         <rdfs:comment>a relation between a physical object and a location</rdfs:comment>
     </owl:ObjectProperty>
@@ -96,7 +96,7 @@
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#issurfaceof">
         <rdfs:subPropertyOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#associatedWith"/>
         <rdfs:domain rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#FurnitureSurface"/>
-        <rdfs:range rdf:resource="http://www.ease-crc.org/ont/EASE.owl#DesignedFurniture"/>
+        <rdfs:range rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#DesignedFurniture"/>
         <rdfs:comment>A relation between a piece of designed furniture and a furniture surface</rdfs:comment>
     </owl:ObjectProperty>
     
@@ -273,59 +273,59 @@
     
 
 
-    <!-- http://www.ease-crc.org/ont/EASE-OBJ.owl#ColorRegion -->
+    <!-- http://www.ease-crc.org/ont/SOMA.owl#ColorRegion -->
 
-    <owl:Class rdf:about="http://www.ease-crc.org/ont/EASE-OBJ.owl#ColorRegion"/>
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA.owl#ColorRegion"/>
     
 
 
-    <!-- http://www.ease-crc.org/ont/EASE-OBJ.owl#Crockery -->
+    <!-- http://www.ease-crc.org/ont/SOMA.owl#Crockery -->
 
-    <owl:Class rdf:about="http://www.ease-crc.org/ont/EASE-OBJ.owl#Crockery"/>
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Crockery"/>
     
 
 
-    <!-- http://www.ease-crc.org/ont/EASE-OBJ.owl#Cutlery -->
+    <!-- http://www.ease-crc.org/ont/SOMA.owl#Cutlery -->
 
-    <owl:Class rdf:about="http://www.ease-crc.org/ont/EASE-OBJ.owl#Cutlery"/>
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Cutlery"/>
     
 
 
-    <!-- http://www.ease-crc.org/ont/EASE-OBJ.owl#Destination -->
+    <!-- http://www.ease-crc.org/ont/SOMA.owl#Destination -->
 
-    <owl:Class rdf:about="http://www.ease-crc.org/ont/EASE-OBJ.owl#Destination">
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Destination">
         <owl:equivalentClass rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Target"/>
     </owl:Class>
     
 
 
-    <!-- http://www.ease-crc.org/ont/EASE-OBJ.owl#DishwasherTab -->
+    <!-- http://www.ease-crc.org/ont/SOMA.owl#DishwasherTab -->
 
-    <owl:Class rdf:about="http://www.ease-crc.org/ont/EASE-OBJ.owl#DishwasherTab">
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA.owl#DishwasherTab">
         <owl:equivalentClass rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Dishwashertab"/>
     </owl:Class>
     
 
 
-    <!-- http://www.ease-crc.org/ont/EASE-OBJ.owl#Fork -->
+    <!-- http://www.ease-crc.org/ont/SOMA.owl#Fork -->
 
-    <owl:Class rdf:about="http://www.ease-crc.org/ont/EASE-OBJ.owl#Fork">
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Fork">
         <owl:equivalentClass rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Fork"/>
     </owl:Class>
     
 
 
-    <!-- http://www.ease-crc.org/ont/EASE-OBJ.owl#Knife -->
+    <!-- http://www.ease-crc.org/ont/SOMA.owl#Knife -->
 
-    <owl:Class rdf:about="http://www.ease-crc.org/ont/EASE-OBJ.owl#Knife">
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Knife">
         <owl:equivalentClass rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Knife"/>
     </owl:Class>
     
 
 
-    <!-- http://www.ease-crc.org/ont/EASE-OBJ.owl#Location -->
+    <!-- http://www.ease-crc.org/ont/SOMA.owl#Location -->
 
-    <owl:Class rdf:about="http://www.ease-crc.org/ont/EASE-OBJ.owl#Location">
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Location">
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#isLocationRoleOf"/>
@@ -336,83 +336,83 @@
     
 
 
-    <!-- http://www.ease-crc.org/ont/EASE-OBJ.owl#Origin -->
+    <!-- http://www.ease-crc.org/ont/SOMA.owl#Origin -->
 
-    <owl:Class rdf:about="http://www.ease-crc.org/ont/EASE-OBJ.owl#Origin">
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Origin">
         <owl:equivalentClass rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Source"/>
     </owl:Class>
     
 
 
-    <!-- http://www.ease-crc.org/ont/EASE-OBJ.owl#PancakeMix -->
+    <!-- http://www.ease-crc.org/ont/SOMA.owl#PancakeMix -->
 
-    <owl:Class rdf:about="http://www.ease-crc.org/ont/EASE-OBJ.owl#PancakeMix">
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA.owl#PancakeMix">
         <owl:equivalentClass rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#PancakeMix"/>
     </owl:Class>
     
 
 
-    <!-- http://www.ease-crc.org/ont/EASE-OBJ.owl#Plate -->
+    <!-- http://www.ease-crc.org/ont/SOMA.owl#Plate -->
 
-    <owl:Class rdf:about="http://www.ease-crc.org/ont/EASE-OBJ.owl#Plate">
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Plate">
         <owl:equivalentClass rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Plate"/>
     </owl:Class>
     
 
 
-    <!-- http://www.ease-crc.org/ont/EASE-OBJ.owl#RedColor -->
+    <!-- http://www.ease-crc.org/ont/SOMA.owl#RedColor -->
 
-    <owl:Class rdf:about="http://www.ease-crc.org/ont/EASE-OBJ.owl#RedColor">
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA.owl#RedColor">
         <owl:equivalentClass rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#RedColor"/>
     </owl:Class>
     
 
 
-    <!-- http://www.ease-crc.org/ont/EASE-OBJ.owl#Shape -->
+    <!-- http://www.ease-crc.org/ont/SOMA.owl#Shape -->
 
-    <owl:Class rdf:about="http://www.ease-crc.org/ont/EASE-OBJ.owl#Shape"/>
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Shape"/>
     
 
 
-    <!-- http://www.ease-crc.org/ont/EASE-OBJ.owl#ShapeRegion -->
+    <!-- http://www.ease-crc.org/ont/SOMA.owl#ShapeRegion -->
 
-    <owl:Class rdf:about="http://www.ease-crc.org/ont/EASE-OBJ.owl#ShapeRegion"/>
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA.owl#ShapeRegion"/>
     
 
 
-    <!-- http://www.ease-crc.org/ont/EASE-OBJ.owl#Spatula -->
+    <!-- http://www.ease-crc.org/ont/SOMA.owl#Spatula -->
 
-    <owl:Class rdf:about="http://www.ease-crc.org/ont/EASE-OBJ.owl#Spatula">
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Spatula">
         <owl:equivalentClass rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Spatula"/>
     </owl:Class>
     
 
 
-    <!-- http://www.ease-crc.org/ont/EASE.owl#Bottle -->
+    <!-- http://www.ease-crc.org/ont/SOMA.owl#Bottle -->
 
-    <owl:Class rdf:about="http://www.ease-crc.org/ont/EASE.owl#Bottle">
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Bottle">
         <owl:equivalentClass rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Bottle"/>
     </owl:Class>
     
 
 
-    <!-- http://www.ease-crc.org/ont/EASE.owl#Bowl -->
+    <!-- http://www.ease-crc.org/ont/SOMA.owl#Bowl -->
 
-    <owl:Class rdf:about="http://www.ease-crc.org/ont/EASE.owl#Bowl">
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Bowl">
         <owl:equivalentClass rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Bowl"/>
     </owl:Class>
     
 
 
-    <!-- http://www.ease-crc.org/ont/EASE.owl#DesignedContainer -->
+    <!-- http://www.ease-crc.org/ont/SOMA.owl#DesignedContainer -->
 
-    <owl:Class rdf:about="http://www.ease-crc.org/ont/EASE.owl#DesignedContainer"/>
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA.owl#DesignedContainer"/>
     
 
 
-    <!-- http://www.ease-crc.org/ont/EASE.owl#DesignedFurniture -->
+    <!-- http://www.ease-crc.org/ont/SOMA.owl#DesignedFurniture -->
 
-    <owl:Class rdf:about="http://www.ease-crc.org/ont/EASE.owl#DesignedFurniture">
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA.owl#DesignedFurniture">
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#hassurface"/>
@@ -423,21 +423,21 @@
     
 
 
-    <!-- http://www.ease-crc.org/ont/EASE.owl#DesignedTool -->
+    <!-- http://www.ease-crc.org/ont/SOMA.owl#DesignedTool -->
 
-    <owl:Class rdf:about="http://www.ease-crc.org/ont/EASE.owl#DesignedTool"/>
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA.owl#DesignedTool"/>
     
 
 
-    <!-- http://www.ease-crc.org/ont/EASE.owl#Surface -->
+    <!-- http://www.ease-crc.org/ont/SOMA.owl#Surface -->
 
-    <owl:Class rdf:about="http://www.ease-crc.org/ont/EASE.owl#Surface"/>
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Surface"/>
     
 
 
-    <!-- http://www.ease-crc.org/ont/EASE.owl#Table -->
+    <!-- http://www.ease-crc.org/ont/SOMA.owl#Table -->
 
-    <owl:Class rdf:about="http://www.ease-crc.org/ont/EASE.owl#Table">
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Table">
         <owl:equivalentClass rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Table"/>
     </owl:Class>
     
@@ -479,7 +479,7 @@
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#hasLocationRole"/>
-                <owl:allValuesFrom rdf:resource="http://www.ease-crc.org/ont/EASE-OBJ.owl#Location"/>
+                <owl:allValuesFrom rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Location"/>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
@@ -666,7 +666,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#BlackColor -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#BlackColor">
-        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/EASE-OBJ.owl#ColorRegion"/>
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#ColorRegion"/>
         <rdfs:comment>A color region with dominant black color</rdfs:comment>
     </owl:Class>
     
@@ -675,7 +675,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#BlueColor -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#BlueColor">
-        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/EASE-OBJ.owl#ColorRegion"/>
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#ColorRegion"/>
         <rdfs:comment>A color region with dominant blue color</rdfs:comment>
     </owl:Class>
     
@@ -692,7 +692,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Bowl -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Bowl">
-        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/EASE-OBJ.owl#Crockery"/>
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Crockery"/>
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Receptacle"/>
         <rdfs:comment>A round, deep object used to store food or liquid.</rdfs:comment>
     </owl:Class>
@@ -710,7 +710,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Bucket -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Bucket">
-        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/EASE.owl#DesignedFurniture"/>
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#DesignedFurniture"/>
         <rdfs:comment>Designed furniture designed to store objects, that are no longer needed</rdfs:comment>
     </owl:Class>
     
@@ -996,7 +996,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Cuboid -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Cuboid">
-        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/EASE-OBJ.owl#ShapeRegion"/>
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#ShapeRegion"/>
         <rdfs:comment>A symmetrical shape, either solid or hollow, contained by six rectangles.</rdfs:comment>
     </owl:Class>
     
@@ -1006,7 +1006,7 @@
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Cup">
         <owl:equivalentClass rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Tasse"/>
-        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/EASE-OBJ.owl#Crockery"/>
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Crockery"/>
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Receptacle"/>
     </owl:Class>
     
@@ -1023,7 +1023,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Cylinder -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Cylinder">
-        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/EASE-OBJ.owl#ShapeRegion"/>
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#ShapeRegion"/>
         <rdfs:comment>A solid geometrical figure with straight parallel sides and a circular or oval cross section.</rdfs:comment>
     </owl:Class>
     
@@ -1220,7 +1220,7 @@
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Flashlight">
         <rdfs:subClassOf rdf:resource="http://knowrob.org/kb/knowrob.owl#ElectricalLightingDevice"/>
-        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/EASE.owl#DesignedTool"/>
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#DesignedTool"/>
     </owl:Class>
     
 
@@ -1260,7 +1260,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Fork -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Fork">
-        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/EASE-OBJ.owl#Cutlery"/>
+        <rdfs:subClassOf rdf:resource="hhttp://www.ease-crc.org/ont/SOMA.owl#Cutlery"/>
     </owl:Class>
     
 
@@ -1316,11 +1316,11 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#FurnitureSurface -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#FurnitureSurface">
-        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/EASE.owl#Surface"/>
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Surface"/>
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#issurfaceof"/>
-                <owl:someValuesFrom rdf:resource="http://www.ease-crc.org/ont/EASE.owl#DesignedFurniture"/>
+                <owl:someValuesFrom rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#DesignedFurniture"/>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:comment>The outside part or upmost layer of a piece of furniture</rdfs:comment>
@@ -1629,7 +1629,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Knife -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Knife">
-        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/EASE-OBJ.owl#Cutlery"/>
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Cutlery"/>
     </owl:Class>
     
 
@@ -1887,7 +1887,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#OrangeColor -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#OrangeColor">
-        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/EASE-OBJ.owl#ColorRegion"/>
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#ColorRegion"/>
         <rdfs:comment>A color region with dominant orange color</rdfs:comment>
     </owl:Class>
     
@@ -2033,7 +2033,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Plate -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Plate">
-        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/EASE-OBJ.owl#Crockery"/>
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Crockery"/>
         <rdfs:comment>A flat and usually circular object from which food is eaten or served.</rdfs:comment>
     </owl:Class>
     
@@ -2042,7 +2042,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Pliers -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Pliers">
-        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/EASE.owl#DesignedTool"/>
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#DesignedTool"/>
     </owl:Class>
     
 
@@ -2131,7 +2131,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Receptacle -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Receptacle">
-        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/EASE.owl#DesignedContainer"/>
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#DesignedContainer"/>
         <rdfs:comment>A small designed container, that is designed to store liquids and/or food</rdfs:comment>
     </owl:Class>
     
@@ -2140,7 +2140,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#RedColor -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#RedColor">
-        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/EASE-OBJ.owl#ColorRegion"/>
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#ColorRegion"/>
         <rdfs:comment>A color region with dominant red color</rdfs:comment>
     </owl:Class>
     
@@ -2237,7 +2237,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Shelf -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Shelf">
-        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/EASE.owl#DesignedFurniture"/>
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#DesignedFurniture"/>
         <rdfs:subClassOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#PhysicalPlace"/>
         <rdfs:comment>A piece of furniture for storing things.</rdfs:comment>
     </owl:Class>
@@ -2330,7 +2330,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Source -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Source">
-        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/EASE-OBJ.owl#Location"/>
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Location"/>
         <rdfs:comment>The location where the event originated.</rdfs:comment>
     </owl:Class>
     
@@ -2355,7 +2355,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Spatula -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Spatula">
-        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/EASE-OBJ.owl#Cutlery"/>
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Cutlery"/>
     </owl:Class>
     
 
@@ -2363,7 +2363,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Sphere -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Sphere">
-        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/EASE-OBJ.owl#ShapeRegion"/>
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#ShapeRegion"/>
         <rdfs:comment>A round solid figure with every point equidistant from its center</rdfs:comment>
     </owl:Class>
     
@@ -2396,7 +2396,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Spoon -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Spoon">
-        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/EASE-OBJ.owl#Cutlery"/>
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Cutlery"/>
     </owl:Class>
     
 
@@ -2428,7 +2428,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Table -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Table">
-        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/EASE.owl#DesignedFurniture"/>
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#DesignedFurniture"/>
         <rdfs:subClassOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#PhysicalPlace"/>
         <rdfs:comment>A piece of furniture with a flat top and one or more legs.</rdfs:comment>
     </owl:Class>
@@ -2446,7 +2446,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Target -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Target">
-        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/EASE-OBJ.owl#Location"/>
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Location"/>
         <rdfs:comment>The location where the event is directed towards.</rdfs:comment>
     </owl:Class>
     
@@ -2455,7 +2455,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Tasse -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Tasse">
-        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/EASE-OBJ.owl#Crockery"/>
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Crockery"/>
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Receptacle"/>
     </owl:Class>
     
@@ -2552,7 +2552,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Toy -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Toy">
-        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/EASE.owl#DesignedTool"/>
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#DesignedTool"/>
     </owl:Class>
     
 
@@ -2633,7 +2633,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#WhiteColor -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#WhiteColor">
-        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/EASE-OBJ.owl#ColorRegion"/>
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#ColorRegion"/>
         <rdfs:comment>A color region with dominant white color</rdfs:comment>
     </owl:Class>
     
@@ -2658,7 +2658,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#WritingMaterial -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#WritingMaterial">
-        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/EASE.owl#DesignedTool"/>
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#DesignedTool"/>
     </owl:Class>
     
 
@@ -2682,7 +2682,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#YellowColor -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#YellowColor">
-        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/EASE-OBJ.owl#ColorRegion"/>
+        <rdfs:subClassOf rdf:resource="hhttp://www.ease-crc.org/ont/SOMA.owl#ColorRegion"/>
         <rdfs:comment>A color region with dominant yellow color</rdfs:comment>
     </owl:Class>
 </rdf:RDF>

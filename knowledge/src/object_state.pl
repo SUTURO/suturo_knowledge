@@ -1,6 +1,7 @@
 
 :- module(object_state,
     [
+      object_tf_frame/2,
       create_object/2,
       clear/0,
       object_at_table/1,
@@ -21,7 +22,7 @@
 
 :- rdf_db:rdf_register_ns(hsr_objects, 'http://www.semanticweb.org/suturo/ontologies/2020/3/objects#', [keep(true)]).
 :- rdf_db:rdf_register_ns(robocup, 'http://www.semanticweb.org/suturo/ontologies/2020/2/Robocup#', [keep(true)]).
-:-rdf_db:rdf_register_ns(dul, 'http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#', [keep(true)]).
+:- rdf_db:rdf_register_ns(dul, 'http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#', [keep(true)]).
 
 :- rdf_meta
     create_object(r,?),
@@ -42,12 +43,20 @@ hsr_existing_objects(Objects) :-
   list_to_set(X,Objects).
 
 hsr_forget_object(Object) :-
-    rdf_retractall(Object,_,_).
+    forall(triple(Object,_,_), tripledb_forget(Object,_,_)).
+
 
 forget_objects_on_surface_(SurfaceLink) :-
     objects_on_surface(Objs,SurfaceLink),
     member(Obj,Objs),
     hsr_forget_object(Obj).
+
+
+%% gets the tf-frame given the Object
+object_tf_frame(Object, Frame):-
+    is_object(Object),
+    object_frame_name(Object, Frame).
+
 
 %%
 % finds the surface an object was seen on. When there is no surface supporting the object and
@@ -69,9 +78,9 @@ object_of_type(ObjectType, Instance) :-
 	belief_existing_objects(Instance, [ObjectType]).
 
 create_object(ObjectType, Instance) :-
- 	subclass_of(ObjectType, dul:'PhysicalObject'),
+ 	transitive(subclass_of(ObjectType, dul:'PhysicalObject')),
 	belief_new_object(ObjectType, Instance),
-        tell(triple(Instance, hsr_objects:'supportable', true)).
+    tell(triple(Instance, hsr_objects:'supportable', true)).
 
 % deprecated. buggy, too.
 create_object_at(ObjectType, Transform, Instance, Dimensions, Color) :-
@@ -83,7 +92,7 @@ create_object_at(PerceivedObjectType, PercTypeConfidence, Transform, Instance, [
     validate_confidence(color, PercColorCondidence, ColorCondidence),
     object_size_ok([Width, Depth, Height]),
     object_type_handling(PerceivedObjectType, TypeConfidence, ObjectType),
-    subclass_of(ObjectType, dul:'PhysicalObject'),
+    transitive(subclass_of(ObjectType, dul:'PhysicalObject')),
     new_perceived_at(ObjectType, Transform, Instance),
     atom_number(TypeConfidenceAtom, TypeConfidence),
     tell(triple(Instance, hsr_objects:'ConfidenceClassValue', TypeConfidenceAtom)),
@@ -167,7 +176,7 @@ object_shape_handling(Instance, _, Confidence) :-
     tell(triple(Instance, 'http://www.ease-crc.org/ont/EASE-OBJ.owl#Shape', '')).
 
 set_object_colour(Instance, _, Confidence) :-
-    not(Confidence = 0), % for cases in which Perception doesn't give confidences.
+    not(Confidence = 0), % for cases in which Perception does not give confidences.
     min_color_confidence(MinConf),
     Confidence < MinConf,
     tell(triple(Instance, hsr_objects:'colour', '')),

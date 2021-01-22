@@ -1,0 +1,7 @@
+<launch>
+
+  <include file="$(find knowledge)/launch/knowledge.launch" >
+          <arg name="urdf_launch_file" default="gazebo_E1" />
+  </include>
+
+</launch>

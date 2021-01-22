@@ -1,7 +1,0 @@
-<launch>
-
-  <include file="$(find knowledge)/launch/knowledge.launch" >
-          <arg name="urdf_launch_file" default="robo_sim_t2" />
-  </include>
-
-</launch>

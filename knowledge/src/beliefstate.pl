@@ -59,8 +59,7 @@ new_perceived_at(ObjType, Transform, Instance) :-
 
 % No groups nearby
 hsr_belief_at_update(Instance, Transform) :-
-    kb_create(hsr_objects:'Group', Group, _{graph:groups}),
-%    owl_instance_from_class(hsr_objects:'Group', Group),
+    tripledb_tell(Group,rdfs:'type',hsr_objects:'Group',_,[graph=groups]),
     tell(triple(Instance, hsr_objects:'inGroup', Group)),
     belief_at_update(Instance, Transform).
 
@@ -72,7 +71,7 @@ merge_object_into_group(Instance) :-
         [Obj|Rest]),
     triple(Obj, hsr_objects:'inGroup', WG),
     member(Other, Rest),
-    rdf_retractall(Other, hsr_objects:'inGroup', _),
+    forall(triple(Other,hsr_objects:'inGroup',_),tripledb_forget(Other,hsr_objects:'inGroup',_)),
     tell(triple(Other, hsr_objects:'inGroup', WG)).
 
 group_target_objects :-
@@ -108,10 +107,10 @@ group_objects(Objs) :-
     hsr_existing_object_at_thr(Pos, Threshold, NearbyObj),
     triple(Obj, hsr_objects:'inGroup', Group1),
     triple(NearbyObj, hsr_objects:'inGroup', Group2),
-    not(rdf_equal(Obj, NearbyObj)),
-    not(rdf_equal(Group1, Group2)),
+    not(same_as(Obj, NearbyObj)),
+    not(same_as(Group1, Group2)),
     triple(Member, hsr_objects:'inGroup', Group1),
-    rdf_retractall(Member, hsr_objects:'inGroup', _),
+    forall(triple(Member,hsr_objects:'inGroup',_),tripledb_forget(Member,hsr_objects:'inGroup',_)),
     tell(triple(Member, hsr_objects:'inGroup', Group2)),
     not(group_objects(Objs)).
 
@@ -150,7 +149,7 @@ belief_object_at_location(ObjectId, NewPose, Dmax) :-
 
 belief_class_of(Obj, ObjType) :-
     % nothing to do if current classification matches beliefs
-    kb_type_of(Obj, ObjType), !.
+    has_type(Obj, ObjType), !.
 
 % To Do! assert_temporal_part and assert_temporal_part_end were part of an old knowrob
 % https://github.com/daniel86/knowrob.git
@@ -162,9 +161,9 @@ belief_class_of(Obj, NewObjType) :-
      ignore(once((
         % withdraw old beliefs about object type
         once(instance_of(Obj, CurrObjType)),
-         subclass_of(CurrObjType, Parent),
+        subclass_of(CurrObjType, Parent),
         subclass_of(NewObjType, Parent),
-         assert_temporal_part_end(Obj, rdf:type, CurrObjType, Now, belief_state)
+        assert_temporal_part_end(Obj, rdf:type, CurrObjType, Now, belief_state)
     ))),
     assert_temporal_part(Obj, rdf:type, nontemporal(NewObjType), Now, belief_state).
 
@@ -178,7 +177,7 @@ belief_class_of(Obj, NewObjType) :-
 %%%%%%%%% Defining the distance of their Relationship %%%%%%%%%%%%%%%%%%%%%%%%%%
 
 most_related_object(Source, Target) :-
-    not(kb_type_of(Source, hsr_objects:'Other')),
+    not(has_type(Source, hsr_objects:'Other')),
     most_related_class(Source, Target, Distance),
     allowed_class_distance(MaxDistance),
     MaxDistance >= Distance,
@@ -212,8 +211,8 @@ distance_to_object(Source, Target, Distance) :-
     all_objects_on_target_surfaces(Objs),
     member(Target, Objs),
     not(same_as(Source, Target)),
-    kb_type_of(Target, TargetType),
-    kb_type_of(Source, SourceType),
+    has_type(Target, TargetType),
+    has_type(Source, SourceType),
     distance_of(SourceType, TargetType, Distance).
 
 % in case Source and Target are of the same class,
@@ -241,37 +240,38 @@ same_size(Source, Target):-
     triple(Target, hsr_objects:'size', Size).
 
 assert_all_planning(Object, Surface, Distance, Context, RefObject) :-
-    rdf_retractall(Object, supposedSurface, _),
+    forall(triple(Object, supposedSurface, _), tripledb_forget(Object, supposedSurface, _)),
     tell(triple(Object, supposedSurface, Surface)),
-    rdf_retractall(Object, refObject, _),
+    forall(triple(Object, refObject, _), tripledb_forget(Object, refObject, _)),
     tell(triple(Object, refObject, RefObject)),
     atom_string(ContextAtom, Context),
     assert_distance(Object, Distance, ContextAtom).
 
 assert_distance(Object, Distance, Context) :-
     atom_number(DistanceAtom, Distance),
-    rdf_retractall(Object, distance, _),
+    forall(triple(Object, distance, _), tripledb_forget(Object, distance, _)),
     tell(triple(Object, distance, DistanceAtom)),
     atom_string(ContextAtom, Context),
-    rdf_retractall(Object, context, _),
+    forall(triple(Object, context, _), tripledb_forget(Object, context, _)),
     tell(triple(Object, context, ContextAtom)).
 
 retract_all_planning(Object) :-
-    rdf_retractall(Object, distance, _),
-    rdf_retractall(Object, context, _),
-    rdf_retractall(Object, supposedSurface, _),
-    rdf_retractall(Object, refObject, _).
+    forall(triple(Object, distance, _), tripledb_forget(Object, distance, _)),
+    forall(triple(Object, context, _), tripledb_forget(Object, context, _)),
+    forall(triple(Object, supposedSurface, _), tripledb_forget(Object, supposedSurface, _)),
+    forall(triple(Object, refObject, _), tripledb_forget(Object, refObject, _)).
+
 
 %%%%%%%%% The relation to other Objects on same surface %%%%%%%%%%%%%%%%%%%
 
 % Returns the supposed Surface for the Object and
-% stores the surface and the distance to it's RefObject in RDF.
+% stores the surface and the distance to its RefObject in RDF.
  object_most_similar_surface(Object, Surface) :-
     most_related_object(Object, RefObject),
     find_supporting_surface(RefObject, Surface),
-    rdf_retractall(Object, supposedSurface, _),
+    forall(triple(Object, supposedSurface, _), tripledb_forget(Object, supposedSurface, _)),
     tell(triple(Object, supposedSurface, Surface)),
-    rdf_retractall(Object, refObject, _),
+    forall(triple(Object, refObject, _), tripledb_forget(Object, refObject, _)),
     tell(triple(Object, refObject, RefObject)).
 
 % OtherObjects returns a list of all the objects, that one day 
@@ -350,7 +350,7 @@ next_empty_surface(Surface) :-
     next_empty_surface_(SortedSurfaces, Surface).
 
 next_empty_surface(Surface) :- %% to do
-    writeln("There is no free surface left"),
+    roswarn("There is no free surface left"),
     Surface=error.
 
 next_empty_surface_(Surfaces, Surface) :-
@@ -358,7 +358,7 @@ next_empty_surface_(Surfaces, Surface) :-
     not(triple(_, supposedSurface, Surface)).
 
 % In case there is a bucket, put everything in it
-% To Do: Can't handle multiple surfaces including at least one bucket right now.
+% To Do: Cannot handle multiple surfaces including at least one bucket right now.
 assert_object_supposed_surface(Object) :-
     all_target_surfaces(Surfaces),
     member(Surface, Surfaces),

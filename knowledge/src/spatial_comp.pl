@@ -19,7 +19,6 @@
     hsr_lookup_transform(r,r,?,?),
     hsr_existing_object_at(r,r,?).
 
-
 hsr_lookup_transform(SourceFrame, TargetFrame, Translation, Rotation) :-
     tf_lookup_transform(SourceFrame, TargetFrame, pose(Translation,Rotation)).
 
@@ -50,8 +49,8 @@ hsr_existing_object_at_thr([X,Y,Z], Threshold1, Instance) :-
     hsr_existing_objects(Objects),
     member(Instance, Objects),
     object_dimensions(Instance, Depth, Width, Height),
-    urdf_frame(Instance, InstanceFrame),
-    tf_transform_point(map, InstanceFrame, Pos, [RelX, RelY, RelZ]),
+    object_tf_frame(Instance, ObjectFrame),
+    tf_transform_point(map, ObjectFrame, Pos, [RelX, RelY, RelZ]),
     (Depth >= Width % ignore the orientation of the object
         -> Size = Depth
         ; Size = Width),
@@ -62,7 +61,7 @@ hsr_existing_object_at_thr([X,Y,Z], Threshold1, Instance) :-
     abs(RelZ) < Height. % assuming, the object we want to place has about the same height as the object already placed.
 
 surface_pose_in_map(SurfaceLink, Pose) :-
-    urdf_frame(SurfaceLink, Frame),
+    surface_tf_frame(SurfaceLink, Frame),
     hsr_lookup_transform(map, Frame, [X,Y,Z], Rotation),
     Pose = [[X,Y,Z], Rotation].
 
@@ -95,7 +94,7 @@ position_supportable_by_surface(Position, ground) :-
 
 relative_position_supportable_by_surface([X,Y,Z],Surface) :-
     is_table(Surface),
-    rdf_urdf_link_collision(Surface, box(Depth, Width, _), _),
+    surface_dimensions(Surface, Depth, Width, _),
     threshold_surface(ThAbove, ThBelow),
     ThAbove >= Z,
     ThBelow =< Z,
@@ -105,7 +104,7 @@ relative_position_supportable_by_surface([X,Y,Z],Surface) :-
 
 relative_position_supportable_by_surface([X,Y,Z], Surface) :-
     ( is_shelf(Surface) ; is_bucket(Surface) ),
-    rdf_urdf_link_collision(Surface, box(Depth, Width, _), _),
+    surface_dimensions(Surface, Depth, Width, _),
     threshold_surface(ThAbove, ThBelow),
     ThAbove >= Z,
     ThBelow =< Z,
@@ -125,7 +124,10 @@ position_supportable_by_ground([_,_,Z]) :-
 
 
 distance_to_robot(Thing, Distance) :-
-    urdf_frame(Thing, Frame),
+    ( is_surface(Thing)
+    -> surface_tf_frame(Thing, Frame)
+    ; object_tf_frame(Thing,Frame)
+    ),  
     hsr_lookup_transform(map, Frame, [OX, OY, OZ], _),
     hsr_lookup_transform(map,'base_footprint',[BX,BY,BZ],_),
     DX is (OX - BX),

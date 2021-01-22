@@ -20,15 +20,15 @@ next_object_(BestObj) :-
 
 next_object_(noSourceSurfaces) :-
     all_source_surfaces([]),
-    writeln("You haven't declared any surfaces to be source surfaces"), !.
+    roswarn("You haven't declared any surfaces to be source surfaces"), !.
 
 next_object_(noObjectsOnSourceSurfaces) :-
     all_objects_on_source_surfaces([]),
-    writeln("There aren't any objects on source surfaces").
+    rosinfo("There aren't any objects on source surfaces").
 
 place_objects :- % to do: find a better place for this!
     hsr_existing_objects(Objs),    
     forall(member(Obj, Objs), place_object(Obj)), !.
 
 place_objects :-
-    writeln("Not all objects could have been added.").
+    roswarn("Not all objects could have been added.").
