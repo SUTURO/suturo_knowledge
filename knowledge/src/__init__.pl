@@ -8,6 +8,8 @@
 :- use_module(library('lang/terms/triple')).
 :- use_module(library('lang/computable')).
 :- use_module(library('model/metrics/WuPalmer')).
+:- use_module(library('lang/terms/is_at'), [is_at/2]).
+:- use_module(library('utility/algebra'), [transform_close_to/3]).
 
 :- use_module(library('config')).
 :- use_module(library('urdf')).

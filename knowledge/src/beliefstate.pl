@@ -102,7 +102,8 @@ group_objects_at([X,Y,Z]) :-
 
 group_objects(Objs) :-
     member(Obj, Objs),
-    current_object_pose(Obj, [map, _, Pos, _]),
+    %current_object_pose(Obj, [map, _, Pos, _]),
+    is_at(Obj, [map, Pos, _]),
     threshold_for_group(Threshold),
     hsr_existing_object_at_thr(Pos, Threshold, NearbyObj),
     triple(Obj, hsr_objects:'inGroup', Group1),
@@ -118,15 +119,18 @@ group_objects(Objs) :-
 group_mean_pose(Group, Transform, Rotation) :-
     findall(X, (
         triple(Member, hsr_objects:'inGroup', Group),
-        current_object_pose(Member, [_,_,[X,_,_],_])),
+        %current_object_pose(Member, [_,_,[X,_,_],_])),
+        is_at(Member, [_, [X,_,_], _])),
     Xs),
     findall(Y, (
         triple(Member, hsr_objects:'inGroup', Group),
-        current_object_pose(Member, [_,_,[_,Y,_],_])),
+        %current_object_pose(Member, [_,_,[_,Y,_],_])),
+        is_at(Member, [_, [_,Y,_], _])),
     Ys),
     findall(Z, (
         triple(Member, hsr_objects:'inGroup', Group),
-        current_object_pose(Member, [_,_,[_,_,Z],_])),
+        %current_object_pose(Member, [_,_,[_,_,Z],_])),
+        is_at(Member, [_, [_,_,Z], _])),
     Zs),
     sumlist(Xs, Xtotal),
     sumlist(Ys, Ytotal),
@@ -139,12 +143,14 @@ group_mean_pose(Group, Transform, Rotation) :-
     once(triple(Member, hsr_objects:'inGroup', Group)),
     find_supporting_surface(Member, Surface),
     surface_pose_in_map(Surface, [_, Rotation]),
-    object_frame_name(Group, Frame),
-    object_pose_update(Group, ['map', Frame, Transform, Rotation]).
+    %object_frame_name(Group, Frame),
+    %object_pose_update(Group, ['map', Frame, Transform, Rotation]).
+    tell(is_at(Group, ['map', Transform, Rotation])).
 
 %% Add these predicates because they are not exported in the corresponding modules
 belief_object_at_location(ObjectId, NewPose, Dmax) :-
-    object_pose(ObjectId, OldPose),
+    %object_pose(ObjectId, OldPose),
+    is_at(ObjectId, OldPose),
     transform_close_to(NewPose, OldPose, Dmax).
 
 belief_class_of(Obj, ObjType) :-
