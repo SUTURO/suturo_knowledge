@@ -5,55 +5,123 @@
      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
      xmlns:xml="http://www.w3.org/XML/1998/namespace"
      xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
-     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+     xmlns:SOMA="http://www.ease-crc.org/ont/SOMA.owl#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:knowrob="http://knowrob.org/kb/knowrob.owl#">
     <owl:Ontology rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms">
-        <owl:imports rdf:resource="package://knowrob/owl/knowrob.owl"/>
-        <owl:imports rdf:resource="package://knowrob/owl/URDF.owl"/>
+        <owl:imports rdf:resource="http://knowrob.org/kb/knowrob.owl"/>
     </owl:Ontology>
+    
 
 
-    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#hasSurface -->
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
 
-    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#hasSurface">
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#has_room_type_role -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#has_room_type_role">
+        <rdfs:subPropertyOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#hasRole"/>
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#is_room_type_role_of"/>
+        <rdfs:domain rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Room"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#RoomType"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#has_surface -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#has_surface">
         <rdfs:subPropertyOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#associatedWith"/>
-        <owl:inverseOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#isSurfaceOf"/>
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#is_surface_of"/>
         <rdfs:domain rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Room"/>
         <rdfs:range rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#RoomSurface"/>
-        <rdfs:comment>A relation between a room and a room surface</rdfs:comment>
     </owl:ObjectProperty>
+    
 
 
-    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#isSurfaceOf -->
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#is_room_type_role_of -->
 
-    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#isSurfaceOf">
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#is_room_type_role_of">
+        <rdfs:subPropertyOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#isRoleOf"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#RoomType"/>
+        <rdfs:range rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Room"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#is_surface_of -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#is_surface_of">
         <rdfs:subPropertyOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#associatedWith"/>
-        <owl:inverseOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#hasSurface"/>
         <rdfs:domain rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#RoomSurface"/>
         <rdfs:range rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Room"/>
-        <rdfs:comment>A relation between a room and a room surface</rdfs:comment>
     </owl:ObjectProperty>
+    
 
 
-    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#isRoomFunctionRoleOf -->
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
 
-    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#isRoomFunctionRoleOf">
-        <rdfs:subPropertyOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#hasRole"/>
-        <owl:inverseOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#hasRoomFunctionRole"/>
-        <rdfs:domain rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#RoomFunction"/>
-        <rdfs:range rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Room"/>
-        <rdfs:comment>A relation between a room function and a room</rdfs:comment>
-    </owl:ObjectProperty>
+    
 
 
-    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#hasRoomFunctionRole -->
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Bedroom -->
 
-    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#hasRoomFunctionRole">
-        <rdfs:subPropertyOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#hasRole"/>
-        <owl:inverseOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#isRoomFunctionRoleOf"/>
-        <rdfs:domain rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Room"/>
-        <rdfs:range rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#RoomFunction"/>
-        <rdfs:comment>A relation between a room and a its function</rdfs:comment>
-    </owl:ObjectProperty>
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Bedroom">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#RoomType"/>
+        <owl:disjointWith rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#DiningRoom"/>
+        <owl:disjointWith rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Kitchen"/>
+        <owl:disjointWith rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#LivingRoom"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#CommonFurniture -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#CommonFurniture">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#CommonLocation"/>
+        <owl:disjointWith rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#CommonRoom"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#CommonLocation -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#CommonLocation">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Location"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#CommonRoom -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#CommonRoom">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#CommonLocation"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#DiningRoom -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#DiningRoom">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#RoomType"/>
+        <owl:disjointWith rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Kitchen"/>
+        <owl:disjointWith rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#LivingRoom"/>
+    </owl:Class>
+    
 
 
     <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#DoorHandle -->
@@ -61,137 +129,40 @@
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#DoorHandle">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#DesignedHandle"/>
         <owl:disjointWith rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#DoorKnob"/>
-        <rdfs:comment>Represents the handle of a door used to open or close the door</rdfs:comment>
     </owl:Class>
+    
 
 
     <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#DoorKnob -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#DoorKnob">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#DesignedHandle"/>
-        <owl:disjointWith rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#DoorHandle"/>
-        <rdfs:comment>Represents a knob of a door used to open or close a door. In comparison to a door handle which is mostly found at room doors door knoby are mostly part of furniture doors.</rdfs:comment>
     </owl:Class>
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#RoomFunction -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#RoomFunction">
-        <rdfs:subClassOf>
-            <rdfs:restriction>
-                <owl:onProperty rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#isRoomFunctionRoleOf"/>
-                <owl:someValuesFrom rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Room"/>
-            </rdfs:restriction>
-        </rdfs:subClassOf>
-        <rdfs:comment>Represents the function a rrom has in a household</rdfs:comment>
-    </owl:Class>
+    
 
 
     <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Kitchen -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Kitchen">
-        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#RoomFunction"/>
-        <rdfs:comment>Represents a kitchen, which is a specific kind of room in an household, where people are cooking</rdfs:comment>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#RoomType"/>
+        <owl:disjointWith rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#LivingRoom"/>
     </owl:Class>
-
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#DiningRoom -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#DiningRoom">
-        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#RoomFunction"/>
-        <owl:disjointWith rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Kitchen"/>
-        <rdfs:comment>Represents a kitchen, which is a specific kind of room in an household, where people are eating</rdfs:comment>
-    </owl:Class>
+    
 
 
     <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#LivingRoom -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#LivingRoom">
-        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#RoomFunction"/>
-        <owl:disjointWith rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Kitchen"/>
-        <owl:disjointWith rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#DiningRoom"/>
-        <rdfs:comment>Represents a living room, which is a specific kind of room in an household, where people are living</rdfs:comment>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#RoomType"/>
     </owl:Class>
+    
 
 
-    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#SleepingRoom -->
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#RoomType -->
 
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#SleepingRoom">
-        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#RoomFunction"/>
-        <owl:disjointWith rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Kitchen"/>
-        <owl:disjointWith rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#DiningRoom"/>
-        <owl:disjointWith rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#LivingRoom"/>
-        <rdfs:comment>Represents a sleeping room in an household, which is a specific kind of room, where people are sleeping</rdfs:comment>
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#RoomType">
+        <rdfs:subClassOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#Role"/>
     </owl:Class>
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#UnknownRoom -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#UnknownRoom">
-        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#RoomFunction"/>
-        <owl:disjointWith rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Kitchen"/>
-        <owl:disjointWith rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#DiningRoom"/>
-        <owl:disjointWith rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#LivingRoom"/>
-        <owl:disjointWith rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#SleepingRoom">
-        <rdfs:comment>Represents a room with an unknown function</rdfs:comment>
-    </owl:Class>
-
-
-    <!-- http://www.ease-crc.org/ont/SOMA.owl#Room -->
-
-    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Room">
-        <rdfs:subClassOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#PhysicalPlace"/>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#hasRoomFunctionRole">
-                <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#RoomFunction">
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#hasSurface">
-                <owl:allValuesFrom rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#RoomSurface">
-            </owl:Restriction>
-        </rdfs:subClassOf>
-    </owl:Class>
-
-
-    <!-- http://www.ease-crc.org/ont/SOMA.owl#RoomSurface -->
-
-    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA.owl#RoomSurface">
-        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Surface"/>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#isSurfaceOf">
-                <owl:someValuesFrom rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Room">
-            </owl:Restriction>
-        </rdfs:subClassOf>
-    </owl:Class>
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#CommonLocation -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#CommonLocation">
-        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Location"/>
-    </owl:class>
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#RoomLocation -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#RoomLocation">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#CommonLocation"/>
-    </owl:class>
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#FurnitureLocation -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#FurnitureLocation">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#CommonLocation"/>
-        <owl:disjointWith rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#RoomLocation"/>
-    </owl:class>
-
-
 </rdf:RDF>
 
 
