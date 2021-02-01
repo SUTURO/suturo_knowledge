@@ -64,7 +64,8 @@ hsr_belief_at_update(Instance, Transform) :-
     belief_at_update(Instance, Transform).
 
 merge_object_into_group(Instance) :-
-    current_object_pose(Instance, Transform),
+    %current_object_pose(Instance, Transform),
+    is_at(Instance, Transform),
     findall(NearbyObj, (
         threshold_for_group(Threshold),
         hsr_existing_object_at(Transform, Threshold, NearbyObj)),
