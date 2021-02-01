@@ -21,6 +21,7 @@
 :- use_module(library('export')).
 
 :- ros_package_iri(knowledge, 'package://knowledge/owl/objects.owl').
+:- ros_package_iri(knowledge, 'package://knowledge/owl/rooms.owl').
 
 :- tripledb_load(
 	'http://www.ontologydesignpatterns.org/ont/dul/DUL.owl',
@@ -32,6 +33,10 @@
 	]).
 :- tripledb_load('package://knowledge/owl/objects.owl',
 	[ namespace(hsr_objects)
+	]).
+:- tripledb_load(
+	'package://knowledge/owl/rooms.owl',
+	[namespace(hsr_rooms, 'http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#')
 	]).
 :- tripledb_load(
 	'http://knowrob.org/kb/URDF.owl',
