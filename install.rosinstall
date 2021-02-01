@@ -1,12 +1,4 @@
 - git:
-    local-name: dul
-    uri: https://github.com/ease-crc/dul.git
-    version: master
-- git:
-    local-name: ease_ontology
-    uri: https://github.com/knowrob/ease_ontology.git
-    version: master
-- git:
     local-name: genowl
     uri: https://github.com/knowrob/genowl.git
     version: master
@@ -26,4 +18,7 @@
     local-name: rosprolog
     uri: https://github.com/knowrob/rosprolog.git
     version: master
-
+- git:
+    local-name: hsr_description
+    uri: https://github.com/ToyotaResearchInstitute/hsr_description.git
+    version: master
