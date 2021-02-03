@@ -19,6 +19,7 @@ load_surfaces_from_param(Param):-
     ros_param_get_string(Param,S), % S is the urdf file (a xml file) as a string
     get_urdf_id(URDF),
     urdf_load_xml(URDF,S),
+    urdf_set_pose_to_origin(URDF,map),
     urdf_link_names(URDF,Links),
     forall(
     ( member(Link, Links)),
