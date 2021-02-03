@@ -61,7 +61,7 @@ new_perceived_at(ObjType, Transform, Instance) :-
 hsr_belief_at_update(Instance, Transform) :-
     tripledb_tell(Group,rdfs:'type',hsr_objects:'Group',_,[graph=groups]),
     tell(triple(Instance, hsr_objects:'inGroup', Group)),
-    belief_at_update(Instance, Transform).
+    tell(is_at(Instance, Transform)).
 
 merge_object_into_group(Instance) :-
     %current_object_pose(Instance, Transform),
