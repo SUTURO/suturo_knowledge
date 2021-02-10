@@ -70,7 +70,7 @@ class StoreObjectInfoServer(object):
             qw = str(data.pose.pose.orientation.w)
             region_splits = str(data.region).split('_')
 
-            query_string = ("is_legal_obj_position([" + ", ".join([x, y, z]) + "]),create_object_at('http://www.semanticweb.org/suturo/ontologies/2020/3/objects#" +
+            query_string = ("is_legal_obj_position([" + ", ".join([x, y, z]) + "]),create_object('http://www.semanticweb.org/suturo/ontologies/2020/3/objects#" +
                                 obj_class + "'," + confidence_class + ", " +
                                 "['" + source_frame +
                                 "', _, [" + ", ".join([x, y, z]) + "]," +
