@@ -18,10 +18,13 @@
 :- use_module(library('beliefstate')).
 :- use_module(library('assignplaces')).
 :- use_module(library('gripper'), [gripper/1, gripper_init/1]).
+:- use_module(library('rooms')).
 :- use_module(library('export')).
 
 :- ros_package_iri(knowledge, 'package://knowledge/owl/objects.owl').
 :- ros_package_iri(knowledge, 'package://knowledge/owl/rooms.owl').
+:- ros_package_iri(knowledge, 'package://knowledge/owl/maps/sim_door_rooms.owl').
+:- ros_package_iri(knowledge, 'package://knowledge/owl/locations.owl').
 
 :- tripledb_load(
 	'http://www.ontologydesignpatterns.org/ont/dul/DUL.owl',
@@ -36,7 +39,15 @@
 	]).
 :- tripledb_load(
 	'package://knowledge/owl/rooms.owl',
-	[namespace(hsr_rooms, 'http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#')
+	[ namespace(hsr_rooms, 'http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#')
+	]).
+:- tripledb_load(
+	'package://knowledge/owl/maps/sim_door_rooms.owl',
+	[ namespace(hsr_map, 'http://www.semanticweb.org/suturo/ontologies/2021/1/sim_door_rooms#')
+	]).
+:- tripledb_load(
+	'package://knowledge/owl/locations.owl',
+	[ namespace(hsr_locations, 'http://www.semanticweb.org/suturo/ontologies/2021/0/locations#')
 	]).
 :- tripledb_load(
 	'http://knowrob.org/kb/URDF.owl',
