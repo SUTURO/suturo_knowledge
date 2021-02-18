@@ -35,6 +35,7 @@
 :- use_module(library('assignplaces')).
 :- use_module(library('gripper')).
 :- use_module(library('export')).
+:- use_module(library('nlg')).
 
 :- owl_parser:owl_parse('package://dul/owl/DUL.owl').
 :- owl_parser:owl_parse('package://knowrob_common/owl/knowrob.owl').
