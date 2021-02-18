@@ -1,0 +1,34 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+title __Creating objects 2/2__
+
+skinparam activity {
+    BackGroundColor white
+}
+
+partition suturo_knowledge {
+partition sripts {
+   (*) -> "StoreObjectInfoServer"
+}
+partition src {
+   --> [(2) create_object_at()] "object_state_publisher"
+}
+}
+
+partition knowrob {
+    "StoreObjectInfoServer" ---> [(1) is_legal_object_pos()] "knowrob module"
+}
+
+partition rosprolog {
+   "rosprolog Node"  ->  "rosprolog Node"
+}
+partition ParamServer {
+    "rosprolog Node"  ---> [(3) publish object on tf] "Topic"
+
+}
+
+
+
+
+
+@enduml

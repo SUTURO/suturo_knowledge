@@ -81,7 +81,7 @@ create_object(PerceivedObjectType, PercTypeConf, Transform, [Width, Depth, Heigh
     tell(is_individual(Shape)),
     tell(triple(ObjID, soma:hasShape, Shape)),
     % Save the transform
-    tell(is_at(ObjID,Transform)),
+    tell(is_at(ObjID,Transform)), % this triggers rosprolog to publish it on tf
     % Save the Type Confidence
     atom_number(TypeConfidenceAtom, TypeConf),
     tell(triple(ObjID, hsr_objects:'ConfidenceClassValue', TypeConfidenceAtom)),
@@ -99,11 +99,23 @@ create_object(PerceivedObjectType, PercTypeConf, Transform, [Width, Depth, Heigh
     set_object_color(ObjID, Color, ColorConf),
     % identify the object as an supportable object this is used by suturo_existing_objects
     tell(triple(ObjID, hsr_objects:'supportable', true)),
-    
-    % create Marker for the Object
-    % TODO create the Marker
 
-    !.
+    % create Marker for the Object
+    ros_info('Here'),
+    marker_message_new(ObjID, 'SomeData', [
+    0, % action ( 0 means to add/modify an object)
+    ObjID, % MarkerID (we put in the same as the Object ID)
+    1, % type (we only work with boxes/cubes)
+    Transform, % pose (the passed 3D + Quaternion info)
+    [Width,Depth,Height], % scale (the passed size dimensions)
+    Color, % color (the passed Color)
+    _,
+    _
+    ]),
+
+    !. % when call stack reaches here, then all bindings
+
+% todo: make errors and warnings more descriptive ?
 
 
 

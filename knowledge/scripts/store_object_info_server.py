@@ -43,13 +43,14 @@ class StoreObjectInfoServer(object):
                 rospy.loginfo("The given class name is empty. Setting to OTHER.")
                 obj_class = "Other"
 
-            class_test_query = "is_class(hsr_objects:'" + obj_class + "')."
-            solutions = prolog.all_solutions(class_test_query)
-            if not solutions:
+            class_test_query = "is_class(hsr_objects:'" + obj_class + "')." # via knowrob, eg. Gummy Bears / Pringles Originals
+            print(class_test_query)
+            solutions = prolog.all_solutions(class_test_query) # bool
+            if not solutions:  # if class is not known
                 rospy.logwarn(
                     "The class '" + obj_class + "' has no equivalent in kowledge-ontology. Setting class to Other.")
-                obj_class = "Other"
-
+                obj_class = "Other" # <- instantiate as Other
+            # --- further information from perception
             confidence_class = str(data.confidence_class)
             shape = str(data.shape)
             source_frame = 'map'
@@ -70,7 +71,10 @@ class StoreObjectInfoServer(object):
             qw = str(data.pose.pose.orientation.w)
             region_splits = str(data.region).split('_')
 
-            query_string = ("is_legal_obj_position([" + ", ".join([x, y, z]) + "]),create_object_at('http://www.semanticweb.org/suturo/ontologies/2020/3/objects#" +
+            # checks if the obj position is valid, eg. distance to surface
+            # (1) is_legal_obj_position
+            # (2) create_object_at()
+            query_string = ("is_legal_obj_position([" + ", ".join([x, y, z]) + "]),create_object('http://www.semanticweb.org/suturo/ontologies/2020/3/objects#" + # actually create_object(...)
                                 obj_class + "'," + confidence_class + ", " +
                                 "['" + source_frame +
                                 "', _, [" + ", ".join([x, y, z]) + "]," +
@@ -82,11 +86,15 @@ class StoreObjectInfoServer(object):
             if not solutions:
                 rospy.logwarn("This Object couldn't have been added: " + data.obj_class)
             
-
+            # when we identified an object, and see another object next to it, then:
+            #   create a concept as group: eg. salty snacks!
+            #   -> over the object hierarchy: go upwards and find
+            #   -> lowest common parent
+            # maybe remove, else: (...)
             rospy.loginfo("Grouping objects.")
             prolog.all_solutions("group_objects_at([" + ", ".join([x,y,z]) + "]).")
 
-        self._result.succeeded = success
+        self._result.succeeded = success # the Action.result
         self._as.set_succeeded(self._result)
 
 

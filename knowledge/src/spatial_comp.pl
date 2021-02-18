@@ -86,7 +86,7 @@ position_supportable_by_surface(Position, Surface) :-
     all_surfaces(Surfaces),
     member(Surface, Surfaces),
     surface_front_edge_center_frame(Surface, Frame),
-    tf_transform_point(map, Frame, Position, RelativePosition),
+    tf_transform_point(map, Frame, Position, RelativePosition), % rospolog
     relative_position_supportable_by_surface(RelativePosition, Surface),
     !.
     
