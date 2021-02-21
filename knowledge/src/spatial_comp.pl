@@ -27,7 +27,8 @@ hsr_existing_object_at(Pose, Threshold, Instance) :-
     has_type(Instance, owl:'NamedIndividual'),
     instance_of(Instance, dul:'PhysicalObject'),
     triple(Instance, hsr_objects:'supportable', true),
-    object_pose(Instance, OldPose),
+    %object_pose(Instance, OldPose),
+    is_at(Instance, OldPose),
     transform_close_to(Pose, OldPose, Threshold).
 
 hsr_existing_object_at([X,Y,Z], Instance) :-

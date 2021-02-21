@@ -1,29 +1,25 @@
-
+% TODO rdf meta
 :- module(object_state,
     [
-      object_tf_frame/2,
-      create_object/2,
-      clear/0,
-      object_at_table/1,
-      object_of_type/2,
-      create_object_at/5,
-      create_object_at/9,
-      hsr_existing_objects/1,
-      hsr_forget_object/1,
-      forget_objects_on_surface_/1,
-      place_object/1,
-      %%% DEBUG %%%
-      set_dimension_semantics/4,
-      set_object_colour/3,
-      object_type_handling/3,
-      object_size_ok/1,
-      set_colour_semantics/2
+    hsr_existing_objects/1,
+    hsr_forget_object/1,
+    forget_objects_on_surface_/1,
+    place_object/1,
+    create_object/9,
+    random_id_gen/2,
+    validate_confidence/3,
+    object_size_ok/1,
+    object_type_handling/3,
+    set_object_color/3,
+    set_color_semantics/2    
     ]).
 
 :- rdf_db:rdf_register_ns(hsr_objects, 'http://www.semanticweb.org/suturo/ontologies/2020/3/objects#', [keep(true)]).
 :- rdf_db:rdf_register_ns(robocup, 'http://www.semanticweb.org/suturo/ontologies/2020/2/Robocup#', [keep(true)]).
 :- rdf_db:rdf_register_ns(dul, 'http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#', [keep(true)]).
 
+
+% TODO rdf meta
 :- rdf_meta
     create_object(r,?),
 	object_at(r,r,r,?),
@@ -32,30 +28,28 @@
 	create_object_at(r,r,r,?,-,-),
 	hsr_existing_objects(?).
 
-
+% returns a list of all the Objects know to the Knowledgebase
 hsr_existing_objects(Objects) :-
-    belief_existing_objects(L, [dul:'PhysicalObject']),
-  findall(J, (
-      has_type(J,_),
-      triple(J, hsr_objects:'supportable', true),
-      member(J, L)
-  ), X),
-  list_to_set(X,Objects).
+    findall(PO, (
+        ask(has_type(PO, 'http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#PhysicalObject'))
+    ), POs),
+    findall(Obj, (
+        has_type(Obj,_),
+        triple(Obj, hsr_objects:'supportable', true),
+        member(Obj, POs)
+    ), Objs),
+    list_to_set(Objs,Objects).
 
+% forget a specific object
 hsr_forget_object(Object) :-
-    forall(triple(Object,_,_), tripledb_forget(Object,_,_)).
+    forall(triple(Object,X,Y), tripledb_forget(Object,X,Y)).
+    % TODO we need to stop publishing the tf and marker
 
 
 forget_objects_on_surface_(SurfaceLink) :-
     objects_on_surface(Objs,SurfaceLink),
     member(Obj,Objs),
     hsr_forget_object(Obj).
-
-
-%% gets the tf-frame given the Object
-object_tf_frame(Object, Frame):-
-    is_object(Object),
-    object_frame_name(Object, Frame).
 
 
 %%
@@ -65,48 +59,74 @@ place_object(Object):-
     object_supportable_by_surface(Object, Surface),
     assert_object_on(Object,Surface).
 
-% deprecated. Use hsr_existing_object_at/2.
-object_at(ObjectType, Transform, Threshold, Instance) :-
-	hsr_existing_objects(Objectlist),
-	member(Instance, Objectlist),
-	belief_existing_object_at(ObjectType, Transform, Threshold, Instance). % non-existant anymore.
-
-object_at_table(Instance) :-
-	all_objects_on_tables_(Instances),once(member(Instance,Instances)).
-
-object_of_type(ObjectType, Instance) :-
-	belief_existing_objects(Instance, [ObjectType]).
-
-create_object(ObjectType, Instance) :-
- 	transitive(subclass_of(ObjectType, dul:'PhysicalObject')),
-	belief_new_object(ObjectType, Instance),
-    tell(triple(Instance, hsr_objects:'supportable', true)).
-
-% deprecated. buggy, too.
-create_object_at(ObjectType, Transform, Instance, Dimensions, Color) :-
-    create_object_at(ObjectType, _, Transform, Instance, Dimensions, '', _, Color, _).
-
-create_object_at(PerceivedObjectType, PercTypeConfidence, Transform, Instance, [Width, Depth, Height], Shape, PercShapeConfidence, Color, PercColorCondidence) :-
-    validate_confidence(class, PercTypeConfidence, TypeConfidence),
-    validate_confidence(shape, PercShapeConfidence, ShapeConfidence),
-    validate_confidence(color, PercColorCondidence, ColorCondidence),
+% Transform should be [RelativeTFFrame,[X,Y,Z],[X,Y,Z,W]]
+% Conf between 0 and 1
+% Color needs to be [R,G,B] Values between 0 and 255
+create_object(PerceivedObjectType, PercTypeConf, Transform, [Width, Depth, Height], Shape, PercShapeConf, Color, PercColorConf, ObjID):-
+    % Dont add the object when the size is to big/small
     object_size_ok([Width, Depth, Height]),
-    object_type_handling(PerceivedObjectType, TypeConfidence, ObjectType),
-    transitive(subclass_of(ObjectType, dul:'PhysicalObject')),
-    new_perceived_at(ObjectType, Transform, Instance),
-    atom_number(TypeConfidenceAtom, TypeConfidence),
-    tell(triple(Instance, hsr_objects:'ConfidenceClassValue', TypeConfidenceAtom)),
-    object_assert_dimensions(Instance, Width, Depth, Height),
-    set_dimension_semantics(Instance, Width, Depth, Height),
-    object_shape_handling(Instance, Shape, ShapeConfidence),
-    atom_number(ShapeConfidenceAtom, ShapeConfidence),
-    tell(triple(Instance, hsr_objects:'ConfidenceShapeValue', ShapeConfidenceAtom)),
-    atom_number(ColorCondidenceAtom, ColorCondidence),
-    tell(triple(Instance, hsr_objects:'ConfidenceColorValue', ColorCondidenceAtom)),
-    set_object_colour(Instance, Color, ColorCondidence),
-    tell(triple(Instance, hsr_objects:'supportable', true)),
+    validate_confidence(class, PercTypeConf, TypeConf),
+    validate_confidence(shape, PercShapeConf, ShapeConf),
+    validate_confidence(color, PercColorConf, ColorConf),
+    % When the PercTypeConf is to low the Type is set to Other, Otherwise ObjectType is the same as PerceivedObjectType
+    object_type_handling(PerceivedObjectType, PercTypeConf, ObjectType),
+    % create ID = Type + random id
+    random_id_gen(6, Result),
+    atom_concat(ObjectType, '_', ObjectTypeU),
+    atom_concat(ObjectTypeU, Result, ObjID),
+    % TODO check if the ID is already used
+    % Create Object of type ObjectType
+    tell(has_type(ObjID, ObjectType)),
+    tell(is_physical_object(ObjID)),
+    tell(is_individual(Shape)),
+    tell(triple(ObjID, soma:hasShape, Shape)),
+    % Save the transform
+    tell(is_at(ObjID,Transform)),
+    % Save the Type Confidence
+    atom_number(TypeConfidenceAtom, TypeConf),
+    tell(triple(ObjID, hsr_objects:'ConfidenceClassValue', TypeConfidenceAtom)),
+    % Save object dimensions
+    tell(triple(ObjID, soma:hasShape, Shape)),
+    tell(object_dimensions(ObjID, Depth, Width, Height)),
+    % add aditional information for the shape like tall/small/flat...
+    set_dimension_semantics(ObjID, Width, Depth, Height),   
+    % save the Confidences in the db
+    atom_number(ShapeConfAtom, ShapeConf),
+    tell(triple(ObjID, hsr_objects:'ConfidenceShapeValue', ShapeConfAtom)),
+    atom_number(ColorConfAtom, ColorConf),
+    tell(triple(ObjID, hsr_objects:'ConfidenceColorValue', ColorConfAtom)),
+    % set the color
+    set_object_color(ObjID, Color, ColorConf),
+    % identify the object as an supportable object this is used by suturo_existing_objects
+    tell(triple(ObjID, hsr_objects:'supportable', true)),
+    
+    % create Marker for the Object
+    % TODO create the Marker
+
     !.
 
+
+
+
+
+
+
+% Recursively create a Random String of a given length
+random_id_gen(Size, Result):-
+    ( Size > 0
+    -> (Characters = ['A', 'a', 'B', 'b', 'C', 'c', 'D', 'd', 'E', 'e', 'F', 'f',
+                      'G', 'g', 'H', 'h', 'I', 'i', 'J','j','K','k','L','l','M',
+                      'm','N','n','O','o','P','p','Q','q','R','r','S','s','T',
+                      't','U','u','V','v','W','w','X','x','Y','y','Z','z'],
+        random(0, 48, RandomValue),
+        nth0(RandomValue, Characters, RandomCharacter),
+        random_id_gen(Size - 1, SubResult),
+        atom_concat(RandomCharacter, SubResult, Result))
+    ;   Result = '')
+    .
+
+
+%%%%%%%%%% TODO what was the purpose of this code? %%%%%%%%%%
 validate_confidence(class, Is, Should) :-
     var(Is),
     min_class_confidence(Should).
@@ -130,6 +150,7 @@ object_size_ok([Width,Depth,Height]):-
     Depth < 0.6,
     Height < 0.6.
 
+% Determines the ObjectType the Object is saved as, it is PerceivedObjectType when the Conf is high enough Otherwise it is Other
 object_type_handling(PerceivedObjectType, TypeConfidence, ObjectType) :-
     min_class_confidence(MinConf),
     (   number(TypeConfidence),
@@ -138,6 +159,9 @@ object_type_handling(PerceivedObjectType, TypeConfidence, ObjectType) :-
         ; ObjectType = 'http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Other'
         ).
 
+
+%%%%%%%%%% asserts Dimension Semantic is the object tall/flat/long/small/big? %%%%%%%%%%
+% TODO is prob does not add multible informations
 set_dimension_semantics(Instance, _, _, Height) :-
     Height > 0.16,
     tell(triple(Instance, hsr_objects:'size', 'tall')).
@@ -162,61 +186,57 @@ set_dimension_semantics(Instance, Width, Depth, Height) :-
     Volume > 2.0,
     tell(triple(Instance, hsr_objects:'size', 'big')).
 
+% succeed even when no other semantic is set
 set_dimension_semantics(_Instance,_W,_D,_H) :-
     true.
 
-object_shape_handling(Instance, Shape, Confidence) :-
-    min_shape_confidence(MinConf),
-    Confidence > MinConf,
-    tell(triple(Instance, 'http://www.ease-crc.org/ont/EASE-OBJ.owl#Shape', Shape)).
 
-object_shape_handling(Instance, _, Confidence) :-
-    min_shape_confidence(MinConf),
-    Confidence =< MinConf,
-    tell(triple(Instance, 'http://www.ease-crc.org/ont/EASE-OBJ.owl#Shape', '')).
 
-set_object_colour(Instance, _, Confidence) :-
+
+%%%%%%%%%% COLOR SEMANTICS %%%%%%%%%%
+
+% When the Confidence is to low this querry will succeed and set an empty color
+set_object_color(ObjID, _, Confidence) :-
     not(Confidence = 0), % for cases in which Perception does not give confidences.
     min_color_confidence(MinConf),
     Confidence < MinConf,
-    tell(triple(Instance, hsr_objects:'colour', '')),
-    object_assert_color(Instance, '').
+    tell(triple(ObjID, hsr_objects:'colour', '')),
+    tell(object_color_rgb(ObjID, '')).
 
-set_object_colour(Instance, [0.0, 0.0, 0.0, 0.0], _) :-
-    object_assert_color(Instance, [0.8, 0.8, 0.8, 0.8]),
-    tell(triple(Instance, hsr_objects:'colour', 'grey')), !.
-
-set_object_colour(Instance, [R,G,B,_], _) :-
+% Because the set_object_color(Instance, _, Confidence) gets executed before this is.
+% We can just ignore the Confidence because we know it is high enough
+set_object_color(ObjID, [R,G,B], _) :-    
+    tell(is_individual(Color)),
+    tell(triple(ObjID, soma:hasColor, Color)),
+    tell(object_color_rgb(ObjID, [R,G,B])),
     RConv is R/255,    GConv is G/255,    BConv is B/255,
-    object_assert_color(Instance, [RConv,GConv,BConv,0.8]),
-    set_colour_semantics(Instance, [RConv,GConv,BConv]).
+    set_color_semantics(ObjID, [RConv,GConv,BConv]).
 
-set_colour_semantics(Instance, [0.0, 0.0, 0.0]) :-
-    tell(triple(Instance, hsr_objects:'colour', 'dark')).
+set_color_semantics(ObjID, [0.0, 0.0, 0.0]) :-
+    tell(triple(ObjID, hsr_objects:'colour', 'dark')).
 
-set_colour_semantics(Instance, [1.0, 0.0, 0.0]) :-
-    tell(triple(Instance, hsr_objects:'colour', 'red')).
+set_color_semantics(ObjID, [1.0, 0.0, 0.0]) :-
+    tell(triple(ObjID, hsr_objects:'colour', 'red')).
 
-set_colour_semantics(Instance, [0.0, 1.0, 0.0]) :-
-    tell(triple(Instance, hsr_objects:'colour', 'green')).
+set_color_semantics(ObjID, [0.0, 1.0, 0.0]) :-
+    tell(triple(ObjID, hsr_objects:'colour', 'green')).
 
-set_colour_semantics(Instance, [1.0, 1.0, 0.0]) :-
-    tell(triple(Instance, hsr_objects:'colour', 'yellow')).
+set_color_semantics(ObjID, [1.0, 1.0, 0.0]) :-
+    tell(triple(ObjID, hsr_objects:'colour', 'yellow')).
 
-set_colour_semantics(Instance, [0.0, 0.0, 1.0]) :-
-    tell(triple(Instance, hsr_objects:'colour', 'dark-blue')).
+set_color_semantics(ObjID, [0.0, 0.0, 1.0]) :-
+    tell(triple(ObjID, hsr_objects:'colour', 'dark-blue')).
 
-set_colour_semantics(Instance, [1.0, 0.0, 1.0]) :-
-    tell(triple(Instance, hsr_objects:'colour', 'violet')).
+set_color_semantics(ObjID, [1.0, 0.0, 1.0]) :-
+    tell(triple(ObjID, hsr_objects:'colour', 'violet')).
 
-set_colour_semantics(Instance, [0.0, 1.0, 1.0]) :-
-    tell(triple(Instance, hsr_objects:'colour', 'light-blue')).
+set_color_semantics(ObjID, [0.0, 1.0, 1.0]) :-
+    tell(triple(ObjID, hsr_objects:'colour', 'light-blue')).
 
-set_colour_semantics(Instance, [1.0, 1.0, 1.0]) :-
-    tell(triple(Instance, hsr_objects:'colour', 'bright')).
+set_color_semantics(ObjID, [1.0, 1.0, 1.0]) :-
+    tell(triple(ObjID, hsr_objects:'colour', 'bright')).
 
-set_colour_semantics(_, _) :-
+% Used so when no color is given the query does not fail
+set_color_semantics(_, _) :-
     true.
-    
-clear :-
-	belief_forget.
+
