@@ -5,7 +5,8 @@
         surface_tf_frame/2,
         surface_frame_add_prefix_/2,
         surface_front_edge_center_frame/2,
-        surface_dimensions/4
+        surface_dimensions/4,
+        object_frame_name/2
     ]).
 
 
@@ -75,4 +76,7 @@ surface_frame_add_prefix_(SurfaceName, Surface_with_Prefix) :-
 surface_dimensions(Surface, Depth, Width, Height) :- % adapted to new knowrob
     get_urdf_id(URDF),
     urdf_link_collision_shape(URDF,Surface, box(Depth, Width, Height),_).
+
+object_frame_name(Object, FrameName) :-
+    split_string(Object, "#", "", [_, FrameName]).
 

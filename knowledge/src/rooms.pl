@@ -1,9 +1,6 @@
 :- module(rooms,
     [
         create_rooms/0,
-        update_door_state/2,
-        get_door_state/2,
-        get_all_door_states/1,
         object_instance_in_room/3,
         object_class_in_room/3,
         are_orthogonal_walls/2,
@@ -23,26 +20,28 @@ create_rooms :-
     forall(has_type(Room, hsr_rooms:'Room'), 
     (
         get_room_dimensions(Room, Width, Depth, PosX, PosY),
-        tell(is_individual('box')),
-        tell(triple(Room, soma:'hasShape', 'box')),
+        tell(has_type(Shape, soma:'Shape')),
+        tell(triple(Room, soma:'hasShape', Shape)),
         tell(object_dimensions(Room, Width, Depth, 0.6)),
-        tell(is_at(Room, ['world', [PosX, PosY, 0.0], [0.0, 0.0, 0.0, 1.0]]))
+        get_urdf_origin(Origin),
+        tell(is_at(Room, [Origin, [PosX, PosY, 0.0], [0.0, 0.0, 0.0, 1.0]]))
     )),
     forall(has_type(Door, hsr_rooms:'Door'),
     (
-        get_object_name(Door, DoorName),
+        object_frame_name(Door, DoorFrame),
         get_urdf_id(URDF),
-        urdf_link_parent_joint(URDF, DoorName, DoorJoint),
+        urdf_link_parent_joint(URDF, DoorFrame, DoorJoint),
         tell(triple(DoorJoint, hsr_rooms:'hasJointState', 0.0))
     )).
 
 
 object_instance_in_room(ObjInstance, Room, RoomType) :-
-    get_object_name(ObjInstance, ObjName),
-    tf_lookup_transform(ObjName, 'world', pose([XObj, YObj, _], _)),
+    object_frame_name(ObjInstance, ObjFrame),
+    get_urdf_origin(Origin),
+    tf_lookup_transform(ObjFrame, Origin, pose([XObj, YObj, _], _)),
     has_type(Room, hsr_rooms:'Room'),
-    get_object_name(Room, RoomName),
-    tf_lookup_transform(RoomName, 'world', pose([XRoom, YRoom, _], _)),
+    object_frame_name(Room, RoomFrame),
+    tf_lookup_transform(RoomFrame, Origin, pose([XRoom, YRoom, _], _)),
     object_dimensions(Room, Width, Depth, _),
     XObj > XRoom - Width/2,
     XObj < XRoom + Width/2,
@@ -72,43 +71,6 @@ object_class_on_furniture(ObjInstance, Furnitures, FurnitureType) :-
     transitive(subclass_of(ObjClass, SupportedClass)),
     triple(Location, hsr_rooms:'object', FurnitureType),
     findall(Furniture, has_type(Furniture, FurnitureType), Furnitures).
-
-
-update_door_state(Door, Angle) :-
-    get_object_name(Door, DoorName),
-    get_urdf_id(URDF),
-    urdf_link_parent_joint(URDF, DoorName, DoorJoint),
-    ( is_valid_joint_state(DoorJoint, Angle)
-    -> 
-    (
-        forall(triple(DoorJoint, hsr_rooms:'hasJointState', _), tripledb_forget(DoorJoint, hsr_rooms:'hasJointState', _)),
-        tell(triple(DoorJoint, hsr_rooms:'hasJointState', Angle))
-    )
-    ; fail
-    ).
-
-
-get_door_state(Door, DoorState) :-
-    get_object_name(Door, DoorName),
-    get_urdf_id(URDF),
-    urdf_link_parent_joint(URDF, DoorName, DoorJoint),
-    triple(DoorJoint, hsr_rooms:'hasJointState', JointState),
-    min_door_joint_angle(MaxAngle),
-    MinAngle is -1*MaxAngle,
-    ( JointState < MaxAngle, JointState > MinAngle 
-    -> DoorState = 'closed'
-    ; DoorState = 'open'
-    ).
-
-
-get_all_door_states(DoorStates) :-
-    findall([Door, State], 
-    (
-        has_type(Door, hsr_rooms:'Door'),
-        get_door_state(Door, State)
-    ), 
-        DoorStates
-    ).
     
 
 
@@ -141,9 +103,9 @@ get_room_dimensions(Room, Width, Depth, PosX, PosY) :-
 
 
 are_parallel_walls(Wall1, Wall2) :-
-    get_object_name(Wall1, NameWall1),
-    get_object_name(Wall2, NameWall2),
-    tf_lookup_transform(NameWall1, NameWall2, pose(_, [W, X, Y, Z])),
+    object_frame_name(Wall1, FrameWall1),
+    object_frame_name(Wall2, FrameWall2),
+    tf_lookup_transform(FrameWall1, FrameWall2, pose(_, [W, X, Y, Z])),
     ( W > -0.1, W < 0.1, X > -0.1, X < 0.1, Y > -0.1, Y < 0.1, Z > 0.9, Z < 1.1
     -> true
     ;
@@ -152,9 +114,9 @@ are_parallel_walls(Wall1, Wall2) :-
 
 
 are_orthogonal_walls(Wall1, Wall2) :-
-    get_object_name(Wall1, NameWall1),
-    get_object_name(Wall2, NameWall2),
-    tf_lookup_transform(NameWall1, NameWall2, pose(_, [W, X, Y, Z])),
+    object_frame_name(Wall1, FrameWall1),
+    object_frame_name(Wall2, FrameWall2),
+    tf_lookup_transform(FrameWall1, FrameWall2, pose(_, [W, X, Y, Z])),
     ( W > -0.1, W < 0.1, X > -0.1, X < 0.1, Y > 0.6, Y < 0.8, Z > 0.6, Z < 0.8
     -> true
     ;
@@ -163,10 +125,11 @@ are_orthogonal_walls(Wall1, Wall2) :-
 
 
 get_intersection_of_walls(Wall1, Wall2, X, Y) :-
-    get_object_name(Wall1, NameWall1),
-    get_object_name(Wall2, NameWall2),
-    tf_lookup_transform('world', NameWall1, pose([X1, Y1, _], _)),
-    tf_lookup_transform('world', NameWall2, pose([X2, Y2, _], _)),
+    object_frame_name(Wall1, FrameWall1),
+    object_frame_name(Wall2, FrameWall2),
+    get_urdf_origin(Origin),
+    tf_lookup_transform(Origin, FrameWall1, pose([X1, Y1, _], _)),
+    tf_lookup_transform(Origin, FrameWall2, pose([X2, Y2, _], _)),
     X = X2,
     Y = Y1.
 
@@ -202,8 +165,8 @@ min_door_joint_angle(Angle) :-
     Angle = 1.22. % corresponds to 70 degree
 
 
-get_object_name(Object, Name) :-
-    split_string(Object, "#", "", [_, Name]).
+%get_object_name(Object, Name) :-
+%    split_string(Object, "#", "", [_, Name]).
 
 
     

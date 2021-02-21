@@ -63,3 +63,4 @@
 
 :- gripper(Gripper), gripper_init(Gripper).
 
+
