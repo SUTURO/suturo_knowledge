@@ -24,13 +24,12 @@
   <param name="param_to_load_URDF_from" type="str" value="$(arg urdf_param)" />
   <param name="initial_package" type="string" value="knowledge" />
   <param name="initial_goal" type="string" value="ros_param_get_string('/param_to_load_URDF_from', Param),
-    load_surfaces_from_param(Param), create_rooms." />
+    load_surfaces_from_param(Param)." />
 
   <node name="rosprolog" pkg="rosprolog" type="rosprolog_node" cwd="node" output="screen"/>
 
   <node name="store_object_info_server" pkg="knowledge" type="store_object_info_server.py" output="screen"/>
 
-  <node name="manipulation_listener" pkg="knowledge" type="manipulation_listener.py" output="screen"/>-->
+  <node name="manipulation_listener" pkg="knowledge" type="manipulation_listener.py" output="screen"/>
 
-  
 </launch>

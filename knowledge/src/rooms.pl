@@ -25,13 +25,6 @@ create_rooms :-
         tell(object_dimensions(Room, Width, Depth, 0.6)),
         get_urdf_origin(Origin),
         tell(is_at(Room, [Origin, [PosX, PosY, 0.0], [0.0, 0.0, 0.0, 1.0]]))
-    )),
-    forall(has_type(Door, hsr_rooms:'Door'),
-    (
-        object_frame_name(Door, DoorFrame),
-        get_urdf_id(URDF),
-        urdf_link_parent_joint(URDF, DoorFrame, DoorJoint),
-        tell(triple(DoorJoint, hsr_rooms:'hasJointState', 0.0))
     )).
 
 
@@ -150,19 +143,6 @@ get_intersection_of_walls(Wall1, Wall2, X, Y) :-
 %    -> true
 %    ; false
 %    ).
-
-
-is_valid_joint_state(DoorJoint, JointState) :-
-    get_urdf_id(URDF),
-    urdf_joint_hard_limits(URDF, DoorJoint, [LowerLimit, UpperLimit], _, _),
-    ( JointState > LowerLimit, JointState < UpperLimit
-    -> true
-    ; fail
-    ).
-
-
-min_door_joint_angle(Angle) :-
-    Angle = 1.22. % corresponds to 70 degree
 
 
 %get_object_name(Object, Name) :-

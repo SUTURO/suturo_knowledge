@@ -78,5 +78,10 @@ surface_dimensions(Surface, Depth, Width, Height) :- % adapted to new knowrob
     urdf_link_collision_shape(URDF,Surface, box(Depth, Width, Height),_).
 
 object_frame_name(Object, FrameName) :-
-    split_string(Object, "#", "", [_, FrameName]).
+    ( sub_string(Object,_,_,_,"#")
+    -> split_string(Object, "#", "", [_, FrameName])
+    ;
+    FrameName = Object
+    ).
+    
 
