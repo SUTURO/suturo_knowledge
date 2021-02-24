@@ -11,7 +11,7 @@
 :- use_module(library('lang/terms/is_at'), [is_at/2]).
 :- use_module(library('utility/algebra'), [transform_close_to/3]).
 %:- use_module('ros/marker/maker_plugin.pl', [marker_message_new/3]).
-:- ros_package_path('knowrob',X),atom_concat(X,'/src/ros/marker/marker_plugin.pl',P),use_module(P).
+%:- ros_package_path('knowrob',X),atom_concat(X,'/src/ros/marker/marker_plugin.pl',P),use_module(P).
 %(library('ros/marker/marker_plugin')), [marker_message_new/3].
 %%% knowledge imports
 :- use_module(library('config')).

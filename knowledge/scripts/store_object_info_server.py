@@ -28,6 +28,7 @@ class StoreObjectInfoServer(object):
         success = True
 
         for data in goal.detectionData:
+
             if self._as.is_preempt_requested():
                 rospy.loginfo('%s: Preempted' % self._action_name)
                 self._as.set_preempted()
@@ -71,6 +72,7 @@ class StoreObjectInfoServer(object):
             qw = str(data.pose.pose.orientation.w)
             region_splits = str(data.region).split('_')
 
+
             # checks if the obj position is valid, eg. distance to surface
             # (1) is_legal_obj_position
             # (2) create_object_at()
@@ -79,7 +81,7 @@ class StoreObjectInfoServer(object):
                                 "['" + source_frame +
                                 "', _, [" + ", ".join([x, y, z]) + "]," +
                                 "[" + ", ".join([qx, qy, qz, qw]) + "]], _," +
-                                "[" + ", ".join([depth, width, height]) + "], " + shape + ", _, " +
+                                "[" + ", ".join([depth, width, height]) + "], " + shape + ", _, " + # when everything is a box, then we can leave it like that
                                 "[" + ", ".join([r, g, b]) + "], " + confidence_color + ",_).")
             rospy.loginfo('Send query: \n' + query_string)
             solutions = prolog.all_solutions(query_string)
