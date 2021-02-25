@@ -44,14 +44,18 @@ update_door_state(Door, Angle) :-
     object_frame_name(Door, DoorName),
     get_urdf_id(URDF),
     urdf_link_parent_joint(URDF, DoorName, DoorJoint),
-    ( is_valid_joint_state(DoorJoint, Angle)
+    triple(DoorJoint, hsr_rooms:'hasJointState', CurrentAngle),
+    NewAngle is CurrentAngle + Angle,
+    ( is_valid_joint_state(DoorJoint, NewAngle)
     -> 
     (
         forall(triple(DoorJoint, hsr_rooms:'hasJointState', _), tripledb_forget(DoorJoint, hsr_rooms:'hasJointState', _)),
-        tell(triple(DoorJoint, hsr_rooms:'hasJointState', Angle))
+        tell(triple(DoorJoint, hsr_rooms:'hasJointState', NewAngle))
     )
     ; fail
     ).
+    
+
 
 
 %% get_door_state(Door, DoorState)
