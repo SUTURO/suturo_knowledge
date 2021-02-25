@@ -14,7 +14,7 @@
 :- use_module(library('spatial_comp')).
 :- use_module(library('pickup')).
 :- use_module(library('object_state')).
-:- use_module(library('surfaces'), [all_surfaces/1, supporting_surface/1, assert_surface_types/1, pose_of_shelves/1, table_surfaces/1]).
+:- use_module(library('surfaces'), [all_surfaces/1, supporting_surface/1, assert_surface_types/1, pose_of_shelves/1, table_surfaces/1, make_all_surface_type_role/2,is_surface/1,is_table/1,is_bucket/1,is_shelf/1]).
 :- use_module(library('beliefstate')).
 :- use_module(library('assignplaces')).
 :- use_module(library('gripper'), [gripper/1, gripper_init/1]).
