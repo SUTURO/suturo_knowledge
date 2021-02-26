@@ -17,7 +17,7 @@
 
   <node name="store_object_info_server" pkg="knowledge" type="store_object_info_server.py" output="screen"/>
 
-  <node name="manipulation_listener" pkg="knowledge" type="manipulation_listener.py" output="screen"/>-->
+  <node name="manipulation_subscriber" pkg="knowledge" type="manipulation_subscriber.py" output="screen"/>-->
 
   
 </launch>
