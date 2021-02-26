@@ -1,8 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <catalog prefer="public" xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
+    <uri id="User Entered Import Resolution" name="package://ease_ontology/owl/EASE-IO.owl" uri="file:/home/paul/SUTURO/k_ws/src/ease_ontology/owl/EASE-IO.owl"/>
+    <uri id="User Entered Import Resolution" name="package://urdfprolog/owl/urdf.owl" uri="file:/home/paul/SUTURO/k_ws/src/knowrob/urdfprolog/owl/urdf.owl"/>
+    <uri id="User Entered Import Resolution" name="package://ease_ontology/owl/EASE-STATE.owl" uri="file:/home/paul/SUTURO/k_ws/src/ease_ontology/owl/EASE-STATE.owl"/>
+    <uri id="User Entered Import Resolution" name="package://ease_ontology/owl/EASE-OBJ.owl" uri="file:/home/paul/SUTURO/k_ws/src/ease_ontology/owl/EASE-OBJ.owl"/>
+    <uri id="User Entered Import Resolution" name="package://ease_ontology/owl/EASE-PROC.owl" uri="file:/home/paul/SUTURO/k_ws/src/ease_ontology/owl/EASE-PROC.owl"/>
+    <uri id="User Entered Import Resolution" name="package://ease_ontology/owl/EASE-ACT.owl" uri="file:/home/paul/SUTURO/k_ws/src/ease_ontology/owl/EASE-ACT.owl"/>
+    <uri id="User Entered Import Resolution" name="package://ease_ontology/owl/EASE.owl" uri="file:/home/paul/SUTURO/k_ws/src/ease_ontology/owl/EASE.owl"/>
+    <uri id="User Entered Import Resolution" name="package://ease_ontology/owl/EASE-WF.owl" uri="file:/home/paul/SUTURO/k_ws/src/ease_ontology/owl/EASE-WF.owl"/>
+    <uri id="User Entered Import Resolution" name="package://knowrob_common/owl/knowrob.owl" uri="file:/home/paul/SUTURO/k_ws/src/knowrob/knowrob_common/owl/knowrob.owl"/>
     <group id="Folder Repository, directory=, recursive=true, Auto-Update=true, version=2" prefer="public" xml:base="">
-        <uri id="Automatically generated entry, Timestamp=1587385006480" name="http://www.semanticweb.org/suturo/ontologies/2018/10/objects" uri="objects_wo_dul.owl"/>
-        <uri id="Automatically generated entry, Timestamp=1587385006480" name="http://www.semanticweb.org/suturo/ontologies/2020/2/Robocup" uri="robocup.owl"/>
-        <uri id="Automatically generated entry, Timestamp=1587385006480" name="http://www.semanticweb.org/suturo/ontologies/2020/3/objects" uri="objects.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1613654500778" name="http://www.semanticweb.org/suturo/ontologies/2018/10/objects" uri="objects_wo_dul.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1613654500778" name="http://www.semanticweb.org/suturo/ontologies/2020/2/Robocup" uri="robocup.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1613654500778" name="http://www.semanticweb.org/suturo/ontologies/2020/3/objects" uri="objects.owl"/>
     </group>
 </catalog>

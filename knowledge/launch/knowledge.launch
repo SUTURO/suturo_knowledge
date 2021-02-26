@@ -3,6 +3,7 @@
   <arg name="mongodb_whipe" default="false" />
   <arg name="urdf_param" default="/hsrb_lab" />
   <arg name="urdf_launch_file" default="gazebo_E1" />
+  <arg name="nlg" default="true" />
 
   <!-- The urdf now starts from suturo_bringup
   <include file="$(find suturo_urdf_publisher)/launch/$(arg urdf_launch_file).launch" />
@@ -29,4 +30,9 @@
     <node name="mongodb_log" pkg="mongodb_log" type="mongodb_log"
       args="/tf --mongodb-name SUTURO_0" />
   </group>
+  
+  <group if="$(arg nlg)">
+    <include file="$(find suturo_nlg)/launch/suturo_nlg.launch" />
+  </group>
+  
 </launch>
