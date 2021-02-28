@@ -2,8 +2,11 @@
     [
         init_doors/0,
         update_door_state/2,
+        update_door_state_dynamic/2,
+        update_door_state_measurement/3,
         get_door_state/2,
-        get_all_door_states/1
+        get_all_door_states/1,
+        get_angle_to_open_door/2
     ]).
 
 :- rdf_db:rdf_register_ns(hsr_rooms, 'http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#', [keep(true)]).
@@ -56,7 +59,69 @@ update_door_state(Door, Angle) :-
     ).
     
 
+update_door_state_dynamic(Door, Angle) :-
+    object_frame_name(Door, DoorName),
+    get_urdf_id(URDF),
+    urdf_link_parent_joint(URDF, DoorName, DoorJoint),
+    triple(DoorJoint, hsr_rooms:'hasJointState', CurrentAngle),
+    NewAngle is CurrentAngle + Angle,
+    ( is_valid_joint_state(DoorJoint, NewAngle)
+    -> 
+    (
+        forall(triple(DoorJoint, hsr_rooms:'hasJointState', _), tripledb_forget(DoorJoint, hsr_rooms:'hasJointState', _)),
+        tell(triple(DoorJoint, hsr_rooms:'hasJointState', NewAngle)),
+        get_door_hinge(Door, DoorHinge),
+        rotate_door_by_angle(Door, DoorHinge, Angle)
+    )
+    ; fail
+    ).
+    
 
+
+rotate_door_by_angle(Door, DoorHinge, Angle) :-
+    get_urdf_origin(Origin),
+    C is cos(Angle/2), S is sin(Angle/2),
+    Rotation = [0.0, 0.0, S, C],
+    tf_lookup_transform(Door, DoorHinge, pose(CurrentPos, _)),
+    tf_transform_quaternion(DoorHinge, Door, Rotation, NewRotation),
+    tell(is_at(Door, [DoorHinge, CurrentPos, NewRotation])).
+
+
+
+get_angle_to_open_door(Door, Angle) :-
+    object_frame_name(Door, DoorName),
+    get_urdf_id(URDF),
+    urdf_link_parent_joint(URDF, DoorName, DoorJoint),
+    urdf_joint_hard_limits(URDF, DoorJoint, [LowerLimit, UpperLimit], _, _),
+    triple(DoorJoint, hsr_rooms:'hasJointState', CurrentAngle),
+    get_door_hinge(Door, DoorHinge),
+    tf_lookup_transform('base_footprint', DoorHinge, pose([_, Y, _], _)),
+    ( Y < 0
+    -> Angle is LowerLimit - CurrentAngle
+    ; Angle is UpperLimit - CurrentAngle
+    ).
+
+
+
+update_door_state_measurement(DoorHandle, Width, Depth) :-
+    get_urdf_id(URDF),
+    get_urdf_origin(Origin),
+    urdf_link_parent_joint(URDF, DoorHandle, DoorHandleJoint),
+    urdf_joint_parent_link(URDF, DoorHandleJoint, Door),
+    urdf_link_parent_joint(URDF, Door, DoorHingeJoint),
+    urdf_joint_parent_link(URDF, DoorHingeJoint, DoorHinge),
+    tf_lookup_transform(DoorHinge, Origin, pose([XHinge, YHinge, _], _)),
+    tf_lookup_transform(DoorHandle, Origin, pose([XHandle, YHandle, _], _)),
+    HDX is Width - XHinge,
+    HDY is Depth - YHinge,
+    sqrt(((HDX*HDX) + (HDY*HDY)), Hyp),
+    KDX is (Width - XHandle)/2,
+    KDY is (Depth - YHandle)/2,
+    sqrt(((KDX*KDX) + (KDY*KDY)), Kath),
+    Angle is 2*sin(Kath/Hyp),
+    update_door_state_dynamic(Door, Angle).
+
+    
 
 %% get_door_state(Door, DoorState)
 %  
@@ -96,6 +161,12 @@ get_all_door_states(DoorStates) :-
         DoorStates
     ).
 
+
+
+get_door_hinge(Door, Hinge) :-
+    get_urdf_id(URDF),
+    urdf_link_parent_joint(URDF, Door, HingeJoint),
+    urdf_joint_parent_link(URDF, HingeJoint, Hinge).
 
 
 %% is_valid_joint_state(DoorJoint, JointState)
