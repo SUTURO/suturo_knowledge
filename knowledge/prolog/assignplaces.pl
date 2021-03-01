@@ -46,10 +46,8 @@ object_goal_pose(Instance, [Translation, Rotation], Context, RefObject) :-
     NewY > (Width / -2) + 0.1,
     NewX is - Depth / 2 + 0.03,
     tf_transform_point(Frame, map, [NewX, NewY, 0], [AbsX, AbsY,AbsZ]),
-    object_dimensions(Instance,_,_,ObjHeight),
-    AbsZOffset is AbsZ + ObjHeight/2 + 0.07,
-    not(hsr_existing_object_at_thr([AbsX, AbsY, AbsZOffset], 0.15)),
-    Translation = [AbsX, AbsY, AbsZOffset],
+    not(hsr_existing_object_at_thr([AbsX, AbsY, AbsZ], 0.15)),
+    Translation = [AbsX, AbsY, AbsZ],
     !.
 
 %% When a new group is opened the RefObject is equal to the Instance
@@ -67,10 +65,8 @@ object_goal_pose(Instance, [Translation, Rotation], Context, Instance) :-
     NewYOnS > (Width / -2) + 0.1,
     NewXOnS is - Depth / 2 + 0.03,
     tf_transform_point(Frame, map, [NewXOnS, NewYOnS, 0], [AbsX, AbsY,AbsZ]),
-    object_dimensions(Instance,_,_,ObjHeight),
-    AbsZOffset is AbsZ + ObjHeight/2 + 0.07,
-    not(hsr_existing_object_at_thr([AbsX, AbsY,AbsZOffset], 0.15)),
-    Translation = [AbsX, AbsY,AbsZOffset],
+    not(hsr_existing_object_at_thr([AbsX, AbsY,AbsZ], 0.15)),
+    Translation = [AbsX, AbsY,AbsZ],
     !.
 
 object_goal_pose(_, _, "You haven't defined any target surfaces", _) :-
@@ -85,5 +81,5 @@ object_goal_pose_offset_(Instance, [[XR,YR,ZR], Rotation],Context):-
     object_dimensions(Instance,_,_,ObjHeight),
     XR is X + 0,
     YR is Y + 0,
-    ZR is Z + ObjHeight/2.
+    ZR is Z + ObjHeight/2 + 0.07.
 
