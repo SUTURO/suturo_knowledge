@@ -28,9 +28,9 @@ object_goal_pose(Instance, [Translation, Rotation], Context, Instance) :-
     is_bucket(Surface),
     surface_pose_in_map(Surface, [[XWOOffset,Y,Z], Rotation]),
     X is XWOOffset + 0.0,
-    % X is xWOOffset - 0.05, for 5cm closer to edge
+    % X is XWOOffset - 0.05, for 5cm closer to edge
     % X is XWOOffset + 0.05, for 5cm further away from edge
-    % + 0.15 is the outer edge of the current bucket
+    % - 0.15 is the outer edge of the current bucket
     Translation = [X,Y,Z],
     !.
 
