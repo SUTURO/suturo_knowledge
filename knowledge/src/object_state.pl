@@ -73,32 +73,32 @@ create_object(PerceivedObjectType, PercTypeConf, Transform, [Width, Depth, Heigh
     % create ID = Type + random id
     random_id_gen(6, Result),
     atom_concat(ObjectType, '_', ObjectTypeU),
-    atom_concat(ObjectTypeU, Result, ObjID),
+    atom_concat(ObjectTypeU, Result, GenID),
     % TODO check if the ID is already used
     % Create Object of type ObjectType
-    tell(has_type(ObjID, ObjectType)),
-    tell(is_physical_object(ObjID)),
+    tell(has_type(GenID, ObjectType)),
+    tell(is_physical_object(GenID)),
     tell(is_individual(Shape)),
-    tell(triple(ObjID, soma:hasShape, Shape)),
+    tell(triple(GenID, soma:hasShape, Shape)),
     % Save the transform
-    tell(is_at(ObjID,Transform)),
+    tell(is_at(GenID,Transform)),
     % Save the Type Confidence
     atom_number(TypeConfidenceAtom, TypeConf),
-    tell(triple(ObjID, hsr_objects:'ConfidenceClassValue', TypeConfidenceAtom)),
+    tell(triple(GenID, hsr_objects:'ConfidenceClassValue', TypeConfidenceAtom)),
     % Save object dimensions
-    tell(triple(ObjID, soma:hasShape, Shape)),
-    tell(object_dimensions(ObjID, Depth, Width, Height)),
+    tell(triple(GenID, soma:hasShape, Shape)),
+    tell(object_dimensions(GenID, Depth, Width, Height)),
     % add aditional information for the shape like tall/small/flat...
-    set_dimension_semantics(ObjID, Width, Depth, Height),   
+    set_dimension_semantics(GenID, Width, Depth, Height),   
     % save the Confidences in the db
     atom_number(ShapeConfAtom, ShapeConf),
-    tell(triple(ObjID, hsr_objects:'ConfidenceShapeValue', ShapeConfAtom)),
+    tell(triple(GenID, hsr_objects:'ConfidenceShapeValue', ShapeConfAtom)),
     atom_number(ColorConfAtom, ColorConf),
-    tell(triple(ObjID, hsr_objects:'ConfidenceColorValue', ColorConfAtom)),
+    tell(triple(GenID, hsr_objects:'ConfidenceColorValue', ColorConfAtom)),
     % set the color
-    set_object_color(ObjID, Color, ColorConf),
+    set_object_color(GenID, Color, ColorConf),
     % identify the object as an supportable object this is used by suturo_existing_objects
-    tell(triple(ObjID, hsr_objects:'supportable', true)),
+    tell(triple(GenID, hsr_objects:'supportable', true)),
     
     % create Marker for the Object
     % TODO create the Marker

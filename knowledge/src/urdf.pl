@@ -23,6 +23,7 @@ load_surfaces_from_param(Param):-
     get_urdf_origin(Origin),
     urdf_set_pose_to_origin(URDF,Origin),
     urdf_link_names(URDF,Links),
+    init_surface_types,
     forall(
     ( member(Link, Links)),
     ((supporting_surface(Link) % if supporting Surface
@@ -49,11 +50,12 @@ surface_tf_frame(Surface, Frame):-
     is_surface(Surface),
     surface_front_edge_center_frame(Surface, Frame).
 
-surface_front_edge_center_frame(Surface, FrontEdgeCenterFrame) :- % in case it's a Shelf
+surface_front_edge_center_frame(Surface, FrontEdgeCenterFrame) :- % in case it is a Shelf
     is_shelf(Surface),
-    surface_frame_with_prefix_(Surface, FrontEdgeCenterFrame).
+    %surface_frame_with_prefix_(Surface, FrontEdgeCenterFrame).
+    object_frame_name(Surface, FrontEdgeCenterFrame).
 
-surface_front_edge_center_frame(Surface, FrontEdgeCenterFrame) :- % in case it's a Table or a Bucket
+surface_front_edge_center_frame(Surface, FrontEdgeCenterFrame) :- % in case it is a Table or a Bucket
     sub_atom(Surface, 0, _, 7, Name), % cuts away the Suffix "_center" (the last 7 letters)
     urdf_surface_prefix(Prefix), % /kitchen_desciption
     atom_concat(Prefix, Name, Part1), % results in /kitchen_desciption/table_1
