@@ -4,13 +4,16 @@
 %%% KnowRob imports
 :- use_module(library('semweb/rdf_db')).
 :- use_module(library('semweb/rdfs')).
-:- use_module(library('db/tripledb'), [tripledb_load/1, tripledb_load/2, ros_package_iri/2, tripledb_tell/5, tripledb_forget/3]).
+:- use_module(library('db/tripledb'), [tripledb_load/1, tripledb_load/2, tripledb_tell/5, tripledb_forget/3]).
+:- use_module(library('utility/url'),[ros_package_iri/2]).
+%:- use_module(library('reasoning/OWL/plowl/individual'),[owl_individual_of/3]).
+%:- use_module(library('reasoning/OWL/plowl/property'),[owl_has/4]).
 :- use_module(library('lang/terms/triple')).
-:- use_module(library('lang/computable')).
 :- use_module(library('model/metrics/WuPalmer')).
 :- use_module(library('lang/terms/is_at'), [is_at/2]).
 :- use_module(library('utility/algebra'), [transform_close_to/3]).
 %:- use_module('ros/marker/maker_plugin.pl', [marker_message_new/3]).
+%:- ros_package_path('knowrob',X),atom_concat(X,'/src/ros/marker/marker_plugin.pl',P),use_module(P).
 %:- ros_package_path('knowrob',X),atom_concat(X,'/src/ros/marker/marker_plugin.pl',P),use_module(P).
 %(library('ros/marker/marker_plugin')), [marker_message_new/3].
 %%% knowledge imports
@@ -26,6 +29,10 @@
 :- use_module(library('export')).
 
 :- ros_package_iri(knowledge, 'package://knowledge/owl/objects.owl').
+
+writeln('here').
+writeln(pwd).
+
 
 :- tripledb_load(
 	'http://www.ontologydesignpatterns.org/ont/dul/DUL.owl',

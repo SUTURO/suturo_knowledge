@@ -4,7 +4,7 @@
 
 
 
- .. list-table::
+.. list-table::
     :widths: 50
 
     * - to accomplish the publishing of the visualization_marker__array msg we must make use of the knowrob/src/ros/marker/marker_plugin.pl
@@ -12,6 +12,16 @@
     * - this predicate calls several functions in the marker_plugin/object_marker.pl
     * - one of those calls result in the invocation of **object_shape_/5** from the src/model/SOMA/OBJ.pl module
     * - this is in part not fully understood and potentially bugged
+    * - **further surfaces**
+    * - (1) get me surfaces for this kind of objects
+    * - (2) get me all possible surfaces
+
+
+problem
+-----------
+hasIndividual + hasShape
+* 1. ShapeRegioun durch uns
+* 2. ShapeRegion durch object_dimensions
 
 .. code-block:: prolog
 

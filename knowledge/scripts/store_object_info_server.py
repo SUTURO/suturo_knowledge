@@ -12,6 +12,7 @@ prolog = rosprolog_client.Prolog()
 # This Script is an Actionserver that takes the Action knowledge_msgs/StoreObjectInfo.action
 # The sent data will one by one be stored in the knowledgebase. Unless this process is being
 # preempted or fails, this Server will return succeeded=true.
+# todo : make more clear and smaller
 class StoreObjectInfoServer(object):
     _feedback = action.StoreObjectInfoFeedback()
     _result = action.StoreObjectInfoResult()

@@ -36,8 +36,9 @@ create_object/9
 
 .. code-block:: prolog
 
-    ?- create_object('http://www.semanticweb.org/suturo/ontologies/2020/3/objects#PringlesOriginals', 1,  ['map', [1,1,1], [0, 0, 0, 0]], [0.5, 0.5, 0.5], 'box',1, [0,0,255], 1, ObjID)
+    ?- create_object('http://www.semanticweb.org/suturo/ontologies/2020/3/objects#PringlesOriginals', 1,  ['map', [1,1,1], [0, 0, 0, 1]], [0.5, 0.5, 0.5], 'box',1, [0,0,255], 1, ObjID)
 
+.. image:: ../../_static/images/create_object.png
 
 hsr_existing_objects/1
 ------------------------

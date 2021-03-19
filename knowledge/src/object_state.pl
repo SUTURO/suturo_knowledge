@@ -1,5 +1,3 @@
-% TODO rdf meta
-
 :- module(object_state,
     [
     hsr_existing_objects/1,
@@ -18,11 +16,9 @@
 :- rdf_db:rdf_register_ns(hsr_objects, 'http://www.semanticweb.org/suturo/ontologies/2020/3/objects#', [keep(true)]).
 :- rdf_db:rdf_register_ns(robocup, 'http://www.semanticweb.org/suturo/ontologies/2020/2/Robocup#', [keep(true)]).
 :- rdf_db:rdf_register_ns(dul, 'http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#', [keep(true)]).
-
-% Importing marker_plugin
-:- use_module(library('ros/marker/marker_plugin'), [marker_message_new/3, republish/0]).
-
-%:- ros_package_path('knowrob',X),atom_concat(X,'/src/ros/marker/marker_plugin.pl',P),use_module(P).
+:- rdf_db:rdf_register_ns(soma, 'https://ease-crc.github.io/soma/owl/current/SOMA.owl#', [keep(true)]).
+:- rdf_db:rdf_register_ns(knowrob, 'http://www.knowrob.org/kb/knowrob.owl#', [keep(true)]).
+:- use_module(library('ros/marker/marker_plugin'), [marker_message_new/3, republish/0]). % Importing marker_plugin
 
 % TODO rdf meta
 :- rdf_meta
@@ -45,104 +41,117 @@ hsr_existing_objects(Objects) :-
     ), Objs),
     list_to_set(Objs,Objects).
 
-% forget a specific object
+%% hsr_forget_object(Object) is det.
+%
+% Forget a specific Object.
+%
+% @param Object the object to forget.
 hsr_forget_object(Object) :-
     forall(triple(Object,X,Y), tripledb_forget(Object,X,Y)).
     % TODO we need to stop publishing the tf and marker
 
-
+%% forget_objects_on_surface_(SurfaceLink) is det.
+%
+% Forget all objects on surface.
+%
+% @param Object the object to forget.
 forget_objects_on_surface_(SurfaceLink) :-
     objects_on_surface(Objs,SurfaceLink),
     member(Obj,Objs),
     hsr_forget_object(Obj).
 
 
-%%
-% finds the surface an object was seen on. When there is no surface supporting the object and
-% the center point of the object < 0.5 the object is placed on the ground. Otherwise the query resolves to false.
+%% place_object(Object) is ?
+%
+% Finds the surface an object was seen on. When there is no surface supporting the object and
+% the center point of the object < 0.5 the object is placed on the ground.
+% Otherwise the query resolves to false.
+% @param Object the object to find the surface on.
 place_object(Object):-
     object_supportable_by_surface(Object, Surface),
     assert_object_on(Object,Surface).
 
-% Transform should be [RelativeTFFrame,[X,Y,Z],[X,Y,Z,W]]
-% Conf between 0 and 1
-% Color needs to be [R,G,B] Values between 0 and 255
+%% create_object(PerceivedObjectType, PercTypeConf, Transform, [Width, Depth, Height], 'box', PercShapeConf, Color, PercColorConf, ObjID is nondet.
+%
+% Validate the perceived params, create an Object instance of the corresponding Ontology,
+% write it into the triple store and publish accordingly to ros topics.
+% @param PerceivedObjectType the Object Type that perception observed.
+% @param PercTypeConf the confidence of the Object Type.
+% @param Transform the tranformation of the Object Pose Matrix in the coordinance map.
+% @param [Width, Depth, Height] the corresponding dimensions.
+% @param 'box' the Object Shape that is fixed on a box shape.
+% @param PercShapeConf the confidence of the shape.
+% @param Color the observed color of the object.
+% @param PercColorConf the confidence of the color.
+% @param ObjID the id that will be generated for the Object.
+% TODO refactor into more suitable predicates
+% TODO change that terriple param order
+% TODO improve 'box' param
+% TODO fix the marker_plugin Warnings
+% TODO go over all db writings, where to we actually need a tell ?
+% TODO validate reachable in create_object: @param for colision avoidance, inferr distance via self position + obj position, inferr size of gripper and check with the existing size
 create_object(PerceivedObjectType, PercTypeConf, Transform, [Width, Depth, Height], 'box', PercShapeConf, Color, PercColorConf, ObjID):-
-    % Since everything is a box, we pass only box
 
-    % Dont add the object when the size is to big/small
-    object_size_ok([Width, Depth, Height]),
+    %%% ================ Object validation
+    % TODO make this dynamic to constraints
+    object_size_ok([Width, Depth, Height]), % Dont add the object when the size is to big/small
     validate_confidence(class, PercTypeConf, TypeConf),
     validate_confidence(shape, PercShapeConf, ShapeConf),
     validate_confidence(color, PercColorConf, ColorConf),
-    % When the PercTypeConf is to low the Type is set to Other, Otherwise ObjectType is the same as PerceivedObjectType
-    object_type_handling(PerceivedObjectType, PercTypeConf, ObjectType),
-    % create ID = Type + random id
-    random_id_gen(6, Result),
+    object_type_handling(PerceivedObjectType, PercTypeConf, ObjectType), % When the PercTypeConf is to low the Type is set to Other, Otherwise ObjectType is the same as PerceivedObjectType
+    random_id_gen(6, Result),  % create ID = Type + random id
     atom_concat(ObjectType, '_', ObjectTypeU),
     atom_concat(ObjectTypeU, Result, ObjID),
     % TODO check if the ID is already used
-    % Create Object of type ObjectType
-    tell(has_type(ObjID, ObjectType)),
-    tell(is_physical_object(ObjID)),
-%    tell(is_individual(Shape)),
-%    tell(triple(ObjID, soma:hasShape, Shape)),
-    % Save the transform
-    tell(is_at(ObjID,Transform)), % this triggers rosprolog to publish it on tf
-    % Save the Type Confidence
+
+    %%% ================ Object creation
+    tell(has_type(ObjID, ObjectType)), % Create Object of type ObjectType           // +1 P=ObjID
+    tell(is_physical_object(ObjID)), % write into triple: ont: is-a                 // +1 P=ObjID
+    tell(is_at(ObjID,Transform)), % this triggers rosprolog to publish it on tf     // no change! no tell(...) needed? doch needed..
     atom_number(TypeConfidenceAtom, TypeConf),
-    tell(triple(ObjID, hsr_objects:'ConfidenceClassValue', TypeConfidenceAtom)),
-    % Save object dimensions
-    %   ((triple(Object, soma:hasShape, Shape),
-    %   tell(has_type(Shape, soma:'Shape'),
-
-    ((triple(ObjID, soma:hasShape, Shape), % check if Shape exists
+    tell(triple(ObjID, hsr_objects:'ConfidenceClassValue', TypeConfidenceAtom)), %  // +1 P=ObjID
+    ((triple(ObjID, soma:hasShape, Shape), % check if Shape exists                  // +6, 1x P=ObjID, 3x P=ShapeID, 2x P=ShapeRegionID
     triple(Shape,dul:hasRegion,ShapeRegion)); % if yes, then check if ShapeRegion exist
-
     (tell(has_type(Shape, soma:'Shape')), % if either Shape or ShapeRegion does not exist,
     tell(triple(ObjID,soma:hasShape,Shape)), % then create Shape, ShapeRegion
     tell(has_type(ShapeRegion, soma:'ShapeRegion')),
     tell(holds(Shape,dul:hasRegion,ShapeRegion)))),
-
-
-    tell(object_dimensions(ObjID, Depth, Width, Height)), % from SOMA
-
     Pos = [0,0,0], Rot = [0,0,0,1],
-    tell(is_individual(Origin)), % create an individuum
+    tell(is_individual(Origin)), % create an individuum                             // +1 P=NamedIndId
     tell(triple(ShapeRegion,'http://knowrob.org/kb/urdf.owl#hasOrigin',Origin)), % connect ShapeRegion with Origin
     tell(triple(Origin, soma:hasPositionVector, term(Pos))), % set the position of Origin
     tell(triple(Origin, soma:hasOrientationVector, term(Rot))), % set the rotation of Origin
-    % set further attributes for the Shape
     tell(triple(ShapeRegion, soma:hasWidth, Width)), % set the depth of Shape
     tell(triple(ShapeRegion, soma:hasDepth, Depth)), % set the width of Shape
     tell(triple(ShapeRegion, soma:hasHeight, Height)), % set the height of Shape
-
-    % add aditional information for the shape like tall/small/flat...
-    set_dimension_semantics(ObjID, Width, Depth, Height),   
-    % save the Confidences in the db
-    atom_number(ShapeConfAtom, ShapeConf),
+    set_dimension_semantics(ObjID, Width, Depth, Height), % add aditional information for the shape like tall/small/flat...
+    atom_number(ShapeConfAtom, ShapeConf), % save the Confidences in the db
     tell(triple(ObjID, hsr_objects:'ConfidenceShapeValue', ShapeConfAtom)),
     atom_number(ColorConfAtom, ColorConf),
     tell(triple(ObjID, hsr_objects:'ConfidenceColorValue', ColorConfAtom)),
-    % set the color
-    set_object_color(ObjID, Color, ColorConf),
-    % identify the object as an supportable object this is used by suturo_existing_objects
-    tell(triple(ObjID, hsr_objects:'supportable', true)),
+    set_object_color(ObjID, Color, ColorConf),  % set the color
+    tell(triple(ObjID, hsr_objects:'supportable', true)),     % identify the object as an supportable object this is used by suturo_existing_objects
 
-    % create Marker for the Object
-    ros_info('=====> object_state.pl -> marker_plugin.pl : republish()'),
-    % republish
+    %%% ================ visualization marker array publish
+    % TODO why not working with 1x ?
     marker_plugin:republish,
-    ros_info('=====> object_state.pl: <- (...)'),
+    marker_plugin:republish,
 
     !. % when call stack reaches here, then all bindings
 
-% todo: make errors and warnings more descriptive ?
 
 
-
-
-
+%%% =========================== reachable predicates
+reachable(1, Reachability) :-
+    Reachability = 'Reachable'.
+reachable(2, Reachability) :-
+    Reachability = 'Ungraspable because too big for gripper'.
+reachable(3, Reachability) :-
+    Reachability = 'Unreachable because too far away'.
+reachable(4, Reachability) :-
+    Reachability = 'Unreachable because collision not avoidable'.
+reachable(5, Reachability) :-
+    Reachability = 'Unreachable for unkown reason'.
 
 
 % Recursively create a Random String of a given length
@@ -189,8 +198,8 @@ object_type_handling(PerceivedObjectType, TypeConfidence, ObjectType) :-
     min_class_confidence(MinConf),
     (   number(TypeConfidence),
         TypeConfidence >= MinConf
-        -> ObjectType = PerceivedObjectType
-        ; ObjectType = 'http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Other'
+        -> ObjectType = PerceivedObjectType;
+        ObjectType = 'http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Other'
         ).
 
 
