@@ -65,7 +65,7 @@ forget_objects_on_surface_(SurfaceLink) :-
 %
 % Finds the surface an object was seen on. When there is no surface supporting the object and
 % the center point of the object < 0.5 the object is placed on the ground.
-% Otherwise the query resolves to false.
+% Otherwise the quer/home/suturo/code/progress/main/source/plans/📚 learn/suturo_project/source/_static/images/knowledgey resolves to false.
 % @param Object the object to find the surface on.
 place_object(Object):-
     object_supportable_by_surface(Object, Surface),
@@ -138,6 +138,21 @@ create_object(PerceivedObjectType, PercTypeConf, Transform, [Width, Depth, Heigh
     marker_plugin:republish,
 
     !. % when call stack reaches here, then all bindings
+
+
+
+%%% =========================== reachable predicates
+reachable(1, Reachability) :-
+    Reachability = 'Reachable'.
+reachable(2, Reachability) :-
+    Reachability = 'Ungraspable because too big for gripper'.
+reachable(3, Reachability) :-
+    Reachability = 'Unreachable because too far away'.
+reachable(4, Reachability) :-
+    Reachability = 'Unreachable because collision not avoidable'.
+reachable(5, Reachability) :-
+    Reachability = 'Unreachable for unkown reason'.
+
 
 % Recursively create a Random String of a given length
 random_id_gen(Size, Result):-
