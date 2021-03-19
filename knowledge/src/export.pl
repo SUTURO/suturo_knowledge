@@ -13,7 +13,7 @@
       object_goal_surface/3,
       object_goal_pose_offset/3,
       % Pick up Object
-      next_object/1,
+      next_object/1, % other namespace: pickup_pl/next_object_
       % URDF
       surface_frame/2,
       pose_of_shelves/1,

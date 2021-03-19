@@ -65,7 +65,6 @@ surface_suffix(Surface, Suffix) :-
 surface_suffix(Surface, Suffix) :-
     is_bucket(Surface),
     Suffix = "_surface_center".
-
     
 surface_frame_add_prefix_(SurfaceName, Surface_with_Prefix) :-
     urdf_surface_prefix(Prefix),
