@@ -105,7 +105,7 @@ create_object(PerceivedObjectType, PercTypeConf, Transform, [Width, Depth, Heigh
     % TODO check if the ID is already used
 
     %%% ================ Object creation
-    tell(has_type(ObjID, ObjectType)), % Create Object of type ObjectType           // +1 P=ObjID
+    tell(has_type(ObjID, ObjectType)), % Create Object of type ObjectType           // +1 S=ObjID
     tell(is_physical_object(ObjID)), % write into triple: ont: is-a                 // +1 P=ObjID
     tell(is_at(ObjID,Transform)), % this triggers rosprolog to publish it on tf     // no change! no tell(...) needed? doch needed..
     atom_number(TypeConfidenceAtom, TypeConf),
@@ -138,21 +138,6 @@ create_object(PerceivedObjectType, PercTypeConf, Transform, [Width, Depth, Heigh
     marker_plugin:republish,
 
     !. % when call stack reaches here, then all bindings
-
-
-
-%%% =========================== reachable predicates
-reachable(1, Reachability) :-
-    Reachability = 'Reachable'.
-reachable(2, Reachability) :-
-    Reachability = 'Ungraspable because too big for gripper'.
-reachable(3, Reachability) :-
-    Reachability = 'Unreachable because too far away'.
-reachable(4, Reachability) :-
-    Reachability = 'Unreachable because collision not avoidable'.
-reachable(5, Reachability) :-
-    Reachability = 'Unreachable for unkown reason'.
-
 
 % Recursively create a Random String of a given length
 random_id_gen(Size, Result):-
