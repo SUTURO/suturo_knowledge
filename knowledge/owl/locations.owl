@@ -16,47 +16,47 @@
     </owl:Ontology>
     
     <rdf:Description rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#CleaningSupply">
-        <dul:hasLocation rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Sink"/>
+        <dul:hasLocation rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Sink"/>
         <hsr_rooms:inRoom rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Kitchen"/>
     </rdf:Description>
 
     <rdf:Description rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Receptacle">
-        <dul:hasLocation rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Cabinet"/>
+        <dul:hasLocation rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Cabinet"/>
         <hsr_rooms:inRoom rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#LivingRoom"/>
     </rdf:Description>
 
     <rdf:Description rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Cutlery">
-        <dul:hasLocation rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Cabinet"/>
+        <dul:hasLocation rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Cabinet"/>
         <hsr_rooms:inRoom rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Kitchen"/>
     </rdf:Description>
 
     <rdf:Description rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Drink">
-        <dul:hasLocation rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Sideboard"/>
+        <dul:hasLocation rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Sideboard"/>
         <hsr_rooms:inRoom rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#LivingRoom"/>
     </rdf:Description>
 
     <rdf:Description rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Candy">
-        <dul:hasLocation rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Table"/>
+        <dul:hasLocation rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Table"/>
         <hsr_rooms:inRoom rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Office"/>
     </rdf:Description>
 
     <rdf:Description rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#ProcessedFood">
-        <dul:hasLocation rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Shelf"/>
+        <dul:hasLocation rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Shelf"/>
         <hsr_rooms:inRoom rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Bedroom"/>
     </rdf:Description>
 
     <rdf:Description rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Fruit">
-        <dul:hasLocation rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Cabinet"/>
+        <dul:hasLocation rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Cabinet"/>
         <hsr_rooms:inRoom rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Kitchen"/>
     </rdf:Description>
 
     <rdf:Description rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Chips">
-        <dul:hasLocation rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Table"/>
+        <dul:hasLocation rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Table"/>
         <hsr_rooms:inRoom rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#LivingRoom"/>
     </rdf:Description>
 
     <rdf:Description rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Crockery">
-        <dul:hasLocation rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Cabinet"/>
+        <dul:hasLocation rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Cabinet"/>
         <hsr_rooms:inRoom rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Kitchen"/>
     </rdf:Description>
 
