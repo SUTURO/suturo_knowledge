@@ -5,7 +5,9 @@
         object_class_in_room/3,
         are_orthogonal_walls/2,
         get_intersection_of_walls/4,
-        get_room_dimensions/5
+        get_room_dimensions/5,
+        in_room/2,
+        all_rooms_of_type/2
     ]).
 
 
@@ -17,15 +19,66 @@
 
 
 create_rooms :-
-    forall(has_type(Room, hsr_rooms:'Room'), 
+    get_urdf_id(URDF),
+    urdf_link_names(URDF, Links),
+    findall(RoomLink, 
     (
-        get_room_dimensions(Room, Width, Depth, PosX, PosY),
-        tell(has_type(Shape, soma:'Shape')),
-        tell(triple(Room, soma:'hasShape', Shape)),
-        tell(object_dimensions(Room, Width, Depth, 0.6)),
-        get_urdf_origin(Origin),
-        tell(is_at(Room, [Origin, [PosX, PosY, 0.0], [0.0, 0.0, 0.0, 1.0]]))
+        member(RoomLink, Links),
+        sub_string(RoomLink,_,_,_,walls)
+    ),
+    RoomLinks),
+    forall(member(RoomLink2, RoomLinks),
+    (    
+        create_room(RoomLink2)
     )).
+
+    %forall(has_type(Room, hsr_rooms:'Room'), 
+    %(
+        %get_room_dimensions(Room, Width, Depth, PosX, PosY),
+        %tell(has_type(Shape, soma:'Shape')),
+        %tell(triple(Room, soma:'hasShape', Shape)),
+        %tell(object_dimensions(Room, Width, Depth, 0.6)),
+        %get_urdf_origin(Origin),
+        %tell(is_at(Room, [Origin, [PosX, PosY, 0.0], [0.0, 0.0, 0.0, 1.0]]))
+    %)).
+
+
+create_room(RoomLink) :-
+    get_room_dimensions(RoomLink, Width, Depth, PosX, PosY),
+    tell(has_type(Room, hsr_rooms:'Room')),
+    tell(has_type(Shape, soma:'Shape')),
+    tell(triple(Room, soma:'hasShape', Shape)),
+    tell(object_dimensions(Room, Width, Depth, 0.6)),
+    get_urdf_origin(Origin),
+    tell(is_at(Room, [Origin, [PosX, PosY, 0.0], [0.0, 0.0, 0.0, 1.0]])),
+    ( sub_string(RoomLink,_,_,_,kitchen)
+    -> (tell(has_type(KitchenType, hsr_rooms:'Kitchen')), tell(triple(Room, hsr_rooms:'hasRoomTypeRole', KitchenType)))
+    ;
+    ( sub_string(RoomLink,_,_,_,diningroom)
+    -> (tell(has_type(DiningType, hsr_rooms:'DiningRoom')), tell(triple(Room, hsr_rooms:'hasRoomTypeRole', DiningType)))
+    ;
+    ( sub_string(RoomLink,_,_,_,livingroom)
+    -> (tell(has_type(LivingType, hsr_rooms:'LivingRoom')), tell(triple(Room, hsr_rooms:'hasRoomTypeRole', LivingType)))
+    ;
+    ( sub_string(RoomLink,_,_,_,bedroom)
+    -> (tell(has_type(BedType, hsr_rooms:'Bedroom')), tell(triple(Room, hsr_rooms:'hasRoomTypeRole', BedType)))
+    ;
+    (tell(has_type(OfficeType, hsr_rooms:'Office')), tell(triple(Room, hsr_rooms:'hasRoomTypeRole', OfficeType)))
+    )))).
+
+
+
+in_room(ObjectClass, RoomType) :-
+    holds(ObjectClass, hsr_rooms:'inRoom', RoomType).
+
+
+all_rooms_of_type(RoomType, Rooms) :-
+    findall(Room,
+    (
+        has_type(Type, RoomType),
+        triple(Room, hsr_rooms:'hasRoomTypeRole', Type)
+    ),
+    Rooms).
 
 
 object_instance_in_room(ObjInstance, Room, RoomType) :-
@@ -67,14 +120,25 @@ object_class_on_furniture(ObjInstance, Furnitures, FurnitureType) :-
     
 
 
-get_room_dimensions(Room, Width, Depth, PosX, PosY) :-
-    triple(Room, hsr_rooms:'hasSurface', Wall1), has_type(Wall1, hsr_rooms:'Wall'),
-    triple(Room, hsr_rooms:'hasSurface', Wall2), has_type(Wall2, hsr_rooms:'Wall'),
+get_room_dimensions(RoomLink, Width, Depth, PosX, PosY) :-
+    get_urdf_id(URDF), 
+    urdf_link_child_joints(URDF, RoomLink, Joints), 
+    findall(Wall, 
+    (
+        member(Joint, Joints), 
+        urdf_joint_child_link(URDF, Joint, Wall)
+    ),
+    Walls),
+    member(Wall1, Walls), member(Wall2, Walls),
     not same_as(Wall1, Wall2),
+    %triple(Room, hsr_rooms:'hasSurface', Wall1), has_type(Wall1, hsr_rooms:'Wall'),
+    %triple(Room, hsr_rooms:'hasSurface', Wall2), has_type(Wall2, hsr_rooms:'Wall'),
+    %not same_as(Wall1, Wall2),
     are_orthogonal_walls(Wall1, Wall2),
     get_intersection_of_walls(Wall1, Wall2, X1, Y1),
-    triple(Room, hsr_rooms:'hasSurface', Wall3), has_type(Wall3, hsr_rooms:'Wall'),
-    triple(Room, hsr_rooms:'hasSurface', Wall4), has_type(Wall4, hsr_rooms:'Wall'),
+    %triple(Room, hsr_rooms:'hasSurface', Wall3), has_type(Wall3, hsr_rooms:'Wall'),
+    %triple(Room, hsr_rooms:'hasSurface', Wall4), has_type(Wall4, hsr_rooms:'Wall'),
+    member(Wall3, Walls), member(Wall4, Walls),
     not same_as(Wall1, Wall3), not same_as(Wall2, Wall3), 
     not same_as(Wall1, Wall4), not same_as(Wall2, Wall4),
     not same_as(Wall3, Wall4),
