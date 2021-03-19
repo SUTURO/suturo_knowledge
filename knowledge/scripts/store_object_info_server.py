@@ -73,7 +73,6 @@ class StoreObjectInfoServer(object):
             qw = str(data.pose.pose.orientation.w)
             region_splits = str(data.region).split('_')
 
-
             # checks if the obj position is valid, eg. distance to surface
             # (1) is_legal_obj_position
             # (2) create_object_at()
