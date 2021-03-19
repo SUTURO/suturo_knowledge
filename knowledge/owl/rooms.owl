@@ -142,22 +142,6 @@
     
 
 
-    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#ArmChair -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#ArmChair">
-        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#DesignedFurniture"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Bed -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Bed">
-        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#DesignedFurniture"/>
-    </owl:Class>
-    
-
-
     <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Bedroom -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Bedroom">
@@ -166,22 +150,6 @@
         <owl:disjointWith rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Kitchen"/>
         <owl:disjointWith rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#LivingRoom"/>
         <owl:disjointWith rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Office"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Bucket -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Bucket">
-        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#DesignedFurniture"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Cabinet -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Cabinet">
-        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#DesignedFurniture"/>
     </owl:Class>
     
 
@@ -221,14 +189,6 @@
     
 
 
-    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Couch -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Couch">
-        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#DesignedFurniture"/>
-    </owl:Class>
-    
-
-
     <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#DiningRoom -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#DiningRoom">
@@ -236,14 +196,6 @@
         <owl:disjointWith rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Kitchen"/>
         <owl:disjointWith rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#LivingRoom"/>
         <owl:disjointWith rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Office"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Dishwasher -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Dishwasher">
-        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#DesignedFurniture"/>
     </owl:Class>
     
 
@@ -278,14 +230,6 @@
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Floor">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#RoomSurface"/>
         <owl:disjointWith rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Wall"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Fridge -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Fridge">
-        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#DesignedFurniture"/>
     </owl:Class>
     
 
@@ -327,38 +271,6 @@
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#RoomType">
         <rdfs:subClassOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#Role"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Shelf -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Shelf">
-        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#DesignedFurniture"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Sideboard -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Sideboard">
-        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#DesignedFurniture"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Sink -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Sink">
-        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#DesignedFurniture"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Table -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Table">
-        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#DesignedFurniture"/>
     </owl:Class>
     
 
