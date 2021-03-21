@@ -135,11 +135,6 @@ create_object(PerceivedObjectType, PercTypeConf, Transform, [Width, Depth, Heigh
     tell(triple(ObjID, hsr_objects:'ConfidenceColorValue', ColorConfAtom)),
     set_object_color(ObjID, Color, ColorConf),  % set the color
     tell(triple(ObjID, hsr_objects:'supportable', true)),     % identify the object as an supportable object this is used by suturo_existing_objects
-
-    % todo: %%%%%%% remove me %%%%%%%%
-    tell(triple(ObjID, hsr_objects:'supportedBy', table)),
-
-
     reachability_check([Width, Depth, Height], ObjID, Reachability), % check if object is reachable
     tell(triple(ObjID, hsr_objects:'hasReachability', Reachability)),
 
