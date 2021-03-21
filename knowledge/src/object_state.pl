@@ -94,6 +94,8 @@ create_object(PerceivedObjectType, PercTypeConf, Transform, [Width, Depth, Heigh
     % TODO fix the marker_plugin Warnings
     % TODO go over all db writings, where to we actually need a tell ?
 
+    tf_logger_enable,
+
     %%% ================ Object validation
     % TODO make this dynamic to constraints
     object_size_ok([Width, Depth, Height]), % Dont add the object when the size is to big/small
@@ -146,6 +148,7 @@ create_object(PerceivedObjectType, PercTypeConf, Transform, [Width, Depth, Heigh
     marker_plugin:republish,
     marker_plugin:republish,
 
+    memorize('neem_folder'),
     !. % when call stack reaches here, then all bindings
 
 
