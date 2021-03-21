@@ -19,6 +19,7 @@
 :- use_module(library('beliefstate')).
 :- use_module(library('assignplaces')).
 :- use_module(library('gripper'), [gripper/1, gripper_init/1]).
+%:- use_module(library('reachable')).
 :- use_module(library('export')).
 
 :- ros_package_iri(knowledge, 'package://knowledge/owl/objects.owl').

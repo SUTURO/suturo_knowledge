@@ -12,18 +12,10 @@
     
 
 next_object_(BestObj) :-
-    writeln('=== next_object_'),
-    writeln('place_objects'),
     place_objects,
-    writeln('all_objects_on_source_surfaces'),
     all_objects_on_source_surfaces(Objs),
-    writeln('predsort'),
     predsort(compareDistances, Objs, SortedObjs),
-    writeln('nth0'),
-    writeln('-- SortedObjs'),
-    writeln(SortedObjs),
     nth0(0, SortedObjs, BestObj).
-    writeln('=== ---> passed'),
 
 
 next_object_(noSourceSurfaces) :-

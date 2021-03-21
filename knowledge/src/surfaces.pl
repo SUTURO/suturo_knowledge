@@ -204,7 +204,9 @@ table_surfaces(TableLinks):-
     findall(TableLink, triple(TableLink, hsr_objects:'isSurfaceType',table), TableLinks).
 
 bucket_surfaces(BucketLinks):-
-    findall(BucketLink, triple(BucketLink, hsr_objects:'isSurfaceType',bucket), BucketLinks).
+    findall(BucketLink, triple(Buckdo_predsort_more :-
+    predsort(smaller_distance, [n('Obj1',50), n('Obj2',7),n('Obj3',2)], X),
+    writeln(X).etLink, hsr_objects:'isSurfaceType',bucket), BucketLinks).
 
 find_supporting_surface(Object, Surface) :-
     triple(Object, hsr_objects:'supportedBy', Surface).

@@ -11,9 +11,11 @@
     object_type_handling/3,
     set_object_color/3,
     set_color_semantics/2,
-    reachability_check/2,
+    reachability_check/3,
     check_too_small/1,
-    republish/0
+    republish/0,
+    set_test_for_graspable/0
+%    test_predicate/0
     ]).
 
 :- rdf_db:rdf_register_ns(hsr_objects, 'http://www.semanticweb.org/suturo/ontologies/2020/3/objects#', [keep(true)]).
@@ -68,7 +70,7 @@ forget_objects_on_surface_(SurfaceLink) :-
 %
 % Finds the surface an object was seen on. When there is no surface supporting the object and
 % the center point of the object < 0.5 the object is placed on the ground.
-% Otherwise the quer/home/suturo/code/progress/main/source/plans/📚 learn/suturo_project/source/_static/images/knowledgey resolves to false.
+% Otherwise the query resolves to false.
 % @param Object the object to find the surface on.
 place_object(Object):-
     object_supportable_by_surface(Object, Surface),
@@ -93,7 +95,6 @@ create_object(PerceivedObjectType, PercTypeConf, Transform, [Width, Depth, Heigh
     % TODO improve 'box' param
     % TODO fix the marker_plugin Warnings
     % TODO go over all db writings, where to we actually need a tell ?
-    % TODO Transform = [map, [1,1,1], [0,0,0,1]]
 
     %%% ================ Object validation
     % TODO make this dynamic to constraints
@@ -105,12 +106,6 @@ create_object(PerceivedObjectType, PercTypeConf, Transform, [Width, Depth, Heigh
     random_id_gen(6, Result),  % create ID = Type + random id
     atom_concat(ObjectType, '_', ObjectTypeU),
     atom_concat(ObjectTypeU, Result, ObjID),
-    writeln('once(ask(..)) SurfaceType'),
-    once(ask(triple(Surface, hsr_objects:'isSurfaceType', SurfaceType))), % TODO remove after testing
-    writeln('tell(..)'),
-    tell(triple(ObjID, hsr_objects:'supportedBy', Surface)),
-    writeln('=== ---> passed'),
-%    reachability_check([Width, Depth, Height], ObjID, Reachability), % check if object is reachable
     % TODO check if the ID is already used
 
     %%% ================ Object creation
@@ -120,7 +115,7 @@ create_object(PerceivedObjectType, PercTypeConf, Transform, [Width, Depth, Heigh
     atom_number(TypeConfidenceAtom, TypeConf),
     tell(triple(ObjID, hsr_objects:'ConfidenceClassValue', TypeConfidenceAtom)), %  // +1 P=ObjID
     ((triple(ObjID, soma:hasShape, Shape), % check if Shape exists                  // +6, 1x P=ObjID, 3x P=ShapeID, 2x P=ShapeRegionID
-    triple(Shape,dul:hasRegion,ShapeRegion)); % if yes, then check if ShapeRegion exist
+    triple(Shape,dul:hasRegionReachabilityEnum,ShapeRegion)); % if yes, then check if ShapeRegion exist
     (tell(has_type(Shape, soma:'Shape')), % if either Shape or ShapeRegion does not exist,
     tell(triple(ObjID,soma:hasShape,Shape)), % then create Shape, ShapeRegion
     tell(has_type(ShapeRegion, soma:'ShapeRegion')),
@@ -140,9 +135,16 @@ create_object(PerceivedObjectType, PercTypeConf, Transform, [Width, Depth, Heigh
     tell(triple(ObjID, hsr_objects:'ConfidenceColorValue', ColorConfAtom)),
     set_object_color(ObjID, Color, ColorConf),  % set the color
     tell(triple(ObjID, hsr_objects:'supportable', true)),     % identify the object as an supportable object this is used by suturo_existing_objects
-    tell(triple(ObjID, hsr_objects:'hasReachability', 31)),
 
-    %%% ================ visualization marker array publish
+    % todo: %%%%%%% remove me %%%%%%%%
+    tell(triple(ObjID, hsr_objects:'supportedBy', table)),
+
+
+    reachability_check([Width, Depth, Height], ObjID, Reachability), % check if object is reachable
+    tell(triple(ObjID, hsr_objects:'hasReachability', Reachability)),
+
+    %%% ================ visualization marker array publishpublish
+
     % TODO why not working with 1x ?
     marker_plugin:republish,
     marker_plugin:republish,
@@ -152,57 +154,180 @@ create_object(PerceivedObjectType, PercTypeConf, Transform, [Width, Depth, Heigh
 
 %%% =========================== reachable predicates
 reachability_check([Width, Depth, Height], ObjID, Reachability) :-
-    writeln('reachbility_check'),
+    % todo : refactor if supportedBySurface, then check if shelf: 30 cm or table 40 cm
     (
-    check_too_small([Width, Depth, Height]) -> reachable_reason(1, Reachability);
-    check_too_big([Width, Depth, Height]) -> reachable_reason(2, Reachability);
-    check_distance(ObjID) -> reachable_reason(3, Reachability);
-    reachable_reason(0, Reachability)
+    check_too_big([Width, Depth, Height]) -> Reachability = 1;
+    check_too_much_distance(ObjID) -> Reachability = 2;
+    Reachability = 0
     ).
 
-check_too_small([Width, Depth, Height]) :-
-    ros_info('check too small'),
-    ros_info('Width'),
-    Width < 0.01;
-    Depth < 0.01;
-    Height < 0.01.
-
+%% check_too_big([Width, Depth, Height]) is det.
+%
+%
+%
+%
 check_too_big([Width, Depth, Height]) :-
-    writeln('check too big'),
     Width > 0.11;
     Depth > 0.11;
     Height > 0.11.
+%% check_too_much_distance(ObjID) is det.
+%
+%
+%
+%
+check_too_much_distance(ObjID) :-
+    calc_distance(ObjID, Distance),
+    Distance > 0.4.
+%% calc_distance(ObjID, Distance) is det.
+%
+%
+%
+%
+calc_distance(ObjID, Distance) :-
+    % todo : refactor with existing functionalities
+    % is_at('iai_kitchen/table_front_edge_center', [map,[AX,AY,AZ],_]),
+    is_at('base_footprint', [map,[AX,AY,AZ],_]),
+    is_at(ObjID, [map,[BX,BY,BZ],_]),
+    DX is AX - BX,
+    DY is AY - BY,
+    DZ is AZ - BZ,
+    Distance is sqrt( ((DX*DX) + (DY*DY)) + (DZ*DZ)).
 
-check_distance(ObjID) :-
-    % soma: hasReferenceFrame
-    % soma: isLocalizationOf, hasLocalization
-    % TODO: Do we make an actual tf lookup or just get info from the tf db ?
-    writeln('=== check_distance'),
-    writeln('ask(..)'),
-    ask(triple(ObjID, hsr_objects:'supportedBy', Surface)),
-    writeln('Surface'),
-    writeln(Surface),
-    writeln('tf_lookup'),
-    object_tf_frame(ObjID, Frame),
-    writeln(Frame),
-    writeln('=== ---> passed').
-
-%    transform_between(Transform, SurfaceTransform, Result),
-%    Result > 31.
-
-
+%%% =========================== reachable reasons
+% todo : think of a more clever mapping of reason representation <-> efficient querying
 reachable_reason(0, Reachability) :-
     Reachability = 'Reachable'.
 reachable_reason(1, Reachability) :-
-    writeln('Ungraspable because too small for gripper'),
-    Reachability = 'Ungraspable because too small for gripper'.
-reachable_reason(2, Reachability) :-
-    writeln('Ungraspable because too big for gripper'),
     Reachability = 'Ungraspable because too big for gripper'.
-reachable_reason(3, Reachability) :-
+reachable_reason(2, Reachability) :-
     Reachability = 'Object is out of reach'.
-reachable_reason(4, Reachability) :-
+reachable_reason(3, Reachability) :-
     Reachability = 'Unreachable for unkown reason'.
+
+
+
+set_test_for_graspable :-
+    writeln('======= start tests'),
+    % Set base footprint
+    writeln('=== is at fooprint'),
+    tell(is_at('base_footprint', [map, [0,0,0], [0,0,0,1]])),
+
+    writeln('=== create objects'),
+    %%%
+    writeln('Reachable, 1st closest'),
+    create_object('http://www.semanticweb.org/suturo/ontologies/2020/3/objects#PringlesOriginals', 1,  ['map', [0.1,0.1,0.1], [0, 0, 0, 1]], [0.05, 0.05, 0.05], 'box',1, [0,0,255], 1, FirstObj),
+    writeln(FirstObj),
+    %%%
+    writeln('Reachable, 2nd closest'),
+    create_object('http://www.semanticweb.org/suturo/ontologies/2020/3/objects#PringlesOriginals', 1,  ['map', [0.2,0.2,0.2], [0, 0, 0, 1]], [0.05, 0.05, 0.05], 'box',1, [0,0,255], 1, SecondObj),
+    writeln(SecondObj),
+    %%%
+    writeln('Unreachable, too big'),
+    create_object('http://www.semanticweb.org/suturo/ontologies/2020/3/objects#PringlesOriginals', 1,  ['map', [0.1,0.1,0.1], [0, 0, 0, 1]], [0.5, 0.05, 0.05], 'box',1, [0,0,255], 1, ThirdObj),
+    writeln(ThirdObj),
+    %%%
+    writeln('Unreachable, out of reach'),
+    create_object('http://www.semanticweb.org/suturo/ontologies/2020/3/objects#PringlesOriginals', 1,  ['map', [10,0.1,0.1], [0, 0, 0, 1]], [0.5, 0.05, 0.05], 'box',1, [0,0,255], 1, FourthObj),
+    writeln(FourthObj),
+    %%%
+
+    writeln('=== all objects graspable'),
+    all_objects_graspable(Graspable),
+    length(Graspable, LenGraspable),
+    LenGraspable =:= 2,
+    writeln('=== ---> passed!'),
+
+    writeln('=== all objects not graspable'),
+    all_objects_not_graspable(NotGraspable),
+    length(NotGraspable, LenNotGraspable),
+    LenNotGraspable =:= 2,
+    writeln('=== ---> passed!'),
+
+    writeln('=== next graspable object on surface'),
+    next_graspable_object_on_surface(NextGraspable, table),
+    member(NextGraspable,[FirstObj, SecondObj]),
+    writeln('=== ---> passed!'),
+
+    writeln('=== all not graspable objects on surface'),
+    all_not_graspable_objects_on_surfacte(NotGraspableObjects, table),
+    length(NotGraspableObjects, LenNotGraspableObjects),
+    LenNotGraspableObjects =:= 2,
+    writeln('=== ---> passed!'),
+
+    writeln('=== set_not_graspable'),
+    set_not_graspable(FirstObj, table),
+    all_not_graspable_objects_on_surfacte(MoreUngraspable, table),
+    length(MoreUngraspable, LenMoreUngraspable),
+    LenMoreUngraspable =:= 3,
+    writeln('=== ---> passed!'),
+
+
+    !.
+
+%%% =============================== reachable objects for knowledge client
+%% all_objects_graspable(Graspable) is nondet.
+%
+%
+%
+%
+all_objects_graspable(Graspable):-
+    findall(Subject,ask(triple(Subject, hsr_objects:'hasReachability',0)),Graspable).
+%% all_objects_not_graspable(Graspable) is nondet.
+%
+%
+%
+%
+all_objects_not_graspable(NotGraspable):-
+    findall(Subject,ask(triple(Subject, hsr_objects:'hasReachability',>(0))),NotGraspable).
+%% next_graspable_object_on_surface(NextGraspable, Surface) is nondet.
+%3
+%
+%
+%
+next_graspable_object_on_surface(NextGraspable, Surface) :-
+    % todo : sort for distance
+    findall(Subject,ask(triple(Subject, hsr_objects:'supportedBy', Surface)),ObjectsOnSurface),
+%    predsort(compareDistances, ObjectsOnSurface, SortedObjs),
+    nth0(0, ObjectsOnSurface, NextGraspable).
+
+%% all_not_graspable_objects_on_surfacte(Graspable, Surface) is nondet.
+%
+%
+%
+%
+all_not_graspable_objects_on_surfacte(NotGraspable, Surface) :-
+    findall(Subject,ask(triple(Subject, hsr_objects:'supportedBy', Surface)),ObjectsOnSurface).
+
+%% set_not_graspable(Object, ReachabilityEnum) is det.
+%
+%
+%
+%
+set_not_graspable(Object, ReachabilityEnum):-
+    tell(triple(Object, hsr_objects:'hasReachability', ReachabilityEnum)).
+
+%%% =========================== helper functions
+%% calc_distance_from_surface(ObjID, Surface, Distance) is det.
+%
+%
+%
+%
+calc_distance_from_surface(ObjID, Surface, Distance) :-
+    % todo : refactor with existing functionalities
+    is_at(Surface, [map,[AX,AY,AZ],_]),
+    is_at(ObjID, [map,[BX,BY,BZ],_]),
+    DX is AX - BX,
+    DY is AY - BY,
+    DZ is AZ - BZ,
+    Distance is sqrt( ((DX*DX) + (DY*DY)) + (DZ*DZ)).
+%% check_if_graspable(Object) is nondet.
+%
+%
+%
+%
+check_if_graspable(Object) :-
+    ask(triple(Object,hsr_objects:'hasReachability', 0)).
+
 
 
 % Recursively create a Random String of a given length
