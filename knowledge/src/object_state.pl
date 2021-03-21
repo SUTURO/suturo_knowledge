@@ -93,6 +93,7 @@ create_object(PerceivedObjectType, PercTypeConf, Transform, [Width, Depth, Heigh
     % TODO improve 'box' param
     % TODO fix the marker_plugin Warnings
     % TODO go over all db writings, where to we actually need a tell ?
+    % TODO Transform = [map, [1,1,1], [0,0,0,1]]
 
     %%% ================ Object validation
     % TODO make this dynamic to constraints
@@ -109,7 +110,7 @@ create_object(PerceivedObjectType, PercTypeConf, Transform, [Width, Depth, Heigh
     writeln('tell(..)'),
     tell(triple(ObjID, hsr_objects:'supportedBy', Surface)),
     writeln('=== ---> passed'),
-    reachability_check([Width, Depth, Height], ObjID, Reachability), % check if object is reachable
+%    reachability_check([Width, Depth, Height], ObjID, Reachability), % check if object is reachable
     % TODO check if the ID is already used
 
     %%% ================ Object creation
@@ -139,13 +140,12 @@ create_object(PerceivedObjectType, PercTypeConf, Transform, [Width, Depth, Heigh
     tell(triple(ObjID, hsr_objects:'ConfidenceColorValue', ColorConfAtom)),
     set_object_color(ObjID, Color, ColorConf),  % set the color
     tell(triple(ObjID, hsr_objects:'supportable', true)),     % identify the object as an supportable object this is used by suturo_existing_objects
-    tell(triple(ObjID, hsr_objects:'hasReachability', Reachability)),
+    tell(triple(ObjID, hsr_objects:'hasReachability', 31)),
 
     %%% ================ visualization marker array publish
     % TODO why not working with 1x ?
     marker_plugin:republish,
     marker_plugin:republish,
-
     !. % when call stack reaches here, then all bindings
 
 
@@ -174,6 +174,9 @@ check_too_big([Width, Depth, Height]) :-
     Height > 0.11.
 
 check_distance(ObjID) :-
+    % soma: hasReferenceFrame
+    % soma: isLocalizationOf, hasLocalization
+    % TODO: Do we make an actual tf lookup or just get info from the tf db ?
     writeln('=== check_distance'),
     writeln('ask(..)'),
     ask(triple(ObjID, hsr_objects:'supportedBy', Surface)),
