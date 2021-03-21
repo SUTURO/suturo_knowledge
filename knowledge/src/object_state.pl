@@ -14,7 +14,11 @@
     reachability_check/3,
     check_too_small/1,
     republish/0,
-    set_test_for_graspable/0
+    all_objects_graspable_/1,
+    all_objects_not_graspable_/1,
+    next_graspable_object_on_surface_/2,
+    all_not_graspable_objects_on_surface_/2,
+    set_not_graspable_/2
 %    test_predicate/0
     ]).
 
@@ -227,31 +231,31 @@ set_test_for_graspable :-
     %%%
 
     writeln('=== all objects graspable'),
-    all_objects_graspable(Graspable),
+    all_objects_graspable_(Graspable),
     length(Graspable, LenGraspable),
     LenGraspable =:= 2,
     writeln('=== ---> passed!'),
 
     writeln('=== all objects not graspable'),
-    all_objects_not_graspable(NotGraspable),
+    all_objects_not_graspable_(NotGraspable),
     length(NotGraspable, LenNotGraspable),
     LenNotGraspable =:= 2,
     writeln('=== ---> passed!'),
 
     writeln('=== next graspable object on surface'),
-    next_graspable_object_on_surface(NextGraspable, table),
+    next_graspable_object_on_surface_(NextGraspable, table),
     member(NextGraspable,[FirstObj, SecondObj]),
     writeln('=== ---> passed!'),
 
     writeln('=== all not graspable objects on surface'),
-    all_not_graspable_objects_on_surfacte(NotGraspableObjects, table),
+    all_not_graspable_objects_on_surface_(NotGraspableObjects, table),
     length(NotGraspableObjects, LenNotGraspableObjects),
     LenNotGraspableObjects =:= 2,
     writeln('=== ---> passed!'),
 
-    writeln('=== set_not_graspable'),
-    set_not_graspable(FirstObj, table),
-    all_not_graspable_objects_on_surfacte(MoreUngraspable, table),
+    writeln('=== set_not_graspable_'),
+    set_not_graspable_(FirstObj, 3),
+    all_not_graspable_objects_on_surface_(MoreUngraspable, table),
     length(MoreUngraspable, LenMoreUngraspable),
     LenMoreUngraspable =:= 3,
     writeln('=== ---> passed!'),
@@ -260,45 +264,45 @@ set_test_for_graspable :-
     !.
 
 %%% =============================== reachable objects for knowledge client
-%% all_objects_graspable(Graspable) is nondet.
+%% all_objects_graspable_(Graspable) is nondet.
 %
 %
 %
 %
-all_objects_graspable(Graspable):-
+all_objects_graspable_(Graspable):-
     findall(Subject,ask(triple(Subject, hsr_objects:'hasReachability',0)),Graspable).
-%% all_objects_not_graspable(Graspable) is nondet.
+%% all_objects_not_graspable_(Graspable) is nondet.
 %
 %
 %
 %
-all_objects_not_graspable(NotGraspable):-
+all_objects_not_graspable_(NotGraspable):-
     findall(Subject,ask(triple(Subject, hsr_objects:'hasReachability',>(0))),NotGraspable).
-%% next_graspable_object_on_surface(NextGraspable, Surface) is nondet.
+%% next_graspable_object_on_surface_(NextGraspable, Surface) is nondet.
 %3
 %
 %
 %
-next_graspable_object_on_surface(NextGraspable, Surface) :-
+next_graspable_object_on_surface_(NextGraspable, Surface) :-
     % todo : sort for distance
     findall(Subject,ask(triple(Subject, hsr_objects:'supportedBy', Surface)),ObjectsOnSurface),
 %    predsort(compareDistances, ObjectsOnSurface, SortedObjs),
     nth0(0, ObjectsOnSurface, NextGraspable).
 
-%% all_not_graspable_objects_on_surfacte(Graspable, Surface) is nondet.
+%% all_not_graspable_objects_on_surface_(Graspable, Surface) is nondet.
 %
 %
 %
 %
-all_not_graspable_objects_on_surfacte(NotGraspable, Surface) :-
+all_not_graspable_objects_on_surface_(NotGraspable, Surface) :-
     findall(Subject,ask(triple(Subject, hsr_objects:'supportedBy', Surface)),ObjectsOnSurface).
 
-%% set_not_graspable(Object, ReachabilityEnum) is det.
+%% set_not_graspable_(Object, ReachabilityEnum) is det.
 %
 %
 %
 %
-set_not_graspable(Object, ReachabilityEnum):-
+set_not_graspable_(Object, ReachabilityEnum):-
     tell(triple(Object, hsr_objects:'hasReachability', ReachabilityEnum)).
 
 %%% =========================== helper functions

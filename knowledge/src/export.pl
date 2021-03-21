@@ -20,7 +20,13 @@
       % Find Surfaces
       table_surfaces/1,
       % Beliefstate
-      forget_objects_on_surface/1
+      forget_objects_on_surface/1,
+      % Reachables
+      all_objects_graspable/1,
+      all_objects_not_graspable/1,
+      next_graspable_object_on_surface/2,
+      all_not_graspable_objects_on_surface/2,
+      set_not_graspable/2
     ]).
 
 %%% ROLES %%%
@@ -70,3 +76,19 @@ forget_objects_on_surface(Surface) :-
 % TODO :  where?
 surface_frame(Surface, Frame) :-
     surface_frame_(Surface, Frame).
+
+%%% =========================== reachable predicates
+all_objects_graspable(Graspable):-
+    all_objects_graspable_(Graspable).
+
+all_objects_not_graspable(NotGraspable):-
+    all_objects_graspable_(NotGraspable).
+
+next_graspable_object_on_surface(NextGraspable, Surface) :-
+    next_graspable_object_on_surface_(NextGraspable, Surface).
+
+all_not_graspable_objects_on_surface(NotGraspable, Surface) :-
+    all_not_graspable_objects_on_surface_(NotGraspable, Surface).
+
+set_not_graspable(Object, ReachabilityEnum):-
+    set_not_graspable_(Object, ReachabilityEnum).
