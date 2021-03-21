@@ -25,16 +25,16 @@
 
 %%% ROLES %%%
 
-make_ground_source:-
+make_ground_source :-
     make_all_surface_type_role(ground, source).
 
-make_all_shelves_target:-
+make_all_shelves_target :-
     make_all_surface_type_role(shelf, target).
 
-make_all_tables_source:-
+make_all_tables_source :-
     make_all_surface_type_role(table, source).
 
-make_all_buckets_target:-
+make_all_buckets_target :-
     make_all_surface_type_role(bucket, target).
 
 %%% FIND OBJECTS %%%
@@ -67,6 +67,6 @@ forget_objects_on_surface(Surface) :-
     forget_objects_on_surface_(Surface).
 
 %%% URDF %%%
-
+% TODO :  where?
 surface_frame(Surface, Frame) :-
     surface_frame_(Surface, Frame).

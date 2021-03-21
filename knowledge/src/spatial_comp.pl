@@ -9,6 +9,7 @@
         object_supportable_by_surface/2,
         position_supportable_by_surface/2,
         distance_to_robot/2,
+        object_tf_frame/2,
         %Debug
         relative_position_supportable_by_surface/2
     ]).

@@ -10,7 +10,10 @@
     object_size_ok/1,
     object_type_handling/3,
     set_object_color/3,
-    set_color_semantics/2    
+    set_color_semantics/2,
+    reachability_check/2,
+    check_too_small/1,
+    republish/0
     ]).
 
 :- rdf_db:rdf_register_ns(hsr_objects, 'http://www.semanticweb.org/suturo/ontologies/2020/3/objects#', [keep(true)]).
@@ -18,7 +21,7 @@
 :- rdf_db:rdf_register_ns(dul, 'http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#', [keep(true)]).
 :- rdf_db:rdf_register_ns(soma, 'https://ease-crc.github.io/soma/owl/current/SOMA.owl#', [keep(true)]).
 :- rdf_db:rdf_register_ns(knowrob, 'http://www.knowrob.org/kb/knowrob.owl#', [keep(true)]).
-:- use_module(library('ros/marker/marker_plugin'), [marker_message_new/3, republish/0]). % Importing marker_plugin
+:- use_module(library('ros/marker/marker_plugin'), [republish/0]). % Importing marker_plugin
 
 % TODO rdf meta
 :- rdf_meta
@@ -84,13 +87,12 @@ place_object(Object):-
 % @param Color the observed color of the object.
 % @param PercColorConf the confidence of the color.
 % @param ObjID the id that will be generated for the Object.
-% TODO refactor into more suitable predicates
-% TODO change that terriple param order
-% TODO improve 'box' param
-% TODO fix the marker_plugin Warnings
-% TODO go over all db writings, where to we actually need a tell ?
-% TODO validate reachable in create_object: @param for colision avoidance, inferr distance via self position + obj position, inferr size of gripper and check with the existing size
 create_object(PerceivedObjectType, PercTypeConf, Transform, [Width, Depth, Height], 'box', PercShapeConf, Color, PercColorConf, ObjID):-
+    % TODO refactor into more suitable predicates
+    % TODO change that terriple param order
+    % TODO improve 'box' param
+    % TODO fix the marker_plugin Warnings
+    % TODO go over all db writings, where to we actually need a tell ?
 
     %%% ================ Object validation
     % TODO make this dynamic to constraints
@@ -102,6 +104,12 @@ create_object(PerceivedObjectType, PercTypeConf, Transform, [Width, Depth, Heigh
     random_id_gen(6, Result),  % create ID = Type + random id
     atom_concat(ObjectType, '_', ObjectTypeU),
     atom_concat(ObjectTypeU, Result, ObjID),
+    writeln('once(ask(..)) SurfaceType'),
+    once(ask(triple(Surface, hsr_objects:'isSurfaceType', SurfaceType))), % TODO remove after testing
+    writeln('tell(..)'),
+    tell(triple(ObjID, hsr_objects:'supportedBy', Surface)),
+    writeln('=== ---> passed'),
+    reachability_check([Width, Depth, Height], ObjID, Reachability), % check if object is reachable
     % TODO check if the ID is already used
 
     %%% ================ Object creation
@@ -131,6 +139,7 @@ create_object(PerceivedObjectType, PercTypeConf, Transform, [Width, Depth, Heigh
     tell(triple(ObjID, hsr_objects:'ConfidenceColorValue', ColorConfAtom)),
     set_object_color(ObjID, Color, ColorConf),  % set the color
     tell(triple(ObjID, hsr_objects:'supportable', true)),     % identify the object as an supportable object this is used by suturo_existing_objects
+    tell(triple(ObjID, hsr_objects:'hasReachability', Reachability)),
 
     %%% ================ visualization marker array publish
     % TODO why not working with 1x ?
@@ -142,15 +151,54 @@ create_object(PerceivedObjectType, PercTypeConf, Transform, [Width, Depth, Heigh
 
 
 %%% =========================== reachable predicates
-reachable(1, Reachability) :-
+reachability_check([Width, Depth, Height], ObjID, Reachability) :-
+    writeln('reachbility_check'),
+    (
+    check_too_small([Width, Depth, Height]) -> reachable_reason(1, Reachability);
+    check_too_big([Width, Depth, Height]) -> reachable_reason(2, Reachability);
+    check_distance(ObjID) -> reachable_reason(3, Reachability);
+    reachable_reason(0, Reachability)
+    ).
+
+check_too_small([Width, Depth, Height]) :-
+    ros_info('check too small'),
+    ros_info('Width'),
+    Width < 0.01;
+    Depth < 0.01;
+    Height < 0.01.
+
+check_too_big([Width, Depth, Height]) :-
+    writeln('check too big'),
+    Width > 0.11;
+    Depth > 0.11;
+    Height > 0.11.
+
+check_distance(ObjID) :-
+    writeln('=== check_distance'),
+    writeln('ask(..)'),
+    ask(triple(ObjID, hsr_objects:'supportedBy', Surface)),
+    writeln('Surface'),
+    writeln(Surface),
+    writeln('tf_lookup'),
+    object_tf_frame(ObjID, Frame),
+    writeln(Frame),
+    writeln('=== ---> passed').
+
+%    transform_between(Transform, SurfaceTransform, Result),
+%    Result > 31.
+
+
+reachable_reason(0, Reachability) :-
     Reachability = 'Reachable'.
-reachable(2, Reachability) :-
+reachable_reason(1, Reachability) :-
+    writeln('Ungraspable because too small for gripper'),
+    Reachability = 'Ungraspable because too small for gripper'.
+reachable_reason(2, Reachability) :-
+    writeln('Ungraspable because too big for gripper'),
     Reachability = 'Ungraspable because too big for gripper'.
-reachable(3, Reachability) :-
-    Reachability = 'Unreachable because too far away'.
-reachable(4, Reachability) :-
-    Reachability = 'Unreachable because collision not avoidable'.
-reachable(5, Reachability) :-
+reachable_reason(3, Reachability) :-
+    Reachability = 'Object is out of reach'.
+reachable_reason(4, Reachability) :-
     Reachability = 'Unreachable for unkown reason'.
 
 

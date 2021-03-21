@@ -7,8 +7,8 @@
     set_not_graspable/1
     ]).
 
-%% TODO: findall
 all_objects_graspable(Graspable):-
+    % TODO : findall
     ask(triple(Graspable, hsr_objects:'hasReachability', 1)).
 
 all_objects_not_graspable(Graspable):-
@@ -20,5 +20,6 @@ next_graspable_object_on_surface(Graspable, Surface):-
 all_not_graspable_objects_on_surfacte(Graspable, Surface):-
     !.
 
-set_not_graspable(Object, Reachability):-
+set_not_graspable(Object, ReachabilityEnum):-
+    reachable_reason(ReachabilityEnum, Reachability),
     tell(triple(Object, hsr_objects:'hasReachability', Reachability)).
