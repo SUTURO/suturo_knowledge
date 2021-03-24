@@ -20,6 +20,7 @@
 :- use_module(library('assignplaces')).
 :- use_module(library('gripper'), [gripper/1, gripper_init/1]).
 :- use_module(library('export')).
+:- use_module(library('neems')).
 
 :- ros_package_iri(knowledge, 'package://knowledge/owl/objects.owl').
 

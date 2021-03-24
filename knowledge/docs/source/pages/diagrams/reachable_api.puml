@@ -1,0 +1,53 @@
+@startuml
+' ================> Start
+skinparam component {
+BackGroundColor white
+fontstyle bold
+
+}
+skinparam rectangle {
+BorderColor darkred
+BackGroundColor white
+}
+skinparam frame {
+BackGroundColor whitesmoke
+BorderColor white
+
+}
+skinparam node {
+BackGroundColor white
+}
+skinparam interface {
+BackGroundColor white
+}
+' -------- Notes
+
+' -------- Diagram
+frame suturo_planning {
+skinparam componentStyle uml1
+component knowledge_client.lisp
+
+}
+
+
+frame suturo_knowledge {
+skinparam componentStyle uml2
+component reachable_objects.pl {
+interface all_objects_graspable as first
+interface all_objects_not_graspable as second
+interface next_graspable_object_on_surface as third
+interface all_not_grasbaple_objects_on_surface as fourth
+interface set_not_graspable as fifth
+
+}
+}
+
+' -------- Connections
+knowledge_client.lisp <----( first
+knowledge_client.lisp <----( second
+knowledge_client.lisp <----( third
+knowledge_client.lisp <----( fourth
+knowledge_client.lisp ---[#blue]> fifth
+
+' ================> End
+@enduml
