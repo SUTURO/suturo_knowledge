@@ -1,6 +1,7 @@
 :- register_ros_package(rosprolog).
 :- register_ros_package(knowrob).
 :- register_ros_package(knowledge).
+
 %%% KnowRob imports
 :- use_module(library('semweb/rdf_db')).
 :- use_module(library('semweb/rdfs')).
