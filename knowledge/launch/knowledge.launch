@@ -1,12 +1,25 @@
 <launch>
   <arg name="urdf_param" default="/hsrb_lab" />
-  <arg name="urdf_launch_file" default="gazebo_E1" />
+  <arg name="urdf_launch_file" default="cleanup_movable_doors" />
   <arg name="standalone" default="false" />
 
-  <!-- The urdf now starts from suturo_bringup except when we start-->
   <group if="$(arg standalone)">
-    <include file="$(find suturo_urdf_publisher)/launch/$(arg urdf_launch_file).launch" />
+    <include file="$(find suturo_bringup)/launch/$(arg urdf_launch_file).launch" pass_all_args="true">
+      <arg name="gui" value="false"/>
+      <arg name="gazebo_visualization" value="false"/>
+      <arg name="use_manipulation" value="false"/>
+      <arg name="use_navigation" value="false"/>
+      <arg name="use_perception" value="false"/>
+      <arg name="use_teleop" value="false"/>
+      <arg name="use_web" value="false"/>
+      <arg name="use_laser_odom" value="false"/>
+      <arg name="fast_physics" value="false"/>
+      <arg name="gazebo" value="false"/>
+      <arg name="suturo_rviz" value="true"/>
+      <arg name="run_snap_map" value="false"/>
+    </include>
   </group>
+
   <!--these are ParamServer.(params) -->
   <param name="param_to_load_URDF_from" type="str" value="$(arg urdf_param)" />
   <param name="initial_package" type="string" value="knowledge" />
