@@ -1,8 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <catalog prefer="public" xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
+    <uri id="User Entered Import Resolution" name="package://knowrob/owl/knowrob.owl" uri="file:/home/reni/knowledge_ws_new_knowrob/src/knowrob/owl/knowrob.owl"/>
+    <uri id="User Entered Import Resolution" name="package://knwoledge/owl/objects.owl" uri="objects.owl"/>
+    <uri id="User Entered Import Resolution" name="package://knowledge/owl/rooms.owl" uri="rooms.owl"/>
+    <uri id="User Entered Import Resolution" name="package://knowrob/owl/URDF.owl" uri="file:/home/reni/knowledge_ws_new_knowrob/src/knowrob/owl/URDF.owl"/>
+    <uri id="User Entered Import Resolution" name="http://www.ontologydesignpatterns.org/ont/dul/IOLite.owl" uri="file:/home/reni/knowledge_ws_new_knowrob/src/knowrob/owl/external/DUL.owl"/>
+    <uri id="User Entered Import Resolution" name="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl" uri="file:/home/reni/knowledge_ws_new_knowrob/src/knowrob/owl/external/DUL.owl"/>
+    <uri id="User Entered Import Resolution" name="http://www.ease-crc.org/ont/SOMA.owl" uri="file:/home/reni/knowledge_ws_new_knowrob/src/knowrob/owl/external/SOMA.owl"/>
+    <uri id="User Entered Import Resolution" name="http://knowrob.org/kb/knowrob.owl" uri="file:/home/reni/knowledge_ws_new_knowrob/src/knowrob/owl/knowrob.owl"/>
     <group id="Folder Repository, directory=, recursive=true, Auto-Update=true, version=2" prefer="public" xml:base="">
-        <uri id="Automatically generated entry, Timestamp=1587385006480" name="http://www.semanticweb.org/suturo/ontologies/2018/10/objects" uri="objects_wo_dul.owl"/>
-        <uri id="Automatically generated entry, Timestamp=1587385006480" name="http://www.semanticweb.org/suturo/ontologies/2020/2/Robocup" uri="robocup.owl"/>
-        <uri id="Automatically generated entry, Timestamp=1587385006480" name="http://www.semanticweb.org/suturo/ontologies/2020/3/objects" uri="objects.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1615631723046" name="http://www.semanticweb.org/suturo/ontologies/2018/10/objects" uri="objects_wo_dul.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1615631723046" name="http://www.semanticweb.org/suturo/ontologies/2020/2/Robocup" uri="robocup.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1615631723046" name="http://www.semanticweb.org/suturo/ontologies/2020/3/objects" uri="objects.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1615631723046" name="http://www.semanticweb.org/suturo/ontologies/2021/0/locations" uri="locations.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1615631723046" name="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms" uri="rooms.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1615631723046" name="http://www.semanticweb.org/suturo/ontologies/2021/0/testing" uri="testing.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1615631723046" name="http://www.semanticweb.org/suturo/ontologies/2021/1/sim_door_rooms" uri="maps/sim_door_rooms.owl"/>
     </group>
 </catalog>
