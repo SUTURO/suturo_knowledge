@@ -6,10 +6,12 @@
     log_scan_shelf_floors_sequence/0,
     log_place_sequence/0,
     neem_terminate/0,
+    episode_overview/0,
+    event_overview/0,
     action_overview/0,
     event_overview/0,
     action_overview/0,
-    objects_overview/0,
+    object_overview/0,
     get_first_event/0,
     neem_storing_groceries/0,
     neem_query/0
@@ -35,6 +37,7 @@ neem_storing_groceries :-
 
 neem_query :-
     remember('storing_groceries_neem'),
+    episode_overview,
     event_overview,
     action_overview,
     object_overview.
@@ -47,9 +50,10 @@ neem_query :-
 neem_init :-
     tf_logger_enable.
     tell([
+        Episode = 'Storing Groceries Main Episode',
+        Agent = 'hsr',
         is_episode(Episode),
-        is_setting_for(Episode, 0),
-        is_setting_for(Episode, 1)
+        is_setting_for(Episode, Agent)
     ]).
 
 %%% log_setup() is nondet.
@@ -57,7 +61,10 @@ neem_init :-
 % Log the necessary infos for the Setup Task.
 %
 log_setup :-
-    X = 31.
+    writeln('===== log_setup'),
+    writeln('tell is action'),
+    tell(is_action('http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#Action')),
+    writeln('===== ---> passed !').
 
 %%% log_scan_table_sequence() is nondet.
 %
@@ -96,12 +103,19 @@ neem_terminate :-
 
 %%% ====================================== neem query predicates
 
+%%% episode_overview() is nondet.
+%
+% Give an expressive representation of the existing Episodes.
+%
+episode_overview :-
+    is_episode(Event).
+
 %%% event_overview() is nondet.
 %
 % Give an expressive representation of the existing Events.
 %
 event_overview :-
-    X = 31.
+    is_event(Event).
 
 %%% action_overview() is nondet.
 %
@@ -110,11 +124,11 @@ event_overview :-
 action_overview :-
     X = 31.
 
-%%% objects_overview() is nondet.
+%%% object_overview() is nondet.
 %
 % Give an expressive representation of the existing Objects.
 %
-objects_overview :-
+object_overview :-
     X = 31.
 
 

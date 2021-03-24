@@ -95,7 +95,7 @@ create_object(PerceivedObjectType, PercTypeConf, Transform, [Width, Depth, Heigh
     % TODO go over all db writings, where to we actually need a tell ?
 
     tf_logger_enable,
-
+    writeln(soma:hasShape),
     %%% ================ Object validation
     % TODO make this dynamic to constraints
     object_size_ok([Width, Depth, Height]), % Dont add the object when the size is to big/small
