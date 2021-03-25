@@ -22,7 +22,7 @@
 :- use_module(library('export')).
 :- use_module(library('neems')).
 
-:- ros_package_iri(knowledge, 'package://knowledge/owl/objects.owl').
+:- ros_package_iri(knowledge, 'http://www.semanticweb.org/suturo/ontologies/2020/3').
 
 :- tripledb_load(
 	'http://www.ontologydesignpatterns.org/ont/dul/DUL.owl',
@@ -32,7 +32,7 @@
 	'http://knowrob.org/kb/knowrob.owl',
 	[ namespace(knowrob)
 	]).
-:- tripledb_load('package://knowledge/owl/objects.owl',
+:- tripledb_load('http://www.semanticweb.org/suturo/ontologies/2020/3/objects.owl',
 	[ namespace(hsr_objects)
 	]).
 :- tripledb_load(

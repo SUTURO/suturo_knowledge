@@ -48,13 +48,13 @@ neem_query :-
 % Initialize the neem.
 %
 neem_init :-
-    tf_logger_enable.
+    writeln('===== neem_init'),
+    tf_logger_enable,
     tell([
-        Episode = 'Storing Groceries Main Episode',
-        Agent = 'hsr',
-        is_episode(Episode),
-        is_setting_for(Episode, Agent)
-    ]).
+        is_episode(GroceriesEpisode),
+        is_setting_for(GroceriesEpisode, 'hsr')
+    ]),
+    writeln('===== ---> passed !').
 
 %%% log_setup() is nondet.
 %
@@ -62,44 +62,131 @@ neem_init :-
 %
 log_setup :-
     writeln('===== log_setup'),
-    writeln('tell is action'),
-    tell(is_action('http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#Action')),
+    tell(is_action(SetupTask)),
+    tell(has_participant(SetupTask, 'hsr')),
+    tell(is_performed_by(SetupTask, 'hsr')),
+    % get_time(Start),
+    % get_time(End),
+    % tell(occurs(SetupTask) during [Start, End]),
+    tell(has_subevent(SetupTask, SetTableSource)),
+    tell(has_subevent(SetupTask, SetTargetSurface)),
+    tell(has_subevent(SetupTask, TakePoseAction)),
+    tell(has_type(Task1, soma:'GetTaskParameter')),
+    tell(has_type(Task2, soma:'AssumingPose')),
+    tell(executes_task(SetTableSource, Task1)),
+    tell(executes_task(SetTargetSurface, Task1)),
+    tell(executes_task(TakePoseAction, Task2)),
     writeln('===== ---> passed !').
+
 
 %%% log_scan_table_sequence() is nondet.
 %
 % Log the necessary infos for the Scan Table Sequence Task.
 %
 log_scan_table_sequence :-
-    X = 31.
+    writeln('===== log_scan_table_sequence'),
+    tell(is_action(ScanTableSequence)),
+    tell(has_participant(ScanTableSequence, 'hsr')),
+    tell(is_performed_by(ScanTableSequence, 'hsr')),
+    % get_time(Start),
+    % get_time(End),
+    % tell(occurs(SetupTask) during [Start, End]),
+    tell(has_subevent(ScanTableSequence, MoveToTable)),
+    tell(has_subevent(ScanTableSequence, TakePoseAction)),
+    tell(has_subevent(ScanTableSequence, GetConfidenceObjects)),
+    tell(has_subevent(ScanTableSequence, InsertKnowledgeObjects)),
+    tell(has_type(NavTask, soma:'Navigating')),
+    tell(has_type(PoseTask, soma:'AssumingPose')),
+    tell(has_type(PerceiveTask, soma:'Perceiving')),
+    tell(has_type(ReasoningTask, soma:'Reasoning')),
+    tell(executes_task(MoveToTable, NavTask)),
+    tell(executes_task(TakePoseAction, PoseTask)),
+    tell(executes_task(GetConfidenceObjects, PerceiveTask)),
+    tell(executes_task(InsertKnowledgeObjects, ReasoningTask)),
+    writeln('===== ---> passed !').
 
 %%% log_grasp_sequence() is nondet.
 %
 % Log the necessary infos for the Grasping Sequence Task.
 %
 log_grasp_sequence :-
-    X = 31.
+    writeln('===== log_grasp_sequence'),
+    tell(is_action(GraspSequence)),
+    tell(has_participant(GraspSequence, 'hsr')),
+    tell(is_performed_by(GraspSequence, 'hsr')),
+    % get_time(Start),
+    % get_time(End),
+    % tell(occurs(SetupTask) during [Start, End]),
+    tell(has_subevent(GraspSequence, PrologNextObject)),
+    tell(has_subevent(GraspSequence, GraspObject)),
+    tell(has_subevent(GraspSequence, MoveToTable)),
+    tell(has_subevent(GraspSequence, PrologForgetTableObjects)),
+    tell(has_type(ReasoningTask, soma:'Reasoning')),
+    tell(has_type(GrapTask, soma:'Grasping')),
+    tell(has_type(NavTask, soma:'Navigating')),
+    tell(executes_task(PrologNextObject, ReasoningTask)),
+    tell(executes_task(GraspObject, GrapTask)),
+    tell(executes_task(MoveToTable, NavTask)),
+    tell(executes_task(PrologForgetTableObjects, ReasoningTask)),
+    writeln('===== ---> passed !').
 
 %%% log_scan_shelf_floors_sequence() is nondet.
 %
 % Log the necessary infos for the Scan Shelf floors Sequence Task.
 %
 log_scan_shelf_floors_sequence :-
-    X = 31.
+    writeln('===== log_scan_shelf_floors_sequence'),
+    tell(is_action(ScanShelfFloorsSequence)),
+    tell(has_participant(ScanShelfFloorsSequence, 'hsr')),
+    tell(is_performed_by(ScanShelfFloorsSequence, 'hsr')),
+    % get_time(Start),
+    % get_time(End),
+    % tell(occurs(SetupTask) during [Start, End]),
+    tell(has_subevent(ScanShelfFloorsSequence, PerceiveShelf)),
+    tell(has_subevent(ScanShelfFloorsSequence, TakePoseAction)),
+    tell(has_subevent(ScanShelfFloorsSequence, GetConfidenceObjects)),
+    tell(has_subevent(ScanShelfFloorsSequence, InsertKnowledgeObjects)),
+    tell(has_type(ReasoningTask, soma:'Reasoning')),
+    tell(has_type(PerceiveTask, soma:'Perceiving')),
+    tell(has_type(PoseTask, soma:'AssumingPose')),
+    tell(executes_task(PerceiveShelf, PerceiveTask)),
+    tell(executes_task(TakePoseAction, PoseTask)),
+    tell(executes_task(GetConfidenceObjects, PerceiveTask)),
+    tell(executes_task(InsertKnowledgeObjects, ReasoningTask)),
+    writeln('===== ---> passed !').
 
 %%% log_place_sequence() is nondet.
 %
 % Log the necessary infos for the Place Sequence Task.
 %
 log_place_sequence :-
-    X = 31.
+    writeln('===== log_place_sequence'),
+    tell(is_action(PlaceSequence)),
+    tell(has_participant(PlaceSequence, 'hsr')),
+    tell(is_performed_by(PlaceSequence, 'hsr')),
+    % get_time(Start),
+    % get_time(End),
+    % tell(occurs(SetupTask) during [Start, End]),
+    tell(has_subevent(PlaceSequence, PrologShelfPosition)),
+    tell(has_subevent(PlaceSequence, PrologObjectGoal)),
+    tell(has_subevent(PlaceSequence, TakePoseAction)),
+    tell(has_subevent(PlaceSequence, PrologTablePose)),
+    tell(has_type(ReasoningTask, soma:'Reasoning')),
+    tell(has_type(PoseTask, soma:'AssumingPose')),
+    tell(executes_task(PrologShelfPosition, ReasoningTask)),
+    tell(executes_task(PrologObjectGoal, ReasoningTask)),
+    tell(executes_task(TakePoseAction, PoseTask)),
+    tell(executes_task(PrologTablePose, ReasoningTask)),
+    writeln('===== ---> passed !').
 
 %%% neem_term() is det.
 %
 % End the Neem and save it into destinated folder.
 %
 neem_terminate :-
-    memorize('storing_groceries_neem').
+    writeln('===== neem_terminate'),
+    memorize('storing_groceries_neem'),
+    writeln('===== ---> passed !').
 
 %%% ====================================== neem query predicates
 
