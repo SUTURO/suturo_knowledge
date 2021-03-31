@@ -3,7 +3,7 @@
         setup_suturo_test_env/0,
         get_suturo_test_env/1,
         setup_suturo_test_surfaces/0,
-        setup_suturo_test_objects/0
+        setup_suturo_test_objects/1
     ]
 ).
 
