@@ -169,10 +169,10 @@ log_scan_table_sequence(RobotName,Start, End) :-
     make_task_asuming_pose(PoseTask),
     tell(has_type(PerceiveTask, soma:'Perceiving')),
     tell(has_type(ReasoningTask, soma:'Reasoning')),
-    set_action_task(MoveToTable, NavTask)),
-    set_action_task(TakePoseAction, PoseTask)),
-    set_action_task(GetConfidenceObjects, PerceiveTask)),
-    set_action_task(InsertKnowledgeObjects, ReasoningTask)),
+    set_action_task(MoveToTable, NavTask),
+    set_action_task(TakePoseAction, PoseTask),
+    set_action_task(GetConfidenceObjects, PerceiveTask),
+    set_action_task(InsertKnowledgeObjects, ReasoningTask),
     rosinfo('===== ---> passed !').
 
 %%% log_grasp_sequence() is nondet.
@@ -182,7 +182,7 @@ log_scan_table_sequence(RobotName,Start, End) :-
 log_grasp_sequence :-
     rosinfo('===== log_grasp_sequence'),
     start_action(GraspSequence, RobotName)),
-    tell(has_participant(GraspSequence, 'hsr')),
+    tell(has_participant(GraspSequence, 'hsr'),
     tell(is_performed_by(GraspSequence, 'hsr')),
     add_subevent(GraspSequence, PrologNextObject)),
     add_subevent(GraspSequence, GraspObject)),

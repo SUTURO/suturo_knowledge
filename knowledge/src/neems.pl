@@ -218,7 +218,6 @@ action_overview :-
 object_overview :-
     X = 31.
 
-
 %%% get_first_event() is nondet.
 %
 % Return the first Event.
