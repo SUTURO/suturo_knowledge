@@ -132,6 +132,8 @@ create_object(PerceivedObjectType, PercTypeConf, Transform, [Width, Depth, Heigh
     set_object_color(ObjID, Color, ColorConf),  % set the color
     tell(triple(ObjID, hsr_objects:'supportable', true)),     % identify the object as an supportable object this is used by suturo_existing_objects
 
+    place_object(ObjID),
+
     %%% ================ visualization marker array publish
     % TODO why not working with 1x ?
     marker_plugin:republish,
@@ -233,7 +235,7 @@ set_object_color(ObjID, _, Confidence) :-
 
 % Because the set_object_color(Instance, _, Confidence) gets executed before this is.
 % We can just ignore the Confidence because we know it is high enough
-set_object_color(ObjID, [R,G,B], _) :-    
+set_object_color(ObjID, [R,G,B], _) :-  
     tell(has_type(ColorType, soma:'Color')),
     tell(triple(ObjID, soma:hasColor, ColorType)),
     tell(object_color_rgb(ObjID, [R,G,B])),
@@ -242,28 +244,28 @@ set_object_color(ObjID, [R,G,B], _) :-
     RConv is R/255,    GConv is G/255,    BConv is B/255,
     set_color_semantics(ObjID, [RConv,GConv,BConv]).
 
-set_color_semantics(ObjID, [0.0, 0.0, 0.0]) :-
+set_color_semantics(ObjID, [0, 0, 0]) :-
     tell(triple(ObjID, hsr_objects:'colour', 'dark')).
 
-set_color_semantics(ObjID, [1.0, 0.0, 0.0]) :-
+set_color_semantics(ObjID, [1, 0, 0]) :-
     tell(triple(ObjID, hsr_objects:'colour', 'red')).
 
-set_color_semantics(ObjID, [0.0, 1.0, 0.0]) :-
+set_color_semantics(ObjID, [0, 1, 0]) :-
     tell(triple(ObjID, hsr_objects:'colour', 'green')).
 
-set_color_semantics(ObjID, [1.0, 1.0, 0.0]) :-
+set_color_semantics(ObjID, [1, 1, 0]) :-
     tell(triple(ObjID, hsr_objects:'colour', 'yellow')).
 
-set_color_semantics(ObjID, [0.0, 0.0, 1.0]) :-
+set_color_semantics(ObjID, [0, 0, 1]) :-
     tell(triple(ObjID, hsr_objects:'colour', 'dark-blue')).
 
-set_color_semantics(ObjID, [1.0, 0.0, 1.0]) :-
+set_color_semantics(ObjID, [1, 0, 1]) :-
     tell(triple(ObjID, hsr_objects:'colour', 'violet')).
 
-set_color_semantics(ObjID, [0.0, 1.0, 1.0]) :-
+set_color_semantics(ObjID, [0, 1, 1]) :-
     tell(triple(ObjID, hsr_objects:'colour', 'light-blue')).
 
-set_color_semantics(ObjID, [1.0, 1.0, 1.0]) :-
+set_color_semantics(ObjID, [1, 1, 1]) :-
     tell(triple(ObjID, hsr_objects:'colour', 'bright')).
 
 % Used so when no color is given the query does not fail
