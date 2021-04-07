@@ -23,8 +23,9 @@ object_goal_pose(Instance, [Translation, Rotation]) :-
 object_goal_pose(Instance, [Translation, Rotation], Context) :-
     object_goal_pose(Instance, [Translation, Rotation], Context, _).
 
-object_goal_pose(Instance, [Translation, Rotation], Context, Instance) :-
-    object_goal_surface_(Instance, Surface, Context, Instance),
+object_goal_pose(Instance, [Translation, Rotation], Context, RefInstance) :-
+    writeln(Instance),
+    object_goal_surface_(Instance, Surface, Context, RefInstance),
     is_bucket(Surface),
     surface_pose_in_map(Surface, [Translation, Rotation]),
     !.
@@ -54,7 +55,7 @@ object_goal_pose(Instance, [Translation, Rotation], Context, RefObject) :-
 
 %% When a new group is opened the RefObject is equal to the Instance
 object_goal_pose(Instance, [Translation, Rotation], Context, Instance) :-
-    rosinfo("object_goal_pose created new Group"),
+    ros_info("object_goal_pose created new Group"),
     object_goal_surface_(Instance, Surface, Context, Instance),
     surface_pose_in_map(Surface, [[SX,SY,SZ], Rotation]),
     tf_transform_point(map, Surface, [SX,SY,SZ], [ _, YOnS,_]),  
@@ -79,5 +80,5 @@ object_goal_pose(_, _, "You haven't defined any target surfaces", _) :-
 
 % deprecated. Use object_goal_pose instead.
 object_goal_pose_offset_(Instance, [[X,Y,Z], Rotation],Context):-
-    place_objects,
+    %place_objects,
     object_goal_pose(Instance, [[X,Y,Z], Rotation],Context).

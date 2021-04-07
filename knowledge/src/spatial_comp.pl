@@ -73,12 +73,12 @@ object_supportable_by_surface(Object, Surface):-
     all_surfaces(Surfaces),
     member(Surface,Surfaces),
     surface_front_edge_center_frame(Surface, SurfaceFrame),
-    object_frame_name(Object, ObjectFrame),
+    object_tf_frame(Object, ObjectFrame),
     hsr_lookup_transform(SurfaceFrame, ObjectFrame, Position, _),
     relative_position_supportable_by_surface(Position, Surface).
     
 object_supportable_by_surface(Object, ground):-
-    object_frame_name(Object, Frame),
+    object_tf_frame(Object, Frame),
     hsr_lookup_transform(map, Frame, [_,_,Z], _),
     position_supportable_by_ground(Z).
 

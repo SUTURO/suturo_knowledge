@@ -194,6 +194,7 @@ most_related_object(Source, Target) :-
 
 most_related_object(Source, Target):-
     same_color(Source, Target),
+    writeln("color"),
     context_speech_sort_by_color(Source, Target, Context),
     allowed_class_distance(MaxDist),
     Distance is MaxDist + 1,
@@ -202,6 +203,7 @@ most_related_object(Source, Target):-
 
 most_related_object(Source, Target):-
     same_size(Source, Target),
+    writeln("size"),
     context_speech_sort_by_size(Source, Target, Context),
     allowed_class_distance(MaxDist),
     Distance is MaxDist + 2,
@@ -210,9 +212,12 @@ most_related_object(Source, Target):-
 
 
 most_related_class(Source, Target, Distance) :-
-    findall(Dist, distance_to_object(Source, _, Dist), Distances),
-    min_member(Distance, Distances),
-    distance_to_object(Source, Target, Distance).
+    %findall([Dist, T], distance_to_object(Source, T, Dist), Distances),
+    findnsols(20, [Dist, T], distance_to_object(Source, T, Dist), Distances),
+    min_member([Distance, Target], Distances),
+    writeln(Target),
+    writeln(Distance).
+    %distance_to_object(Source, Target, Distance).
 
 distance_to_object(Source, Target, Distance) :-
     all_objects_on_target_surfaces(Objs),
@@ -221,6 +226,7 @@ distance_to_object(Source, Target, Distance) :-
     has_type(Target, TargetType),
     has_type(Source, SourceType),
     distance_of(SourceType, TargetType, Distance).
+    %distance_of(SourceType, TargetType, Distance).
 
 % in case Source and Target are of the same class,
 % rdf_shortest_path/3 would return 3 instead of 1. 
@@ -232,7 +238,36 @@ distance_of(SourceType, TargetType, Distance) :-
 % Returns the logical distance between two classes.
 distance_of(SourceType, TargetType, Distance) :-
     not(same_as(SourceType, TargetType)),
-    rdf_shortest_path(SourceType, TargetType, Distance).
+    transitive(subclass_of(SourceType, Step)), 
+    transitive(subclass_of(TargetType, Step)),
+    transitive(subclass_of(Step, dul:'PhysicalObject')),
+    path_up(SourceType, Step, DistUp),
+    path_down(Step, TargetType, DistDown),
+    Distance is DistUp + DistDown.
+    %rdf_shortest_path(SourceType, TargetType, Distance).
+
+
+path_up(SourceType, TargetType, Distance) :-
+    (same_as(SourceType, TargetType)
+    -> Distance = 1
+    ;
+    (    
+        subclass_of(SourceType, Step),
+        path_up(Step, TargetType, CurrentDistance),
+        Distance is CurrentDistance + 1
+    )).
+
+
+path_down(SourceType, TargetType, Distance) :-
+    (same_as(SourceType, TargetType)
+    -> Distance = 1
+    ;
+    (
+        subclass_of(Step, SourceType),
+        path_down(Step, TargetType, CurrentDistance),
+        Distance is CurrentDistance + 1
+    )).
+
 
 same_color(Source, Target):-
     all_objects_on_target_surfaces(Objects),
@@ -288,13 +323,15 @@ objects_on_same_surface_in_future(Surface, OtherObjects) :-
     all_objects_on_source_surfaces(SourceObjects1),
     all_objects_in_gripper(SourceObjects2),
     append(SourceObjects1, SourceObjects2, SourceObjects),
+    writeln(SourceObjects),
     findall(Obj,
     (
         member(Obj, SourceObjects),
-        object_most_similar_surface(Obj, Surface)
+        writeln(Obj),
+        object_most_similar_surface(Obj, Surfacet),
+        writeln(Surfacet)
     ),
         FutureObjects),
-
     append(AlreadyPlacedObjects, FutureObjects, OtherObjectsUnsorted),
     predsort(compareLogicalDistances, OtherObjectsUnsorted, OtherObjects).
 
@@ -357,7 +394,7 @@ next_empty_surface(Surface) :-
     next_empty_surface_(SortedSurfaces, Surface).
 
 next_empty_surface(Surface) :- %% to do
-    roswarn("There is no free surface left"),
+    ros_warn("There is no free surface left"),
     Surface=error.
 
 next_empty_surface_(Surfaces, Surface) :-
@@ -376,8 +413,12 @@ assert_object_supposed_surface(Object) :-
     assert_all_planning(Object, Surface, 0, Context, Object).
 
 assert_object_supposed_surface(Object) :-
+    writeln("Hallo4"),
     object_most_similar_surface(Object, Surface),
+    writeln("Hallo5"),
+    writeln(Surface),
     objects_on_same_surface_in_future(Surface, OtherObjects),
+    writeln("Hallo6"),
     objects_fit_on_surface(OtherObjects, Surface, _, NotFittingObjects),
     forall(member(NotFittingObject, NotFittingObjects), retract_all_planning(NotFittingObject)),
     (   member(Object, NotFittingObjects)
@@ -396,15 +437,23 @@ assert_object_new_empty_surface(Object) :-
     !.
 
 object_goal_surface_(Object, Surface, Context, RefObject) :-
+    %writeln("Hallo1"),
     triple(Object, supposedSurface, Surface),
+    %writeln("Hallo2"),
     triple(Object, context, Context),
+    %writeln("Hallo3"),
     triple(Object, refObject, RefObject),
+    %writeln("Hallo4"),
     !.
 
 object_goal_surface_(Object, Surface, Context, RefObject) :-
+    writeln("Hallo1"),
     place_objects,
+    writeln("Hallo2"),
     assert_object_supposed_surface(Object),
+    writeln("Hallo3"),
     object_goal_surface_(Object, Surface, Context, RefObject),
+    writeln("Hallo4"),
     !.
     
 
