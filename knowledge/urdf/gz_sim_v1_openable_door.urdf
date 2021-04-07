@@ -36,155 +36,155 @@
   </joint>
   <link name="room_link"/>
   <!-- General conveinience links -->
-  <link name="hcr_shefl_2_origin"/>
-  <link name="hcr_shefl_2_center"/>
-  <link name="hcr_shefl_2_base_center"/>
-  <joint name="hcr_shefl_2_origin_joint" type="fixed">
-    <origin rpy="0 0 3.1415926" xyz="-2.96206 -5.31539 0"/>
+  <link name="bookshelf_clone_origin"/>
+  <link name="bookshelf_clone_center"/>
+  <link name="bookshelf_clone_base_center"/>
+  <joint name="bookshelf_clone_origin_joint" type="fixed">
+    <origin rpy="0 0 1.5707963" xyz="5.79168 4.55429 0"/>
     <parent link="room_link"/>
-    <child link="hcr_shefl_2_origin"/>
+    <child link="bookshelf_clone_origin"/>
   </joint>
-  <joint name="hcr_shefl_2_center_joint" type="fixed">
-    <origin rpy="0 0 0" xyz="0.133 0.207 0.598"/>
-    <parent link="hcr_shefl_2_origin"/>
-    <child link="hcr_shefl_2_center"/>
+  <joint name="bookshelf_clone_center_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="0.2 0.44 0.45"/>
+    <parent link="bookshelf_clone_origin"/>
+    <child link="bookshelf_clone_center"/>
   </joint>
-  <joint name="hcr_shefl_2_base_center_joint" type="fixed">
-    <origin rpy="0 0 0" xyz="0.133 0.207 0.0"/>
-    <parent link="hcr_shefl_2_origin"/>
-    <child link="hcr_shefl_2_base_center"/>
+  <joint name="bookshelf_clone_base_center_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="0.2 0.44 0.0"/>
+    <parent link="bookshelf_clone_origin"/>
+    <child link="bookshelf_clone_base_center"/>
   </joint>
   <!-- LINK -->
-  <link name="hcr_shefl_2_back_piece">
+  <link name="bookshelf_clone_back_piece">
     <visual>
       <material name="shelf_grey"/>
       <origin rpy="0 0 0" xyz="0 0 0.0"/>
       <geometry>
-        <box size="0.01 0.414 1.196"/>
+        <box size="0.01 0.88 0.9"/>
       </geometry>
     </visual>
     <collision>
       <origin rpy="0 0 0" xyz="0 0 0.0"/>
       <geometry>
-        <box size="0.01 0.414 1.196"/>
+        <box size="0.01 0.88 0.9"/>
       </geometry>
     </collision>
   </link>
   <!-- JOINT -->
-  <joint name="hcr_shefl_2_back_piece_joint" type="fixed">
-    <origin rpy="0 0 0" xyz="0.266 0.207 0.598"/>
-    <parent link="hcr_shefl_2_origin"/>
-    <child link="hcr_shefl_2_back_piece"/>
+  <joint name="bookshelf_clone_back_piece_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="0.4 0.44 0.45"/>
+    <parent link="bookshelf_clone_origin"/>
+    <child link="bookshelf_clone_back_piece"/>
   </joint>
   <!-- LINK -->
-  <link name="hcr_shefl_2_right_side_piece">
+  <link name="bookshelf_clone_right_side_piece">
     <visual>
       <material name="shelf_grey"/>
       <origin rpy="0 0 0" xyz="0 0 0.0"/>
       <geometry>
-        <box size="0.266 0.01 1.196"/>
-      </geometry>
-    </visual>
-    <collision>
-      <origin rpy="0 0 0" xyz="0 0 0.0"/>
-      <geometry>
-        <box size="0.266 0.01 1.196"/>
-      </geometry>
-    </collision>
-  </link>
-  <!-- JOINT -->
-  <joint name="hcr_shefl_2_right_side_piece_joint" type="fixed">
-    <origin rpy="0 0 0" xyz="0.133 0.0 0.598"/>
-    <parent link="hcr_shefl_2_origin"/>
-    <child link="hcr_shefl_2_right_side_piece"/>
-  </joint>
-  <!-- LINK -->
-  <link name="hcr_shefl_2_left_side_piece">
-    <visual>
-      <material name="shelf_grey"/>
-      <origin rpy="0 0 0" xyz="0 0 0.0"/>
-      <geometry>
-        <box size="0.266 0.01 1.196"/>
+        <box size="0.4 0.01 0.9"/>
       </geometry>
     </visual>
     <collision>
       <origin rpy="0 0 0" xyz="0 0 0.0"/>
       <geometry>
-        <box size="0.266 0.01 1.196"/>
+        <box size="0.4 0.01 0.9"/>
       </geometry>
     </collision>
   </link>
   <!-- JOINT -->
-  <joint name="hcr_shefl_2_left_side_piece_joint" type="fixed">
-    <origin rpy="0 0 0" xyz="0.133 0.414 0.598"/>
-    <parent link="hcr_shefl_2_origin"/>
-    <child link="hcr_shefl_2_left_side_piece"/>
+  <joint name="bookshelf_clone_right_side_piece_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="0.2 0.0 0.45"/>
+    <parent link="bookshelf_clone_origin"/>
+    <child link="bookshelf_clone_right_side_piece"/>
   </joint>
   <!-- LINK -->
-  <link name="hcr_shefl_2_floor_0_piece">
+  <link name="bookshelf_clone_left_side_piece">
+    <visual>
+      <material name="shelf_grey"/>
+      <origin rpy="0 0 0" xyz="0 0 0.0"/>
+      <geometry>
+        <box size="0.4 0.01 0.9"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0.0"/>
+      <geometry>
+        <box size="0.4 0.01 0.9"/>
+      </geometry>
+    </collision>
+  </link>
+  <!-- JOINT -->
+  <joint name="bookshelf_clone_left_side_piece_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="0.2 0.88 0.45"/>
+    <parent link="bookshelf_clone_origin"/>
+    <child link="bookshelf_clone_left_side_piece"/>
+  </joint>
+  <!-- LINK -->
+  <link name="bookshelf_clone_floor_0_piece">
     <visual>
       <material name="shelf_grey"/>
       <origin rpy="0 0 0" xyz="0 0 -0.02"/>
       <geometry>
-        <box size="0.266 0.414 0.04"/>
+        <box size="0.4 0.88 0.04"/>
       </geometry>
     </visual>
     <collision>
       <origin rpy="0 0 0" xyz="0 0 -0.02"/>
       <geometry>
-        <box size="0.266 0.414 0.04"/>
+        <box size="0.4 0.88 0.04"/>
       </geometry>
     </collision>
   </link>
   <!-- JOINT -->
-  <joint name="hcr_shefl_2_floor_0_piece_joint" type="fixed">
-    <origin rpy="0 0 0" xyz="0.0 0.0 0.32"/>
-    <parent link="hcr_shefl_2_base_center"/>
-    <child link="hcr_shefl_2_floor_0_piece"/>
+  <joint name="bookshelf_clone_floor_0_piece_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="0.0 0.0 0.06"/>
+    <parent link="bookshelf_clone_base_center"/>
+    <child link="bookshelf_clone_floor_0_piece"/>
   </joint>
   <!-- LINK -->
-  <link name="hcr_shefl_2_floor_1_piece">
+  <link name="bookshelf_clone_floor_1_piece">
     <visual>
       <material name="shelf_grey"/>
       <origin rpy="0 0 0" xyz="0 0 -0.02"/>
       <geometry>
-        <box size="0.266 0.414 0.04"/>
+        <box size="0.4 0.88 0.04"/>
       </geometry>
     </visual>
     <collision>
       <origin rpy="0 0 0" xyz="0 0 -0.02"/>
       <geometry>
-        <box size="0.266 0.414 0.04"/>
+        <box size="0.4 0.88 0.04"/>
       </geometry>
     </collision>
   </link>
   <!-- JOINT -->
-  <joint name="hcr_shefl_2_floor_1_piece_joint" type="fixed">
-    <origin rpy="0 0 0" xyz="0.0 0.0 0.582"/>
-    <parent link="hcr_shefl_2_base_center"/>
-    <child link="hcr_shefl_2_floor_1_piece"/>
+  <joint name="bookshelf_clone_floor_1_piece_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="0.0 0.0 0.44"/>
+    <parent link="bookshelf_clone_base_center"/>
+    <child link="bookshelf_clone_floor_1_piece"/>
   </joint>
   <!-- LINK -->
-  <link name="hcr_shefl_2_floor_2_piece">
+  <link name="bookshelf_clone_floor_2_piece">
     <visual>
       <material name="shelf_grey"/>
       <origin rpy="0 0 0" xyz="0 0 -0.02"/>
       <geometry>
-        <box size="0.266 0.414 0.04"/>
+        <box size="0.4 0.88 0.04"/>
       </geometry>
     </visual>
     <collision>
       <origin rpy="0 0 0" xyz="0 0 -0.02"/>
       <geometry>
-        <box size="0.266 0.414 0.04"/>
+        <box size="0.4 0.88 0.04"/>
       </geometry>
     </collision>
   </link>
   <!-- JOINT -->
-  <joint name="hcr_shefl_2_floor_2_piece_joint" type="fixed">
-    <origin rpy="0 0 0" xyz="0.0 0.0 0.884"/>
-    <parent link="hcr_shefl_2_base_center"/>
-    <child link="hcr_shefl_2_floor_2_piece"/>
+  <joint name="bookshelf_clone_floor_2_piece_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="0.0 0.0 0.81"/>
+    <parent link="bookshelf_clone_base_center"/>
+    <child link="bookshelf_clone_floor_2_piece"/>
   </joint>
   <!-- General conveinience links -->
   <link name="bookshelf_origin"/>
@@ -419,53 +419,6 @@
     <parent link="table_clone_origin"/>
     <child link="table_clone_front_edge_center"/>
   </joint>
-  <!-- LINKS -->
-  <link name="bed_table_center">
-    <visual>
-      <material name="table_grey"/>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
-      <geometry>
-        <box size="0.398 0.898 0.635"/>
-      </geometry>
-    </visual>
-    <collision>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
-      <geometry>
-        <box size="0.398 0.898 0.635"/>
-      </geometry>
-    </collision>
-  </link>
-  <link name="bed_table_origin"/>
-  <!-- Additional tf-frames -->
-  <link name="bed_table_surface_center"/>
-  <link name="bed_table_front_edge_center"/>
-  <!-- JOINTS -->
-  <joint name="bed_table_origin_joint" type="fixed">
-    <origin rpy="0 0 3.4144446536" xyz="-1.14768 -2.00515 0"/>
-    <parent link="room_link"/>
-    <child link="bed_table_origin"/>
-  </joint>
-  <joint name="bed_table_center_joint" type="fixed">
-    <origin rpy="0 0 0" xyz="0.199 0.449 0.3175"/>
-    <parent link="bed_table_origin"/>
-    <child link="bed_table_center"/>
-  </joint>
-  <joint name="bed_table_surface_center_joint" type="fixed">
-    <origin rpy="0 0 0" xyz="0.199 0.449 0.635"/>
-    <parent link="bed_table_origin"/>
-    <child link="bed_table_surface_center"/>
-  </joint>
-  <joint name="bed_table_front_edge_center_joint" type="fixed">
-    <origin rpy="0 0 0" xyz="0 0.449 0.635"/>
-    <parent link="bed_table_origin"/>
-    <child link="bed_table_front_edge_center"/>
-  </joint>
-  <suturo_door height="2.09" name="door_1" parent="room_link" width="0.90">
-    <origin rpy="0 0 1.570796327" xyz="6.79644 3.06344 1.045"/>
-  </suturo_door>
-  <suturo_door height="2.09" name="door_2" parent="room_link" width="0.90">
-    <origin rpy="0 0 0" xyz="-1.93446 4.97898 1.045"/>
-  </suturo_door>
   <!-- LINKS -->
   <link name="bucket_center">
     <visual>

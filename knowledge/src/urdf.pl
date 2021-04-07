@@ -5,7 +5,8 @@
         surface_tf_frame/2,
         surface_frame_add_prefix_/2,
         surface_front_edge_center_frame/2,
-        surface_dimensions/4
+        surface_dimensions/4,
+        object_tf_frame/2
     ]).
 
 
@@ -47,16 +48,24 @@ surface_tf_frame(Surface, Frame):-
     is_surface(Surface),
     surface_front_edge_center_frame(Surface, Frame).
 
+object_tf_frame(Object, Frame) :-
+    ( sub_string(Object,_,_,_,"#")
+    -> split_string(Object, "#", "", [_, Frame])
+    ;
+    Frame = Object
+    ).
+
 surface_front_edge_center_frame(Surface, FrontEdgeCenterFrame) :- % in case it's a Shelf
     is_shelf(Surface),
-    surface_frame_with_prefix_(Surface, FrontEdgeCenterFrame).
+    FrontEdgeCenterFrame = Surface.
+    %surface_frame_with_prefix_(Surface, FrontEdgeCenterFrame).
 
 surface_front_edge_center_frame(Surface, FrontEdgeCenterFrame) :- % in case it's a Table or a Bucket
     sub_atom(Surface, 0, _, 7, Name), % cuts away the Suffix "_center" (the last 7 letters)
-    urdf_surface_prefix(Prefix), % /kitchen_desciption
-    atom_concat(Prefix, Name, Part1), % results in /kitchen_desciption/table_1
+    %urdf_surface_prefix(Prefix), % /kitchen_desciption
+    %atom_concat(Prefix, Name, Part1), % results in /kitchen_desciption/table_1
     surface_suffix(Surface, Suffix), % front_edge_center for tables / surface_center for bucket
-    atom_concat(Part1, Suffix, FrontEdgeCenterFrame). % /kitchen_desciption/table_1_front_edge_center
+    atom_concat(Name, Suffix, FrontEdgeCenterFrame). % /kitchen_desciption/table_1_front_edge_center
 
 surface_suffix(Surface, Suffix) :-
     is_table(Surface),
