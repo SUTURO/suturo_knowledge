@@ -29,6 +29,12 @@
 	create_object_at(r,r,r,?,-,-),
 	hsr_existing_objects(?).
 
+
+/**
+*****************************************OBJECT INFO******************************************************
+*/
+
+
 % returns a list of all the Objects know to the Knowledgebase
 hsr_existing_objects(Objects) :-
     findall(PO, (
@@ -41,25 +47,6 @@ hsr_existing_objects(Objects) :-
     ), Objs),
     list_to_set(Objs,Objects).
 
-%% hsr_forget_object(Object) is det.
-%
-% Forget a specific Object.
-%
-% @param Object the object to forget.
-hsr_forget_object(Object) :-
-    forall(triple(Object,X,Y), tripledb_forget(Object,X,Y)).
-    % TODO we need to stop publishing the tf and marker
-
-%% forget_objects_on_surface_(SurfaceLink) is det.
-%
-% Forget all objects on surface.
-%
-% @param Object the object to forget.
-forget_objects_on_surface_(SurfaceLink) :-
-    objects_on_surface(Objs,SurfaceLink),
-    member(Obj,Objs),
-    hsr_forget_object(Obj).
-
 
 %% place_object(Object) is ?
 %
@@ -70,6 +57,10 @@ forget_objects_on_surface_(SurfaceLink) :-
 place_object(Object):-
     object_supportable_by_surface(Object, Surface),
     assert_object_on(Object,Surface).
+
+/**
+*****************************************OBJECT CREATION******************************************************
+*/
 
 %% create_object(PerceivedObjectType, PercTypeConf, Transform, [Width, Depth, Height], 'box', PercShapeConf, Color, PercColorConf, ObjID is nondet.
 %
@@ -139,6 +130,106 @@ create_object(PerceivedObjectType, PercTypeConf, Transform, [Width, Depth, Heigh
 
     !. % when call stack reaches here, then all bindings
 
+% TODO is prob does not add multible informations
+set_dimension_semantics(Instance, _, _, Height) :-
+    Height > 0.16,
+    tell(triple(Instance, hsr_objects:'size', 'tall')).
+
+set_dimension_semantics(Instance, Width, Depth, Height) :-
+    Height < Width * 0.9,
+    Height < Depth * 0.9,
+    tell(triple(Instance, hsr_objects:'size', 'flat')).
+
+set_dimension_semantics(Instance, Width, Depth, Height) :-
+    ((Depth > Width * 2, Depth > Height * 2);
+     (Width > Depth * 2, Width > Height * 2)),
+    tell(triple(Instance, hsr_objects:'size', 'long')).
+
+set_dimension_semantics(Instance, Width, Depth, Height) :-
+    Volume is Width * Depth * Height * 1000,
+    Volume < 0.6,
+    tell(triple(Instance, hsr_objects:'size', 'small')).
+
+set_dimension_semantics(Instance, Width, Depth, Height) :-
+    Volume is Width * Depth * Height * 1000,
+    Volume > 2.0,
+    tell(triple(Instance, hsr_objects:'size', 'big')).
+
+%% set_dimenstion_semantics is ?
+%
+% succeed even when no other semantic is set
+%
+% @param
+set_dimension_semantics(_Instance,_W,_D,_H) :-
+    true.
+
+%% set_object_color is ?
+%
+% When the Confidence is to low this querry will succeed and set an empty color
+%
+% @param
+%
+set_object_color(ObjID, _, Confidence) :-
+    not(Confidence = 0), % for cases in which Perception does not give confidences.
+    min_color_confidence(MinConf),
+    Confidence < MinConf,
+    tell(triple(ObjID, hsr_objects:'colour', '')),
+    tell(object_color_rgb(ObjID, '')).
+
+%% set_object_color is ?
+%
+% Because the set_object_color(Instance, _, Confidence) gets executed before this is.
+% We can just ignore the Confidence because we know it is high enough
+%
+% @param
+%
+set_object_color(ObjID, [R,G,B], _) :-
+    tell(has_type(ColorType, soma:'Color')),
+    tell(triple(ObjID, soma:hasColor, ColorType)),
+    tell(object_color_rgb(ObjID, [R,G,B])),
+    triple(ColorType,dul:hasRegion,Region),
+    tell(triple(Region, soma:hasTransparencyValue, 0)),
+    RConv is R/255,    GConv is G/255,    BConv is B/255,
+    set_color_semantics(ObjID, [RConv,GConv,BConv]).
+
+set_color_semantics(ObjID, [0.0, 0.0, 0.0]) :-
+    tell(triple(ObjID, hsr_objects:'colour', 'dark')).
+
+set_color_semantics(ObjID, [1.0, 0.0, 0.0]) :-
+    tell(triple(ObjID, hsr_objects:'colour', 'red')).
+
+set_color_semantics(ObjID, [0.0, 1.0, 0.0]) :-
+    tell(triple(ObjID, hsr_objects:'colour', 'green')).
+
+set_color_semantics(ObjID, [1.0, 1.0, 0.0]) :-
+    tell(triple(ObjID, hsr_objects:'colour', 'yellow')).
+
+set_color_semantics(ObjID, [0.0, 0.0, 1.0]) :-
+    tell(triple(ObjID, hsr_objects:'colour', 'dark-blue')).
+
+set_color_semantics(ObjID, [1.0, 0.0, 1.0]) :-
+    tell(triple(ObjID, hsr_objects:'colour', 'violet')).
+
+set_color_semantics(ObjID, [0.0, 1.0, 1.0]) :-
+    tell(triple(ObjID, hsr_objects:'colour', 'light-blue')).
+
+set_color_semantics(ObjID, [1.0, 1.0, 1.0]) :-
+    tell(triple(ObjID, hsr_objects:'colour', 'bright')).
+
+%% set_color_semantics is ?
+%
+% Used so when no color is given the query does not fail
+%
+% @param
+%
+set_color_semantics(_, _) :-
+    true.
+
+/**
+*****************************************OBJECT VALIDATION******************************************************
+*/
+
+
 % Recursively create a Random String of a given length
 random_id_gen(Size, Result):-
     ( Size > 0
@@ -154,7 +245,7 @@ random_id_gen(Size, Result):-
     .
 
 
-%%%%%%%%%% TODO what was the purpose of this code? %%%%%%%%%%
+% TODO what was the purpose of this code?
 validate_confidence(class, Is, Should) :-
     var(Is),
     min_class_confidence(Should).
@@ -188,85 +279,27 @@ object_type_handling(PerceivedObjectType, TypeConfidence, ObjectType) :-
         ).
 
 
-%%%%%%%%%% asserts Dimension Semantic is the object tall/flat/long/small/big? %%%%%%%%%%
-% TODO is prob does not add multible informations
-set_dimension_semantics(Instance, _, _, Height) :-
-    Height > 0.16,
-    tell(triple(Instance, hsr_objects:'size', 'tall')).
-
-set_dimension_semantics(Instance, Width, Depth, Height) :-
-    Height < Width * 0.9,
-    Height < Depth * 0.9,
-    tell(triple(Instance, hsr_objects:'size', 'flat')).
-
-set_dimension_semantics(Instance, Width, Depth, Height) :-
-    ((Depth > Width * 2, Depth > Height * 2);
-     (Width > Depth * 2, Width > Height * 2)),
-    tell(triple(Instance, hsr_objects:'size', 'long')).
-
-set_dimension_semantics(Instance, Width, Depth, Height) :-
-    Volume is Width * Depth * Height * 1000,
-    Volume < 0.6,
-    tell(triple(Instance, hsr_objects:'size', 'small')).
-
-set_dimension_semantics(Instance, Width, Depth, Height) :-
-    Volume is Width * Depth * Height * 1000,
-    Volume > 2.0,
-    tell(triple(Instance, hsr_objects:'size', 'big')).
-
-% succeed even when no other semantic is set
-set_dimension_semantics(_Instance,_W,_D,_H) :-
-    true.
 
 
+/**
+*****************************************OBJECT MANIPULATION******************************************************
+*/
 
+%% hsr_forget_object(Object) is det.
+%
+% Forget a specific Object.
+%
+% @param Object the object to forget.
+hsr_forget_object(Object) :-
+    forall(triple(Object,X,Y), tripledb_forget(Object,X,Y)).
+    % TODO we need to stop publishing the tf and marker
 
-%%%%%%%%%% COLOR SEMANTICS %%%%%%%%%%
-
-% When the Confidence is to low this querry will succeed and set an empty color
-set_object_color(ObjID, _, Confidence) :-
-    not(Confidence = 0), % for cases in which Perception does not give confidences.
-    min_color_confidence(MinConf),
-    Confidence < MinConf,
-    tell(triple(ObjID, hsr_objects:'colour', '')),
-    tell(object_color_rgb(ObjID, '')).
-
-% Because the set_object_color(Instance, _, Confidence) gets executed before this is.
-% We can just ignore the Confidence because we know it is high enough
-set_object_color(ObjID, [R,G,B], _) :-    
-    tell(has_type(ColorType, soma:'Color')),
-    tell(triple(ObjID, soma:hasColor, ColorType)),
-    tell(object_color_rgb(ObjID, [R,G,B])),
-    triple(ColorType,dul:hasRegion,Region),
-    tell(triple(Region, soma:hasTransparencyValue, 0)),
-    RConv is R/255,    GConv is G/255,    BConv is B/255,
-    set_color_semantics(ObjID, [RConv,GConv,BConv]).
-
-set_color_semantics(ObjID, [0.0, 0.0, 0.0]) :-
-    tell(triple(ObjID, hsr_objects:'colour', 'dark')).
-
-set_color_semantics(ObjID, [1.0, 0.0, 0.0]) :-
-    tell(triple(ObjID, hsr_objects:'colour', 'red')).
-
-set_color_semantics(ObjID, [0.0, 1.0, 0.0]) :-
-    tell(triple(ObjID, hsr_objects:'colour', 'green')).
-
-set_color_semantics(ObjID, [1.0, 1.0, 0.0]) :-
-    tell(triple(ObjID, hsr_objects:'colour', 'yellow')).
-
-set_color_semantics(ObjID, [0.0, 0.0, 1.0]) :-
-    tell(triple(ObjID, hsr_objects:'colour', 'dark-blue')).
-
-set_color_semantics(ObjID, [1.0, 0.0, 1.0]) :-
-    tell(triple(ObjID, hsr_objects:'colour', 'violet')).
-
-set_color_semantics(ObjID, [0.0, 1.0, 1.0]) :-
-    tell(triple(ObjID, hsr_objects:'colour', 'light-blue')).
-
-set_color_semantics(ObjID, [1.0, 1.0, 1.0]) :-
-    tell(triple(ObjID, hsr_objects:'colour', 'bright')).
-
-% Used so when no color is given the query does not fail
-set_color_semantics(_, _) :-
-    true.
-
+%% forget_objects_on_surface_(SurfaceLink) is det.
+%
+% Forget all objects on surface.
+%
+% @param Object the object to forget.
+forget_objects_on_surface_(SurfaceLink) :-
+    objects_on_surface(Objs,SurfaceLink),
+    member(Obj,Objs),
+    hsr_forget_object(Obj).
