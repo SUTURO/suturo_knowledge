@@ -30,12 +30,12 @@
 	hsr_existing_objects(?).
 
 
-/**
-*****************************************OBJECT INFO******************************************************
-*/
-
-
+%%% ===================================== OBJECT INFO ====================================================== %%%
+%% hsr_existing_objects(Objects is ?
+%
 % returns a list of all the Objects know to the Knowledgebase
+%
+% @param Object the object to find the surface on.
 hsr_existing_objects(Objects) :-
     findall(PO, (
         ask(has_type(PO, 'http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#PhysicalObject'))
@@ -53,19 +53,18 @@ hsr_existing_objects(Objects) :-
 % Finds the surface an object was seen on. When there is no surface supporting the object and
 % the center point of the object < 0.5 the object is placed on the ground.
 % Otherwise the query resolves to false.
+%
 % @param Object the object to find the surface on.
 place_object(Object):-
     object_supportable_by_surface(Object, Surface),
     assert_object_on(Object,Surface).
 
-/**
-*****************************************OBJECT CREATION******************************************************
-*/
-
+%%% ===================================== OBJECT CREATION ====================================================== %%%
 %% create_object(PerceivedObjectType, PercTypeConf, Transform, [Width, Depth, Height], 'box', PercShapeConf, Color, PercColorConf, ObjID is nondet.
 %
 % Validate the perceived params, create an Object instance of the corresponding Ontology,
 % write it into the triple store and publish accordingly to ros topics.
+%
 % @param PerceivedObjectType the Object Type that perception observed.
 % @param PercTypeConf the confidence of the Object Type.
 % @param Transform the tranformation of the Object Pose Matrix in the coordinance map.
@@ -75,12 +74,14 @@ place_object(Object):-
 % @param Color the observed color of the object.
 % @param PercColorConf the confidence of the color.
 % @param ObjID the id that will be generated for the Object.
+%
 % TODO refactor into more suitable predicates
 % TODO change that terriple param order
 % TODO improve 'box' param
 % TODO fix the marker_plugin Warnings
 % TODO go over all db writings, where to we actually need a tell ?
 % TODO validate reachable in create_object: @param for colision avoidance, inferr distance via self position + obj position, inferr size of gripper and check with the existing size
+% TODO why not working with 1x republish ?
 create_object(PerceivedObjectType, PercTypeConf, Transform, [Width, Depth, Height], 'box', PercShapeConf, Color, PercColorConf, ObjID):-
 
     %%% ================ Object validation
@@ -124,12 +125,16 @@ create_object(PerceivedObjectType, PercTypeConf, Transform, [Width, Depth, Heigh
     tell(triple(ObjID, hsr_objects:'supportable', true)),     % identify the object as an supportable object this is used by suturo_existing_objects
 
     %%% ================ visualization marker array publish
-    % TODO why not working with 1x ?
     marker_plugin:republish,
-    marker_plugin:republish,
+    marker_plugin:republish.
 
-    !. % when call stack reaches here, then all bindings
 
+%% set_dimension_semantics() is ?
+%
+%   ?
+%
+% @param
+%
 % TODO is prob does not add multible informations
 set_dimension_semantics(Instance, _, _, Height) :-
     Height > 0.16,
@@ -160,6 +165,7 @@ set_dimension_semantics(Instance, Width, Depth, Height) :-
 % succeed even when no other semantic is set
 %
 % @param
+%
 set_dimension_semantics(_Instance,_W,_D,_H) :-
     true.
 
@@ -192,6 +198,12 @@ set_object_color(ObjID, [R,G,B], _) :-
     RConv is R/255,    GConv is G/255,    BConv is B/255,
     set_color_semantics(ObjID, [RConv,GConv,BConv]).
 
+%% set_color_semantics is ?
+%
+% ?
+%
+% @param
+%
 set_color_semantics(ObjID, [0.0, 0.0, 0.0]) :-
     tell(triple(ObjID, hsr_objects:'colour', 'dark')).
 
@@ -225,12 +237,50 @@ set_color_semantics(ObjID, [1.0, 1.0, 1.0]) :-
 set_color_semantics(_, _) :-
     true.
 
-/**
-*****************************************OBJECT VALIDATION******************************************************
-*/
+%%% ===================================== OBJECT VALIDATION ====================================================== %%%
+%% validate_confidence(class, Is, Should) is semidet.
+%
+% Determines whether the observed confidences of type, shape and color are valid.
+%
+% @param PerceivedTypeConf the observed type confidence
+% @param PerceivedShapeConf the observed shape confidence
+% @param PerceivedColorConf the observed color confidence
+%
+validate_confidence(PerceivedTypeConf, PerceivedShapeConf, PerceivedColorConf) :-
+    writeln([PerceivedTypeConf, PerceivedShapeConf, PerceivedColorConf]),
+    min_type_confidence(MinTypeConf),
+    min_shape_confidence(MinShapeConf),
+    min_color_confidence(MinColorConf),
+    PerceivedTypeConf >= MinTypeConf,
+    writeln([PerceivedShapeConf,'>=',MinShapeConf]),
+    writeln('passed type conf'),
+    PerceivedShapeConf >= MinShapeConf,
+    writeln('passed shape conf'),
+    PerceivedColorConf >= MinColorConf,
+    writeln('passed color conf').
 
+%% object_size_ok([Width,Depth,Height]) is semidet.
+%
+% Determines whether the dimensions of the object are valid.
+%
+% @param Width the oberved width
+% @param Depth the oberved depth
+% @param Height the oberved height
+%
+object_size_ok([Width,Depth,Height]):-
+    Width > 0.01,
+    Depth > 0.01,
+    Height > 0.01,
+    Width < 0.6,
+    Depth < 0.6,
+    Height < 0.6.
 
+%% set_color_semantics is ?
+%
 % Recursively create a Random String of a given length
+%
+% @param
+%
 random_id_gen(Size, Result):-
     ( Size > 0
     -> (Characters = ['A', 'a', 'B', 'b', 'C', 'c', 'D', 'd', 'E', 'e', 'F', 'f',
@@ -244,31 +294,6 @@ random_id_gen(Size, Result):-
     ;   Result = '')
     .
 
-
-% TODO what was the purpose of this code?
-validate_confidence(class, Is, Should) :-
-    var(Is),
-    min_class_confidence(Should).
-
-validate_confidence(shape, Is, Should) :-
-    var(Is),
-    min_shape_confidence(Should).
-
-validate_confidence(color, Is, Should) :-
-    var(Is),
-    min_color_confidence(Should).
-
-validate_confidence(_, Is, Should) :-
-    Should = Is.
-
-object_size_ok([Width,Depth,Height]):-
-    Width > 0.01,
-    Depth > 0.01,
-    Height > 0.01,
-    Width < 0.6,
-    Depth < 0.6,
-    Height < 0.6.
-
 % Determines the ObjectType the Object is saved as, it is PerceivedObjectType when the Conf is high enough Otherwise it is Other
 object_type_handling(PerceivedObjectType, TypeConfidence, ObjectType) :-
     min_class_confidence(MinConf),
@@ -278,27 +303,24 @@ object_type_handling(PerceivedObjectType, TypeConfidence, ObjectType) :-
         ObjectType = 'http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Other'
         ).
 
-
-
-
-/**
-*****************************************OBJECT MANIPULATION******************************************************
-*/
+%%% ===================================== OBJECT MANIPULATION ====================================================== %%%
 
 %% hsr_forget_object(Object) is det.
 %
 % Forget a specific Object.
 %
 % @param Object the object to forget.
+%
+% TODO we need to stop publishing the tf and marker
 hsr_forget_object(Object) :-
     forall(triple(Object,X,Y), tripledb_forget(Object,X,Y)).
-    % TODO we need to stop publishing the tf and marker
 
 %% forget_objects_on_surface_(SurfaceLink) is det.
 %
 % Forget all objects on surface.
 %
 % @param Object the object to forget.
+%
 forget_objects_on_surface_(SurfaceLink) :-
     objects_on_surface(Objs,SurfaceLink),
     member(Obj,Objs),

@@ -6,7 +6,7 @@
       min_space_between_objects/1,
       urdf_surface_prefix/1,
       allowed_class_distance/1,
-      min_class_confidence/1, 
+      min_type_confidence/1,
       min_shape_confidence/1,
       min_color_confidence/1,
       max_shelf_capacity/1,
@@ -30,7 +30,7 @@
 
 :- rdf_db:rdf_register_ns(hsr_objects, 'http://www.semanticweb.org/suturo/ontologies/2020/3/objects#', [keep(true)]).
 
-
+%%% ===================================== OBJECT CONSTRAINTS ====================================================== %%%
 offsets(Offset) :-
     Offset = [0, -0.05, 0.05, -0.1, 0.1, -0.15, 0.15, -0.2, 0.2, -0.25, 0.25, -0.3, 0.3, -0.35, 0.35, -0.4, 0.4, -0.45, 0.45, -0.5, 0.5, -0.55, 0.55, -0.6, 0.6, -0.65, 0.65, -0.7, 0.7, -0.75, 0.75, -0.8, 0.8].
 
@@ -56,7 +56,7 @@ allowed_class_distance(Distance) :-
 
 %% Minimum Confidence where the perceived Object class should still be stored.
 %% Classes with lower confidence get 'Other' as fallback.
-min_class_confidence(Confidence) :-
+min_type_confidence(Confidence) :-
     Confidence = 0.5.
 
 min_shape_confidence(Confidence) :-
@@ -68,6 +68,10 @@ min_color_confidence(Confidence) :-
 max_shelf_capacity(Capacity) :-
     Capacity = 4.
 
+get_urdf_id(URDF) :-
+    URDF = arena.
+
+%%% ===================================== SPEECH STUFF ====================================================== %%%
 %% Context is the Speech, the Robot should hold depending on the distance of the
 %% next Objects Class.
 context_speech_sort_by_class(Object, SimilarObject, Distance, Context) :-
@@ -125,6 +129,5 @@ context_speech_basket(Context) :-
     Context = "I will put this in the Basket".
 
 
-get_urdf_id(URDF) :-
-    URDF = arena.
+
 
