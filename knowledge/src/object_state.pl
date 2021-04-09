@@ -5,7 +5,6 @@
     forget_objects_on_surface_/1,
     place_object/1,
     create_object/9,
-    random_id_gen/2,
     validate_confidence/3,
     object_size_ok/1,
     object_type_handling/3,
@@ -90,7 +89,7 @@ place_object(Object):-
 % TODO fix the marker_plugin Warnings
 % TODO go over all db writings, where to we actually need a tell ?
 % TODO validate reachable in create_object: @param for colision avoidance, inferr distance via self position + obj position, inferr size of gripper and check with the existing size
-create_object(PerceivedObjectType, PercTypeConf, Transform, [Width, Depth, Height], 'box', PercShapeConf, Color, PercColorConf, ObjID):-
+create_object(PerceivedObjectType, PercTypeConf, [Frame,Position,Rotation], [Width, Depth, Height], 'box', PercShapeConf, Color, PercColorConf, ObjID):-
 
     %%% ================ Object validation
     % TODO make this dynamic to constraints
@@ -99,15 +98,13 @@ create_object(PerceivedObjectType, PercTypeConf, Transform, [Width, Depth, Heigh
     validate_confidence(shape, PercShapeConf, ShapeConf),
     validate_confidence(color, PercColorConf, ColorConf),
     object_type_handling(PerceivedObjectType, PercTypeConf, ObjectType), % When the PercTypeConf is to low the Type is set to Other, Otherwise ObjectType is the same as PerceivedObjectType
-    random_id_gen(6, Result),  % create ID = Type + random id
-    atom_concat(ObjectType, '_', ObjectTypeU),
-    atom_concat(ObjectTypeU, Result, ObjID),
-    % TODO check if the ID is already used
+        
+    is_legal_obj_position(Position),
 
     %%% ================ Object creation
     tell(has_type(ObjID, ObjectType)), % Create Object of type ObjectType           // +1 S=ObjID
     tell(is_physical_object(ObjID)), % write into triple: ont: is-a                 // +1 P=ObjID
-    tell(is_at(ObjID,Transform)), % this triggers rosprolog to publish it on tf     // no change! no tell(...) needed? doch needed..
+    tell(is_at(ObjID,[Frame,Position,Rotation])), % this triggers rosprolog to publish it on tf     // no change! no tell(...) needed? doch needed..
     atom_number(TypeConfidenceAtom, TypeConf),
     tell(triple(ObjID, hsr_objects:'ConfidenceClassValue', TypeConfidenceAtom)), %  // +1 P=ObjID
     ((triple(ObjID, soma:hasShape, Shape), % check if Shape exists                  // +6, 1x P=ObjID, 3x P=ShapeID, 2x P=ShapeRegionID
@@ -141,19 +138,6 @@ create_object(PerceivedObjectType, PercTypeConf, Transform, [Width, Depth, Heigh
 
     !. % when call stack reaches here, then all bindings
 
-% Recursively create a Random String of a given length
-random_id_gen(Size, Result):-
-    ( Size > 0
-    -> (Characters = ['A', 'a', 'B', 'b', 'C', 'c', 'D', 'd', 'E', 'e', 'F', 'f',
-                      'G', 'g', 'H', 'h', 'I', 'i', 'J','j','K','k','L','l','M',
-                      'm','N','n','O','o','P','p','Q','q','R','r','S','s','T',
-                      't','U','u','V','v','W','w','X','x','Y','y','Z','z'],
-        random(0, 48, RandomValue),
-        nth0(RandomValue, Characters, RandomCharacter),
-        random_id_gen(Size - 1, SubResult),
-        atom_concat(RandomCharacter, SubResult, Result))
-    ;   Result = '')
-    .
 
 
 %%%%%%%%%% TODO what was the purpose of this code? %%%%%%%%%%
