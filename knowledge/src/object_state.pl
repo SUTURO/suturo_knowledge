@@ -129,16 +129,14 @@ create_object(PerceivedObjectType, PercTypeConf, [Frame,Position,Rotation], [Wid
     set_object_color(ObjID, Color, ColorConf),  % set the color
     tell(triple(ObjID, hsr_objects:'supportable', true)),     % identify the object as an supportable object this is used by suturo_existing_objects
 
-    place_object(ObjID),
-
     %%% ================ visualization marker array publish
     % TODO why not working with 1x ?
     marker_plugin:republish,
     marker_plugin:republish,
 
-    !. % when call stack reaches here, then all bindings
-
-
+    ! % when call stack reaches here, then all bindings stay set
+    , place_object(ObjID)
+    .
 
 %%%%%%%%%% TODO what was the purpose of this code? %%%%%%%%%%
 validate_confidence(class, Is, Should) :-

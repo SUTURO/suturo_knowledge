@@ -12,7 +12,9 @@ from knowledge_msgs.msg import ObjectState
 prolog_client = rosprolog_client.Prolog()
 
 def callback(data):
+    rospy.loginfo("test")
     for marker in data.markers:
+        rospy.loginfo(marker)
         osa_message = ObjectStateArray()
         if marker.action == 0:
             osa_message.action = 0
@@ -21,18 +23,19 @@ def callback(data):
         os = ObjectState()
         os.object_id = marker.ns
 
-        x = marker.pose.point.x
-        y = marker.pose.point.y
-        z = marker.pose.point.z
+        x = marker.pose.position.x
+        y = marker.pose.position.y
+        z = marker.pose.position.z
 
-        query = "hsr_lookup_transform('map'," + marker.header.frame_id + ", PoseTrans, _), hsr_existing_object_at_thr(PoseTrans, 0.009, Instance)."
+        # query = "hsr_lookup_transform('map',[" + str(x) + "," + str(y) + "," + str(z) + "], PoseTrans, _), hsr_existing_object_at_thr(PoseTrans, 0.009, Instance)."
+
+        query = "hsr_existing_object_at_thr([" + str(x) + "," + str(y) + "," + str(z) + "], 0.009, Instance)."
 
         solutions = prolog_client.all_solutions(query)
 
-        print(solutions)
-
-        os.frame_name = solutions[0]['Instance']
-        # os.object_type TODO do we need This??
+        object_id # "http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Other_SJQWTXBE"
+        os.frame_name = solutions[0]['Instance'].split('#')[1] # needs to be "Other_SJQWTXBE"
+        os.object_type  = solutions[0]['Instance'].split('#')[1].split('_')[0] # Other
         os.shape = 1  # TODO everything is a cube for now
         os.mesh_path = marker.mesh_resource  # will always be ""
         os.color = marker.color
