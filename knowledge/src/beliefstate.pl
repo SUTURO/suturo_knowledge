@@ -214,9 +214,7 @@ most_related_object(Source, Target):-
 most_related_class(Source, Target, Distance) :-
     %findall([Dist, T], distance_to_object(Source, T, Dist), Distances),
     findnsols(20, [Dist, T], distance_to_object(Source, T, Dist), Distances),
-    min_member([Distance, Target], Distances),
-    writeln(Target),
-    writeln(Distance).
+    min_member([Distance, Target], Distances).
     %distance_to_object(Source, Target, Distance).
 
 distance_to_object(Source, Target, Distance) :-
@@ -437,23 +435,15 @@ assert_object_new_empty_surface(Object) :-
     !.
 
 object_goal_surface_(Object, Surface, Context, RefObject) :-
-    %writeln("Hallo1"),
     triple(Object, supposedSurface, Surface),
-    %writeln("Hallo2"),
     triple(Object, context, Context),
-    %writeln("Hallo3"),
     triple(Object, refObject, RefObject),
-    %writeln("Hallo4"),
     !.
 
 object_goal_surface_(Object, Surface, Context, RefObject) :-
-    writeln("Hallo1"),
     place_objects,
-    writeln("Hallo2"),
     assert_object_supposed_surface(Object),
-    writeln("Hallo3"),
     object_goal_surface_(Object, Surface, Context, RefObject),
-    writeln("Hallo4"),
     !.
     
 

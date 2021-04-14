@@ -558,4 +558,11 @@
     <parent link="door_1_center"/>
     <child link="door_1_handle_outside"/>
   </joint>
+  <!--ROBOT LINK ONLY FOR TESTING-->
+  <link name="base_footprint"/>
+  <joint name="base_footprint_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="0.5151 -0.506436 0"/>
+    <parent link="world"/>
+    <child link="base_footprint"/>
+  </joint>
 </robot>

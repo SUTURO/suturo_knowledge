@@ -12,13 +12,6 @@
 :- setup_suturo_test_objects.
 
 
-test(objects_on_same_surface_in_future) :-
-    setup_suturo_test_source_surfaces(['table_center']),
-    setup_suturo_test_target_surfaces(['bookshelf_floor_0_piece', 'bookshelf_floor_1_piece', 'bookshelf_floor_2_piece']),
-    get_suturo_test_objects([Bowl1, Cokecan1, Cokecan2, Spoon1]),
-    objects_on_same_surface_in_future(Cokecan1, OtherObjects),
-    writeln(OtherObjects).
-
 test(object_most_similar_surface) :-
     setup_suturo_test_source_surfaces(['table_center']),
     setup_suturo_test_target_surfaces(['bookshelf_floor_0_piece', 'bookshelf_floor_1_piece', 'bookshelf_floor_2_piece']),
@@ -61,6 +54,13 @@ test(object_goal_surface_with_shelf_target) :-
     object_goal_surface_(Cokecan1, Surface, RefObject, Context),
     assert_equals(Surface, 'bookshelf_floor_2_piece'),
     assert_equals(Context, Cokecan2).
+
+test(objects_on_same_surface_in_future) :-
+    setup_suturo_test_source_surfaces(['table_center']),
+    setup_suturo_test_target_surfaces(['bookshelf_floor_0_piece', 'bookshelf_floor_1_piece', 'bookshelf_floor_2_piece']),
+    get_suturo_test_objects([Bowl1, Cokecan1, Cokecan2, Spoon1]),
+    objects_on_same_surface_in_future(Cokecan1, OtherObjects),
+    assert_true(OtherObjects == [Cokecan1, Bowl1]).
 
 
 test(fail) :-
