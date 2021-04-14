@@ -31,4 +31,8 @@
   <node name="manipulation_subscriber" pkg="knowledge" type="manipulation_subscriber.py" output="screen"/>
 
 <!--  <node name="my_node" pkg="knowledge" type="my_node.py" output="screen" />-->
+
+  <node name="marker_objectstate" pkg="knowledge" type="marker_objectstate.py" output="screen"/>
+  
+
 </launch>
