@@ -53,7 +53,7 @@ if __name__ == '__main__':
     # subscriber
     rospy.Subscriber("/visualization_marker_array", MarkerArray, callback)
     # publisher
-    pub = rospy.Publisher('/object_state_2', ObjectStateArray, queue_size=10)
+    pub = rospy.Publisher('/object_state', ObjectStateArray, queue_size=10)
     
     rospy.loginfo('Waiting for rosprolog')    
     rospy.wait_for_service('/rosprolog/query')
