@@ -45,7 +45,7 @@ test(pose_of_buckets) :-
     (
         member(Surface, BucketSurfaces),
         tf_lookup_transform('map', Surface, pose(Pos, Rot)),
-        ExpPoses = [Pos, Rot]
+        ExpPose = [Pos, Rot]
     ), ExpPoses),
     assert_true(same_length(Poses, ExpPoses)),
     assert_true(subset(Poses, ExpPoses)),
@@ -134,7 +134,7 @@ test(make_all_tables_target) :-
     assert_true(subset(ExpTargetSurfaces, TargetSurfaces)).
 
 test(all_objects_on_tables) :-
-    get_suturo_test_objects([Bowl1, Cokecan1, Cokecan2, Spoon1]),
+    get_suturo_test_objects([Bowl1, Cokecan1, _, _]),
     all_objects_on_tables_(Objects),
     ExpObjects = [Bowl1, Cokecan1],
     assert_true(same_length(Objects, ExpObjects)),
@@ -142,7 +142,7 @@ test(all_objects_on_tables) :-
     assert_true(subset(ExpObjects, Objects)).
 
 test(all_objects_in_whole_shelf) :-
-    get_suturo_test_objects([Bowl1, Cokecan1, Cokecan2, Spoon1]),
+    get_suturo_test_objects([_, _, Cokecan2, Spoon1]),
     all_objects_in_whole_shelf_(Objects),
     ExpObjects = [Cokecan2, Spoon1],
     assert_true(same_length(Objects, ExpObjects)),
@@ -166,12 +166,13 @@ test(all_objects_on_ground) :-
 test(pose_of_target_surfaces) :-
     pose_of_target_surfaces(Poses),
     TargetSurfaces = ['table_center', 'table_clone_center'],
+    ExpSurfaceLinks = ['table_front_edge_center', 'table_clone_front_edge_center'],
     setup_suturo_test_target_surfaces(TargetSurfaces),
     findall(ExpPose, 
     (
-        member(Surface, TargetSurfaces),
+        member(Surface, ExpSurfaceLinks),
         tf_lookup_transform('map', Surface, pose(Pos, Rot)),
-        ExpPoses = [Pos, Rot]
+        ExpPose = [Pos, Rot]
     ), ExpPoses),
     assert_true(same_length(Poses, ExpPoses)),
     assert_true(subset(Poses, ExpPoses)),
@@ -180,19 +181,17 @@ test(pose_of_target_surfaces) :-
 test(pose_of_source_surfaces) :-
     pose_of_source_surfaces(Poses),
     SourceSurfaces = ['table_center', 'table_clone_center'],
+    ExpSurfaceLinks = ['table_front_edge_center', 'table_clone_front_edge_center'],
     setup_suturo_test_source_surfaces(SourceSurfaces),
     findall(ExpPose, 
     (
-        member(Surface, SourceSurfaces),
+        member(Surface, ExpSurfaceLinks),
         tf_lookup_transform('map', Surface, pose(Pos, Rot)),
-        ExpPoses = [Pos, Rot]
+        ExpPose = [Pos, Rot]
     ), ExpPoses),
     assert_true(same_length(Poses, ExpPoses)),
     assert_true(subset(Poses, ExpPoses)),
     assert_true(subset(ExpPoses, Poses)).
 
-
-test(fail) :-
-    fail.
 
 :- end_tests('surfaces').
