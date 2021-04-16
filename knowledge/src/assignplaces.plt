@@ -5,7 +5,7 @@
 :- use_module(library('ros/urdf/URDF')).
 :- use_module(library('model/SOMA/OBJ')).
 
-:- include(library('assignplaces')).
+:- use_module('assignplaces.pl').
 
 
 :- setup_suturo_test_env.

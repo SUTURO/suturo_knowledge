@@ -1,9 +1,9 @@
 :- begin_tests(urdf).
 
-:- use_module(library('test')).
-:- use_module(library('surfaces')).
+:- use_module(library(test)).
+:- use_module(library(surfaces)).
 
-:- include(library('urdf')).
+:- use_module('urdf.pl').
 
 :- setup_suturo_test_env.
 :- setup_suturo_test_surfaces.

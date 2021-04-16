@@ -4,7 +4,7 @@
 :- use_module(library('lang/terms/triple')).
 :- use_module(library('spatial_comp')).
 
-:- include(library('surfaces')).
+:- use_module('surfaces.pl').
 
 :- setup_suturo_test_env.
 :- setup_suturo_test_surfaces.

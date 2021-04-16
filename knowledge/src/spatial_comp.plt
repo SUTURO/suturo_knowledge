@@ -5,7 +5,7 @@
 :- use_module(library('urdf')).
 
 
-:- include('spatial_comp').
+:- use_module('spatial_comp.pl').
 
 :- setup_suturo_test_env.
 :- setup_suturo_test_surfaces.

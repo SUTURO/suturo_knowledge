@@ -2,7 +2,7 @@
 
 :- use_module(library('test')).
 
-:- include(library('pickup')).
+:- use_module('pickup.pl').
 
 :- setup_suturo_test_env.
 :- setup_suturo_test_surfaces.

@@ -1,10 +1,15 @@
 :- begin_tests('beliefstate').
 
+:- use_module(library('semweb/rdf_db')).
+:- use_module(library('semweb/rdfs')).
+:- use_module(library('lang/query')).
+:-use_module(library('model/OWL')).
 
 :- use_module(library('test')).
 :- use_module(library('lang/terms/transitive')).
 :- use_module(library('gripper')).
-:- include(library('beliefstate')).
+
+:- use_module('beliefstate.pl').
 
 
 :- setup_suturo_test_env.
