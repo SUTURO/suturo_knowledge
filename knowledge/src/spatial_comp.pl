@@ -5,6 +5,7 @@
         hsr_existing_object_at/2,
         hsr_existing_object_at_thr/2,
         hsr_existing_object_at_thr/3,
+	object_pose/2,
         surface_pose_in_map/2,
         object_supportable_by_surface/2,
         position_supportable_by_surface/2,
@@ -27,7 +28,8 @@ hsr_existing_object_at(Pose, Threshold, Instance) :-
     has_type(Instance, owl:'NamedIndividual'),
     instance_of(Instance, dul:'PhysicalObject'),
     triple(Instance, hsr_objects:'supportable', true),
-    object_pose(Instance, OldPose),
+    %object_pose(Instance, OldPose),
+    is_at(Instance, OldPose),
     transform_close_to(Pose, OldPose, Threshold).
 
 hsr_existing_object_at([X,Y,Z], Instance) :-
@@ -72,12 +74,12 @@ object_supportable_by_surface(Object, Surface):-
     all_surfaces(Surfaces),
     member(Surface,Surfaces),
     surface_front_edge_center_frame(Surface, SurfaceFrame),
-    object_frame_name(Object, ObjectFrame),
+    object_tf_frame(Object, ObjectFrame),
     hsr_lookup_transform(SurfaceFrame, ObjectFrame, Position, _),
     relative_position_supportable_by_surface(Position, Surface).
     
 object_supportable_by_surface(Object, ground):-
-    object_frame_name(Object, Frame),
+    object_tf_frame(Object, Frame),
     hsr_lookup_transform(map, Frame, [_,_,Z], _),
     position_supportable_by_ground(Z).
 
@@ -85,7 +87,7 @@ position_supportable_by_surface(Position, Surface) :-
     all_surfaces(Surfaces),
     member(Surface, Surfaces),
     surface_front_edge_center_frame(Surface, Frame),
-    tf_transform_point(map, Frame, Position, RelativePosition),
+    tf_transform_point(map, Frame, Position, RelativePosition), % rospolog
     relative_position_supportable_by_surface(RelativePosition, Surface),
     !.
     
@@ -121,6 +123,10 @@ position_supportable_by_ground([_,_,Z]) :-
     position_supportable_by_ground(Z).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+object_pose(ObjID, ['map',Frame, Point, Rotation]) :-
+    object_tf_frame(ObjID,Frame),
+    hsr_lookup_transform(map, Frame, Point, Rotation).
 
 
 distance_to_robot(Thing, Distance) :-

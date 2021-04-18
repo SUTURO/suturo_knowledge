@@ -1,32 +1,38 @@
 <launch>
-  <arg name="mongodb_log" default="false" />
-  <arg name="mongodb_whipe" default="false" />
   <arg name="urdf_param" default="/hsrb_lab" />
-  <arg name="urdf_launch_file" default="gazebo_E1" />
+  <arg name="urdf_launch_file" default="suturo_bringup" />
+  <arg name="standalone" default="false" />
 
-  <!-- The urdf now starts from suturo_bringup
-  <include file="$(find suturo_urdf_publisher)/launch/$(arg urdf_launch_file).launch" />
-  -->
+  <group if="$(arg standalone)">
+    <include file="$(find suturo_bringup)/launch/$(arg urdf_launch_file).launch" pass_all_args="true">
+      <arg name="gui" value="false"/>
+      <arg name="gazebo_visualization" value="false"/>
+      <arg name="use_manipulation" value="false"/>
+      <arg name="use_navigation" value="false"/>
+      <arg name="use_perception" value="false"/>
+      <arg name="use_teleop" value="false"/>
+      <arg name="use_web" value="false"/>
+      <arg name="use_laser_odom" value="false"/>
+      <arg name="fast_physics" value="false"/>
+      <arg name="gazebo" value="false"/>
+      <arg name="suturo_rviz" value="true"/>
+      <arg name="run_snap_map" value="false"/>
+    </include>
+  </group>
 
+  <!--these are ParamServer.(params) -->
   <param name="param_to_load_URDF_from" type="str" value="$(arg urdf_param)" />
   <param name="initial_package" type="string" value="knowledge" />
-  <param name="initial_goal" type="string" value="ros_param_get_string('/param_to_load_URDF_from', Param),
-    load_surfaces_from_param(Param)." />
 
   <node name="rosprolog" pkg="rosprolog" type="rosprolog_node" cwd="node" output="screen"/>
 
-  <node name="object_state_publisher" pkg="knowledge" type="object_state_publisher.py" output="screen">
-    <param name="hz" value="10" />
-    <param name="object_types" value="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#PhysicalObject" />
-  </node>
-
   <node name="store_object_info_server" pkg="knowledge" type="store_object_info_server.py" output="screen"/>
 
-  <node name="manipulation_listener" pkg="knowledge" type="manipulation_listener.py" output="screen"/>-->
+  <node name="manipulation_subscriber" pkg="knowledge" type="manipulation_subscriber.py" output="screen"/>
 
+<!--  <node name="my_node" pkg="knowledge" type="my_node.py" output="screen" />-->
+
+  <node name="marker_objectstate" pkg="knowledge" type="marker_objectstate.py" output="screen"/>
   
-  <group if="$(arg mongodb_log)">
-    <node name="mongodb_log" pkg="mongodb_log" type="mongodb_log"
-      args="/tf --mongodb-name SUTURO_0" />
-  </group>
+
 </launch>
