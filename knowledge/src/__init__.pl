@@ -1,6 +1,7 @@
 :- register_ros_package(rosprolog).
 :- register_ros_package(knowrob).
 :- register_ros_package(knowledge).
+
 %%% KnowRob imports
 :- use_module(library('semweb/rdf_db')).
 :- use_module(library('semweb/rdfs')).
@@ -19,10 +20,9 @@
 :- use_module(library('beliefstate')).
 :- use_module(library('assignplaces')).
 :- use_module(library('gripper'), [gripper/1, gripper_init/1]).
-%:- use_module(library('reachable')).
 :- use_module(library('export')).
 
-:- ros_package_iri(knowledge, 'package://knowledge/owl/objects.owl').
+%:- ros_package_iri(knowledge, 'package://knowledge/owl/objects.owl').
 
 :- tripledb_load(
 	'http://www.ontologydesignpatterns.org/ont/dul/DUL.owl',
@@ -46,4 +46,3 @@
 :- tf_lookup_transform(map, map, _).
 
 :- gripper(Gripper), gripper_init(Gripper).
-

@@ -12,7 +12,6 @@
     set_object_color/3,
     set_color_semantics/2,
     reachability_check/3,
-    check_too_small/1,
     republish/0,
     all_objects_graspable_/1,
     all_objects_not_graspable_/1,
