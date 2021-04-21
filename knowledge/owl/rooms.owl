@@ -66,12 +66,28 @@
     
 
 
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#isAtMarginOf -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#isAtMarginOf">
+        <rdfs:subPropertyOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#hasLocation"/>
+    </owl:ObjectProperty>
+    
+
+
     <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#isConnectedBy -->
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#isConnectedBy">
         <rdfs:subPropertyOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#associatedWith"/>
         <rdfs:domain rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Room"/>
         <rdfs:range rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Door"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#isInCornerOf -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#isInCornerOf">
+        <rdfs:subPropertyOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#hasLocation"/>
     </owl:ObjectProperty>
     
 
@@ -142,18 +158,6 @@
     
 
 
-    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Bedroom -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Bedroom">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#RoomType"/>
-        <owl:disjointWith rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#DiningRoom"/>
-        <owl:disjointWith rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Kitchen"/>
-        <owl:disjointWith rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#LivingRoom"/>
-        <owl:disjointWith rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Office"/>
-    </owl:Class>
-    
-
-
     <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Ceiling -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Ceiling">
@@ -192,10 +196,13 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#DiningRoom -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#DiningRoom">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#RoomType"/>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Room"/>
+        <owl:disjointWith rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Hall"/>
         <owl:disjointWith rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Kitchen"/>
         <owl:disjointWith rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#LivingRoom"/>
         <owl:disjointWith rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Office"/>
+        <owl:disjointWith rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#OtherRoom"/>
+        <owl:disjointWith rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#SleepingRoom"/>
     </owl:Class>
     
 
@@ -234,12 +241,27 @@
     
 
 
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Hall -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Hall">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Room"/>
+        <owl:disjointWith rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Kitchen"/>
+        <owl:disjointWith rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#LivingRoom"/>
+        <owl:disjointWith rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Office"/>
+        <owl:disjointWith rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#OtherRoom"/>
+        <owl:disjointWith rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#SleepingRoom"/>
+    </owl:Class>
+    
+
+
     <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Kitchen -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Kitchen">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#RoomType"/>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Room"/>
         <owl:disjointWith rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#LivingRoom"/>
         <owl:disjointWith rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Office"/>
+        <owl:disjointWith rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#OtherRoom"/>
+        <owl:disjointWith rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#SleepingRoom"/>
     </owl:Class>
     
 
@@ -247,8 +269,10 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#LivingRoom -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#LivingRoom">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#RoomType"/>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Room"/>
         <owl:disjointWith rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Office"/>
+        <owl:disjointWith rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#OtherRoom"/>
+        <owl:disjointWith rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#SleepingRoom"/>
     </owl:Class>
     
 
@@ -256,7 +280,18 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Office -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Office">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#RoomType"/>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Room"/>
+        <owl:disjointWith rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#OtherRoom"/>
+        <owl:disjointWith rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#SleepingRoom"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#OtherRoom -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#OtherRoom">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Room"/>
+        <owl:disjointWith rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#SleepingRoom"/>
     </owl:Class>
     
 
@@ -271,6 +306,14 @@
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#RoomType">
         <rdfs:subClassOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#Role"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#SleepingRoom -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#SleepingRoom">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Room"/>
     </owl:Class>
     
 

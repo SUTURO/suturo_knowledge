@@ -7,7 +7,9 @@
         get_intersection_of_walls/4,
         get_room_dimensions/5,
         in_room/2,
-        all_rooms_of_type/2
+        all_rooms_of_type/2,
+        room_center_point_position/2,
+        room_corner_point_positions/2
     ]).
 
 
@@ -21,26 +23,116 @@
 create_rooms :-
     get_urdf_id(URDF),
     urdf_link_names(URDF, Links),
-    findall(RoomLink, 
+    findall(RoomLink,
     (
         member(RoomLink, Links),
-        sub_string(RoomLink,_,_,_,walls)
-    ),
+        sub_string(RoomLink,_,_,_,"room_center_link")
+    ), 
     RoomLinks),
     forall(member(RoomLink2, RoomLinks),
-    (    
-        create_room(RoomLink2)
+    (
+        create_room(RoomLink2, Room),
+        assign_room_points(Room, RoomLink2)
     )).
 
-    %forall(has_type(Room, hsr_rooms:'Room'), 
-    %(
-        %get_room_dimensions(Room, Width, Depth, PosX, PosY),
-        %tell(has_type(Shape, soma:'Shape')),
-        %tell(triple(Room, soma:'hasShape', Shape)),
-        %tell(object_dimensions(Room, Width, Depth, 0.6)),
-        %get_urdf_origin(Origin),
-        %tell(is_at(Room, [Origin, [PosX, PosY, 0.0], [0.0, 0.0, 0.0, 1.0]]))
-    %)).
+
+create_room(RoomLink, Room) :-
+    sub_string(RoomLink,_,_,_,"kitchen"),
+    tell(has_type(Room, hsr_rooms:'Kitchen')).
+
+create_room(RoomLink, Room) :-
+    sub_string(RoomLink,_,_,_,"living_room"),
+    tell(has_type(Room, hsr_rooms:'LivingRoom')).
+
+create_room(RoomLink, Room) :-
+    sub_string(RoomLink,_,_,_,"sleeping_room"),
+    tell(has_type(Room, hsr_rooms:'SleepingRoom')).
+
+create_room(RoomLink, Room) :-
+    sub_string(RoomLink,_,_,_,"office"),
+    tell(has_type(Room, hsr_rooms:'Office')).
+
+create_room(RoomLink, Room) :-
+    sub_string(RoomLink,_,_,_,"dining_room"),
+    tell(has_type(Room, hsr_rooms:'DiningRoom')).
+
+create_room(RoomLink, Room) :-
+    sub_string(RoomLink,_,_,_,"hall"),
+    tell(has_type(Room, hsr_rooms:'Hall')).
+
+
+assign_room_points(Room, RoomLink) :-
+    tell(has_type(CenterPoint, knowrob:'Point')),
+    tell(triple(CenterPoint, urdf:'hasURDFName', RoomLink)),
+    tell(has_type(CenterPointLocation, soma:'Location')),
+    tell(triple(CenterPoint, dul:'hasLocation', CenterPointLocation)),
+    tell(triple(CenterPointLocation, knowrob:'isInCenterOf', Room)),
+
+    tell(has_type(CornerPointCollection, dul:'Collection')),
+    get_urdf_id(URDF),
+    urdf_link_child_joints(URDF, RoomLink, CornerJoints),
+    forall(
+    (
+        member(CornerJoint, CornerJoints),
+        urdf_joint_child_link(URDF, CornerJoint, CornerLink)
+    ), 
+    (
+        tell(has_type(CornerPoint, knowrob:'Point')),
+        tell(triple(CornerPoint, urdf:'hasURDFName', CornerLink)),
+        tell(triple(CornerPoint, dul:'isMemberOf', CornerPointCollection))
+    )),
+    tell(has_type(CornerPointLocation, soma:'Location')),
+    tell(triple(CornerPointCollection, dul:'hasLocation', CornerPointLocation)),
+    tell(triple(CornerPointLocation, hsr_rooms:'isInCornerOf', Room)).
+
+
+room_center_point_position(Room, [X, Y, Z]) :-
+    triple(CenterPointLocation, knowrob:'isInCenterOf', Room),
+    has_location(CenterPoint, CenterPointLocation),
+    triple(CenterPoint, urdf:'hasURDFName', RoomLink),
+    get_urdf_origin(Origin),
+    tf_lookup_transform(Origin, RoomLink, pose([X, Y, Z], _)).
+
+
+room_corner_point_positions(Room, Positions) :-
+    once((
+        triple(CornerPointLocation, hsr_rooms:'isInCornerOf', Room),
+        has_location(CornerPointCollection, CornerPointLocation),
+        get_urdf_origin(Origin),
+        findall(Position, 
+        (
+            triple(CornerPoint, dul:'isMemberOf', CornerPointCollection),
+            triple(CornerPoint, urdf:'hasURDFName', CornerLink),
+            tf_lookup_transform(Origin, CornerLink, pose(Position, _))
+        ), 
+        Positions)
+    )).
+
+
+
+%create_rooms :-
+%    get_urdf_id(URDF),
+%    urdf_link_names(URDF, Links),
+%    findall(RoomLink, 
+%    (
+%        member(RoomLink, Links),
+%        sub_string(RoomLink,_,_,_,walls)
+%    ),
+%    RoomLinks),
+%    forall(member(RoomLink2, RoomLinks),
+%    (    
+%        create_room(RoomLink2)
+%    )).
+%
+%    %forall(has_type(Room, hsr_rooms:'Room'), 
+%    %(
+%        %get_room_dimensions(Room, Width, Depth, PosX, PosY),
+%        %tell(has_type(Shape, soma:'Shape')),
+%        %tell(triple(Room, soma:'hasShape', Shape)),
+%        %tell(object_dimensions(Room, Width, Depth, 0.6)),
+%        %get_urdf_origin(Origin),
+%        %tell(is_at(Room, [Origin, [PosX, PosY, 0.0], [0.0, 0.0, 0.0, 1.0]]))
+%    %)).
 
 
 create_room(RoomLink) :-

@@ -1,6 +1,6 @@
 <launch>
   <arg name="urdf_param" default="/hsrb_lab" />
-  <arg name="urdf_launch_file" default="cleanup_movable_doors" />
+  <arg name="urdf_launch_file" default="rooms_test" />
   <arg name="standalone" default="false" />
 
   <!-- The urdf now starts from suturo_bringup except when we start-->
