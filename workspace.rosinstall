@@ -15,8 +15,8 @@
     uri: https://github.com/knowrob/knowrob.git
     version: master
 - git:
-    local-name: rosowl
-    uri: https://github.com/knowrob/rosowl.git
+    local-name: genowl
+    uri: https://github.com/knowrob/genowl.git
     version: master
 - git: 
     local-name: rosprolog
