@@ -83,11 +83,13 @@ object_goal_pose(_, _, "You haven't defined any target surfaces", _) :-
     all_target_surfaces([]),
     roswarn("You haven't defined any target surfaces").
 
-% deprecated. Use object_goal_pose instead.
+
+% TODO Rework the offsets
 object_goal_pose_offset_(Instance, [[XR,YR,ZR], Rotation],Context):-
-    %place_objects,
+    place_objects,
     object_goal_pose(Instance, [[X,Y,Z], Rotation],Context),
     object_dimensions(Instance,_,_,ObjHeight),
     XR is X + 0,
     YR is Y + 0,
     ZR is Z + ObjHeight/2 + 0.07.
+
