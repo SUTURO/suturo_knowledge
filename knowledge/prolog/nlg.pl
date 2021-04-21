@@ -14,9 +14,18 @@ object_tts(ObjID,Name):-
     (rdfs_individual_of(ObjID, ObjClass)
     -> ( rdf_has(ObjClass, 'http://www.semanticweb.org/suturo/ontologies/2020/3/objects#TtSName',_)
         -> rdf_has(ObjClass, 'http://www.semanticweb.org/suturo/ontologies/2020/3/objects#TtSName', Name)
-        ; ros_error("nlg.pl unable to deterimine name"), Name = ObjID
+        ; (
+            ros_warn("nlg.pl unable to deterimine name"), 
+            split_string(ObjID, "#","",L), 
+            nth0(0,L,ObjID)
         )
-    ; ros_error("nlg.pl unable to deterimine name"), Name = ObjID
+    ; (
+        ros_warn("nlg.pl unable to deterimine name"), 
+        split_string(ObjID, "#","",L), 
+        nth0(1,L,A),
+        split_string(A, "_","",B), 
+        nth0(0,B,ObjID)
+      )
     ).
 
 
