@@ -86,7 +86,8 @@ assert_surface_types(SurfaceLink):-
     ;
     ( sub_string(SurfaceLink,_,_,_,bucket) % when the Link has the string bucket in it it is a bucket
     ->tell(triple(SurfaceLink,hsr_objects:'isSurfaceType',bucket))
-    ;tell(triple(SurfaceLink,hsr_objects:'isSurfaceType',other))) % when it's not a shelf/table/bucket')).
+    ;tell(triple(SurfaceLink,hsr_objects:'isSurfaceType',other))) % when it's not a shelf/table/bucket
+    )).
 
 
 %% supporting_surface(?Surface).
