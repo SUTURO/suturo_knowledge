@@ -46,7 +46,7 @@
     load_surfaces_from_param(Param).
 
 :- hsr_lookup_transform('map', 'base_footprint', _, _). % Why does this help with TF erros??
-:- is_at(A,B,C). % Why does this help with TF erros??
+:- is_at(_,_). % Why does this help with TF erros??
 
 :- gripper(Gripper), gripper_init(Gripper).
 
