@@ -9,7 +9,7 @@
 
 :- rdf_db:rdf_register_ns(hsr_objects, 'http://www.semanticweb.org/suturo/ontologies/2020/3/objects#', [keep(true)]).
 :- rdf_db:rdf_register_ns(robocup, 'http://www.semanticweb.org/suturo/ontologies/2020/2/Robocup#', [keep(true)]).
-
+:- use_module(library('ros/marker/marker_plugin'), [republish/0]).
 
 :- rdf_meta
     gripper(+),
@@ -22,7 +22,8 @@
 
 
 gripper(Gripper) :-
-    Gripper = gripper.
+    %Gripper = gripper.
+    Gripper = hand_palm_link.
 
 gripper_init(Gripper) :-
     %rdf_instance_from_class(knowrob:'EnduringThing-Localized', belief_state, Gripper),
@@ -31,8 +32,9 @@ gripper_init(Gripper) :-
 
 
 all_objects_in_gripper(Instances):-
+    gripper(Gripper),
     findall(Instance, (
-        objects_on_surface(Objs, gripper),
+        objects_on_surface(Objs, Gripper),
         member(Instance, Objs)
         ), Instances).
 
@@ -42,14 +44,18 @@ attach_object_to_gripper(Instance) :-
     tell(triple(Instance, hsr_objects:'supportedBy', Gripper)),
     %object_frame_name(Instance, InstanceFrame),
     %object_frame_name(Gripper,GripperFrame),
-    hsr_lookup_transform(Gripper, Instance, PoseTrans, PoseRota),
-    tell(is_at(Instance, [Gripper, PoseTrans, PoseRota])).
+    object_tf_frame(Instance,InstanceFrame),
+    hsr_lookup_transform(Gripper, InstanceFrame, PoseTrans, PoseRota),
+    tell(is_at(Instance, [Gripper, PoseTrans, PoseRota])),
+    republish, republish.
 
 release_object_from_gripper([NewPose,NewRotation]) :-
     gripper(Gripper),
     objects_on_surface(Instances, Gripper),
     member(Instance, Instances),
     %object_frame_name(Instance, InstanceFrame),
-    hsr_belief_at_update(Instance, [map, _, NewPose, NewRotation]),
+    %hsr_belief_at_update(Instance, [map, _, NewPose, NewRotation]),
+    tell(is_at(Instance, ['map', NewPose, NewRotation])),
     place_object(Instance),
-    group_target_objects.
+    group_target_objects,
+    republish, republish.

@@ -29,13 +29,13 @@ def callback(data):
 
         # query = "hsr_lookup_transform('map',[" + str(x) + "," + str(y) + "," + str(z) + "], PoseTrans, _), hsr_existing_object_at_thr(PoseTrans, 0.009, Instance)."
 
-        query = "hsr_existing_object_at_thr([" + str(x) + "," + str(y) + "," + str(z) + "], 0.009, Instance)."
+        # query = "hsr_existing_object_at_thr([" + str(x) + "," + str(y) + "," + str(z) + "], 0.009, Instance)."
 
-        solutions = prolog_client.all_solutions(query)
+        # solutions = prolog_client.all_solutions(query)
 
-        object_id # "http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Other_SJQWTXBE"
-        os.frame_name = solutions[0]['Instance'].split('#')[1] # needs to be "Other_SJQWTXBE"
-        os.object_type  = solutions[0]['Instance'].split('#')[1].split('_')[0] # Other
+        object_id = "http://www.semanticweb.org/suturo/ontologies/2020/3/objects#" + marker.header.frame_id # "http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Other_SJQWTXBE"
+        os.frame_name = marker.header.frame_id # needs to be "Other_SJQWTXBE"
+        os.object_type  = marker.header.frame_id.split('_')[0] # Other
         os.shape = 1  # TODO everything is a cube for now
         os.mesh_path = marker.mesh_resource  # will always be ""
         os.color = marker.color

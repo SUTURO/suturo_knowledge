@@ -26,7 +26,12 @@ object_goal_pose(Instance, [Translation, Rotation], Context) :-
 object_goal_pose(Instance, [Translation, Rotation], Context, RefInstance) :-
     object_goal_surface_(Instance, Surface, Context, RefInstance),
     is_bucket(Surface),
-    surface_pose_in_map(Surface, [Translation, Rotation]),
+    surface_pose_in_map(Surface, [[XWOOffset,Y,Z], Rotation]),
+    X is XWOOffset + 0.10,
+    % X is XWOOffset - 0.05, for 5cm closer to edge
+    % X is XWOOffset + 0.05, for 5cm further away from edge
+    % - 0.15 is the outer edge of the current bucket
+    Translation = [X,Y,Z],
     !.
 
 %% In case a reference group in the shelf is found
@@ -77,7 +82,13 @@ object_goal_pose(_, _, "You haven't defined any target surfaces", _) :-
     all_target_surfaces([]),
     roswarn("You haven't defined any target surfaces").
 
-% deprecated. Use object_goal_pose instead.
-object_goal_pose_offset_(Instance, [[X,Y,Z], Rotation],Context):-
-    %place_objects,
-    object_goal_pose(Instance, [[X,Y,Z], Rotation],Context).
+
+% TODO Rework the offsets
+object_goal_pose_offset_(Instance, [[XR,YR,ZR], Rotation],Context):-
+    place_objects,
+    object_goal_pose(Instance, [[X,Y,Z], Rotation],Context),
+    object_dimensions(Instance,_,_,ObjHeight),
+    XR is X + 0,
+    YR is Y + 0,
+    ZR is Z + ObjHeight/2 + 0.07.
+

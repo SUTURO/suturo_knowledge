@@ -5,6 +5,7 @@
         hsr_existing_object_at/2,
         hsr_existing_object_at_thr/2,
         hsr_existing_object_at_thr/3,
+	object_pose/2,
         surface_pose_in_map/2,
         object_supportable_by_surface/2,
         position_supportable_by_surface/2,
@@ -122,6 +123,10 @@ position_supportable_by_ground([_,_,Z]) :-
     position_supportable_by_ground(Z).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+object_pose(ObjID, ['map',Frame, Point, Rotation]) :-
+    object_tf_frame(ObjID,Frame),
+    hsr_lookup_transform(map, Frame, Point, Rotation).
 
 
 distance_to_robot(Thing, Distance) :-

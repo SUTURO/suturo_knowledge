@@ -13,17 +13,17 @@ find_package(catkin REQUIRED COMPONENTS
   rosprolog
   )
 
-add_message_files(
-   # FILES
-    # DetectedObject.msg
-    )
+# add_message_files(
+#   FILES
+#   DetectedObject.msg
+# )
 
- #generate_messages(
- #  DEPENDENCIES
- #  actionlib_msgs
- #  geometry_msgs
- #  std_msgs
- #)
+# generate_messages(
+#   DEPENDENCIES
+#   actionlib_msgs
+#   geometry_msgs
+#   std_msgs
+#)
 
 include_directories(
 # include
