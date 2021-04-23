@@ -85,5 +85,8 @@ object_frame_name(Object, FrameName) :-
     ;
     FrameName = Object
     ).
+
+has_urdf_name(Object, URDFName) :-
+    triple(Object, urdf:'hasURDFName', URDFName).
     
 

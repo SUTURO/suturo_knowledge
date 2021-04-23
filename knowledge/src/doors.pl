@@ -29,10 +29,138 @@ init_doors :-
         not sub_string(Link,_,_,_,hinge)
     ),
     (
-        tell(has_type(Link, hsr_rooms:'Door')),
-        urdf_link_parent_joint(URDF, Link, DoorJoint),
-        tell(triple(DoorJoint, hsr_rooms:'hasJointState', 0.0))
+        create_door(Link, Door),
+        create_door_joint(Door, Link),
+        create_door_hinge(Door, Link),
+        create_door_handles(Door, Link),
+        assign_connecting_rooms(Door, Link)
     )).
+
+
+create_door(DoorLink, Door) :-
+    tell(has_type(Door, hsr_rooms:'Door')),
+    tell(triple(Door, urdf:'hasURDFName', DoorLink)),
+
+
+create_door_joint(Door, DoorLink) :-
+    get_urdf_id(URDF),
+    urdf_link_parent_joint(URDF, DoorLink, DoorJointName),
+    tell(has_type(DoorJoint, soma:'Joint')),
+    tell(triple(DoorJoint, urdf:'hasURDFName', DoorJointName)),
+    tell(has_type(DoorJointState, soma:'JointState')),
+    tell(triple(DoorJoint, soma:'hasJointPosition', DoorJointState)),
+    tell(triple(DoorJointState, soma:'hasJointPosition', 0.0)).
+
+
+create_door_hinge(Door, DoorLink) :-
+    get_urdf_id(URDF),
+    urdf_link_parent_joint(URDF, Door, HingeJointName),
+    urdf_joint_parent_link(URDF, HingeJoint, HingeLink).
+    tell(has_type(Hinge, hsr_rooms:'Hinge')),
+    tell(triple(Hinge, urdf:'hasURDFName', HingeLink)),
+    tell(has_type(HingeJoint, urdf:'HingeJoint')),
+    tell(triple(HingeJoint, urdf:'hasURDFName', HingeJointName)),
+    tell(triple(Door, knowrob:'doorHingedTo', Hinge)).
+
+
+create_door_handles(Door, DoorLink) :-
+    get_urdf_id(URDF),
+    urdf_link_child_joints(URDF, DoorLink, ChildJoints),
+    forall(member(ChildJoint, ChildJoints),
+    (
+        urdf_joint_child_link(URDF, ChildJoint, DoorHandleLink),
+        tell(has_type(DoorHandle, hsr_rooms:'DoorHandle')),
+        tell(has_urdf_name(DoorHandle, DoorHandleLink)),
+        (sub_string(DoorHandleLink,_,_,_,"inside")
+        ->
+        (
+            tell(has_type(InsideHandleLocation, soma:'Location')),
+            tell(has_location(DoorHandle, InsideHandleLocation)),
+            tell(triple(InsideHandleLocation, soma:'isInsideOf', Door))
+        );
+        (
+            tell(has_type(OutsideHandleLocation, soma:'Location')),
+            tell(has_location(DoorHandle, OutsideHandleLocation)),
+            tell(triple(OutsideHandleLocation, hsr_rooms:'isOutsideOf', Door))
+        ))
+    )).
+    
+
+create_passage(Passage, PassageLink) :-
+    tell(has_type(Passage, hsr_rooms:'Passage')),
+    tell(triple(Passage, urdf:'hasURDFName', PassageLink)).
+
+
+assign_connecting_rooms(RoomLinkage, RoomLinkageLink) :-
+    split_string(RoomLinkageLink, "_", "", [_,ExpRoom1Link, ExpRoom2Link, _]),
+    has_type(Room1, hsr_rooms:'Room'),
+    has_type(Room2, hsr_rooms:'Room'),
+    urdf_room_center_link(Room1, ActRoom1Link),
+    urdf_room_center_link(Room2, ActRoom2Link),
+    sub_string(ActRoom1Link,_,_,_,ExpRoom1Link),
+    sub_string(ActRoom2Link,_,_,_,ExpRoom2Link),
+    tell(has_type(Location, soma:'Location')),
+    tell(triple(Location, soma:'isLinkedTo', Room1)),
+    tell(triple(Location, soma:'isLinkedTo', Room2)),
+    tell(triple(RoomLinkage, dul:'has_location', Location)).
+
+
+perceiving_pose_of_door(Door, Pose) :-
+    get_urdf_id(URDF),
+    get_urdf_origin(Origin),
+    triple(Door, urdf:'hasURDFName', DoorLink),
+    urdf_link_collision_shape(URDF, DoorLink, box(Width, _, _), _),
+    tf_transform_point(DoorLink, Origin, [0, Width/2, 0], [NewX, NewY, _]),
+    Offset is Width + 0.2,
+    Position = [NewX+Offset, NewY, 0.0],
+    tf_lookup_transform('base_footprint', DoorLink, pose([X, _, _], _)),
+    tf_lookup_transform(Origin, DoorLink, pose(_, Rotation)),
+    ((X < 0)
+    -> 
+    (
+        Pose = [Position, Rotation]
+    );
+    (
+        rotation_opposite_to_door(Door, NewRotation),
+        Pose = [Position, NewRotation]
+    ).
+
+
+manipulating_pose_of_door(Door, Pose) :-
+    get_urdf_origin(Origin),
+    has_urdf_name(Door, DoorLink),
+    tf_lookup_transform('base_footprint', DoorLink, pose([X, _, _], _)),
+    tf_lookup_transform(Origin, DoorLink, pose(_, Rotation)),
+    ((X < 0)
+    -> 
+    (
+        outside_door_handle(Door, OutsideDoorHandle),
+        has_urdf_name(OutsideDoorHandle, OutsideDoorHandleLink)
+        tf_lookup_transform(Origin, OutsideDoorHandleLink, pose([X, Y, _], _)),
+        Pose = [[X-1.2, Y, 0.0], Rotation]
+    );
+    (
+        inside_door_handle(Doo, InsideDoorHandle),
+        has_urdf_name(InsideDoorHandle, InsideDoorHandleLink),
+        tf_lookup_transform(Origin, InsideDoorHandleLink, pose([X, Y, _], _)),
+        rotation_opposite_to_door(Door, OppositeRotation),
+        Pose = [[X+1.2, Y, 0.0], OppositeRotation]
+    )).
+
+
+rotation_aligned_with_door(Door, Rotation) :-
+    get_urdf_origin(Origin),
+    has_urdf_name(Door, DoorLink),
+    tf_lookup_transform(Origin, DoorLink, pose(_, Rotation)).
+
+
+rotation_opposite_to_door(Door, Rotation) :-    
+    get_urdf_origin(Origin),
+    has_urdf_name(Door, DoorLink),
+    tf_lookup_transform(Origin, DoorLink, pose(_, DoorRotation)),
+    Angle is 0.5 * pi
+    angle_to_quaternion(Angle, DeltaRotation),
+    tf_transform_quaternion(DoorLink, Origin, DeltaRotation, Rotation).
 
 
 %% update_door_state(Door, Angle)
@@ -85,6 +213,12 @@ rotate_door_by_angle(Door, DoorHinge, Angle) :-
     tf_lookup_transform(Door, DoorHinge, pose(CurrentPos, _)),
     tf_transform_quaternion(DoorHinge, Door, Rotation, NewRotation),
     tell(is_at(Door, [DoorHinge, CurrentPos, NewRotation])).
+
+
+angle_to_quaternion(Angle, Quaternion) :-
+    C is cos(Angle/2),
+    S is sin(Angle/2),
+    Quaternion = [0.0, 0.0, S, C].
 
 
 
@@ -162,11 +296,16 @@ get_all_door_states(DoorStates) :-
     ).
 
 
+door_hinge(Door, Hinge) :-
+    triple(Door, urdf:'doorHingedTo', Hinge).
 
-get_door_hinge(Door, Hinge) :-
-    get_urdf_id(URDF),
-    urdf_link_parent_joint(URDF, Door, HingeJoint),
-    urdf_joint_parent_link(URDF, HingeJoint, Hinge).
+inside_door_handle(Door, DoorHandle) :-
+    triple(Location, soma:'isInsideOf', Door),
+    has_location(DoorHandle, Location).
+
+outside_door_handle(Door, DoorHandle) :-
+    triple(Location, hsr_rooms:'isOutsideOf', Door),
+    has_location(DoorHandle, Location).
 
 
 %% is_valid_joint_state(DoorJoint, JointState)

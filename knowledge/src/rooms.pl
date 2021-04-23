@@ -1,6 +1,6 @@
 :- module(rooms,
     [
-        create_rooms/0,
+        init_rooms/0,
         object_instance_in_room/3,
         object_class_in_room/3,
         are_orthogonal_walls/2,
@@ -8,8 +8,9 @@
         get_room_dimensions/5,
         in_room/2,
         all_rooms_of_type/2,
-        room_center_point_position/2,
-        room_corner_point_positions/2
+        room_center_point_position/3,
+        room_corner_point_positions/2,
+        urdf_room_center_link/2
     ]).
 
 
@@ -20,7 +21,7 @@
     min_door_joint_angle(?).
 
 
-create_rooms :-
+init_rooms :-
     get_urdf_id(URDF),
     urdf_link_names(URDF, Links),
     findall(RoomLink,
@@ -41,11 +42,11 @@ create_room(RoomLink, Room) :-
     tell(has_type(Room, hsr_rooms:'Kitchen')).
 
 create_room(RoomLink, Room) :-
-    sub_string(RoomLink,_,_,_,"living_room"),
+    sub_string(RoomLink,_,_,_,"livingroom"),
     tell(has_type(Room, hsr_rooms:'LivingRoom')).
 
 create_room(RoomLink, Room) :-
-    sub_string(RoomLink,_,_,_,"sleeping_room"),
+    sub_string(RoomLink,_,_,_,"sleepingroom"),
     tell(has_type(Room, hsr_rooms:'SleepingRoom')).
 
 create_room(RoomLink, Room) :-
@@ -53,7 +54,7 @@ create_room(RoomLink, Room) :-
     tell(has_type(Room, hsr_rooms:'Office')).
 
 create_room(RoomLink, Room) :-
-    sub_string(RoomLink,_,_,_,"dining_room"),
+    sub_string(RoomLink,_,_,_,"diningroom"),
     tell(has_type(Room, hsr_rooms:'DiningRoom')).
 
 create_room(RoomLink, Room) :-
@@ -86,7 +87,7 @@ assign_room_points(Room, RoomLink) :-
     tell(triple(CornerPointLocation, hsr_rooms:'isInCornerOf', Room)).
 
 
-room_center_point_position(Room, [X, Y, Z]) :-
+room_center_point_position(Room, RoomLink, [X, Y, Z]) :-
     triple(CenterPointLocation, knowrob:'isInCenterOf', Room),
     has_location(CenterPoint, CenterPointLocation),
     triple(CenterPoint, urdf:'hasURDFName', RoomLink),
@@ -108,6 +109,10 @@ room_corner_point_positions(Room, Positions) :-
         Positions)
     )).
 
+urdf_room_center_link(Room, RoomLink) :-
+    triple(CenterPointLocation, knowrob:'isInCenterOf', Room),
+    has_location(CenterPoint, CenterPointLocation),
+    triple(CenterPoint, urdf:'hasURDFName', RoomLink).
 
 
 %create_rooms :-
