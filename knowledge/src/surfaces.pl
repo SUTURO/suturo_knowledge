@@ -483,7 +483,7 @@ all_objects_in_gripper(Instances):-
         ), Instances).
 
 is_legal_obj_position([X,Y,Z]) :-
-    position_supportable_by_surface([X,Y,Z], _).
+    position_supportable_by_surface([X,Y,Z], _). % call from store_obj_info_server
 
 
 /**

@@ -1,31 +1,34 @@
 :- begin_tests('spatial_comp').
 
-:- use_module(library('semweb/rdf_db')).
-:- use_module(library('semweb/rdfs')).
-:- use_module(library('db/tripledb')).
-:- use_module(library('knowrob')).
 
-:- use_module(library('config')).
-:- use_module(library('pickup')).
-:- use_module(library('object_state')).
-:- use_module(library('beliefstate')).
-:- use_module(library('surfaces')).
-:- use_module(library('assignplaces')).
-
-:- include(spatial_comp).
-
-%%% SETUP PREDICATES %%%%%%%%
+:- use_module(library('test')).
+:- use_module(library('urdf')).
 
 
+:- use_module('spatial_comp.pl').
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%% ACTUAL TESTS %%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+:- setup_suturo_test_env.
+:- setup_suturo_test_surfaces.
+:- setup_suturo_test_objects.
 
 
-test(quaternionEuler) :-
-	quaternion_to_euler([0,0,0,1],[0.0,0.0,0.0]).
-	%quaternion_to_euler([ 0.0002561, 1, 0.0001707, 0.0000427 ], [ 3.1412512, 0.0000853, 3.1410805 ]).
+test(surface_pose_in_map_with_surface_table) :-
+	surface_pose_in_map('table_center', [Position, Rotation]),
+	tf_lookup_transform('map', 'table_front_edge_center', pose(ExpPosition, ExpRotation)),
+	assert_true(Position == ExpPosition),
+	assert_true(Rotation == ExpRotation).
 
+test(surface_pose_in_map_with_surface_shelf) :-
+	surface_pose_in_map('bookshelf_floor_1_piece', [Position, Rotation]),
+	tf_lookup_transform('map', 'bookshelf_floor_1_piece', pose(ExpPosition, ExpRotation)),
+	assert_true(Position == ExpPosition),
+	assert_true(Rotation == ExpRotation).
+
+test(surface_pose_in_map_with_surface_bucket) :-
+	surface_pose_in_map('bucket_center', [Position, Rotation]),
+	tf_lookup_transform('map', 'bucket_surface_center', pose(ExpPosition, ExpRotation)),
+	assert_true(Position == ExpPosition),
+	assert_true(Rotation == ExpRotation).
+	
 
 :- end_tests(spatial_comp).

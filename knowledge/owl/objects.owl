@@ -19,6 +19,23 @@
     <!-- 
     ///////////////////////////////////////////////////////////////////////////////////////
     //
+    // Annotation properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#TtSName -->
+
+    <owl:AnnotationProperty rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#TtSName"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
     // Object Properties
     //
     ///////////////////////////////////////////////////////////////////////////////////////
@@ -941,6 +958,7 @@
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Cokecan">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#SodaCan"/>
+        <TtSName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">the coke can</TtSName>
     </owl:Class>
     
 
@@ -953,10 +971,11 @@
     
 
 
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Comdocappuccinoclassico -->
+    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Combocappuccinoclassico -->
 
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Comdocappuccinoclassico">
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Combocappuccinoclassico">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Coffee"/>
+        <TtSName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">the combo cappuccino powder</TtSName>
     </owl:Class>
     
 
@@ -1001,6 +1020,7 @@
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Contactsoftwareenergydrink">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#EnergyDrink"/>
+        <TtSName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">the energy drink</TtSName>
     </owl:Class>
     
 
@@ -1183,6 +1203,7 @@
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Elbrygcoffee">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Coffee"/>
+        <TtSName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">the coffee powder</TtSName>
     </owl:Class>
     
 
@@ -1762,6 +1783,7 @@
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#MagicoKaffetypFamilyCappuccino">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Coffee"/>
+        <TtSName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">the magico cappuccino powder</TtSName>
     </owl:Class>
     
 
@@ -1957,6 +1979,7 @@
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Orangesoda">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#SodaCan"/>
+        <TtSName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">the orange soda can</TtSName>
     </owl:Class>
     
 
@@ -2119,6 +2142,7 @@
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#PringlesOriginal">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Pringles"/>
+        <TtSName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">the pringles originals can</TtSName>
     </owl:Class>
     
 
@@ -2127,6 +2151,7 @@
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#PringlesPaprika">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Pringles"/>
+        <TtSName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">the pringles paprika</TtSName>
     </owl:Class>
     
 
@@ -2135,6 +2160,7 @@
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#PringlesSalt">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Pringles"/>
+        <TtSName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">the can of salted pringles</TtSName>
     </owl:Class>
     
 
@@ -2143,6 +2169,7 @@
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#PringlesSaltVinegar">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Pringles"/>
+        <TtSName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">the can of Pringles salt and vinegar</TtSName>
     </owl:Class>
     
 
@@ -2159,6 +2186,7 @@
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#PringlesYellow">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Pringles"/>
+        <TtSName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">the yellow pringles can</TtSName>
     </owl:Class>
     
 
@@ -2581,6 +2609,7 @@
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#TomatoAlGustoBasilikum">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Pesto"/>
+        <TtSName>the tomato pesto</TtSName>
     </owl:Class>
     
 

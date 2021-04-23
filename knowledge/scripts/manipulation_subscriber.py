@@ -32,7 +32,7 @@ def callback(data):
 
 
 def listener():
-    rospy.init_node('manipulation_listener', anonymous=True)
+    rospy.init_node('manipulation_subscriber', anonymous=True)
 
     rospy.Subscriber("object_in_gripper", ObjectInGripper, callback)
     rospy.spin()

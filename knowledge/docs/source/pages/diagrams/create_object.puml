@@ -1,0 +1,75 @@
+@startuml
+' ====================> Start
+skinparam participant{
+BackGroundColor white
+}
+skinparam collections{
+BackGroundColor white
+}
+skinparam control{
+BackGroundColor white
+}
+<style>
+
+' scope to sequenceDiagram elements
+sequenceDiagram {
+' define a new style, using CSS class syntax
+
+.number1 {
+RoundCorner 20
+}
+
+skinparam control{
+BackGroundColor white
+}
+
+}
+
+</style>
+
+' -------------------- Diagram
+participant object_state.pl
+collections knowrob
+database mongo_triple_store #darkgrey
+control rosprolog_node
+box Topics #lightgrey
+participant tf <<number1>>
+participant visualization_marker <<number1>>
+endbox
+' -------------------- Connections
+object_state.pl ++
+object_state.pl -> object_state.pl : **object_size_ok()**
+group #lightgrey Object validation
+object_state.pl -[#blue]> object_state.pl : **validate_confidence()**\nTypeConf <<
+object_state.pl -[#blue]> object_state.pl : **validate_confidence()**\nShapeConf <<
+object_state.pl -[#blue]> object_state.pl : **validate_confidence()**\nColorConf <<
+object_state.pl -[#blue]> object_state.pl : **object_type_handling()**\nObjectType <<
+object_state.pl -[#blue]> object_state.pl : **random_(), atom_concat()**\nObjID <<
+end
+
+group #lightgrey Object creation 28x ObjID / ShapeID / ShapeRegion / NamedIndividual
+object_state.pl --[#orange]> knowrob ++ : **tell(has_type(ObjId, ObjectType))**
+object_state.pl --
+knowrob --[#orange]> mongo_triple_store ++ : **new** triple(S,P,O)
+mongo_triple_store --
+knowrob --
+end
+
+object_state.pl --> knowrob ++ : **is_at(ObjID,Transform)**
+knowrob --> rosprolog_node ++
+rosprolog_node --[#orange]> tf ++ : **msg: object**
+rosprolog_node --
+tf --
+knowrob --
+
+object_state.pl --> knowrob ++ : **republish()**
+knowrob --> rosprolog_node ++
+rosprolog_node --[#orange]> visualization_marker ++ : **msg: marker_array_msg**
+rosprolog_node --
+tf --
+knowrob --
+
+' -------------------- Notes
+
+' ====================> End
+@enduml

@@ -11,6 +11,8 @@
       group_objects_at/1,
       group_objects/1,
       group_mean_pose/3,
+      same_color/2,
+      same_size/2,
       % Placing Objects
       assert_object_supposed_surface/1,
       object_goal_surface_/4,
@@ -210,9 +212,10 @@ most_related_object(Source, Target):-
 
 
 most_related_class(Source, Target, Distance) :-
-    findall(Dist, distance_to_object(Source, _, Dist), Distances),
-    min_member(Distance, Distances),
-    distance_to_object(Source, Target, Distance).
+    %findall([Dist, T], distance_to_object(Source, T, Dist), Distances),
+    findnsols(20, [Dist, T], distance_to_object(Source, T, Dist), Distances),
+    min_member([Distance, Target], Distances).
+    %distance_to_object(Source, Target, Distance).
 
 distance_to_object(Source, Target, Distance) :-
     all_objects_on_target_surfaces(Objs),
@@ -221,6 +224,7 @@ distance_to_object(Source, Target, Distance) :-
     has_type(Target, TargetType),
     has_type(Source, SourceType),
     distance_of(SourceType, TargetType, Distance).
+    %distance_of(SourceType, TargetType, Distance).
 
 % in case Source and Target are of the same class,
 % rdf_shortest_path/3 would return 3 instead of 1. 
@@ -232,7 +236,36 @@ distance_of(SourceType, TargetType, Distance) :-
 % Returns the logical distance between two classes.
 distance_of(SourceType, TargetType, Distance) :-
     not(same_as(SourceType, TargetType)),
-    rdf_shortest_path(SourceType, TargetType, Distance).
+    transitive(subclass_of(SourceType, Step)), 
+    transitive(subclass_of(TargetType, Step)),
+    transitive(subclass_of(Step, dul:'PhysicalObject')),
+    path_up(SourceType, Step, DistUp),
+    path_down(Step, TargetType, DistDown),
+    Distance is DistUp + DistDown.
+    %rdf_shortest_path(SourceType, TargetType, Distance).
+
+
+path_up(SourceType, TargetType, Distance) :-
+    (same_as(SourceType, TargetType)
+    -> Distance = 1
+    ;
+    (    
+        subclass_of(SourceType, Step),
+        path_up(Step, TargetType, CurrentDistance),
+        Distance is CurrentDistance + 1
+    )).
+
+
+path_down(SourceType, TargetType, Distance) :-
+    (same_as(SourceType, TargetType)
+    -> Distance = 1
+    ;
+    (
+        subclass_of(Step, SourceType),
+        path_down(Step, TargetType, CurrentDistance),
+        Distance is CurrentDistance + 1
+    )).
+
 
 same_color(Source, Target):-
     all_objects_on_target_surfaces(Objects),
@@ -291,10 +324,9 @@ objects_on_same_surface_in_future(Surface, OtherObjects) :-
     findall(Obj,
     (
         member(Obj, SourceObjects),
-        object_most_similar_surface(Obj, Surface)
+        object_most_similar_surface(Obj, SurfaceX)
     ),
         FutureObjects),
-
     append(AlreadyPlacedObjects, FutureObjects, OtherObjectsUnsorted),
     predsort(compareLogicalDistances, OtherObjectsUnsorted, OtherObjects).
 
@@ -357,7 +389,7 @@ next_empty_surface(Surface) :-
     next_empty_surface_(SortedSurfaces, Surface).
 
 next_empty_surface(Surface) :- %% to do
-    roswarn("There is no free surface left"),
+    ros_warn("There is no free surface left"),
     Surface=error.
 
 next_empty_surface_(Surfaces, Surface) :-
