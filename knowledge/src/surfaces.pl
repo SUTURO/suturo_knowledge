@@ -12,6 +12,7 @@
     is_table/1,
     is_bucket/1,
     is_shelf/1,
+    is_other/1,
     all_source_surfaces/1,
     all_target_surfaces/1,
     ground_surface/1,
@@ -39,8 +40,7 @@
     all_objects_on_ground/1,
     all_objects_in_whole_shelf_/1, % will soon be deprecated
     all_objects_on_tables_/1,
-    all_objects_in_buckets/1,
-    all_objects_on_table/1, % DEPRECATED! Use only for backward compatibility reasons
+    all_objects_in_buckets/1,    
     %% CREATE OBJECT
     place_object/1,
     %% ROLES
@@ -78,13 +78,13 @@
 assert_surface_types(SurfaceLink):-
     tell(triple(ground,hsr_objects:'isSurfaceType',ground)),
     supporting_surface(SurfaceLink), % Checks if the Collision is big enough to be a surface
-    ( sub_string(SurfaceLink,_,_,_,shelf) % when the Link has the string shelf in it it is a shelf
+    ( sub_string(SurfaceLink,_,_,_,'_shelf_') % when the Link has the string shelf in it it is a shelf
     ->tell(triple(SurfaceLink,hsr_objects:'isSurfaceType',shelf))
     ;
-    ( sub_string(SurfaceLink,_,_,_,table) % when the Link has the string table in it it is a table
+    ( sub_string(SurfaceLink,_,_,_,'_table_') % when the Link has the string table in it it is a table
     ->tell(triple(SurfaceLink,hsr_objects:'isSurfaceType',table))
     ;
-    ( sub_string(SurfaceLink,_,_,_,bucket) % when the Link has the string bucket in it it is a bucket
+    ( sub_string(SurfaceLink,_,_,_,'_bucket_') % when the Link has the string bucket in it it is a bucket
     ->tell(triple(SurfaceLink,hsr_objects:'isSurfaceType',bucket))
     ;tell(triple(SurfaceLink,hsr_objects:'isSurfaceType',other))) % when it's not a shelf/table/bucket
     )).
@@ -128,16 +128,17 @@ is_surface(Surface) :-
     member(Surface, Surfaces).
 
 is_table(Table) :-
-    table_surfaces(Tables),
-    member(Table, Tables).
+    ask(triple(Other,hsr_objects:'isSurfaceType',table)).
 
 is_shelf(Shelf) :-
-    shelf_surfaces(Shelves),
-    member(Shelf, Shelves).
+    ask(triple(Other,hsr_objects:'isSurfaceType',shelf)).
 
 is_bucket(Bucket) :-
-    bucket_surfaces(Buckets),
-    member(Bucket, Buckets).
+    ask(triple(Other,hsr_objects:'isSurfaceType',bucket)).
+
+is_other(Other) :-
+    ask(triple(Other,hsr_objects:'isSurfaceType',other)).
+
 
 /**
 *****************************************FIND SURFACES******************************************************
@@ -176,35 +177,17 @@ ground_surface(GroundSurface):-
     GroundSurface = ground.
 
 
-shelf_surfaces(ShelfLinks):-
-    findall(ShelfLink, triple(ShelfLink, hsr_objects:'isSurfaceType',shelf),ShelfLinks).
-
-
-big_shelf_surfaces(ShelfLinks) :- % has not been tested yet.
-    findall(ShelfLink,
-    (
-        triple(ShelfLink, hsr_objects:'isSurfaceType',shelf),
-        not(sub_string(ShelfLink,_,_,_,small))
-    ),
-    ShelfLinks).
-
-
-% Deprecated
-shelf_floor_at_height(Height, TargetShelfLink) :- % has not been tested yet.
-    findall(ShelfFloorLink, (
-        big_shelf_surfaces(AllFloorsLinks),
-        member(ShelfFloorLink, AllFloorsLinks),
-        surface_pose_in_map(ShelfFloorLink, [[_,_,Z],_]),
-        Z < Height
-    ), ShelfFloorsLinks),
-    reverse(ShelfFloorsLinks, [TargetShelfLink|_]).
-
-
 table_surfaces(TableLinks):-
-    findall(TableLink, triple(TableLink, hsr_objects:'isSurfaceType',table), TableLinks).
+    findall(TableLink, ask(triple(TableLink, hsr_objects:'isSurfaceType',table)), TableLinks).
 
 bucket_surfaces(BucketLinks):-
-    findall(BucketLink, triple(BucketLink, hsr_objects:'isSurfaceType',bucket), BucketLinks).
+    findall(BucketLink, ask(triple(BucketLink, hsr_objects:'isSurfaceType',bucket)), BucketLinks).
+
+shelf_surfaces(ShelfLinks):-
+    findall(ShelfLink, ask(triple(ShelfLink, hsr_objects:'isSurfaceType',shelf)),ShelfLinks).
+
+other_surfaces(OtherLinks):-
+    findall(OtherLinks, ask(triple(OtherLinks, hsr_objects:'isSurfaceType',other)),OtherLinks).
 
 find_supporting_surface(Object, Surface) :-
     triple(Object, hsr_objects:'supportedBy', Surface).
