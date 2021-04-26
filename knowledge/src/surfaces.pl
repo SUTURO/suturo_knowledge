@@ -32,7 +32,7 @@
     compareDistances/3,
     %% FIND OBJs
     objects_on_surface/2,
-    is_object/1,
+    hsr_is_object/1,
     objects_on_list_of_surfaces/2,
     all_objects_on_source_surfaces/1,
     all_objects_on_target_surfaces/1,
@@ -191,7 +191,7 @@ other_surfaces(OtherLinks):-
 find_supporting_surface(Object, Surface) :-
     triple(Object, hsr_objects:'supportedBy', Surface).
 
-is_object(Object) :-
+hsr_is_object(Object) :-
     hsr_existing_objects(Objects),
     member(Object, Objects).
 
