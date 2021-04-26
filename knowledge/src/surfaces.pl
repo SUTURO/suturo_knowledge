@@ -17,10 +17,9 @@
     all_target_surfaces/1,
     ground_surface/1,
     shelf_surfaces/1, 
-    big_shelf_surfaces/1, % will soon be deprecated
-    shelf_floor_at_height/2, % will soon be deprecated
     table_surfaces/1, 
     bucket_surfaces/1,
+    other_surfaces/1,
     is_legal_obj_position/1,
     find_supporting_surface/2,
     % Get poses 
@@ -128,13 +127,13 @@ is_surface(Surface) :-
     member(Surface, Surfaces).
 
 is_table(Table) :-
-    ask(triple(Other,hsr_objects:'isSurfaceType',table)).
+    ask(triple(Table,hsr_objects:'isSurfaceType',table)).
 
 is_shelf(Shelf) :-
-    ask(triple(Other,hsr_objects:'isSurfaceType',shelf)).
+    ask(triple(Shelf,hsr_objects:'isSurfaceType',shelf)).
 
 is_bucket(Bucket) :-
-    ask(triple(Other,hsr_objects:'isSurfaceType',bucket)).
+    ask(triple(Bucket,hsr_objects:'isSurfaceType',bucket)).
 
 is_other(Other) :-
     ask(triple(Other,hsr_objects:'isSurfaceType',other)).
