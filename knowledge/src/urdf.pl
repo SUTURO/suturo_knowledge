@@ -61,19 +61,10 @@ surface_front_edge_center_frame(Surface, FrontEdgeCenterFrame) :- % in case it's
     %surface_frame_with_prefix_(Surface, FrontEdgeCenterFrame).
 
 surface_front_edge_center_frame(Surface, FrontEdgeCenterFrame) :- % in case it's a Table or a Bucket
-    sub_atom(Surface, 0, _, 7, Name), % cuts away the Suffix "_center" (the last 7 letters)
-    %urdf_surface_prefix(Prefix), % /kitchen_desciption
-    %atom_concat(Prefix, Name, Part1), % results in /kitchen_desciption/table_1
-    surface_suffix(Surface, Suffix), % front_edge_center for tables / surface_center for bucket
-    atom_concat(Name, Suffix, FrontEdgeCenterFrame). % /kitchen_desciption/table_1_front_edge_center
+    is_table(Surface); is_bucket(Surface),
+    sub_atom(Surface, 0, _, 7, Name), % cuts away the Postfix "_center" (the last 7 letters)
+    atom_concat(Name, '_front_edge_center', FrontEdgeCenterFrame).
 
-surface_suffix(Surface, Suffix) :-
-    is_table(Surface),
-    Suffix = "_front_edge_center".
-
-surface_suffix(Surface, Suffix) :-
-    is_bucket(Surface),
-    Suffix = "_surface_center".
     
 surface_frame_add_prefix_(SurfaceName, Surface_with_Prefix) :-
     urdf_surface_prefix(Prefix),
