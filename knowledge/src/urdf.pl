@@ -5,6 +5,7 @@
         surface_tf_frame/2,
         surface_frame_add_prefix_/2,
         surface_front_edge_center_frame/2,
+        surface_front_edge_center_pose/2,
         surface_dimensions/4,
         object_tf_frame/2
     ]).
@@ -55,14 +56,21 @@ object_tf_frame(Object, Frame) :-
     Frame = Object
     ).
 
+surface_front_edge_center_pose(Surface,[Trans,Rot]):-
+    surface_front_edge_center_frame(Surface, FrontEdgeCenterFrame),
+    tf_lookup_transform('map', FrontEdgeCenterFrame, pose(Trans,Rot)).
+
+
 surface_front_edge_center_frame(Surface, FrontEdgeCenterFrame) :- % in case it's a Shelf
     is_shelf(Surface),
     FrontEdgeCenterFrame = Surface.
     %surface_frame_with_prefix_(Surface, FrontEdgeCenterFrame).
 
 surface_front_edge_center_frame(Surface, FrontEdgeCenterFrame) :- % in case it's a Table or a Bucket
-    is_table(Surface); is_bucket(Surface),
-    sub_atom(Surface, 0, _, 7, Name), % cuts away the Postfix "_center" (the last 7 letters)
+    (is_table(Surface); is_bucket(Surface)),
+    atom_length(Surface,L),
+    C is L - 7,
+    sub_atom(Surface, 0, C, _, Name), % cuts away the Postfix "_center" (the last 7 letters)
     atom_concat(Name, '_front_edge_center', FrontEdgeCenterFrame).
 
     
