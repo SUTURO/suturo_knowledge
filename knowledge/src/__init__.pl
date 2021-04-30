@@ -25,10 +25,11 @@
 :- use_module(library('doors')).
 :- use_module(library('export')).
 :- use_module(library('nlg')).
+:- use_module(library('algebra')).
+:- use_module(library('algorithms')).
 
 :- ros_package_iri(knowledge, 'package://knowledge/owl/objects.owl').
 :- ros_package_iri(knowledge, 'package://knowledge/owl/rooms.owl').
-:- ros_package_iri(knowledge, 'package://knowledge/owl/maps/arena_sydney19.owl').
 :- ros_package_iri(knowledge, 'package://knowledge/owl/locations.owl').
 
 :- tripledb_load(
@@ -47,10 +48,6 @@
 	[ namespace(hsr_rooms, 'http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#')
 	]).
 :- tripledb_load(
-	'package://knowledge/owl/maps/arena_sydney19.owl',
-	[ namespace(hsr_map, 'http://www.semanticweb.org/suturo/ontologies/2021/2/arena_sydney19#')
-	]).
-:- tripledb_load(
 	'package://knowledge/owl/locations.owl',
 	[ namespace(hsr_locations, 'http://www.semanticweb.org/suturo/ontologies/2021/0/locations#')
 	]).
@@ -66,6 +63,6 @@
 
 :- gripper(Gripper), gripper_init(Gripper).
 
-:- init_doors.
+%:- init_doors.
 
 

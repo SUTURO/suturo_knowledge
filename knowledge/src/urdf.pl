@@ -6,7 +6,8 @@
         surface_frame_add_prefix_/2,
         surface_front_edge_center_frame/2,
         surface_dimensions/4,
-        object_tf_frame/2
+        object_tf_frame/2,
+        has_urdf_name/2
     ]).
 
 

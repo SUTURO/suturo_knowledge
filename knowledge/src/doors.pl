@@ -1,12 +1,17 @@
 :- module(doors,
     [
         init_doors/0,
+        init_door_paths/0,
         update_door_state/2,
         update_door_state_dynamic/2,
         update_door_state_measurement/3,
         get_door_state/2,
         get_all_door_states/1,
-        get_angle_to_open_door/2
+        get_angle_to_open_door/2,
+        perceiving_pose_of_door/2,
+        manipulating_pose_of_door/2,
+        passing_pose_of_door/2,
+        shortest_path_between_rooms/3
     ]).
 
 :- rdf_db:rdf_register_ns(hsr_rooms, 'http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#', [keep(true)]).
@@ -24,9 +29,7 @@ init_doors :-
     forall(
     (
         member(Link, Links),
-        sub_string(Link,_,_,_,door), 
-        not sub_string(Link,_,_,_,handle), 
-        not sub_string(Link,_,_,_,hinge)
+        sub_string(Link,_,_,_,door_center)
     ),
     (
         create_door(Link, Door),
@@ -39,7 +42,7 @@ init_doors :-
 
 create_door(DoorLink, Door) :-
     tell(has_type(Door, hsr_rooms:'Door')),
-    tell(triple(Door, urdf:'hasURDFName', DoorLink)),
+    tell(triple(Door, urdf:'hasURDFName', DoorLink)).
 
 
 create_door_joint(Door, DoorLink) :-
@@ -48,14 +51,14 @@ create_door_joint(Door, DoorLink) :-
     tell(has_type(DoorJoint, soma:'Joint')),
     tell(triple(DoorJoint, urdf:'hasURDFName', DoorJointName)),
     tell(has_type(DoorJointState, soma:'JointState')),
-    tell(triple(DoorJoint, soma:'hasJointPosition', DoorJointState)),
+    tell(triple(DoorJoint, soma:'hasJointState', DoorJointState)),
     tell(triple(DoorJointState, soma:'hasJointPosition', 0.0)).
 
 
 create_door_hinge(Door, DoorLink) :-
     get_urdf_id(URDF),
-    urdf_link_parent_joint(URDF, Door, HingeJointName),
-    urdf_joint_parent_link(URDF, HingeJoint, HingeLink).
+    urdf_link_parent_joint(URDF, DoorLink, HingeJointName),
+    urdf_joint_parent_link(URDF, HingeJointName, HingeLink),
     tell(has_type(Hinge, hsr_rooms:'Hinge')),
     tell(triple(Hinge, urdf:'hasURDFName', HingeLink)),
     tell(has_type(HingeJoint, urdf:'HingeJoint')),
@@ -70,8 +73,8 @@ create_door_handles(Door, DoorLink) :-
     (
         urdf_joint_child_link(URDF, ChildJoint, DoorHandleLink),
         tell(has_type(DoorHandle, hsr_rooms:'DoorHandle')),
-        tell(has_urdf_name(DoorHandle, DoorHandleLink)),
-        (sub_string(DoorHandleLink,_,_,_,"inside")
+        tell(triple(DoorHandle, urdf:'hasURDFName', DoorHandleLink)),
+        (sub_string(DoorHandleLink,_,_,_,inside)
         ->
         (
             tell(has_type(InsideHandleLocation, soma:'Location')),
@@ -92,7 +95,7 @@ create_passage(Passage, PassageLink) :-
 
 
 assign_connecting_rooms(RoomLinkage, RoomLinkageLink) :-
-    split_string(RoomLinkageLink, "_", "", [_,ExpRoom1Link, ExpRoom2Link, _]),
+    split_string(RoomLinkageLink, "_", "", [_,ExpRoom1Link, ExpRoom2Link, _, _, _]),
     has_type(Room1, hsr_rooms:'Room'),
     has_type(Room2, hsr_rooms:'Room'),
     urdf_room_center_link(Room1, ActRoom1Link),
@@ -102,65 +105,156 @@ assign_connecting_rooms(RoomLinkage, RoomLinkageLink) :-
     tell(has_type(Location, soma:'Location')),
     tell(triple(Location, soma:'isLinkedTo', Room1)),
     tell(triple(Location, soma:'isLinkedTo', Room2)),
-    tell(triple(RoomLinkage, dul:'has_location', Location)).
+    tell(triple(RoomLinkage, dul:'hasLocation', Location)).
+
+
+init_door_paths :-
+    findall([OriginLinkage, DestinationLinkage],
+    (   
+
+        triple(OriginLinkage, dul:'hasLocation', OriginLocation),
+        triple(DestinationLinkage, dul:'hasLocation', DestinationLocation),
+        not same_as(OriginLocation, DestinationLocation),
+        triple(OriginLocation, soma:'isLinkedTo', Room),
+        triple(DestinationLocation, soma:'isLinkedTo', Room)
+        
+    ), 
+    Paths),
+    forall(member([Origin, Destination], Paths),
+    (
+        tell(has_type(Path, hsr_rooms:'Path')),
+        tell(triple(Path, hsr_rooms:'hasOrigin', Origin)),
+        tell(triple(Path, hsr_rooms:'hasDestination', Destination)),
+        assign_path_costs(Path, Origin, Destination)
+    )).
+
+
+assign_path_costs(Path, Origin, Destination) :-
+    has_urdf_name(Origin, OriginLink),
+    has_urdf_name(Destination, DestinationLink),
+    get_urdf_origin(Map),
+    tf_lookup_transform(Map, OriginLink, pose(OriginPosition, _)),
+    tf_lookup_transform(Map, DestinationLink, pose(DestinationPosition, _)),
+    euclidean_distance(OriginPosition, DestinationPosition, Distance),
+    robot_velocity(Velocity),
+    NeededTime is Distance/Velocity,
+    ((has_type(Destination, hsr_rooms:'Door'), get_door_state(Destination, 0))
+    ->  
+    (
+        door_opening_time(OpeningTime),
+        FinalCosts is NeededTime + OpeningTime,
+        tell(triple(Path, hsr_rooms:'hasCosts', FinalCosts))
+
+    );
+    (
+        FinalCosts is NeededTime,
+        tell(triple(Path, hsr_rooms:'hasCosts', FinalCosts))
+    )).
+
+
+
+shortest_path_between_rooms(OriginRoom, DestinationRoom, Path) :-
+    robot_velocity(Velocity),
+    door_opening_time(OpeningTime),
+    findall([OriginLinkage, DestinationLinkage],
+    (
+        triple(OriginLocation, soma:'isLinkedTo', OriginRoom),
+        triple(DestinationLocation, soma:'isLinkedTo', DestinationRoom),
+        triple(OriginLinkage, dul:'hasLocation', OriginLocation),
+        triple(DestinationLinkage, dul:'hasLocation', DestinationLocation)
+    ),
+    OriginDestinationPairs),
+    findall([Costs, PossiblePath], 
+    (
+        member([Origin, Destination], OriginDestinationPairs),
+        get_urdf_origin(Map),
+        has_urdf_name(Origin, OriginLink),
+        tf_lookup_transform(Map, OriginLink, pose(OriginPosition, _)),
+        tf_lookup_transform(Map, 'base_footprint', pose(RobotPosition, _)),
+        euclidean_distance(OriginPosition, RobotPosition, InitialDistance),
+        ((has_type(Origin, hsr_rooms:'Door'), get_door_state(Origin, 0))
+        -> InitialCosts is InitialDistance/Velocity + OpeningTime
+        ; InitialCosts is InitialDistance/Velocity),
+        a_star(Origin, InitialDistance, Destination, PossiblePath, Costs)
+    ), 
+    PossiblePaths),
+    min_member([_, Path], PossiblePaths).
+
 
 
 perceiving_pose_of_door(Door, Pose) :-
     get_urdf_id(URDF),
     get_urdf_origin(Origin),
-    triple(Door, urdf:'hasURDFName', DoorLink),
+    has_urdf_name(Door, DoorLink),
     urdf_link_collision_shape(URDF, DoorLink, box(Width, _, _), _),
-    tf_transform_point(DoorLink, Origin, [0, Width/2, 0], [NewX, NewY, _]),
+    DeltaX is Width/2,
     Offset is Width + 0.2,
-    Position = [NewX+Offset, NewY, 0.0],
-    tf_lookup_transform('base_footprint', DoorLink, pose([X, _, _], _)),
-    tf_lookup_transform(Origin, DoorLink, pose(_, Rotation)),
-    ((X < 0)
+    tf_lookup_transform('base_footprint', DoorLink, pose([_, Y, _], _)),
+    ((Y < 0)
     -> 
     (
-        Pose = [Position, Rotation]
+        DeltaY is -1 * Offset,
+        Angle is 0.0,
+        angle_to_quaternion(Angle, DeltaRotation),
+        tf_transform_pose(DoorLink, Origin, pose([DeltaX, DeltaY, 0.0], DeltaRotation), pose([NewX, NewY, _], Rotation)),
+        Pose = [[NewX, NewY, 0.0], Rotation]
     );
     (
-        rotation_opposite_to_door(Door, NewRotation),
-        Pose = [Position, NewRotation]
-    ).
+        DeltaY is Offset,
+        Angle is pi,
+        angle_to_quaternion(Angle, DeltaRotation),
+        tf_transform_pose(DoorLink, Origin, pose([DeltaX, DeltaY, 0.0], DeltaRotation), pose([NewX, NewY, _], Rotation)),
+        Pose = [[NewX, NewY, 0.0], Rotation]
+    )).
+
+
+passing_pose_of_door(Door, Pose) :-
+    get_urdf_id(URDF),
+    get_urdf_origin(Origin),
+    has_urdf_name(Door, DoorLink),
+    urdf_link_collision_shape(URDF, DoorLink, box(Width, _, _), _),
+    tf_lookup_transform('base_footprint', DoorLink, pose([_, Y, _], _)),
+    DeltaX is Width/2,
+    ((Y < 0)
+    -> 
+    (
+        DeltaY is 0.4,
+        Angle is 0.0,
+        angle_to_quaternion(Angle, DeltaRotation),
+        tf_transform_pose(DoorLink, Origin, pose([DeltaX, DeltaY, 0.0], DeltaRotation), pose([NewX, NewY, _], Rotation)),
+        Pose = [[NewX, NewY, 0.0], Rotation]
+    );
+    (
+        DeltaY is -0.4,
+        Angle is pi,
+        angle_to_quaternion(Angle, DeltaRotation),
+        tf_transform_pose(DoorLink, Origin, pose([DeltaX, DeltaY, 0.0], DeltaRotation), pose([NewX, NewY, _], Rotation)),
+        Pose = [[NewX, NewY, 0.0], Rotation]
+    )).
 
 
 manipulating_pose_of_door(Door, Pose) :-
     get_urdf_origin(Origin),
     has_urdf_name(Door, DoorLink),
-    tf_lookup_transform('base_footprint', DoorLink, pose([X, _, _], _)),
-    tf_lookup_transform(Origin, DoorLink, pose(_, Rotation)),
-    ((X < 0)
+    tf_lookup_transform('base_footprint', DoorLink, pose([_, Y, _], _)),
+    ((Y < 0)
     -> 
     (
         outside_door_handle(Door, OutsideDoorHandle),
-        has_urdf_name(OutsideDoorHandle, OutsideDoorHandleLink)
-        tf_lookup_transform(Origin, OutsideDoorHandleLink, pose([X, Y, _], _)),
-        Pose = [[X-1.2, Y, 0.0], Rotation]
+        has_urdf_name(OutsideDoorHandle, OutsideDoorHandleLink),
+        Angle is 0.0,
+        angle_to_quaternion(Angle, DeltaRotation),
+        tf_transform_pose(OutsideDoorHandleLink, Origin, pose([0.0, -1.2, 0.0], DeltaRotation), pose([NewX, NewY, _], Rotation)),
+        Pose = [[NewX, NewY, 0.0], Rotation]
     );
     (
         inside_door_handle(Doo, InsideDoorHandle),
         has_urdf_name(InsideDoorHandle, InsideDoorHandleLink),
-        tf_lookup_transform(Origin, InsideDoorHandleLink, pose([X, Y, _], _)),
-        rotation_opposite_to_door(Door, OppositeRotation),
-        Pose = [[X+1.2, Y, 0.0], OppositeRotation]
+        Angle is pi,
+        angle_to_quaternion(Angle, DeltaRotation),
+        tf_transform_pose(InsideDoorHandleLink, Origin, pose([0.0, 1.2, 0.0], DeltaRotation), pose([NewX, NewY, _], Rotation)),
+        Pose = [[NewX, NewY, 0.0], Rotation]
     )).
-
-
-rotation_aligned_with_door(Door, Rotation) :-
-    get_urdf_origin(Origin),
-    has_urdf_name(Door, DoorLink),
-    tf_lookup_transform(Origin, DoorLink, pose(_, Rotation)).
-
-
-rotation_opposite_to_door(Door, Rotation) :-    
-    get_urdf_origin(Origin),
-    has_urdf_name(Door, DoorLink),
-    tf_lookup_transform(Origin, DoorLink, pose(_, DoorRotation)),
-    Angle is 0.5 * pi
-    angle_to_quaternion(Angle, DeltaRotation),
-    tf_transform_quaternion(DoorLink, Origin, DeltaRotation, Rotation).
 
 
 %% update_door_state(Door, Angle)
@@ -223,17 +317,13 @@ angle_to_quaternion(Angle, Quaternion) :-
 
 
 get_angle_to_open_door(Door, Angle) :-
-    object_frame_name(Door, DoorName),
     get_urdf_id(URDF),
-    urdf_link_parent_joint(URDF, DoorName, DoorJoint),
-    urdf_joint_hard_limits(URDF, DoorJoint, [LowerLimit, UpperLimit], _, _),
-    triple(DoorJoint, hsr_rooms:'hasJointState', CurrentAngle),
-    get_door_hinge(Door, DoorHinge),
-    tf_lookup_transform('base_footprint', DoorHinge, pose([_, Y, _], _)),
-    ( Y < 0
-    -> Angle is LowerLimit - CurrentAngle
-    ; Angle is UpperLimit - CurrentAngle
-    ).
+    door_joint(Door, DoorJoint),
+    has_urdf_name(DoorJoint, DoorJointName),
+    urdf_joint_hard_limits(URDF, DoorJointName, [_, UpperLimit], _, _),
+    triple(DoorJoint, soma:'hasJointState', DoorJointState),
+    triple(DoorJointState, soma:'hasJointPosition', JointPosition),
+    Angle is UpperLimit - JointPosition.
 
 
 
@@ -266,13 +356,12 @@ update_door_state_measurement(DoorHandle, Width, Depth) :-
 %  0 - closed
 %  1 - open
 get_door_state(Door, DoorState) :-
-    object_frame_name(Door, DoorName),
-    get_urdf_id(URDF),
-    urdf_link_parent_joint(URDF, DoorName, DoorJoint),
-    triple(DoorJoint, hsr_rooms:'hasJointState', JointState),
+    door_joint(Door, DoorJoint),
+    triple(DoorJoint, soma:'hasJointState', DoorJointState),
+    triple(DoorJointState, soma:'hasJointPosition', DoorJointPosition),
     min_door_joint_angle(MaxAngle),
     MinAngle is -1*MaxAngle,
-    ( JointState < MaxAngle, JointState > MinAngle 
+    ( DoorJointPosition < MaxAngle, DoorJointPosition > MinAngle 
     -> DoorState = 0
     ; DoorState = 1
     ).
@@ -294,6 +383,13 @@ get_all_door_states(DoorStates) :-
     ), 
         DoorStates
     ).
+
+
+door_joint(Door, DoorJoint) :-
+    has_urdf_name(Door, DoorLink),
+    get_urdf_id(URDF),
+    urdf_link_parent_joint(URDF, DoorLink, DoorJointName),
+    has_urdf_name(DoorJoint, DoorJointName).
 
 
 door_hinge(Door, Hinge) :-
@@ -334,3 +430,11 @@ is_valid_joint_state(DoorJoint, JointState) :-
 %  @param Angle Minimum opening angle
 min_door_joint_angle(Angle) :-
     Angle = 1.22. % corresponds to 70 degree
+
+
+robot_velocity(Velocity) :-
+    Velocity = 0.15. % Robot moves about 0.15 meters per second
+
+
+door_opening_time(Time) :-
+    Time is 60.  % Robot needs about 60 seconds to open a door
