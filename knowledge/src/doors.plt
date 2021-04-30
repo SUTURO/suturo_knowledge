@@ -100,7 +100,9 @@ test(get_door_state_when_door_closed) :-
 
 test(get_all_door_states) :-
     get_all_door_states(States),
-    writeln(States).
+    findall([Door, 0], has_type(Door, hsr_rooms:'Door'), ExpectedStates),
+    assert_true(subset(States, ExpectedStates)),
+    assert_true(subset(ExpectedStates, States)).
 
 
 test(get_angle_to_open_door_when_door_is_closed) :-
@@ -108,5 +110,27 @@ test(get_angle_to_open_door_when_door_is_closed) :-
     get_angle_to_open_door(Door, Angle),
     assert_equals(Angle, 1.5708).
 
+
+test(update_door_state_dynamic) :-
+    triple(Door, urdf:'hasURDFName', 'door_hall_kitchen_1_door_center'),
+    get_door_state(Door, BeginState),
+    assert_equals(BeginState, 0),
+    Angle is pi/2,
+    update_door_state_dynamic(Door, Angle),
+    get_door_state(Door, EndState),
+    assert_equals(EndState, 1).
+
+
+test(get_door_state_when_door_open) :-
+    triple(Door, urdf:'hasURDFName', 'door_hall_kitchen_1_door_center'),
+    get_door_state(Door, State),
+    assert_equals(State, 1).
+
+
+test(get_angle_to_open_door_when_door_is_open) :-
+    triple(Door, urdf:'hasURDFName', 'door_hall_kitchen_1_door_center'),
+    get_angle_to_open_door(Door, Angle),
+    assert_true(Angle > -0.0001),
+    assert_true(Angle < 0.0001).
 
 :- end_tests(doors).

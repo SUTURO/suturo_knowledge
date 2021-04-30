@@ -61,8 +61,8 @@ create_door_hinge(Door, DoorLink) :-
     urdf_joint_parent_link(URDF, HingeJointName, HingeLink),
     tell(has_type(Hinge, hsr_rooms:'Hinge')),
     tell(triple(Hinge, urdf:'hasURDFName', HingeLink)),
-    tell(has_type(HingeJoint, urdf:'HingeJoint')),
-    tell(triple(HingeJoint, urdf:'hasURDFName', HingeJointName)),
+    %tell(has_type(HingeJoint, urdf:'HingeJoint')),
+    %tell(triple(HingeJoint, urdf:'hasURDFName', HingeJointName)),
     tell(triple(Door, knowrob:'doorHingedTo', Hinge)).
 
 
@@ -143,12 +143,12 @@ assign_path_costs(Path, Origin, Destination) :-
     (
         door_opening_time(OpeningTime),
         FinalCosts is NeededTime + OpeningTime,
-        tell(triple(Path, hsr_rooms:'hasCosts', FinalCosts))
+        update(triple(Path, hsr_rooms:'hasCosts', FinalCosts))
 
     );
     (
         FinalCosts is NeededTime,
-        tell(triple(Path, hsr_rooms:'hasCosts', FinalCosts))
+        update(triple(Path, hsr_rooms:'hasCosts', FinalCosts))
     )).
 
 
@@ -282,38 +282,46 @@ update_door_state(Door, Angle) :-
     
 
 update_door_state_dynamic(Door, Angle) :-
-    object_frame_name(Door, DoorName),
-    get_urdf_id(URDF),
-    urdf_link_parent_joint(URDF, DoorName, DoorJoint),
-    triple(DoorJoint, hsr_rooms:'hasJointState', CurrentAngle),
+    door_joint(Door, DoorJoint),
+    triple(DoorJoint, soma:'hasJointState', DoorJointState),
+    triple(DoorJointState, soma:'hasJointPosition', CurrentAngle),
     NewAngle is CurrentAngle + Angle,
     ( is_valid_joint_state(DoorJoint, NewAngle)
     -> 
     (
-        forall(triple(DoorJoint, hsr_rooms:'hasJointState', _), tripledb_forget(DoorJoint, hsr_rooms:'hasJointState', _)),
-        tell(triple(DoorJoint, hsr_rooms:'hasJointState', NewAngle)),
-        get_door_hinge(Door, DoorHinge),
-        rotate_door_by_angle(Door, DoorHinge, Angle)
+        forall(triple(DoorJointState, soma:'hasJointPosition', _), tripledb_forget(DoorJointState, soma:'hasJointPosition', _)),
+        tell(triple(DoorJointState, soma:'hasJointPosition', NewAngle)),
+        door_hinge(Door, DoorHinge),
+        rotate_door_by_angle(Door, DoorHinge, Angle),
+        update_door_paths(Door)
     )
     ; fail
     ).
+
+
+update_door_paths(Door) :-
+    findall(Path, 
+    (
+        (triple(Path, hsr_rooms:'hasOrigin', Door);
+        triple(Path, hsr_rooms:'hasDestination', Door))
+    ),
+    Paths),
+    forall(member(Path, Paths),
+    (
+        triple(Path, hsr_rooms:'hasOrigin', Origin),
+        triple(Path, hsr_rooms:'hasDestination', Destination),
+        assign_path_costs(Path, Origin, Destination)
+    )).
     
 
-
-rotate_door_by_angle(Door, DoorHinge, Angle) :-
+rotate_door_by_angle(Door, Hinge, Angle) :-
+    has_urdf_name(Door, DoorLink),
+    has_urdf_name(Hinge, HingeLink),
     get_urdf_origin(Origin),
-    C is cos(Angle/2), S is sin(Angle/2),
-    Rotation = [0.0, 0.0, S, C],
-    tf_lookup_transform(Door, DoorHinge, pose(CurrentPos, _)),
-    tf_transform_quaternion(DoorHinge, Door, Rotation, NewRotation),
-    tell(is_at(Door, [DoorHinge, CurrentPos, NewRotation])).
-
-
-angle_to_quaternion(Angle, Quaternion) :-
-    C is cos(Angle/2),
-    S is sin(Angle/2),
-    Quaternion = [0.0, 0.0, S, C].
-
+    angle_to_quaternion(Angle, Rotation),
+    tf_lookup_transform(DoorLink, HingeLink, pose(CurrentPos, _)),
+    tf_transform_quaternion(HingeLink, DoorLink, Rotation, NewRotation),
+    tell(is_at(DoorLink, [HingeLink, CurrentPos, NewRotation])).
 
 
 get_angle_to_open_door(Door, Angle) :-
@@ -393,7 +401,7 @@ door_joint(Door, DoorJoint) :-
 
 
 door_hinge(Door, Hinge) :-
-    triple(Door, urdf:'doorHingedTo', Hinge).
+    triple(Door, knowrob:'doorHingedTo', Hinge).
 
 inside_door_handle(Door, DoorHandle) :-
     triple(Location, soma:'isInsideOf', Door),
@@ -415,7 +423,8 @@ outside_door_handle(Door, DoorHandle) :-
 %  perform e.g.: an angle for a revolute joint
 is_valid_joint_state(DoorJoint, JointState) :-
     get_urdf_id(URDF),
-    urdf_joint_hard_limits(URDF, DoorJoint, [LowerLimit, UpperLimit], _, _),
+    has_urdf_name(DoorJoint, DoorJointName),
+    urdf_joint_hard_limits(URDF, DoorJointName, [LowerLimit, UpperLimit], _, _),
     ( JointState > LowerLimit, JointState < UpperLimit
     -> true
     ; fail
