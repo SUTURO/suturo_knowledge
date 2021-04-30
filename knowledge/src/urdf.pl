@@ -4,6 +4,7 @@
         get_surface_id_by_name/2,
         surface_tf_frame/2,
         surface_frame_add_prefix_/2,
+        surface_center_pose/2,
         surface_front_edge_center_frame/2,
         surface_front_edge_center_pose/2,
         surface_dimensions/4,
@@ -55,6 +56,15 @@ object_tf_frame(Object, Frame) :-
     ;
     Frame = Object
     ).
+
+
+surface_center_pose(Surface, [Position, Rotation]) :-
+    surface_front_edge_center_frame(Surface, FrontEdgeCenterFrame),
+    get_urdf_id(URDF),
+    urdf_link_collision_shape(URDF,Surface,box(X,Y,Z),_),
+    HalfX is X / 2,
+    tf_transform_point(FrontEdgeCenterFrame, map, [HalfX, 0, 0], Position),
+    tf_lookup_transform('map', FrontEdgeCenterFrame, pose(_,Rotation)).
 
 surface_front_edge_center_pose(Surface,[Trans,Rot]):-
     surface_front_edge_center_frame(Surface, FrontEdgeCenterFrame),
