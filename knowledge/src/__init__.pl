@@ -65,5 +65,5 @@
 
 :- init_rooms.
 :- init_doors.
-
+:- init_door_paths.
 
