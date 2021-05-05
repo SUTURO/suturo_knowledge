@@ -63,6 +63,7 @@
 
 :- gripper(Gripper), gripper_init(Gripper).
 
-%:- init_doors.
+:- init_rooms.
+:- init_doors.
 
 
