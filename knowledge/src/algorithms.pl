@@ -16,7 +16,7 @@ a_star(Origin, DistanceToOrigin, Destination, Path, Costs) :-
     cleanup_a_star_attributes.
 
 
-next_node(Destination, [], ClosedList).
+next_node(_, [], _).
 next_node(Destination, OpenList, ClosedList) :-
     min_distance(OpenList, CurrentNode),
     delete(OpenList, CurrentNode, TempOpenList),
@@ -25,12 +25,12 @@ next_node(Destination, OpenList, ClosedList) :-
     -> next_node(Destination, [], ClosedList)
     ;(
         append([CurrentNode], ClosedList, NewClosedList),
-        expand_node(CurrentNode, TempOpenList, NewClosedList, NewOpenList),
+        expand_node(CurrentNode, Destination, TempOpenList, NewClosedList, NewOpenList),
         next_node(Destination, NewOpenList, NewClosedList)
     )).
 
 
-expand_node(CurrentNode, OpenList, ClosedList, NewOpenList) :-
+expand_node(CurrentNode, Destination, OpenList, ClosedList, NewOpenList) :-
     findall(SuccessorNode,
     (
         triple(Path, hsr_rooms:'hasOrigin', CurrentNode),
@@ -41,7 +41,7 @@ expand_node(CurrentNode, OpenList, ClosedList, NewOpenList) :-
     g_value(CurrentNode, CurrentG),
     forall(member(SuccessorNode, Successors),
     (
-        path_costs(Origin, Destination, PathCosts),
+        path_costs(CurrentNode, SuccessorNode, PathCosts),
         NewG is CurrentG + PathCosts,
         ((not member(SuccessorNode, OpenList); 
         (g_value(SuccessorNode, OldG), NewG < OldG))
@@ -64,8 +64,8 @@ min_distance(OpenList, NextNode) :-
 
 
 path_costs(Origin, Destination, PathCosts) :-
-    triple(Path, hsr_rooms:'hasOrigin', CurrentNode),
-    triple(Path, hsr_rooms:'hasDestination', SuccessorNode),    
+    triple(Path, hsr_rooms:'hasOrigin', Origin),
+    triple(Path, hsr_rooms:'hasDestination', Destination),    
     triple(Path, hsr_rooms:'hasCosts', PathCosts).
 
 g_value(Node, G) :-
@@ -77,7 +77,7 @@ heuristic(Origin, Destination, Distance) :-
     has_urdf_name(Origin, OriginLink),
     tf_lookup_transform(Map, OriginLink, pose(OriginPosition, _)),
     has_urdf_name(Destination, DestinationLink),
-    tf_lookup_transform(Map, OriginLink, pose(DestinationPosition, _)),
+    tf_lookup_transform(Map, DestinationLink, pose(DestinationPosition, _)),
     euclidean_distance(OriginPosition, DestinationPosition, Distance).
 
 
@@ -98,7 +98,7 @@ update_a_star_attributes(Node, Predecessor, G, F) :-
 cleanup_a_star_attributes :-
     forall(triple(Attributes, hsr_rooms:'hasGValue', _), tripledb_forget(Attributes, hsr_rooms:'hasGValue', _)),
     forall(triple(Attributes, hsr_rooms:'hasFValue', _), tripledb_forget(Attributes, hsr_rooms:'hasFValue', _)),
-    forall(triple(Attributes, hsr_rooms:'hasGPredecessor', _), tripledb_forget(CurrentAttributes, hsr_rooms:'hasPredecessor', _)),
+    forall(triple(Attributes, hsr_rooms:'hasGPredecessor', _), tripledb_forget(Attributes, hsr_rooms:'hasPredecessor', _)),
     forall(triple(Node, hsr_rooms:'hasAStarAttr', _), tripledb_forget(Node, hsr_rooms:'hasAStarAttr', _)).
 
 

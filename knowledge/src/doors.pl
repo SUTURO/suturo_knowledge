@@ -33,7 +33,7 @@ init_doors :-
     ),
     (
         create_door(Link, Door),
-        create_door_joint(Door, Link),
+        create_door_joint(Link),
         create_door_hinge(Door, Link),
         create_door_handles(Door, Link),
         assign_connecting_rooms(Door, Link)
@@ -45,7 +45,7 @@ create_door(DoorLink, Door) :-
     tell(triple(Door, urdf:'hasURDFName', DoorLink)).
 
 
-create_door_joint(Door, DoorLink) :-
+create_door_joint(DoorLink) :-
     get_urdf_id(URDF),
     urdf_link_parent_joint(URDF, DoorLink, DoorJointName),
     tell(has_type(DoorJoint, soma:'Joint')),
@@ -317,7 +317,6 @@ update_door_paths(Door) :-
 rotate_door_by_angle(Door, Hinge, Angle) :-
     has_urdf_name(Door, DoorLink),
     has_urdf_name(Hinge, HingeLink),
-    get_urdf_origin(Origin),
     angle_to_quaternion(Angle, Rotation),
     tf_lookup_transform(DoorLink, HingeLink, pose(CurrentPos, _)),
     tf_transform_quaternion(HingeLink, DoorLink, Rotation, NewRotation),
