@@ -22,7 +22,7 @@ test(init_doors) :-
         triple(Door, urdf:'hasURDFName', DoorName)
     ), 
     DoorNames),
-    ExpDoorNames = ['door_hall_livingroom_1_door_center', 'door_hall_sleepingroom_1_door_center', 'door_hall_kitchen_1_door_center', 'door_livingroom_sleepingroom_1_door_center'],
+    ExpDoorNames = ['door_hall_living-room_1_door_center', 'door_hall_sleeping-room_1_door_center', 'door_hall_kitchen_1_door_center', 'door_living-room_sleeping-room_1_door_center'],
     length(Doors, DoorCount),
     assert_true(DoorCount == 4),
     assert_true(subset(ExpDoorNames, DoorNames)),

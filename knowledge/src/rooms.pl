@@ -42,11 +42,11 @@ create_room(RoomLink, Room) :-
     tell(has_type(Room, hsr_rooms:'Kitchen')).
 
 create_room(RoomLink, Room) :-
-    sub_string(RoomLink,_,_,_,"livingroom"),
+    sub_string(RoomLink,_,_,_,"living-room"),
     tell(has_type(Room, hsr_rooms:'LivingRoom')).
 
 create_room(RoomLink, Room) :-
-    sub_string(RoomLink,_,_,_,"sleepingroom"),
+    sub_string(RoomLink,_,_,_,"sleeping-room"),
     tell(has_type(Room, hsr_rooms:'SleepingRoom')).
 
 create_room(RoomLink, Room) :-
@@ -54,7 +54,7 @@ create_room(RoomLink, Room) :-
     tell(has_type(Room, hsr_rooms:'Office')).
 
 create_room(RoomLink, Room) :-
-    sub_string(RoomLink,_,_,_,"diningroom"),
+    sub_string(RoomLink,_,_,_,"dining-room"),
     tell(has_type(Room, hsr_rooms:'DiningRoom')).
 
 create_room(RoomLink, Room) :-

@@ -359,12 +359,12 @@
   </joint>
   <link name="kitchen_room_corner_3_link"/>
   <!-- define a central joint to wich every corner is connected -->
-  <joint name="world_livingroom_room_joint" type="fixed">
+  <joint name="world_living-room_room_joint" type="fixed">
     <origin rpy="0 0 0" xyz="1.5 3 0 "/>
     <parent link="urdf_offset"/>
-    <child link="livingroom_room_center_link"/>
+    <child link="living-room_room_center_link"/>
   </joint>
-  <link name="livingroom_room_center_link">
+  <link name="living-room_room_center_link">
     <visual>
       <geometry>
         <cylinder length="0" radius="0"/>
@@ -374,49 +374,49 @@
       </material>
     </visual>
   </link>
-  <joint name="livingroom_room_joint_0" type="fixed">
+  <joint name="living-room_room_joint_0" type="fixed">
     <origin rpy="0 0 0" xyz="-1.5 -3 0 "/>
-    <parent link="livingroom_room_center_link"/>
-    <child link="livingroom_room_corner_0_link"/>
+    <parent link="living-room_room_center_link"/>
+    <child link="living-room_room_corner_0_link"/>
   </joint>
-  <link name="livingroom_room_corner_0_link"/>
-  <joint name="livingroom_room_joint_1" type="fixed">
+  <link name="living-room_room_corner_0_link"/>
+  <joint name="living-room_room_joint_1" type="fixed">
     <origin rpy="0 0 0" xyz="1.5 -3 0 "/>
-    <parent link="livingroom_room_center_link"/>
-    <child link="livingroom_room_corner_1_link"/>
+    <parent link="living-room_room_center_link"/>
+    <child link="living-room_room_corner_1_link"/>
   </joint>
-  <link name="livingroom_room_corner_1_link"/>
-  <joint name="livingroom_room_joint_2" type="fixed">
+  <link name="living-room_room_corner_1_link"/>
+  <joint name="living-room_room_joint_2" type="fixed">
     <origin rpy="0 0 0" xyz="1.5 2 0 "/>
-    <parent link="livingroom_room_center_link"/>
-    <child link="livingroom_room_corner_2_link"/>
+    <parent link="living-room_room_center_link"/>
+    <child link="living-room_room_corner_2_link"/>
   </joint>
-  <link name="livingroom_room_corner_2_link"/>
-  <joint name="livingroom_room_joint_3" type="fixed">
+  <link name="living-room_room_corner_2_link"/>
+  <joint name="living-room_room_joint_3" type="fixed">
     <origin rpy="0 0 0" xyz="-3.5 2 0 "/>
-    <parent link="livingroom_room_center_link"/>
-    <child link="livingroom_room_corner_3_link"/>
+    <parent link="living-room_room_center_link"/>
+    <child link="living-room_room_corner_3_link"/>
   </joint>
-  <link name="livingroom_room_corner_3_link"/>
-  <joint name="livingroom_room_joint_4" type="fixed">
+  <link name="living-room_room_corner_3_link"/>
+  <joint name="living-room_room_joint_4" type="fixed">
     <origin rpy="0 0 0" xyz="-3.5 0 0 "/>
-    <parent link="livingroom_room_center_link"/>
-    <child link="livingroom_room_corner_4_link"/>
+    <parent link="living-room_room_center_link"/>
+    <child link="living-room_room_corner_4_link"/>
   </joint>
-  <link name="livingroom_room_corner_4_link"/>
-  <joint name="livingroom_room_joint_5" type="fixed">
+  <link name="living-room_room_corner_4_link"/>
+  <joint name="living-room_room_joint_5" type="fixed">
     <origin rpy="0 0 0" xyz="-1.5 0 0 "/>
-    <parent link="livingroom_room_center_link"/>
-    <child link="livingroom_room_corner_5_link"/>
+    <parent link="living-room_room_center_link"/>
+    <child link="living-room_room_corner_5_link"/>
   </joint>
-  <link name="livingroom_room_corner_5_link"/>
+  <link name="living-room_room_corner_5_link"/>
   <!-- define a central joint to wich every corner is connected -->
-  <joint name="world_sleepingroom_room_joint" type="fixed">
+  <joint name="world_sleeping-room_room_joint" type="fixed">
     <origin rpy="0 0 0" xyz="-1.5 1.5 0 "/>
     <parent link="urdf_offset"/>
-    <child link="sleepingroom_room_center_link"/>
+    <child link="sleeping-room_room_center_link"/>
   </joint>
-  <link name="sleepingroom_room_center_link">
+  <link name="sleeping-room_room_center_link">
     <visual>
       <geometry>
         <cylinder length="0" radius="0"/>
@@ -426,30 +426,30 @@
       </material>
     </visual>
   </link>
-  <joint name="sleepingroom_room_joint_0" type="fixed">
+  <joint name="sleeping-room_room_joint_0" type="fixed">
     <origin rpy="0 0 0" xyz="-1.5 -1.5 0 "/>
-    <parent link="sleepingroom_room_center_link"/>
-    <child link="sleepingroom_room_corner_0_link"/>
+    <parent link="sleeping-room_room_center_link"/>
+    <child link="sleeping-room_room_corner_0_link"/>
   </joint>
-  <link name="sleepingroom_room_corner_0_link"/>
-  <joint name="sleepingroom_room_joint_1" type="fixed">
+  <link name="sleeping-room_room_corner_0_link"/>
+  <joint name="sleeping-room_room_joint_1" type="fixed">
     <origin rpy="0 0 0" xyz="1.5 -1.5 0 "/>
-    <parent link="sleepingroom_room_center_link"/>
-    <child link="sleepingroom_room_corner_1_link"/>
+    <parent link="sleeping-room_room_center_link"/>
+    <child link="sleeping-room_room_corner_1_link"/>
   </joint>
-  <link name="sleepingroom_room_corner_1_link"/>
-  <joint name="sleepingroom_room_joint_2" type="fixed">
+  <link name="sleeping-room_room_corner_1_link"/>
+  <joint name="sleeping-room_room_joint_2" type="fixed">
     <origin rpy="0 0 0" xyz="1.5 1.5 0 "/>
-    <parent link="sleepingroom_room_center_link"/>
-    <child link="sleepingroom_room_corner_2_link"/>
+    <parent link="sleeping-room_room_center_link"/>
+    <child link="sleeping-room_room_corner_2_link"/>
   </joint>
-  <link name="sleepingroom_room_corner_2_link"/>
-  <joint name="sleepingroom_room_joint_3" type="fixed">
+  <link name="sleeping-room_room_corner_2_link"/>
+  <joint name="sleeping-room_room_joint_3" type="fixed">
     <origin rpy="0 0 0" xyz="-1.5 1.5 0 "/>
-    <parent link="sleepingroom_room_center_link"/>
-    <child link="sleepingroom_room_corner_3_link"/>
+    <parent link="sleeping-room_room_center_link"/>
+    <child link="sleeping-room_room_corner_3_link"/>
   </joint>
-  <link name="sleepingroom_room_corner_3_link"/>
+  <link name="sleeping-room_room_corner_3_link"/>
   <!-- define a central joint to wich every corner is connected -->
   <joint name="world_office_room_joint" type="fixed">
     <origin rpy="0 0 0" xyz="1.5 -1.5 0 "/>
@@ -543,7 +543,7 @@
   </joint>
   <link name="hall_room_corner_5_link"/>
   <!-- LINKS -->
-  <link name="door_hall_livingroom_1_door_center">
+  <link name="door_hall_living-room_1_door_center">
     <visual>
       <material name="door_green"/>
       <origin rpy="0 0 0" xyz="0.5 0 0"/>
@@ -558,7 +558,7 @@
       </geometry>
     </collision>
   </link>
-  <link name="door_hall_livingroom_1_door_hinge">
+  <link name="door_hall_living-room_1_door_hinge">
     <visual>
       <material name="hinge_red"/>
       <origin rpy="0 0 0" xyz="0 0 0"/>
@@ -573,7 +573,7 @@
       </geometry>
     </collision>
   </link>
-  <link name="door_hall_livingroom_1_door_handle_outside">
+  <link name="door_hall_living-room_1_door_handle_outside">
     <sphere_inertia mass="0" radius="0"/>
     <visual>
       <material name="handle_blue"/>
@@ -589,7 +589,7 @@
       </geometry>
     </collision>
   </link>
-  <link name="door_hall_livingroom_1_door_handle_inside">
+  <link name="door_hall_living-room_1_door_handle_inside">
     <sphere_inertia mass="0" radius="0"/>
     <visual>
       <material name="handle_blue"/>
@@ -606,36 +606,36 @@
     </collision>
   </link>
   <!-- JOINTS -->
-  <joint name="door_hall_livingroom_1_door_origin_revolute_joint" type="revolute">
+  <joint name="door_hall_living-room_1_door_origin_revolute_joint" type="revolute">
     <axis xyz="0 0 1"/>
     <limit effort="100" lower="0" upper="1.5708" velocity="10"/>
     <origin rpy="0 0 1.57079632679" xyz="0 0 0"/>
-    <parent link="door_hall_livingroom_1_door_hinge"/>
-    <child link="door_hall_livingroom_1_door_center"/>
+    <parent link="door_hall_living-room_1_door_hinge"/>
+    <child link="door_hall_living-room_1_door_center"/>
   </joint>
-  <joint name="door_hall_livingroom_1_door_hinge_joint" type="fixed">
+  <joint name="door_hall_living-room_1_door_hinge_joint" type="fixed">
     <axis xyz="0 0 0"/>
     <limit effort="1" lower="0" upper="1.5708" velocity="1"/>
     <origin rpy="0 0 0" xyz="-2 3.5 1.045"/>
     <parent link="urdf_offset"/>
-    <child link="door_hall_livingroom_1_door_hinge"/>
+    <child link="door_hall_living-room_1_door_hinge"/>
   </joint>
-  <joint name="door_hall_livingroom_1_door_handle_inside_joint" type="fixed">
+  <joint name="door_hall_living-room_1_door_handle_inside_joint" type="fixed">
     <axis xyz="0 0 0"/>
     <limit effort="1" lower="0" upper="1.5708" velocity="1"/>
     <origin rpy="0 0 0" xyz="0.9 -0.06875 -0.13"/>
-    <parent link="door_hall_livingroom_1_door_center"/>
-    <child link="door_hall_livingroom_1_door_handle_inside"/>
+    <parent link="door_hall_living-room_1_door_center"/>
+    <child link="door_hall_living-room_1_door_handle_inside"/>
   </joint>
-  <joint name="door_hall_livingroom_1_door_handle_outside_joint" type="fixed">
+  <joint name="door_hall_living-room_1_door_handle_outside_joint" type="fixed">
     <axis xyz="0 0 0"/>
     <limit effort="1" lower="0" upper="1.5708" velocity="1"/>
     <origin rpy="0 0 0" xyz="0.9 0.055 -0.13"/>
-    <parent link="door_hall_livingroom_1_door_center"/>
-    <child link="door_hall_livingroom_1_door_handle_outside"/>
+    <parent link="door_hall_living-room_1_door_center"/>
+    <child link="door_hall_living-room_1_door_handle_outside"/>
   </joint>
   <!-- LINKS -->
-  <link name="door_hall_sleepingroom_1_door_center">
+  <link name="door_hall_sleeping-room_1_door_center">
     <visual>
       <material name="door_green"/>
       <origin rpy="0 0 0" xyz="0.5 0 0"/>
@@ -650,7 +650,7 @@
       </geometry>
     </collision>
   </link>
-  <link name="door_hall_sleepingroom_1_door_hinge">
+  <link name="door_hall_sleeping-room_1_door_hinge">
     <visual>
       <material name="hinge_red"/>
       <origin rpy="0 0 0" xyz="0 0 0"/>
@@ -665,7 +665,7 @@
       </geometry>
     </collision>
   </link>
-  <link name="door_hall_sleepingroom_1_door_handle_outside">
+  <link name="door_hall_sleeping-room_1_door_handle_outside">
     <sphere_inertia mass="0" radius="0"/>
     <visual>
       <material name="handle_blue"/>
@@ -681,7 +681,7 @@
       </geometry>
     </collision>
   </link>
-  <link name="door_hall_sleepingroom_1_door_handle_inside">
+  <link name="door_hall_sleeping-room_1_door_handle_inside">
     <sphere_inertia mass="0" radius="0"/>
     <visual>
       <material name="handle_blue"/>
@@ -698,33 +698,33 @@
     </collision>
   </link>
   <!-- JOINTS -->
-  <joint name="door_hall_sleepingroom_1_door_origin_revolute_joint" type="revolute">
+  <joint name="door_hall_sleeping-room_1_door_origin_revolute_joint" type="revolute">
     <axis xyz="0 0 1"/>
     <limit effort="100" lower="0" upper="1.5708" velocity="10"/>
     <origin rpy="0 0 1.57079632679" xyz="0 0 0"/>
-    <parent link="door_hall_sleepingroom_1_door_hinge"/>
-    <child link="door_hall_sleepingroom_1_door_center"/>
+    <parent link="door_hall_sleeping-room_1_door_hinge"/>
+    <child link="door_hall_sleeping-room_1_door_center"/>
   </joint>
-  <joint name="door_hall_sleepingroom_1_door_hinge_joint" type="fixed">
+  <joint name="door_hall_sleeping-room_1_door_hinge_joint" type="fixed">
     <axis xyz="0 0 0"/>
     <limit effort="1" lower="0" upper="1.5708" velocity="1"/>
     <origin rpy="0 0 0" xyz="-3 1.0 1.045"/>
     <parent link="urdf_offset"/>
-    <child link="door_hall_sleepingroom_1_door_hinge"/>
+    <child link="door_hall_sleeping-room_1_door_hinge"/>
   </joint>
-  <joint name="door_hall_sleepingroom_1_door_handle_inside_joint" type="fixed">
+  <joint name="door_hall_sleeping-room_1_door_handle_inside_joint" type="fixed">
     <axis xyz="0 0 0"/>
     <limit effort="1" lower="0" upper="1.5708" velocity="1"/>
     <origin rpy="0 0 0" xyz="0.9 -0.06875 -0.13"/>
-    <parent link="door_hall_sleepingroom_1_door_center"/>
-    <child link="door_hall_sleepingroom_1_door_handle_inside"/>
+    <parent link="door_hall_sleeping-room_1_door_center"/>
+    <child link="door_hall_sleeping-room_1_door_handle_inside"/>
   </joint>
-  <joint name="door_hall_sleepingroom_1_door_handle_outside_joint" type="fixed">
+  <joint name="door_hall_sleeping-room_1_door_handle_outside_joint" type="fixed">
     <axis xyz="0 0 0"/>
     <limit effort="1" lower="0" upper="1.5708" velocity="1"/>
     <origin rpy="0 0 0" xyz="0.9 0.055 -0.13"/>
-    <parent link="door_hall_sleepingroom_1_door_center"/>
-    <child link="door_hall_sleepingroom_1_door_handle_outside"/>
+    <parent link="door_hall_sleeping-room_1_door_center"/>
+    <child link="door_hall_sleeping-room_1_door_handle_outside"/>
   </joint>
   <!-- LINKS -->
   <link name="door_hall_kitchen_1_door_center">
@@ -819,7 +819,7 @@
     <child link="door_hall_kitchen_1_door_handle_outside"/>
   </joint>
   <!-- LINKS -->
-  <link name="door_livingroom_sleepingroom_1_door_center">
+  <link name="door_living-room_sleeping-room_1_door_center">
     <visual>
       <material name="door_green"/>
       <origin rpy="0 0 0" xyz="0.5 0 0"/>
@@ -834,7 +834,7 @@
       </geometry>
     </collision>
   </link>
-  <link name="door_livingroom_sleepingroom_1_door_hinge">
+  <link name="door_living-room_sleeping-room_1_door_hinge">
     <visual>
       <material name="hinge_red"/>
       <origin rpy="0 0 0" xyz="0 0 0"/>
@@ -849,7 +849,7 @@
       </geometry>
     </collision>
   </link>
-  <link name="door_livingroom_sleepingroom_1_door_handle_outside">
+  <link name="door_living-room_sleeping-room_1_door_handle_outside">
     <sphere_inertia mass="0" radius="0"/>
     <visual>
       <material name="handle_blue"/>
@@ -865,7 +865,7 @@
       </geometry>
     </collision>
   </link>
-  <link name="door_livingroom_sleepingroom_1_door_handle_inside">
+  <link name="door_living-room_sleeping-room_1_door_handle_inside">
     <sphere_inertia mass="0" radius="0"/>
     <visual>
       <material name="handle_blue"/>
@@ -882,33 +882,33 @@
     </collision>
   </link>
   <!-- JOINTS -->
-  <joint name="door_livingroom_sleepingroom_1_door_origin_revolute_joint" type="revolute">
+  <joint name="door_living-room_sleeping-room_1_door_origin_revolute_joint" type="revolute">
     <axis xyz="0 0 1"/>
     <limit effort="100" lower="0" upper="1.5708" velocity="10"/>
     <origin rpy="0 0 0" xyz="0 0 0"/>
-    <parent link="door_livingroom_sleepingroom_1_door_hinge"/>
-    <child link="door_livingroom_sleepingroom_1_door_center"/>
+    <parent link="door_living-room_sleeping-room_1_door_hinge"/>
+    <child link="door_living-room_sleeping-room_1_door_center"/>
   </joint>
-  <joint name="door_livingroom_sleepingroom_1_door_hinge_joint" type="fixed">
+  <joint name="door_living-room_sleeping-room_1_door_hinge_joint" type="fixed">
     <axis xyz="0 0 0"/>
     <limit effort="1" lower="0" upper="1.5708" velocity="1"/>
     <origin rpy="0 0 0" xyz="-1.5 3 1.045"/>
     <parent link="urdf_offset"/>
-    <child link="door_livingroom_sleepingroom_1_door_hinge"/>
+    <child link="door_living-room_sleeping-room_1_door_hinge"/>
   </joint>
-  <joint name="door_livingroom_sleepingroom_1_door_handle_inside_joint" type="fixed">
+  <joint name="door_living-room_sleeping-room_1_door_handle_inside_joint" type="fixed">
     <axis xyz="0 0 0"/>
     <limit effort="1" lower="0" upper="1.5708" velocity="1"/>
     <origin rpy="0 0 0" xyz="0.9 -0.06875 -0.13"/>
-    <parent link="door_livingroom_sleepingroom_1_door_center"/>
-    <child link="door_livingroom_sleepingroom_1_door_handle_inside"/>
+    <parent link="door_living-room_sleeping-room_1_door_center"/>
+    <child link="door_living-room_sleeping-room_1_door_handle_inside"/>
   </joint>
-  <joint name="door_livingroom_sleepingroom_1_door_handle_outside_joint" type="fixed">
+  <joint name="door_living-room_sleeping-room_1_door_handle_outside_joint" type="fixed">
     <axis xyz="0 0 0"/>
     <limit effort="1" lower="0" upper="1.5708" velocity="1"/>
     <origin rpy="0 0 0" xyz="0.9 0.055 -0.13"/>
-    <parent link="door_livingroom_sleepingroom_1_door_center"/>
-    <child link="door_livingroom_sleepingroom_1_door_handle_outside"/>
+    <parent link="door_living-room_sleeping-room_1_door_center"/>
+    <child link="door_living-room_sleeping-room_1_door_handle_outside"/>
   </joint>
   <link name="urdf_main"/>
   <joint name="map_urdf_joint" type="fixed">
