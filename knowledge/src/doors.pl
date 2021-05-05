@@ -248,7 +248,7 @@ manipulating_pose_of_door(Door, Pose) :-
         Pose = [[NewX, NewY, 0.0], Rotation]
     );
     (
-        inside_door_handle(Doo, InsideDoorHandle),
+        inside_door_handle(Door, InsideDoorHandle),
         has_urdf_name(InsideDoorHandle, InsideDoorHandleLink),
         Angle is pi,
         angle_to_quaternion(Angle, DeltaRotation),
