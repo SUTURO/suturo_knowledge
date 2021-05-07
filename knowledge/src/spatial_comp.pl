@@ -100,7 +100,7 @@ position_supportable_by_surface(Position, ground) :-
     position_supportable_by_ground(Position).
 
 relative_position_supportable_by_surface([X,Y,Z], Surface) :-
-    ( is_table(Surface); is_dishwasher(Surface); is_bed(Surface); is_sideboard(Surface); is_sink(Surface) ),
+    is_table(Surface),
     surface_dimensions(Surface, Depth, Width, _),
     threshold_surface(ThAbove, ThBelow),
     ThAbove >= Z,
@@ -110,7 +110,7 @@ relative_position_supportable_by_surface([X,Y,Z], Surface) :-
     Depth >= X.
 
 relative_position_supportable_by_surface([X,Y,Z], Surface) :-
-    ( is_shelf(Surface); is_cabinet(Surface) ; is_bucket(Surface) ),
+    ( is_shelf(Surface); is_bucket(Surface)),
     surface_dimensions(Surface, Depth, Width, _),
     threshold_surface(ThAbove, ThBelow),
     ThAbove >= Z,
