@@ -77,13 +77,13 @@
 assert_surface_types(SurfaceLink):-
     tell(triple(ground,hsr_objects:'isSurfaceType',ground)),
     supporting_surface(SurfaceLink), % Checks if the Collision is big enough to be a surface
-    ( sub_string(SurfaceLink,_,_,_,'_shelf_') % when the Link has the string shelf in it it is a shelf
+    ( sub_string(SurfaceLink,_,_,_,'#shelf_') % when the Link has the string shelf in it it is a shelf
     ->tell(triple(SurfaceLink,hsr_objects:'isSurfaceType',shelf))
     ;
-    ( sub_string(SurfaceLink,_,_,_,'_table_') % when the Link has the string table in it it is a table
+    ( sub_string(SurfaceLink,_,_,_,'#table_') % when the Link has the string table in it it is a table
     ->tell(triple(SurfaceLink,hsr_objects:'isSurfaceType',table))
     ;
-    ( sub_string(SurfaceLink,_,_,_,'_bucket_') % when the Link has the string bucket in it it is a bucket
+    ( sub_string(SurfaceLink,_,_,_,'#bucket_') % when the Link has the string bucket in it it is a bucket
     ->tell(triple(SurfaceLink,hsr_objects:'isSurfaceType',bucket))
     ;tell(triple(SurfaceLink,hsr_objects:'isSurfaceType',other))) % when it's not a shelf/table/bucket
     )).

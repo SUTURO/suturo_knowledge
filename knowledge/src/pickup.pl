@@ -32,3 +32,11 @@ place_objects :- % to do: find a better place for this!
 
 place_objects :-
     ros_warn("Not all objects could have been added.").
+
+object_pose_to_grasp_from(Object,[RelativePosition, Rotation]):-
+    ask(triple(Object, hsr_objects:'supportedBy', Surface)),
+    surface_front_edge_center_frame(Surface, SurfaceFrame),
+    surface_front_edge_center_pose(Surface,[_, Rotation]),
+    tf_lookup_transform(SurfaceFrame, Object, pose([_,Y,Z],_)),
+    Ynew is Y + 0.5,
+    tf_transform_point(map, SurfaceFrame, [0, -Ynew,-Z], RelativePosition).
