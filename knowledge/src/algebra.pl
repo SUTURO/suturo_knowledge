@@ -1,7 +1,8 @@
 :- module(algebra,
     [
         euclidean_distance/3,
-        angle_to_quaternion/2
+        angle_to_quaternion/2,
+        signum_function/2
     ]).
 
 
@@ -18,3 +19,12 @@ angle_to_quaternion(Angle, Quaternion) :-
     C is cos(Angle/2),
     S is sin(Angle/2),
     Quaternion = [0.0, 0.0, S, C].
+
+
+signum_function(X, Y) :-
+    (X > 0; X = 0),
+    Y is 1.
+
+signum_function(X, Y) :-
+    X < 0,
+    Y is -1.

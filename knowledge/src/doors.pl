@@ -95,7 +95,7 @@ create_passage(Passage, PassageLink) :-
 
 
 assign_connecting_rooms(RoomLinkage, RoomLinkageLink) :-
-    split_string(RoomLinkageLink, "_", "", [_,ExpRoom1Link, ExpRoom2Link, _, _, _]),
+    split_string(RoomLinkageLink, "#", "", [ExpRoom1Link, ExpRoom2Link, _]),
     has_type(Room1, hsr_rooms:'Room'),
     has_type(Room2, hsr_rooms:'Room'),
     urdf_room_center_link(Room1, ActRoom1Link),
@@ -111,7 +111,8 @@ assign_connecting_rooms(RoomLinkage, RoomLinkageLink) :-
 init_door_paths :-
     findall([OriginLinkage, DestinationLinkage],
     (   
-
+        has_type(OriginLinkage, hsr_rooms:'RoomLinkage'),
+        has_type(DestinationLinkage, hsr_rooms:'RoomLinkage'),
         triple(OriginLinkage, dul:'hasLocation', OriginLocation),
         triple(DestinationLinkage, dul:'hasLocation', DestinationLocation),
         not same_as(OriginLocation, DestinationLocation),
@@ -130,8 +131,10 @@ init_door_paths :-
 
 
 assign_path_costs(Path, Origin, Destination) :-
-    has_urdf_name(Origin, OriginLink),
-    has_urdf_name(Destination, DestinationLink),
+    has_urdf_name(Origin, OriginURDFName),
+    urdf_frame_add_prefix_(OriginURDFName, OriginLink),
+    has_urdf_name(Destination, DestinationURDFName),
+    urdf_frame_add_prefix_(DestinationURDFName, DestinationLink),
     get_urdf_origin(Map),
     tf_lookup_transform(Map, OriginLink, pose(OriginPosition, _)),
     tf_lookup_transform(Map, DestinationLink, pose(DestinationPosition, _)),

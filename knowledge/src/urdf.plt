@@ -5,10 +5,11 @@
 
 :- use_module('urdf.pl').
 
-:- setup_suturo_test_env.
-:- setup_suturo_test_surfaces.
-:- setup_suturo_test_objects.
 
+test(setup) :-
+    setup_suturo_test_env,
+    setup_suturo_test_surfaces,
+    setup_suturo_test_objects.
 
 test(surface_tf_frame_with_surface_table) :-
     surface_tf_frame('table_center', Frame),
@@ -21,6 +22,5 @@ test(surface_tf_frame_with_surface_bucket) :-
 test(surface_tf_frame_with_surface_shelf) :-
     surface_tf_frame('bookshelf_floor_0_piece', Frame),
     assert_equals(Frame, 'bookshelf_floor_0_piece').
-
 
 :- end_tests(urdf).

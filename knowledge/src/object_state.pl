@@ -98,8 +98,6 @@ create_object(PerceivedObjectType, PercTypeConf, [Frame,Position,Rotation], [Wid
     validate_confidence(shape, PercShapeConf, ShapeConf),
     validate_confidence(color, PercColorConf, ColorConf),
     object_type_handling(PerceivedObjectType, PercTypeConf, ObjectType), % When the PercTypeConf is to low the Type is set to Other, Otherwise ObjectType is the same as PerceivedObjectType
-        
-    is_legal_obj_position(Position),
 
     %%% ================ Object creation
     tell(has_type(ObjID, ObjectType)), % Create Object of type ObjectType           // +1 S=ObjID
@@ -133,12 +131,8 @@ create_object(PerceivedObjectType, PercTypeConf, [Frame,Position,Rotation], [Wid
     %%% ================ visualization marker array publish
     % TODO why not working with 1x ?
     marker_plugin:republish,
-    marker_plugin:republish,
+    marker_plugin:republish.
 
-    ! % when call stack reaches here, then all bindings stay set
-    , 
-    place_object(ObjID)
-    .
 
 %%%%%%%%%% TODO what was the purpose of this code? %%%%%%%%%%
 validate_confidence(class, Is, Should) :-

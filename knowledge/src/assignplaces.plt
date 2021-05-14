@@ -8,9 +8,11 @@
 :- use_module('assignplaces.pl').
 
 
-:- setup_suturo_test_env.
-:- setup_suturo_test_surfaces.
-:- setup_suturo_test_objects.
+
+test(setup) :-
+    setup_suturo_test_env,
+    setup_suturo_test_surfaces,
+    setup_suturo_test_objects.
 
 
 test(object_goal_pose_offset_when_target_shelf) :-
