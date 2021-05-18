@@ -20,7 +20,7 @@
 :- use_module(library('surfaces')).
 :- use_module(library('beliefstate')).
 :- use_module(library('assignplaces')).
-:- use_module(library('gripper'), [gripper/1, gripper_init/1]).
+:- use_module(library('gripper')).
 :- use_module(library('rooms')).
 :- use_module(library('doors')).
 :- use_module(library('export')).
