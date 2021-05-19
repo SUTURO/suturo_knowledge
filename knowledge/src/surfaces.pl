@@ -47,7 +47,8 @@
     make_surfaces_source/1,
     make_surfaces_target/1,
     make_role/2,
-    get_surface_role/2
+    get_surface_role/2,
+    get_perception_surface_region/2
     ]).
 
 :- tripledb_load(
@@ -383,4 +384,12 @@ make_role(SurfaceLink, Role):-
 % Role is the role (target or source) of the given SurfaceLink
 get_surface_role(SurfaceLink, Role):-
     triple(SurfaceLink, hsr_objects:'sourceOrTarget', Role).
+
+get_perception_surface_region(Surface, PerceptionName):-
+    is_shelf(Surface),
+    split_string(Surface, ":","",SurfaceSplit), nth0(0,SurfaceSplit,Name),sub_atom(Surface, _, 1, 0, Number), string_concat(Name,"_floor_",Temp), string_concat(Temp,Number,PerceptionName),!.
+
+get_perception_surface_region(Surface, PerceptionName):-
+    not(is_shelf(Surface)),
+    split_string(Surface, ":","",SurfaceSplit), nth0(0,SurfaceSplit,PerceptionName).
 
