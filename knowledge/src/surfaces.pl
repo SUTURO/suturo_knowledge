@@ -139,6 +139,35 @@ is_other(Other) :-
     ask(triple(Other,hsr_objects:'isSurfaceType',other)).
 
 
+is_bed(Bed) :-
+    bed_surfaces(Beds),
+    member(Bed, Beds).
+
+is_cabinet(Cabinet) :-
+    cabinet_surfaces(Cabinets),
+    member(Cabinet, Cabinets).
+
+is_couch(Couch) :-
+    couch_surfaces(Couches),
+    member(Couch, Couches).
+
+is_dishwasher(Dishwasher) :-
+    dishwasher_surfaces(Dishwashers),
+    member(Dishwasher, Dishwashers).
+
+is_fridge(Fridge) :-
+    fridge_surfaces(Fridges),
+    member(Fridge, Fridges).
+
+is_sideboard(Sideboard) :-
+    sideboard_surfaces(Sideboards),
+    member(Sideboard, Sideboards).
+
+is_sink(Sink) :-
+    sink_surfaces(Sinks),
+    member(Sink, Sinks).
+
+
 /**
 *****************************************FIND SURFACES******************************************************
 */
@@ -170,6 +199,15 @@ all_target_surfaces(Surfaces):-
         triple(Surface, hsr_objects:'sourceOrTarget', target)
     ),
         Surfaces).
+
+
+all_surfaces_of_type(SurfaceType, Surfaces) :-
+    findall(Surface, 
+    (
+        has_type(Type, SurfaceType),
+        triple(Surface, hsr_objects:'isSurfaceType', Type)
+    ),
+    Surfaces).
 
 
 ground_surface(GroundSurface):-

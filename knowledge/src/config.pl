@@ -15,7 +15,8 @@
       context_speech_sort_by_size/3,
       context_speech_new_class/1,
       context_speech_basket/1,
-      get_urdf_id/1
+      get_urdf_id/1,
+      get_urdf_origin/1
     ]).
 
 
@@ -127,4 +128,7 @@ context_speech_basket(Context) :-
 
 get_urdf_id(URDF) :-
     URDF = arena.
+
+get_urdf_origin(Origin) :-
+    Origin = map.
 

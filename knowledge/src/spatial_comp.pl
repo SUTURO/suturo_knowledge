@@ -11,10 +11,15 @@
         position_supportable_by_surface/2,
         distance_to_robot/2,
         %Debug
-        relative_position_supportable_by_surface/2
+        relative_position_supportable_by_surface/2,
+        predefined_location/3,
+        object_in_room/2,
+        is_misplaced/2,
+        surfaces_according_to_predefined_location/3
     ]).
 
 :-rdf_db:rdf_register_ns(dul, 'http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#', [keep(true)]).
+:- rdf_db:rdf_register_ns(hsr_rooms, 'http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#', [keep(true)]).
 
 :- rdf_meta
     hsr_lookup_transform(r,r,?,?),
@@ -94,7 +99,7 @@ position_supportable_by_surface(Position, Surface) :-
 position_supportable_by_surface(Position, ground) :-
     position_supportable_by_ground(Position).
 
-relative_position_supportable_by_surface([X,Y,Z],Surface) :-
+relative_position_supportable_by_surface([X,Y,Z], Surface) :-
     is_table(Surface),
     surface_dimensions(Surface, Depth, Width, _),
     threshold_surface(ThAbove, ThBelow),
@@ -105,7 +110,7 @@ relative_position_supportable_by_surface([X,Y,Z],Surface) :-
     Depth >= X.
 
 relative_position_supportable_by_surface([X,Y,Z], Surface) :-
-    ( is_shelf(Surface) ; is_bucket(Surface) ),
+    ( is_shelf(Surface); is_bucket(Surface)),
     surface_dimensions(Surface, Depth, Width, _),
     threshold_surface(ThAbove, ThBelow),
     ThAbove >= Z,
@@ -121,6 +126,22 @@ position_supportable_by_ground(ZPos) :-
 
 position_supportable_by_ground([_,_,Z]) :-
     position_supportable_by_ground(Z).
+
+
+%%%%%%%%%%%%%% in room %%%%%%%%%%%%%%
+
+object_in_room(Object, Room) :-
+    object_frame_name(Object, ObjFrame),
+    get_urdf_origin(Origin),
+    tf_lookup_transform(ObjFrame, Origin, pose([XObj, YObj, _], _)),
+    has_type(Room, hsr_rooms:'Room'),
+    object_frame_name(Room, RoomFrame),
+    tf_lookup_transform(RoomFrame, Origin, pose([XRoom, YRoom, _], _)),
+    object_dimensions(Room, Width, Depth, _),
+    XObj > XRoom - Width/2,
+    XObj < XRoom + Width/2,
+    YObj > YRoom - Depth/2,
+    YObj < YRoom + Depth/2.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -141,3 +162,55 @@ distance_to_robot(Thing, Distance) :-
     DZ is (OZ - BZ),
     sqrt(((DX*DX) + (DY*DY) + (DZ*DZ)), Distance),
     !.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+predefined_location(Object, RoomType, SurfaceType) :-
+    once((
+        has_type(Object, ObjectClass),
+        transitive(subclass_of(ObjectClass, SupportedClass)),
+        ( in_room(SupportedClass, _), has_location(SupportedClass,_)
+        -> 
+        (        
+            in_room(SupportedClass, RoomType),
+            has_location(SupportedClass, SurfaceType)
+        )
+        ;   
+        (
+            SurfaceType = 'http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Bucket',
+            object_in_room(Object, Room),
+            triple(Room, hsr_rooms:'hasRoomTypeRole', RoomTypeInstance),
+            has_type(RoomTypeInstance, RoomType)
+        ))
+    )).
+
+
+is_misplaced(Object, State) :-
+    predefined_location(Object, PredefRoomType, PredefSurfaceType),
+    object_in_room(Object, Room),
+    triple(Room, hsr_rooms:'hasRoomTypeRole', CurrentRoomType),
+    object_supportable_by_surface(Object, Surface),
+    triple(Surface, hsr_objects:'isSurfaceType', CurrentSurfaceType),
+    has_type(CurrentRoomType, RoomType), 
+    has_type(CurrentSurfaceType, SurfaceType),
+    ( same_as(PredefRoomType, RoomType), same_as(PredefSurfaceType, SurfaceType)
+    -> State = 0
+    ;
+    State = 1
+    ).
+
+
+surfaces_according_to_predefined_location(RoomType, SurfaceType, MatchingSurfaces) :-
+    all_surfaces_of_type(SurfaceType, Surfaces),
+    all_rooms_of_type(RoomType, Rooms),
+    findall(Surface, 
+    (
+        member(Surface, Surfaces),
+        member(Room, Rooms),
+        object_in_room(Surface, Room)
+    ),
+    MatchingSurfaces).
+
+

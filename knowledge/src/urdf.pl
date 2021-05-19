@@ -8,7 +8,8 @@
         surface_front_edge_center_frame/2,
         surface_front_edge_center_pose/2,
         surface_dimensions/4,
-        object_tf_frame/2
+        object_tf_frame/2,
+        has_urdf_name/2
     ]).
 
 
@@ -22,8 +23,10 @@ load_surfaces_from_param(Param):-
     ros_param_get_string(Param,S), % S is the urdf file (a xml file) as a string
     get_urdf_id(URDF),
     urdf_load_xml(URDF,S),
-    urdf_set_pose_to_origin(URDF,map),
+    get_urdf_origin(Origin),
+    urdf_set_pose_to_origin(URDF,Origin),
     urdf_link_names(URDF,Links),
+    %init_surface_types,
     forall(
     ( member(Link, Links)),
     ((supporting_surface(Link) % if supporting Surface
@@ -91,4 +94,15 @@ surface_frame_add_prefix_(SurfaceName, Surface_with_Prefix) :-
 surface_dimensions(Surface, Depth, Width, Height) :- % adapted to new knowrob
     get_urdf_id(URDF),
     urdf_link_collision_shape(URDF,Surface, box(Depth, Width, Height),_).
+
+object_frame_name(Object, FrameName) :-
+    ( sub_string(Object,_,_,_,"#")
+    -> split_string(Object, "#", "", [_, FrameName])
+    ;
+    FrameName = Object
+    ).
+
+has_urdf_name(Object, URDFName) :-
+    triple(Object, urdf:'hasURDFName', URDFName).
+    
 

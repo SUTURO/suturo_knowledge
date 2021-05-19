@@ -24,7 +24,6 @@ object_goal_pose(Instance, [Translation, Rotation], Context) :-
     object_goal_pose(Instance, [Translation, Rotation], Context, _).
 
 object_goal_pose(Instance, [Translation, Rotation], Context, RefInstance) :-
-    writeln(Instance),
     object_goal_surface_(Instance, Surface, Context, RefInstance),
     is_bucket(Surface),
     surface_pose_in_map(Surface, [[XWOOffset,Y,Z], Rotation]),

@@ -11,6 +11,8 @@
       group_objects_at/1,
       group_objects/1,
       group_mean_pose/3,
+      same_color/2,
+      same_size/2,
       % Placing Objects
       assert_object_supposed_surface/1,
       object_goal_surface_/4,
@@ -194,7 +196,6 @@ most_related_object(Source, Target) :-
 
 most_related_object(Source, Target):-
     same_color(Source, Target),
-    writeln("color"),
     context_speech_sort_by_color(Source, Target, Context),
     allowed_class_distance(MaxDist),
     Distance is MaxDist + 1,
@@ -203,7 +204,6 @@ most_related_object(Source, Target):-
 
 most_related_object(Source, Target):-
     same_size(Source, Target),
-    writeln("size"),
     context_speech_sort_by_size(Source, Target, Context),
     allowed_class_distance(MaxDist),
     Distance is MaxDist + 2,
@@ -321,13 +321,10 @@ objects_on_same_surface_in_future(Surface, OtherObjects) :-
     all_objects_on_source_surfaces(SourceObjects1),
     all_objects_in_gripper(SourceObjects2),
     append(SourceObjects1, SourceObjects2, SourceObjects),
-    writeln(SourceObjects),
     findall(Obj,
     (
         member(Obj, SourceObjects),
-        writeln(Obj),
-        object_most_similar_surface(Obj, Surfacet),
-        writeln(Surfacet)
+        object_most_similar_surface(Obj, SurfaceX)
     ),
         FutureObjects),
     append(AlreadyPlacedObjects, FutureObjects, OtherObjectsUnsorted),
@@ -411,12 +408,8 @@ assert_object_supposed_surface(Object) :-
     assert_all_planning(Object, Surface, 0, Context, Object).
 
 assert_object_supposed_surface(Object) :-
-    writeln("Hallo4"),
     object_most_similar_surface(Object, Surface),
-    writeln("Hallo5"),
-    writeln(Surface),
     objects_on_same_surface_in_future(Surface, OtherObjects),
-    writeln("Hallo6"),
     objects_fit_on_surface(OtherObjects, Surface, _, NotFittingObjects),
     forall(member(NotFittingObject, NotFittingObjects), retract_all_planning(NotFittingObject)),
     (   member(Object, NotFittingObjects)

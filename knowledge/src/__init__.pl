@@ -21,11 +21,17 @@
 :- use_module(library('beliefstate')).
 :- use_module(library('assignplaces')).
 :- use_module(library('gripper')).
+:- use_module(library('rooms')).
+:- use_module(library('doors')).
 :- use_module(library('export')).
+:- use_module(library('algebra')).
+:- use_module(library('algorithms')).
 :- use_module(library('naturallanguage/nlg')).
 :- use_module(library('naturallanguage/nlp')).
 
 :- ros_package_iri(knowledge, 'package://knowledge/owl/objects.owl').
+:- ros_package_iri(knowledge, 'package://knowledge/owl/rooms.owl').
+:- ros_package_iri(knowledge, 'package://knowledge/owl/locations.owl').
 
 :- tripledb_load(
 	'http://www.ontologydesignpatterns.org/ont/dul/DUL.owl',
@@ -39,6 +45,14 @@
 	[ namespace(hsr_objects)
 	]).
 :- tripledb_load(
+	'package://knowledge/owl/rooms.owl',
+	[ namespace(hsr_rooms, 'http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#')
+	]).
+:- tripledb_load(
+	'package://knowledge/owl/locations.owl',
+	[ namespace(hsr_locations, 'http://www.semanticweb.org/suturo/ontologies/2021/0/locations#')
+	]).
+:- tripledb_load(
 	'http://knowrob.org/kb/URDF.owl',
 	[ namespace(urdf, 'http://knowrob.org/kb/urdf.owl#')
 	]).
@@ -49,4 +63,8 @@
 :- ignore(hsr_lookup_transform('map', 'base_footprint', _, _)). % Why does this help with TF erros??
 
 :- gripper(Gripper), gripper_init(Gripper).
+
+:- init_rooms.
+:- init_doors.
+:- init_door_paths.
 

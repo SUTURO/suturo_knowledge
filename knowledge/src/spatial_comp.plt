@@ -5,7 +5,7 @@
 :- use_module(library('urdf')).
 
 
-:- include('spatial_comp').
+:- use_module('spatial_comp.pl').
 
 :- setup_suturo_test_env.
 :- setup_suturo_test_surfaces.
@@ -29,9 +29,6 @@ test(surface_pose_in_map_with_surface_bucket) :-
 	tf_lookup_transform('map', 'bucket_surface_center', pose(ExpPosition, ExpRotation)),
 	assert_true(Position == ExpPosition),
 	assert_true(Rotation == ExpRotation).
-
-test(fail) :-
-	fail.
-
+	
 
 :- end_tests(spatial_comp).

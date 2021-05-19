@@ -1,25 +1,37 @@
 :- module(test,
     [
         setup_suturo_test_env/0,
+        setup_suturo_rooms_test_env/0,
         get_suturo_test_env/1,
         setup_suturo_test_surfaces/0,
+        setup_suturo_test_rooms/0,
         setup_suturo_test_objects/0,
         get_suturo_test_objects/1,
         cleanup_suturo_test_objects/0,
         setup_suturo_test_source_surfaces/1,
-        setup_suturo_test_target_surfaces/1
+        setup_suturo_test_target_surfaces/1,
+        reset_goal_surfaces/0
     ]
 ).
 
 
 :- use_module(library('ros/urdf/URDF')).
 :- use_module(library('object_state'), [create_object]).
+:- use_module(library('rooms'), [init_rooms]).
 
 
 setup_suturo_test_env :-
     get_suturo_test_env(URDF),
     ros_package_path('knowledge', X),
     atom_concat(X, '/urdf/gz_sim_v1_openable_door.urdf', Filepath),
+    urdf_load_file(URDF, Filepath),
+    urdf_set_pose_to_origin(URDF,map).
+
+
+setup_suturo_rooms_test_env :-
+    get_suturo_test_env(URDF),
+    ros_package_path('knowledge', X),
+    atom_concat(X, '/urdf/suturo_rooms.urdf', Filepath),
     urdf_load_file(URDF, Filepath),
     urdf_set_pose_to_origin(URDF,map).
 
@@ -54,17 +66,25 @@ cleanup_suturo_test_surfaces :-
     tripledb_forget(ground, hsr_objects:'isSurfaceType', ground).
 
 
+setup_suturo_test_rooms :-
+    findall(Room, has_type(Room, hsr_rooms:'Room'), Rooms),
+    length(Rooms, Count),
+    (Count == 0
+    ->(
+        init_rooms
+    )).
+
+
 setup_suturo_test_objects :-
     get_suturo_test_objects(TestObjects),
     length(TestObjects, Count),
     (Count == 0
     -> (
-        create_object("http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Bowl", 0.8, ['map', [1.3, -0.17, 0.619873], [0, 0, 0, 1]], [0.3, 0.3, 0.3], _, 1.0, [255, 0, 0], 1.0, _),
-        create_object("http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Cokecan", 0.9, ['map', [1.3, 0.07, 0.619873], [0, 0, 0, 1]], [0.4, 0.4, 0.4], _, 1.0, [255, 0, 0], 1.0, _),
-        create_object("http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Cokecan", 0.9, ['map', [0.7, 4.8, 0.81], [0, 0, 0, 1]], [0.4, 0.4, 0.4], _, 1.0, [255, 0, 0], 1.0, _),
-        create_object("http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Spoon", 0.96, ['map', [0.7, 4.8, 0.44], [0, 0, 0, 1]], [0.2, 0.2, 0.2], _, 1.0, [0, 0, 255], 1.0, _)
-    )).
-    
+        create_object('http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Bowl', 0.8, ['map', [1.3, -0.17, 0.619873], [0, 0, 0, 1]], [0.3, 0.3, 0.3], _, 1.0, [255, 0, 0], 1.0, _),
+        create_object('http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Cokecan', 0.9, ['map', [1.3, 0.07, 0.619873], [0, 0, 0, 1]], [0.4, 0.4, 0.4], _, 1.0, [255, 0, 0], 1.0, _),
+        create_object('http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Cokecan', 0.9, ['map', [0.7, 4.8, 0.81], [0, 0, 0, 1]], [0.4, 0.4, 0.4], _, 1.0, [255, 0, 0], 1.0, _),
+        create_object('http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Spoon', 0.96, ['map', [0.7, 4.8, 0.44], [0, 0, 0, 1]], [0.2, 0.2, 0.2], _, 1.0, [0, 0, 255], 1.0, _)
+    )).    
 
 
 get_suturo_test_objects(TestObjects) :-
@@ -83,3 +103,8 @@ setup_suturo_test_source_surfaces(Surfaces) :-
 setup_suturo_test_target_surfaces(Surfaces) :-
     forall(triple(Target, hsr_objects:'sourceOrTarget', target), tripledb_forget(Target, hsr_objects:'sourceOrTarget', target)),
     forall(member(Surface, Surfaces), tell(triple(Surface, hsr_objects:'sourceOrTarget', target))).
+
+reset_goal_surfaces :-
+    forall(triple(Object, supposedSurface, _), tripledb_forget(Object, supposedSurface, _)),
+    forall(triple(Object, context, _), tripledb_forget(Object, context, _)),
+    forall(triple(Object, refObject, _), tripledb_forget(Object, refObject, _)).

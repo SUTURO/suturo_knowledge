@@ -1,0 +1,238 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://www.semanticweb.org/suturo/ontologies/2021/1/sim_door_rooms#"
+     xml:base="http://www.semanticweb.org/suturo/ontologies/2021/1/sim_door_rooms"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:SOMA="http://www.ease-crc.org/ont/SOMA.owl#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:rooms="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#"
+     xmlns:knowrob="http://knowrob.org/kb/knowrob.owl#">
+    <owl:Ontology rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/1/sim_door_rooms">
+        <owl:imports rdf:resource="package://knowledge/owl/rooms.owl"/>
+    </owl:Ontology>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Annotation properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#has_room_type_role -->
+
+    <owl:AnnotationProperty rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#has_room_type_role"/>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#has_surface -->
+
+    <owl:AnnotationProperty rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#has_surface"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#hasRoomTypeRole -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#hasRoomTypeRole"/>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#hasSurface -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#hasSurface"/>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#isConnectedBy -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#isConnectedBy"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#DiningRoom -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#DiningRoom"/>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Door -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Door"/>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Kitchen -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Kitchen"/>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Room -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Room"/>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Wall -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Wall"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Individuals
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/1/sim_door_rooms#dining_room -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/1/sim_door_rooms#dining_room">
+        <rdf:type rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Room"/>
+        <rooms:hasRoomTypeRole rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/1/sim_door_rooms#dining_room_type"/>
+        <rooms:hasSurface rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/1/sim_door_rooms#hsr_lab_wall_1"/>
+        <rooms:hasSurface rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/1/sim_door_rooms#hsr_lab_wall_2"/>
+        <rooms:hasSurface rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/1/sim_door_rooms#hsr_lab_wall_4"/>
+        <rooms:hasSurface rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/1/sim_door_rooms#hsr_lab_wall_5"/>
+        <rooms:hasSurface rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/1/sim_door_rooms#hsr_lab_wall_6"/>
+        <rooms:isConnectedBy rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/1/sim_door_rooms#door_1_center"/>
+        <rooms:has_room_type_role rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/1/sim_door_rooms#dining_room_type"/>
+        <rooms:has_surface rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/1/sim_door_rooms#hsr_lab_wall_1"/>
+        <rooms:has_surface rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/1/sim_door_rooms#hsr_lab_wall_2"/>
+        <rooms:has_surface rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/1/sim_door_rooms#hsr_lab_wall_4"/>
+        <rooms:has_surface rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/1/sim_door_rooms#hsr_lab_wall_5"/>
+        <rooms:has_surface rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/1/sim_door_rooms#hsr_lab_wall_6"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/1/sim_door_rooms#dining_room_type -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/1/sim_door_rooms#dining_room_type">
+        <rdf:type rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#DiningRoom"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/1/sim_door_rooms#door_1_center -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/1/sim_door_rooms#door_1_center">
+        <rdf:type rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Door"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/1/sim_door_rooms#hsr_lab_wall_1 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/1/sim_door_rooms#hsr_lab_wall_1">
+        <rdf:type rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Wall"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/1/sim_door_rooms#hsr_lab_wall_2 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/1/sim_door_rooms#hsr_lab_wall_2">
+        <rdf:type rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Wall"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/1/sim_door_rooms#hsr_lab_wall_3 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/1/sim_door_rooms#hsr_lab_wall_3">
+        <rdf:type rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Wall"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/1/sim_door_rooms#hsr_lab_wall_4 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/1/sim_door_rooms#hsr_lab_wall_4">
+        <rdf:type rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Wall"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/1/sim_door_rooms#hsr_lab_wall_5 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/1/sim_door_rooms#hsr_lab_wall_5">
+        <rdf:type rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Wall"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/1/sim_door_rooms#hsr_lab_wall_6 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/1/sim_door_rooms#hsr_lab_wall_6">
+        <rdf:type rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Wall"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/1/sim_door_rooms#kitchen -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/1/sim_door_rooms#kitchen">
+        <rdf:type rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Room"/>
+        <rooms:hasRoomTypeRole rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/1/sim_door_rooms#kitchen_type"/>
+        <rooms:hasSurface rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/1/sim_door_rooms#hsr_lab_wall_1"/>
+        <rooms:hasSurface rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/1/sim_door_rooms#hsr_lab_wall_2"/>
+        <rooms:hasSurface rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/1/sim_door_rooms#hsr_lab_wall_3"/>
+        <rooms:hasSurface rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/1/sim_door_rooms#hsr_lab_wall_5"/>
+        <rooms:hasSurface rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/1/sim_door_rooms#hsr_lab_wall_6"/>
+        <rooms:isConnectedBy rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/1/sim_door_rooms#door_1_center"/>
+        <rooms:has_room_type_role rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/1/sim_door_rooms#kitchen_type"/>
+        <rooms:has_surface rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/1/sim_door_rooms#hsr_lab_wall_1"/>
+        <rooms:has_surface rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/1/sim_door_rooms#hsr_lab_wall_2"/>
+        <rooms:has_surface rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/1/sim_door_rooms#hsr_lab_wall_3"/>
+        <rooms:has_surface rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/1/sim_door_rooms#hsr_lab_wall_5"/>
+        <rooms:has_surface rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/1/sim_door_rooms#hsr_lab_wall_6"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/1/sim_door_rooms#kitchen_type -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/1/sim_door_rooms#kitchen_type">
+        <rdf:type rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Kitchen"/>
+    </owl:NamedIndividual>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi -->
+
