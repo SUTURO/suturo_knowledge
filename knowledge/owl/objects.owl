@@ -232,11 +232,6 @@
     
 
 
-    <!-- hhttp://www.ease-crc.org/ont/SOMA.owl#Cutlery -->
-
-    <owl:Class rdf:about="hhttp://www.ease-crc.org/ont/SOMA.owl#Cutlery"/>
-    
-
 
     <!-- http://ias.cs.tum.edu/kb/knowrob.owl#EnduringThing-Localized -->
 
@@ -248,34 +243,40 @@
 
     <!-- http://knowrob.org/kb/knowrob.owl#Battery -->
 
-    <owl:Class rdf:about="http://knowrob.org/kb/knowrob.owl#Battery"/>
+    <owl:Class rdf:about="http://knowrob.org/kb/knowrob.owl#Battery">
+        <rdfs:subClassOf rdf:resource="http://knowrob.org/kb/knowrob.owl#ElectricalDevice"/>
+    </owl:Class>
     
 
 
     <!-- http://knowrob.org/kb/knowrob.owl#Cloth -->
 
     <owl:Class rdf:about="http://knowrob.org/kb/knowrob.owl#Cloth">
-        <owl:equivalentClass rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Cloth"/>
+        <rdfs:subClassOf rdf:resource="http://knowrob.org/kb/knowrob.owl#TextileArtifact"/>
     </owl:Class>
     
 
 
     <!-- http://knowrob.org/kb/knowrob.owl#ElectricalDevice -->
 
-    <owl:Class rdf:about="http://knowrob.org/kb/knowrob.owl#ElectricalDevice"/>
+    <owl:Class rdf:about="http://knowrob.org/kb/knowrob.owl#ElectricalDevice">
+        <rdfs:subClassOf rdf:resource="http://ias.cs.tum.edu/kb/knowrob.owl#EnduringThing-Localized"/>
+    </owl:Class>
     
 
 
     <!-- http://knowrob.org/kb/knowrob.owl#ElectricalLightingDevice -->
 
-    <owl:Class rdf:about="http://knowrob.org/kb/knowrob.owl#ElectricalLightingDevice"/>
+    <owl:Class rdf:about="http://knowrob.org/kb/knowrob.owl#ElectricalLightingDevice">
+        <rdfs:subClassOf rdf:resource="http://knowrob.org/kb/knowrob.owl#ElectricalDevice"/>
+    </owl:Class>
     
 
 
     <!-- http://knowrob.org/kb/knowrob.owl#Flashlight -->
 
     <owl:Class rdf:about="http://knowrob.org/kb/knowrob.owl#Flashlight">
-        <owl:equivalentClass rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Flashlight"/>
+        <rdfs:subClassOf rdf:resource="http://knowrob.org/kb/knowrob.owl#ElectricalLightingDevice"/>
     </owl:Class>
     
 
@@ -283,14 +284,16 @@
     <!-- http://knowrob.org/kb/knowrob.owl#Lightbulb -->
 
     <owl:Class rdf:about="http://knowrob.org/kb/knowrob.owl#Lightbulb">
-        <owl:equivalentClass rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Lightbulb"/>
+        <rdfs:subClassOf rdf:resource="http://knowrob.org/kb/knowrob.owl#ElectricalLightingDevice"/>
     </owl:Class>
     
 
 
     <!-- http://knowrob.org/kb/knowrob.owl#TextileArtifact -->
 
-    <owl:Class rdf:about="http://knowrob.org/kb/knowrob.owl#TextileArtifact"/>
+    <owl:Class rdf:about="http://knowrob.org/kb/knowrob.owl#TextileArtifact">
+        <rdfs:subClassOf rdf:resource="http://ias.cs.tum.edu/kb/knowrob.owl#EnduringThing-Localized"/>
+    </owl:Class>
     
 
 
@@ -305,7 +308,7 @@
     <!-- http://www.ease-crc.org/ont/SOMA.owl#Bottle -->
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Bottle">
-        <owl:equivalentClass rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Bottle"/>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Drink"/>
     </owl:Class>
     
 
@@ -313,7 +316,7 @@
     <!-- http://www.ease-crc.org/ont/SOMA.owl#Bowl -->
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Bowl">
-        <owl:equivalentClass rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Bowl"/>
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Crockery"/>
     </owl:Class>
     
 
@@ -326,13 +329,36 @@
 
     <!-- http://www.ease-crc.org/ont/SOMA.owl#Crockery -->
 
-    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Crockery"/>
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Crockery">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#KitchenEquipment"/>
+    </owl:Class>
     
 
 
     <!-- http://www.ease-crc.org/ont/SOMA.owl#Cutlery -->
 
-    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Cutlery"/>
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Cutlery">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#KitchenEquipment"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SOMA.owl#DesignedContainer -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA.owl#DesignedContainer"/>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SOMA.owl#DesignedFurniture -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA.owl#DesignedFurniture">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#hassurface"/>
+                <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#FurnitureSurface"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
     
 
 
@@ -372,7 +398,7 @@
     <!-- http://www.ease-crc.org/ont/SOMA.owl#DishwasherTab -->
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA.owl#DishwasherTab">
-        <owl:equivalentClass rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Dishwashertab"/>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#CleaningSupply"/>
     </owl:Class>
     
 
@@ -380,7 +406,7 @@
     <!-- http://www.ease-crc.org/ont/SOMA.owl#Fork -->
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Fork">
-        <owl:equivalentClass rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Fork"/>
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Cutlery"/>
     </owl:Class>
     
 
@@ -388,7 +414,7 @@
     <!-- http://www.ease-crc.org/ont/SOMA.owl#Knife -->
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Knife">
-        <owl:equivalentClass rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Knife"/>
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Cutlery"/>
     </owl:Class>
     
 
@@ -417,7 +443,7 @@
     <!-- http://www.ease-crc.org/ont/SOMA.owl#PancakeMix -->
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA.owl#PancakeMix">
-        <owl:equivalentClass rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#PancakeMix"/>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#ProcessedFood"/>
     </owl:Class>
     
 
@@ -425,7 +451,7 @@
     <!-- http://www.ease-crc.org/ont/SOMA.owl#Plate -->
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Plate">
-        <owl:equivalentClass rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Plate"/>
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Crockery"/>
     </owl:Class>
     
 
@@ -453,7 +479,7 @@
     <!-- http://www.ease-crc.org/ont/SOMA.owl#Spatula -->
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Spatula">
-        <owl:equivalentClass rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Spatula"/>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#KitchenEquipment"/>
     </owl:Class>
     
 
@@ -472,9 +498,19 @@
     
 
 
+    <!-- http://www.ease-crc.org/ont/SOMA.owl#Tool -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Tool">
+        <rdfs:subClassOf rdf:resource="http://ias.cs.tum.edu/kb/knowrob.owl#EnduringThing-Localized"/>
+    </owl:Class>
+    
+
+
     <!-- http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#BiologicalObject -->
 
-    <owl:Class rdf:about="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#BiologicalObject"/>
+    <owl:Class rdf:about="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#BiologicalObject">
+        <rdfs:subClassOf rdf:resource="http://ias.cs.tum.edu/kb/knowrob.owl#EnduringThing-Localized"/>
+    </owl:Class>
     
 
 
@@ -492,7 +528,9 @@
 
     <!-- http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#DesignedSubstance -->
 
-    <owl:Class rdf:about="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#DesignedSubstance"/>
+    <owl:Class rdf:about="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#DesignedSubstance">
+        <rdfs:subClassOf rdf:resource="http://ias.cs.tum.edu/kb/knowrob.owl#EnduringThing-Localized"/>
+    </owl:Class>
     
 
 
@@ -599,7 +637,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Bag -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Bag">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Receptacle"/>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#KitchenEquipment"/>
     </owl:Class>
     
 
@@ -718,28 +756,10 @@
     
 
 
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Bottle -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Bottle">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Receptacle"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Bowl -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Bowl">
-        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Crockery"/>
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Receptacle"/>
-        <rdfs:comment>A round, deep object used to store food or liquid.</rdfs:comment>
-    </owl:Class>
-    
-
-
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Box -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Box">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Receptacle"/>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#KitchenEquipment"/>
     </owl:Class>
     
 
@@ -817,14 +837,6 @@
     
 
 
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Can -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Can">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Receptacle"/>
-    </owl:Class>
-    
-
-
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Candy -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Candy">
@@ -893,6 +905,7 @@
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Chips">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#ProcessedFood"/>
+        <TtSName>Crisps</TtSName>
     </owl:Class>
     
 
@@ -908,16 +921,8 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#CleaningSupply -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#CleaningSupply">
-        <rdfs:subClassOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#DesignedSubstance"/>
+        <rdfs:subClassOf rdf:resource="http://ias.cs.tum.edu/kb/knowrob.owl#EnduringThing-Localized"/>
         <rdfs:comment>substance designed to be used to clean physical objects</rdfs:comment>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Cloth -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Cloth">
-        <rdfs:subClassOf rdf:resource="http://knowrob.org/kb/knowrob.owl#TextileArtifact"/>
     </owl:Class>
     
 
@@ -1061,9 +1066,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Cup -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Cup">
-        <owl:equivalentClass rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Tasse"/>
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Crockery"/>
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Receptacle"/>
     </owl:Class>
     
 
@@ -1121,7 +1124,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Dinnerplate -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Dinnerplate">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Plate"/>
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Plate"/>
     </owl:Class>
     
 
@@ -1137,7 +1140,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Dishwashertab -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Dishwashertab">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#CleaningSupply"/>
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#DishwasherTab"/>
     </owl:Class>
     
 
@@ -1153,7 +1156,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Drink -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Drink">
-        <rdfs:subClassOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#DesignedSubstance"/>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Food"/>
         <rdfs:comment>liquid substance designed to be drunk</rdfs:comment>
     </owl:Class>
     
@@ -1162,7 +1165,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#DrinkingCan -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#DrinkingCan">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Can"/>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Drink"/>
     </owl:Class>
     
 
@@ -1194,7 +1197,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Edekabowl -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Edekabowl">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Bowl"/>
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Bowl"/>
     </owl:Class>
     
 
@@ -1219,8 +1222,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Ewer -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Ewer">
-        <owl:equivalentClass rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Wasserkanne"/>
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Receptacle"/>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#KitchenEquipment"/>
     </owl:Class>
     
 
@@ -1281,11 +1283,10 @@
     
 
 
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Flashlight -->
+    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Food -->
 
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Flashlight">
-        <rdfs:subClassOf rdf:resource="http://knowrob.org/kb/knowrob.owl#ElectricalLightingDevice"/>
-        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#DesignedTool"/>
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Food">
+        <rdfs:subClassOf rdf:resource="http://ias.cs.tum.edu/kb/knowrob.owl#EnduringThing-Localized"/>
     </owl:Class>
     
 
@@ -1293,7 +1294,8 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#FoodCan -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#FoodCan">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Can"/>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#ProcessedFood"/>
+        <TtSName>Can</TtSName>
     </owl:Class>
     
 
@@ -1301,7 +1303,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#FoodCup -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#FoodCup">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Receptacle"/>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#KitchenEquipment"/>
     </owl:Class>
     
 
@@ -1309,7 +1311,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#FoodJar -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#FoodJar">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Receptacle"/>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#KitchenEquipment"/>
     </owl:Class>
     
 
@@ -1320,23 +1322,6 @@
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Bag"/>
     </owl:Class>
     
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Fork -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Fork">
-        <rdfs:subClassOf rdf:resource="hhttp://www.ease-crc.org/ont/SOMA.owl#Cutlery"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Fridge -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Fridge">
-        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#DesignedFurniture"/>
-    </owl:Class>
-    
-
 
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Fruit -->
 
@@ -1381,7 +1366,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Fryingspatula -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Fryingspatula">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Spatula"/>
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Spatula"/>
     </owl:Class>
     
 
@@ -1557,7 +1542,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Ikeabowl -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Ikeabowl">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Bowl"/>
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Bowl"/>
     </owl:Class>
     
 
@@ -1674,6 +1659,14 @@
     
 
 
+    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#KitchenEquipment -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#KitchenEquipment">
+        <rdfs:subClassOf rdf:resource="http://ias.cs.tum.edu/kb/knowrob.owl#EnduringThing-Localized"/>
+    </owl:Class>
+    
+
+
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Kiwifrucht -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Kiwifrucht">
@@ -1695,14 +1688,6 @@
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Kleenex">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#PersonalHygiene"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Knife -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Knife">
-        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Cutlery"/>
     </owl:Class>
     
 
@@ -1735,14 +1720,6 @@
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Lemon">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Fruit"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Lightbulb -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Lightbulb">
-        <rdfs:subClassOf rdf:resource="http://knowrob.org/kb/knowrob.owl#ElectricalDevice"/>
     </owl:Class>
     
 
@@ -1856,7 +1833,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#MondaminPancakeMix -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#MondaminPancakeMix">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#PancakeMix"/>
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#PancakeMix"/>
     </owl:Class>
     
 
@@ -1864,7 +1841,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#MondaminPfannkuchen -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#MondaminPfannkuchen">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#PancakeMix"/>
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#PancakeMix"/>
     </owl:Class>
     
 
@@ -1888,7 +1865,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#NaturalFood -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#NaturalFood">
-        <rdfs:subClassOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#BiologicalObject"/>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Food"/>
         <rdfs:comment>A BiologicalObject that is commonly used as Food</rdfs:comment>
     </owl:Class>
     
@@ -2008,14 +1985,6 @@
     
 
 
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#PancakeMix -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#PancakeMix">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#ProcessedFood"/>
-    </owl:Class>
-    
-
-
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#PastureMilkSmall -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#PastureMilkSmall">
@@ -2059,7 +2028,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#PersonalHygiene -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#PersonalHygiene">
-        <rdfs:subClassOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#DesignedArtifact"/>
+        <rdfs:subClassOf rdf:resource="http://ias.cs.tum.edu/kb/knowrob.owl#EnduringThing-Localized"/>
         <rdfs:comment>artifacts designed for the personal hygiene</rdfs:comment>
     </owl:Class>
     
@@ -2092,7 +2061,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Pitcher -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Pitcher">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Receptacle"/>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#KitchenEquipment"/>
     </owl:Class>
     
 
@@ -2105,19 +2074,10 @@
     
 
 
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Plate -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Plate">
-        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Crockery"/>
-        <rdfs:comment>A flat and usually circular object from which food is eaten or served.</rdfs:comment>
-    </owl:Class>
-    
-
-
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Pliers -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Pliers">
-        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#DesignedTool"/>
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Tool"/>
     </owl:Class>
     
 
@@ -2194,7 +2154,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#ProcessedFood -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#ProcessedFood">
-        <rdfs:subClassOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#DesignedSubstance"/>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Food"/>
         <rdfs:comment>Substance designed to be eaten</rdfs:comment>
     </owl:Class>
     
@@ -2204,15 +2164,6 @@
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Rapunzelorganicmintslemon">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Candy"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Receptacle -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Receptacle">
-        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#DesignedContainer"/>
-        <rdfs:comment>A small designed container, that is designed to store liquids and/or food</rdfs:comment>
     </owl:Class>
     
 
@@ -2377,7 +2328,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Slottedspatula -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Slottedspatula">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Spatula"/>
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Spatula"/>
     </owl:Class>
     
 
@@ -2410,7 +2361,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Somatclassic -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Somatclassic">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#CleaningSupply"/>
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#DishwasherTab"/>
     </owl:Class>
     
 
@@ -2444,14 +2395,6 @@
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#SparklingWater">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Water"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Spatula -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Spatula">
-        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Cutlery"/>
     </owl:Class>
     
 
@@ -2548,15 +2491,6 @@
     
 
 
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Tasse -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Tasse">
-        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Crockery"/>
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Receptacle"/>
-    </owl:Class>
-    
-
-
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Tea -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Tea">
@@ -2649,7 +2583,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Toy -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Toy">
-        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#DesignedTool"/>
+        <rdfs:subClassOf rdf:resource="http://ias.cs.tum.edu/kb/knowrob.owl#EnduringThing-Localized"/>
     </owl:Class>
     
 
@@ -2706,7 +2640,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Wasserkanne -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Wasserkanne">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Receptacle"/>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Ewer"/>
     </owl:Class>
     
 
@@ -2755,7 +2689,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#WritingMaterial -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#WritingMaterial">
-        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#DesignedTool"/>
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Tool"/>
     </owl:Class>
     
 
@@ -2763,7 +2697,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Ycbfork -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Ycbfork">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Fork"/>
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Fork"/>
     </owl:Class>
     
 
@@ -2771,7 +2705,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Ycbknife -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Ycbknife">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Knife"/>
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Knife"/>
     </owl:Class>
     
 
