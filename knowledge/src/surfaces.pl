@@ -5,13 +5,14 @@
     is_furniture/1,
     all_furnitures/1,
     furniture_surfaces/2,
-    furnitures_not_visited/1,
+    surfaces_not_visited/1,
     has_table_shape/1,
     has_shelf_shape/1,
     has_bucket_shape/1,
     has_surface/2,
     visited/1,
-    assign_visit_state/2,
+    update_visit_state/1,
+    all_surfaces_of_type/2,
     supporting_surface/1,
     assert_object_on/2,
     surface_type_of/2,
@@ -110,8 +111,8 @@ init_furnitures :-
         split_string(FurnitureLink2, "#", "", [_, Type, Shape]),
         create_furniture(Type, Furniture),
         tell(triple(Furniture, urdf:'hasURDFName', FurnitureLink2)),
-        init_visit_state(Furniture),
-        assign_surfaces(Furniture, FurnitureLink2, Shape)
+        assign_surfaces(Furniture, FurnitureLink2, Shape),
+        init_visit_state(Furniture)
     )).
 
 
@@ -204,29 +205,34 @@ assign_surfaces(Furniture, FurnitureLink, Shape) :-
 
 
 init_visit_state(Furniture) :-
-    tell(has_type(VisitState, hsr_rooms:'VisitState')),
-    tell(triple(Furniture, hsr_rooms:'hasVisitState', VisitState)),
-    tell(triple(VisitState, hsr_rooms:'visited', false)).
-
-
-assign_visit_state(Furniture, State) :-
-    triple(Furniture, hsr_rooms:'hasVisitState', VisitState),
-    forall(triple(VisitState, hsr_rooms:'visited', _), tripledb_forget(VisitState, hsr_rooms.'visited', _)),
-    tell(triple(VisitState, hsr_rooms:'visited', State)).
-
-visited(Furniture) :-
-    triple(Furniture, hsr_rooms:'hasVisitState', VisitState),
-    triple(VisitState, hsr_rooms:'visited', Visited),
-    (Visited == false
-    -> fail).
-
-furnitures_not_visited(Furnitures) :-
-    findall(Furniture,
+    furniture_surfaces(Furniture, Surfaces),
+    forall(member(Surface, Surfaces),
     (
-        is_furniture(Furniture),
-        not visited(Funiture)
+        tell(has_type(VisitState, hsr_rooms:'VisitState')),
+        tell(triple(Surface, hsr_rooms:'hasVisitState', VisitState)),
+        tell(triple(VisitState, hsr_rooms:'visited', false))
+    )).
+
+
+update_visit_state(Surface) :-
+    is_surface(Surface),
+    triple(Surface, hsr_rooms:'hasVisitState', VisitState),
+    forall(triple(VisitState, hsr_rooms:'visited', _), tripledb_forget(VisitState, hsr_rooms:'visited', _)),
+    tell(triple(VisitState, hsr_rooms:'visited', true)).
+
+visited(Surface) :-
+    is_surface(Surface),
+    triple(Surface, hsr_rooms:'hasVisitState', VisitState),
+    triple(VisitState, hsr_rooms:'visited', Visited),
+    Visited == 1.
+
+surfaces_not_visited(Surfaces) :-
+    findall(Surface,
+    (
+        is_surface(Surface),
+        not visited(Surface)
     ),
-    Furnitures).
+    Surfaces).
 
 
 has_table_shape(Furniture) :-
@@ -248,6 +254,9 @@ all_furnitures(Furnitures) :-
         has_type(Furniture, soma:'DesignedFurniture')
     ),
     Furnitures).
+
+all_furnitures_of_type(FurnitureType, Furnitures) :-
+    findall(Furniture, has_type(Furniture, FurnitureType), Furnitures).
 
 is_surface(Surface) :-
     has_type(Surface, soma:'Surface').

@@ -11,7 +11,8 @@
         room_corner_point_positions/2,
         urdf_room_center_link/2,
         all_rooms/1,
-        is_room/1
+        is_room/1,
+        all_rooms_of_type/2
     ]).
 
 
@@ -120,6 +121,9 @@ is_room(Room) :-
 
 all_rooms(Rooms) :-
     findall(Room, has_type(Room, hsr_rooms:'Room'), Rooms).
+
+all_rooms_of_type(RoomType, Rooms) :-
+    findall(Room, has_type(Room, RoomType), Rooms).
 
 in_room(Room) :-
     get_urdf_origin(Origin),

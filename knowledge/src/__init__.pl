@@ -49,7 +49,8 @@
 	]).
 :- tripledb_load(
 	'package://knowledge/owl/locations.owl',
-	[ namespace(hsr_locations, 'http://www.semanticweb.org/suturo/ontologies/2021/0/locations#')
+	[ namespace(hsr_locations, 'http://www.semanticweb.org/suturo/ontologies/2021/0/locations#'),
+	  graph(locations)
 	]).
 :- tripledb_load(
 	'http://knowrob.org/kb/URDF.owl',

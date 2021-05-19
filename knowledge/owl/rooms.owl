@@ -35,10 +35,28 @@
     
 
 
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#hasHandleState -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#hasHandleState">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#hasInteractionStateRegion"/>
+        <rdfs:domain rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#PhysicalObject"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#HandleState"/>
+    </owl:ObjectProperty>
+    
+
+
     <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#hasInteractionStateRegion -->
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#hasInteractionStateRegion">
         <rdfs:subPropertyOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#hasRegion"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#hasPredefinedLocation -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#hasPredefinedLocation">
+        <rdfs:subPropertyOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#hasLocation"/>
     </owl:ObjectProperty>
     
 
@@ -61,6 +79,16 @@
         <owl:inverseOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#isSurfaceOf"/>
         <rdfs:domain rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Room"/>
         <rdfs:range rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#RoomSurface"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#hasVisitState -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#hasVisitState">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#hasInteractionStateRegion"/>
+        <rdfs:domain rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Surface"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#VisitState"/>
     </owl:ObjectProperty>
     
 
