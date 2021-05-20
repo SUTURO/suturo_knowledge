@@ -261,18 +261,17 @@ object_supported_by_surface(Object, Surface) :-
     is_surface(Surface),
     object_tf_frame(Object, ObjectFrame),
     urdf_tf_frame(Surface, SurfaceFrame),
-    tf_lookup_transform(map, ObjectFrame, pose(Position, _)),
-    position_supported_by_surface(Position, Surface),
-    has_location(Object, ObjectLocation),
-    tell(triple(ObjectLocation, soma:'isSupportedBy', Surface)).
+    tf_lookup_transform(SurfaceFrame, ObjectFrame, pose(Position, _)),
+    position_supported_by_surface(Position, Surface)
+    %tell(has_location(Object, ObjectLocation)),
+    %tell(triple(ObjectLocation, soma:'isSupportedBy', Surface)).
+    .
 
-position_supported_by_surface(Position, Surface) :-
+position_supported_by_surface([X,Y,Z], Surface) :-
     is_surface(Surface),
     surface_dimensions(Surface, Depth, Width, _),
     threshold_surface(ThAbove, ThBelow),
     urdf_tf_frame(Surface, SurfaceFrame),
-    writeln(SurfaceFrame),
-    tf_transform_point(map, SurfaceFrame, Position, [X, Y, Z]),
     ThAbove >= Z,
     ThBelow =< Z,
     Width/2 >= abs(Y),

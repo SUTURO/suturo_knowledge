@@ -14,18 +14,15 @@
 
 next_object_(BestObj) :-
     place_objects,
-    all_objects_on_source_surfaces(Objs),
-    predsort(compareDistances, Objs, SortedObjs),
+    hsr_existing_objects(X),
+    findall(Object,
+         (member(Object,X),
+         object_supported_by_surface(Object,S),
+         has_urdf_name(S,N),
+         not(sub_string(N,_,_,_,"bucket"))),
+        Objects),
+    predsort(compareDistances, Objects, SortedObjs),
     nth0(0, SortedObjs, BestObj).
-
-
-next_object_(noSourceSurfaces) :-
-    all_source_surfaces([]),
-    ros_warn("You haven't declared any surfaces to be source surfaces"), !.
-
-next_object_(noObjectsOnSourceSurfaces) :-
-    all_objects_on_source_surfaces([]),
-    ros_info("There aren't any objects on source surfaces").
 
 place_objects :- % to do: find a better place for this!
     hsr_existing_objects(Objs),    
