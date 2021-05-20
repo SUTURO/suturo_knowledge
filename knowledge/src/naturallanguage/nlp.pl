@@ -25,7 +25,7 @@ all_names_with_id(AllNames):-
             ,Names), append(TtsNames,Names,AllNamesWithDup),sort(AllNamesWithDup, AllNames).
 
 
-matching_classes(Name,Classes):-
+matching_classes(Name,[Class|Classes]):-
     all_names_with_id(AllNames), member([Class,Name], AllNames), findall(SubClass, subclass_of(SubClass,Class), Classes).
 
 matching_object(Name, Obj):-
