@@ -22,22 +22,14 @@
     is_table/1,
     is_bucket/1,
     is_shelf/1,
-    is_bed/1,
-    is_cabinet/1,
-    is_couch/1,
-    is_dishwasher/1,
-    is_fridge/1,
-    is_sideboard/1,
-    is_sink/1,
+    is_other/1,
     all_source_surfaces/1,
     all_target_surfaces/1,
     ground_surface/1,
     shelf_surfaces/1, 
-    big_shelf_surfaces/1, % will soon be deprecated
-    shelf_floor_at_height/2, % will soon be deprecated
     table_surfaces/1, 
     bucket_surfaces/1,
-    all_surfaces_of_type/2,
+    other_surfaces/1,
     is_legal_obj_position/1,
     find_supporting_surface/2,
     % Get poses 
@@ -51,14 +43,14 @@
     %% FIND OBJs
     objects_on_surface/2,
     is_suturo_object/1,
+    hsr_is_object/1,
     objects_on_list_of_surfaces/2,
     all_objects_on_source_surfaces/1,
     all_objects_on_target_surfaces/1,
     all_objects_on_ground/1,
     all_objects_in_whole_shelf_/1, % will soon be deprecated
     all_objects_on_tables_/1,
-    all_objects_in_buckets/1,
-    all_objects_on_table/1, % DEPRECATED! Use only for backward compatibility reasons
+    all_objects_in_buckets/1,    
     %% CREATE OBJECT
     place_object/1,
     %% ROLES
@@ -66,7 +58,8 @@
     make_surfaces_source/1,
     make_surfaces_target/1,
     make_role/2,
-    get_surface_role/2
+    get_surface_role/2,
+    get_perception_surface_region/2
     ]).
 
 :- tripledb_load(
@@ -280,6 +273,22 @@ furniture_surfaces(Furniture, Surfaces) :-
     ),
     Surfaces).
 
+% Surface Link is the String used directly like /table_1_center etc.
+assert_surface_types(SurfaceLink):-
+    tell(triple(ground,hsr_objects:'isSurfaceType',ground)),
+    supporting_surface(SurfaceLink), % Checks if the Collision is big enough to be a surface
+    ( sub_string(SurfaceLink,_,_,_,':shelf_') % when the Link has the string shelf in it it is a shelf
+    ->tell(triple(SurfaceLink,hsr_objects:'isSurfaceType',shelf))
+    ;
+    ( sub_string(SurfaceLink,_,_,_,':table_') % when the Link has the string table in it it is a table
+    ->tell(triple(SurfaceLink,hsr_objects:'isSurfaceType',table))
+    ;
+    ( sub_string(SurfaceLink,_,_,_,':bucket_') % when the Link has the string bucket in it it is a bucket
+    ->tell(triple(SurfaceLink,hsr_objects:'isSurfaceType',bucket))
+    ;tell(triple(SurfaceLink,hsr_objects:'isSurfaceType',other))) % when it's not a shelf/table/bucket
+    )).
+
+
 
 %% supporting_surface(?Surface).
 %
@@ -314,16 +323,17 @@ surface_type_of(Surface, Type):- % has not been tested yet.
 
 
 is_table(Table) :-
-    table_surfaces(Tables),
-    member(Table, Tables).
+    ask(triple(Table,hsr_objects:'isSurfaceType',table)).
 
 is_shelf(Shelf) :-
-    shelf_surfaces(Shelves),
-    member(Shelf, Shelves).
+    ask(triple(Shelf,hsr_objects:'isSurfaceType',shelf)).
 
 is_bucket(Bucket) :-
-    bucket_surfaces(Buckets),
-    member(Bucket, Buckets).
+    ask(triple(Bucket,hsr_objects:'isSurfaceType',bucket)).
+
+is_other(Other) :-
+    ask(triple(Other,hsr_objects:'isSurfaceType',other)).
+
 
 is_bed(Bed) :-
     bed_surfaces(Beds),
@@ -400,115 +410,27 @@ ground_surface(GroundSurface):-
     GroundSurface = ground.
 
 
-shelf_surfaces(ShelfLinks):-
-    findall(ShelfLink, 
-    (
-        has_type(Shelf, hsr_objects:'Shelf'),
-        triple(ShelfLink, hsr_objects:'isSurfaceType',Shelf)
-    ),
-    ShelfLinks).
-
-
-big_shelf_surfaces(ShelfLinks) :- % has not been tested yet.
-    findall(ShelfLink,
-    (
-        triple(ShelfLink, hsr_objects:'isSurfaceType',shelf),
-        not(sub_string(ShelfLink,_,_,_,small))
-    ),
-    ShelfLinks).
-
-
-% Deprecated
-shelf_floor_at_height(Height, TargetShelfLink) :- % has not been tested yet.
-    findall(ShelfFloorLink, (
-        big_shelf_surfaces(AllFloorsLinks),
-        member(ShelfFloorLink, AllFloorsLinks),
-        surface_pose_in_map(ShelfFloorLink, [[_,_,Z],_]),
-        Z < Height
-    ), ShelfFloorsLinks),
-    reverse(ShelfFloorsLinks, [TargetShelfLink|_]).
-
-
 table_surfaces(TableLinks):-
-    findall(TableLink, 
-        (
-            has_type(Table, hsr_objects:'Table'),
-            triple(TableLink, hsr_objects:'isSurfaceType',Table)
-        ), 
-    TableLinks).
-
+    findall(TableLink, ask(triple(TableLink, hsr_objects:'isSurfaceType',table)), TableLinks).
 
 bucket_surfaces(BucketLinks):-
-    findall(BucketLink, 
-    (
-        has_type(Bucket, hsr_objects:'Bucket'),
-        triple(BucketLink, hsr_objects:'isSurfaceType',Bucket)
-    ), 
-    BucketLinks).
+    findall(BucketLink, ask(triple(BucketLink, hsr_objects:'isSurfaceType',bucket)), BucketLinks).
 
+shelf_surfaces(ShelfLinks):-
+    findall(ShelfLink, ask(triple(ShelfLink, hsr_objects:'isSurfaceType',shelf)),ShelfLinks).
 
-bed_surfaces(BedLinks) :-
-    findall(BedLink,
-    (
-        has_type(Bed, hsr_objects:'Bed'),
-        triple(BedLink, hsr_objects:'isSurfaceType', Bed)
-    ),
-    BedLinks).
-
-
-cabinet_surfaces(CabinetLinks) :-
-    findall(CabinetLink,
-    (
-        has_type(Cabinet, hsr_objects:'Cabinet'),
-        triple(CabinetLink, hsr_objects:'isSurfaceType', Cabinet)
-    ),
-    CabinetLinks).
-
-
-couch_surfaces(CouchLinks) :-
-    findall(CouchLink,
-    (
-        has_type(Couch, hsr_objects:'Couch'),
-        triple(CouchLink, hsr_objects:'isSurfaceType', Couch)
-    ),
-    CouchLinks).
-
-dishwasher_surfaces(DishwasherLinks) :-
-    findall(DishwasherLink,
-    (
-        has_type(Dishwasher, hsr_objects:'Dishwasher'),
-        triple(DishwasherLink, hsr_objects:'isSurfaceType', Dishwasher)
-    ),
-    DishwasherLinks).
-
-fridge_surfaces(FridgeLinks) :-
-    findall(FridgeLink,
-    (
-        has_type(Fridge, hsr_objects:'Fridge'),
-        triple(FridgeLink, hsr_objects:'isSurfacRype', Fridge)
-    ),
-    FridgeLinks).
-
-sideboard_surfaces(SideboardLinks) :-
-    findall(SidebaordLink,
-    (
-        has_type(Sideboard, hsr_objects:'Sideboard'),
-        triple(SidebaordLink, hsr_objects:'isSurfaceType', Sideboard)
-    ),
-    SideboardLinks).
-
-sink_surfaces(SinkLinks) :-
-    findall(SinkLink,
-    (
-        has_type(Sink, hsr_objects:'Sink'),
-        triple(SinkLink, hsr_objects:'isSurfaceType', Sink)
-    ),
-    SinkLinks).
+other_surfaces(OtherLinks):-
+    findall(OtherLinks, ask(triple(OtherLinks, hsr_objects:'isSurfaceType',other)),OtherLinks).
 
 find_supporting_surface(Object, Surface) :-
     triple(Object, hsr_objects:'supportedBy', Surface).
 
+
 is_suturo_object(Object) :-
+    hsr_existing_objects(Objects),
+    member(Object, Objects).
+    
+hsr_is_object(Object) :-
     hsr_existing_objects(Objects),
     member(Object, Objects).
 
@@ -660,4 +582,12 @@ make_role(SurfaceLink, Role):-
 % Role is the role (target or source) of the given SurfaceLink
 get_surface_role(SurfaceLink, Role):-
     triple(SurfaceLink, hsr_objects:'sourceOrTarget', Role).
+
+get_perception_surface_region(Surface, PerceptionName):-
+    is_shelf(Surface),
+    split_string(Surface, ":","",SurfaceSplit), nth0(0,SurfaceSplit,Name),sub_atom(Surface, _, 1, 0, Number), string_concat(Name,"_floor_",Temp), string_concat(Temp,Number,PerceptionName),!.
+
+get_perception_surface_region(Surface, PerceptionName):-
+    not(is_shelf(Surface)),
+    split_string(Surface, ":","",SurfaceSplit), nth0(0,SurfaceSplit,PerceptionName).
 

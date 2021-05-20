@@ -11,17 +11,17 @@
     room_tts(r,?).
 
 object_tts(ObjID,Name):-
-    (rdfs_individual_of(ObjID, ObjClass)
-    ->  (rdf_has(ObjClass, 'http://www.semanticweb.org/suturo/ontologies/2020/3/objects#TtSName',_)
-        -> rdf_has(ObjClass, 'http://www.semanticweb.org/suturo/ontologies/2020/3/objects#TtSName', Name)
+    (ask(has_type(ObjID, ObjClass))
+    ->  (ask(triple(ObjClass, 'http://www.semanticweb.org/suturo/ontologies/2020/3/objects#TtSName',_))
+        -> ask(triple(ObjClass, 'http://www.semanticweb.org/suturo/ontologies/2020/3/objects#TtSName', Name))
         ; (
-            ros_warn(ObjID),
+            ros_warn("nlg.pl unable to deterimine name no TtSName"),
             split_string(ObjClass, "#","",L),
             nth0(1,L,Name)
         )
     )
     ; (
-        ros_warn("nlg.pl unable to deterimine name"), 
+        ros_warn("nlg.pl unable to deterimine name not a Class"), 
         split_string(ObjID, "#","",L), 
         nth0(1,L,A),
         split_string(A, "_","",B), 
