@@ -19,10 +19,6 @@
     %% FIND SURFACES
     all_surfaces/1, %replaces all_srdl_objects contains ground
     is_surface/1,
-    is_table/1,
-    is_bucket/1,
-    is_shelf/1,
-    is_other/1,
     all_source_surfaces/1,
     all_target_surfaces/1,
     ground_surface/1,
@@ -59,7 +55,11 @@
     make_surfaces_target/1,
     make_role/2,
     get_surface_role/2,
-    get_perception_surface_region/2
+    get_perception_surface_region/2,
+    %% TEMP
+    create_furniture/2,
+    assign_surfaces/3,
+    init_visit_state/1
     ]).
 
 :- tripledb_load(
@@ -101,7 +101,7 @@ init_furnitures :-
     FurnitureLinks),
     forall(member(FurnitureLink2, FurnitureLinks),
     (
-        split_string(FurnitureLink2, "#", "", [_, Type, Shape]),
+        split_string(FurnitureLink2, ":", "", [_, Type, Shape]),
         create_furniture(Type, Furniture),
         tell(triple(Furniture, urdf:'hasURDFName', FurnitureLink2)),
         assign_surfaces(Furniture, FurnitureLink2, Shape),
@@ -183,7 +183,7 @@ assign_surfaces(Furniture, FurnitureLink, Shape) :-
     (
         tell(has_type(FurnitureSurface, hsr_rooms:'Shelffloor')),
         tell(triple(Furniture, hsr_rooms:'hasSurface', FurnitureSurface)),
-        tell(triple(FurnitureSurface, urdf:'hasURDFName', FurnitureLink))
+        tell(triple(FurnitureSurface, urdf:'hasURDFName', SurfaceLink))
     )).
 
 
@@ -228,13 +228,16 @@ surfaces_not_visited(Surfaces) :-
     Surfaces).
 
 
-has_table_shape(Furniture) :-
+has_table_shape(Surface) :-
+    has_surface(Furniture,Surface),
     triple(Furniture, soma:'hasShape', hsr_rooms:'TableShape').
 
-has_shelf_shape(Furniture) :-
+has_shelf_shape(Surface) :-
+    has_surface(Furniture,Surface),
     triple(Furniture, soma:'hasShape', hsr_rooms:'ShelfShape').
 
-has_bucket_shape(Furniture) :-
+has_bucket_shape(Surface) :-
+    has_surface(Furniture,Surface),
     triple(Furniture, soma:'hasShape', hsr_rooms:'BucketShape').
 
 
@@ -322,58 +325,9 @@ surface_type_of(Surface, Type):- % has not been tested yet.
     triple(Surface, hsr_objects:'isSurfaceType', Type).
 
 
-is_table(Table) :-
-    ask(triple(Table,hsr_objects:'isSurfaceType',table)).
-
-is_shelf(Shelf) :-
-    ask(triple(Shelf,hsr_objects:'isSurfaceType',shelf)).
-
-is_bucket(Bucket) :-
-    ask(triple(Bucket,hsr_objects:'isSurfaceType',bucket)).
-
-is_other(Other) :-
-    ask(triple(Other,hsr_objects:'isSurfaceType',other)).
-
-
-is_bed(Bed) :-
-    bed_surfaces(Beds),
-    member(Bed, Beds).
-
-is_cabinet(Cabinet) :-
-    cabinet_surfaces(Cabinets),
-    member(Cabinet, Cabinets).
-
-is_couch(Couch) :-
-    couch_surfaces(Couches),
-    member(Couch, Couches).
-
-is_dishwasher(Dishwasher) :-
-    dishwasher_surfaces(Dishwashers),
-    member(Dishwasher, Dishwashers).
-
-is_fridge(Fridge) :-
-    fridge_surfaces(Fridges),
-    member(Fridge, Fridges).
-
-is_sideboard(Sideboard) :-
-    sideboard_surfaces(Sideboards),
-    member(Sideboard, Sideboards).
-
-is_sink(Sink) :-
-    sink_surfaces(Sinks),
-    member(Sink, Sinks).
-
-
 /**
 *****************************************FIND SURFACES******************************************************
 */
-
-all_surfaces(SurfaceLinks):-
-    findall(SurfaceLink,
-        triple(SurfaceLink,hsr_objects:'isSurfaceType',_),
-        SurfaceLinks
-    ).
-
 
 % Surfaces is a list of all SurfaceLinks that are source
 all_source_surfaces(Surfaces):-
@@ -584,10 +538,16 @@ get_surface_role(SurfaceLink, Role):-
     triple(SurfaceLink, hsr_objects:'sourceOrTarget', Role).
 
 get_perception_surface_region(Surface, PerceptionName):-
-    is_shelf(Surface),
-    split_string(Surface, ":","",SurfaceSplit), nth0(0,SurfaceSplit,Name),sub_atom(Surface, _, 1, 0, Number), string_concat(Name,"_floor_",Temp), string_concat(Temp,Number,PerceptionName),!.
+    has_shelf_shape(Surface),
+    has_urdf_name(Surface,Name),
+    split_string(Surface, ":","",SurfaceSplit),
+    nth0(0,SurfaceSplit,Name),sub_atom(Surface, _, 1, 0, Number),
+    string_concat(Name,"_floor_",Temp),
+    string_concat(Temp,Number,PerceptionName),!.
 
 get_perception_surface_region(Surface, PerceptionName):-
-    not(is_shelf(Surface)),
-    split_string(Surface, ":","",SurfaceSplit), nth0(0,SurfaceSplit,PerceptionName).
+    not(has_shelf_shape(Surface)),    
+    has_urdf_name(Surface,Name),
+    split_string(Name, ":","",SurfaceSplit),
+    nth0(0,SurfaceSplit,PerceptionName).
 

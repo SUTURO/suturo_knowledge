@@ -67,7 +67,7 @@ forget_objects_on_surface_(SurfaceLink) :-
 % Otherwise the query resolves to false.
 % @param Object the object to find the surface on.
 place_object(Object):-
-    object_supportable_by_surface(Object, Surface),
+    object_supported_by_surface(Object, Surface),
     assert_object_on(Object,Surface).
 
 %% create_object(PerceivedObjectType, PercTypeConf, Transform, [Width, Depth, Height], 'box', PercShapeConf, Color, PercColorConf, ObjID is nondet.

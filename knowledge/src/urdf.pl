@@ -2,12 +2,9 @@
     [
         load_surfaces_from_param/1,
         get_surface_id_by_name/2,
-        surface_tf_frame/2,
         surface_frame_add_prefix_/2,
-
         urdf_frame_add_prefix_/2,
         surface_center_pose/2,
-        surface_front_edge_center_frame/2,
         surface_front_edge_center_pose/2,
         surface_dimensions/4,
         object_tf_frame/2,
@@ -28,14 +25,14 @@ load_surfaces_from_param(Param):-
     urdf_load_xml(URDF,S),
     get_urdf_origin(Origin),
     urdf_set_pose_to_origin(URDF,Origin),
-    urdf_link_names(URDF,Links),
+    urdf_link_names(URDF,Links)
     %init_surface_types,
-    forall(
-    ( member(Link, Links)),
-    ((supporting_surface(Link) % if supporting Surface
-        -> assert_surface_types(Link)) % assert it as a type
-        ; true   % else do nothing
-    ))
+%    forall(
+%    ( member(Link, Links)),
+%    ((supporting_surface(Link) % if supporting Surface
+%        -> assert_surface_types(Link)) % assert it as a type
+%        ; true   % else do nothing
+%    ))
     .
 
 
@@ -51,11 +48,6 @@ get_surface_id_by_name(Name, SurfaceId):-
     ).
 
 
-%% gives the tf frame given the SurfaceID
-surface_tf_frame(Surface, Frame):-
-    is_surface(Surface),
-    surface_front_edge_center_frame(Surface, Frame).
-
 object_tf_frame(Object, Frame) :-
     ( sub_string(Object,_,_,_,"#")
     -> split_string(Object, "#", "", [_, Frame])
@@ -68,31 +60,17 @@ urdf_tf_frame(UrdfInstance, Frame) :-
     urdf_frame_add_prefix_(UrdfName, Frame).
 
 
+surface_center_pose(Surface, [Position, Rotation]):-
+    has_urdf_name(Surface, CenterTFFrame),
+    tf_lookup_transform('map', CenterTFFrame, pose(Position,Rotation)).
 
-surface_center_pose(Surface, [Position, Rotation]) :-
-    surface_front_edge_center_frame(Surface, FrontEdgeCenterFrame),
-    get_urdf_id(URDF),
-    urdf_link_collision_shape(URDF,Surface,box(X,Y,Z),_),
-    HalfX is X / 2,
-    tf_transform_point(FrontEdgeCenterFrame, map, [HalfX, 0, 0], Position),
-    tf_lookup_transform('map', FrontEdgeCenterFrame, pose(_,Rotation)).
+surface_front_edge_center_pose(Surface, [Position, Rotation]):-
+    has_urdf_name(Surface, SurfaceLink),
+    surface_dimensions(Surface,X,_,_),
+    NegHalfX is X / -2,
+    tf_transform_point(SurfaceLink, map, [NegHalfX, 0, 0], Position),
+    tf_lookup_transform('map', SurfaceLink, pose(_,Rotation)).
 
-surface_front_edge_center_pose(Surface,[Trans,Rot]):-
-    surface_front_edge_center_frame(Surface, FrontEdgeCenterFrame),
-    tf_lookup_transform('map', FrontEdgeCenterFrame, pose(Trans,Rot)).
-
-
-surface_front_edge_center_frame(Surface, FrontEdgeCenterFrame) :- % in case it's a Shelf
-    is_shelf(Surface),
-    FrontEdgeCenterFrame = Surface.
-    %surface_frame_with_prefix_(Surface, FrontEdgeCenterFrame).
-
-surface_front_edge_center_frame(Surface, FrontEdgeCenterFrame) :- % in case it's a Table or a Bucket
-    (is_table(Surface); is_bucket(Surface)),
-    atom_length(Surface,L),
-    C is L - 7,
-    sub_atom(Surface, 0, C, _, Name), % cuts away the Postfix "_center" (the last 7 letters)
-    atom_concat(Name, '_front_edge_center', FrontEdgeCenterFrame).
 
     
 surface_frame_add_prefix_(SurfaceName, Surface_with_Prefix) :-

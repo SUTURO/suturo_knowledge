@@ -7,11 +7,10 @@
         hsr_existing_object_at_thr/3,
 	    object_pose/2,
         surface_pose_in_map/2,
-        object_supportable_by_surface/2,
-        position_supportable_by_surface/2,
+        object_supported_by_surface/2,
+        position_supported_by_surface/2,
         distance_to_robot/2,
         %Debug
-        relative_position_supportable_by_surface/2,
         is_legal_obj_position/1,
         object_in_room/2,
         surface_in_room/2,
@@ -84,51 +83,8 @@ surface_pose_in_map(SurfaceLink, Pose) :-
     hsr_lookup_transform(map, Frame, [X,Y,Z], Rotation),
     Pose = [[X,Y,Z], Rotation].
 
-%%%%%%%%%%%%%%%  Supportable by surface  %%%%%%%%%%%%%%%%%5
-
-% finds and returns surfaces the object might be standing on.
-object_supportable_by_surface(Object, Surface):-
-    all_surfaces(Surfaces),
-    member(Surface,Surfaces),
-    surface_front_edge_center_frame(Surface, SurfaceFrame),
-    object_tf_frame(Object, ObjectFrame),
-    hsr_lookup_transform(SurfaceFrame, ObjectFrame, Position, _),
-    relative_position_supportable_by_surface(Position, Surface).
+%%%%%%%%%%%%%%%  Supportable by surface  %%%%%%%%%%%%%%%%%
     
-object_supportable_by_surface(Object, ground):-
-    object_tf_frame(Object, Frame),
-    hsr_lookup_transform(map, Frame, [_,_,Z], _),
-    position_supportable_by_ground(Z).
-
-position_supportable_by_surface(Position, Surface) :-
-    all_surfaces(Surfaces),
-    member(Surface, Surfaces),
-    surface_front_edge_center_frame(Surface, Frame),
-    tf_transform_point(map, Frame, Position, RelativePosition), % rospolog
-    relative_position_supportable_by_surface(RelativePosition, Surface),
-    !.
-    
-position_supportable_by_surface(Position, ground) :-
-    position_supportable_by_ground(Position).
-
-relative_position_supportable_by_surface([X,Y,Z], Surface) :-
-    is_table(Surface),
-    surface_dimensions(Surface, Depth, Width, _),
-    threshold_surface(ThAbove, ThBelow),
-    ThAbove >= Z,
-    ThBelow =< Z,
-    Width/2 >= abs(Y),
-    0 < X,
-    Depth >= X.
-
-relative_position_supportable_by_surface([X,Y,Z], Surface) :-
-    ( is_shelf(Surface); is_bucket(Surface)),
-    surface_dimensions(Surface, Depth, Width, _),
-    threshold_surface(ThAbove, ThBelow),
-    ThAbove >= Z,
-    ThBelow =< Z,
-    Width/2 >= abs(Y),
-    Depth/2 >= abs(X).
 
 position_supportable_by_ground(ZPos) :-
     number(ZPos),
@@ -138,7 +94,6 @@ position_supportable_by_ground(ZPos) :-
 
 position_supportable_by_ground([_,_,Z]) :-
     position_supportable_by_ground(Z).
-
 
 
 is_legal_obj_position([X, Y, Z]) :-
@@ -322,6 +277,11 @@ position_supported_by_surface(Position, Surface) :-
     ThBelow =< Z,
     Width/2 >= abs(Y),
     Depth/2 >= abs(X).
+
+
+%position_supportable_by_surface(Position, ground) :-
+%    position_supportable_by_ground(Position).
+
 
 
 furnitures_in_room(Room, Furnitures) :-
