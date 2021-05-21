@@ -17,11 +17,52 @@
     <!-- 
     ///////////////////////////////////////////////////////////////////////////////////////
     //
+    // Annotation properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#TtSName -->
+
+    <owl:AnnotationProperty rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#TtSName"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
     // Object Properties
     //
     ///////////////////////////////////////////////////////////////////////////////////////
      -->
 
+    
+
+
+    <!-- http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#associatedWith -->
+
+    <owl:ObjectProperty rdf:about="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#associatedWith"/>
+    
+
+
+    <!-- http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#hasLocation -->
+
+    <owl:ObjectProperty rdf:about="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#hasLocation"/>
+    
+
+
+    <!-- http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#hasRole -->
+
+    <owl:ObjectProperty rdf:about="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#hasRole"/>
+    
+
+
+    <!-- http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#isRoleOf -->
+
+    <owl:ObjectProperty rdf:about="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#isRoleOf"/>
     
 
 
@@ -129,6 +170,12 @@
     
 
 
+    <!-- http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#hasDataValue -->
+
+    <owl:DatatypeProperty rdf:about="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#hasDataValue"/>
+    
+
+
     <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#hasJointState -->
 
     <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#hasJointState">
@@ -150,17 +197,53 @@
     
 
 
+    <!-- http://knowrob.org/kb/urdf.owl#Joint -->
+
+    <owl:Class rdf:about="http://knowrob.org/kb/urdf.owl#Joint"/>
+    
+
+
+    <!-- http://knowrob.org/kb/urdf.owl#Link -->
+
+    <owl:Class rdf:about="http://knowrob.org/kb/urdf.owl#Link"/>
+    
+
+
     <!-- http://www.ease-crc.org/ont/SOMA.owl#DesignedHandle -->
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA.owl#DesignedHandle"/>
     
 
 
+    <!-- http://www.ease-crc.org/ont/SOMA.owl#Linkage -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Linkage"/>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SOMA.owl#Location -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Location"/>
+    
+
+
     <!-- http://www.ease-crc.org/ont/SOMA.owl#Room -->
 
-    <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Room">
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Room">
         <owl:equivalentClass rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Room"/>
-    </rdf:Description>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SOMA.owl#RoomSurface -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA.owl#RoomSurface"/>
+    
+
+
+    <!-- http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#Role -->
+
+    <owl:Class rdf:about="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#Role"/>
     
 
 
@@ -256,6 +339,7 @@
         <owl:disjointWith rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Office"/>
         <owl:disjointWith rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#OtherRoom"/>
         <owl:disjointWith rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#SleepingRoom"/>
+        <TtSName>hall</TtSName>
     </owl:Class>
     
 
@@ -344,6 +428,7 @@
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#SleepingRoom">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Room"/>
+        <TtSName>bedroom</TtSName>
     </owl:Class>
     
 
