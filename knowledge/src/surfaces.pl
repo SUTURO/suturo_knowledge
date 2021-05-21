@@ -1,18 +1,24 @@
 
 :- module(surfaces,
     [
-    assert_surface_types/1,
+    init_furnitures/0,
+    is_furniture/1,
+    all_furnitures/1,
+    furniture_surfaces/2,
+    surfaces_not_visited/1,
+    has_table_shape/1,
+    has_shelf_shape/1,
+    has_bucket_shape/1,
+    has_surface/2,
+    visited/1,
+    update_visit_state/1,
+    all_surfaces_of_type/2,
     supporting_surface/1,
     assert_object_on/2,
     surface_type_of/2,
-    is_legal_obj_position/1,
     %% FIND SURFACES
     all_surfaces/1, %replaces all_srdl_objects contains ground
     is_surface/1,
-    is_table/1,
-    is_bucket/1,
-    is_shelf/1,
-    is_other/1,
     all_source_surfaces/1,
     all_target_surfaces/1,
     ground_surface/1,
@@ -32,6 +38,7 @@
     compareDistances/3,
     %% FIND OBJs
     objects_on_surface/2,
+    is_suturo_object/1,
     hsr_is_object/1,
     objects_on_list_of_surfaces/2,
     all_objects_on_source_surfaces/1,
@@ -47,7 +54,12 @@
     make_surfaces_source/1,
     make_surfaces_target/1,
     make_role/2,
-    get_surface_role/2
+    get_surface_role/2,
+    get_perception_surface_region/2,
+    %% TEMP
+    create_furniture/2,
+    assign_surfaces/3,
+    init_visit_state/1
     ]).
 
 :- tripledb_load(
@@ -73,6 +85,197 @@
     object_goal_pose(r,?,?,?).
 
 
+
+init_furnitures :-
+    get_urdf_id(URDF),
+    urdf_link_names(URDF, Links),
+    findall(FurnitureLink, 
+    (
+        member(FurnitureLink, Links),
+        (
+            sub_string(FurnitureLink,_,_,_,"table_front_edge_center");
+            sub_string(FurnitureLink,_,_,_,"shelf_base_center");
+            sub_string(FurnitureLink,_,_,_,"bucket_front_edge_center")
+        )
+    ),
+    FurnitureLinks),
+    forall(member(FurnitureLink2, FurnitureLinks),
+    (
+        split_string(FurnitureLink2, ":", "", [_, Type, Shape]),
+        create_furniture(Type, Furniture),
+        tell(triple(Furniture, urdf:'hasURDFName', FurnitureLink2)),
+        assign_surfaces(Furniture, FurnitureLink2, Shape),
+        init_visit_state(Furniture)
+    )).
+
+
+create_furniture(FurnitureType, Furniture) :-
+    sub_string(FurnitureType,_,_,_,"armchair"),
+    tell(has_type(Furniture, hsr_rooms:'Armchair')).
+
+create_furniture(FurnitureType, Furniture) :-
+    sub_string(FurnitureType,_,_,_,"bed"),
+    tell(has_type(Furniture, hsr_rooms:'Bed')).
+
+create_furniture(FurnitureType, Furniture) :-
+    sub_string(FurnitureType,_,_,_,"bucket"),
+    tell(has_type(Furniture, hsr_rooms:'Bucket')).
+
+create_furniture(FurnitureType, Furniture) :-
+    sub_string(FurnitureType,_,_,_,"couch"),
+    tell(has_type(Furniture, hsr_rooms:'Couch')).
+
+create_furniture(FurnitureType, Furniture) :-
+    sub_string(FurnitureType,_,_,_,"cabinet"),
+    tell(has_type(Furniture, hsr_rooms:'Cabinet')).
+
+create_furniture(FurnitureType, Furniture) :-
+    sub_string(FurnitureType,_,_,_,"dishwasher"),
+    tell(has_type(Furniture, hsr_rooms:'Dishwasher')).
+
+create_furniture(FurnitureType, Furniture) :-
+    sub_string(FurnitureType,_,_,_,"fridge"),
+    tell(has_type(Furniture, hsr_rooms:'Fridge')).
+
+create_furniture(FurnitureType, Furniture) :-
+    sub_string(FurnitureType,_,_,_,"shelf"),
+    tell(has_type(Furniture, hsr_rooms:'Shelf')).
+
+create_furniture(FurnitureType, Furniture) :-
+    sub_string(FurnitureType,_,_,_,"sideboard"),
+    tell(has_type(Furniture, hsr_rooms:'Sideboard')).
+
+create_furniture(FurnitureType, Furniture) :-
+    sub_string(FurnitureType,_,_,_,"sidetable"),
+    tell(has_type(Furniture, hsr_rooms:'Sidetable')).
+
+create_furniture(FurnitureType, Furniture) :-
+    sub_string(FurnitureType,_,_,_,"sink"),
+    tell(has_type(Furniture, hsr_rooms:'Sink')).
+
+create_furniture(FurnitureType, Furniture) :-
+    sub_string(FurnitureType,_,_,_,"table"),
+    tell(has_type(Furniture, hsr_rooms:'Table')).
+
+
+assign_surfaces(Furniture, FurnitureLink, Shape) :-
+    sub_string(Shape,_,_,_,"table"),
+    tell(triple(Furniture, soma:'hasShape', hsr_rooms:'TableShape')),
+    tell(has_type(FurnitureSurface, hsr_rooms:'Tabletop')),
+    tell(triple(Furniture, hsr_rooms:'hasSurface', FurnitureSurface)),
+    sub_atom(FurnitureLink, 0, _, 17, FurnitureStem),
+    atom_concat(FurnitureStem, "center", SurfaceLink),
+    tell(triple(FurnitureSurface, urdf:'hasURDFName', SurfaceLink)).
+
+
+assign_surfaces(Furniture, FurnitureLink, Shape) :-
+    sub_string(Shape,_,_,_,"shelf"),
+    tell(triple(Furniture, soma:'hasShape', hsr_rooms:'ShelfShape')),
+    get_urdf_id(URDF),
+    urdf_link_child_joints(URDF, FurnitureLink, Joints),
+    findall(SurfaceLink,
+    (
+        member(Joint, Joints),
+        urdf_joint_child_link(URDF, Joint, SurfaceLink)
+    ), 
+    SurfaceLinks),
+    forall((member(SurfaceLink, SurfaceLinks), supporting_surface(SurfaceLink)),
+    (
+        tell(has_type(FurnitureSurface, hsr_rooms:'Shelffloor')),
+        tell(triple(Furniture, hsr_rooms:'hasSurface', FurnitureSurface)),
+        tell(triple(FurnitureSurface, urdf:'hasURDFName', SurfaceLink))
+    )).
+
+
+assign_surfaces(Furniture, FurnitureLink, Shape) :-
+    sub_string(Shape,_,_,_,"bucket"),
+    tell(triple(Furniture, soma:'hasShape', hsr_rooms:'BucketShape')),
+    tell(has_type(FurnitureSurface, hsr_rooms:'BucketOpening')),
+    tell(triple(Furniture, hsr_rooms:'hasSurface', FurnitureSurface)),
+    sub_atom(FurnitureLink, 0, _, 17, FurnitureStem),
+    atom_concat(FurnitureStem, "surface_center", SurfaceLink),
+    tell(triple(FurnitureSurface, urdf:'hasURDFName', SurfaceLink)).
+
+
+init_visit_state(Furniture) :-
+    furniture_surfaces(Furniture, Surfaces),
+    forall(member(Surface, Surfaces),
+    (
+        tell(has_type(VisitState, hsr_rooms:'VisitState')),
+        tell(triple(Surface, hsr_rooms:'hasVisitState', VisitState)),
+        tell(triple(VisitState, hsr_rooms:'visited', false))
+    )).
+
+
+update_visit_state(Surface) :-
+    is_surface(Surface),
+    triple(Surface, hsr_rooms:'hasVisitState', VisitState),
+    forall(triple(VisitState, hsr_rooms:'visited', _), tripledb_forget(VisitState, hsr_rooms:'visited', _)),
+    tell(triple(VisitState, hsr_rooms:'visited', true)).
+
+visited(Surface) :-
+    is_surface(Surface),
+    triple(Surface, hsr_rooms:'hasVisitState', VisitState),
+    triple(VisitState, hsr_rooms:'visited', Visited),
+    Visited == 1.
+
+surfaces_not_visited(Surfaces) :-
+    findall(Surface,
+    (
+        is_surface(Surface),
+        not visited(Surface)
+    ),
+    Surfaces).
+
+
+has_table_shape(Surface) :-
+    has_surface(Furniture,Surface),
+    triple(Furniture, soma:'hasShape', hsr_rooms:'TableShape').
+
+has_shelf_shape(Surface) :-
+    has_surface(Furniture,Surface),
+    triple(Furniture, soma:'hasShape', hsr_rooms:'ShelfShape').
+
+has_bucket_shape(Surface) :-
+    has_surface(Furniture,Surface),
+    triple(Furniture, soma:'hasShape', hsr_rooms:'BucketShape').
+
+
+is_furniture(Furniture) :-
+    has_type(Furniture, soma:'DesignedFurniture').
+
+all_furnitures(Furnitures) :-
+    findall(Furniture,
+    (
+        has_type(Furniture, soma:'DesignedFurniture')
+    ),
+    Furnitures).
+
+all_furnitures_of_type(FurnitureType, Furnitures) :-
+    findall(Furniture, has_type(Furniture, FurnitureType), Furnitures).
+
+is_surface(Surface) :-
+    has_type(Surface, soma:'Surface').
+
+all_surfaces(Surfaces) :-
+    findall(Surface, 
+    (
+        has_type(Surface, soma:'Surface')
+    ),
+    Surfaces).
+
+
+has_surface(Furniture, Surface) :-
+    triple(Furniture, hsr_rooms:'hasSurface', Surface).
+
+
+furniture_surfaces(Furniture, Surfaces) :-
+    findall(Surface,
+    (
+        has_surface(Furniture, Surface)
+    ),
+    Surfaces).
+
 % Surface Link is the String used directly like /table_1_center etc.
 assert_surface_types(SurfaceLink):-
     tell(triple(ground,hsr_objects:'isSurfaceType',ground)),
@@ -89,13 +292,12 @@ assert_surface_types(SurfaceLink):-
     )).
 
 
+
 %% supporting_surface(?Surface).
 %
 supporting_surface(SurfaceLink):-
     get_urdf_id(URDF),
-    %write(SurfaceLink),
     urdf_link_collision_shape(URDF,SurfaceLink,ShapeTerm,_),
-    %write(ShapeTerm),
     surface_big_enough(ShapeTerm).
 
 surface_big_enough(box(X, Y, _)):- %TODO Support other shapes, has not been tested yet.
@@ -122,62 +324,10 @@ assert_object_on(ObjectInstance, SurfaceLink) :-
 surface_type_of(Surface, Type):- % has not been tested yet.
     triple(Surface, hsr_objects:'isSurfaceType', Type).
 
-is_surface(Surface) :-
-    all_surfaces(Surfaces),
-    member(Surface, Surfaces).
-
-is_table(Table) :-
-    ask(triple(Table,hsr_objects:'isSurfaceType',table)).
-
-is_shelf(Shelf) :-
-    ask(triple(Shelf,hsr_objects:'isSurfaceType',shelf)).
-
-is_bucket(Bucket) :-
-    ask(triple(Bucket,hsr_objects:'isSurfaceType',bucket)).
-
-is_other(Other) :-
-    ask(triple(Other,hsr_objects:'isSurfaceType',other)).
-
-
-is_bed(Bed) :-
-    bed_surfaces(Beds),
-    member(Bed, Beds).
-
-is_cabinet(Cabinet) :-
-    cabinet_surfaces(Cabinets),
-    member(Cabinet, Cabinets).
-
-is_couch(Couch) :-
-    couch_surfaces(Couches),
-    member(Couch, Couches).
-
-is_dishwasher(Dishwasher) :-
-    dishwasher_surfaces(Dishwashers),
-    member(Dishwasher, Dishwashers).
-
-is_fridge(Fridge) :-
-    fridge_surfaces(Fridges),
-    member(Fridge, Fridges).
-
-is_sideboard(Sideboard) :-
-    sideboard_surfaces(Sideboards),
-    member(Sideboard, Sideboards).
-
-is_sink(Sink) :-
-    sink_surfaces(Sinks),
-    member(Sink, Sinks).
-
 
 /**
 *****************************************FIND SURFACES******************************************************
 */
-
-all_surfaces(SurfaceLinks):-
-    findall(SurfaceLink,
-        triple(SurfaceLink,hsr_objects:'isSurfaceType',_),
-        SurfaceLinks
-    ).
-
 
 % Surfaces is a list of all SurfaceLinks that are source
 all_source_surfaces(Surfaces):-
@@ -229,6 +379,11 @@ other_surfaces(OtherLinks):-
 find_supporting_surface(Object, Surface) :-
     triple(Object, hsr_objects:'supportedBy', Surface).
 
+
+is_suturo_object(Object) :-
+    hsr_existing_objects(Objects),
+    member(Object, Objects).
+    
 hsr_is_object(Object) :-
     hsr_existing_objects(Objects),
     member(Object, Objects).
@@ -347,8 +502,6 @@ all_objects_in_gripper(Instances):-
         member(Instance, Objs)
         ), Instances).
 
-is_legal_obj_position([X,Y,Z]) :-
-    position_supportable_by_surface([X,Y,Z], _). % call from store_obj_info_server
 
 
 /**
@@ -383,4 +536,18 @@ make_role(SurfaceLink, Role):-
 % Role is the role (target or source) of the given SurfaceLink
 get_surface_role(SurfaceLink, Role):-
     triple(SurfaceLink, hsr_objects:'sourceOrTarget', Role).
+
+get_perception_surface_region(Surface, PerceptionName):-
+    has_shelf_shape(Surface),
+    has_urdf_name(Surface,Name),
+    split_string(Surface, ":","",SurfaceSplit),
+    nth0(0,SurfaceSplit,Name),sub_atom(Surface, _, 1, 0, Number),
+    string_concat(Name,"_floor_",Temp),
+    string_concat(Temp,Number,PerceptionName),!.
+
+get_perception_surface_region(Surface, PerceptionName):-
+    not(has_shelf_shape(Surface)),    
+    has_urdf_name(Surface,Name),
+    split_string(Name, ":","",SurfaceSplit),
+    nth0(0,SurfaceSplit,PerceptionName).
 

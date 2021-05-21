@@ -1,17 +1,29 @@
-:- use_module(library('db/tripledb_tests')).
+:- begin_tests(rooms).
 
-:- use_module(library('knowrob')).
-:- use_module(library('semweb/rdf_db')).
-:- use_module(library('semweb/rdfs')).
-
-:- begin_tripledb_tests(
-      	'locations',
-       	'package://knowledge/owl/testing.owl',
-       	[ namespace('http://www.semanticweb.org/suturo/ontologies/2021/0/testing#')]
- ).
+:- use_module(library('model/RDFS'), [ has_type/2 ]).
 
 
- test(get_location) :-
-    true.
+:- use_module(library(test)).
+:- use_module('rooms.pl').
 
- :- end_tripledb_tests('locations').
+
+test(setup) :-
+	setup_suturo_rooms_test_env,
+	setup_suturo_test_rooms.
+
+
+
+test(robot_in_room) :-
+	in_room(Room),
+	has_type(ExpRoom, hsr_rooms:'Hall'),
+	assert_equals(Room, ExpRoom).
+
+
+test(all_rooms) :-
+	findall(Room, has_type(Room, hsr_rooms:'Room'), ExpRooms),
+	all_rooms(ActRooms),
+	assert_true(subset(ExpRooms, ActRooms)),
+	assert_true(subset(ActRooms, ExpRooms)).
+
+
+:- end_tests(rooms).

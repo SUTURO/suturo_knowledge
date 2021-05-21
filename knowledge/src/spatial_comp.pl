@@ -5,13 +5,24 @@
         hsr_existing_object_at/2,
         hsr_existing_object_at_thr/2,
         hsr_existing_object_at_thr/3,
-	object_pose/2,
+	    object_pose/2,
         surface_pose_in_map/2,
-        object_supportable_by_surface/2,
-        position_supportable_by_surface/2,
+        object_supported_by_surface/2,
+        position_supported_by_surface/2,
         distance_to_robot/2,
         %Debug
-        relative_position_supportable_by_surface/2,
+        is_legal_obj_position/1,
+        object_in_room/2,
+        surface_in_room/2,
+        furniture_in_room/2,
+        robot_in_room/1,
+        object_at_location/4,
+        object_on_furniture/2,
+        furnitures_in_room/2,
+        surfaces_in_room/2,
+        objects_in_room/2,
+        locations_not_visited/1,
+        locations_not_visited/2,
         predefined_location/3,
         object_in_room/2,
         is_misplaced/2,
@@ -72,51 +83,8 @@ surface_pose_in_map(SurfaceLink, Pose) :-
     hsr_lookup_transform(map, Frame, [X,Y,Z], Rotation),
     Pose = [[X,Y,Z], Rotation].
 
-%%%%%%%%%%%%%%%  Supportable by surface  %%%%%%%%%%%%%%%%%5
-
-% finds and returns surfaces the object might be standing on.
-object_supportable_by_surface(Object, Surface):-
-    all_surfaces(Surfaces),
-    member(Surface,Surfaces),
-    surface_front_edge_center_frame(Surface, SurfaceFrame),
-    object_tf_frame(Object, ObjectFrame),
-    hsr_lookup_transform(SurfaceFrame, ObjectFrame, Position, _),
-    relative_position_supportable_by_surface(Position, Surface).
+%%%%%%%%%%%%%%%  Supportable by surface  %%%%%%%%%%%%%%%%%
     
-object_supportable_by_surface(Object, ground):-
-    object_tf_frame(Object, Frame),
-    hsr_lookup_transform(map, Frame, [_,_,Z], _),
-    position_supportable_by_ground(Z).
-
-position_supportable_by_surface(Position, Surface) :-
-    all_surfaces(Surfaces),
-    member(Surface, Surfaces),
-    surface_front_edge_center_frame(Surface, Frame),
-    tf_transform_point(map, Frame, Position, RelativePosition), % rospolog
-    relative_position_supportable_by_surface(RelativePosition, Surface),
-    !.
-    
-position_supportable_by_surface(Position, ground) :-
-    position_supportable_by_ground(Position).
-
-relative_position_supportable_by_surface([X,Y,Z], Surface) :-
-    is_table(Surface),
-    surface_dimensions(Surface, Depth, Width, _),
-    threshold_surface(ThAbove, ThBelow),
-    ThAbove >= Z,
-    ThBelow =< Z,
-    Width/2 >= abs(Y),
-    0 < X,
-    Depth >= X.
-
-relative_position_supportable_by_surface([X,Y,Z], Surface) :-
-    ( is_shelf(Surface); is_bucket(Surface)),
-    surface_dimensions(Surface, Depth, Width, _),
-    threshold_surface(ThAbove, ThBelow),
-    ThAbove >= Z,
-    ThBelow =< Z,
-    Width/2 >= abs(Y),
-    Depth/2 >= abs(X).
 
 position_supportable_by_ground(ZPos) :-
     number(ZPos),
@@ -127,23 +95,240 @@ position_supportable_by_ground(ZPos) :-
 position_supportable_by_ground([_,_,Z]) :-
     position_supportable_by_ground(Z).
 
+%TODO Support ground
+is_legal_obj_position([X, Y, Z]) :-
+    is_surface(Surface),
+    urdf_tf_frame(Surface, SurfaceFrame),
+    tf_transform_pose('map',SurfaceFrame,pose([X, Y, Z],[0,0,0,1]),pose(RelPosition,_)),   
+    position_supported_by_surface(RelPosition, Surface).
 
-%%%%%%%%%%%%%% in room %%%%%%%%%%%%%%
+
+locations_not_visited(Locations) :-
+    surfaces_not_visited(Surfaces),
+    findall([Room, Furniture, Surface],
+    (
+        is_room(Room),
+        member(Surface, Surfaces),
+        has_surface(Furniture, Surface),
+        in_room(Furniture, Room)
+    ),
+    Locations).
+
+locations_not_visited(Room, Locations) :-
+    is_room(Room),
+    surfaces_not_visited(Surfaces),
+    findall([Furniture, Surface], 
+    (
+        member(Surface, Surfaces),
+        has_surface(Furniture, Surface),
+        in_room(Furniture, Room)
+    ), 
+    Locations).
+
+
+object_at_location(Object, Room, Furniture, Surface) :-
+    is_suturo_object(Object),
+    has_location(Object, ObjectLocation),
+    in_room(Object, Room),
+    on_furniture(Object, Furniture),
+    supported_by_surface(Object, Surface),
+    !.
+
+object_at_location(Object, Room, Furniture, Surface) :-
+    is_suturo_object(Object),
+    tell(has_type(ObjectLocation, soma:'Location')),
+    tell(has_location(Object, ObjectLocation)),
+    in_room(Object, Room),
+    on_furniture(Object, Furniture),
+    supported_by_surface(Object, Surface),
+    !.
+
+object_at_predefined_location(Object, RoomType, FurnitureType) :-
+    is_suturo_object(object),
+    in_predefined_room(Object, RoomType),
+    on_predefined_furniture(Object, FurnitureType).
+
+robot_in_room(Room) :-
+    get_urdf_origin(Origin),
+    tf_lookup_transform(Origin, 'base_footprint', pose(RobotPosition, _)),
+    has_type(Room, hsr_rooms:'Room'),
+    room_corner_point_positions(Room, CornerPoints),
+    point_in_polygon(RobotPosition, CornerPoints).
 
 object_in_room(Object, Room) :-
-    object_frame_name(Object, ObjFrame),
-    get_urdf_origin(Origin),
-    tf_lookup_transform(ObjFrame, Origin, pose([XObj, YObj, _], _)),
-    has_type(Room, hsr_rooms:'Room'),
-    object_frame_name(Room, RoomFrame),
-    tf_lookup_transform(RoomFrame, Origin, pose([XRoom, YRoom, _], _)),
-    object_dimensions(Room, Width, Depth, _),
-    XObj > XRoom - Width/2,
-    XObj < XRoom + Width/2,
-    YObj > YRoom - Depth/2,
-    YObj < YRoom + Depth/2.
+    is_suturo_object(Object),
+    has_location(Object, ObjectLocation),
+    triple(ObjectLocation, knowrob:'isInsideOf', Room),
+    is_room(Room).
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+object_in_room(Object, Room) :-
+    is_suturo_object(Object),
+    has_location(Object, ObjectLocation),
+    object_tf_frame(Object, ObjectFrame),
+    get_urdf_origin(Origin),
+    tf_lookup_transform(Origin, ObjectFrame, pose(ObjectPosition, _)),
+    has_type(Room, hsr_rooms:'Room'),
+    room_corner_point_positions(Room, CornerPoints),
+    point_in_polygon(ObjectPosition, CornerPoints),
+    forall(
+    (
+        triple(ObjectLocation, knowrob:'isInsideOf', CurrentRoom), 
+        has_type(CurrentRoom, hsr_rooms:'Room')
+    ), 
+    update(triple(ObjectLocation, knowrob:'isInsideOf', Room))).
+
+
+object_in_room(Object, Room) :-
+    is_suturo_object(Object),
+    object_tf_frame(Object, ObjectFrame),
+    get_urdf_origin(Origin),
+    tf_lookup_transform(Origin, ObjectFrame, pose(ObjectPosition, _)),
+    has_type(Room, hsr_rooms:'Room'),
+    room_corner_point_positions(Room, CornerPoints),
+    point_in_polygon(ObjectPosition, CornerPoints),
+    tell(has_type(ObjectLocation, soma:'Location')),
+    tell(has_location(Object, ObjectLocation)),
+    tell(triple(ObjectLocation, knowrob:'isInsideOf', Room)).
+
+
+furniture_in_room(Furniture, Room) :-
+    is_furniture(Furniture),
+    once(has_location(Furniture, FurnitureLocation)),
+    triple(FurnitureLocation, knowrob:'isInsideOf', Room),
+    !.
+
+furniture_in_room(Furniture, Room) :-
+    is_furniture(Furniture),
+    once(has_location(Furniture, FurnitureLocation)),
+    urdf_tf_frame(Furniture, FurnitureFrame),
+    get_urdf_origin(Origin),
+    tf_lookup_transform(Origin, FurnitureFrame, pose(ObjectPosition, _)),
+    has_type(Room, hsr_rooms:'Room'),
+    room_corner_point_positions(Room, CornerPoints),
+    point_in_polygon(ObjectPosition, CornerPoints),
+    update(triple(FurnitureLocation, knowrob:'isInsideOf', Room)),
+    !.
+
+furniture_in_room(Furniture, Room) :-
+    is_furniture(Furniture),
+    urdf_tf_frame(Furniture, FurnitureFrame),
+    get_urdf_origin(Origin),
+    tf_lookup_transform(Origin, FurnitureFrame, pose(ObjectPosition, _)),
+    has_type(Room, hsr_rooms:'Room'),
+    room_corner_point_positions(Room, CornerPoints),
+    point_in_polygon(ObjectPosition, CornerPoints),
+    tell(has_type(FurnitureLocation, soma:'Location')),
+    tell(has_location(Furniture, FurnitureLocation)),
+    update(triple(FurnitureLocation, knowrob:'isInsideOf', Room)),
+    !.
+
+surface_in_room(Surface, Room) :-
+    is_surface(Surface),
+    has_surface(Furniture, Surface),
+    furniture_in_room(Furniture, Room).
+
+object_in_predefined_room(Object, RoomType) :-
+    has_predefined_location(Object, Location),
+    triple(Location, knowrob:'isInsideOf', RoomType).
+
+object_on_furniture(Object, Furniture) :-
+    is_suturo_object(Object),
+    has_location(Object, ObjectLocation),
+    triple(ObjectLocation, knowrob:'isInsideOf', Furniture),
+    is_furniture(Furniture).
+
+object_on_furniture(Object, Furniture) :-
+    is_suturo_object(Object),
+    has_location(Object, ObjectLocation),
+    triple(ObjectLocation, knowrob:'isOnTopOf', Furniture),
+    is_furniture(Furniture).
+
+object_on_furniture(Object, Furniture) :-
+    is_suturo_object(Object),
+    is_furniture(Furniture),
+    has_surface(Furniture, Surface),
+    supported_by_surface(Object, Surface).
+
+object_on_predefined_furniture(Object, FurnitureType) :-
+    has_predefined_location(Object, Location),
+    (triple(Location, knowrob:'isOntopOf', SurfaceType);
+    triple(Location, knowrob:'isInsideOf', SurfaceType)).
+
+object_supported_by_surface(Object, Surface) :-
+    is_suturo_object(Object),
+    has_location(Object, ObjectLocation),
+    triple(ObjectLocation, soma:'isSupportedBy', Surface).
+
+object_supported_by_surface(Object, Surface) :-
+    is_suturo_object(Object),
+    is_surface(Surface),
+    object_tf_frame(Object, ObjectFrame),
+    urdf_tf_frame(Surface, SurfaceFrame),
+    tf_lookup_transform(SurfaceFrame, ObjectFrame, pose(Position, _)),
+    position_supported_by_surface(Position, Surface)
+    %tell(has_location(Object, ObjectLocation)),
+    %tell(triple(ObjectLocation, soma:'isSupportedBy', Surface)).
+    .
+
+position_supported_by_surface([X,Y,Z], Surface) :-
+    is_surface(Surface),
+    surface_dimensions(Surface, Depth, Width, _),
+    threshold_surface(ThAbove, ThBelow),
+    urdf_tf_frame(Surface, SurfaceFrame),
+    ThAbove >= Z,
+    ThBelow =< Z,
+    Width/2 >= abs(Y),
+    Depth/2 >= abs(X).
+
+
+%position_supportable_by_surface(Position, ground) :-
+%    position_supportable_by_ground(Position).
+
+
+
+furnitures_in_room(Room, Furnitures) :-
+    all_furnitures(AllFurnitures),
+    findall(Furniture, 
+    (
+        member(Furniture, AllFurnitures),
+        furniture_in_room(Furniture, Room)
+    ),
+    Furnitures).
+
+
+surfaces_in_room(Room, Surfaces) :-
+    furnitures_in_room(Room, Furnitures),
+    findall(Surface, 
+    (
+        member(Furniture, Furnitures),
+        has_surface(Furniture, Surface)
+    ),
+    Surfaces).
+
+
+objects_in_room(Room, Objects) :-
+    findall(Object,
+    (
+        is_suturo_object(Object),
+        object_in_room(Object, Room)
+    ),
+    Objects).
+
+has_predefined_location(Object, Location) :-
+    once(
+    (
+        has_type(Object, ObjectType),
+        transitive(subclass_of(ObjectType, SupportedType)),
+        triple(SupportedType, hsr_rooms:'hasPredefinedLocation', Location) 
+    )).
+
+is_misplaced(Object) :-
+    object_at_location(Object, Room, Furniture, _),
+    object_at_predefined_location(Object, RoomType, FurnitureType),
+    has_type(Room, RoomType),
+    has_type(Furniture, FurnitureType).
+
+
 
 object_pose(ObjID, ['map',Frame, Point, Rotation]) :-
     object_tf_frame(ObjID,Frame),

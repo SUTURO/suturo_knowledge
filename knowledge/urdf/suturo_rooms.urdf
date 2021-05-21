@@ -920,7 +920,7 @@
   <!--ROBOT LINK ONLY FOR TESTING-->
   <link name="base_footprint"/>
   <joint name="base_footprint_joint" type="fixed">
-    <origin rpy="0 0 0" xyz="-4.0 -4.0 0.0"/>
+    <origin rpy="0 0 0" xyz="-4.0 -3.0 0.0"/>
     <parent link="urdf_main"/>
     <child link="base_footprint"/>
   </joint>

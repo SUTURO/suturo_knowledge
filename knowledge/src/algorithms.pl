@@ -1,8 +1,14 @@
 :- module(algorithms,
     [
-        a_star/5
+        a_star/5,
+        point_in_polygon/2
     ]).
 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%% A* Algorithm %%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 a_star(Origin, DistanceToOrigin, Destination, Path, Costs) :-
     OpenList = [Origin],
@@ -113,3 +119,53 @@ path(Origin, Destination, CurrentPath, Path, Costs) :-
     path(Origin, Predecessor, CurrentPath, ExtendedPath, _),
     append([Predecessor], ExtendedPath, Path),
     triple(DestinationAttributes, hsr_rooms:'hasFValue', Costs).
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%% Point in Polygon Test %%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+point_in_polygon(Q, PolygonCornerPoints) :-
+    nth0(0, PolygonCornerPoints, First),
+    InitialSign is -1,
+    next_edge(Q, First, PolygonCornerPoints, InitialSign, Sign),
+    (Sign == 1; Sign == 0).
+
+next_edge(Q, R, PolygonCornerPoints, CurrentSign, Sign) :-
+    not nextto(R, _, PolygonCornerPoints),
+    nth0(0, PolygonCornerPoints, First),
+    right_cross(Q, R, First, Result),
+    Sign is CurrentSign * Result.
+
+next_edge(Q, R, PolygonCornerPoints, CurrentSign, Sign) :-
+    nextto(R, S, PolygonCornerPoints),
+    right_cross(Q, R, S, Result),
+    NewSign is CurrentSign * Result,
+    next_edge(Q, S, PolygonCornerPoints, NewSign, Sign).
+
+right_cross([QX, QY, _], [RX, RY, _], [SX, SY, _], Result) :-
+    (RY < SY; RY = SY),
+    (QY > SY; QY < RY; QY = RY),
+    Result is 1.
+
+right_cross([QX, QY, _], [RX, RY, _], [SX, SY, _], Result) :-
+    (RY < SY; RY = SY),
+    not (QY > SY; QY < RY; QY = RY),
+    det([QX, QY, _], [RX, RY, _], [SX, SY, _], Det),
+    signum_function(Det, Result).
+
+right_cross([QX, QY, _], [RX, RY, _], [SX, SY, _], Result) :-
+    RY > SY,
+    (QY < SY; QY = SY; QY > RY),
+    Result is 1.
+
+right_cross([QX, QY, _], [RX, RY, _], [SX, SY, _], Result) :-
+    RY > SY,
+    not (QY < SY; QY = SY; QY > RY),
+    det([QX, QY, _], [SX, SY, _], [RX, RY, _], Det),
+    signum_function(Det, Result).
+
+det([QX, QY, _], [RX, RY, _], [SX, SY, _], Result) :-
+    Result is (RX - QX)*(SY - QY) - (RY - QY)*(SX - QX).
+
+

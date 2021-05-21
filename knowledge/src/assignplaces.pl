@@ -24,63 +24,10 @@ object_goal_pose(Instance, [Translation, Rotation], Context) :-
     object_goal_pose(Instance, [Translation, Rotation], Context, _).
 
 object_goal_pose(Instance, [Translation, Rotation], Context, RefInstance) :-
-    object_goal_surface_(Instance, Surface, Context, RefInstance),
-    is_bucket(Surface),
-    surface_pose_in_map(Surface, [[XWOOffset,Y,Z], Rotation]),
-    X is XWOOffset + 0.10,
-    % X is XWOOffset - 0.05, for 5cm closer to edge
-    % X is XWOOffset + 0.05, for 5cm further away from edge
-    % - 0.15 is the outer edge of the current bucket
-    Translation = [X,Y,Z],
-    !.
-
-%% In case a reference group in the shelf is found
-object_goal_pose(Instance, [Translation, Rotation], Context, RefObject) :-
-    object_goal_surface_(Instance, Surface, Context, RefObject),
-    not(same_as(Instance, RefObject)),
-    surface_pose_in_map(Surface, [_, Rotation]),
-    triple(RefObject, hsr_objects:'inGroup', Group),
-    group_mean_pose(Group, [GroupX,GroupY,GroupZ], _),
-    tf_transform_point(map, Surface, [GroupX,GroupY,GroupZ], [_, GroupYOnS, _]),
-    offsets(Offset),
-    member(YOffset, Offset),
-    get_urdf_id(URDF),
-    urdf_link_collision_shape(URDF, Surface, box(Depth, Width, _), _), % get surface dimensions
-    NewY is (GroupYOnS + YOffset),
-    NewY < (Width / 2) - 0.1,
-    NewY > (Width / -2) + 0.1,
-    NewX is - Depth / 2 + 0.03,
-    tf_transform_point(Surface, map, [NewX, NewY, 0], [AbsX, AbsY,AbsZ]),
-    object_dimensions(Instance,_,_,ObjHeight),
-    AbsZOffset is AbsZ + ObjHeight/2 + 0.07,
-    not(hsr_existing_object_at_thr([AbsX, AbsY, AbsZOffset], 0.15)),
-    Translation = [AbsX, AbsY, AbsZOffset],
-    !.
-
-%% When a new group is opened the RefObject is equal to the Instance
-object_goal_pose(Instance, [Translation, Rotation], Context, Instance) :-
-    ros_info("object_goal_pose created new Group"),
-    object_goal_surface_(Instance, Surface, Context, Instance),
-    surface_pose_in_map(Surface, [[SX,SY,SZ], Rotation]),
-    tf_transform_point(map, Surface, [SX,SY,SZ], [ _, YOnS,_]),  
-    offsets(Offset),
-    member(YOffset, Offset),
-    get_urdf_id(URDF),
-    urdf_link_collision_shape(URDF, Surface, box(Depth, Width, _), _), % get surface dimensions
-    NewYOnS is YOnS + YOffset,
-    NewYOnS < (Width / 2) - 0.1,
-    NewYOnS > (Width / -2) + 0.1,
-    NewXOnS is - Depth / 2 + 0.03,
-    tf_transform_point(Surface, map, [NewXOnS, NewYOnS, 0], [AbsX, AbsY,AbsZ]),
-    object_dimensions(Instance,_,_,ObjHeight),
-    AbsZOffset is AbsZ + ObjHeight/2 + 0.07,
-    not(hsr_existing_object_at_thr([AbsX, AbsY,AbsZOffset], 0.15)),
-    Translation = [AbsX, AbsY,AbsZOffset],
-    !.
-
-object_goal_pose(_, _, "You haven't defined any target surfaces", _) :-
-    all_target_surfaces([]),
-    roswarn("You haven't defined any target surfaces").
+    has_table_shape(Table),
+    has_urdf_name(Table,Name),
+    sub_string(Name,_,_,_,bucket),
+    surface_center_pose(Table,[Translation, Rotation]).
 
 
 % TODO Rework the offsets

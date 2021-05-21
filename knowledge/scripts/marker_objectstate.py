@@ -14,7 +14,7 @@ prolog_client = rosprolog_client.Prolog()
 def callback(data):
     rospy.loginfo("test")
     for marker in data.markers:
-        rospy.loginfo(marker)
+        # rospy.loginfo(marker)
         osa_message = ObjectStateArray()
         if marker.action == 0:
             osa_message.action = 0

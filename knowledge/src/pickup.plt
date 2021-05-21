@@ -4,10 +4,12 @@
 
 :- use_module('pickup.pl').
 
-:- setup_suturo_test_env.
-:- setup_suturo_test_surfaces.
-:- setup_suturo_test_objects.
 
+
+test(setup) :-
+    setup_suturo_test_env,
+    setup_suturo_test_surfaces,
+    setup_suturo_test_objects.
 
 test(next_object_best_object) :-
     setup_suturo_test_source_surfaces(['table_center']),
