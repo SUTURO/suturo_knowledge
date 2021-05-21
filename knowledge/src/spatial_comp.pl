@@ -95,9 +95,12 @@ position_supportable_by_ground(ZPos) :-
 position_supportable_by_ground([_,_,Z]) :-
     position_supportable_by_ground(Z).
 
-
+%TODO Support ground
 is_legal_obj_position([X, Y, Z]) :-
-    position_supported_by_surface([X, Y, Z], _).
+    is_surface(Surface),
+    urdf_tf_frame(Surface, SurfaceFrame),
+    tf_transform_pose('map',SurfaceFrame,pose([X, Y, Z],[0,0,0,1]),pose(RelPosition,_)),   
+    position_supported_by_surface(RelPosition, Surface).
 
 
 locations_not_visited(Locations) :-
