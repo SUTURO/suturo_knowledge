@@ -1,6 +1,7 @@
 :- module(nlp,
     [
-    matching_object_in_room/3,
+    matching_object_in_room_name/3,
+    matching_object_in_room_id/3,
     matching_object_everywhere/2,
     all_obj_names/1,
     all_obj_names_with_id/1,
@@ -16,10 +17,13 @@
     matching_classes(r,r).
 
 
+matching_object_in_room_name(ObjectName, RoomName, Obj):-
+    matching_room(RoomName,RoomId),
+    matching_object_in_room_id(ObjectName, RoomId, Obj).
 
-matching_object_in_room(ObjectName, RoomName, Object):-
-    matching_room(RoomName,Room),
-    objects_in_room(Room,Objects),
+
+matching_object_in_room_id(ObjectName, RoomId, Obj):-
+    objects_in_room(RoomId,Objects),
     matching_object_in_list(ObjectName, Objects, Obj).
 
 
