@@ -427,17 +427,11 @@ assert_object_new_empty_surface(Object) :-
     assert_all_planning(Object, Surface, 0, Context, Object),
     !.
 
-object_goal_surface_(Object, Surface, Context, RefObject) :-
-    triple(Object, supposedSurface, Surface),
-    triple(Object, context, Context),
-    triple(Object, refObject, RefObject),
-    !.
-
-object_goal_surface_(Object, Surface, Context, RefObject) :-
-    place_objects,
-    assert_object_supposed_surface(Object),
-    object_goal_surface_(Object, Surface, Context, RefObject),
-    !.
+%TODO we now always give bucket
+object_goal_surface_(Object, Surface, "Temporary Solution Always Bucket", _) :-
+    has_table_shape(Surface),
+    has_urdf_name(Surface,Name),
+    sub_string(Name,_,_,_,bucket).
     
 
 
