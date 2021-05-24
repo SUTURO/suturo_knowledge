@@ -39,9 +39,11 @@ all_objects_in_gripper(Instances):-
         ), Instances).
 
 attach_object_to_gripper(Instance) :-
-    forall(triple(Instance, hsr_objects:'supportedBy', _), tripledb_forget(Instance, hsr_objects:'supportedBy', _)),
+    %forall(triple(Instance, hsr_objects:'supportedBy', _), tripledb_forget(Instance, hsr_objects:'supportedBy', _)),
+    forget_object_at_location(Instance),
     gripper(Gripper),
-    tell(triple(Instance, hsr_objects:'supportedBy', Gripper)),
+    has_location(Instance, InstanceLocation),
+    tell(triple(InstanceLocation, hsr_objects:'supportedBy', Gripper)),
     %object_frame_name(Instance, InstanceFrame),
     %object_frame_name(Gripper,GripperFrame),
     object_tf_frame(Instance,InstanceFrame),
@@ -56,6 +58,7 @@ release_object_from_gripper([NewPose,NewRotation]) :-
     %object_frame_name(Instance, InstanceFrame),
     %hsr_belief_at_update(Instance, [map, _, NewPose, NewRotation]),
     tell(is_at(Instance, ['map', NewPose, NewRotation])),
-    place_object(Instance),
+    forget_object_at_location(Instance),
+    at_location(Instance, _, _, _),
     group_target_objects,
     republish, republish.

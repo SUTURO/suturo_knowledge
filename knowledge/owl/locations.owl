@@ -31,7 +31,7 @@
 
     <rdf:Description rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/locations#PredefinedLocation2">
         <rdf:type rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Location"/>
-        <knowrob:isInsideOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Bookshelf"/>
+        <knowrob:isInsideOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Shelf"/>
         <knowrob:isInsideOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Kitchen"/>
     </rdf:Description>
 
@@ -55,7 +55,7 @@
 
     <rdf:Description rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/locations#PredefinedLocation6">
         <rdf:type rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Location"/>
-        <knowrob:isInsideOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Bookshelf"/>
+        <knowrob:isInsideOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Shelf"/>
         <knowrob:isInsideOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Kitchen"/>
     </rdf:Description>
 
@@ -79,7 +79,7 @@
         <hsr_rooms:hasPredefinedLocation rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/locations#PredefinedLocation1"/>
     </rdf:Description>
 
-    <rdf:Description rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Cutlery">
+    <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Cutlery">
          <hsr_rooms:hasPredefinedLocation rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/locations#PredefinedLocation2"/>
     </rdf:Description>
 

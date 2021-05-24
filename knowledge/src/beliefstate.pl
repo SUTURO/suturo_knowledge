@@ -218,7 +218,10 @@ most_related_class(Source, Target, Distance) :-
     %distance_to_object(Source, Target, Distance).
 
 distance_to_object(Source, Target, Distance) :-
-    all_objects_on_target_surfaces(Objs),
+    %all_objects_on_target_surfaces(Objs),
+    object_at_predefined_location(Source, RoomType, FurnitureType),
+    surfaces_at_predefined_location(Surfaces, RoomType, FurnitureType),
+    objects_supported_by_surfaces(Surfaces, Objs),
     member(Target, Objs),
     not(same_as(Source, Target)),
     has_type(Target, TargetType),
@@ -308,7 +311,8 @@ retract_all_planning(Object) :-
 % stores the surface and the distance to its RefObject in RDF.
  object_most_similar_surface(Object, Surface) :-
     most_related_object(Object, RefObject),
-    find_supporting_surface(RefObject, Surface),
+    %find_supporting_surface(RefObject, Surface),
+    object_supported_by_surface(RefObject, Surface),
     forall(triple(Object, supposedSurface, _), tripledb_forget(Object, supposedSurface, _)),
     tell(triple(Object, supposedSurface, Surface)),
     forall(triple(Object, refObject, _), tripledb_forget(Object, refObject, _)),
@@ -317,18 +321,22 @@ retract_all_planning(Object) :-
 % OtherObjects returns a list of all the objects, that one day 
 % would be put on Surface.
 objects_on_same_surface_in_future(Surface, OtherObjects) :-
-    objects_on_surface(AlreadyPlacedObjects, Surface),
-    all_objects_on_source_surfaces(SourceObjects1),
+    %objects_on_surface(AlreadyPlacedObjects, Surface),
+    objects_supported_by_surface(Surface, AlreadyPlacedObjects),
+    surface_at_predefined_location(Surface, RoomType, FurnitureType),
+    misplaced_objects_at_predefined_location(SourceObjects1, RoomType, FurnitureType),
+    %all_objects_on_source_surfaces(SourceObjects1),
     all_objects_in_gripper(SourceObjects2),
     append(SourceObjects1, SourceObjects2, SourceObjects),
     findall(Obj,
     (
         member(Obj, SourceObjects),
-        object_most_similar_surface(Obj, SurfaceX)
+        object_most_similar_surface(Obj, Surface)
     ),
-        FutureObjects),
+    FutureObjects),
     append(AlreadyPlacedObjects, FutureObjects, OtherObjectsUnsorted),
-    predsort(compareLogicalDistances, OtherObjectsUnsorted, OtherObjects).
+    predsort(compareLogicalDistances, OtherObjectsUnsorted, OtherObjectsList),
+    list_to_set(OtherObjectsList, OtherObjects).
 
 % compares the logical Distance of two Objects to their ReferenceObject on Target-Surface based on compare/3.
 compareLogicalDistances(Order, Object1, Object2) :-
@@ -383,8 +391,8 @@ objects_fit_on_surface_(Objects, Surface) :-
     surface_dimensions(Surface, _, SurfaceWidth, _),
     SurfaceWidth >= Sum.
 
-next_empty_surface(Surface) :-
-    all_target_surfaces(Surfaces),
+next_empty_surface([RoomType, FurnitureType], Surface) :-
+    surfaces_at_predefined_location(Surfaces, RoomType, FurnitureType),
     predsort(compareDistances, Surfaces, SortedSurfaces),
     next_empty_surface_(SortedSurfaces, Surface).
 
@@ -399,10 +407,16 @@ next_empty_surface_(Surfaces, Surface) :-
 % In case there is a bucket, put everything in it
 % To Do: Cannot handle multiple surfaces including at least one bucket right now.
 assert_object_supposed_surface(Object) :-
-    all_target_surfaces(Surfaces),
-    member(Surface, Surfaces),
-    is_bucket(Surface),
-    all_objects_on_source_surfaces(Objs),
+    %all_target_surfaces(Surfaces),
+    not object_at_predefined_location(Object, _, _),
+    writeln("Goal is bucket"),
+    bucket_surfaces(BucketSurfaces),
+    predsort(compareDistances, BucketSurfaces, SortedSurfaces),
+    nth0(0, SortedSurfaces, Surface),
+    findall(Obj, 
+    (
+        not object_at_predefined_location(Obj, _, _)
+    ), Objs),
     context_speech_basket(Context),
     forall(member(Obj, Objs), assert_all_planning(Obj, Surface, 0, Context, Obj)),
     assert_all_planning(Object, Surface, 0, Context, Object).
@@ -414,15 +428,20 @@ assert_object_supposed_surface(Object) :-
     forall(member(NotFittingObject, NotFittingObjects), retract_all_planning(NotFittingObject)),
     (   member(Object, NotFittingObjects)
         -> assert_object_new_empty_surface(Object)
-        ).
+        ; ros_info("All objects fit on surface")
+    ).
 
 % First object to be placed in case of empty target surfaces
 assert_object_supposed_surface(Object) :- % to do: what happens when there already are supposedSurfaces, but the according objects are not placed yet?
-    all_objects_on_target_surfaces([]),
+    object_at_predefined_location(Object, RoomType, FurnitureType),
+    surfaces_at_predefined_location(Surfaces, RoomType, FurnitureType),
+    objects_supported_by_surfaces(Surfaces, []),
     assert_object_new_empty_surface(Object).
 
 assert_object_new_empty_surface(Object) :-
-    next_empty_surface(Surface),
+    object_at_predefined_location(Object, RoomType, FurnitureType),
+    Location = [RoomType, FurnitureType],
+    next_empty_surface(Location, Surface),
     context_speech_new_class(Context),
     assert_all_planning(Object, Surface, 0, Context, Object),
     !.

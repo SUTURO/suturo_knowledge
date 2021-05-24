@@ -6,6 +6,7 @@
     all_furnitures/1,
     furniture_surfaces/2,
     surfaces_not_visited/1,
+    bucket_surfaces/1,
     has_table_shape/1,
     has_shelf_shape/1,
     has_bucket_shape/1,
@@ -190,7 +191,7 @@ assign_surfaces(Furniture, FurnitureLink, Shape) :-
     (
         tell(has_type(FurnitureSurface, hsr_rooms:'Shelffloor')),
         tell(triple(Furniture, hsr_rooms:'hasSurface', FurnitureSurface)),
-        tell(triple(FurnitureSurface, urdf:'hasURDFName', FurnitureLink))
+        tell(triple(FurnitureSurface, urdf:'hasURDFName', SurfaceLink))
     )).
 
 
@@ -235,13 +236,16 @@ surfaces_not_visited(Surfaces) :-
     Surfaces).
 
 
-has_table_shape(Furniture) :-
+has_table_shape(Surface) :-
+    has_surface(Furniture, Surface),
     triple(Furniture, soma:'hasShape', hsr_rooms:'TableShape').
 
-has_shelf_shape(Furniture) :-
+has_shelf_shape(Surface) :-
+    has_surface(Furniture, Surface),
     triple(Furniture, soma:'hasShape', hsr_rooms:'ShelfShape').
 
-has_bucket_shape(Furniture) :-
+has_bucket_shape(Surface) :-
+    has_surface(Furniture, Surface),
     triple(Furniture, soma:'hasShape', hsr_rooms:'BucketShape').
 
 
@@ -267,6 +271,15 @@ all_surfaces(Surfaces) :-
         has_type(Surface, soma:'Surface')
     ),
     Surfaces).
+
+
+bucket_surfaces(BucketSurfaces) :-
+    findall(BucketSurface,
+    (
+        has_type(Furniture, hsr_rooms:'Bucket'),
+        has_surface(Furniture, BucketSurface)
+    ),
+    BucketSurfaces).
 
 
 has_surface(Furniture, Surface) :-

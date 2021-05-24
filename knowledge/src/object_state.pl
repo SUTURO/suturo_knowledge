@@ -70,6 +70,28 @@ place_object(Object):-
     object_supportable_by_surface(Object, Surface),
     assert_object_on(Object,Surface).
 
+
+update_handle_state(Object) :-
+    is_suturo_object(Object),
+    triple(Surface, hsr_objects:'hasHandleState', VisitState),
+    forall(triple(VisitState, hsr_objects:'handeled', _), tripledb_forget(VisitState, hsr_objects:'handeled', _)),
+    tell(triple(VisitState, hsr_objects:'handeled', true)).
+
+handeled(Object) :-
+    is_suturo_object(Object),
+    triple(Object, hsr_objects:'hasHandleState', HandleState),
+    triple(HandleState, hsr_objects:'handleled', handeled),
+    handeled == 1.
+
+objects_not_handeled(Objects) :-
+    findall(Object, 
+    (
+        is_suturo_object(Object),
+        not handeled(Object)
+    ),
+    Objects).
+
+
 %% create_object(PerceivedObjectType, PercTypeConf, Transform, [Width, Depth, Height], 'box', PercShapeConf, Color, PercColorConf, ObjID is nondet.
 %
 % Validate the perceived params, create an Object instance of the corresponding Ontology,
@@ -126,7 +148,10 @@ create_object(PerceivedObjectType, PercTypeConf, [Frame,Position,Rotation], [Wid
     tell(triple(ObjID, hsr_objects:'ConfidenceColorValue', ColorConfAtom)),
     set_object_color(ObjID, Color, ColorConf),  % set the color
     tell(triple(ObjID, hsr_objects:'supportable', true)),     % identify the object as an supportable object this is used by suturo_existing_objects
-
+    
+    tell(has_type(HandleState, hsr_objects:'HandleState')),
+    tell(triple(objID, hsr_objects:'hasHandleState', HandleState)),
+    tell(triple(HandleState, hsr_objects:'handeled', false)),
 
     %%% ================ visualization marker array publish
     % TODO why not working with 1x ?
