@@ -34,8 +34,8 @@ gripper_init(Gripper) :-
 all_objects_in_gripper(Instances):-
     gripper(Gripper),
     findall(Instance, (
-        objects_on_surface(Objs, Gripper),
-        member(Instance, Objs)
+        has_location(Instance, ObjectLocation),
+        triple(ObjectLocation, hsr_objects:'supportedBy', Gripper)
         ), Instances).
 
 attach_object_to_gripper(Instance) :-
