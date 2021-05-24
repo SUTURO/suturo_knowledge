@@ -37,7 +37,7 @@
   <group if="$(arg nlg)">
     <include file="$(find suturo_nlg)/launch/suturo_nlg.launch" />
   </group>
-  <group if="$(arg nlg)">
+  <group if="$(arg nlp)">
     <include file="$(find suturo_textparser)/launch/suturo_nlp_goandget.launch" />
   </group>
 
