@@ -8,6 +8,7 @@
     matching_obj_classes/2,
     matching_object_in_list/3,
     matching_room_class/2,
+    matching_room/2,
     all_room_names_with_id/1
     ]).
 
