@@ -18,7 +18,6 @@
       surface_frame/2,
       pose_of_shelves/1,
       % Find Surfaces
-      table_surfaces/1,
       % Beliefstate
       forget_objects_on_surface/1
     ]).

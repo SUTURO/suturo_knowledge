@@ -325,6 +325,7 @@ object_supported_by_surface(Object, Surface) :-
     tf_lookup_transform(map, ObjectFrame, pose(Position, _)),
     position_supported_by_surface(Position, Surface),
     tell(triple(ObjectLocation, soma:'isSupportedBy', Surface)).
+    
 
 position_supported_by_surface(Position, Surface) :-
     surface_dimensions(Surface, Depth, Width, _),

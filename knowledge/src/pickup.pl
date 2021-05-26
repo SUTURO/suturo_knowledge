@@ -1,6 +1,6 @@
 :- module(pickup,
     [
-      next_object_/1
+      next_object_/1,
       object_pose_to_grasp_from/2
     ]).
 

@@ -21,13 +21,6 @@
     is_surface/1,
     all_source_surfaces/1,
     all_target_surfaces/1,
-    ground_surface/1,
-    shelf_surfaces/1, 
-    table_surfaces/1, 
-    bucket_surfaces/1,
-    other_surfaces/1,
-    is_legal_obj_position/1,
-    find_supporting_surface/2,
     % Get poses 
     pose_of_tables/1,
     pose_of_shelves/1,
@@ -343,26 +336,6 @@ all_surfaces_of_type(SurfaceType, Surfaces) :-
         triple(Surface, hsr_objects:'isSurfaceType', Type)
     ),
     Surfaces).
-
-
-ground_surface(GroundSurface):-
-    GroundSurface = ground.
-
-
-table_surfaces(TableLinks):-
-    findall(TableLink, ask(triple(TableLink, hsr_objects:'isSurfaceType',table)), TableLinks).
-
-bucket_surfaces(BucketLinks):-
-    findall(BucketLink, ask(triple(BucketLink, hsr_objects:'isSurfaceType',bucket)), BucketLinks).
-
-shelf_surfaces(ShelfLinks):-
-    findall(ShelfLink, ask(triple(ShelfLink, hsr_objects:'isSurfaceType',shelf)),ShelfLinks).
-
-other_surfaces(OtherLinks):-
-    findall(OtherLinks, ask(triple(OtherLinks, hsr_objects:'isSurfaceType',other)),OtherLinks).
-
-find_supporting_surface(Object, Surface) :-
-    triple(Object, hsr_objects:'supportedBy', Surface).
 
 
 is_suturo_object(Object) :-
