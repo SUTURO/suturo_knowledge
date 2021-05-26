@@ -222,7 +222,12 @@ robot_in_room(Room) :-
     tf_lookup_transform(Origin, 'base_footprint', pose(RobotPosition, _)),
     has_type(Room, hsr_rooms:'Room'),
     room_corner_point_positions(Room, CornerPoints),
-    point_in_polygon(RobotPosition, CornerPoints).
+    point_in_polygon(RobotPosition, CornerPoints),
+    !.
+
+robot_in_room(Room) :-
+    has_type(Room, hsr_rooms:'Outside'),
+    !.
 
 object_in_room(Object, Room) :-
     once(has_location(Object, ObjectLocation)),

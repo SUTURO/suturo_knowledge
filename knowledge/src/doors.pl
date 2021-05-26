@@ -8,7 +8,7 @@
         get_door_state/2,
         get_all_door_states/1,
         get_angle_to_open_door/2,
-        perceiving_pose_of_door/2,
+        perceiving_pose_of_door/3,
         manipulating_pose_of_door/2,
         passing_pose_of_door/2,
         shortest_path_between_rooms/3
@@ -108,6 +108,32 @@ assign_connecting_rooms(RoomLinkage, RoomLinkageLink) :-
     tell(triple(RoomLinkage, dul:'hasLocation', Location)).
 
 
+assign_connecting_rooms(RoomLinkage, RoomLinkageLink) :-
+    split_string(RoomLinkageLink, ":", "", [ExpRoom1Link, ExpRoom2Link, _]),
+    sub_string(ExpRoom1Link,_,_,_,"outside"),
+    has_type(Room, hsr_rooms:'Room'),
+    urdf_room_center_link(Room, ActRoomLink),
+    sub_string(ActRoomLink,_,_,_,ExpRoom2Link),
+    has_type(Outside, hsr_rooms:'Outside'),
+    tell(has_type(Location, soma:'Location')),
+    tell(triple(Location, soma:'isLinkedTo', Outside)),
+    tell(triple(Location, soma:'isLinkedTo', Room)),
+    tell(triple(RoomLinkage, dul:'hasLocation', Location)).
+
+
+assign_connecting_rooms(RoomLinkage, RoomLinkageLink) :-
+    split_string(RoomLinkageLink, ":", "", [ExpRoom1Link, ExpRoom2Link, _]),
+    sub_string(ExpRoom2Link,_,_,_,"outside"),
+    has_type(Room, hsr_rooms:'Room'),
+    urdf_room_center_link(Room, ActRoomLink),
+    sub_string(ActRoomLink,_,_,_,ExpRoom1Link),
+    has_type(Outside, hsr_rooms:'Outside'),
+    tell(has_type(Location, soma:'Location')),
+    tell(triple(Location, soma:'isLinkedTo', Outside)),
+    tell(triple(Location, soma:'isLinkedTo', Room)),
+    tell(triple(RoomLinkage, dul:'hasLocation', Location)).
+
+
 init_door_paths :-
     findall([OriginLinkage, DestinationLinkage],
     (   
@@ -185,7 +211,7 @@ shortest_path_between_rooms(OriginRoom, DestinationRoom, Path) :-
 
 
 
-perceiving_pose_of_door(Door, Pose) :-
+perceiving_pose_of_door(Door, Pose, DoorHandle) :-
     get_urdf_id(URDF),
     get_urdf_origin(Origin),
     has_urdf_name(Door, DoorLink),
@@ -200,14 +226,16 @@ perceiving_pose_of_door(Door, Pose) :-
         Angle is 0.0,
         angle_to_quaternion(Angle, DeltaRotation),
         tf_transform_pose(DoorLink, Origin, pose([DeltaX, DeltaY, 0.0], DeltaRotation), pose([NewX, NewY, _], Rotation)),
-        Pose = [[NewX, NewY, 0.0], Rotation]
+        Pose = [[NewX, NewY, 0.0], Rotation],
+        inside_door_handle(Door, DoorHandle)
     );
     (
         DeltaY is Offset,
         Angle is pi,
         angle_to_quaternion(Angle, DeltaRotation),
         tf_transform_pose(DoorLink, Origin, pose([DeltaX, DeltaY, 0.0], DeltaRotation), pose([NewX, NewY, _], Rotation)),
-        Pose = [[NewX, NewY, 0.0], Rotation]
+        Pose = [[NewX, NewY, 0.0], Rotation],
+        outside_door_handle(Door, DoorHandle)
     )).
 
 
