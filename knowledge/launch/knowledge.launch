@@ -3,6 +3,7 @@
   <arg name="urdf_launch_file" default="rooms_test" />
   <arg name="standalone" default="false" />
   <arg name="nlg" default="true" />
+  <arg name="nlp" default="true" />
 
   <group if="$(arg standalone)">
     <include file="$(find suturo_bringup)/launch/$(arg urdf_launch_file).launch" pass_all_args="true">
@@ -35,6 +36,9 @@
   
   <group if="$(arg nlg)">
     <include file="$(find suturo_nlg)/launch/suturo_nlg.launch" />
+  </group>
+  <group if="$(arg nlp)">
+    <include file="$(find suturo_textparser)/launch/suturo_nlp_goandget.launch" />
   </group>
 
 </launch>

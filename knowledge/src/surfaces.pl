@@ -16,29 +16,16 @@
     all_surfaces_of_type/2,
     supporting_surface/1,
     assert_object_on/2,
-    surface_type_of/2,
     %% FIND SURFACES
     all_surfaces/1, %replaces all_srdl_objects contains ground
     is_surface/1,
-    is_table/1,
-    is_bucket/1,
-    is_shelf/1,
-    is_bed/1,
-    is_cabinet/1,
-    is_couch/1,
-    is_dishwasher/1,
-    is_fridge/1,
-    is_sideboard/1,
-    is_sink/1,
     all_source_surfaces/1,
     all_target_surfaces/1,
     ground_surface/1,
     shelf_surfaces/1, 
-    big_shelf_surfaces/1, % will soon be deprecated
-    shelf_floor_at_height/2, % will soon be deprecated
     table_surfaces/1, 
     bucket_surfaces/1,
-    all_surfaces_of_type/2,
+    other_surfaces/1,
     is_legal_obj_position/1,
     find_supporting_surface/2,
     % Get poses 
@@ -58,8 +45,7 @@
     all_objects_on_ground/1,
     all_objects_in_whole_shelf_/1, % will soon be deprecated
     all_objects_on_tables_/1,
-    all_objects_in_buckets/1,
-    all_objects_on_table/1, % DEPRECATED! Use only for backward compatibility reasons
+    all_objects_in_buckets/1,    
     %% CREATE OBJECT
     place_object/1,
     %% ROLES
@@ -67,7 +53,12 @@
     make_surfaces_source/1,
     make_surfaces_target/1,
     make_role/2,
-    get_surface_role/2
+    get_surface_role/2,
+    get_perception_surface_region/2,
+    %% TEMP
+    create_furniture/2,
+    assign_surfaces/3,
+    init_visit_state/1
     ]).
 
 :- tripledb_load(
@@ -82,9 +73,6 @@
     surface_big_enough(r,?),
     point_in_rectangle(r,r,r,r,r),
     assert_surface_types(?),
-    object_goal_surface(r,?),
-    object_goal_surface(r,?,?),
-    object_goal_surface(r,?,?,?),
     object_goal_pose_offset(r,?,?),
     all_objects_in_whole_shelf(?),
     all_objects_on_source_surfaces(?),
@@ -109,7 +97,7 @@ init_furnitures :-
     FurnitureLinks),
     forall(member(FurnitureLink2, FurnitureLinks),
     (
-        split_string(FurnitureLink2, "#", "", [_, Type, Shape]),
+        split_string(FurnitureLink2, ":", "", [_, Type, Shape]),
         create_furniture(Type, Furniture),
         tell(triple(Furniture, urdf:'hasURDFName', FurnitureLink2)),
         assign_surfaces(Furniture, FurnitureLink2, Shape),
@@ -245,7 +233,7 @@ has_shelf_shape(Surface) :-
     triple(Furniture, soma:'hasShape', hsr_rooms:'ShelfShape').
 
 has_bucket_shape(Surface) :-
-    has_surface(Furniture, Surface),
+    has_surface(Furniture,Surface),
     triple(Furniture, soma:'hasShape', hsr_rooms:'BucketShape').
 
 
@@ -322,61 +310,9 @@ assert_object_on(ObjectInstance, SurfaceLink) :-
     tripledb_tell(ObjectInstance, hsr_objects:'supportedBy', SurfaceLink).
 
 
-surface_type_of(Surface, Type):- % has not been tested yet.
-    triple(Surface, hsr_objects:'isSurfaceType', Type).
-
-
-is_table(Table) :-
-    table_surfaces(Tables),
-    member(Table, Tables).
-
-is_shelf(Shelf) :-
-    shelf_surfaces(Shelves),
-    member(Shelf, Shelves).
-
-is_bucket(Bucket) :-
-    bucket_surfaces(Buckets),
-    member(Bucket, Buckets).
-
-is_bed(Bed) :-
-    bed_surfaces(Beds),
-    member(Bed, Beds).
-
-is_cabinet(Cabinet) :-
-    cabinet_surfaces(Cabinets),
-    member(Cabinet, Cabinets).
-
-is_couch(Couch) :-
-    couch_surfaces(Couches),
-    member(Couch, Couches).
-
-is_dishwasher(Dishwasher) :-
-    dishwasher_surfaces(Dishwashers),
-    member(Dishwasher, Dishwashers).
-
-is_fridge(Fridge) :-
-    fridge_surfaces(Fridges),
-    member(Fridge, Fridges).
-
-is_sideboard(Sideboard) :-
-    sideboard_surfaces(Sideboards),
-    member(Sideboard, Sideboards).
-
-is_sink(Sink) :-
-    sink_surfaces(Sinks),
-    member(Sink, Sinks).
-
-
 /**
 *****************************************FIND SURFACES******************************************************
 */
-
-all_surfaces(SurfaceLinks):-
-    findall(SurfaceLink,
-        triple(SurfaceLink,hsr_objects:'isSurfaceType',_),
-        SurfaceLinks
-    ).
-
 
 % Surfaces is a list of all SurfaceLinks that are source
 all_source_surfaces(Surfaces):-
@@ -413,117 +349,26 @@ ground_surface(GroundSurface):-
     GroundSurface = ground.
 
 
-shelf_surfaces(ShelfLinks):-
-    findall(ShelfLink, 
-    (
-        has_type(Shelf, hsr_objects:'Shelf'),
-        triple(ShelfLink, hsr_objects:'isSurfaceType',Shelf)
-    ),
-    ShelfLinks).
-
-
-big_shelf_surfaces(ShelfLinks) :- % has not been tested yet.
-    findall(ShelfLink,
-    (
-        triple(ShelfLink, hsr_objects:'isSurfaceType',shelf),
-        not(sub_string(ShelfLink,_,_,_,small))
-    ),
-    ShelfLinks).
-
-
-% Deprecated
-shelf_floor_at_height(Height, TargetShelfLink) :- % has not been tested yet.
-    findall(ShelfFloorLink, (
-        big_shelf_surfaces(AllFloorsLinks),
-        member(ShelfFloorLink, AllFloorsLinks),
-        surface_pose_in_map(ShelfFloorLink, [[_,_,Z],_]),
-        Z < Height
-    ), ShelfFloorsLinks),
-    reverse(ShelfFloorsLinks, [TargetShelfLink|_]).
-
-
 table_surfaces(TableLinks):-
-    findall(TableLink, 
-        (
-            has_type(Table, hsr_objects:'Table'),
-            triple(TableLink, hsr_objects:'isSurfaceType',Table)
-        ), 
-    TableLinks).
-
+    findall(TableLink, ask(triple(TableLink, hsr_objects:'isSurfaceType',table)), TableLinks).
 
 bucket_surfaces(BucketLinks):-
-    findall(BucketLink, 
-    (
-        has_type(Bucket, hsr_objects:'Bucket'),
-        triple(BucketLink, hsr_objects:'isSurfaceType',Bucket)
-    ), 
-    BucketLinks).
+    findall(BucketLink, ask(triple(BucketLink, hsr_objects:'isSurfaceType',bucket)), BucketLinks).
 
+shelf_surfaces(ShelfLinks):-
+    findall(ShelfLink, ask(triple(ShelfLink, hsr_objects:'isSurfaceType',shelf)),ShelfLinks).
 
-bed_surfaces(BedLinks) :-
-    findall(BedLink,
-    (
-        has_type(Bed, hsr_objects:'Bed'),
-        triple(BedLink, hsr_objects:'isSurfaceType', Bed)
-    ),
-    BedLinks).
-
-
-cabinet_surfaces(CabinetLinks) :-
-    findall(CabinetLink,
-    (
-        has_type(Cabinet, hsr_objects:'Cabinet'),
-        triple(CabinetLink, hsr_objects:'isSurfaceType', Cabinet)
-    ),
-    CabinetLinks).
-
-
-couch_surfaces(CouchLinks) :-
-    findall(CouchLink,
-    (
-        has_type(Couch, hsr_objects:'Couch'),
-        triple(CouchLink, hsr_objects:'isSurfaceType', Couch)
-    ),
-    CouchLinks).
-
-dishwasher_surfaces(DishwasherLinks) :-
-    findall(DishwasherLink,
-    (
-        has_type(Dishwasher, hsr_objects:'Dishwasher'),
-        triple(DishwasherLink, hsr_objects:'isSurfaceType', Dishwasher)
-    ),
-    DishwasherLinks).
-
-fridge_surfaces(FridgeLinks) :-
-    findall(FridgeLink,
-    (
-        has_type(Fridge, hsr_objects:'Fridge'),
-        triple(FridgeLink, hsr_objects:'isSurfacRype', Fridge)
-    ),
-    FridgeLinks).
-
-sideboard_surfaces(SideboardLinks) :-
-    findall(SidebaordLink,
-    (
-        has_type(Sideboard, hsr_objects:'Sideboard'),
-        triple(SidebaordLink, hsr_objects:'isSurfaceType', Sideboard)
-    ),
-    SideboardLinks).
-
-sink_surfaces(SinkLinks) :-
-    findall(SinkLink,
-    (
-        has_type(Sink, hsr_objects:'Sink'),
-        triple(SinkLink, hsr_objects:'isSurfaceType', Sink)
-    ),
-    SinkLinks).
+other_surfaces(OtherLinks):-
+    findall(OtherLinks, ask(triple(OtherLinks, hsr_objects:'isSurfaceType',other)),OtherLinks).
 
 find_supporting_surface(Object, Surface) :-
     triple(Object, hsr_objects:'supportedBy', Surface).
 
+
 is_suturo_object(Object) :-
     hsr_existing_objects(Objects),
     member(Object, Objects).
+
 
 %%%%%%%%%%% Get Poses %%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -673,4 +518,18 @@ make_role(SurfaceLink, Role):-
 % Role is the role (target or source) of the given SurfaceLink
 get_surface_role(SurfaceLink, Role):-
     triple(SurfaceLink, hsr_objects:'sourceOrTarget', Role).
+
+get_perception_surface_region(Surface, PerceptionName):-
+    has_shelf_shape(Surface),
+    has_urdf_name(Surface,Name),
+    split_string(Surface, ":","",SurfaceSplit),
+    nth0(0,SurfaceSplit,Name),sub_atom(Surface, _, 1, 0, Number),
+    string_concat(Name,"_floor_",Temp),
+    string_concat(Temp,Number,PerceptionName),!.
+
+get_perception_surface_region(Surface, PerceptionName):-
+    not(has_shelf_shape(Surface)),    
+    has_urdf_name(Surface,Name),
+    split_string(Name, ":","",SurfaceSplit),
+    nth0(0,SurfaceSplit,PerceptionName).
 

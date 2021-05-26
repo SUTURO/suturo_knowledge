@@ -95,7 +95,7 @@ create_passage(Passage, PassageLink) :-
 
 
 assign_connecting_rooms(RoomLinkage, RoomLinkageLink) :-
-    split_string(RoomLinkageLink, "#", "", [ExpRoom1Link, ExpRoom2Link, _]),
+    split_string(RoomLinkageLink, ":", "", [ExpRoom1Link, ExpRoom2Link, _]),
     has_type(Room1, hsr_rooms:'Room'),
     has_type(Room2, hsr_rooms:'Room'),
     urdf_room_center_link(Room1, ActRoom1Link),

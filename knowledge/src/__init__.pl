@@ -20,13 +20,14 @@
 :- use_module(library('surfaces')).
 :- use_module(library('beliefstate')).
 :- use_module(library('assignplaces')).
-:- use_module(library('gripper'), [gripper/1, gripper_init/1]).
+:- use_module(library('gripper')).
 :- use_module(library('rooms')).
 :- use_module(library('doors')).
 :- use_module(library('export')).
-:- use_module(library('nlg')).
 :- use_module(library('algebra')).
 :- use_module(library('algorithms')).
+:- use_module(library('naturallanguage/nlg')).
+:- use_module(library('naturallanguage/nlp')).
 
 :- ros_package_iri(knowledge, 'package://knowledge/owl/objects.owl').
 :- ros_package_iri(knowledge, 'package://knowledge/owl/rooms.owl').
@@ -60,7 +61,7 @@
 :- ros_param_get_string('/param_to_load_URDF_from', Param),
     load_surfaces_from_param(Param).
 
-:- tf_lookup_transform(map, map, _).
+:- ignore(hsr_lookup_transform('map', 'base_footprint', _, _)). % Why does this help with TF erros??
 
 :- gripper(Gripper), gripper_init(Gripper).
 

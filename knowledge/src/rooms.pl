@@ -11,8 +11,7 @@
         room_corner_point_positions/2,
         urdf_room_center_link/2,
         all_rooms/1,
-        is_room/1,
-        all_rooms_of_type/2
+        is_room/1
     ]).
 
 
@@ -154,20 +153,8 @@ in_room(Object, Room) :-
     update(ObjectLocation, knowrob:'isInsideOf', Room)).
 
 
-
-
-
 %in_room(ObjectClass, RoomType) :-
 %    holds(ObjectClass, hsr_rooms:'inRoom', RoomType).
-
-
-all_rooms_of_type(RoomType, Rooms) :-
-    findall(Room,
-    (
-        has_type(Type, RoomType),
-        triple(Room, hsr_rooms:'hasRoomTypeRole', Type)
-    ),
-    Rooms).
 
 
 object_instance_in_room(ObjInstance, Room, RoomType) :-
