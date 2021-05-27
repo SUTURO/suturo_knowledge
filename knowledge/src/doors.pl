@@ -227,7 +227,7 @@ perceiving_pose_of_door(Door, Pose, DoorHandle) :-
         angle_to_quaternion(Angle, DeltaRotation),
         tf_transform_pose(DoorLink, Origin, pose([DeltaX, DeltaY, 0.0], DeltaRotation), pose([NewX, NewY, _], Rotation)),
         Pose = [[NewX, NewY, 0.0], Rotation],
-        inside_door_handle(Door, DoorHandle)
+        outside_door_handle(Door, DoorHandle)
     );
     (
         DeltaY is Offset,
@@ -235,7 +235,7 @@ perceiving_pose_of_door(Door, Pose, DoorHandle) :-
         angle_to_quaternion(Angle, DeltaRotation),
         tf_transform_pose(DoorLink, Origin, pose([DeltaX, DeltaY, 0.0], DeltaRotation), pose([NewX, NewY, _], Rotation)),
         Pose = [[NewX, NewY, 0.0], Rotation],
-        outside_door_handle(Door, DoorHandle)
+        inside_door_handle(Door, DoorHandle)
     )).
 
 
@@ -348,10 +348,13 @@ update_door_paths(Door) :-
 rotate_door_by_angle(Door, Hinge, Angle) :-
     has_urdf_name(Door, DoorLink),
     has_urdf_name(Hinge, HingeLink),
+    urdf_tf_frame(Door, DoorLinkWithPrefix),
+    urdf_tf_frame(Hinge, HingeLinkWithPrefix),
     angle_to_quaternion(Angle, Rotation),
     tf_lookup_transform(DoorLink, HingeLink, pose(CurrentPos, _)),
     tf_transform_quaternion(HingeLink, DoorLink, Rotation, NewRotation),
-    tell(is_at(DoorLink, [HingeLink, CurrentPos, NewRotation])).
+    tell(is_at(DoorLink, [HingeLink, CurrentPos, NewRotation])),
+    tell(is_at(DoorLinkWithPrefix, [HingeLinkWithPrefix, CurrentPos, NewRotation])).
 
 
 get_angle_to_open_door(Door, Angle) :-
