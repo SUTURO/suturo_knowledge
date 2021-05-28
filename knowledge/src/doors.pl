@@ -229,7 +229,7 @@ perceiving_pose_of_door(Door, Pose, DoorHandle) :-
         angle_to_quaternion(Angle, DeltaRotation),
         tf_transform_pose(DoorLink, Origin, pose([DeltaX, DeltaY, 0.0], DeltaRotation), pose([NewX, NewY, _], Rotation)),
         Pose = [[NewX, NewY, 0.0], Rotation],
-        outside_door_handle(Door, DoorHandle)
+        inside_door_handle(Door, DoorHandle)
     );
     (
         DeltaY is Offset,
@@ -237,7 +237,7 @@ perceiving_pose_of_door(Door, Pose, DoorHandle) :-
         angle_to_quaternion(Angle, DeltaRotation),
         tf_transform_pose(DoorLink, Origin, pose([DeltaX, DeltaY, 0.0], DeltaRotation), pose([NewX, NewY, _], Rotation)),
         Pose = [[NewX, NewY, 0.0], Rotation],
-        inside_door_handle(Door, DoorHandle)
+        outside_door_handle(Door, DoorHandle)
     )).
 
 
