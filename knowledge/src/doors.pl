@@ -11,7 +11,9 @@
         perceiving_pose_of_door/3,
         manipulating_pose_of_door/2,
         passing_pose_of_door/2,
-        shortest_path_between_rooms/3
+        shortest_path_between_rooms/3,
+        inside_door_handle/2,
+        outside_door_handle/2
     ]).
 
 :- rdf_db:rdf_register_ns(hsr_rooms, 'http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#', [keep(true)]).
@@ -218,7 +220,7 @@ perceiving_pose_of_door(Door, Pose, DoorHandle) :-
     urdf_link_collision_shape(URDF, DoorLink, box(Width, _, _), _),
     DeltaX is Width/2,
     Offset is Width + 0.2,
-    tf_lookup_transform('base_footprint', DoorLink, pose([_, Y, _], _)),
+    tf_lookup_transform(DoorLink, 'base_footprint', pose([_, Y, _], _)),
     ((Y < 0)
     -> 
     (
@@ -437,11 +439,11 @@ door_hinge(Door, Hinge) :-
     triple(Door, knowrob:'doorHingedTo', Hinge).
 
 inside_door_handle(Door, DoorHandle) :-
-    triple(Location, soma:'isInsideOf', Door),
+    once(triple(Location, soma:'isInsideOf', Door)),
     has_location(DoorHandle, Location).
 
 outside_door_handle(Door, DoorHandle) :-
-    triple(Location, hsr_rooms:'isOutsideOf', Door),
+    once(triple(Location, hsr_rooms:'isOutsideOf', Door)),
     has_location(DoorHandle, Location).
 
 
