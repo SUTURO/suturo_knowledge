@@ -439,12 +439,12 @@ door_hinge(Door, Hinge) :-
     triple(Door, knowrob:'doorHingedTo', Hinge).
 
 inside_door_handle(Door, DoorHandle) :-
-    once(triple(Location, soma:'isInsideOf', Door)),
-    has_location(DoorHandle, Location).
+    triple(Location, soma:'isInsideOf', Door),
+    once(has_location(DoorHandle, Location)).
 
 outside_door_handle(Door, DoorHandle) :-
-    once(triple(Location, hsr_rooms:'isOutsideOf', Door)),
-    has_location(DoorHandle, Location).
+    triple(Location, hsr_rooms:'isOutsideOf', Door),
+    once(has_location(DoorHandle, Location)).
 
 
 %% is_valid_joint_state(DoorJoint, JointState)
