@@ -29,7 +29,8 @@ init_rooms :-
     (
         create_room(RoomLink2, Room),
         assign_room_points(Room, RoomLink2)
-    )).
+    )),
+    tell(has_type(Outside, hsr_rooms:'Outside')).
 
 
 create_room(RoomLink, Room) :-

@@ -19,8 +19,6 @@
     %% FIND SURFACES
     all_surfaces/1, %replaces all_srdl_objects contains ground
     is_surface/1,
-    all_source_surfaces/1,
-    all_target_surfaces/1,
     % Get poses 
     pose_of_tables/1,
     pose_of_shelves/1,
@@ -41,12 +39,6 @@
     all_objects_in_buckets/1,    
     %% CREATE OBJECT
     place_object/1,
-    %% ROLES
-    make_all_surface_type_role/2,
-    make_surfaces_source/1,
-    make_surfaces_target/1,
-    make_role/2,
-    get_surface_role/2,
     get_perception_surface_region/2,
     %% TEMP
     create_furniture/2,
@@ -95,6 +87,11 @@ init_furnitures :-
         tell(triple(Furniture, urdf:'hasURDFName', FurnitureLink2)),
         assign_surfaces(Furniture, FurnitureLink2, Shape),
         init_visit_state(Furniture)
+    )),
+    all_rooms(Rooms),
+    forall(member(Room,Rooms),
+    (
+       tell(has_type(Room, hsr_rooms:'Floor'))  
     )).
 
 
@@ -307,28 +304,6 @@ assert_object_on(ObjectInstance, SurfaceLink) :-
 *****************************************FIND SURFACES******************************************************
 */
 
-% Surfaces is a list of all SurfaceLinks that are source
-all_source_surfaces(Surfaces):-
-    all_surfaces(ExistingSurfaces),
-    findall(Surface,
-    (
-        member(Surface, ExistingSurfaces),
-        triple(Surface, hsr_objects:'sourceOrTarget', source)
-    ),
-        Surfaces).
-
-
-% Surfaces is a list of all SurfaceLinks that are target
-all_target_surfaces(Surfaces):-
-    all_surfaces(ExistingSurfaces),
-    findall(Surface,
-    (
-        member(Surface, ExistingSurfaces),
-        triple(Surface, hsr_objects:'sourceOrTarget', target)
-    ),
-        Surfaces).
-
-
 all_surfaces_of_type(SurfaceType, Surfaces) :-
     findall(Surface, 
     (
@@ -470,15 +445,6 @@ make_surfaces_source(Surfaces):-
 % Gives a list of surfaces the role target
 make_surfaces_target(Surfaces):-
     forall(member(Surface, Surfaces), make_role(Surface, target)).
-
-
-% Gives all surfaces with given name (ground, table, basket or shelf) the Role (target or source)
-make_all_surface_type_role(SurfaceType, Role):-
-    SurfaceType = ground,
-    make_role(SurfaceType, Role).
-
-make_all_surface_type_role(SurfaceType, Role):-
-    forall(triple(SurfaceLink, hsr_objects:'isSurfaceType',SurfaceType), make_role(SurfaceLink,Role)).
 
 
 % Gives the gives SurfaceLink the Role (target or source)

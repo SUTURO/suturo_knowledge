@@ -228,7 +228,7 @@ robot_in_room(Room) :-
     !.
 
 robot_in_room(Room) :-
-    has_type(Room, hsr_rooms:'Outside'),
+    ask(has_type(Room, hsr_rooms:'Outside')),
     !.
 
 object_in_room(Object, Room) :-
@@ -298,7 +298,7 @@ pose_in_room([X,Y,_], Room) :-
     point_in_polygon([X,Y,0], CornerPoints),!.
 
 pose_in_room([X,Y,_], Room) :-
-    has_type(Room, hsr_rooms:'Outside').
+    ask(has_type(Room, hsr_rooms:'Outside')).
 
 pose_is_outside([X,Y,_]) :-
     pose_in_room([X,Y,_], Room),
@@ -335,18 +335,18 @@ object_on_predefined_furniture(Object, FurnitureType) :-
     subclass_of(FurnitureType, soma:'DesignedFurniture').
 
 object_supported_by_surface(Object, Surface) :-
-    once(has_location(Object, ObjectLocation)),
-    triple(ObjectLocation, soma:'isSupportedBy', Surface).
+    %once(has_location(Object, ObjectLocation)),
+    triple(Object, soma:'isSupportedBy', Surface).
 
 object_supported_by_surface(Object, Surface) :-
-    has_location(Object, ObjectLocation),
+    %has_location(Object, ObjectLocation),
     object_tf_frame(Object, ObjectFrame),
-    urdf_tf_frame(Surface, SurfaceFrame),
     tf_lookup_transform(map, ObjectFrame, pose(Position, _)),
     position_supported_by_surface(Position, Surface),
-    tell(triple(ObjectLocation, soma:'isSupportedBy', Surface)).
+    tell(triple(Object, soma:'isSupportedBy', Surface)).
     
 
+% Position is relative to map
 position_supported_by_surface(Position, Surface) :-
     surface_dimensions(Surface, Depth, Width, _),
     threshold_surface(ThAbove, ThBelow),
@@ -355,11 +355,14 @@ position_supported_by_surface(Position, Surface) :-
     ThAbove >= Z,
     ThBelow =< Z,
     Width/2 >= abs(Y),
-    Depth/2 >= abs(X).
+    Depth/2 >= abs(X),!.
 
 
-%position_supportable_by_surface(Position, ground) :-
-%    position_supportable_by_ground(Position).
+position_supported_by_surface([X,Y,Z], Room) :-
+    ZLimit is 0.5,
+    Z =< ZLimit,
+    pose_in_room([X,Y,Z],Room).
+
 
 
 
