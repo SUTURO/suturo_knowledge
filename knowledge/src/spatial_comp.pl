@@ -31,6 +31,8 @@
         furnitures_in_room/2,
         surfaces_in_room/2,
         objects_in_room/2,
+        pose_in_room/2,
+        pose_is_outside/1,
         has_predefined_location/2,
         objects_supported_by_surface/2,
         locations_not_visited/1,
@@ -141,7 +143,7 @@ place_objects :-
     hsr_existing_objects(Objects),
     forall(member(Object, Objects), 
     (
-        object_at_location(Object, Room, Furniture, Surface)
+        object_at_location(Object, _, _, _)
     )).
 
 object_at_location(Object, Room, Furniture, Surface) :-
@@ -289,6 +291,19 @@ furniture_in_room(Furniture, Room) :-
     tell(has_location(Furniture, FurnitureLocation)),
     update(triple(FurnitureLocation, knowrob:'isInsideOf', Room)),
     !.
+
+pose_in_room([X,Y,_], Room) :-
+    has_type(Room, hsr_rooms:'Room'),
+    room_corner_point_positions(Room, CornerPoints),
+    point_in_polygon([X,Y,0], CornerPoints),!.
+
+pose_in_room([X,Y,_], Room) :-
+    has_type(Room, hsr_rooms:'Outside').
+
+pose_is_outside([X,Y,_]) :-
+    pose_in_room([X,Y,_], Room),
+    ask(has_type(Room, hsr_rooms:'Outside')).
+
 
 surface_in_room(Surface, Room) :-
     has_surface(Furniture, Surface),
