@@ -98,7 +98,7 @@ group_table_objects :-
 group_objects_at([X,Y,Z]) :-
     Transform = ['map', _, [X,Y,Z], [0,0,1,0]],
     hsr_existing_object_at(Transform, 0.05, Obj),
-    find_supporting_surface(Obj, Surface),
+    object_supported_by_surface(Obj, Surface),
     objects_on_surface(Objs, Surface),
     group_objects(Objs).
 
@@ -144,7 +144,7 @@ group_mean_pose(Group, Transform, Rotation) :-
     Zmean is Ztotal / L,
     Transform = [Xmean, Ymean, Zmean],
     once(triple(Member, hsr_objects:'inGroup', Group)),
-    find_supporting_surface(Member, Surface),
+    object_supported_by_surface(Member, Surface),
     surface_pose_in_map(Surface, [_, Rotation]),
     %object_frame_name(Group, Frame),
     %object_pose_update(Group, ['map', Frame, Transform, Rotation]).

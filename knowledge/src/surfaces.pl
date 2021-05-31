@@ -359,9 +359,10 @@ compareDistances(Order, Thing1, Thing2) :-
 *****************************************FIND OBJECTS******************************************************
 */
 
-objects_on_surface(ObjectInstances, SurfaceLink) :-
+objects_on_surface(ObjectInstances, Surface) :-
+    place_objects,
     findall(ObjectInstance,
-        find_supporting_surface(ObjectInstance, SurfaceLink),
+        triple(ObjectInstance, soma:'isSupportedBy', Surface),
         ObjectInstances).
 
 
