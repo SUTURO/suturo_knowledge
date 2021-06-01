@@ -328,6 +328,12 @@ object_on_furniture(Object, Furniture) :-
     has_surface(Furniture, Surface),
     object_supported_by_surface(Object, Surface).
 
+% TODO HOT FIX
+object_on_furniture(Object, Furniture) :-
+    object_supported_by_surface(Object, Surface),
+    is_room(Surface).
+
+
 object_on_predefined_furniture(Object, FurnitureType) :-
     has_predefined_location(Object, Location),
     (triple(Location, knowrob:'isOntopOf', FurnitureType);
@@ -336,7 +342,7 @@ object_on_predefined_furniture(Object, FurnitureType) :-
 
 object_supported_by_surface(Object, Surface) :-
     %once(has_location(Object, ObjectLocation)),
-    triple(Object, soma:'isSupportedBy', Surface).
+    triple(Object, soma:'isSupportedBy', Surface),!.
 
 object_supported_by_surface(Object, Surface) :-
     %has_location(Object, ObjectLocation),

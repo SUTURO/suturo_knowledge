@@ -52,13 +52,10 @@ attach_object_to_gripper(Instance) :-
     republish, republish.
 
 release_object_from_gripper([NewPose,NewRotation]) :-
-    gripper(Gripper),
-    objects_on_surface(Instances, Gripper),
+    all_objects_in_gripper(Instances),
     member(Instance, Instances),
-    %object_frame_name(Instance, InstanceFrame),
-    %hsr_belief_at_update(Instance, [map, _, NewPose, NewRotation]),
     tell(is_at(Instance, ['map', NewPose, NewRotation])),
     forget_object_at_location(Instance),
-    at_location(Instance, _, _, _),
+    object_at_location(Instance, _, _, _),
     group_target_objects,
     republish, republish.
