@@ -56,5 +56,7 @@ release_object_from_gripper([NewPose,NewRotation]) :-
     member(Instance, Instances),
     tell(is_at(Instance, ['map', NewPose, NewRotation])),
     forget_object_at_location(Instance),
+    tell(is_at(Instance, ['map', NewPose, NewRotation])),
     object_at_location(Instance, _, _, _),
+    tell(is_at(Instance, ['map', NewPose, NewRotation])),
     republish, republish.

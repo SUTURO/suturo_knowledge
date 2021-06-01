@@ -39,7 +39,8 @@ object_pose_to_grasp_from(Object,[[XPose,YPose,0], Rotation]):-
 
 surface_not_a_bucket(S):-
     has_urdf_name(S,N),
-    not(sub_string(N,_,_,_,"bucket")).
+    not(sub_string(N,_,_,_,"bucket")),
+    not(gripper(S)).
 
 surface_not_a_bucket(S):-
     is_room(S).
