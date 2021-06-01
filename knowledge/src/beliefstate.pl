@@ -5,7 +5,6 @@
       belief_class_of/2,
       hsr_belief_at_update/2,
       merge_object_into_group/1,
-      group_target_objects/0,
       group_shelf_objects/0,
       group_table_objects/0,
       group_objects_at/1,
@@ -76,16 +75,6 @@ merge_object_into_group(Instance) :-
     member(Other, Rest),
     forall(triple(Other,hsr_objects:'inGroup',_),tripledb_forget(Other,hsr_objects:'inGroup',_)),
     tell(triple(Other, hsr_objects:'inGroup', WG)).
-
-group_target_objects :-
-    all_objects_on_target_surfaces(Objs),
-    group_objects(Objs).
-
-% Returns always true if the bucket is target.
-group_target_objects :-
-    all_target_surfaces(Surfaces),
-    member(Surface, Surfaces),
-    is_bucket(Surface).
 
 group_shelf_objects :-
     all_objects_in_whole_shelf(Objs),

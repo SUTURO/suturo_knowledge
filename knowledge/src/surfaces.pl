@@ -23,16 +23,12 @@
     pose_of_tables/1,
     pose_of_shelves/1,
     pose_of_buckets/1,
-    pose_of_target_surfaces/1,
-    pose_of_source_surfaces/1,
     pose_of_surfaces/2,
     compareDistances/3,
     %% FIND OBJs
     objects_on_surface/2,
     is_suturo_object/1,
     objects_on_list_of_surfaces/2,
-    all_objects_on_source_surfaces/1,
-    all_objects_on_target_surfaces/1,
     all_objects_on_ground/1,
     all_objects_in_whole_shelf_/1, % will soon be deprecated
     all_objects_on_tables_/1,
@@ -332,10 +328,6 @@ pose_of_buckets(Positions) :-
     bucket_surfaces(Buckets),
     pose_of_surfaces(Buckets, Positions).
 
-pose_of_target_surfaces(Positions) :-
-    all_target_surfaces(Surfaces),
-    pose_of_surfaces(Surfaces, Positions).
-
 pose_of_source_surfaces(Positions) :-
     all_source_surfaces(Surfaces),
     pose_of_surfaces(Surfaces, Positions).
@@ -370,14 +362,6 @@ objects_on_surface(ObjectInstances, Surface) :-
 all_objects_on_source_surfaces(Objs):-
     all_source_surfaces(Surfaces),
     objects_on_list_of_surfaces(Objs, Surfaces).
-
-
-% Objs is a list of all Objects on all target surfaces.
-all_objects_on_target_surfaces(Objs):-
-    all_target_surfaces(Surfaces),
-    objects_on_list_of_surfaces(Objs, Surfaces).
-
-
 
 objects_on_list_of_surfaces(ObjectInstances, SurfaceList):-
     findall(Obj,
