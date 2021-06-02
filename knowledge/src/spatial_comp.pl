@@ -168,7 +168,7 @@ forget_object_at_location(Object) :-
         has_location(Object, ObjectLocation),
         forall(triple(ObjectLocation, knowrob:'isInsideOf', _), tripledb_forget(ObjectLocation, knowrob:'isInsideOf', _)),
         forall(triple(ObjectLocation, knowrob:'isOntopOf', _), tripledb_forget(ObjectLocation, knowrob:'isOntopOf', _)),
-        forall(triple(ObjectLocation, knowrob:'isSupportedBy', _), tripledb_forget(ObjectLocation, knowrob:'isSupportedBy', _))
+        forall(triple(ObjectLocation, soma:'isSupportedBy', _), tripledb_forget(ObjectLocation, soma:'isSupportedBy', _))
     );
     not has_location(Object, _).
 
