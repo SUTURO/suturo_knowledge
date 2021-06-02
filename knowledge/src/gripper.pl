@@ -33,19 +33,20 @@ gripper_init(Gripper) :-
 
 all_objects_in_gripper(Instances):-
     gripper(Gripper),
-    findall(Instance, (
-        triple(Instance, soma:'supportedBy', Gripper)
+    findall(Object, (
+        is_suturo_object(Object),
+        once(has_location(Object, ObjectLocation)),
+        triple(ObjectLocation, soma:'isSupportedBy', Gripper)
         ), Instances).
 
-attach_object_to_gripper(Instance) :-
-    forget_object_at_location(Instance),
+attach_object_to_gripper(Object) :-
+    forget_object_at_location(Object),
     gripper(Gripper),
-    tell(triple(Instance, soma:'supportedBy', Gripper)),
-    %object_frame_name(Instance, InstanceFrame),
-    %object_frame_name(Gripper,GripperFrame),
-    object_tf_frame(Instance,InstanceFrame),
-    hsr_lookup_transform(Gripper, InstanceFrame, PoseTrans, PoseRota),
-    tell(is_at(Instance, [Gripper, PoseTrans, PoseRota])),
+    has_location(Object, ObjectLocation),
+    tell(triple(ObjectLocation, soma:'isSupportedBy', Gripper)),
+    object_tf_frame(Object,ObjectFrame),
+    hsr_lookup_transform(Gripper, ObjectFrame, PoseTrans, PoseRota),
+    tell(is_at(Object, [Gripper, PoseTrans, PoseRota])),
     republish, republish.
 
 release_object_from_gripper([NewPose,NewRotation]) :-

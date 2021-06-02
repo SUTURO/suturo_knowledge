@@ -148,19 +148,19 @@ place_objects :-
 
 object_at_location(Object, Room, Furniture, Surface) :-
     is_suturo_object(Object),
-    has_location(Object, ObjectLocation),
+    once(has_location(Object, _)),!, % just check if it already has a Location
     object_in_room(Object, Room),
     object_on_furniture(Object, Furniture),
-    object_supported_by_surface(Object, Surface),
+    once(object_supported_by_surface(Object, Surface)),
     !.
 
 object_at_location(Object, Room, Furniture, Surface) :-
     is_suturo_object(Object),
     tell(has_type(ObjectLocation, soma:'Location')),
-    tell(has_location(Object, ObjectLocation)),
+    once(tell(has_location(Object, ObjectLocation))),!,
     object_in_room(Object, Room),
-    object_on_furniture(Object, Furniture),
-    object_supported_by_surface(Object, Surface),
+    once(object_supported_by_surface(Object, Surface)),
+    once(object_on_furniture(Object, Furniture)),
     !.
 
 forget_object_at_location(Object) :-
@@ -341,15 +341,15 @@ object_on_predefined_furniture(Object, FurnitureType) :-
     subclass_of(FurnitureType, soma:'DesignedFurniture').
 
 object_supported_by_surface(Object, Surface) :-
-    %once(has_location(Object, ObjectLocation)),
-    triple(Object, soma:'isSupportedBy', Surface),!.
+    once(has_location(Object, ObjectLocation)),
+    triple(ObjectLocation, soma:'isSupportedBy', Surface),!.
 
 object_supported_by_surface(Object, Surface) :-
-    %has_location(Object, ObjectLocation),
+    has_location(Object, ObjectLocation),
     object_tf_frame(Object, ObjectFrame),
     tf_lookup_transform(map, ObjectFrame, pose(Position, _)),
     position_supported_by_surface(Position, Surface),
-    tell(triple(Object, soma:'isSupportedBy', Surface)).
+    tell(triple(ObjectLocation, soma:'isSupportedBy', Surface)).
     
 
 % Position is relative to map
@@ -365,7 +365,7 @@ position_supported_by_surface(Position, Surface) :-
 
 
 position_supported_by_surface([X,Y,Z], Room) :-
-    ZLimit is 0.5,
+    ZLimit is 0.28,
     Z =< ZLimit,
     pose_in_room([X,Y,Z],Room).
 
