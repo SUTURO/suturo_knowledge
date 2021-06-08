@@ -28,6 +28,7 @@
     %% FIND OBJs
     objects_on_surface/2,
     is_suturo_object/1,
+    objects_on_furniture/2,
     objects_on_list_of_surfaces/2,
     all_objects_on_ground/1,
     all_objects_in_whole_shelf_/1, % will soon be deprecated
@@ -292,8 +293,9 @@ square_big_enough(X,Y):- %TODO Support other shapes
 assert_object_on(ObjectInstance, SurfaceLink) :-
     all_surfaces(SurfaceLinks), % this makes sure, we actually have a surface here
     member(SurfaceLink,SurfaceLinks),
-    tripledb_forget(ObjectInstance, hsr_objects:'supportedBy', _),
-    tripledb_tell(ObjectInstance, hsr_objects:'supportedBy', SurfaceLink).
+    has_location(ObjectLocation, ObjectInstance),
+    tripledb_forget(ObjectInstance, hsr_objects:'isSupportedBy', _),
+    tripledb_tell(ObjectInstance, hsr_objects:'isSupportedBy', SurfaceLink).
 
 
 /**
@@ -352,9 +354,12 @@ compareDistances(Order, Thing1, Thing2) :-
 */
 
 objects_on_surface(ObjectInstances, Surface) :-
-    place_objects,
+    % place_objects,
     findall(ObjectInstance,
-        triple(ObjectInstance, soma:'isSupportedBy', Surface),
+        (
+        triple(ObjectLocation, soma:'isSupportedBy', Surface),
+        once(has_location(ObjectInstance,ObjectLocation))
+        ),
         ObjectInstances).
 
 
@@ -364,14 +369,17 @@ all_objects_on_source_surfaces(Objs):-
     objects_on_list_of_surfaces(Objs, Surfaces).
 
 objects_on_list_of_surfaces(ObjectInstances, SurfaceList):-
-    findall(Obj,
+    findall(Objects,
     ( 
         member(Surface, SurfaceList),
-        objects_on_surface(Objects, Surface),
-        member(Obj, Objects)
+        objects_on_surface(Objects, Surface)
     ),
-        ObjectInstances).
+        ObjectsNested),
+    flatten(ObjectsNested, ObjectInstances).
 
+objects_on_furniture(Furniture_ID, Objects):-
+    furniture_surfaces(Furniture_ID, Surfaces),
+    objects_on_list_of_surfaces(Objects,Surfaces).
 
 all_objects_on_ground(Instances) :-
     findall(Instance, (

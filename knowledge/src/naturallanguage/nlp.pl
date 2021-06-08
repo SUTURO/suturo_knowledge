@@ -2,6 +2,7 @@
     [
     matching_object_in_room_name/3,
     matching_object_in_room_id/3,
+    matching_object_in_furniture_id/3,
     matching_object_everywhere/2,
     all_obj_names/1,
     all_obj_names_with_id/1,
@@ -26,6 +27,12 @@ matching_object_in_room_name(ObjectName, RoomName, Obj):-
 matching_object_in_room_id(ObjectName, RoomId, Obj):-
     objects_in_room(RoomId,Objects),
     matching_object_in_list(ObjectName, Objects, Obj).
+
+
+matching_object_in_furniture_id(ObjectName, FurnitureId, Obj):-
+    objects_on_furniture(FurnitureId,Objects),
+    matching_object_in_list(ObjectName, Objects, Obj).
+
 
 
 matching_object_everywhere(Name,Obj):-
