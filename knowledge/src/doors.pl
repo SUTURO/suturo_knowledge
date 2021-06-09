@@ -2,6 +2,8 @@
     [
         init_doors/0,
         init_door_paths/0,
+        is_door/1,
+        is_passage/1,
         update_door_state/2,
         update_door_state_dynamic/2,
         update_door_state_measurement/3,
@@ -11,6 +13,7 @@
         perceiving_pose_of_door/3,
         manipulating_pose_of_door/2,
         passing_pose_of_door/2,
+        passing_pose_of_passage/2,
         shortest_path_between_rooms/3,
         inside_door_handle/2,
         outside_door_handle/2
@@ -39,6 +42,14 @@ init_doors :-
         create_door_hinge(Door, Link),
         create_door_handles(Door, Link),
         assign_connecting_rooms(Door, Link)
+    )),
+    forall((
+        member(Link, Links),
+        sub_string(Link,_,_,_,path)
+    ),
+    (
+        create_passage(Passage, Link),
+        assign_connecting_rooms(Passage, Link)
     )).
 
 
@@ -89,11 +100,19 @@ create_door_handles(Door, DoorLink) :-
             tell(triple(OutsideHandleLocation, hsr_rooms:'isOutsideOf', Door))
         ))
     )).
-    
+
+
+is_door(Door) :-
+    has_type(Door, hsr_rooms:'Door').
+
 
 create_passage(Passage, PassageLink) :-
     tell(has_type(Passage, hsr_rooms:'Passage')),
     tell(triple(Passage, urdf:'hasURDFName', PassageLink)).
+
+
+is_passage(Passage) :-
+    has_type(Passage, hsr_rooms:'Passage').
 
 
 assign_connecting_rooms(RoomLinkage, RoomLinkageLink) :-
@@ -286,6 +305,29 @@ manipulating_pose_of_door(Door, Pose) :-
         Angle is pi,
         angle_to_quaternion(Angle, DeltaRotation),
         tf_transform_pose(InsideDoorHandleLink, Origin, pose([0.0, 1.2, 0.0], DeltaRotation), pose([NewX, NewY, _], Rotation)),
+        Pose = [[NewX, NewY, 0.0], Rotation]
+    )).
+
+
+passing_pose_of_passage(Passage, Pose) :-
+    get_urdf_id(URDF),
+    get_urdf_origin(Origin),
+    has_urdf_name(Passage, PassageLink),
+    tf_lookup_transform(PassageLink, 'base_footprint', pose([X, _, _], _)),
+    ((X < 0)
+    ->
+    (
+        Angle is 0.0,
+        angle_to_quaternion(Angle, DeltaRotation),
+        DeltaX is 0.4,
+        tf_transform_pose(PassageLink, Origin, pose([DeltaX, 0.0, 0.0], DeltaRotation), pose([NewX, NewY, _], Rotation)),
+        Pose = [[NewX, NewY, 0.0], Rotation]
+    );
+    (
+        Angle is pi,
+        angle_to_quaternion(Angle, DeltaRotation),
+        DeltaX is -0.4,
+        tf_transform_pose(PassageLink, Origin, pose([DeltaX, 0.0, 0.0], DeltaRotation), pose([NewX, NewY, _], Rotation)),
         Pose = [[NewX, NewY, 0.0], Rotation]
     )).
 
