@@ -1,7 +1,8 @@
 :- module(pickup,
     [
       next_object_/1,
-      object_pose_to_grasp_from/2
+      object_pose_to_grasp_from/2,
+      surface_not_a_bucket/1
     ]).
 
 :- rdf_db:rdf_register_ns(hsr_objects, 'http://www.semanticweb.org/suturo/ontologies/2020/3/objects#', [keep(true)]).
@@ -15,22 +16,15 @@ next_object_(BestObj) :-
     place_objects,
     hsr_existing_objects(X),
     findall(Object,
-         (member(Object,X),
+         (
+         member(Object,X),
          object_supported_by_surface(Object,S),
-         has_urdf_name(S,N),
-         not(sub_string(N,_,_,_,"bucket"))),
+         surface_not_a_bucket(S)
+         )
+         ,
         Objects),
     predsort(compareDistances, Objects, SortedObjs),
     nth0(0, SortedObjs, BestObj).
-
-
-next_object_(noSourceSurfaces) :-
-    all_source_surfaces([]),
-    ros_warn("You haven't declared any surfaces to be source surfaces"), !.
-
-next_object_(noObjectsOnSourceSurfaces) :-
-    all_objects_on_source_surfaces([]),
-    ros_info("There aren't any objects on source surfaces").
 
 
 object_pose_to_grasp_from(Object,[[XPose,YPose,0], Rotation]):-
@@ -42,3 +36,12 @@ object_pose_to_grasp_from(Object,[[XPose,YPose,0], Rotation]):-
     surface_dimensions(Surface, Depth, _, _),
     Offset is -(Depth / 2 + 0.5),
     tf_transform_point(Name, map, [Depth, Y,0], [XPose,YPose,_]).
+
+surface_not_a_bucket(S):-
+    has_urdf_name(S,N),
+    not(sub_string(N,_,_,_,"bucket")),
+    not(gripper(S)).
+
+surface_not_a_bucket(S):-
+    is_room(S).
+

@@ -31,6 +31,8 @@
         furnitures_in_room/2,
         surfaces_in_room/2,
         objects_in_room/2,
+        pose_in_room/2,
+        pose_is_outside/1,
         has_predefined_location/2,
         objects_supported_by_surface/2,
         locations_not_visited/1,
@@ -141,24 +143,24 @@ place_objects :-
     hsr_existing_objects(Objects),
     forall(member(Object, Objects), 
     (
-        object_at_location(Object, Room, Furniture, Surface)
+        object_at_location(Object, _, _, _)
     )).
 
 object_at_location(Object, Room, Furniture, Surface) :-
     is_suturo_object(Object),
-    has_location(Object, ObjectLocation),
+    once(has_location(Object, _)),!, % just check if it already has a Location
     object_in_room(Object, Room),
     object_on_furniture(Object, Furniture),
-    object_supported_by_surface(Object, Surface),
+    once(object_supported_by_surface(Object, Surface)),
     !.
 
 object_at_location(Object, Room, Furniture, Surface) :-
     is_suturo_object(Object),
     tell(has_type(ObjectLocation, soma:'Location')),
-    tell(has_location(Object, ObjectLocation)),
+    once(tell(has_location(Object, ObjectLocation))),!,
     object_in_room(Object, Room),
-    object_on_furniture(Object, Furniture),
-    object_supported_by_surface(Object, Surface),
+    once(object_supported_by_surface(Object, Surface)),
+    once(object_on_furniture(Object, Furniture)),
     !.
 
 forget_object_at_location(Object) :-
@@ -166,7 +168,7 @@ forget_object_at_location(Object) :-
         has_location(Object, ObjectLocation),
         forall(triple(ObjectLocation, knowrob:'isInsideOf', _), tripledb_forget(ObjectLocation, knowrob:'isInsideOf', _)),
         forall(triple(ObjectLocation, knowrob:'isOntopOf', _), tripledb_forget(ObjectLocation, knowrob:'isOntopOf', _)),
-        forall(triple(ObjectLocation, knowrob:'isSupportedBy', _), tripledb_forget(ObjectLocation, knowrob:'isSupportedBy', _))
+        forall(triple(ObjectLocation, soma:'isSupportedBy', _), tripledb_forget(ObjectLocation, soma:'isSupportedBy', _))
     );
     not has_location(Object, _).
 
@@ -226,7 +228,7 @@ robot_in_room(Room) :-
     !.
 
 robot_in_room(Room) :-
-    has_type(Room, hsr_rooms:'Outside'),
+    ask(has_type(Room, hsr_rooms:'Outside')),
     !.
 
 object_in_room(Object, Room) :-
@@ -290,6 +292,19 @@ furniture_in_room(Furniture, Room) :-
     update(triple(FurnitureLocation, knowrob:'isInsideOf', Room)),
     !.
 
+pose_in_room([X,Y,_], Room) :-
+    has_type(Room, hsr_rooms:'Room'),
+    room_corner_point_positions(Room, CornerPoints),
+    point_in_polygon([X,Y,0], CornerPoints),!.
+
+pose_in_room([X,Y,_], Room) :-
+    ask(has_type(Room, hsr_rooms:'Outside')).
+
+pose_is_outside([X,Y,_]) :-
+    pose_in_room([X,Y,_], Room),
+    ask(has_type(Room, hsr_rooms:'Outside')).
+
+
 surface_in_room(Surface, Room) :-
     has_surface(Furniture, Surface),
     furniture_in_room(Furniture, Room).
@@ -313,6 +328,12 @@ object_on_furniture(Object, Furniture) :-
     has_surface(Furniture, Surface),
     object_supported_by_surface(Object, Surface).
 
+% TODO HOT FIX
+object_on_furniture(Object, Furniture) :-
+    object_supported_by_surface(Object, Surface),
+    is_room(Surface).
+
+
 object_on_predefined_furniture(Object, FurnitureType) :-
     has_predefined_location(Object, Location),
     (triple(Location, knowrob:'isOntopOf', FurnitureType);
@@ -321,17 +342,17 @@ object_on_predefined_furniture(Object, FurnitureType) :-
 
 object_supported_by_surface(Object, Surface) :-
     once(has_location(Object, ObjectLocation)),
-    triple(ObjectLocation, soma:'isSupportedBy', Surface).
+    triple(ObjectLocation, soma:'isSupportedBy', Surface),!.
 
 object_supported_by_surface(Object, Surface) :-
     has_location(Object, ObjectLocation),
     object_tf_frame(Object, ObjectFrame),
-    urdf_tf_frame(Surface, SurfaceFrame),
     tf_lookup_transform(map, ObjectFrame, pose(Position, _)),
     position_supported_by_surface(Position, Surface),
     tell(triple(ObjectLocation, soma:'isSupportedBy', Surface)).
     
 
+% Position is relative to map
 position_supported_by_surface(Position, Surface) :-
     surface_dimensions(Surface, Depth, Width, _),
     threshold_surface(ThAbove, ThBelow),
@@ -340,11 +361,14 @@ position_supported_by_surface(Position, Surface) :-
     ThAbove >= Z,
     ThBelow =< Z,
     Width/2 >= abs(Y),
-    Depth/2 >= abs(X).
+    Depth/2 >= abs(X),!.
 
 
-%position_supportable_by_surface(Position, ground) :-
-%    position_supportable_by_ground(Position).
+position_supported_by_surface([X,Y,Z], Room) :-
+    ZLimit is 0.28,
+    Z =< ZLimit,
+    pose_in_room([X,Y,Z],Room).
+
 
 
 

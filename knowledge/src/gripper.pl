@@ -33,32 +33,26 @@ gripper_init(Gripper) :-
 
 all_objects_in_gripper(Instances):-
     gripper(Gripper),
-    findall(Instance, (
-        has_location(Instance, ObjectLocation),
-        triple(ObjectLocation, hsr_objects:'supportedBy', Gripper)
+    findall(Object, (
+        is_suturo_object(Object),
+        once(has_location(Object, ObjectLocation)),
+        triple(ObjectLocation, soma:'isSupportedBy', Gripper)
         ), Instances).
 
-attach_object_to_gripper(Instance) :-
-    %forall(triple(Instance, hsr_objects:'supportedBy', _), tripledb_forget(Instance, hsr_objects:'supportedBy', _)),
-    forget_object_at_location(Instance),
+attach_object_to_gripper(Object) :-
+    forget_object_at_location(Object),
     gripper(Gripper),
-    has_location(Instance, InstanceLocation),
-    tell(triple(InstanceLocation, hsr_objects:'supportedBy', Gripper)),
-    %object_frame_name(Instance, InstanceFrame),
-    %object_frame_name(Gripper,GripperFrame),
-    object_tf_frame(Instance,InstanceFrame),
-    hsr_lookup_transform(Gripper, InstanceFrame, PoseTrans, PoseRota),
-    tell(is_at(Instance, [Gripper, PoseTrans, PoseRota])),
+    has_location(Object, ObjectLocation),
+    tell(triple(ObjectLocation, soma:'isSupportedBy', Gripper)),
+    object_tf_frame(Object,ObjectFrame),
+    hsr_lookup_transform(Gripper, ObjectFrame, PoseTrans, PoseRota),
+    tell(is_at(Object, [Gripper, PoseTrans, PoseRota])),
     republish, republish.
 
 release_object_from_gripper([NewPose,NewRotation]) :-
-    gripper(Gripper),
-    objects_on_surface(Instances, Gripper),
+    all_objects_in_gripper(Instances),
     member(Instance, Instances),
-    %object_frame_name(Instance, InstanceFrame),
-    %hsr_belief_at_update(Instance, [map, _, NewPose, NewRotation]),
     tell(is_at(Instance, ['map', NewPose, NewRotation])),
     forget_object_at_location(Instance),
-    at_location(Instance, _, _, _),
-    group_target_objects,
+    object_at_location(Instance, _, _, _),
     republish, republish.

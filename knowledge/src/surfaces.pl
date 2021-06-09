@@ -19,34 +19,23 @@
     %% FIND SURFACES
     all_surfaces/1, %replaces all_srdl_objects contains ground
     is_surface/1,
-    all_source_surfaces/1,
-    all_target_surfaces/1,
     % Get poses 
     pose_of_tables/1,
     pose_of_shelves/1,
     pose_of_buckets/1,
-    pose_of_target_surfaces/1,
-    pose_of_source_surfaces/1,
     pose_of_surfaces/2,
     compareDistances/3,
     %% FIND OBJs
     objects_on_surface/2,
     is_suturo_object/1,
+    objects_on_furniture/2,
     objects_on_list_of_surfaces/2,
-    all_objects_on_source_surfaces/1,
-    all_objects_on_target_surfaces/1,
     all_objects_on_ground/1,
     all_objects_in_whole_shelf_/1, % will soon be deprecated
     all_objects_on_tables_/1,
     all_objects_in_buckets/1,    
     %% CREATE OBJECT
     place_object/1,
-    %% ROLES
-    make_all_surface_type_role/2,
-    make_surfaces_source/1,
-    make_surfaces_target/1,
-    make_role/2,
-    get_surface_role/2,
     get_perception_surface_region/2,
     %% TEMP
     create_furniture/2,
@@ -95,6 +84,11 @@ init_furnitures :-
         tell(triple(Furniture, urdf:'hasURDFName', FurnitureLink2)),
         assign_surfaces(Furniture, FurnitureLink2, Shape),
         init_visit_state(Furniture)
+    )),
+    all_rooms(Rooms),
+    forall(member(Room,Rooms),
+    (
+       tell(has_type(Room, hsr_rooms:'Floor'))  
     )).
 
 
@@ -299,35 +293,14 @@ square_big_enough(X,Y):- %TODO Support other shapes
 assert_object_on(ObjectInstance, SurfaceLink) :-
     all_surfaces(SurfaceLinks), % this makes sure, we actually have a surface here
     member(SurfaceLink,SurfaceLinks),
-    tripledb_forget(ObjectInstance, hsr_objects:'supportedBy', _),
-    tripledb_tell(ObjectInstance, hsr_objects:'supportedBy', SurfaceLink).
+    has_location(ObjectLocation, ObjectInstance),
+    tripledb_forget(ObjectInstance, hsr_objects:'isSupportedBy', _),
+    tripledb_tell(ObjectInstance, hsr_objects:'isSupportedBy', SurfaceLink).
 
 
 /**
 *****************************************FIND SURFACES******************************************************
 */
-
-% Surfaces is a list of all SurfaceLinks that are source
-all_source_surfaces(Surfaces):-
-    all_surfaces(ExistingSurfaces),
-    findall(Surface,
-    (
-        member(Surface, ExistingSurfaces),
-        triple(Surface, hsr_objects:'sourceOrTarget', source)
-    ),
-        Surfaces).
-
-
-% Surfaces is a list of all SurfaceLinks that are target
-all_target_surfaces(Surfaces):-
-    all_surfaces(ExistingSurfaces),
-    findall(Surface,
-    (
-        member(Surface, ExistingSurfaces),
-        triple(Surface, hsr_objects:'sourceOrTarget', target)
-    ),
-        Surfaces).
-
 
 all_surfaces_of_type(SurfaceType, Surfaces) :-
     findall(Surface, 
@@ -357,10 +330,6 @@ pose_of_buckets(Positions) :-
     bucket_surfaces(Buckets),
     pose_of_surfaces(Buckets, Positions).
 
-pose_of_target_surfaces(Positions) :-
-    all_target_surfaces(Surfaces),
-    pose_of_surfaces(Surfaces, Positions).
-
 pose_of_source_surfaces(Positions) :-
     all_source_surfaces(Surfaces),
     pose_of_surfaces(Surfaces, Positions).
@@ -384,9 +353,13 @@ compareDistances(Order, Thing1, Thing2) :-
 *****************************************FIND OBJECTS******************************************************
 */
 
-objects_on_surface(ObjectInstances, SurfaceLink) :-
+objects_on_surface(ObjectInstances, Surface) :-
+    % place_objects,
     findall(ObjectInstance,
-        find_supporting_surface(ObjectInstance, SurfaceLink),
+        (
+        triple(ObjectLocation, soma:'isSupportedBy', Surface),
+        once(has_location(ObjectInstance,ObjectLocation))
+        ),
         ObjectInstances).
 
 
@@ -395,23 +368,18 @@ all_objects_on_source_surfaces(Objs):-
     all_source_surfaces(Surfaces),
     objects_on_list_of_surfaces(Objs, Surfaces).
 
-
-% Objs is a list of all Objects on all target surfaces.
-all_objects_on_target_surfaces(Objs):-
-    all_target_surfaces(Surfaces),
-    objects_on_list_of_surfaces(Objs, Surfaces).
-
-
-
 objects_on_list_of_surfaces(ObjectInstances, SurfaceList):-
-    findall(Obj,
+    findall(Objects,
     ( 
         member(Surface, SurfaceList),
-        objects_on_surface(Objects, Surface),
-        member(Obj, Objects)
+        objects_on_surface(Objects, Surface)
     ),
-        ObjectInstances).
+        ObjectsNested),
+    flatten(ObjectsNested, ObjectInstances).
 
+objects_on_furniture(Furniture_ID, Objects):-
+    furniture_surfaces(Furniture_ID, Surfaces),
+    objects_on_list_of_surfaces(Objects,Surfaces).
 
 all_objects_on_ground(Instances) :-
     findall(Instance, (
@@ -470,15 +438,6 @@ make_surfaces_source(Surfaces):-
 % Gives a list of surfaces the role target
 make_surfaces_target(Surfaces):-
     forall(member(Surface, Surfaces), make_role(Surface, target)).
-
-
-% Gives all surfaces with given name (ground, table, basket or shelf) the Role (target or source)
-make_all_surface_type_role(SurfaceType, Role):-
-    SurfaceType = ground,
-    make_role(SurfaceType, Role).
-
-make_all_surface_type_role(SurfaceType, Role):-
-    forall(triple(SurfaceLink, hsr_objects:'isSurfaceType',SurfaceType), make_role(SurfaceLink,Role)).
 
 
 % Gives the gives SurfaceLink the Role (target or source)

@@ -5,7 +5,6 @@
       belief_class_of/2,
       hsr_belief_at_update/2,
       merge_object_into_group/1,
-      group_target_objects/0,
       group_shelf_objects/0,
       group_table_objects/0,
       group_objects_at/1,
@@ -77,16 +76,6 @@ merge_object_into_group(Instance) :-
     forall(triple(Other,hsr_objects:'inGroup',_),tripledb_forget(Other,hsr_objects:'inGroup',_)),
     tell(triple(Other, hsr_objects:'inGroup', WG)).
 
-group_target_objects :-
-    all_objects_on_target_surfaces(Objs),
-    group_objects(Objs).
-
-% Returns always true if the bucket is target.
-group_target_objects :-
-    all_target_surfaces(Surfaces),
-    member(Surface, Surfaces),
-    is_bucket(Surface).
-
 group_shelf_objects :-
     all_objects_in_whole_shelf(Objs),
     group_objects(Objs).
@@ -98,7 +87,7 @@ group_table_objects :-
 group_objects_at([X,Y,Z]) :-
     Transform = ['map', _, [X,Y,Z], [0,0,1,0]],
     hsr_existing_object_at(Transform, 0.05, Obj),
-    find_supporting_surface(Obj, Surface),
+    object_supported_by_surface(Obj, Surface),
     objects_on_surface(Objs, Surface),
     group_objects(Objs).
 
@@ -144,7 +133,7 @@ group_mean_pose(Group, Transform, Rotation) :-
     Zmean is Ztotal / L,
     Transform = [Xmean, Ymean, Zmean],
     once(triple(Member, hsr_objects:'inGroup', Group)),
-    find_supporting_surface(Member, Surface),
+    object_supported_by_surface(Member, Surface),
     surface_pose_in_map(Surface, [_, Rotation]),
     %object_frame_name(Group, Frame),
     %object_pose_update(Group, ['map', Frame, Transform, Rotation]).
