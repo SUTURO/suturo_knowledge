@@ -13,6 +13,8 @@
     has_surface/2,
     visited/1,
     update_visit_state/2,
+    set_surface_visited/1,
+    set_surface_not_visited/1,
     all_surfaces_of_type/2,
     supporting_surface/1,
     assert_object_on/2,
@@ -184,6 +186,12 @@ init_visit_state(Furniture) :-
         tell(triple(VisitState, hsr_rooms:'visited', true))
     )).
 
+
+set_surface_visited(Surface) :-
+    update_visit_state(Surface, true).
+
+set_surface_not_visited(Surface) :-
+    update_visit_state(Surface, false).
 
 update_visit_state(Surface, State) :-
     is_surface(Surface),
