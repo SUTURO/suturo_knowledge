@@ -1,6 +1,7 @@
 :- module(pickup,
     [
       next_object_/1,
+      surface_pose_to_perceive_from/2,
       object_pose_to_grasp_from/2,
       surface_not_a_bucket/1
     ]).
@@ -25,6 +26,19 @@ next_object_(BestObj) :-
         Objects),
     predsort(compareDistances, Objects, SortedObjs),
     nth0(0, SortedObjs, BestObj).
+
+
+surface_pose_to_perceive_from(Surface, [[XPos,YPos,0],Rotation]):-
+    has_urdf_name(Surface, SurfaceLink),
+    surface_dimensions(Surface,X,_,_),
+    HalfX is X / 2,
+    XOffset is (X * -1.75) - HalfX,
+    (XOffset =< -0.6  - HalfX
+    -> XOffset is -0.6  - HalfX
+    ; true),
+    tf_transform_point(SurfaceLink, map, [XOffset, 0, 0], [XPos,YPos,_]),
+    tf_lookup_transform('map', SurfaceLink, pose(_,Rotation)).
+    
 
 
 object_pose_to_grasp_from(Object,[[XPose,YPose,0], Rotation]):-
