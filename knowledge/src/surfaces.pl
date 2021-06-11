@@ -84,6 +84,8 @@ init_furnitures :-
         split_string(FurnitureLink2, ":", "", [_, Type, Shape]),
         create_furniture(Type, Furniture),
         tell(triple(Furniture, urdf:'hasURDFName', FurnitureLink2)),
+        tell(has_type(FurnitureLocation, soma:'Location')),
+        tell(triple(Furniture, dul:'hasLocation', FurnitureLocation)),
         assign_surfaces(Furniture, FurnitureLink2, Shape),
         init_visit_state(Furniture)
     )).
@@ -91,51 +93,63 @@ init_furnitures :-
 
 create_furniture(FurnitureType, Furniture) :-
     sub_string(FurnitureType,_,_,_,"armchair"),
-    tell(has_type(Furniture, hsr_rooms:'Armchair')).
+    tell(has_type(Furniture, hsr_rooms:'Armchair')),
+    !.
 
 create_furniture(FurnitureType, Furniture) :-
     sub_string(FurnitureType,_,_,_,"bed"),
-    tell(has_type(Furniture, hsr_rooms:'Bed')).
+    tell(has_type(Furniture, hsr_rooms:'Bed')),
+    !.
 
 create_furniture(FurnitureType, Furniture) :-
     sub_string(FurnitureType,_,_,_,"bucket"),
-    tell(has_type(Furniture, hsr_rooms:'Bucket')).
+    tell(has_type(Furniture, hsr_rooms:'Bucket')),
+    !.
 
 create_furniture(FurnitureType, Furniture) :-
     sub_string(FurnitureType,_,_,_,"couch"),
-    tell(has_type(Furniture, hsr_rooms:'Couch')).
+    tell(has_type(Furniture, hsr_rooms:'Couch')),
+    !.
 
 create_furniture(FurnitureType, Furniture) :-
     sub_string(FurnitureType,_,_,_,"cabinet"),
-    tell(has_type(Furniture, hsr_rooms:'Cabinet')).
+    tell(has_type(Furniture, hsr_rooms:'Cabinet')),
+    !.
 
 create_furniture(FurnitureType, Furniture) :-
     sub_string(FurnitureType,_,_,_,"dishwasher"),
-    tell(has_type(Furniture, hsr_rooms:'Dishwasher')).
+    tell(has_type(Furniture, hsr_rooms:'Dishwasher')),
+    !.
 
 create_furniture(FurnitureType, Furniture) :-
     sub_string(FurnitureType,_,_,_,"fridge"),
-    tell(has_type(Furniture, hsr_rooms:'Fridge')).
+    tell(has_type(Furniture, hsr_rooms:'Fridge')),
+    !.
 
 create_furniture(FurnitureType, Furniture) :-
     sub_string(FurnitureType,_,_,_,"shelf"),
-    tell(has_type(Furniture, hsr_rooms:'Shelf')).
+    tell(has_type(Furniture, hsr_rooms:'Shelf')),
+    !.
 
 create_furniture(FurnitureType, Furniture) :-
     sub_string(FurnitureType,_,_,_,"sideboard"),
-    tell(has_type(Furniture, hsr_rooms:'Sideboard')).
+    tell(has_type(Furniture, hsr_rooms:'Sideboard')),
+    !.
 
 create_furniture(FurnitureType, Furniture) :-
     sub_string(FurnitureType,_,_,_,"sidetable"),
-    tell(has_type(Furniture, hsr_rooms:'Sidetable')).
+    tell(has_type(Furniture, hsr_rooms:'Sidetable')),
+    !.
 
 create_furniture(FurnitureType, Furniture) :-
     sub_string(FurnitureType,_,_,_,"sink"),
-    tell(has_type(Furniture, hsr_rooms:'Sink')).
+    tell(has_type(Furniture, hsr_rooms:'Sink')),
+    !.
 
 create_furniture(FurnitureType, Furniture) :-
     sub_string(FurnitureType,_,_,_,"table"),
-    tell(has_type(Furniture, hsr_rooms:'Table')).
+    tell(has_type(Furniture, hsr_rooms:'Table')),
+    !.
 
 
 assign_surfaces(Furniture, FurnitureLink, Shape) :-

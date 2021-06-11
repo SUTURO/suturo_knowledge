@@ -17,6 +17,7 @@
 
 init_rooms :-
     tell(has_type(Outside, hsr_rooms:'Outside')),
+    assign_room_surfaces(Outside),
     get_urdf_id(URDF),
     urdf_link_names(URDF, Links),
     findall(RoomLink,
@@ -28,34 +29,41 @@ init_rooms :-
     forall(member(RoomLink2, RoomLinks),
     (
         create_room(RoomLink2, Room),
-        assign_room_points(Room, RoomLink2)
+        assign_room_points(Room, RoomLink2),
+        assign_room_surfaces(Room)
     )).
 
 
 create_room(RoomLink, Room) :-
     sub_string(RoomLink,_,_,_,"kitchen"),
-    tell(has_type(Room, hsr_rooms:'Kitchen')).
+    tell(has_type(Room, hsr_rooms:'Kitchen')),
+    !.
 
 create_room(RoomLink, Room) :-
     sub_string(RoomLink,_,_,_,"living_room"),
-    tell(has_type(Room, hsr_rooms:'LivingRoom')).
+    tell(has_type(Room, hsr_rooms:'LivingRoom')),
+    !.
 
 create_room(RoomLink, Room) :-
     (sub_string(RoomLink,_,_,_,"sleeping_room");
     sub_string(RoomLink,_,_,_,"bedroom")),
-    tell(has_type(Room, hsr_rooms:'SleepingRoom')).
+    tell(has_type(Room, hsr_rooms:'SleepingRoom')),
+    !.
 
 create_room(RoomLink, Room) :-
     sub_string(RoomLink,_,_,_,"office"),
-    tell(has_type(Room, hsr_rooms:'Office')).
+    tell(has_type(Room, hsr_rooms:'Office')),
+    !.
 
 create_room(RoomLink, Room) :-
     sub_string(RoomLink,_,_,_,"dining_room"),
-    tell(has_type(Room, hsr_rooms:'DiningRoom')).
+    tell(has_type(Room, hsr_rooms:'DiningRoom')),
+    !.
 
 create_room(RoomLink, Room) :-
     sub_string(RoomLink,_,_,_,"hall"),
-    tell(has_type(Room, hsr_rooms:'Hall')).
+    tell(has_type(Room, hsr_rooms:'Hall')),
+    !.
 
 
 assign_room_points(Room, RoomLink) :-
@@ -81,6 +89,11 @@ assign_room_points(Room, RoomLink) :-
     tell(has_type(CornerPointLocation, soma:'Location')),
     tell(triple(CornerPointCollection, dul:'hasLocation', CornerPointLocation)),
     tell(triple(CornerPointLocation, hsr_rooms:'isInCornerOf', Room)).
+
+
+assign_room_surfaces(Room) :-
+    tell(has_type(Floor, hsr_rooms:'Floor')),
+    tell(triple(Room, hsr_rooms:'hasSurface', Floor)).
 
 
 room_center_point_position(Room, RoomLink, [X, Y, Z]) :-
