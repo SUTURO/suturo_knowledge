@@ -92,6 +92,31 @@ init_furnitures :-
 
 
 create_furniture(FurnitureType, Furniture) :-
+    sub_string(FurnitureType,_,_,_,"bin_a"),
+    tell(has_type(Furniture, hsr_rooms:'GreenBucket')),
+    !.
+
+create_furniture(FurnitureType, Furniture) :-
+    sub_string(FurnitureType,_,_,_,"bin_b"),
+    tell(has_type(Furniture, hsr_rooms:'BlackBucket')),
+    !.
+
+create_furniture(FurnitureType, Furniture) :-
+    sub_string(FurnitureType,_,_,_,"tray"),
+    tell(has_type(Furniture, hsr_rooms:'Tray')),
+    !.
+
+create_furniture(FurnitureType, Furniture) :-
+    sub_string(FurnitureType,_,_,_,"container_a"),
+    tell(has_type(Furniture, hsr_rooms:'BigContainer')),
+    !.
+
+create_furniture(FurnitureType, Furniture) :-
+    sub_string(FurnitureType,_,_,_,"container_b"),
+    tell(has_type(Furniture, hsr_rooms:'SmallContainer')),
+    !.
+
+create_furniture(FurnitureType, Furniture) :-
     sub_string(FurnitureType,_,_,_,"armchair"),
     tell(has_type(Furniture, hsr_rooms:'Armchair')),
     !.
