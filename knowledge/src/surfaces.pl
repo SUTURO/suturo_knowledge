@@ -6,6 +6,7 @@
     all_furnitures/1,
     furniture_surfaces/2,
     surfaces_not_visited/1,
+    surfaces_not_visited_in_room/2,
     bucket_surfaces/1,
     has_table_shape/1,
     has_shelf_shape/1,
@@ -42,7 +43,8 @@
     %% TEMP
     create_furniture/2,
     assign_surfaces/3,
-    init_visit_state/1
+    init_visit_state/1,
+    cleanup_surfaces/1
     ]).
 
 :- tripledb_load(
@@ -249,6 +251,17 @@ surfaces_not_visited(Surfaces) :-
     (
         is_surface(Surface),
         not visited(Surface)
+    ),
+    Surfaces).
+
+
+surfaces_not_visited_in_room(RoomId, Surfaces) :-
+    surfaces_not_visited(SurfacesEverywhere),
+    surfaces_in_room(RoomId, SurfacesInRoom),
+    findall(Surface,
+    (
+        member(Surface,SurfacesEverywhere),
+        member(Surface,SurfacesInRoom)
     ),
     Surfaces).
 
@@ -506,4 +519,9 @@ get_perception_surface_region(Surface, PerceptionName):-
     has_urdf_name(Surface,Name),
     split_string(Name, ":","",SurfaceSplit),
     nth0(0,SurfaceSplit,PerceptionName).
+
+cleanup_surfaces(Surfaces) :-
+    findall(S,
+    (has_urdf_name(S,"long_table:table:table_center");has_urdf_name(S,"tall_table:table:table_center"))
+    , Surfaces).
 
