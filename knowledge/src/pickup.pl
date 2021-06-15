@@ -33,10 +33,10 @@ surface_pose_to_perceive_from(Surface, [[XPos,YPos,0],Rotation]):-
     surface_dimensions(Surface,X,_,_),
     HalfX is X / 2,
     XOffset is (X * -1.75) - HalfX,
-    (XOffset =< -0.6  - HalfX
-    -> XOffset is -0.6  - HalfX
-    ; true),
-    tf_transform_point(SurfaceLink, map, [XOffset, 0, 0], [XPos,YPos,_]),
+    (XOffset >= -0.6  - HalfX
+    -> XOffsetUsed is -0.6  - HalfX
+    ; XOffsetUsed is (X * -1.75) - HalfX),
+    tf_transform_point(SurfaceLink, map, [XOffsetUsed, 0, 0], [XPos,YPos,_]),
     tf_lookup_transform('map', SurfaceLink, pose(_,Rotation)).
     
 
