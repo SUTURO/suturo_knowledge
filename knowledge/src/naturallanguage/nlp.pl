@@ -10,7 +10,8 @@
     matching_object_in_list/3,
     matching_room_class/2,
     matching_room/2,
-    all_room_names_with_id/1
+    all_room_names_with_id/1,
+    deliver_object_pose/2
     ]).
 
 :- rdf_meta
@@ -85,4 +86,16 @@ matching_room_class(Name,Class):-
 
 matching_room(Name,Room):-    
     matching_room_class(Name,Class), all_rooms_of_type(Class,Rooms), member(Room, Rooms).
-    
+
+
+
+
+
+%%%% RC People to Pose%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+deliver_object_pose('left', [[0.18,2.8,0],[0, 0, 0.99518, -0.098072]]).
+deliver_object_pose("left", Pose):-
+    deliver_object_pose('left', Pose).
+deliver_object_pose('right', [[0.2131, 3.9596, 0],[0, 0, 0.99998, -0.0067647]]).
+deliver_object_pose("right", Pose).
+    deliver_object_pose('right', Pose).
