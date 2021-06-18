@@ -255,7 +255,8 @@ surfaces_not_visited(Surfaces) :-
 
 has_table_shape(Surface) :-
     has_surface(Furniture, Surface),
-    triple(Furniture, soma:'hasShape', hsr_rooms:'TableShape').
+    triple(Furniture, soma:'hasShape', hsr_rooms:'TableShape'),
+    not has_bucket_shape(Surface).
 
 has_shelf_shape(Surface) :-
     has_surface(Furniture, Surface),
@@ -263,7 +264,7 @@ has_shelf_shape(Surface) :-
 
 has_bucket_shape(Surface) :-
     has_surface(Furniture,Surface),
-    triple(Furniture, soma:'hasShape', hsr_rooms:'BucketShape').
+    has_type(Furniture, hsr_rooms:'Deposit').
 
 
 is_furniture(Furniture) :-

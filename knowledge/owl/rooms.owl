@@ -332,7 +332,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Bucket -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Bucket">
-        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#DesignedFurniture"/>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Deposit"/>
     </owl:Class>
     
 
@@ -710,7 +710,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Tray -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Tray">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Deposit"/>
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#DesignedFurniture"/>
     </owl:Class>
     
 
