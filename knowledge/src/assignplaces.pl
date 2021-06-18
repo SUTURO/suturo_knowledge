@@ -44,7 +44,6 @@ object_goal_pose(Instance, [Translation, Rotation], Context, RefInstance) :-
     (not same_as(Instance, RefInstance)
     ->
     (
-        writeln("Object and RefObject not the same"),
         triple(RefInstance, hsr_objects:'inGroup', Group),
         tell(triple(Instance, hsr_objects:'inGroup', Group)),
         object_tf_frame(RefInstance, RefObjectFrame),
@@ -55,19 +54,16 @@ object_goal_pose(Instance, [Translation, Rotation], Context, RefInstance) :-
         tf_transform_pose(SurfaceLink, 'map', pose([X, Y, 0], [0, 0, 0, 1]), pose(Translation, Rotation))
     );
     (
-        writeln("Object and RefObject same"),
         all_groups_on_tablelike_surface(Surface, Groups),
         surface_dimensions(Surface, SurfaceWidth, SurfaceDepth, SurfaceHeight),
         (length(Groups, 0)
         ->
         (
-            writeln("Table Surface empty"),
             RefX is SurfaceWidth/2 - MinSpace - ObjectDepth/2,
             RefY is SurfaceDepth/2 - MinSpace - ObjectWidth/2,
             tf_transform_pose(SurfaceLink, 'map', pose([RefX, RefY, 0], [0, 0, 0, 1]), pose(Translation, Rotation))
         );
         (
-            writeln("Begin new Row"),
             findall([X, Group],
             (
                 member(Group, Groups),
@@ -77,8 +73,6 @@ object_goal_pose(Instance, [Translation, Rotation], Context, RefInstance) :-
             sort(GroupPositions, SortedGroupPositions),
             nth0(0, SortedGroupPositions, [_, FirstGroup]),
             group_position_on_surface(Group, Surface, [GroupX, _, GroupZ]),
-            writeln("Group X Coordinate"),
-            writeln(GroupX),
             group_dimensions(Group, GroupDepth, _),
             RefX is GroupX - MinSpace - GroupDepth - ObjectDepth/2,
             RefY is SurfaceDepth/2 - MinSpace - ObjectWidth/2,
