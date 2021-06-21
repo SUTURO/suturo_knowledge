@@ -2,8 +2,7 @@
     [
       next_object_/1,
       surface_pose_to_perceive_from/2,
-      object_pose_to_grasp_from/2,
-      surface_not_a_bucket/1
+      object_pose_to_grasp_from/2
     ]).
 
 :- rdf_db:rdf_register_ns(hsr_objects, 'http://www.semanticweb.org/suturo/ontologies/2020/3/objects#', [keep(true)]).
@@ -14,7 +13,7 @@
     
 
 next_object_(BestObj) :-
-    place_objects,
+    ignore(place_objects),
     objects_not_handeled(Objects),
     predsort(compareDistances, Objects, SortedObjs),
     nth0(0, SortedObjs, BestObj).
@@ -47,12 +46,4 @@ object_pose_to_grasp_from(Object,[[XPose,YPose,0], Rotation]):-
     surface_dimensions(Surface, Depth, _, _),
     Offset is -(Depth / 2 + 0.5),
     tf_transform_point(Name, map, [Depth, Y,0], [XPose,YPose,_]).
-
-surface_not_a_bucket(S):-
-    has_urdf_name(S,N),
-    not(sub_string(N,_,_,_,"bucket")),
-    not(gripper(S)).
-
-surface_not_a_bucket(S):-
-    is_room(S).
 
