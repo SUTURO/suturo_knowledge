@@ -15,15 +15,7 @@
 
 next_object_(BestObj) :-
     place_objects,
-    hsr_existing_objects(X),
-    findall(Object,
-         (
-         member(Object,X),
-         object_supported_by_surface(Object,S),
-         surface_not_a_bucket(S)
-         )
-         ,
-        Objects),
+    objects_not_handeled(Objects),
     predsort(compareDistances, Objects, SortedObjs),
     nth0(0, SortedObjs, BestObj).
 

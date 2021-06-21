@@ -9,7 +9,10 @@
     object_size_ok/1,
     object_type_handling/3,
     set_object_color/3,
-    set_color_semantics/2    
+    set_color_semantics/2,
+    objects_not_handeled/1,
+    set_object_handeled/1,
+    set_object_not_handeled/1 
     ]).
 
 :- rdf_db:rdf_register_ns(hsr_objects, 'http://www.semanticweb.org/suturo/ontologies/2020/3/objects#', [keep(true)]).
@@ -71,17 +74,23 @@ place_object(Object):-
     assert_object_on(Object,Surface).
 
 
-update_handle_state(Object) :-
+set_object_handeled(Object) :-
+    update_handle_state(Object, true).
+
+set_object_not_handeled(Object) :-
+    update_handle_state(Object, false).
+
+update_handle_state(Object, State) :-
     is_suturo_object(Object),
-    triple(Surface, hsr_objects:'hasHandleState', VisitState),
-    forall(triple(VisitState, hsr_objects:'handeled', _), tripledb_forget(VisitState, hsr_objects:'handeled', _)),
-    tell(triple(VisitState, hsr_objects:'handeled', true)).
+    triple(Surface, hsr_objects:'hasHandleState', HandleState),
+    forall(triple(HandleState, hsr_objects:'handeled', _), tripledb_forget(HandleState, hsr_objects:'handeled', _)),
+    tell(triple(HandleState, hsr_objects:'handeled', State)).
 
 handeled(Object) :-
     is_suturo_object(Object),
     triple(Object, hsr_objects:'hasHandleState', HandleState),
-    triple(HandleState, hsr_objects:'handleled', handeled),
-    handeled == 1.
+    triple(HandleState, hsr_objects:'handeled', State),
+    State == 1.
 
 objects_not_handeled(Objects) :-
     findall(Object, 
@@ -150,7 +159,7 @@ create_object(PerceivedObjectType, PercTypeConf, [Frame,Position,Rotation], [Wid
     tell(triple(ObjID, hsr_objects:'supportable', true)),     % identify the object as an supportable object this is used by suturo_existing_objects
     
     tell(has_type(HandleState, hsr_objects:'HandleState')),
-    tell(triple(objID, hsr_objects:'hasHandleState', HandleState)),
+    tell(triple(ObjID, hsr_objects:'hasHandleState', HandleState)),
     tell(triple(HandleState, hsr_objects:'handeled', false)),
 
     tell(has_type(ObjectLocation, soma:'Location')),
