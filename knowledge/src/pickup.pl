@@ -20,7 +20,7 @@ next_object_(BestObj) :-
     nth0(0, SortedObjs, BestObj).
 
 
-surface_pose_to_perceive_from(Surface, [[2.8899999839230626, 0.46000000509103018, 0], [0.0, 0.0, -0.707106771713121, 0.707106790659974]]) :-
+surface_pose_to_perceive_from(Surface, [[2.75, 0.09, 0], [0.0, 0.0, -0.707106771713121, 0.707106790659974]]) :-
     has_urdf_name(Surface, "bin_b:bin_b:table_center"),!.
 
 
