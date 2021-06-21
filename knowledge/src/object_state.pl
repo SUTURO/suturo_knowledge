@@ -153,6 +153,9 @@ create_object(PerceivedObjectType, PercTypeConf, [Frame,Position,Rotation], [Wid
     tell(triple(objID, hsr_objects:'hasHandleState', HandleState)),
     tell(triple(HandleState, hsr_objects:'handeled', false)),
 
+    tell(has_type(ObjectLocation, soma:'Location')),
+    tell(triple(ObjID, dul:'hasLocation', ObjectLocation)),
+
     %%% ================ visualization marker array publish
     % TODO why not working with 1x ?
     marker_plugin:republish,

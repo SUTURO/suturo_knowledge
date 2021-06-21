@@ -28,15 +28,20 @@ next_object_(BestObj) :-
     nth0(0, SortedObjs, BestObj).
 
 
+surface_pose_to_perceive_from(Surface, [[2.8899999839230626, 0.46000000509103018, 0], [0.0, 0.0, -0.707106771713121, 0.707106790659974]]) :-
+    has_urdf_name(Surface, "bin_b:bin_b:table_center"),!.
+
+
+
 surface_pose_to_perceive_from(Surface, [[XPos,YPos,0],Rotation]):-
     has_urdf_name(Surface, SurfaceLink),
     surface_dimensions(Surface,X,_,_),
     HalfX is X / 2,
     XOffset is (X * -1.75) - HalfX,
-    (XOffset =< -0.6  - HalfX
-    -> XOffset is -0.6  - HalfX
-    ; true),
-    tf_transform_point(SurfaceLink, map, [XOffset, 0, 0], [XPos,YPos,_]),
+    (XOffset >= -0.6  - HalfX
+    -> XOffsetUsed is -0.6  - HalfX
+    ; XOffsetUsed is (X * -1.75) - HalfX),
+    tf_transform_point(SurfaceLink, map, [XOffsetUsed, 0, 0], [XPos,YPos,_]),
     tf_lookup_transform('map', SurfaceLink, pose(_,Rotation)).
     
 

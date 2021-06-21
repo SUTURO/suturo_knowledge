@@ -31,8 +31,6 @@
         furnitures_in_room/2,
         surfaces_in_room/2,
         objects_in_room/2,
-        pose_in_room/2,
-        pose_is_outside/1,
         has_predefined_location/2,
         objects_supported_by_surface/2,
         locations_not_visited/1,
@@ -199,18 +197,12 @@ objects_at_same_predefined_location(Object, Objects) :-
 
 
 surface_at_predefined_location(Surface, RoomType, FurnitureType) :-
-    writeln("Function: surface at predefined location"),
     has_surface(Furniture, Surface),
-    writeln(Furniture),
     has_type(Furniture, FurnitureType),
     subclass_of(FurnitureType, soma:'DesignedFurniture'),
-    writeln(FurnitureType),
     furniture_in_room(Furniture, Room),
-    writeln(Room),
     has_type(Room, RoomType),
-    subclass_of(RoomType, hsr_rooms:'Room'),
-    writeln(RoomType),
-    writeln("Function: surface at predefined location").
+    subclass_of(RoomType, hsr_rooms:'Room').
 
 surfaces_at_predefined_location(Surfaces, RoomType, FurnitureType) :-
     findall(Surface,
@@ -222,45 +214,25 @@ surfaces_at_predefined_location(Surfaces, RoomType, FurnitureType) :-
 robot_in_room(Room) :-
     get_urdf_origin(Origin),
     tf_lookup_transform(Origin, 'base_footprint', pose(RobotPosition, _)),
-    has_type(Room, hsr_rooms:'Room'),
-    room_corner_point_positions(Room, CornerPoints),
-    point_in_polygon(RobotPosition, CornerPoints),
+    position_in_room(RobotPosition, Room),
     !.
 
-robot_in_room(Room) :-
-    ask(has_type(Room, hsr_rooms:'Outside')),
-    !.
+%robot_in_room(Room) :-
+%    ask(has_type(Room, hsr_rooms:'Outside')),
+%    !.
 
 object_in_room(Object, Room) :-
     once(has_location(Object, ObjectLocation)),
     triple(ObjectLocation, knowrob:'isInsideOf', Room),
     is_room(Room).
 
+
 object_in_room(Object, Room) :-
+    object_tf_frame(Object, ObjectFrame),
+    get_urdf_origin(Origin),
+    tf_lookup_transform(Origin, ObjectFrame, pose(ObjectPosition, _)),
+    position_in_room(ObjectPosition, Room),
     once(has_location(Object, ObjectLocation)),
-    object_tf_frame(Object, ObjectFrame),
-    get_urdf_origin(Origin),
-    tf_lookup_transform(Origin, ObjectFrame, pose(ObjectPosition, _)),
-    has_type(Room, hsr_rooms:'Room'),
-    room_corner_point_positions(Room, CornerPoints),
-    point_in_polygon(ObjectPosition, CornerPoints),
-    forall(
-    (
-        triple(ObjectLocation, knowrob:'isInsideOf', CurrentRoom), 
-        has_type(CurrentRoom, hsr_rooms:'Room')
-    ), 
-    update(triple(ObjectLocation, knowrob:'isInsideOf', Room))).
-
-
-object_in_room(Object, Room) :-
-    object_tf_frame(Object, ObjectFrame),
-    get_urdf_origin(Origin),
-    tf_lookup_transform(Origin, ObjectFrame, pose(ObjectPosition, _)),
-    has_type(Room, hsr_rooms:'Room'),
-    room_corner_point_positions(Room, CornerPoints),
-    point_in_polygon(ObjectPosition, CornerPoints),
-    tell(has_type(ObjectLocation, soma:'Location')),
-    tell(has_location(Object, ObjectLocation)),
     tell(triple(ObjectLocation, knowrob:'isInsideOf', Room)).
 
 
@@ -269,41 +241,15 @@ furniture_in_room(Furniture, Room) :-
     triple(FurnitureLocation, knowrob:'isInsideOf', Room),
     !.
 
+
 furniture_in_room(Furniture, Room) :-
     once(has_location(Furniture, FurnitureLocation)),
     urdf_tf_frame(Furniture, FurnitureFrame),
     get_urdf_origin(Origin),
     tf_lookup_transform(Origin, FurnitureFrame, pose(ObjectPosition, _)),
-    has_type(Room, hsr_rooms:'Room'),
-    room_corner_point_positions(Room, CornerPoints),
-    point_in_polygon(ObjectPosition, CornerPoints),
-    update(triple(FurnitureLocation, knowrob:'isInsideOf', Room)),
+    position_in_room(ObjectPosition, Room),
+    tell(triple(FurnitureLocation, knowrob:'isInsideOf', Room)),
     !.
-
-furniture_in_room(Furniture, Room) :-
-    urdf_tf_frame(Furniture, FurnitureFrame),
-    get_urdf_origin(Origin),
-    tf_lookup_transform(Origin, FurnitureFrame, pose(ObjectPosition, _)),
-    has_type(Room, hsr_rooms:'Room'),
-    room_corner_point_positions(Room, CornerPoints),
-    point_in_polygon(ObjectPosition, CornerPoints),
-    tell(has_type(FurnitureLocation, soma:'Location')),
-    tell(has_location(Furniture, FurnitureLocation)),
-    update(triple(FurnitureLocation, knowrob:'isInsideOf', Room)),
-    !.
-
-pose_in_room([X,Y,_], Room) :-
-    has_type(Room, hsr_rooms:'Room'),
-    room_corner_point_positions(Room, CornerPoints),
-    point_in_polygon([X,Y,0], CornerPoints),!.
-
-pose_in_room([X,Y,_], Room) :-
-    ask(has_type(Room, hsr_rooms:'Outside')).
-
-pose_is_outside([X,Y,_]) :-
-    pose_in_room([X,Y,_], Room),
-    ask(has_type(Room, hsr_rooms:'Outside')).
-
 
 surface_in_room(Surface, Room) :-
     has_surface(Furniture, Surface),
@@ -328,12 +274,6 @@ object_on_furniture(Object, Furniture) :-
     has_surface(Furniture, Surface),
     object_supported_by_surface(Object, Surface).
 
-% TODO HOT FIX
-object_on_furniture(Object, Furniture) :-
-    object_supported_by_surface(Object, Surface),
-    is_room(Surface).
-
-
 object_on_predefined_furniture(Object, FurnitureType) :-
     has_predefined_location(Object, Location),
     (triple(Location, knowrob:'isOntopOf', FurnitureType);
@@ -342,18 +282,32 @@ object_on_predefined_furniture(Object, FurnitureType) :-
 
 object_supported_by_surface(Object, Surface) :-
     once(has_location(Object, ObjectLocation)),
-    triple(ObjectLocation, soma:'isSupportedBy', Surface),!.
+    triple(ObjectLocation, soma:'isSupportedBy', Surface),
+    !.
 
 object_supported_by_surface(Object, Surface) :-
-    has_location(Object, ObjectLocation),
+    once(has_location(Object, ObjectLocation)),
     object_tf_frame(Object, ObjectFrame),
     tf_lookup_transform(map, ObjectFrame, pose(Position, _)),
     position_supported_by_surface(Position, Surface),
     tell(triple(ObjectLocation, soma:'isSupportedBy', Surface)).
-    
+
+
+position_in_room(Position, Room) :-
+    is_room(Room),
+    room_corner_point_positions(Room, CornerPoints),
+    point_in_polygon(Position, CornerPoints),
+    !.
+
+
+position_in_room(Position, Room) :-
+    has_type(Room, hsr_rooms:'Outside'),
+    !.
+
 
 % Position is relative to map
 position_supported_by_surface(Position, Surface) :-
+    is_surface(Surface),
     surface_dimensions(Surface, Depth, Width, _),
     threshold_surface(ThAbove, ThBelow),
     urdf_tf_frame(Surface, SurfaceFrame),
@@ -361,13 +315,16 @@ position_supported_by_surface(Position, Surface) :-
     ThAbove >= Z,
     ThBelow =< Z,
     Width/2 >= abs(Y),
-    Depth/2 >= abs(X),!.
+    Depth/2 >= abs(X),
+    !.
 
 
-position_supported_by_surface([X,Y,Z], Room) :-
+position_supported_by_surface([X,Y,Z], Surface) :-
     ZLimit is 0.28,
     Z =< ZLimit,
-    pose_in_room([X,Y,Z],Room).
+    position_in_room([X,Y,Z], Room),
+    has_surface(Room, Surface),
+    !.
 
 
 

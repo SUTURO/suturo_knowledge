@@ -35,6 +35,54 @@ object_goal_pose(Instance, [Translation, Rotation], Context, RefInstance) :-
     Translation = [X,Y,Z],
     !.
 
+object_goal_pose(Instance, [Translation, Rotation], Context, RefInstance) :-
+    object_goal_surface_(Instance, Surface, Context, RefInstance),
+    object_dimensions(Instance, ObjectWidth, ObjectDepth, _),
+    has_table_shape(Surface),
+    has_urdf_name(Surface, SurfaceLink),
+    min_space_between_objects(MinSpace),
+    (not same_as(Instance, RefInstance)
+    ->
+    (
+        triple(RefInstance, hsr_objects:'inGroup', Group),
+        tell(triple(Instance, hsr_objects:'inGroup', Group)),
+        object_tf_frame(RefInstance, RefObjectFrame),
+        tf_lookup_transform(SurfaceLink, RefObjectFrame, pose([RefX, RefY, RefZ], _)),
+        object_dimensions(RefInstance, RefObjectWidth, RefObjectDepth, _),
+        X is RefX + RefObjectDepth/2 - ObjectDepth/2,
+        Y is RefY - RefObjectWidth/2 - ObjectWidth/2 - MinSpace,
+        tf_transform_pose(SurfaceLink, 'map', pose([X, Y, 0], [0, 0, 0, 1]), pose(Translation, Rotation))
+    );
+    (
+        all_groups_on_tablelike_surface(Surface, Groups),
+        surface_dimensions(Surface, SurfaceWidth, SurfaceDepth, SurfaceHeight),
+        (length(Groups, 0)
+        ->
+        (
+            RefX is SurfaceWidth/2 - MinSpace - ObjectDepth/2,
+            RefY is SurfaceDepth/2 - MinSpace - ObjectWidth/2,
+            tf_transform_pose(SurfaceLink, 'map', pose([RefX, RefY, 0], [0, 0, 0, 1]), pose(Translation, Rotation))
+        );
+        (
+            findall([X, Group],
+            (
+                member(Group, Groups),
+                group_position_on_surface(Group, Surface, [X, _, _])
+            ),
+            GroupPositions),
+            sort(GroupPositions, SortedGroupPositions),
+            nth0(0, SortedGroupPositions, [_, FirstGroup]),
+            group_position_on_surface(Group, Surface, [GroupX, _, GroupZ]),
+            group_dimensions(Group, GroupDepth, _),
+            RefX is GroupX - MinSpace - GroupDepth - ObjectDepth/2,
+            RefY is SurfaceDepth/2 - MinSpace - ObjectWidth/2,
+            tf_transform_pose(SurfaceLink, 'map', pose([RefX, RefY, 0], [0, 0, 0, 1]), pose(Translation, Rotation))
+        )),
+        tell(has_type(NewGroup, hsr_objects:'Group')),
+        tell(triple(Instance, hsr_objects:'inGroup', NewGroup))
+    )),
+    !.
+
 %% In case a reference group in the shelf is found
 object_goal_pose(Instance, [Translation, Rotation], Context, RefObject) :-
     object_goal_surface_(Instance, Surface, Context, RefObject),

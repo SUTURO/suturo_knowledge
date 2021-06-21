@@ -1,4 +1,4 @@
-
+    
 :- module(surfaces,
     [
     init_furnitures/0,
@@ -6,6 +6,7 @@
     all_furnitures/1,
     furniture_surfaces/2,
     surfaces_not_visited/1,
+    surfaces_not_visited_in_room/2,
     bucket_surfaces/1,
     has_table_shape/1,
     has_shelf_shape/1,
@@ -42,7 +43,9 @@
     %% TEMP
     create_furniture/2,
     assign_surfaces/3,
-    init_visit_state/1
+    init_visit_state/1,
+    cleanup_surfaces/1,
+    goandgetit_surfaces/1
     ]).
 
 :- tripledb_load(
@@ -84,58 +87,97 @@ init_furnitures :-
         split_string(FurnitureLink2, ":", "", [_, Type, Shape]),
         create_furniture(Type, Furniture),
         tell(triple(Furniture, urdf:'hasURDFName', FurnitureLink2)),
+        tell(has_type(FurnitureLocation, soma:'Location')),
+        tell(triple(Furniture, dul:'hasLocation', FurnitureLocation)),
         assign_surfaces(Furniture, FurnitureLink2, Shape),
         init_visit_state(Furniture)
     )).
 
 
 create_furniture(FurnitureType, Furniture) :-
+    sub_string(FurnitureType,_,_,_,"bin_a"),
+    tell(has_type(Furniture, hsr_rooms:'GreenBucket')),
+    !.
+
+create_furniture(FurnitureType, Furniture) :-
+    sub_string(FurnitureType,_,_,_,"bin_b"),
+    tell(has_type(Furniture, hsr_rooms:'BlackBucket')),
+    !.
+
+create_furniture(FurnitureType, Furniture) :-
+    sub_string(FurnitureType,_,_,_,"tray"),
+    tell(has_type(Furniture, hsr_rooms:'Tray')),
+    !.
+
+create_furniture(FurnitureType, Furniture) :-
+    sub_string(FurnitureType,_,_,_,"container_a"),
+    tell(has_type(Furniture, hsr_rooms:'BigContainer')),
+    !.
+
+create_furniture(FurnitureType, Furniture) :-
+    sub_string(FurnitureType,_,_,_,"container_b"),
+    tell(has_type(Furniture, hsr_rooms:'SmallContainer')),
+    !.
+
+create_furniture(FurnitureType, Furniture) :-
     sub_string(FurnitureType,_,_,_,"armchair"),
-    tell(has_type(Furniture, hsr_rooms:'Armchair')).
+    tell(has_type(Furniture, hsr_rooms:'Armchair')),
+    !.
 
 create_furniture(FurnitureType, Furniture) :-
     sub_string(FurnitureType,_,_,_,"bed"),
-    tell(has_type(Furniture, hsr_rooms:'Bed')).
+    tell(has_type(Furniture, hsr_rooms:'Bed')),
+    !.
 
 create_furniture(FurnitureType, Furniture) :-
     sub_string(FurnitureType,_,_,_,"bucket"),
-    tell(has_type(Furniture, hsr_rooms:'Bucket')).
+    tell(has_type(Furniture, hsr_rooms:'Bucket')),
+    !.
 
 create_furniture(FurnitureType, Furniture) :-
     sub_string(FurnitureType,_,_,_,"couch"),
-    tell(has_type(Furniture, hsr_rooms:'Couch')).
+    tell(has_type(Furniture, hsr_rooms:'Couch')),
+    !.
 
 create_furniture(FurnitureType, Furniture) :-
     sub_string(FurnitureType,_,_,_,"cabinet"),
-    tell(has_type(Furniture, hsr_rooms:'Cabinet')).
+    tell(has_type(Furniture, hsr_rooms:'Cabinet')),
+    !.
 
 create_furniture(FurnitureType, Furniture) :-
     sub_string(FurnitureType,_,_,_,"dishwasher"),
-    tell(has_type(Furniture, hsr_rooms:'Dishwasher')).
+    tell(has_type(Furniture, hsr_rooms:'Dishwasher')),
+    !.
 
 create_furniture(FurnitureType, Furniture) :-
     sub_string(FurnitureType,_,_,_,"fridge"),
-    tell(has_type(Furniture, hsr_rooms:'Fridge')).
+    tell(has_type(Furniture, hsr_rooms:'Fridge')),
+    !.
 
 create_furniture(FurnitureType, Furniture) :-
     sub_string(FurnitureType,_,_,_,"shelf"),
-    tell(has_type(Furniture, hsr_rooms:'Shelf')).
+    tell(has_type(Furniture, hsr_rooms:'Shelf')),
+    !.
 
 create_furniture(FurnitureType, Furniture) :-
     sub_string(FurnitureType,_,_,_,"sideboard"),
-    tell(has_type(Furniture, hsr_rooms:'Sideboard')).
+    tell(has_type(Furniture, hsr_rooms:'Sideboard')),
+    !.
 
 create_furniture(FurnitureType, Furniture) :-
     sub_string(FurnitureType,_,_,_,"sidetable"),
-    tell(has_type(Furniture, hsr_rooms:'Sidetable')).
+    tell(has_type(Furniture, hsr_rooms:'Sidetable')),
+    !.
 
 create_furniture(FurnitureType, Furniture) :-
     sub_string(FurnitureType,_,_,_,"sink"),
-    tell(has_type(Furniture, hsr_rooms:'Sink')).
+    tell(has_type(Furniture, hsr_rooms:'Sink')),
+    !.
 
 create_furniture(FurnitureType, Furniture) :-
     sub_string(FurnitureType,_,_,_,"table"),
-    tell(has_type(Furniture, hsr_rooms:'Table')).
+    tell(has_type(Furniture, hsr_rooms:'Table')),
+    !.
 
 
 assign_surfaces(Furniture, FurnitureLink, Shape) :-
@@ -214,9 +256,21 @@ surfaces_not_visited(Surfaces) :-
     Surfaces).
 
 
+surfaces_not_visited_in_room(RoomId, Surfaces) :-
+    surfaces_not_visited(SurfacesEverywhere),
+    surfaces_in_room(RoomId, SurfacesInRoom),
+    findall(Surface,
+    (
+        member(Surface,SurfacesEverywhere),
+        member(Surface,SurfacesInRoom)
+    ),
+    Surfaces).
+
+
 has_table_shape(Surface) :-
     has_surface(Furniture, Surface),
-    triple(Furniture, soma:'hasShape', hsr_rooms:'TableShape').
+    triple(Furniture, soma:'hasShape', hsr_rooms:'TableShape'),
+    not has_bucket_shape(Surface).
 
 has_shelf_shape(Surface) :-
     has_surface(Furniture, Surface),
@@ -224,7 +278,7 @@ has_shelf_shape(Surface) :-
 
 has_bucket_shape(Surface) :-
     has_surface(Furniture,Surface),
-    triple(Furniture, soma:'hasShape', hsr_rooms:'BucketShape').
+    has_type(Furniture, hsr_rooms:'Deposit').
 
 
 is_furniture(Furniture) :-
@@ -467,4 +521,14 @@ get_perception_surface_region(Surface, PerceptionName):-
     has_urdf_name(Surface,Name),
     split_string(Name, ":","",SurfaceSplit),
     nth0(0,SurfaceSplit,PerceptionName).
+
+cleanup_surfaces(Surfaces) :-
+    findall(S,
+    (has_urdf_name(S,"long_table:table:table_center");has_urdf_name(S,"tall_table:table:table_center"))
+    , Surfaces).
+
+goandgetit_surfaces(Surfaces) :-
+    findall(S,
+    (has_urdf_name(S,"shelf:shelf:shelf_floor_0");has_urdf_name(S,"shelf:shelf:shelf_floor_1");has_urdf_name(S,"shelf:shelf:shelf_floor_2"))
+    , Surfaces).
 
