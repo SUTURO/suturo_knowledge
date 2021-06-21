@@ -2,7 +2,7 @@
   <arg name="urdf_param" default="/hsrb_lab" />
   <arg name="urdf_launch_file" default="rooms_test" />
   <arg name="standalone" default="false" />
-  <arg name="nlg" default="true" />
+  <arg name="nlg" default="false" />
   <arg name="nlp" default="true" />
 
   <group if="$(arg standalone)">

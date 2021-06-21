@@ -1,4 +1,4 @@
-
+    
 :- module(surfaces,
     [
     init_furnitures/0,
@@ -44,7 +44,8 @@
     create_furniture/2,
     assign_surfaces/3,
     init_visit_state/1,
-    cleanup_surfaces/1
+    cleanup_surfaces/1,
+    goandgetit_surfaces/1
     ]).
 
 :- tripledb_load(
@@ -524,5 +525,10 @@ get_perception_surface_region(Surface, PerceptionName):-
 cleanup_surfaces(Surfaces) :-
     findall(S,
     (has_urdf_name(S,"long_table:table:table_center");has_urdf_name(S,"tall_table:table:table_center"))
+    , Surfaces).
+
+goandgetit_surfaces(Surfaces) :-
+    findall(S,
+    (has_urdf_name(S,"shelf:shelf:shelf_floor_0");has_urdf_name(S,"shelf:shelf:shelf_floor_1");has_urdf_name(S,"shelf:shelf:shelf_floor_2"))
     , Surfaces).
 
