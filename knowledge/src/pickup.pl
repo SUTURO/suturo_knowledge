@@ -3,7 +3,7 @@
       next_object_/1,
       surface_pose_to_perceive_from/2,
       object_pose_to_grasp_from/2,
-      surface_not_a_bucket/1
+      surface_not_a_goal/1
     ]).
 
 :- rdf_db:rdf_register_ns(hsr_objects, 'http://www.semanticweb.org/suturo/ontologies/2020/3/objects#', [keep(true)]).
@@ -20,7 +20,7 @@ next_object_(BestObj) :-
          (
          member(Object,X),
          object_supported_by_surface(Object,S),
-         surface_not_a_bucket(S)
+         surface_not_a_goal(S)
          )
          ,
         Objects),
@@ -56,11 +56,13 @@ object_pose_to_grasp_from(Object,[[XPose,YPose,0], Rotation]):-
     Offset is -(Depth / 2 + 0.5),
     tf_transform_point(Name, map, [Depth, Y,0], [XPose,YPose,_]).
 
-surface_not_a_bucket(S):-
-    has_urdf_name(S,N),
-    not(sub_string(N,_,_,_,"bucket")),
-    not(gripper(S)).
-
-surface_not_a_bucket(S):-
-    is_room(S).
+surface_not_a_goal(S):-
+    not((
+    has_urdf_name(S,"bin_a:bin_a:table_center");
+    has_urdf_name(S,"bin_b:bin_b:table_center");
+    has_urdf_name(S,"container_a:container_a:table_center");
+    has_urdf_name(S,"container_b:container_b:table_center");
+    has_urdf_name(S,"tray_a:tray_a:table_center");
+    has_urdf_name(S,"tray_b:tray_b:table_center"))
+    ).
 
