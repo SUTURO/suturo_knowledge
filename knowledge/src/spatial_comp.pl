@@ -141,7 +141,7 @@ place_objects :-
     hsr_existing_objects(Objects),
     forall(member(Object, Objects), 
     (
-        object_at_location(Object, _, _, _)
+        ignore(object_at_location(Object, _, _, _))
     )).
 
 object_at_location(Object, Room, Furniture, Surface) :-
