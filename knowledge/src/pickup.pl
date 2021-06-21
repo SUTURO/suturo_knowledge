@@ -13,7 +13,7 @@
     
 
 next_object_(BestObj) :-
-    place_objects,
+    ignore(place_objects),
     objects_not_handeled(Objects),
     predsort(compareDistances, Objects, SortedObjs),
     nth0(0, SortedObjs, BestObj).
