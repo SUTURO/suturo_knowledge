@@ -593,7 +593,7 @@ object_goal_surface_(Object, Surface, Context, RefObject) :-
 
 
 object_goal_surface_(Object, Surface, Context, RefObject) :-
-    place_objects,
+    ignore(place_objects),
     assert_object_supposed_surface(Object),
     object_goal_surface_(Object, Surface, Context, RefObject),
     !.
