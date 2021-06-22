@@ -48,19 +48,19 @@
     </rdf:Description>
 
 
-    <rdf:Description rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Food">
+    <rdf:Description rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021_food">
         <hsr_rooms:hasPredefinedLocation rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/locations#PredefinedLocation0"/>
     </rdf:Description>
 
-    <rdf:Description rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#KitchenEquipment">
+    <rdf:Description rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021_kitchen">
         <hsr_rooms:hasPredefinedLocation rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/locations#PredefinedLocation1"/>
     </rdf:Description>
 
-    <rdf:Description rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#OrientationItem">
+    <rdf:Description rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021_orientation_items">
          <hsr_rooms:hasPredefinedLocation rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/locations#PredefinedLocation2"/>
     </rdf:Description>
 
-    <rdf:Description rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#TaskItem">
+    <rdf:Description rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021_task_items">
          <hsr_rooms:hasPredefinedLocation rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/locations#PredefinedLocation3"/>
     </rdf:Description>
 

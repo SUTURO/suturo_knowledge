@@ -25,8 +25,7 @@ object_goal_pose(Instance, [Translation, Rotation], Context) :-
 
 object_goal_pose(Instance, [Translation, Rotation], Context, RefInstance) :-
     object_goal_surface_(Instance, Surface, Context, RefInstance),
-    bucket_surfaces(BucketSurfaces),
-    member(Surface, BucketSurfaces),
+    has_bucket_shape(Surface),
     surface_pose_in_map(Surface, [[XWOOffset,Y,Z], Rotation]),
     X is XWOOffset + 0.10,
     % X is XWOOffset - 0.05, for 5cm closer to edge

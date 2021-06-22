@@ -3086,7 +3086,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#040_large_marker -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#040_large_marker">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021_tools"/>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021_orientation_items"/>
         <TtSName>large marker</TtSName>
     </owl:Class>
     
@@ -3095,7 +3095,7 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#041_small_marker -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#041_small_marker">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021_tools"/>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021_orientation_items"/>
         <TtSName>small marker</TtSName>
     </owl:Class>
     
@@ -3679,6 +3679,14 @@
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021_kitchen -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021_kitchen">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021_orientation_items -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021_orientation_items">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021"/>
     </owl:Class>
     
