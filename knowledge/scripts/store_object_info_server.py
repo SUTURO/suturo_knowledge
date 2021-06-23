@@ -41,7 +41,9 @@ class StoreObjectInfoServer(object):
 
             rospy.wait_for_service('/rosprolog/query')
 
-            obj_class = str(data.obj_class)
+            obj_class = str(data.obj_class)[3:] # FIX ME RoboCup Only because numbers
+            if obj_class.startswith("-"):
+                obj_class = obj_class[1:]
             if obj_class:
                 obj_class = obj_class.capitalize().replace('_', '')
             else:
