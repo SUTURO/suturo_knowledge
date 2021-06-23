@@ -82,7 +82,7 @@ set_object_not_handeled(Object) :-
 
 update_handle_state(Object, State) :-
     is_suturo_object(Object),
-    triple(Surface, hsr_objects:'hasHandleState', HandleState),
+    triple(Object, hsr_objects:'hasHandleState', HandleState),
     forall(triple(HandleState, hsr_objects:'handeled', _), tripledb_forget(HandleState, hsr_objects:'handeled', _)),
     tell(triple(HandleState, hsr_objects:'handeled', State)).
 
