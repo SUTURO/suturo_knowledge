@@ -45,7 +45,7 @@ threshold_surface(ThresholdAbove, ThresholdBelow) :-
     ThresholdBelow = -0.05.
 
 min_space_between_objects(Meters) :-
-    Meters = 0.05.
+    Meters = 0.1.
 
 urdf_surface_prefix(Prefix) :-
     Prefix = 'iai_kitchen/'.
