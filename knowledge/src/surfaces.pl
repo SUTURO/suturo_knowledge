@@ -529,6 +529,6 @@ cleanup_surfaces(Surfaces) :-
 
 goandgetit_surfaces(Surfaces) :-
     findall(S,
-    (has_urdf_name(S,"shelf:shelf:shelf_floor_0");has_urdf_name(S,"shelf:shelf:shelf_floor_1");has_urdf_name(S,"shelf:shelf:shelf_floor_2"))
+    (has_urdf_name(S,"shelf:shelf:shelf_floor_0");has_urdf_name(S,"shelf:shelf:shelf_floor_1"))
     , Surfaces).
 
