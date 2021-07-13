@@ -313,22 +313,6 @@
     
 
 
-    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#BigContainer -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#BigContainer">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Container"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#BlackBucket -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#BlackBucket">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Bucket"/>
-    </owl:Class>
-    
-
-
     <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Bucket -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Bucket">
@@ -488,14 +472,6 @@
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#FurnitureSurface">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Surface"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#GreenBucket -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#GreenBucket">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Bucket"/>
     </owl:Class>
     
 
@@ -675,14 +651,6 @@
     
 
 
-    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#SmallContainer -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#SmallContainer">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Container"/>
-    </owl:Class>
-    
-
-
     <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Table -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Table">
@@ -703,14 +671,6 @@
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Tabletop">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#FurnitureSurface"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Tray -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Tray">
-        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#DesignedFurniture"/>
     </owl:Class>
     
 
