@@ -502,13 +502,3 @@ get_perception_surface_region(Surface, PerceptionName):-
     split_string(Name, ":","",SurfaceSplit),
     nth0(0,SurfaceSplit,PerceptionName).
 
-cleanup_surfaces(Surfaces) :-
-    findall(S,
-    (has_urdf_name(S,"long_table:table:table_center");has_urdf_name(S,"tall_table:table:table_center"))
-    , Surfaces).
-
-goandgetit_surfaces(Surfaces) :-
-    findall(S,
-    (has_urdf_name(S,"shelf:shelf:shelf_floor_0");has_urdf_name(S,"shelf:shelf:shelf_floor_1");has_urdf_name(S,"shelf:shelf:shelf_floor_2"))
-    , Surfaces).
-
