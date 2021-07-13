@@ -110,6 +110,11 @@ create_furniture(FurnitureType, Furniture) :-
     !.
 
 create_furniture(FurnitureType, Furniture) :-
+    sub_string(FurnitureType,_,_,_,"container"),
+    tell(has_type(Furniture, hsr_rooms:'Container')),
+    !.
+
+create_furniture(FurnitureType, Furniture) :-
     sub_string(FurnitureType,_,_,_,"couch"),
     tell(has_type(Furniture, hsr_rooms:'Couch')),
     !.
