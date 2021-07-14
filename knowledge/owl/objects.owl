@@ -557,6 +557,14 @@
     
 
 
+    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Adjustablewrench -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Adjustablewrench">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Wrench"/>
+    </owl:Class>
+    
+
+
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#AlbiRaspberryJuice -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#AlbiRaspberryJuice">
@@ -662,6 +670,14 @@
     
 
 
+    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Baseball -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Baseball">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Ball"/>
+    </owl:Class>
+    
+
+
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Batistetrockenshampoo -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Batistetrockenshampoo">
@@ -723,6 +739,14 @@
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#BlackColor">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#ColorRegion"/>
         <rdfs:comment>A color region with dominant black color</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Blocks -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Blocks">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Toy"/>
     </owl:Class>
     
 
@@ -894,6 +918,14 @@
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#ChocolateBar">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Candy"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Clamp -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Clamp">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Tool"/>
     </owl:Class>
     
 
@@ -1093,6 +1125,14 @@
     
 
 
+    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Dice -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Dice">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Toy"/>
+    </owl:Class>
+    
+
+
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#DietarySupplement -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#DietarySupplement">
@@ -1215,6 +1255,14 @@
     
 
 
+    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Extralargeclamp -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Extralargeclamp">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Clamp"/>
+    </owl:Class>
+    
+
+
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Feelfreefraisecitroncoeurliquide -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Feelfreefraisecitroncoeurliquide">
@@ -1259,6 +1307,14 @@
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#FitnessShake">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Drink"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Flatscrewdriver -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Flatscrewdriver">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Wrench"/>
     </owl:Class>
     
 
@@ -1399,6 +1455,14 @@
     
 
 
+    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Glass -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Glass">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Crockery"/>
+    </owl:Class>
+    
+
+
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#GletscherkroneSchokoReis -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#GletscherkroneSchokoReis">
@@ -1424,6 +1488,14 @@
     
 
 
+    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Golfball -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Golfball">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Ball"/>
+    </owl:Class>
+    
+
+
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#GranolaKnusperMuesli -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#GranolaKnusperMuesli">
@@ -1444,6 +1516,14 @@
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Group">
         <rdfs:subClassOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#PhysicalPlace"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Hammer -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Hammer">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Tool"/>
     </owl:Class>
     
 
@@ -1632,6 +1712,14 @@
     
 
 
+    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Key -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Key">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Tool"/>
+    </owl:Class>
+    
+
+
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Keyboard -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Keyboard">
@@ -1697,6 +1785,30 @@
     
 
 
+    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Largeclamp -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Largeclamp">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Clamp"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Largemarker -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Largemarker">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Marker"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Legoduplo -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Legoduplo">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Blocks"/>
+    </owl:Class>
+    
+
+
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Lemon -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Lemon">
@@ -1746,6 +1858,14 @@
     
 
 
+    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Marble -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Marble">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Toy"/>
+    </owl:Class>
+    
+
+
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Markensalz -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Markensalz">
@@ -1770,11 +1890,27 @@
     
 
 
+    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Masterchefcan -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Masterchefcan">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#FoodCan"/>
+    </owl:Class>
+    
+
+
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#MaterialRegion -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#MaterialRegion">
         <rdfs:subClassOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#Region"/>
         <rdfs:comment>Encodes the material of an object</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Mediumclamp -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Mediumclamp">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Clamp"/>
     </owl:Class>
     
 
@@ -1811,6 +1947,14 @@
     
 
 
+    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Minisoccerball -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Minisoccerball">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Ball"/>
+    </owl:Class>
+    
+
+
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#MondaminPancakeMix -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#MondaminPancakeMix">
@@ -1839,6 +1983,14 @@
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Mushroom">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#NaturalFood"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Mustardbottle -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Mustardbottle">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Sauce"/>
     </owl:Class>
     
 
@@ -1966,6 +2118,14 @@
     
 
 
+    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Padlock -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Padlock">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Tool"/>
+    </owl:Class>
+    
+
+
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#PastureMilkSmall -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#PastureMilkSmall">
@@ -2039,6 +2199,14 @@
     
 
 
+    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Phillipsscrewdriver -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Phillipsscrewdriver">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Wrench"/>
+    </owl:Class>
+    
+
+
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Pitcher -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Pitcher">
@@ -2055,6 +2223,22 @@
     
 
 
+    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Plasticbolt -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Plasticbolt">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Tool"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Plasticnut -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Plasticnut">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Tool"/>
+    </owl:Class>
+    
+
+
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Pliers -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Pliers">
@@ -2063,10 +2247,34 @@
     
 
 
+    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Plum -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Plum">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Fruit"/>
+    </owl:Class>
+    
+
+
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Potato -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Potato">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#NaturalFood"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Pottedmeatcan -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Pottedmeatcan">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#FoodCan"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Powerdrill -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Powerdrill">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Tool"/>
     </owl:Class>
     
 
@@ -2141,6 +2349,22 @@
     
 
 
+    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Puddingbox -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Puddingbox">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Dessert"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Racquetball -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Racquetball">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Ball"/>
+    </owl:Class>
+    
+
+
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Rapunzelorganicmintslemon -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Rapunzelorganicmintslemon">
@@ -2170,6 +2394,14 @@
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#ReweCremeFraicheCuplr">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#DairyProduct"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Rope -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Rope">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Toy"/>
     </owl:Class>
     
 
@@ -2314,6 +2546,22 @@
     
 
 
+    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Smallclamp -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Smallclamp">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Clamp"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Smallmarker -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Smallmarker">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Marker"/>
+    </owl:Class>
+    
+
+
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Soap -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Soap">
@@ -2335,6 +2583,14 @@
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#SodaCan">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#DrinkingCan"/>
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Soda"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Softball -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Softball">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Ball"/>
     </owl:Class>
     
 
@@ -2445,6 +2701,22 @@
     
 
 
+    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Strawberry -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Strawberry">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Fruit"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Sugarbox -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Sugarbox">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Spice"/>
+    </owl:Class>
+    
+
+
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Table -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Table">
@@ -2496,6 +2768,22 @@
     
 
 
+    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Tennisball -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Tennisball">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Ball"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Timer -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Timer">
+        <rdfs:subClassOf rdf:resource="http://knowrob.org/kb/knowrob.owl#ElectricalDevice"/>
+    </owl:Class>
+    
+
+
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Todaybodylotion -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Todaybodylotion">
@@ -2533,6 +2821,14 @@
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Tomatosauceorodiparma">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Sauce"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Tomatosoupcan -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Tomatosoupcan">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Soup"/>
     </owl:Class>
     
 
@@ -2581,6 +2877,14 @@
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Traderjoeswalnusskerne">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Nut"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Tunafishcan -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Tunafishcan">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#FoodCan"/>
     </owl:Class>
     
 
@@ -2667,6 +2971,30 @@
     
 
 
+    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Wineglass -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Wineglass">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Glass"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Woodblocks -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Woodblocks">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Blocks"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Wrench -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Wrench">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Tool"/>
+    </owl:Class>
+    
+
+
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#WritingMaterial -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#WritingMaterial">
@@ -2696,1015 +3024,6 @@
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#YellowColor">
         <rdfs:subClassOf rdf:resource="hhttp://www.ease-crc.org/ont/SOMA.owl#ColorRegion"/>
         <rdfs:comment>A color region with dominant yellow color</rdfs:comment>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#acoloredwoodblocks -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#acoloredwoodblocks">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021taskitems"/>
-        <TtSName>colored wood blocks</TtSName>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#acups -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#acups">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#cups"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#adjustablewrench -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#adjustablewrench">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021discarded"/>
-        <TtSName>adjustable wrench</TtSName>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#alegoduplo -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#alegoduplo">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#legoduplo"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#amarbles -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#amarbles">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#marbles"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#apple -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#apple">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021food"/>
-        <TtSName>apple</TtSName>
-        <TtSName>plastic apple</TtSName>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#atoyairplane -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#atoyairplane">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#toyairplane"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#banana -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#banana">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021food"/>
-        <TtSName>banana</TtSName>
-        <TtSName>plastic banana</TtSName>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#baseball -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#baseball">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021shapeitems"/>
-        <TtSName>baseball</TtSName>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#bcups -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#bcups">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#cups"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#bleachcleanser -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#bleachcleanser">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021kitchen"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#blegoduplo -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#blegoduplo">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#legoduplo"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#bmarbles -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#bmarbles">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#marbles"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#bowl -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#bowl">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021kitchen"/>
-        <TtSName>bowl</TtSName>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#btoyairplane -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#btoyairplane">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#toyairplane"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#ccups -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#ccups">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#cups"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#chain -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#chain">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021shapeitems"/>
-        <TtSName>chain</TtSName>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#chipscan -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#chipscan">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021food"/>
-        <TtSName>pringles chips can</TtSName>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#clamp -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#clamp">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021tools"/>
-        <TtSName>clamps</TtSName>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#clegoduplo -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#clegoduplo">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#legoduplo"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#cmarbles -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#cmarbles">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#marbles"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#crackerbox -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#crackerbox">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021food"/>
-        <TtSName>cheez-it cracker box</TtSName>
-        <TtSName>cracker box</TtSName>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#ctoyairplane -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#ctoyairplane">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#toyairplane"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#cups -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#cups">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021shapeitems"/>
-        <TtSName>cup</TtSName>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#dcups -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#dcups">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#cups"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#dice -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#dice">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021shapeitems"/>
-        <TtSName>dice</TtSName>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#dlegoduplo -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#dlegoduplo">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#legoduplo"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#dmarbles -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#dmarbles">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#marbles"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#dtoyairplane -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#dtoyairplane">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#toyairplane"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#ecups -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#ecups">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#cups"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#elegoduplo -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#elegoduplo">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#legoduplo"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#emarbles -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#emarbles">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#marbles"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#etoyairplane -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#etoyairplane">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#toyairplane"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#extralargeclamp -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#extralargeclamp">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#clamp"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#fcups -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#fcups">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#cups"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#flatscrewdriver -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#flatscrewdriver">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021discarded"/>
-        <TtSName>flat screwdriver</TtSName>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#flegoduplo -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#flegoduplo">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#legoduplo"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#fmarbles -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#fmarbles">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#marbles"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#foambrick -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#foambrick">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021shapeitems"/>
-        <TtSName>foam brick</TtSName>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#fork -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#fork">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021kitchen"/>
-        <TtSName>fork</TtSName>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#ftoyairplane -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#ftoyairplane">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#toyairplane"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#gcups -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#gcups">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#cups"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#gelatinbox -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#gelatinbox">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021food"/>
-        <TtSName>gelatin box</TtSName>
-        <TtSName>jell-o strawberry gelatin box</TtSName>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#glegoduplo -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#glegoduplo">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#legoduplo"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#golfball -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#golfball">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021shapeitems"/>
-        <TtSName>golf ball</TtSName>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#gtoyairplane -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#gtoyairplane">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#toyairplane"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#hammer -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#hammer">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021discarded"/>
-        <TtSName>hammer</TtSName>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#hcups -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#hcups">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#cups"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#hlegoduplo -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#hlegoduplo">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#legoduplo"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#htoyairplane -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#htoyairplane">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#toyairplane"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#icups -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#icups">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#cups"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#ilegoduplo -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#ilegoduplo">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#legoduplo"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#itoyairplane -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#itoyairplane">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#toyairplane"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#jcups -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#jcups">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#cups"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#jlegoduplo -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#jlegoduplo">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#legoduplo"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#jtoyairplane -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#jtoyairplane">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#toyairplane"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#key -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#key">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021tools"/>
-        <TtSName>key</TtSName>
-        <TtSName>keys</TtSName>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#klegoduplo -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#klegoduplo">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#legoduplo"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#knife -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#knife">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021discarded"/>
-        <TtSName>knife</TtSName>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#ktoyairplane -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#ktoyairplane">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#toyairplane"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#largeclamp -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#largeclamp">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#clamp"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#largemarker -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#largemarker">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021orientationitems"/>
-        <TtSName>large marker</TtSName>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#legoduplo -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#legoduplo">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021taskitems"/>
-        <TtSName>lego duplo</TtSName>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#lemon -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#lemon">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021food"/>
-        <TtSName>lemon</TtSName>
-        <TtSName>plastic lemon</TtSName>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#llegoduplo -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#llegoduplo">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#legoduplo"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#marbles -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#marbles">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021shapeitems"/>
-        <TtSName>marble</TtSName>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#masterchefcan -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#masterchefcan">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021food"/>
-        <TtSName>master chef coffee can</TtSName>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#mediumclamp -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#mediumclamp">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#clamp"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#minisoccerball -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#minisoccerball">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021shapeitems"/>
-        <TtSName>mini soccer ball</TtSName>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#mlegoduplo -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#mlegoduplo">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#legoduplo"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#mug -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#mug">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021kitchen"/>
-        <TtSName>mug</TtSName>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#mustardbottle -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#mustardbottle">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021food"/>
-        <TtSName>french&apos;s mustard bottle</TtSName>
-        <TtSName>mustard bottle</TtSName>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#nineholepegtest -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#nineholepegtest">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#nineholepegtest"/>
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021taskitems"/>
-        <TtSName>9-peg-hole test</TtSName>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#orange -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#orange">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021food"/>
-        <TtSName>orange</TtSName>
-        <TtSName>plastic orange</TtSName>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#padlock -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#padlock">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021discarded"/>
-        <TtSName>padlock</TtSName>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#peach -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#peach">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021food"/>
-        <TtSName>peach</TtSName>
-        <TtSName>plastic peach</TtSName>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#pear -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#pear">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021food"/>
-        <TtSName>pear</TtSName>
-        <TtSName>plastic pear</TtSName>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#phillipsscrewdriver -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#phillipsscrewdriver">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021discarded"/>
-        <TtSName>phillips screwdriver</TtSName>
-        <TtSName>screwdriver</TtSName>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#pitcherbase -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#pitcherbase">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021kitchen"/>
-        <TtSName>pitcher base</TtSName>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#plasticbolt -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#plasticbolt">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021tools"/>
-        <TtSName>bolt</TtSName>
-        <TtSName>plastic bolt</TtSName>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#plasticnut -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#plasticnut">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021tools"/>
-        <TtSName>nut</TtSName>
-        <TtSName>plastic nut</TtSName>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#plate -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#plate">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021kitchen"/>
-        <TtSName>plate</TtSName>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#plum -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#plum">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021food"/>
-        <TtSName>plastic plum</TtSName>
-        <TtSName>plum</TtSName>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#pottedmeatcan -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#pottedmeatcan">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021food"/>
-        <TtSName>spam potted meat can</TtSName>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#powerdrill -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#powerdrill">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021discarded"/>
-        <TtSName>power drill</TtSName>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#puddingbox -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#puddingbox">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021food"/>
-        <TtSName>jell-o chocolate pudding box</TtSName>
-        <TtSName>pudding box</TtSName>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#racquetball -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#racquetball">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021shapeitems"/>
-        <TtSName>racquetball</TtSName>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#rope -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#rope">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021shapeitems"/>
-        <TtSName>rope</TtSName>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#rubikscube -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#rubikscube">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021taskitems"/>
-        <TtSName>rubik&apos;s cube</TtSName>
-        <TtSName>rubiks cube</TtSName>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#scissors -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#scissors">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021discarded"/>
-        <TtSName>scissors</TtSName>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#smallclamp -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#smallclamp">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#clamp"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#smallmarker -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#smallmarker">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021orientationitems"/>
-        <TtSName>small marker</TtSName>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#softball -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#softball">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021shapeitems"/>
-        <TtSName>soft ball</TtSName>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#spatula -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#spatula">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021kitchen"/>
-        <TtSName>spatula</TtSName>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#sponge -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#sponge">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021kitchen"/>
-        <TtSName>scotch brite dobie sponge</TtSName>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#spoon -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#spoon">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021kitchen"/>
-        <TtSName>spoon</TtSName>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#strawberry -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#strawberry">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021food"/>
-        <TtSName>plastic strawberry</TtSName>
-        <TtSName>strawberry</TtSName>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#sugarbox -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#sugarbox">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021food"/>
-        <TtSName>domino sugar box</TtSName>
-        <TtSName>sugar box</TtSName>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#tennisball -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#tennisball">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021shapeitems"/>
-        <TtSName>tennis ball</TtSName>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#timer -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#timer">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021taskitems"/>
-        <TtSName>timer</TtSName>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#tomatosoupcan -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#tomatosoupcan">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021food"/>
-        <TtSName>tomato soup can</TtSName>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#toyairplane -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#toyairplane">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021taskitems"/>
-        <TtSName>toy airplane</TtSName>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#tunafishcan -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#tunafishcan">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021food"/>
-        <TtSName>starkist tuna fish can</TtSName>
-        <TtSName>tuna fish can</TtSName>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#windexbottle -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#windexbottle">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021kitchen"/>
-        <TtSName>windex spray bottle</TtSName>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#wineglass -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#wineglass">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021kitchen"/>
-        <TtSName>wine glass</TtSName>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#woodblock -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#woodblock">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021discarded"/>
-        <TtSName>wood block</TtSName>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#1nineholepegtest -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#1nineholepegtest">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#nineholepegtest"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021 -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021">
-        <rdfs:subClassOf rdf:resource="http://ias.cs.tum.edu/kb/knowrob.owl#EnduringThing-Localized"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021discarded -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021discarded">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021food -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021food">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021kitchen -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021kitchen">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021orientationitems -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021orientationitems">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021shapeitems -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021shapeitems">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021taskitems -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021taskitems">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021tools -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021tools">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#2021"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#3marbles -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#3marbles">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#marbles"/>
     </owl:Class>
 </rdf:RDF>
 
