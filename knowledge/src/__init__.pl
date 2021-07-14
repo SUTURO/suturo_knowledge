@@ -48,11 +48,20 @@
 	'package://knowledge/owl/rooms.owl',
 	[ namespace(hsr_rooms, 'http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#')
 	]).
-:- tripledb_load(
-	'package://knowledge/owl/locations.owl',
-	[ namespace(hsr_locations, 'http://www.semanticweb.org/suturo/ontologies/2021/0/locations#'),
-	  graph(locations)
-	]).
+
+:- ros_param_get_string('/locations_ontology_file', OntologyFileName), 
+	string_concat('package://knowledge/owl/locations/', OntologyFileName, PathToOntology),
+	tripledb_load(
+		PathToOntology,
+		[ namespace(hsr_locations)
+		]).
+
+%:- tripledb_load(
+%		'package://knowledge/owl/locations.owl',
+%		[ namespace(hsr_locations, 'http://www.semanticweb.org/suturo/ontologies/2021/0/locations#'),
+%	  	graph(locations)
+%		]).
+
 :- tripledb_load(
 	'http://knowrob.org/kb/URDF.owl',
 	[ namespace(urdf, 'http://knowrob.org/kb/urdf.owl#')

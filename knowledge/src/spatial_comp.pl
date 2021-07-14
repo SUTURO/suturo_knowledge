@@ -387,9 +387,11 @@ objects_supported_by_surfaces(Surfaces, Objects) :-
 
 
 has_predefined_location(Object, Location) :-
-    has_type(Object, ObjectType),
-    transitive(subclass_of(ObjectType, SupportedType)),
-    triple(SupportedType, hsr_rooms:'hasPredefinedLocation', Location).
+    once((
+        has_type(Object, ObjectType),
+        transitive(subclass_of(ObjectType, SupportedType)),
+        triple(SupportedType, hsr_rooms:'hasPredefinedLocation', Location)
+    )).
 
 
 is_misplaced(Object) :-

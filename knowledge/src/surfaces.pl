@@ -43,9 +43,7 @@
     %% TEMP
     create_furniture/2,
     assign_surfaces/3,
-    init_visit_state/1,
-    cleanup_surfaces/1,
-    goandgetit_surfaces/1
+    init_visit_state/1
     ]).
 
 :- tripledb_load(
