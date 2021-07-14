@@ -9,7 +9,10 @@
     object_size_ok/1,
     object_type_handling/3,
     set_object_color/3,
-    set_color_semantics/2    
+    set_color_semantics/2,
+    objects_not_handeled/1,
+    set_object_handeled/1,
+    set_object_not_handeled/1 
     ]).
 
 :- rdf_db:rdf_register_ns(hsr_objects, 'http://www.semanticweb.org/suturo/ontologies/2020/3/objects#', [keep(true)]).
@@ -67,8 +70,36 @@ forget_objects_on_surface_(SurfaceLink) :-
 % Otherwise the query resolves to false.
 % @param Object the object to find the surface on.
 place_object(Object):-
-    object_supportable_by_surface(Object, Surface),
+    object_supported_by_surface(Object, Surface),
     assert_object_on(Object,Surface).
+
+
+set_object_handeled(Object) :-
+    update_handle_state(Object, true).
+
+set_object_not_handeled(Object) :-
+    update_handle_state(Object, false).
+
+update_handle_state(Object, State) :-
+    is_suturo_object(Object),
+    triple(Object, hsr_objects:'hasHandleState', HandleState),
+    forall(triple(HandleState, hsr_objects:'handeled', _), tripledb_forget(HandleState, hsr_objects:'handeled', _)),
+    tell(triple(HandleState, hsr_objects:'handeled', State)).
+
+handeled(Object) :-
+    is_suturo_object(Object),
+    triple(Object, hsr_objects:'hasHandleState', HandleState),
+    triple(HandleState, hsr_objects:'handeled', State),
+    State == 1.
+
+objects_not_handeled(Objects) :-
+    findall(Object, 
+    (
+        is_suturo_object(Object),
+        not handeled(Object)
+    ),
+    Objects).
+
 
 %% create_object(PerceivedObjectType, PercTypeConf, Transform, [Width, Depth, Height], 'box', PercShapeConf, Color, PercColorConf, ObjID is nondet.
 %
@@ -98,8 +129,6 @@ create_object(PerceivedObjectType, PercTypeConf, [Frame,Position,Rotation], [Wid
     validate_confidence(shape, PercShapeConf, ShapeConf),
     validate_confidence(color, PercColorConf, ColorConf),
     object_type_handling(PerceivedObjectType, PercTypeConf, ObjectType), % When the PercTypeConf is to low the Type is set to Other, Otherwise ObjectType is the same as PerceivedObjectType
-        
-    is_legal_obj_position(Position),
 
     %%% ================ Object creation
     tell(has_type(ObjID, ObjectType)), % Create Object of type ObjectType           // +1 S=ObjID
@@ -128,15 +157,19 @@ create_object(PerceivedObjectType, PercTypeConf, [Frame,Position,Rotation], [Wid
     tell(triple(ObjID, hsr_objects:'ConfidenceColorValue', ColorConfAtom)),
     set_object_color(ObjID, Color, ColorConf),  % set the color
     tell(triple(ObjID, hsr_objects:'supportable', true)),     % identify the object as an supportable object this is used by suturo_existing_objects
+    
+    tell(has_type(HandleState, hsr_objects:'HandleState')),
+    tell(triple(ObjID, hsr_objects:'hasHandleState', HandleState)),
+    tell(triple(HandleState, hsr_objects:'handeled', false)),
+
+    tell(has_type(ObjectLocation, soma:'Location')),
+    tell(triple(ObjID, dul:'hasLocation', ObjectLocation)),
 
     %%% ================ visualization marker array publish
     % TODO why not working with 1x ?
     marker_plugin:republish,
-    marker_plugin:republish,
+    marker_plugin:republish.
 
-    ! % when call stack reaches here, then all bindings stay set
-    , place_object(ObjID)
-    .
 
 %%%%%%%%%% TODO what was the purpose of this code? %%%%%%%%%%
 validate_confidence(class, Is, Should) :-
