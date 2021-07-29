@@ -36,7 +36,8 @@
         locations_not_visited/1,
         locations_not_visited/2,
         object_in_room/2,
-        is_misplaced/1
+        is_misplaced/1,
+        position_in_room/2
     ]).
 
 :-rdf_db:rdf_register_ns(dul, 'http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#', [keep(true)]).

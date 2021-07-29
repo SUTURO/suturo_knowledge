@@ -10,13 +10,14 @@
         get_door_state/2,
         get_all_door_states/1,
         get_angle_to_open_door/2,
-        perceiving_pose_of_door/3,
+        perceiving_pose_of_door/2,
         manipulating_pose_of_door/2,
         passing_pose_of_door/2,
         passing_pose_of_passage/2,
         shortest_path_between_rooms/3,
         inside_door_handle/2,
-        outside_door_handle/2
+        outside_door_handle/2,
+        door_handle_to_open_door/2
     ]).
 
 :- rdf_db:rdf_register_ns(hsr_rooms, 'http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#', [keep(true)]).
@@ -231,8 +232,17 @@ shortest_path_between_rooms(OriginRoom, DestinationRoom, Path) :-
     min_member([_, Path], PossiblePaths).
 
 
+door_handle_to_open_door(Door, DoorHandle) :-
+    door_handles(Door, DoorHandles),
+    member(DoorHandle, DoorHandles),
+    robot_in_room(Room),
+    has_urdf_name(DoorHandle, DoorHandleLink),
+    get_urdf_origin(Map),
+    tf_lookup_transform(Map, DoorHandleLink, pose(DoorHandlePosition, _)),
+    position_in_room(DoorHandlePosition, Room).
 
-perceiving_pose_of_door(Door, Pose, DoorHandle) :-
+
+perceiving_pose_of_door(Door, Pose) :-
     get_urdf_id(URDF),
     get_urdf_origin(Origin),
     has_urdf_name(Door, DoorLink),
@@ -247,16 +257,14 @@ perceiving_pose_of_door(Door, Pose, DoorHandle) :-
         Angle is 0.0,
         angle_to_quaternion(Angle, DeltaRotation),
         tf_transform_pose(DoorLink, Origin, pose([DeltaX, DeltaY, 0.0], DeltaRotation), pose([NewX, NewY, _], Rotation)),
-        Pose = [[NewX, NewY, 0.0], Rotation],
-        inside_door_handle(Door, DoorHandle)
+        Pose = [[NewX, NewY, 0.0], Rotation]
     );
     (
         DeltaY is Offset,
         Angle is pi,
         angle_to_quaternion(Angle, DeltaRotation),
         tf_transform_pose(DoorLink, Origin, pose([DeltaX, DeltaY, 0.0], DeltaRotation), pose([NewX, NewY, _], Rotation)),
-        Pose = [[NewX, NewY, 0.0], Rotation],
-        outside_door_handle(Door, DoorHandle)
+        Pose = [[NewX, NewY, 0.0], Rotation]
     )).
 
 
@@ -479,6 +487,14 @@ door_joint(Door, DoorJoint) :-
 
 door_hinge(Door, Hinge) :-
     triple(Door, knowrob:'doorHingedTo', Hinge).
+
+door_handles(Door, DoorHandles) :-
+    findall(DoorHandle,
+    (
+        inside_door_handle(Door, DoorHandle);
+        outside_door_handle(Door, DoorHandle)
+    ), 
+    DoorHandles).
 
 inside_door_handle(Door, DoorHandle) :-
     triple(Location, soma:'isInsideOf', Door),
