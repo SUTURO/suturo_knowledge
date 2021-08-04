@@ -33,6 +33,9 @@
 :- ros_package_iri(knowledge, 'package://knowledge/owl/rooms.owl').
 :- ros_package_iri(knowledge, 'package://knowledge/owl/locations.owl').
 
+%%% knowledge load directories
+:- use_directory(objects).
+
 :- tripledb_load(
 	'http://www.ontologydesignpatterns.org/ont/dul/DUL.owl',
 	[ namespace(dul)

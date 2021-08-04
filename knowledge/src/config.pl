@@ -59,7 +59,7 @@ allowed_class_distance(Distance) :-
 %% Minimum Confidence where the perceived Object class should still be stored.
 %% Classes with lower confidence get 'Other' as fallback.
 min_class_confidence(Confidence) :-
-    Confidence = 0.5.
+    Confidence >= 0.5.
 
 min_shape_confidence(Confidence) :-
     Confidence = 0.5.

@@ -12,8 +12,10 @@
     set_color_semantics/2,
     objects_not_handeled/1,
     set_object_handeled/1,
-    set_object_not_handeled/1 
+    set_object_not_handeled/1
     ]).
+
+
 
 :- rdf_db:rdf_register_ns(hsr_objects, 'http://www.semanticweb.org/suturo/ontologies/2020/3/objects#', [keep(true)]).
 :- rdf_db:rdf_register_ns(robocup, 'http://www.semanticweb.org/suturo/ontologies/2020/2/Robocup#', [keep(true)]).
@@ -196,10 +198,16 @@ object_size_ok([Width,Depth,Height]):-
     Height < 0.6.
 
 % Determines the ObjectType the Object is saved as, it is PerceivedObjectType when the Conf is high enough Otherwise it is Other
-object_type_handling(PerceivedObjectType, TypeConfidence, ObjectType) :-
-    min_class_confidence(MinConf),
-    (   number(TypeConfidence),
-        TypeConfidence >= MinConf
+%object_type_handling(PerceivedObjectType, TypeConfidence, ObjectType) :-
+%    min_class_confidence(MinConf),
+%    (   number(TypeConfidence),
+%        TypeConfidence >= MinConf
+%        -> ObjectType = PerceivedObjectType;
+%        ObjectType = 'http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Other'
+%        ).
+
+object_type_handling(PerceivedObjectType, ClassConfidence, ObjectType) :-
+    (   min_class_confidence(ClassConfidence)
         -> ObjectType = PerceivedObjectType;
         ObjectType = 'http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Other'
         ).
