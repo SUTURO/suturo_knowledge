@@ -36,6 +36,12 @@
 offsets(Offset) :-
     Offset = [0, -0.05, 0.05, -0.1, 0.1, -0.15, 0.15, -0.2, 0.2, -0.25, 0.25, -0.3, 0.3, -0.35, 0.35, -0.4, 0.4, -0.45, 0.45, -0.5, 0.5, -0.55, 0.55, -0.6, 0.6, -0.65, 0.65, -0.7, 0.7, -0.75, 0.75, -0.8, 0.8].
 
+% --> get_gripper_link in conifg
+gripper(Gripper) :-
+    %Gripper = gripper.
+    Gripper = hand_palm_link.
+
+
 % max physical Distance between objects for them to be in a group
 threshold_for_group(Threshold) :-
     Threshold = 0.15.

@@ -35,6 +35,7 @@
 
 %%% knowledge load directories
 :- use_directory(objects).
+:- use_directory(gripper).
 
 :- tripledb_load(
 	'http://www.ontologydesignpatterns.org/ont/dul/DUL.owl',
@@ -75,7 +76,7 @@
 
 :- ignore(hsr_lookup_transform('map', 'base_footprint', _, _)). % Why does this help with TF erros??
 
-:- gripper(Gripper), gripper_init(Gripper).
+:- init_gripper.
 
 :- init_rooms.
 :- init_doors.

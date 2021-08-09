@@ -1,6 +1,5 @@
-:- module(assignplaces,
-    [
-      object_goal_pose/4, 
+:- module(placing,[
+      object_goal_pose/4,
       object_goal_pose/3, % recommendet to be used by Planning
       object_goal_pose/2,
       object_goal_pose_offset_/3
@@ -12,10 +11,6 @@
 :- rdf_meta
     most_related_class(-,?,?),
     most_related_object(-,?).
-
-
-
-%******************** GOAL POSE **********************
 
 object_goal_pose(Instance, [Translation, Rotation]) :-
     object_goal_pose(Instance, [Translation, Rotation], _).
@@ -113,7 +108,7 @@ object_goal_pose(Instance, [Translation, Rotation], Context, Instance) :-
     object_goal_surface_(Instance, Surface, Context, Instance),
     surface_pose_in_map(Surface, [[SX,SY,SZ], Rotation]),
     urdf_tf_frame(Surface, SurfaceFrame),
-    tf_transform_point(map, SurfaceFrame, [SX,SY,SZ], [ _, YOnS,_]),  
+    tf_transform_point(map, SurfaceFrame, [SX,SY,SZ], [ _, YOnS,_]),
     offsets(Offset),
     member(YOffset, Offset),
     get_urdf_id(URDF),
@@ -143,4 +138,21 @@ object_goal_pose_offset_(Instance, [[XR,YR,ZR], Rotation],Context):-
     XR is X + 0,
     YR is Y + 0,
     ZR is Z + ObjHeight/2 + 0.07.
+
+
+
+%% release_object_from_gripper([NewPose, NewRotation]) is nondet.
+%
+% Removes the object from the position in the gripper.
+%
+% @param [NewPose, NewRotation] the current position of the object
+%
+release_object_from_gripper([NewPose,NewRotation]) :-
+    all_objects_in_gripper(Instances),
+    member(Instance, Instances),
+    tell(is_at(Instance, ['map', NewPose, NewRotation])),
+    forget_object_at_location(Instance),
+    object_at_location(Instance, _, _, _),
+    set_object_handeled(Instance),
+    republish, republish.
 
