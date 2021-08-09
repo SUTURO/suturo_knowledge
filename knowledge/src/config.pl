@@ -17,7 +17,8 @@
       context_speech_basket/1,
       context_speech_table/1,
       get_urdf_id/1,
-      get_urdf_origin/1
+      get_urdf_origin/1,
+      get_gripper_link/1
     ]).
 
 
@@ -36,9 +37,13 @@
 offsets(Offset) :-
     Offset = [0, -0.05, 0.05, -0.1, 0.1, -0.15, 0.15, -0.2, 0.2, -0.25, 0.25, -0.3, 0.3, -0.35, 0.35, -0.4, 0.4, -0.45, 0.45, -0.5, 0.5, -0.55, 0.55, -0.6, 0.6, -0.65, 0.65, -0.7, 0.7, -0.75, 0.75, -0.8, 0.8].
 
-% --> get_gripper_link in conifg
-gripper(Gripper) :-
-    %Gripper = gripper.
+%% get_gripper_link(Gripper) is det.
+%
+% Return the link name.
+%
+% @param Gripper the variable to be filled with the link name
+%
+get_gripper_link(Gripper) :-
     Gripper = hand_palm_link.
 
 

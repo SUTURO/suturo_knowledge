@@ -1,11 +1,11 @@
-:- begin_tests('assignplaces').
+:- begin_tests('placing').
 
 :- use_module(library('test')).
 
 :- use_module(library('ros/urdf/URDF')).
 :- use_module(library('model/SOMA/OBJ')).
 
-:- use_module('assignplaces.pl').
+:- use_module('placing.pl').
 
 
 

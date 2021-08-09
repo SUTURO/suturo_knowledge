@@ -1,8 +1,8 @@
-:- begin_tests(pickup).
+:- begin_tests(grasping).
 
 :- use_module(library('test')).
 
-:- use_module('pickup.pl').
+:- use_module('grasping.pl').
 
 
 

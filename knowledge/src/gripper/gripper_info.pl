@@ -19,7 +19,7 @@
 %
 %
 init_gripper :-
-    gripper(Gripper),
+    get_gripper_link(Gripper),
     %rdf_instance_from_class(knowrob:'EnduringThing-Localized', belief_state, Gripper),
     tell(has_type(Gripper, owl:'NamedIndividual')),
     tell(triple(Gripper, knowrob:'frameName', hand_palm_link)).
