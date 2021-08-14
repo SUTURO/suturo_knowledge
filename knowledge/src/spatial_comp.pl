@@ -23,6 +23,7 @@
         object_in_predefined_room/2,
         object_on_predefined_furniture/2,
         object_on_furniture/2,
+        objects_on_furniture/2,
         misplaced_objects_at_predefined_location/3,
         surface_at_predefined_location/3,
         surfaces_at_predefined_location/3,

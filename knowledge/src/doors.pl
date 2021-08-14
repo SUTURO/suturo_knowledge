@@ -16,7 +16,8 @@
         passing_pose_of_passage/2,
         shortest_path_between_rooms/3,
         inside_door_handle/2,
-        outside_door_handle/2
+        outside_door_handle/2,
+        robot_velocity/1
     ]).
 
 :- rdf_db:rdf_register_ns(hsr_rooms, 'http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#', [keep(true)]).
