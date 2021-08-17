@@ -31,7 +31,7 @@
     %% FIND OBJs
     objects_on_surface/2,
     is_suturo_object/1,
-    objects_on_furniture/2,
+    %objects_on_furniture/2,
     objects_on_list_of_surfaces/2,
     all_objects_on_ground/1,
     all_objects_in_whole_shelf_/1, % will soon be deprecated
@@ -203,7 +203,7 @@ init_visit_state(Furniture) :-
     (
         tell(has_type(VisitState, hsr_rooms:'VisitState')),
         tell(triple(Surface, hsr_rooms:'hasVisitState', VisitState)),
-        tell(triple(VisitState, hsr_rooms:'visited', true))
+        tell(triple(VisitState, hsr_rooms:'visited', false))
     )).
 
 
@@ -412,9 +412,9 @@ objects_on_list_of_surfaces(ObjectInstances, SurfaceList):-
         ObjectsNested),
     flatten(ObjectsNested, ObjectInstances).
 
-objects_on_furniture(Furniture_ID, Objects):-
-    furniture_surfaces(Furniture_ID, Surfaces),
-    objects_on_list_of_surfaces(Objects,Surfaces).
+%objects_on_furniture(Furniture_ID, Objects):-
+%    furniture_surfaces(Furniture_ID, Surfaces),
+%    objects_on_list_of_surfaces(Objects,Surfaces).
 
 all_objects_on_ground(Instances) :-
     findall(Instance, (

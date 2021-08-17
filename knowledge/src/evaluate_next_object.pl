@@ -1,6 +1,8 @@
 :- module(evaluate_next_object,
     [
-        evaluate_next_object/5
+        evaluate_next_object/5,
+        init_robot_start_position/0,
+        generate_random_objects/1
     ]).
 
 
@@ -14,7 +16,9 @@ perform_next_object_search(Algorithm, Time, CurrentScore, UpdatedTime, UpdatedSc
     Time > 0.0,
     writeln("Next Iteration Perform Next Object Search"),
     ( next_object(Object, Algorithm)
-    -> (once(object_goal_location(Object, GoalPosition)),
+    -> (writeln("Next chosen object"),
+        writeln(Object),
+        once(object_goal_location(Object, GoalPosition)),
         move_robot(GoalPosition),
         move_next_object(Object, GoalPosition, Costs, ObjectScore),
         NewTime is Time - Costs,
@@ -112,8 +116,8 @@ generate_random_object :-
     random_member(Surface, Surfaces),
     surface_pose_in_map(Surface, [[X, Y, Z], _]),
     random(0.4, 1.0, ClassConfidence),
-    create_object(Class, ClassConfidence, ['map', [X, Y, Z], [0.0, 0.0, 0.0, 1.0]], [0.1, 0.1, 0.1], _, 1.0, [255, 0, 0], 1.0, ObjId),
-    set_object_handeled(ObjId).
+    create_object(Class, ClassConfidence, ['map', [X, Y, Z], [0.0, 0.0, 0.0, 1.0]], [0.1, 0.1, 0.1], _, 1.0, [255, 0, 0], 1.0, ObjId).
+    %set_object_handeled(ObjId).
 
 
 random_object_classes(Classes) :-
@@ -123,7 +127,7 @@ random_object_classes(Classes) :-
         'http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Fruit', 
         'http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Chips', 
         'http://www.ease-crc.org/ont/SOMA.owl#Fork', 
-        'http://www.semanticweb.org/suturo/ontologies/2020/3/objects#DishwasherTab'
+        'http://www.ease-crc.org/ont/SOMA.owl#DishwasherTab'
     ].
 
 

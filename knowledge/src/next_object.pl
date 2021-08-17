@@ -2,9 +2,14 @@
     [
         next_object/2,
         create_object_paths/0,
+        create_object_path/3,
+        assign_object_path_costs/3,
         object_goal_location/2,
-        path_costs_normalization_constant/1,
-        object_costs/3
+        object_costs/3,
+        path_costs/3,
+        has_path_costs/2,
+        has_origin/2,
+        has_destination/2
     ]).
 
 
@@ -32,47 +37,100 @@ next_object(Object, 0) :-
     !.
 
 
+next_object(Object, 1) :-
+    create_object_paths,
+    create_start_mark_paths,
+    ( current_object(CurrentObject)
+    -> (
+        cheapest_insertion,
+        triple(Object, dul:'follows', CurrentObject)
+    )
+    ; (
+        next_object(CheapestObject, 0),
+        tell(has_type(StartPosition, hsr_rooms:'StartMark')),
+        tf_lookup_transform(base_footprint, 'map', pose(RobotPosition, RobotRotation)),
+        object_tf_frame(StartPosition, Frame),
+        tell(is_at(Frame, ['map', RobotPosition, RobotRotation])),
+        tell(triple(CheapestObject, dul:'follows', StartPosition)),
+        object_costs(RobotPosition, CheapestObject, Costs),
+        tell(has_type(Path, hsr_rooms:'Path')),
+        tell(triple(StartPosition, hsr_rooms:'isOriginOf', Path)),
+        tell(triple(CheapestObject, hsr_rooms:'isDestinationOf', Path)),
+        tell(triple(Path, hsr_rooms:'hasCosts', Costs)),
+        create_start_mark_paths,
+        cheapest_insertion,
+        triple(Object, dul:'follows', StartPosition)
+    )).
+
+
+current_tour(Tour) :-
+    objects_not_handeled(NotHandeledObjects),
+    findall([Predecessor, Object],
+    (
+        member(Object, NotHandeledObjects),
+        triple(Object, dul:'follows', Predecessor)
+    ),
+    Tour).
+
+
+objects_not_in_current_tour(Objects) :-
+    objects_not_handeled(NotHandeledObjects),
+    findall(Object,
+    (
+        member(Object, NotHandeledObjects),
+        not triple(Object, dul:'follows', _)
+    ),
+    Objects).
+
+
+cheapest_insertion :-
+    objects_not_in_current_tour([]).
+
+
+cheapest_insertion :-
+    objects_not_in_current_tour(ObjectsToInsert),
+    current_tour(CurrentTour),
+    findall([Object, SubTour, Costs],
+    (
+        member([Object1, Object2], CurrentTour),
+        member(Object, ObjectsToInsert),
+        object_insertion_costs(Object, Object1, Object2, Costs),
+        SubTour = [Object1, Object2]
+    ),
+    InsertionCosts),
+    max_member([_, _, NormalizationConstant], InsertionCosts),
+    findall([Object, SubTour, CBRatio],
+    (
+        member([Object, SubTour, Costs], InsertionCosts),
+        object_benefit(Object, BenefitAtom),
+        atom_number(BenefitAtom, Benefit),
+        CBRatio is Benefit / (Costs / NormalizationConstant)
+    ), 
+    CBRatios),
+    max_member([Object, [Object1, Object2], _], CBRatios),
+    insert_object_into_tour(Object, Object1, Object2),
+    cheapest_insertion.
+
+
+object_insertion_costs(ObjectToInsert, Object1, Object2, Costs) :-
+    path_costs(Object1, Object2, CurrentPathCosts),
+    path_costs(Object1, ObjectToInsert, CostsToNewObject),
+    path_costs(ObjectToInsert, Object2, CostsFromNewObject),
+    Costs is CostsToNewObject + CostsFromNewObject - CurrentPathCosts.
+    
+
+insert_object_into_tour(ObjectToInsert, Object1, Object2) :-
+    tripledb_forget(Object2, dul:'follows', Object1),
+    tell(triple(ObjectToInsert, dul:'follows', Object1)),
+    tell(triple(Object2, dul:'follows', ObjectToInsert)).
 
 
 
 current_object(Object) :-
     is_suturo_object(Object),
     handeled(Object),
-    ask(triple(Object, hsr_objects:'hasSuccessorObject', SuccessorObject)),
+    ask(triple(SuccessorObject, dul:'follows', Object)),
     not handeled(SuccessorObject).
-    
-
-
-
-all_objects_cost_benefit_ratios(OriginPosition, PossibleObjects, CBRatios) :-
-    all_objects_normalized_costs_and_benefits(OriginPosition, NormalizedCostsAndBenefits),
-    findall([Object, CBRatio],
-    (
-        member([Object, Costs, Benefit], PossibleObjects, NormalizedCostsAndBenefits),
-        CBRatio is Costs / Benefit
-    ),
-    CBRatios).
-
-
-all_objects_normalized_costs_and_benefits(OriginPosition, PossibleObjects, NormalizedCostsAndBenefits) :-
-    all_objects_costs_and_benefits(OriginPosition, PossibleObjects, CostsAndBenefits),
-    max_member([_, NormalizationConstant, _], CostsAndBenefits),
-    findall([Object, NormalizedCosts, Benefit],
-    (
-        member([Object, Costs, Benefit], CostsAndBenefits),
-        NormalizedCosts is Costs / NormalizationConstant
-    ),
-    NormalizedCostsAndBenefits).
-
-
-all_objects_costs_and_benefits(OriginPosition, PossibleObjects, CostsAndBenefits) :-
-    findall([Object, Costs, Benefit],
-    (
-        member(Object, PossibleObjects),
-        object_costs(OriginPosition, Object, Costs),
-        object_benefit(Object, Benefit)
-    ),
-    CostsAndBenefits).
 
 
 objects_benefits(Objects, ObjectBenefits) :-
@@ -131,15 +189,35 @@ create_object_paths :-
     hsr_existing_objects(Objects),
     forall(
     (
-        member(Object1, Objects), member(Object2, Objects),
+        member(Object1, Objects),
+        member(Object2, Objects),
         not same_as(Object1, Object2),
-        not has_object_path(Object1, Object2)
+        not has_object_path(Object1, Object2),
+        not handeled(Object2),
+        is_misplaced(Object2)
     ),
     (
         create_object_path(Object1, Object2, Path1),
         create_object_path(Object2, Object1, Path2),
         assign_object_path_costs(Object1, Object2, Path1),
         assign_object_path_costs(Object2, Object1, Path2)
+    )).
+
+create_start_mark_paths :-
+    objects_not_handeled(NotHandeledObjects),
+    forall(
+    (
+        has_type(StartMark, hsr_rooms:'StartMark'),
+        member(Object, NotHandeledObjects),
+        is_misplaced(Object),
+        not has_object_path(StartMark, Object)
+    ),
+    (
+        create_object_path(StartMark, Object, Path),
+        object_tf_frame(StartMark, Frame),
+        tf_lookup_transform(Frame, 'map', pose(StartPosition, _)),
+        object_costs(StartPosition, Object, Costs),
+        tell(triple(Path, hsr_rooms:'hasCosts', Costs))
     )).
 
 
@@ -162,6 +240,11 @@ assign_object_path_costs(Origin, Destination, Path) :-
     tell(triple(Path, hsr_rooms:'hasCosts', Costs)).
 
 
+path_costs(Origin, Destination, Costs) :-
+    has_origin(Path, Origin),
+    has_destination(Path, Destination),
+    has_path_costs(Path, Costs).
+
 has_path_costs(Path, Costs) :-
     triple(Path, hsr_rooms:'hasCosts', Costs).
 
@@ -171,38 +254,14 @@ is_path(Path) :-
 
 
 has_origin(Path, Origin) :-
-    triple(Path, hsr_rooms:'hasOrigin', Origin).
+    triple(Path, hsr_rooms:'hasOrigin', Origin);
+    triple(Origin, hsr_rooms:'isOriginOf', Path).
 
 
 has_destination(Path, Destination) :-
-    triple(Path, hsr_rooms:'hasDestination', Destination).
+    triple(Path, hsr_rooms:'hasDestination', Destination);
+    triple(Destination, hsr_rooms:'isDestinationOf', Path).
 
-
-path_costs_normalization_constant(NormalizationConstant) :-
-    tf_lookup_transform('map', 'base_footprint', pose(RobotPosition, _)),
-    objects_not_handeled(NotHandledObjects),
-    findall(Costs,
-    (
-        is_path(Path),
-        has_origin(Path, Origin), 
-        member(Origin, NotHandledObjects),
-        has_destination(Path, Destination), 
-        member(Destination, NotHandledObjects),
-        has_path_costs(Path, Costs)
-    ), 
-    ObjectToObjectCosts),
-    findall(Costs,
-    (
-        member(Destination, NotHandledObjects),
-        object_costs(RobotPosition, Destination, Costs)
-    ),
-    RobotToObjectCosts),
-    append(ObjectToObjectCosts, RobotToObjectCosts, Costs),
-    max_member(NormalizationConstant, Costs).
-
-
-normalization_constant(Costs, NormalizationConstant) :-
-    max_member(NormalizationConstant, Costs).
 
 
 

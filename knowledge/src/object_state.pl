@@ -10,6 +10,7 @@
     object_type_handling/3,
     set_object_color/3,
     set_color_semantics/2,
+    handeled/1,
     objects_not_handeled/1,
     set_object_handeled/1,
     set_object_not_handeled/1 
