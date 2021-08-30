@@ -29,6 +29,8 @@
 :- use_module(library('naturallanguage/nlg')).
 :- use_module(library('naturallanguage/nlp')).
 
+:- use_directory(neems).
+
 :- ros_package_iri(knowledge, 'package://knowledge/owl/objects.owl').
 :- ros_package_iri(knowledge, 'package://knowledge/owl/rooms.owl').
 :- ros_package_iri(knowledge, 'package://knowledge/owl/locations.owl').
