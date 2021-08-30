@@ -21,19 +21,21 @@ next_object(Object, 0) :-
         is_misplaced(NotHandledObject) 
     ), 
     PossibleObjects),
-    tf_lookup_transform('base_footprint', 'map', pose(RobotPosition, _)),
+    is_at(base_footprint, ['map', RobotPosition, _]),
     objects_costs(RobotPosition, PossibleObjects, Costs),
     objects_benefits(PossibleObjects, Benefits),
-    max_member([_, NormalizationConstant], Costs),
-    findall([Object, CBRatio],
+    %max_member([_, NormalizationConstant], Costs),
+    findall([CBRatio, Object],
     (
         member([Object, BenefitAtom], Benefits),
         atom_number(BenefitAtom, Benefit),
         member([Object, Cost], Costs),
-        CBRatio is Benefit / (Cost / NormalizationConstant)
+        %CBRatio is Benefit / (Cost / NormalizationConstant)
+        CBRatio is Benefit / Cost
     ),
     ObjectCBRatios),
-    max_member([Object, _], ObjectCBRatios),
+    list_to_set(ObjectCBRatios, ObjectCBRatiosSet),
+    max_member([_, Object], ObjectCBRatios),
     !.
 
 
@@ -46,9 +48,10 @@ next_object(Object, 1) :-
         triple(Object, dul:'follows', CurrentObject)
     )
     ; (
+        forget_tour,
         next_object(CheapestObject, 0),
         tell(has_type(StartPosition, hsr_rooms:'StartMark')),
-        tf_lookup_transform(base_footprint, 'map', pose(RobotPosition, RobotRotation)),
+        is_at(base_footprint, ['map', RobotPosition, RobotRotation]),
         object_tf_frame(StartPosition, Frame),
         tell(is_at(Frame, ['map', RobotPosition, RobotRotation])),
         tell(triple(CheapestObject, dul:'follows', StartPosition)),
@@ -61,6 +64,20 @@ next_object(Object, 1) :-
         cheapest_insertion,
         triple(Object, dul:'follows', StartPosition)
     )).
+
+
+next_object(Object, 2) :-
+    %ignore(place_objects),
+    objects_not_handeled(ObjectsNotHandled),
+    findall(Obj, (member(Obj, ObjectsNotHandled), is_misplaced(Obj)), Objects),
+    predsort(compareDistances, Objects, SortedObjs),
+    nth0(0, SortedObjs, Object).
+
+
+forget_tour :-
+    writeln("Call forget tour"),
+    forall(triple(Object, dul:'follows', _), tripledb_forget(Object, dul:'follows', _)),
+    forall(has_type(StartMark, hsr_rooms:'StartMark'), tripledb_forget(StartMark, _, _)).
 
 
 current_tour(Tour) :-
@@ -98,16 +115,19 @@ cheapest_insertion :-
         SubTour = [Object1, Object2]
     ),
     InsertionCosts),
-    max_member([_, _, NormalizationConstant], InsertionCosts),
-    findall([Object, SubTour, CBRatio],
+    %max_member([_, _, NormalizationConstant], InsertionCosts),
+    findall([CBRatio, Object, SubTour],
     (
         member([Object, SubTour, Costs], InsertionCosts),
         object_benefit(Object, BenefitAtom),
         atom_number(BenefitAtom, Benefit),
-        CBRatio is Benefit / (Costs / NormalizationConstant)
+        %CBRatio is Benefit / (Costs / NormalizationConstant)
+        CBRatio is Benefit / Costs
     ), 
     CBRatios),
-    max_member([Object, [Object1, Object2], _], CBRatios),
+    writeln("Object CBRatios"),
+    writeln(CBRatios),
+    max_member([_, Object, [Object1, Object2]], CBRatios),
     insert_object_into_tour(Object, Object1, Object2),
     cheapest_insertion.
 
@@ -157,8 +177,9 @@ objects_costs(OriginPosition, Objects, ObjectCosts) :-
 
 object_costs(OriginPosition, Object, Costs) :-
     distance_to_go(OriginPosition, Object, DistanceToGo),
-    robot_velocity(RobotVelocity),
-    Costs is DistanceToGo / RobotVelocity.
+    %robot_velocity(RobotVelocity),
+    %Costs is DistanceToGo / RobotVelocity.
+    Costs is DistanceToGo.
 
 
 distance_to_go(OriginPosition, Object, Distance) :-
@@ -168,8 +189,8 @@ distance_to_go(OriginPosition, Object, Distance) :-
 
 
 distance_to_object(OriginPosition, Object, Distance) :-
-    object_pose(Object, [_, _,ObjectPosition, _]),
-    euclidean_distance(OriginPosition, ObjectPosition, Distance).
+    object_pose(Object, [_, _,[X, Y, _], _]),
+    euclidean_distance(OriginPosition, [X, Y, 0], Distance).
 
 
 distance_to_goal_location(Object, Distance) :-
@@ -182,6 +203,7 @@ object_goal_location(Object, GoalPosition) :-
     object_pose(Object, [_, _,ObjectPosition, _]),
     object_at_predefined_location(Object, RoomType, FurnitureType),
     once(surface_at_predefined_location(GoalSurface, RoomType, FurnitureType)),
+    has_urdf_name(GoalSurface, Name),
     surface_pose_in_map(GoalSurface, [GoalPosition, _]).
 
 
@@ -261,6 +283,28 @@ has_origin(Path, Origin) :-
 has_destination(Path, Destination) :-
     triple(Path, hsr_rooms:'hasDestination', Destination);
     triple(Destination, hsr_rooms:'isDestinationOf', Path).
+
+
+filter_expensive_objects(Objects, FilteredObjects) :-
+    findall([Object, MeanCBRatio, MinCBRatio],
+    (
+        member(Object, Objects),
+        object_benefit(Object, BenefitAtom),
+        atom_number(BenefitAtom, Benefit),
+        findall(CBRatio, 
+        (
+            path_costs(_, Object, Costs),
+            CBRatio is Benefit /Costs
+        ),
+        AllCBRatios),
+        min_member(MinCBRatio, AllCBRatios),
+        sumlist(AllCBRatios, TotalCBRatios),
+        length(AllCBRatios, ObjectCount),
+        MeanCBRatio is TotalCBRatios / ObjectCount 
+    ), 
+    ObjectCBRatios).
+
+
 
 
 
