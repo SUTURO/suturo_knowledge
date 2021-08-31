@@ -37,7 +37,8 @@
         locations_not_visited/2,
         object_in_room/2,
         is_misplaced/1,
-        position_in_room/2
+        position_in_room/2,
+        pose_is_outside/1
     ]).
 
 :-rdf_db:rdf_register_ns(dul, 'http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#', [keep(true)]).
@@ -304,6 +305,10 @@ position_in_room(Position, Room) :-
 position_in_room(Position, Room) :-
     has_type(Room, hsr_rooms:'Outside'),
     !.
+
+pose_is_outside(Position) :-
+    position_in_room(Position, Room),
+    has_type(Room, hsr_rooms:'Outside').
 
 
 % Position is relative to map
