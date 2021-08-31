@@ -19,6 +19,8 @@
       <arg name="gazebo" value="false"/>
       <arg name="suturo_rviz" value="true"/>
       <arg name="run_snap_map" value="false"/>
+      <arg name="world" default="suturo_test_next_object.world"/>
+      <arg name="publish_robot_description" default="false"/>
     </include>
   </group>
 
