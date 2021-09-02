@@ -122,12 +122,13 @@ cheapest_insertion :-
         object_benefit(Object, BenefitAtom),
         atom_number(BenefitAtom, Benefit),
         %CBRatio is Benefit / (Costs / NormalizationConstant)
-        CBRatio is Benefit / Costs
+        %CBRatio is Benefit / Costs
+        CBRatio is Costs
     ), 
     CBRatios),
-    writeln("Object CBRatios"),
-    writeln(CBRatios),
-    max_member([_, Object, [Object1, Object2]], CBRatios),
+    list_to_set(CBRatios, CBRatiosSet),
+    %max_member([_, Object, [Object1, Object2]], CBRatiosSet),
+    min_member([_, Object, [Object1, Object2]], CBRatiosSet),
     insert_object_into_tour(Object, Object1, Object2),
     cheapest_insertion.
 

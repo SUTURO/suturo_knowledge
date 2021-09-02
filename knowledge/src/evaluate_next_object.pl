@@ -7,7 +7,7 @@
 
 
 evaluate_next_object(Algorithm, ObjectCount, Time, RemainingTime, FinalScore) :-
-    set_random(seed(139)),
+    set_random(seed(149)),
     init_robot_start_position,
     generate_random_objects(ObjectCount),
     hsr_existing_objects(AllObjects),
@@ -135,7 +135,7 @@ generate_random_object :-
     random_object_locations(Class, Surfaces),
     random_member(Surface, Surfaces),
     surface_pose_in_map(Surface, [[X, Y, Z], _]),
-    random(0.4, 1.0, ClassConfidence),
+    random(0.2, 1.0, ClassConfidence),
     create_object(Class, ClassConfidence, ['map', [X, Y, Z], [0.0, 0.0, 0.0, 1.0]], [0.1, 0.1, 0.1], _, 1.0, [255, 0, 0], 1.0, ObjId),
     set_object_handeled(ObjId).
 
