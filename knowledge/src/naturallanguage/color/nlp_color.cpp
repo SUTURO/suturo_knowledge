@@ -1,16 +1,10 @@
 #define PL_SAFE_ARG_MACROS
 #include <SWI-cpp.h>
 
-#include <boost/math/distributions/normal.hpp> // for normal_distribution
-  using boost::math::normal; // typedef provides default type is double.
-#include <iomanip>
-  using std::setw; using std::setprecision;
-#include <limits>
-  using std::numeric_limits;
+#include <boost/math/distributions/normal.hpp>
+    using boost::math::normal; // typedef provides default type is double.
 
 
-
-using namespace std;
 
 
 /*** Rgb2Hsv
@@ -85,19 +79,52 @@ PREDICATE(rgb_to_hsv,2) {
 }
 
 
+
+
 // *****************************************************************************************
 
-// + mean, +standard_deviation, +z, -propability
-PREDICATE(normal_distribution_propability,4) {
 
 
-    // Construct a normal distribution s
-    normal s((double) PL_A1, (double) PL_A2);
+/** + value list of 3 elements
+    +mean parameter list of 3,
+    +standard deviation of 3
+    +multipliers list of 3
+    -propability one float
+*/
+PREDICATE(three_normal_distribution_propability_multi,5) {
 
-    PL_A4 = PlTerm(pdf(s, (double) PL_A3));
+    /*
+    Convert the Inputs into usable lists of Terms
+    */
 
+    PlTail values(PL_A1);       PlTerm value;
+    PlTail means(PL_A2);        PlTerm mean;
+    PlTail std_devs(PL_A3);     PlTerm std_dev;
+    PlTail multipliers(PL_A4);  PlTerm multi;
+
+
+    double return_value = 1; // we will convert this into a Term later
+
+
+    for ( int i = 0; i < 3 ; i++) {
+        // let the PlTerms be the next/first element of the PlTails
+        values.next(value);
+        means.next(mean);
+        std_devs.next(std_dev);
+        multipliers.next(multi);
+
+        // we have to cast the PlTerms to double
+        return_value *= 
+        pdf( 
+            normal((double) mean, (double) std_dev), // create a normal dist
+            (double) value
+        ) * (double) multi;
+
+
+    }
+
+
+    PL_A5 = PlTerm(return_value);
 
     return TRUE;
 }
-
-

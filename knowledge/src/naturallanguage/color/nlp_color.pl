@@ -1,4 +1,8 @@
 :- module(nlp_color,[
+    find_object_of_color/4,
+    find_color_of_color_in_list/4,
+    determine_color_name/2,
+    determine_color_name_with_list/2,
     set_nlp_color/1]).
 
 rdf_meta.
@@ -22,33 +26,93 @@ set_nlp_color(ObjID):-
     tell(triple(ObjID, suturo_color:'has_color', Color)).
 
 
+% + ListOfObjects, + TargetColor, - Object, - Conf
+find_object_of_color(ListOfObjects, TargetColor, Object, Conf):-
+    findall(Tuples, % Some Colors have more then one CVD (red)
+    (
+        ask((triple(TargetColor,suturo_color:'color_likelihood', CVD),
+            triple(CVD, suturo_color:'hue_mean',Hue_Mean),
+            triple(CVD, suturo_color:'hue_standard_deviation',Hue_SD),
+            triple(CVD, suturo_color:'hue_multiplier',Hue_Multi),
+
+            triple(CVD, suturo_color:'saturation_mean',Sat_Mean),
+            triple(CVD, suturo_color:'saturation_standard_deviation',Sat_SD),
+            triple(CVD, suturo_color:'saturation_multiplier',Sat_Multi),
+
+            triple(CVD, suturo_color:'value_mean',Val_Mean),
+            triple(CVD, suturo_color:'value_standard_deviation',Val_SD),
+            triple(CVD, suturo_color:'value_multiplier',Val_Multi)
+            )),
+
+        findall(Tuple,
+        (
+            member(Obj, ListOfObjects),
+            ask(object_color_hsv(Obj, [ObjH,ObjS,ObjV])),
+            three_normal_distribution_propability_multi([ObjH,ObjS,ObjV],[Hue_Mean,Sat_Mean,Val_Mean],[Hue_SD,Sat_SD,Val_SD],[Hue_Multi,Sat_Multi,Val_Multi],Prop),
+            Tuple = [Prop, Obj] % The propability has to go first for max_member to use it
+        ),
+        Tuples) % Contains the Conf and the Object for each Object
+    ), Tupless), % Contains a list for each CVD containing the Conf and the Object for each Object
+    my_flatten(Tupless, FlattenTuples),
+    max_member([Conf,Object], FlattenTuples).
+
+
+
+
+% + ListOfObjects, + TargetColor, - Object, - Conf
+find_color_of_color_in_list(ListOfColors, TargetColor, Object, Conf):-
+    findall(Tuples, % Some Colors have more then one CVD (red)
+    (
+        triple(TargetColor,suturo_color:'color_likelihood', CVD),
+            triple(CVD, suturo_color:'hue_mean',Hue_Mean),
+            triple(CVD, suturo_color:'hue_standard_deviation',Hue_SD),
+            triple(CVD, suturo_color:'hue_multiplier',Hue_Multi),
+
+            triple(CVD, suturo_color:'saturation_mean',Sat_Mean),
+            triple(CVD, suturo_color:'saturation_standard_deviation',Sat_SD),
+            triple(CVD, suturo_color:'saturation_multiplier',Sat_Multi),
+
+            triple(CVD, suturo_color:'value_mean',Val_Mean),
+            triple(CVD, suturo_color:'value_standard_deviation',Val_SD),
+            triple(CVD, suturo_color:'value_multiplier',Val_Multi),
+
+        findall(Tuple,
+        (
+            member(C, ListOfColors),
+            C = [ObjH,ObjS,ObjV],
+            three_normal_distribution_propability_multi([ObjH,ObjS,ObjV],[Hue_Mean,Sat_Mean,Val_Mean],[Hue_SD,Sat_SD,Val_SD],[Hue_Multi,Sat_Multi,Val_Multi],Prop),
+            Tuple = [Prop, C] % The propability has to go first for max_member to use it
+        ),
+        Tuples) % Contains the Conf and the Object for each Object
+    ), Tupless), % Contains a list for each CVD containing the Conf and the Object for each Object
+    my_flatten(Tupless, FlattenTuples),
+    max_member([Conf,Object], FlattenTuples).
+
+
+
+
+
+
 
 
 
 
 determine_color_name(ObjID,Color):-
-    ask(object_color_hsv(ObjID,[ObjH,ObjS,ObjV])),
-    determine_color_name([_,ObjSat,ObjVal],Color).
+    not(
+        ObjID = [A,B,C]
+    ),
+    ask(object_color_hsv(ObjID,HSV)),
+    determine_color_name([HSV,ObjSat,ObjVal],Color).
 
 
-determine_color_name([_,ObjSat,ObjVal],Color):-
-    ObjSat < 0.3,
-    ObjVal < 0.6,
-    Color = 'http://www.semanticweb.org/suturo/ontologies/2021/6/color#grey',
-    !.
 
-determine_color_name([_,ObjSat,ObjVal],Color):-
-    ObjSat < 0.12,
-    Color = 'http://www.semanticweb.org/suturo/ontologies/2021/6/color#white',
-    !.
+determine_color_name([ObjH,ObjS,ObjV],Color):-
+    determine_color_name_with_list([ObjH,ObjS,ObjV],Tuples),
+    max_member([_,ColorValue], Tuples),
+    triple(Color,suturo_color:'color_likelihood', ColorValue).
 
-determine_color_name([_,ObjSat,ObjVal],Color):-
-    ObjVal < 0.3,
-    Color = 'http://www.semanticweb.org/suturo/ontologies/2021/6/color#black',
-    !.
 
-determine_color_name([ObjH,_,_],Color):-
-
+determine_color_name_with_list([ObjH,ObjS,ObjV],Tuples):-
     findall(ColorValueDistribution,
         subclass_of(ColorValueDistribution, suturo_color:'hsv_values'),
     ColorValueDistributions),
@@ -56,17 +120,37 @@ determine_color_name([ObjH,_,_],Color):-
     findall(Tuple,
     (
         member(CVD, ColorValueDistributions),
-        triple(CVD, suturo_color:'hue',Hue),
-        triple(CVD,suturo_color:'standard_deviation',SD),
-        triple(CVD,suturo_color:'multiplier',Multi),
-        normal_distribution_propability(Hue,SD,ObjH,Prop),
-        PropM is Prop * Multi,
-        Tuple = [PropM, CVD] % PropM first so max_member uses that
-    ),
-    Tuples),
-    max_member([_,ColorValue], Tuples),
-    triple(Color,suturo_color:'color_likelihood', ColorValue).
+        triple(CVD, suturo_color:'hue_mean',Hue_Mean),
+        triple(CVD, suturo_color:'hue_standard_deviation',Hue_SD),
+        triple(CVD, suturo_color:'hue_multiplier',Hue_Multi),
 
+        triple(CVD, suturo_color:'saturation_mean',Sat_Mean),
+        triple(CVD, suturo_color:'saturation_standard_deviation',Sat_SD),
+        triple(CVD, suturo_color:'saturation_multiplier',Sat_Multi),
+
+        triple(CVD, suturo_color:'value_mean',Val_Mean),
+        triple(CVD, suturo_color:'value_standard_deviation',Val_SD),
+        triple(CVD, suturo_color:'value_multiplier',Val_Multi),
+
+        three_normal_distribution_propability_multi([ObjH,ObjS,ObjV],[Hue_Mean,Sat_Mean,Val_Mean],[Hue_SD,Sat_SD,Val_SD],[Hue_Multi,Sat_Multi,Val_Multi],Prop),
+        Tuple = [Prop, CVD]
+    ),
+    Tuples).
+
+
+
+
+% Flatten only once
+my_flatten([], []).
+my_flatten([A|B],L) :- is_list(A), my_flatten(B,B1), !, append(A,B1,L).
+my_flatten([A|B],[A|B1]) :- my_flatten(B,B1).
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 %% object_color_hsv(?Obj, ?Col) is nondet.

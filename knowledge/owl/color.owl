@@ -28,21 +28,57 @@
     
 
 
-    <!-- http://www.semanticweb.org/suturo/ontologies/2021/6/color#hue -->
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/6/color#hue_mean -->
 
-    <owl:AnnotationProperty rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/6/color#hue"/>
+    <owl:AnnotationProperty rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/6/color#hue_mean"/>
     
 
 
-    <!-- http://www.semanticweb.org/suturo/ontologies/2021/6/color#multiplier -->
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/6/color#hue_multiplier -->
 
-    <owl:AnnotationProperty rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/6/color#multiplier"/>
+    <owl:AnnotationProperty rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/6/color#hue_multiplier"/>
     
 
 
-    <!-- http://www.semanticweb.org/suturo/ontologies/2021/6/color#standard_deviation -->
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/6/color#hue_standard_deviation -->
 
-    <owl:AnnotationProperty rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/6/color#standard_deviation"/>
+    <owl:AnnotationProperty rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/6/color#hue_standard_deviation"/>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/6/color#saturation_mean -->
+
+    <owl:AnnotationProperty rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/6/color#saturation_mean"/>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/6/color#saturation_multiplier -->
+
+    <owl:AnnotationProperty rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/6/color#saturation_multiplier"/>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/6/color#saturation_standard_deviation -->
+
+    <owl:AnnotationProperty rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/6/color#saturation_standard_deviation"/>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/6/color#value_mean -->
+
+    <owl:AnnotationProperty rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/6/color#value_mean"/>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/6/color#value_multiplier -->
+
+    <owl:AnnotationProperty rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/6/color#value_multiplier"/>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/6/color#value_standard_deviation -->
+
+    <owl:AnnotationProperty rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/6/color#value_standard_deviation"/>
     
 
 
@@ -54,6 +90,32 @@
     ///////////////////////////////////////////////////////////////////////////////////////
      -->
 
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/6/color#black -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/6/color#black">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/6/color#color"/>
+        <color_likelihood rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/6/color#black_values"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/6/color#black_values -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/6/color#black_values">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/6/color#hsv_values"/>
+        <hue_mean rdf:datatype="http://www.w3.org/2001/XMLSchema#float">180.0</hue_mean>
+        <hue_multiplier rdf:datatype="http://www.w3.org/2001/XMLSchema#float">2500.0</hue_multiplier>
+        <hue_standard_deviation rdf:datatype="http://www.w3.org/2001/XMLSchema#float">1000.0</hue_standard_deviation>
+        <saturation_mean rdf:datatype="http://www.w3.org/2001/XMLSchema#float">50.0</saturation_mean>
+        <saturation_multiplier rdf:datatype="http://www.w3.org/2001/XMLSchema#float">1000.0</saturation_multiplier>
+        <saturation_standard_deviation rdf:datatype="http://www.w3.org/2001/XMLSchema#float">400.0</saturation_standard_deviation>
+        <value_mean rdf:datatype="http://www.w3.org/2001/XMLSchema#float">0.0</value_mean>
+        <value_multiplier rdf:datatype="http://www.w3.org/2001/XMLSchema#float">50.0</value_multiplier>
+        <value_standard_deviation rdf:datatype="http://www.w3.org/2001/XMLSchema#float">20.0</value_standard_deviation>
+    </owl:Class>
     
 
 
@@ -70,9 +132,41 @@
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/6/color#blue_values">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/6/color#hsv_values"/>
-        <hue rdf:datatype="http://www.w3.org/2001/XMLSchema#float">215.0</hue>
-        <multiplier rdf:datatype="http://www.w3.org/2001/XMLSchema#float">65.0</multiplier>
-        <standard_deviation rdf:datatype="http://www.w3.org/2001/XMLSchema#float">27.0</standard_deviation>
+        <hue_mean rdf:datatype="http://www.w3.org/2001/XMLSchema#float">215.0</hue_mean>
+        <hue_multiplier rdf:datatype="http://www.w3.org/2001/XMLSchema#float">65.0</hue_multiplier>
+        <hue_standard_deviation rdf:datatype="http://www.w3.org/2001/XMLSchema#float">27.0</hue_standard_deviation>
+        <saturation_mean rdf:datatype="http://www.w3.org/2001/XMLSchema#float">100.0</saturation_mean>
+        <saturation_multiplier rdf:datatype="http://www.w3.org/2001/XMLSchema#float">88.0</saturation_multiplier>
+        <saturation_standard_deviation rdf:datatype="http://www.w3.org/2001/XMLSchema#float">35.0</saturation_standard_deviation>
+        <value_mean rdf:datatype="http://www.w3.org/2001/XMLSchema#float">100.0</value_mean>
+        <value_multiplier rdf:datatype="http://www.w3.org/2001/XMLSchema#float">87.0</value_multiplier>
+        <value_standard_deviation rdf:datatype="http://www.w3.org/2001/XMLSchema#float">35.0</value_standard_deviation>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/6/color#brown -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/6/color#brown">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/6/color#color"/>
+        <color_likelihood rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/6/color#brown_values"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/6/color#brown_values -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/6/color#brown_values">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/6/color#hsv_values"/>
+        <hue_mean rdf:datatype="http://www.w3.org/2001/XMLSchema#float">33.0</hue_mean>
+        <hue_multiplier rdf:datatype="http://www.w3.org/2001/XMLSchema#float">18.7</hue_multiplier>
+        <hue_standard_deviation rdf:datatype="http://www.w3.org/2001/XMLSchema#float">7.5</hue_standard_deviation>
+        <saturation_mean rdf:datatype="http://www.w3.org/2001/XMLSchema#float">70.0</saturation_mean>
+        <saturation_multiplier rdf:datatype="http://www.w3.org/2001/XMLSchema#float">88.0</saturation_multiplier>
+        <saturation_standard_deviation rdf:datatype="http://www.w3.org/2001/XMLSchema#float">35.0</saturation_standard_deviation>
+        <value_mean rdf:datatype="http://www.w3.org/2001/XMLSchema#float">70.0</value_mean>
+        <value_multiplier rdf:datatype="http://www.w3.org/2001/XMLSchema#float">87.0</value_multiplier>
+        <value_standard_deviation rdf:datatype="http://www.w3.org/2001/XMLSchema#float">35.0</value_standard_deviation>
     </owl:Class>
     
 
@@ -96,9 +190,15 @@
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/6/color#dark_blue_values">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/6/color#hsv_values"/>
-        <hue rdf:datatype="http://www.w3.org/2001/XMLSchema#float">240.0</hue>
-        <multiplier rdf:datatype="http://www.w3.org/2001/XMLSchema#float">17.5</multiplier>
-        <standard_deviation rdf:datatype="http://www.w3.org/2001/XMLSchema#float">7.0</standard_deviation>
+        <hue_mean rdf:datatype="http://www.w3.org/2001/XMLSchema#float">240.0</hue_mean>
+        <hue_multiplier rdf:datatype="http://www.w3.org/2001/XMLSchema#float">17.5</hue_multiplier>
+        <hue_standard_deviation rdf:datatype="http://www.w3.org/2001/XMLSchema#float">7.0</hue_standard_deviation>
+        <saturation_mean rdf:datatype="http://www.w3.org/2001/XMLSchema#float">100.0</saturation_mean>
+        <saturation_multiplier rdf:datatype="http://www.w3.org/2001/XMLSchema#float">88.0</saturation_multiplier>
+        <saturation_standard_deviation rdf:datatype="http://www.w3.org/2001/XMLSchema#float">35.0</saturation_standard_deviation>
+        <value_mean rdf:datatype="http://www.w3.org/2001/XMLSchema#float">100.0</value_mean>
+        <value_multiplier rdf:datatype="http://www.w3.org/2001/XMLSchema#float">87.0</value_multiplier>
+        <value_standard_deviation rdf:datatype="http://www.w3.org/2001/XMLSchema#float">35.0</value_standard_deviation>
     </owl:Class>
     
 
@@ -107,6 +207,49 @@
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/6/color#green">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/6/color#color"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/6/color#green_values -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/6/color#green_values">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/6/color#hsv_values"/>
+        <hue_mean rdf:datatype="http://www.w3.org/2001/XMLSchema#float">110.0</hue_mean>
+        <hue_multiplier rdf:datatype="http://www.w3.org/2001/XMLSchema#float">25.0</hue_multiplier>
+        <hue_standard_deviation rdf:datatype="http://www.w3.org/2001/XMLSchema#float">62.0</hue_standard_deviation>
+        <saturation_mean rdf:datatype="http://www.w3.org/2001/XMLSchema#float">100.0</saturation_mean>
+        <saturation_multiplier rdf:datatype="http://www.w3.org/2001/XMLSchema#float">88.0</saturation_multiplier>
+        <saturation_standard_deviation rdf:datatype="http://www.w3.org/2001/XMLSchema#float">35.0</saturation_standard_deviation>
+        <value_mean rdf:datatype="http://www.w3.org/2001/XMLSchema#float">100.0</value_mean>
+        <value_multiplier rdf:datatype="http://www.w3.org/2001/XMLSchema#float">87.0</value_multiplier>
+        <value_standard_deviation rdf:datatype="http://www.w3.org/2001/XMLSchema#float">35.0</value_standard_deviation>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/6/color#grey -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/6/color#grey">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/6/color#color"/>
+        <color_likelihood rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/6/color#grey_values"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/6/color#grey_values -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/6/color#grey_values">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/6/color#hsv_values"/>
+        <hue_mean rdf:datatype="http://www.w3.org/2001/XMLSchema#float">180.0</hue_mean>
+        <hue_multiplier rdf:datatype="http://www.w3.org/2001/XMLSchema#float">2500.0</hue_multiplier>
+        <hue_standard_deviation rdf:datatype="http://www.w3.org/2001/XMLSchema#float">1000.0</hue_standard_deviation>
+        <saturation_mean rdf:datatype="http://www.w3.org/2001/XMLSchema#float">0.0</saturation_mean>
+        <saturation_multiplier rdf:datatype="http://www.w3.org/2001/XMLSchema#float">25.0</saturation_multiplier>
+        <saturation_standard_deviation rdf:datatype="http://www.w3.org/2001/XMLSchema#float">10.0</saturation_standard_deviation>
+        <value_mean rdf:datatype="http://www.w3.org/2001/XMLSchema#float">50.0</value_mean>
+        <value_multiplier rdf:datatype="http://www.w3.org/2001/XMLSchema#float">50.0</value_multiplier>
+        <value_standard_deviation rdf:datatype="http://www.w3.org/2001/XMLSchema#float">20.0</value_standard_deviation>
     </owl:Class>
     
 
@@ -130,9 +273,24 @@
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/6/color#light_blue_values">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/6/color#hsv_values"/>
-        <hue rdf:datatype="http://www.w3.org/2001/XMLSchema#float">180.0</hue>
-        <multiplier rdf:datatype="http://www.w3.org/2001/XMLSchema#float">17.5</multiplier>
-        <standard_deviation rdf:datatype="http://www.w3.org/2001/XMLSchema#float">7.0</standard_deviation>
+        <hue_mean rdf:datatype="http://www.w3.org/2001/XMLSchema#float">180.0</hue_mean>
+        <hue_multiplier rdf:datatype="http://www.w3.org/2001/XMLSchema#float">17.5</hue_multiplier>
+        <hue_standard_deviation rdf:datatype="http://www.w3.org/2001/XMLSchema#float">7.0</hue_standard_deviation>
+        <saturation_mean rdf:datatype="http://www.w3.org/2001/XMLSchema#float">100.0</saturation_mean>
+        <saturation_multiplier rdf:datatype="http://www.w3.org/2001/XMLSchema#float">88.0</saturation_multiplier>
+        <saturation_standard_deviation rdf:datatype="http://www.w3.org/2001/XMLSchema#float">35.0</saturation_standard_deviation>
+        <value_mean rdf:datatype="http://www.w3.org/2001/XMLSchema#float">100.0</value_mean>
+        <value_multiplier rdf:datatype="http://www.w3.org/2001/XMLSchema#float">87.0</value_multiplier>
+        <value_standard_deviation rdf:datatype="http://www.w3.org/2001/XMLSchema#float">35.0</value_standard_deviation>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/6/color#orange -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/6/color#orange">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/6/color#color"/>
+        <color_likelihood rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/6/color#orange_values"/>
     </owl:Class>
     
 
@@ -141,9 +299,15 @@
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/6/color#orange_values">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/6/color#hsv_values"/>
-        <hue rdf:datatype="http://www.w3.org/2001/XMLSchema#float">33.0</hue>
-        <multiplier rdf:datatype="http://www.w3.org/2001/XMLSchema#float">18.7</multiplier>
-        <standard_deviation rdf:datatype="http://www.w3.org/2001/XMLSchema#float">7.5</standard_deviation>
+        <hue_mean rdf:datatype="http://www.w3.org/2001/XMLSchema#float">33.0</hue_mean>
+        <hue_multiplier rdf:datatype="http://www.w3.org/2001/XMLSchema#float">18.7</hue_multiplier>
+        <hue_standard_deviation rdf:datatype="http://www.w3.org/2001/XMLSchema#float">7.5</hue_standard_deviation>
+        <saturation_mean rdf:datatype="http://www.w3.org/2001/XMLSchema#float">100.0</saturation_mean>
+        <saturation_multiplier rdf:datatype="http://www.w3.org/2001/XMLSchema#float">70.0</saturation_multiplier>
+        <saturation_standard_deviation rdf:datatype="http://www.w3.org/2001/XMLSchema#float">35.0</saturation_standard_deviation>
+        <value_mean rdf:datatype="http://www.w3.org/2001/XMLSchema#float">100.0</value_mean>
+        <value_multiplier rdf:datatype="http://www.w3.org/2001/XMLSchema#float">87.0</value_multiplier>
+        <value_standard_deviation rdf:datatype="http://www.w3.org/2001/XMLSchema#float">35.0</value_standard_deviation>
     </owl:Class>
     
 
@@ -161,7 +325,15 @@
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/6/color#pink_values">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/6/color#hsv_values"/>
-        <multiplier rdf:datatype="http://www.w3.org/2001/XMLSchema#float">15.0</multiplier>
+        <hue_mean rdf:datatype="http://www.w3.org/2001/XMLSchema#float">310.0</hue_mean>
+        <hue_multiplier rdf:datatype="http://www.w3.org/2001/XMLSchema#float">40.0</hue_multiplier>
+        <hue_standard_deviation rdf:datatype="http://www.w3.org/2001/XMLSchema#float">10.0</hue_standard_deviation>
+        <saturation_mean rdf:datatype="http://www.w3.org/2001/XMLSchema#float">40.0</saturation_mean>
+        <saturation_multiplier rdf:datatype="http://www.w3.org/2001/XMLSchema#float">25.0</saturation_multiplier>
+        <saturation_standard_deviation rdf:datatype="http://www.w3.org/2001/XMLSchema#float">10.0</saturation_standard_deviation>
+        <value_mean rdf:datatype="http://www.w3.org/2001/XMLSchema#float">100.0</value_mean>
+        <value_multiplier rdf:datatype="http://www.w3.org/2001/XMLSchema#float">87.0</value_multiplier>
+        <value_standard_deviation rdf:datatype="http://www.w3.org/2001/XMLSchema#float">35.0</value_standard_deviation>
     </owl:Class>
     
 
@@ -180,9 +352,15 @@
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/6/color#red_high_values">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/6/color#hsv_values"/>
-        <hue rdf:datatype="http://www.w3.org/2001/XMLSchema#float">360.0</hue>
-        <multiplier rdf:datatype="http://www.w3.org/2001/XMLSchema#float">40.0</multiplier>
-        <standard_deviation rdf:datatype="http://www.w3.org/2001/XMLSchema#float">10.0</standard_deviation>
+        <hue_mean rdf:datatype="http://www.w3.org/2001/XMLSchema#float">360.0</hue_mean>
+        <hue_multiplier rdf:datatype="http://www.w3.org/2001/XMLSchema#float">40.0</hue_multiplier>
+        <hue_standard_deviation rdf:datatype="http://www.w3.org/2001/XMLSchema#float">10.0</hue_standard_deviation>
+        <saturation_mean rdf:datatype="http://www.w3.org/2001/XMLSchema#float">100.0</saturation_mean>
+        <saturation_multiplier rdf:datatype="http://www.w3.org/2001/XMLSchema#float">88.0</saturation_multiplier>
+        <saturation_standard_deviation rdf:datatype="http://www.w3.org/2001/XMLSchema#float">35.0</saturation_standard_deviation>
+        <value_mean rdf:datatype="http://www.w3.org/2001/XMLSchema#float">100.0</value_mean>
+        <value_multiplier rdf:datatype="http://www.w3.org/2001/XMLSchema#float">87.0</value_multiplier>
+        <value_standard_deviation rdf:datatype="http://www.w3.org/2001/XMLSchema#float">35.0</value_standard_deviation>
     </owl:Class>
     
 
@@ -191,9 +369,49 @@
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/6/color#red_low_values">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/6/color#hsv_values"/>
-        <hue rdf:datatype="http://www.w3.org/2001/XMLSchema#float">0.0</hue>
-        <multiplier rdf:datatype="http://www.w3.org/2001/XMLSchema#float">45.0</multiplier>
-        <standard_deviation rdf:datatype="http://www.w3.org/2001/XMLSchema#float">18.0</standard_deviation>
+        <hue_mean rdf:datatype="http://www.w3.org/2001/XMLSchema#float">0.0</hue_mean>
+        <hue_multiplier rdf:datatype="http://www.w3.org/2001/XMLSchema#float">45.0</hue_multiplier>
+        <hue_standard_deviation rdf:datatype="http://www.w3.org/2001/XMLSchema#float">18.0</hue_standard_deviation>
+        <saturation_mean rdf:datatype="http://www.w3.org/2001/XMLSchema#float">100.0</saturation_mean>
+        <saturation_multiplier rdf:datatype="http://www.w3.org/2001/XMLSchema#float">88.0</saturation_multiplier>
+        <saturation_standard_deviation rdf:datatype="http://www.w3.org/2001/XMLSchema#float">35.0</saturation_standard_deviation>
+        <value_mean rdf:datatype="http://www.w3.org/2001/XMLSchema#float">100.0</value_mean>
+        <value_multiplier rdf:datatype="http://www.w3.org/2001/XMLSchema#float">87.0</value_multiplier>
+        <value_standard_deviation rdf:datatype="http://www.w3.org/2001/XMLSchema#float">35.0</value_standard_deviation>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/6/color#rose_high_values -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/6/color#rose_high_values">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/6/color#hsv_values"/>
+        <hue_mean rdf:datatype="http://www.w3.org/2001/XMLSchema#float">360.0</hue_mean>
+        <hue_multiplier rdf:datatype="http://www.w3.org/2001/XMLSchema#float">40.0</hue_multiplier>
+        <hue_standard_deviation rdf:datatype="http://www.w3.org/2001/XMLSchema#float">10.0</hue_standard_deviation>
+        <saturation_mean rdf:datatype="http://www.w3.org/2001/XMLSchema#float">40.0</saturation_mean>
+        <saturation_multiplier rdf:datatype="http://www.w3.org/2001/XMLSchema#float">25.0</saturation_multiplier>
+        <saturation_standard_deviation rdf:datatype="http://www.w3.org/2001/XMLSchema#float">10.0</saturation_standard_deviation>
+        <value_mean rdf:datatype="http://www.w3.org/2001/XMLSchema#float">100.0</value_mean>
+        <value_multiplier rdf:datatype="http://www.w3.org/2001/XMLSchema#float">87.0</value_multiplier>
+        <value_standard_deviation rdf:datatype="http://www.w3.org/2001/XMLSchema#float">35.0</value_standard_deviation>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/6/color#rose_low_values -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/6/color#rose_low_values">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/6/color#hsv_values"/>
+        <hue_mean rdf:datatype="http://www.w3.org/2001/XMLSchema#float">0.0</hue_mean>
+        <hue_multiplier rdf:datatype="http://www.w3.org/2001/XMLSchema#float">45.0</hue_multiplier>
+        <hue_standard_deviation rdf:datatype="http://www.w3.org/2001/XMLSchema#float">18.0</hue_standard_deviation>
+        <saturation_mean rdf:datatype="http://www.w3.org/2001/XMLSchema#float">40.0</saturation_mean>
+        <saturation_multiplier rdf:datatype="http://www.w3.org/2001/XMLSchema#float">25.0</saturation_multiplier>
+        <saturation_standard_deviation rdf:datatype="http://www.w3.org/2001/XMLSchema#float">10.0</saturation_standard_deviation>
+        <value_mean rdf:datatype="http://www.w3.org/2001/XMLSchema#float">100.0</value_mean>
+        <value_multiplier rdf:datatype="http://www.w3.org/2001/XMLSchema#float">87.0</value_multiplier>
+        <value_standard_deviation rdf:datatype="http://www.w3.org/2001/XMLSchema#float">35.0</value_standard_deviation>
     </owl:Class>
     
 
@@ -211,9 +429,41 @@
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/6/color#teal_values">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/6/color#hsv_values"/>
-        <hue rdf:datatype="http://www.w3.org/2001/XMLSchema#float">170.0</hue>
-        <multiplier rdf:datatype="http://www.w3.org/2001/XMLSchema#float">6.0</multiplier>
-        <standard_deviation rdf:datatype="http://www.w3.org/2001/XMLSchema#float">15.0</standard_deviation>
+        <hue_mean rdf:datatype="http://www.w3.org/2001/XMLSchema#float">170.0</hue_mean>
+        <hue_multiplier rdf:datatype="http://www.w3.org/2001/XMLSchema#float">6.0</hue_multiplier>
+        <hue_standard_deviation rdf:datatype="http://www.w3.org/2001/XMLSchema#float">15.0</hue_standard_deviation>
+        <saturation_mean rdf:datatype="http://www.w3.org/2001/XMLSchema#float">100.0</saturation_mean>
+        <saturation_multiplier rdf:datatype="http://www.w3.org/2001/XMLSchema#float">88.0</saturation_multiplier>
+        <saturation_standard_deviation rdf:datatype="http://www.w3.org/2001/XMLSchema#float">35.0</saturation_standard_deviation>
+        <value_mean rdf:datatype="http://www.w3.org/2001/XMLSchema#float">100.0</value_mean>
+        <value_multiplier rdf:datatype="http://www.w3.org/2001/XMLSchema#float">87.0</value_multiplier>
+        <value_standard_deviation rdf:datatype="http://www.w3.org/2001/XMLSchema#float">35.0</value_standard_deviation>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/6/color#white -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/6/color#white">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/6/color#color"/>
+        <color_likelihood rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/6/color#white_values"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/6/color#white_values -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/6/color#white_values">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/6/color#hsv_values"/>
+        <hue_mean rdf:datatype="http://www.w3.org/2001/XMLSchema#float">180.0</hue_mean>
+        <hue_multiplier rdf:datatype="http://www.w3.org/2001/XMLSchema#float">2500.0</hue_multiplier>
+        <hue_standard_deviation rdf:datatype="http://www.w3.org/2001/XMLSchema#float">1000.0</hue_standard_deviation>
+        <saturation_mean rdf:datatype="http://www.w3.org/2001/XMLSchema#float">0.0</saturation_mean>
+        <saturation_multiplier rdf:datatype="http://www.w3.org/2001/XMLSchema#float">37.0</saturation_multiplier>
+        <saturation_standard_deviation rdf:datatype="http://www.w3.org/2001/XMLSchema#float">15.0</saturation_standard_deviation>
+        <value_mean rdf:datatype="http://www.w3.org/2001/XMLSchema#float">100.0</value_mean>
+        <value_multiplier rdf:datatype="http://www.w3.org/2001/XMLSchema#float">87.0</value_multiplier>
+        <value_standard_deviation rdf:datatype="http://www.w3.org/2001/XMLSchema#float">35.0</value_standard_deviation>
     </owl:Class>
     
 
@@ -231,9 +481,15 @@
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/6/color#yellow_values">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/6/color#hsv_values"/>
-        <hue rdf:datatype="http://www.w3.org/2001/XMLSchema#float">55.0</hue>
-        <multiplier rdf:datatype="http://www.w3.org/2001/XMLSchema#float">25.0</multiplier>
-        <standard_deviation rdf:datatype="http://www.w3.org/2001/XMLSchema#float">10.0</standard_deviation>
+        <hue_mean rdf:datatype="http://www.w3.org/2001/XMLSchema#float">55.0</hue_mean>
+        <hue_multiplier rdf:datatype="http://www.w3.org/2001/XMLSchema#float">25.0</hue_multiplier>
+        <hue_standard_deviation rdf:datatype="http://www.w3.org/2001/XMLSchema#float">10.0</hue_standard_deviation>
+        <saturation_mean rdf:datatype="http://www.w3.org/2001/XMLSchema#float">100.0</saturation_mean>
+        <saturation_multiplier rdf:datatype="http://www.w3.org/2001/XMLSchema#float">88.0</saturation_multiplier>
+        <saturation_standard_deviation rdf:datatype="http://www.w3.org/2001/XMLSchema#float">35.0</saturation_standard_deviation>
+        <value_mean rdf:datatype="http://www.w3.org/2001/XMLSchema#float">100.0</value_mean>
+        <value_multiplier rdf:datatype="http://www.w3.org/2001/XMLSchema#float">87.0</value_multiplier>
+        <value_standard_deviation rdf:datatype="http://www.w3.org/2001/XMLSchema#float">35.0</value_standard_deviation>
     </owl:Class>
 </rdf:RDF>
 

@@ -22,7 +22,7 @@
 :- use_module(library('assignplaces')).
 :- use_module(library('gripper')).
 :- use_module(library('export')).
-:- use_module(library('nlg')).
+:- use_module(library('naturallanguage/nlg')).
 :- use_module(library('naturallanguage/color/nlp_color')).
 
 :- ros_package_iri(knowledge, 'package://knowledge/owl/objects.owl').
