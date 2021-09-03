@@ -1,5 +1,6 @@
 :- module(general_logging, [
     init_logging/0,
+    init_logging/1,
     finish_logging/0,
     scan_floor_logging/0,
     search_surfaces_logging/0,
@@ -28,7 +29,7 @@ init_logging :-
 %
 init_logging(NeemStart) :-
     writeln('===== neem_init'),
-    NeemStart = 31,
+    NeemStart is 31,
     tf_logger_enable,
     tell([
         is_episode(NeemPlan1Episode),
