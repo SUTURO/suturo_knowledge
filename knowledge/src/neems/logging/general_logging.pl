@@ -22,6 +22,19 @@ init_logging :-
     ]),
     writeln('===== ---> passed !').
 
+%%% neem_init() is det.
+%
+% Initialize the neem.
+%
+init_logging(NeemStart) :-
+    writeln('===== neem_init'),
+    NeemStart = 31,
+    tf_logger_enable,
+    tell([
+        is_episode(NeemPlan1Episode),
+        is_setting_for(NeemPlan1Episode, 'hsr')
+    ]),
+    writeln('===== ---> passed !').
 
 %%% finish_logging() is det.
 %
@@ -29,6 +42,10 @@ init_logging :-
 %
 finish_logging :-
     writeln('===== neem_terminate'),
+    get_time(EndTime),
+    atom_concat(NeemPath,'/',X1),
+    atom_concat(X1,EndTime,X2),
+    memorize(X2),
     memorize('neem_plan_1'),
     writeln('===== ---> passed !').
 
