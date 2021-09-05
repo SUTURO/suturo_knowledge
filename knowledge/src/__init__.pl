@@ -12,17 +12,18 @@
 :- use_module(library('lang/terms/is_at'), [is_at/2]).
 :- use_module(library('utility/algebra'), [transform_close_to/3]).
 
+:- use_module(library('model/environment/furnitures')).
 :- use_module(library('config')).
 :- use_module(library('urdf')).
 :- use_module(library('spatial_comp')).
 :- use_module(library('pickup')).
 :- use_module(library('object_state')).
-:- use_module(library('surfaces')).
+%:- use_module(library('model/environment/surfaces')).
 :- use_module(library('beliefstate')).
 :- use_module(library('assignplaces')).
 :- use_module(library('gripper')).
-:- use_module(library('rooms')).
-:- use_module(library('doors')).
+:- use_module(library('model/environment/rooms')).
+:- use_module(library('model/environment/doors')).
 :- use_module(library('export')).
 :- use_module(library('algebra')).
 :- use_module(library('algorithms')).

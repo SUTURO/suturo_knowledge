@@ -86,7 +86,7 @@ surface_dimensions(Surface, Depth, Width, Height) :- % adapted to new knowrob
     has_urdf_name(Surface, SurfaceLink),
     urdf_link_collision_shape(URDF,SurfaceLink, box(Depth, Width, Height),_).
 
-has_urdf_name(Object, URDFName) :-
+has_urdf_name(Object, URDFName) ?+>
     triple(Object, urdf:'hasURDFName', URDFName).
 
 

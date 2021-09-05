@@ -1,9 +1,15 @@
 :- module(object_info, [
+    is_suturo_object/1,
     hsr_existing_objects/1,
     hsr_forget_object/1,
     forget_objects_on_surface_/1,
     place_object/1
     ]).
+
+
+is_suturo_object(Object) :-
+    has_type(Object, hsr_objects:'EnduringThingLocalized').
+
 
 % returns a list of all the Objects know to the Knowledgebase
 hsr_existing_objects(Objects) :-
