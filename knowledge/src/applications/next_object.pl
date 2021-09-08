@@ -13,6 +13,18 @@
     ]).
 
 
+:- use_module(library('model/objects/object_manipulation'), 
+    [
+        objects_not_handeled/1,
+        handeled/1
+    ]).
+
+:- use_module(library('locations/misplaced'),
+    [
+        is_misplaced/1
+    ]).
+
+
 next_object(Object, 0) :-
     objects_not_handeled(NotHandledObjects),
     findall(NotHandledObject, 
