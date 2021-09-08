@@ -15,7 +15,8 @@
 
 :- use_module(library('model/environment/rooms'), 
     [
-        is_room/1
+        is_room/1,
+        room_corner_point_positions/2
     ]).
 
 :- use_module(library('model/environment/surfaces'), 
@@ -26,7 +27,8 @@
 
 :- use_module(library('model/environment/furnitures'), 
     [
-        has_surface/2
+        has_surface/2,
+        all_furnitures/1
     ]).
 
 :- use_module(library('model/objects/object_info'), 
