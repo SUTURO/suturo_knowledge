@@ -21,7 +21,7 @@
 :- use_module(library('model/environment/surfaces'), 
     [
         is_surface/1,
-        surfaces_not_visited/2
+        surfaces_not_visited/1
     ]).
 
 :- use_module(library('model/environment/furnitures'), 
