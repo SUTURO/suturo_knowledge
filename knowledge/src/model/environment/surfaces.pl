@@ -91,7 +91,7 @@ visited(Surface) :-
 init_visit_state(Surface) :-
     tell(has_type(VisitState, hsr_rooms:'VisitState')),
     tell(triple(Surface, hsr_rooms:'hasVisitState', VisitState)),
-    tell(triple(VisitState, hsr_rooms:'visited', true)).
+    tell(triple(VisitState, hsr_rooms:'visited', false)).
 
 
 %% update_visit_state(?Surface, ?State) is nondet.
