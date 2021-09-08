@@ -16,6 +16,7 @@
 :- use_module(library('config')).
 :- use_module(library('urdf')).
 :- use_module(library('beliefstate')).
+:- use_module(library('model/environment/surfaces'), [set_surface_visited/1])
 :- use_module(library('model/environment/rooms'), [init_rooms/0, connect_rooms/0, all_rooms/1]).
 :- use_module(library('model/environment/doors'), [init_doors/0, init_door_paths/0]).
 :- use_module(library('locations/actual_locations'), 
