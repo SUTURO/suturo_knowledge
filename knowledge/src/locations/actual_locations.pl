@@ -327,3 +327,11 @@ right_cross([QX, QY, _], [RX, RY, _], [SX, SY, _], Result) :-
 
 det([QX, QY, _], [RX, RY, _], [SX, SY, _], Result) :-
     Result is (RX - QX)*(SY - QY) - (RY - QY)*(SX - QX).
+
+signum_function(X, Y) :-
+    (X > 0; X = 0),
+    Y is 1.
+
+signum_function(X, Y) :-
+    X < 0,
+    Y is -1.
