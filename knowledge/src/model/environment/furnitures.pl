@@ -135,6 +135,11 @@ create_furniture(FurnitureType, Furniture) :-
     tell(has_type(Furniture, hsr_rooms:'Table')),
     !.
 
+create_furniture(FurnitureType, Furniture) :-
+    sub_string(FurnitureType,_,_,_,"tray"),
+    tell(has_type(Furniture, hsr_rooms:'Tray')),
+    !.
+
 
 assign_surfaces(Furniture, FurnitureLink, Shape) :-
     sub_string(Shape,_,_,_,"table"),

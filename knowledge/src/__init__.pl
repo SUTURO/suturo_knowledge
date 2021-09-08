@@ -20,6 +20,7 @@
 :- use_module(library('model/environment/doors'), [init_doors/0, init_door_paths/0]).
 :- use_module(library('locations/actual_locations'), 
 	[
+		is_legal_obj_position/1,
 		pose_is_outside/1, 
 		surfaces_not_visited_in_room/2, 
 		robot_in_room/1, 
@@ -27,7 +28,7 @@
 	]).
 :- use_module(library('naturallanguage/nlg')).
 :- use_module(library('naturallanguage/nlp')).
-:- use_module(library('next_object')).
+:- use_module(library('applicatons/next_object'), [next_object/2]).
 
 :- ros_package_iri(knowledge, 'package://knowledge/owl/objects.owl').
 :- ros_package_iri(knowledge, 'package://knowledge/owl/rooms.owl').

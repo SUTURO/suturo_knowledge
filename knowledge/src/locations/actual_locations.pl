@@ -42,7 +42,12 @@
 %%%%%%%%%% actual object locations %%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
+%% is_legal_obj_position(?Position)
+%
+% True if position is on any furniture surface or on the floor
+%
+% @param Position A Position as [X, Y, Z]
+%
 is_legal_obj_position([X, Y, Z]) :-
     is_surface(Surface),
     position_supported_by_surface([X, Y, Z], Surface).
