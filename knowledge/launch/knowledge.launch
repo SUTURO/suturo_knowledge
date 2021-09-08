@@ -1,6 +1,6 @@
 <launch>
   <arg name="urdf_param" default="/hsrb_lab" />
-  <arg name="urdf_launch_file" default="rooms_test" />
+  <arg name="urdf_launch_file" default="test_next_object" />
   <arg name="standalone" default="false" />
   <arg name="nlg" default="false" />
   <arg name="nlp" default="true" />
@@ -19,6 +19,8 @@
       <arg name="gazebo" value="false"/>
       <arg name="suturo_rviz" value="true"/>
       <arg name="run_snap_map" value="false"/>
+      <arg name="world" default="suturo_test_next_object.world"/>
+      <arg name="publish_robot_description" default="false"/>
     </include>
   </group>
 

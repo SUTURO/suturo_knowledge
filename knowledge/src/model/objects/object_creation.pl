@@ -2,8 +2,8 @@
     create_object/9,
     set_dimension_semantics/4,
     set_object_color/3,
-    set_color_semantics/2
-]).
+    set_color_semantics/2, 
+    ]).
 
 :- rdf_db:rdf_register_ns(hsr_objects, 'http://www.semanticweb.org/suturo/ontologies/2020/3/objects#', [keep(true)]).
 :- rdf_db:rdf_register_ns(robocup, 'http://www.semanticweb.org/suturo/ontologies/2020/2/Robocup#', [keep(true)]).
@@ -20,8 +20,6 @@
 	object_of_type(r,?),
 	create_object_at(r,r,r,?,-,-),
 	hsr_existing_objects(?).
-
-
 
 
 %% create_object(PerceivedObjectType, PercTypeConf, Transform, [Width, Depth, Height], 'box', PercShapeConf, Color, PercColorConf, ObjID is nondet.
@@ -58,7 +56,7 @@ create_object(PerceivedObjectType, PercTypeConf, [Frame,Position,Rotation], [Wid
     tell(is_physical_object(ObjID)), % write into triple: ont: is-a                 // +1 P=ObjID
     tell(is_at(ObjID,[Frame,Position,Rotation])), % this triggers rosprolog to publish it on tf     // no change! no tell(...) needed? doch needed..
     atom_number(TypeConfidenceAtom, TypeConf),
-    tell(triple(ObjID, hsr_objects:'ConfidenceClassValue', TypeConfidenceAtom)), %  // +1 P=ObjID
+    tell(triple(ObjID, hsr_objects:'hasConfidenceClassValue', TypeConfidenceAtom)), %  // +1 P=ObjID
     ((triple(ObjID, soma:hasShape, Shape), % check if Shape exists                  // +6, 1x P=ObjID, 3x P=ShapeID, 2x P=ShapeRegionID
     triple(Shape,dul:hasRegion,ShapeRegion)); % if yes, then check if ShapeRegion exist
     (tell(has_type(Shape, soma:'Shape')), % if either Shape or ShapeRegion does not exist,
@@ -75,9 +73,9 @@ create_object(PerceivedObjectType, PercTypeConf, [Frame,Position,Rotation], [Wid
     tell(triple(ShapeRegion, soma:hasHeight, Height)), % set the height of Shape
     set_dimension_semantics(ObjID, Width, Depth, Height), % add aditional information for the shape like tall/small/flat...
     atom_number(ShapeConfAtom, ShapeConf), % save the Confidences in the db
-    tell(triple(ObjID, hsr_objects:'ConfidenceShapeValue', ShapeConfAtom)),
+    tell(triple(ObjID, hsr_objects:'hasConfidenceShapeValue', ShapeConfAtom)),
     atom_number(ColorConfAtom, ColorConf),
-    tell(triple(ObjID, hsr_objects:'ConfidenceColorValue', ColorConfAtom)),
+    tell(triple(ObjID, hsr_objects:'hasConfidenceColorValue', ColorConfAtom)),
     set_object_color(ObjID, Color, ColorConf),  % set the color
     tell(triple(ObjID, hsr_objects:'supportable', true)),     % identify the object as an supportable object this is used by suturo_existing_objects
 

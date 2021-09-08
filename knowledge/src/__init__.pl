@@ -20,6 +20,7 @@
 :- use_module(library('model/environment/doors'), [init_doors/0, init_door_paths/0]).
 :- use_module(library('naturallanguage/nlg')).
 :- use_module(library('naturallanguage/nlp')).
+:- use_module(library('next_object')).
 
 :- ros_package_iri(knowledge, 'package://knowledge/owl/objects.owl').
 :- ros_package_iri(knowledge, 'package://knowledge/owl/rooms.owl').

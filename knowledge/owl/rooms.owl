@@ -76,6 +76,15 @@
     
 
 
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#hasDestination -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#hasDestination">
+        <rdfs:subPropertyOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#hasLocation"/>
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#isDestinationOf"/>
+    </owl:ObjectProperty>
+    
+
+
     <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#hasHandleState -->
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#hasHandleState">
@@ -90,6 +99,15 @@
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#hasInteractionStateRegion">
         <rdfs:subPropertyOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#hasRegion"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#hasOrigin -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#hasOrigin">
+        <rdfs:subPropertyOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#hasLocation"/>
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#isOriginOf"/>
     </owl:ObjectProperty>
     
 
@@ -159,10 +177,26 @@
     
 
 
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#isDestinationOf -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#isDestinationOf">
+        <rdfs:subPropertyOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#isLocationOf"/>
+    </owl:ObjectProperty>
+    
+
+
     <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#isInCornerOf -->
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#isInCornerOf">
         <rdfs:subPropertyOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#hasLocation"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#isOriginOf -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#isOriginOf">
+        <rdfs:subPropertyOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#isLocationOf"/>
     </owl:ObjectProperty>
     
 
