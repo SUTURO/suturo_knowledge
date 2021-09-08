@@ -152,7 +152,6 @@ get_perception_surface_region(Surface, PerceptionName):-
 % @param Shape String, Link Surafce URDF Link, Surface A surface IRI
 %
 create_surface(Shape, Link, Surface) :-
-    supported_surface(Link),
     sub_string(Shape,_,_,_,"table"),
     tell(has_type(Surface, hsr_rooms:'Tabletop')),
     tell(has_urdf_name(Surface, Link)),

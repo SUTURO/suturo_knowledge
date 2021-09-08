@@ -709,6 +709,14 @@
     
 
 
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Tray -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Tray">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#DesignedFurniture"/>
+    </owl:Class>
+    
+
+
     <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#VisitState -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#VisitState">
