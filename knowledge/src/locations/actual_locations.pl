@@ -53,6 +53,10 @@ is_legal_obj_position([X, Y, Z]) :-
     position_supported_by_surface([X, Y, Z], Surface).
 
 
+%% place_objects is det
+%
+% Assigns each known object its current location
+%
 place_objects :-
     hsr_existing_objects(Objects),
     forall(member(Object, Objects), 
@@ -61,6 +65,16 @@ place_objects :-
     )).
 
 
+%% object_at_location(?Object, ?Room, ?Furniture, ?Surface) is nondet
+%
+% True if Object is located in room Room, on furniture 
+% Furniture and supported by surface Surface
+%
+% @param Object An object IRI 
+% @param Room A room IRI 
+% @param Furniture A furniture IRI 
+% @param Surafce A surface IRI 
+%
 object_at_location(Object, Room, Furniture, Surface) :-
     is_suturo_object(Object),
     once(has_location(Object, _)),
