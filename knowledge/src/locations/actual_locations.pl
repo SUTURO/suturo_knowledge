@@ -4,7 +4,7 @@
         place_objects/0,
         object_at_location/4,
         forget_object_at_location/1,
-        surfaces_not_visited_in_room/2
+        surfaces_not_visited_in_room/2,
         robot_in_room/1,
         pose_is_outside/1
     ]).
@@ -224,7 +224,7 @@ position_in_room(Position, Room) :-
     !.
 
 
-position_in_room(Position, Room) :-
+position_in_room(_, Room) :-
     has_type(Room, hsr_rooms:'Outside'),
     !.
 
