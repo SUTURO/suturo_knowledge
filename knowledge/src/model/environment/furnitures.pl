@@ -3,10 +3,7 @@
         is_furniture/1,
         all_furnitures/1,
         furniture_surfaces/2,
-        has_surface/2,
-        has_table_shape/1,
-        has_shelf_shape/1,
-        has_bucket_shape/1
+        has_surface/2
     ]).
 
 
@@ -19,39 +16,53 @@
 	]).
 
 
-
+%% is_furniture(?Furniture) is nondet
+%
+% True if Furniture is an instance of type soma:'DesignedFurniture'
+%
+% @param Furniture A furniture IRI 
+%
 is_furniture(Furniture) :-
     has_type(Furniture, soma:'DesignedFurniture').
 
 
+%% all_furnitures(?Furnitures) is det
+%
+% Returns all instances of type soma:'DesignedFurniture'
+%
+% @param Furnitures A list of furniture instances
+%
 all_furnitures(Furnitures) :-
     findall(Furniture, is_furniture(Furniture), Furnitures).
 
 
+%% has_surface(?Furniture, ?Surface) is nondet
+%
+% True if Surface is a surface of Furniture
+%
+% @param Furniture A furniture IRI, Surface A surface IRI
+%
 has_surface(Furniture, Surface) ?+>
     triple(Furniture, hsr_rooms:'hasSurface', Surface).
 
 
+%% furniture_surfaces(?Furniture, ?Surfaces) is det
+%
+% Returns all Surfaces of instance Furniture
+%
+% @param Furniture A furniture IRI
+% @param Surfaces A list of surface instances 
+%
 furniture_surfaces(Furniture, Surfaces) :-
     findall(Surface, has_surface(Furniture, Surface), Surfaces).
 
 
-has_table_shape(Surface) :-
-    has_surface(Furniture, Surface),
-    triple(Furniture, soma:'hasShape', hsr_rooms:'TableShape'),
-    not has_bucket_shape(Surface).
 
-
-has_shelf_shape(Surface) :-
-    has_surface(Furniture, Surface),
-    triple(Furniture, soma:'hasShape', hsr_rooms:'ShelfShape').
-
-
-has_bucket_shape(Surface) :-
-    has_surface(Furniture,Surface),
-    has_type(Furniture, hsr_rooms:'Deposit').
-
-
+%% init_furnitures is nondet
+%
+% Reads all furnitures from the URDF and creates an
+% instance of type soma:'DesignedFurniture' for each
+%
 init_furnitures :-
     get_urdf_id(URDF),
     urdf_link_names(URDF, Links),
@@ -62,6 +73,13 @@ init_furnitures :-
     init_furniture(FurnitureLink)).
 
 
+%% init_furnitures(?FurnitureLink) is nondet
+%
+% Creates a furniture instance of type soma:'DesignedFurniture'
+% and assigns surfaces
+%
+% @param FurnitureLink String of URDF Link name
+%
 init_furniture(FurnitureLink) :-
     split_string(FurnitureLink, ":", "", [_, Type, Shape]),
     writeln(FurnitureLink),
@@ -71,6 +89,14 @@ init_furniture(FurnitureLink) :-
     assign_surfaces(Furniture, FurnitureLink, Shape).
 
 
+
+%% create_furniture(?FurnitureType, ?Furniture) is nondet
+%
+% Creates an instance of the type derived from FurnitureType
+%
+% @param FurnitureType  String containing the furniture type to create 
+% @param Furniture The created furniture instance
+%
 create_furniture(FurnitureType, Furniture) :-
     sub_string(FurnitureType,_,_,_,"armchair"),
     tell(has_type(Furniture, hsr_rooms:'Armchair')),
@@ -142,6 +168,16 @@ create_furniture(FurnitureType, Furniture) :-
     !.
 
 
+%% assign_surfaces(?Furniture, ?FurnitureLink, ?Shape) is nondet
+%
+% Creates an instance of type soma:'Surface' foreach surface link
+% associated with FurnitureLink in the URDF and assigns the to
+% Furniture
+%
+% @param Furniture A furniture IRI
+% @param FurnitureLink URDF link name of Furniture as String
+% @param Shape String describing the shape of Furniture
+%
 assign_surfaces(Furniture, FurnitureLink, Shape) :-
     sub_string(Shape,_,_,_,"table"),
     sub_atom(FurnitureLink, 0, _, 17, FurnitureStem),
@@ -177,11 +213,23 @@ assign_surfaces(Furniture, FurnitureLink, Shape) :-
     tell(has_surface(Furniture, Surface)).
 
 
+%% assign_furniture_location(?Furniture) is nondet
+%
+% Assigns an instance of type soma:'Location' to furniture
+% 
+% @param Furniture A furniture IRI
+%
 assign_furniture_location(Furniture) :-
     tell(has_type(Location, soma:'Location')),
     tell(has_location(Furniture, Location)).
 
 
+%% is_furniture_link(?Link) is nondet
+%
+% True if Link is a link of a furniture in the URDF
+%
+% @param Link Name of a URDF Link as String
+%
 is_furniture_link(Link) :-
     sub_string(Link,_,_,_,"table_front_edge_center");
     sub_string(Link,_,_,_,"shelf_base_center");

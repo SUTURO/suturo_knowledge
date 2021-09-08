@@ -9,7 +9,10 @@
         all_surfaces/1,
         is_surface/1,
         compareDistances/3,   
-        get_perception_surface_region/2
+        get_perception_surface_region/2,
+        has_table_shape/1,
+        has_shelf_shape/1,
+        has_bucket_shape/1
     ]).
 
 
@@ -37,6 +40,44 @@ is_surface(Surface) :-
 %
 all_surfaces(Surfaces) :-
     findall(Surface, is_surface(Surface), Surfaces).
+
+
+%% has_table_shape(?Surface) is nondet
+%
+% True if Surface has a shape of type hsr_rooms:'TableShape'
+%
+% @param Surface A surface IRI
+%
+has_table_shape(Surface) :-
+    is_surface_of(Surface, Furniture),
+    triple(Furniture, soma:'hasShape', hsr_rooms:'TableShape'),
+    not has_bucket_shape(Surface).
+
+
+%% has_shelf_shape(?Surface) is nondet
+%
+% True if Surface has a shape of type hsr_rooms:'ShelfShape'
+%
+% @param Surface A surface IRI
+%
+has_shelf_shape(Surface) :-
+    is_surface_of(Surface, Furniture),
+    triple(Furniture, soma:'hasShape', hsr_rooms:'ShelfShape').
+
+
+%% has_bucket_shape(?Surface) is nondet
+%
+% True if Surface is surface of a furniture of type hsr_rooms:'Deposit'
+%
+% @param Surface A surface IRI
+%
+has_bucket_shape(Surface) :-
+    is_surface_of(Surface, Furniture),
+    has_type(Furniture, hsr_rooms:'Deposit').
+
+
+is_surface_of(Surface, Furniture) :-
+    triple(Furniture, hsr_rooms:'hasSurface', Surface).
 
     
 %% surfaces_not_visited(?Surfaces) is det.
