@@ -107,17 +107,6 @@ update_visit_state(Surface, State) :-
     tell(triple(VisitState, hsr_rooms:'visited', State)).
 
 
-surfaces_not_visited_in_room(RoomId, Surfaces) :-
-    surfaces_not_visited(SurfacesEverywhere),
-    surfaces_in_room(RoomId, SurfacesInRoom),
-    findall(Surface,
-    (
-        member(Surface,SurfacesEverywhere),
-        member(Surface,SurfacesInRoom)
-    ),
-    Surfaces).
-
-
 % compares the Distance of two things (Surface or Object) to the Robot based on compare/3.
 compareDistances(Order, Thing1, Thing2) :-
     distance_to_robot(Thing1, Dist1),

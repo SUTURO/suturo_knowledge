@@ -13,6 +13,28 @@
 :- rdf_db:rdf_register_ns(hsr_rooms, 'http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#', [keep(true)]).
 
 
+:- use_module(library('model/environment/rooms'), 
+    [
+        is_room/1
+    ]).
+
+:- use_module(library('model/environment/surfaces'), 
+    [
+        is_surface/1,
+        surfaces_not_visited/2
+    ]).
+
+:- use_module(library('model/environment/furnitures'), 
+    [
+        has_surface/2
+    ]).
+
+:- use_module(library('model/objects/object_info'), 
+    [
+        is_suturo_object/1,
+        hsr_existing_objects/1
+    ]).
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%% actual object locations %%%%%%%%%%%%
@@ -192,11 +214,12 @@ surfaces_in_room(Room, Surfaces) :-
 
 surfaces_not_visited_in_room(Room, Surfaces) :-
     is_room(Room),
-    surfaces_not_visited(Surfaces),
+    surfaces_not_visited(SurfacesNotVisited),
+    surfaces_in_room(Room, SurfacesInRoom),
     findall(Surface, 
     (
-        member(Surface, Surfaces),
-        surface_in_room(Room, Surface)
+        member(Surface, SurfacesNotVisited),
+        member(Surface, SurfacesInRoom)
     ), 
     Surfaces).
 
