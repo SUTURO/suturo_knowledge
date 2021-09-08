@@ -13,6 +13,7 @@
 :- use_module(library('utility/algebra'), [transform_close_to/3]).
 
 :- use_module(library('model/environment/furnitures'), [init_furnitures/0]).
+:- use_module(library('model/objects/object_creation'), [create_object/9])
 :- use_module(library('config')).
 :- use_module(library('urdf')).
 :- use_module(library('beliefstate')).

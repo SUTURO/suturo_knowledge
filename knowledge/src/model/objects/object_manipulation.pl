@@ -6,6 +6,8 @@
     objects_not_handeled/1
 ]).
 
+:- use_module(library('model/objects/object_info'), [is_suturo_object/1])
+
 set_object_handeled(Object) :-
     update_handle_state(Object, true).
 

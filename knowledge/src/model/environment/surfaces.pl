@@ -76,6 +76,13 @@ has_bucket_shape(Surface) :-
     has_type(Furniture, hsr_rooms:'Deposit').
 
 
+%% is_surface_of(?Surface, ?Furniture) is nondet
+%
+% True if Surface is a surface of Furniture
+%
+% @param Surface a surface IRI
+% @param Furniture a furniture IRI
+%
 is_surface_of(Surface, Furniture) :-
     triple(Furniture, hsr_rooms:'hasSurface', Surface).
 
