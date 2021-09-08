@@ -18,7 +18,13 @@
 :- use_module(library('beliefstate')).
 :- use_module(library('model/environment/rooms'), [init_rooms/0, connect_rooms/0, all_rooms/1]).
 :- use_module(library('model/environment/doors'), [init_doors/0, init_door_paths/0]).
-:- use_module(library('locations/actual_locations'), [pose_is_outside/1, surfaces_not_visited_in_room/2]).
+:- use_module(library('locations/actual_locations'), 
+	[
+		pose_is_outside/1, 
+		surfaces_not_visited_in_room/2, 
+		robot_in_room/1, 
+		surfaces_in_room/2
+	]).
 :- use_module(library('naturallanguage/nlg')).
 :- use_module(library('naturallanguage/nlp')).
 :- use_module(library('next_object')).
