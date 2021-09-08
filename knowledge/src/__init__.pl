@@ -12,21 +12,12 @@
 :- use_module(library('lang/terms/is_at'), [is_at/2]).
 :- use_module(library('utility/algebra'), [transform_close_to/3]).
 
-:- use_module(library('model/environment/furnitures')).
+:- use_module(library('model/environment/furnitures'), [init_furnitures/0]).
 :- use_module(library('config')).
 :- use_module(library('urdf')).
-:- use_module(library('spatial_comp')).
-:- use_module(library('pickup')).
-:- use_module(library('object_state')).
-%:- use_module(library('model/environment/surfaces')).
 :- use_module(library('beliefstate')).
-:- use_module(library('assignplaces')).
-:- use_module(library('gripper')).
-:- use_module(library('model/environment/rooms')).
-:- use_module(library('model/environment/doors')).
-:- use_module(library('export')).
-:- use_module(library('algebra')).
-:- use_module(library('algorithms')).
+:- use_module(library('model/environment/rooms'), [init_rooms/0, connect_rooms/0]).
+:- use_module(library('model/environment/doors'), [init_doors/0, init_door_paths/0]).
 :- use_module(library('naturallanguage/nlg')).
 :- use_module(library('naturallanguage/nlp')).
 
@@ -81,6 +72,7 @@
 
 :- init_rooms.
 :- init_doors.
+:- connect_rooms.
 :- init_door_paths.
 :- init_furnitures.
 

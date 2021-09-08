@@ -48,9 +48,23 @@ all_surfaces(Surfaces) :-
 surfaces_not_visited(Surfaces) :-
     findall(Surface, ( is_surface(Surface), not visited(Surface)), Surfaces).
 
+
+%% set_surface_visited(?Surface)
+%
+% Sets hsr_rooms:'VisitState' of surface to true
+%
+% @param Surface A surface IRI
+%
 set_surface_visited(Surface) :-
     update_visit_state(Surface, true).
 
+
+%% set_surface_not_visited(?Surface)
+%
+% Sets hsr_rooms:'VisitState' of surface to false
+%
+% @param Surface A surface IRI
+%
 set_surface_not_visited(Surface) :-
     update_visit_state(Surface, false).
 
@@ -67,11 +81,25 @@ visited(Surface) :-
     triple(VisitState, hsr_rooms:'visited', Visited),
     not Visited == 0.
 
+
+%% init_visit_state(?Surface)
+%
+% Sets hsr_rooms:'VisitState' of surface to initial value of false
+%
+% @param Surface A surface IRI
+%
 init_visit_state(Surface) :-
     tell(has_type(VisitState, hsr_rooms:'VisitState')),
     tell(triple(Surface, hsr_rooms:'hasVisitState', VisitState)),
     tell(triple(VisitState, hsr_rooms:'visited', true)).
 
+
+%% update_visit_state(?Surface, ?State) is nondet.
+%
+% Sets hsr_rooms:'VisitState' of surface to value of State
+%
+% @param Surface A surface IRI, State A boolean of value true or false
+%
 update_visit_state(Surface, State) :-
     is_surface(Surface),
     triple(Surface, hsr_rooms:'hasVisitState', VisitState),
@@ -100,6 +128,12 @@ compareDistances(Order, Thing1, Thing2) :-
     .
 
 
+%% get_perception_surface_region(Surface, ?PerceptionName)
+%
+% Returns the region name of the given surface instance
+%
+% @param Surface A surface IRI, PerceptionName region name as string
+%
 get_perception_surface_region(Surface, PerceptionName):-
     has_shelf_shape(Surface),
     has_urdf_name(Surface,Name),
@@ -108,6 +142,13 @@ get_perception_surface_region(Surface, PerceptionName):-
     string_concat(Name,"_floor_",Temp),
     string_concat(Temp,Number,PerceptionName),!.
 
+
+%% get_perception_surface_region(Surface, ?PerceptionName)
+%
+% Returns the region name of the given surface instance
+%
+% @param Surface A surface IRI, PerceptionName region name as string
+%
 get_perception_surface_region(Surface, PerceptionName):-
     not(has_shelf_shape(Surface)),    
     has_urdf_name(Surface,Name),
@@ -115,6 +156,12 @@ get_perception_surface_region(Surface, PerceptionName):-
     nth0(0,SurfaceSplit,PerceptionName).
 
 
+%% create_surface(Shape, Link, ?Surface)
+%
+% Creates an instance of type soma:'Surface' of given shape
+%
+% @param Shape String, Link Surafce URDF Link, Surface A surface IRI
+%
 create_surface(Shape, Link, Surface) :-
     supported_surface(Link),
     sub_string(Shape,_,_,_,"table"),
@@ -122,6 +169,13 @@ create_surface(Shape, Link, Surface) :-
     tell(has_urdf_name(Surface, Link)),
     init_visit_state(Surface).
 
+
+%% create_surface(Shape, Link, ?Surface)
+%
+% Creates an instance of type soma:'Surface' of given shape
+%
+% @param Shape String, Link Surafce URDF Link, Surface A surface IRI
+%
 create_surface(Shape, Link, Surface) :-
     supported_surface(Link),
     sub_string(Shape,_,_,_,"shelf"),
@@ -129,6 +183,13 @@ create_surface(Shape, Link, Surface) :-
     tell(has_urdf_name(Surface, Link)),
     init_visit_state(Surface).
 
+
+%% create_surface(Shape, Link, ?Surface)
+%
+% Creates an instance of type soma:'Surface' of given shape
+%
+% @param Shape String, Link Surafce URDF Link, Surface A surface IRI
+%
 create_surface(Shape, Link, Surface) :-
     supported_surface(Link),
     sub_string(Shape,_,_,_,"bucket"),
@@ -137,6 +198,12 @@ create_surface(Shape, Link, Surface) :-
     init_visit_state(Surface).
 
 
+%% supported_surface(?SurfaceLink)
+%
+% True if surface link is big enough
+%
+% @param SurfaceLink URDF Link as string
+%
 supported_surface(SurfaceLink):-
     get_urdf_id(URDF),
     urdf_link_collision_shape(URDF,SurfaceLink,ShapeTerm,_),

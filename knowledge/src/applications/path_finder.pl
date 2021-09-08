@@ -1,8 +1,39 @@
-:- module(algorithms,
+:- module(path_finder,
     [
-        a_star/5,
-        point_in_polygon/2
+        shortest_path_between_rooms/3
     ]).
+
+
+:- rdf_db:rdf_register_ns(hsr_rooms, 'http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#', [keep(true)]).
+
+
+
+shortest_path_between_rooms(OriginRoom, DestinationRoom, Path) :-
+    robot_velocity(Velocity),
+    door_opening_time(OpeningTime),
+    findall([OriginLinkage, DestinationLinkage],
+    (
+        triple(OriginLocation, soma:'isLinkedTo', OriginRoom),
+        triple(DestinationLocation, soma:'isLinkedTo', DestinationRoom),
+        triple(OriginLinkage, dul:'hasLocation', OriginLocation),
+        triple(DestinationLinkage, dul:'hasLocation', DestinationLocation)
+    ),
+    OriginDestinationPairs),
+    findall([Costs, PossiblePath], 
+    (
+        member([Origin, Destination], OriginDestinationPairs),
+        get_urdf_origin(Map),
+        has_urdf_name(Origin, OriginLink),
+        tf_lookup_transform(Map, OriginLink, pose(OriginPosition, _)),
+        tf_lookup_transform(Map, 'base_footprint', pose(RobotPosition, _)),
+        euclidean_distance(OriginPosition, RobotPosition, InitialDistance),
+        ((has_type(Origin, hsr_rooms:'Door'), get_door_state(Origin, 0))
+        -> InitialCosts is InitialDistance/Velocity + OpeningTime
+        ; InitialCosts is InitialDistance/Velocity),
+        a_star(Origin, InitialDistance, Destination, PossiblePath, Costs)
+    ), 
+    PossiblePaths),
+    min_member([_, Path], PossiblePaths).
 
 
 
@@ -119,53 +150,3 @@ path(Origin, Destination, CurrentPath, Path, Costs) :-
     path(Origin, Predecessor, CurrentPath, ExtendedPath, _),
     append([Predecessor], ExtendedPath, Path),
     triple(DestinationAttributes, hsr_rooms:'hasFValue', Costs).
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%% Point in Polygon Test %%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-point_in_polygon(Q, PolygonCornerPoints) :-
-    nth0(0, PolygonCornerPoints, First),
-    InitialSign is -1,
-    next_edge(Q, First, PolygonCornerPoints, InitialSign, Sign),
-    (Sign == 1; Sign == 0).
-
-next_edge(Q, R, PolygonCornerPoints, CurrentSign, Sign) :-
-    not nextto(R, _, PolygonCornerPoints),
-    nth0(0, PolygonCornerPoints, First),
-    right_cross(Q, R, First, Result),
-    Sign is CurrentSign * Result.
-
-next_edge(Q, R, PolygonCornerPoints, CurrentSign, Sign) :-
-    nextto(R, S, PolygonCornerPoints),
-    right_cross(Q, R, S, Result),
-    NewSign is CurrentSign * Result,
-    next_edge(Q, S, PolygonCornerPoints, NewSign, Sign).
-
-right_cross([QX, QY, _], [RX, RY, _], [SX, SY, _], Result) :-
-    (RY < SY; RY = SY),
-    (QY > SY; QY < RY; QY = RY),
-    Result is 1.
-
-right_cross([QX, QY, _], [RX, RY, _], [SX, SY, _], Result) :-
-    (RY < SY; RY = SY),
-    not (QY > SY; QY < RY; QY = RY),
-    det([QX, QY, _], [RX, RY, _], [SX, SY, _], Det),
-    signum_function(Det, Result).
-
-right_cross([QX, QY, _], [RX, RY, _], [SX, SY, _], Result) :-
-    RY > SY,
-    (QY < SY; QY = SY; QY > RY),
-    Result is 1.
-
-right_cross([QX, QY, _], [RX, RY, _], [SX, SY, _], Result) :-
-    RY > SY,
-    not (QY < SY; QY = SY; QY > RY),
-    det([QX, QY, _], [SX, SY, _], [RX, RY, _], Det),
-    signum_function(Det, Result).
-
-det([QX, QY, _], [RX, RY, _], [SX, SY, _], Result) :-
-    Result is (RX - QX)*(SY - QY) - (RY - QY)*(SX - QX).
-
-
