@@ -5,7 +5,8 @@
         object_at_location/4,
         forget_object_at_location/1,
         surfaces_not_visited_in_room/2
-        robot_in_room/1
+        robot_in_room/1,
+        position_is_outside/1
     ]).
 
 
@@ -226,6 +227,11 @@ position_in_room(Position, Room) :-
 position_in_room(Position, Room) :-
     has_type(Room, hsr_rooms:'Outside'),
     !.
+
+
+position_is_outside(Position) :-
+    position_in_room(Position, Room),
+    has_type(Room, hsr_rooms:'Outside').
 
 
 % Position is relative to map

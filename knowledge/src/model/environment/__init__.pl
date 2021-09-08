@@ -2,3 +2,4 @@
 :- use_module('./doors').
 :- use_module('./rooms').
 :- use_module('./surfaces').
+:- use_module('./funitures').

@@ -16,8 +16,9 @@
 :- use_module(library('config')).
 :- use_module(library('urdf')).
 :- use_module(library('beliefstate')).
-:- use_module(library('model/environment/rooms'), [init_rooms/0, connect_rooms/0]).
+:- use_module(library('model/environment/rooms'), [init_rooms/0, connect_rooms/0, all_rooms/1]).
 :- use_module(library('model/environment/doors'), [init_doors/0, init_door_paths/0]).
+:- use_module(library('locations/actual_locations'), [position_is_outside/1]).
 :- use_module(library('naturallanguage/nlg')).
 :- use_module(library('naturallanguage/nlp')).
 :- use_module(library('next_object')).
