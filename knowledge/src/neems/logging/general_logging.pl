@@ -3,6 +3,7 @@
     init_logging/1,
     finish_logging/0,
     scan_floor_logging/0,
+    scan_floor_logging/1,
     search_surfaces_logging/0,
     not_visited_logging/0
     ]).
