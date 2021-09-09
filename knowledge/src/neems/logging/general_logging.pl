@@ -27,9 +27,9 @@ init_logging :-
 %
 % Initialize the neem.
 %
-init_logging(NeemStart) :-
+init_logging(EpisodeID) :-
     writeln('===== neem_init'),
-    NeemStart is 31,
+    EpisodeID is 31,
     tf_logger_enable,
     tell([
         is_episode(NeemPlan1Episode),
@@ -54,8 +54,9 @@ finish_logging :-
 %
 % Log the actions to scan the floor.
 %
-scan_floor_logging :-
+scan_floor_logging(EpisodeID) :-
     writeln('===== log: scan floor'),
+    writeln(['===== print: EpisodeID is: ', EpisodeID]),
     tell(is_action(ScanFloorSequence)),
     tell(has_participant(ScanFloorSequence, 'hsr')),
     tell(is_performed_by(ScanFloorSequence, 'hsr')),
