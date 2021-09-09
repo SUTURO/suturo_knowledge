@@ -73,7 +73,7 @@ place_objects :-
 % @param Object An object IRI 
 % @param Room A room IRI 
 % @param Furniture A furniture IRI 
-% @param Surafce A surface IRI 
+% @param Surface A surface IRI 
 %
 object_at_location(Object, Room, Furniture, Surface) :-
     is_suturo_object(Object),
@@ -85,6 +85,11 @@ object_at_location(Object, Room, Furniture, Surface) :-
     !.
 
 
+%%
+%
+%
+%
+%
 forget_object_at_location(Object) :-
     (
         has_location(Object, ObjectLocation),

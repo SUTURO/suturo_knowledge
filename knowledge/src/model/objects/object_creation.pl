@@ -2,7 +2,7 @@
     create_object/9,
     set_dimension_semantics/4,
     set_object_color/3,
-    set_color_semantics/2, 
+    set_color_semantics/2 
     ]).
 
 :- rdf_db:rdf_register_ns(hsr_objects, 'http://www.semanticweb.org/suturo/ontologies/2020/3/objects#', [keep(true)]).
@@ -10,7 +10,15 @@
 :- rdf_db:rdf_register_ns(dul, 'http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#', [keep(true)]).
 :- rdf_db:rdf_register_ns(soma, 'https://ease-crc.github.io/soma/owl/current/SOMA.owl#', [keep(true)]).
 :- rdf_db:rdf_register_ns(knowrob, 'http://www.knowrob.org/kb/knowrob.owl#', [keep(true)]).
+
+
 :- use_module(library('ros/marker/marker_plugin'), [marker_message_new/3, republish/0]). % Importing marker_plugin
+:- use_module(library('model/objects/object_validation'), 
+    [
+        object_size_ok/1, 
+        validate_confidence/3,
+        object_type_handling/3
+    ]).
 
 % TODO rdf meta
 :- rdf_meta

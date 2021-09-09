@@ -2,7 +2,6 @@
 :- module(surfaces,
     [   create_surface/3,
         surfaces_not_visited/1,
-        surfaces_not_visited_in_room/2,
         visited/1,
         set_surface_visited/1,
         set_surface_not_visited/1,

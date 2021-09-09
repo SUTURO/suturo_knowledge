@@ -12,6 +12,7 @@
 :- use_module(library('lang/terms/is_at'), [is_at/2]).
 :- use_module(library('utility/algebra'), [transform_close_to/3]).
 
+:- use_module(library('gripper/gripper_info'), [init_gripper/0]).
 :- use_module(library('model/environment/furnitures'), [init_furnitures/0]).
 :- use_module(library('model/objects/object_creation'), [create_object/9]).
 :- use_module(library('config')).
@@ -40,9 +41,6 @@
 :- ros_package_iri(knowledge, 'package://knowledge/owl/rooms.owl').
 :- ros_package_iri(knowledge, 'package://knowledge/owl/locations.owl').
 
-%%% knowledge load directories
-:- use_directory(objects).
-:- use_directory(gripper).
 
 :- tripledb_load(
 	'http://www.ontologydesignpatterns.org/ont/dul/DUL.owl',
