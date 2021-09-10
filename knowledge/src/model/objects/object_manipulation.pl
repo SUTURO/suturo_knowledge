@@ -1,7 +1,6 @@
 :- module(object_manipulation, [
     set_object_handeled/1,
     set_object_not_handeled/1,
-    update_handle_state/2,
     handeled/1,
     objects_not_handeled/1
 ]).

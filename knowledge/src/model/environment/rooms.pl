@@ -3,9 +3,7 @@
         init_rooms/0,
         connect_rooms/0,
         all_rooms_of_type/2,
-        room_center_point_position/3,
         room_corner_point_positions/2,
-        urdf_room_center_link/2,
         all_rooms/1,
         is_room/1
     ]).

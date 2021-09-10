@@ -36,6 +36,25 @@
 :- rdf_db:rdf_register_ns(hsr_objects, 'http://www.semanticweb.org/suturo/ontologies/2020/3/objects#', [keep(true)]).
 :- rdf_db:rdf_register_ns(robocup, 'http://www.semanticweb.org/suturo/ontologies/2020/2/Robocup#', [keep(true)]).
 
+:- use_module(library('locations/actual_locations'), [place_objects/0]).
+:- use_module(library('locations/predefined_locations'), 
+    [
+        object_at_predefined_location/3,
+        surfaces_at_predefined_location/3
+    ]).
+:- use_module(library('locations/spatial_comp'),
+	[
+		hsr_existing_object_at/3,
+        compareDistances/3,
+        surface_dimensions/4
+	]).
+:- use_module(library('gripper/gripper_info'), [all_objects_in_gripper/1]).
+:- use_module(library('locations/misplaced'), [misplaced_objects_at_predefined_location/3]).
+:- use_module(library('model/environment/surfaces'),
+    [
+        has_table_shape/2,
+        has_bucket_shape/2
+    ]).
 
 :- rdf_meta
     new_perceived_at(r,+,+,r),

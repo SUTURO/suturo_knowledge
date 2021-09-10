@@ -5,6 +5,7 @@
         passing_pose_of_door/2,
         manipulating_pose_of_door/2,
         get_angle_to_open_door/2,
+        passing_pose_of_passage/2,
         update_door_state_dynamic/2
     ]).
 
@@ -16,6 +17,7 @@
         inside_door_handle/2, 
         outside_door_handle/2
     ]).
+:- use_module(library('locations/actual_locations'), [robot_in_room/1]).
 
 
 %% door_handle_to_open_door(?Door, ?DoorHandle) is nondet

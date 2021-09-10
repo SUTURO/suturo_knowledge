@@ -7,7 +7,9 @@
         inside_door_handle/2,
         outside_door_handle/2,
         get_all_door_states/1,
-        get_door_state/2
+        get_door_state/2,
+        update_door_paths/1,
+        door_handles/2
     ]).
 
 
@@ -234,14 +236,6 @@ inside_door_handle(Door, DoorHandle) :-
 outside_door_handle(Door, DoorHandle) :-
     triple(Location, hsr_rooms:'isOutsideOf', Door),
     once(has_location(DoorHandle, Location)).
-
-
-robot_velocity(Velocity) :-
-    Velocity = 0.15. % Robot moves about 0.15 meters per second
-
-
-door_opening_time(Time) :-
-    Time is 60.  % Robot needs about 60 seconds to open a door
 
 
 %% min_door_joint_angle(Angle)

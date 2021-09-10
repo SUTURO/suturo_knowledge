@@ -5,6 +5,33 @@
         generate_random_objects/1
     ]).
 
+:- use_module(library('locations/misplaced'), [is_misplaced/1]).
+:- use_module(library('locations/actual_locations'), [forget_object_at_location/1]).
+:- use_module(library('locations/spatial_comp'), 
+    [
+        surface_pose_in_map/2,
+        compareDistances/3
+    ]).
+:- use_module(library('applications/next_object')).
+:- use_module(library('model/environment/furnitures'), 
+    [
+        all_furnitures/1,
+        furniture_surfaces/2,
+        has_surface/2
+    ]).
+:- use_module(library('model/environment/surfaces'), 
+    [
+        surfaces_not_visited/1,
+        set_surface_visited/1,
+    ]).
+:- use_module(library('model/objects/object_creation'), [create_object/9]).
+:- use_module(library('model/objects/object_info'), [hsr_existing_objects/1]).
+:- use_module(library('model/objects/object_manipulation'), 
+    [
+        set_object_handeled/1,
+        set_object_not_handeled/1,
+        objects_not_handeled/1
+    ]).
 
 evaluate_next_object(Algorithm, ObjectCount, Time, RemainingTime, FinalScore) :-
     set_random(seed(149)),

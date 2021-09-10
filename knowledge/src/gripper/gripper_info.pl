@@ -4,14 +4,10 @@
 ]).
 :- rdf_db:rdf_register_ns(hsr_objects, 'http://www.semanticweb.org/suturo/ontologies/2020/3/objects#', [keep(true)]).
 :- rdf_db:rdf_register_ns(robocup, 'http://www.semanticweb.org/suturo/ontologies/2020/2/Robocup#', [keep(true)]).
-:- use_module(library('ros/marker/marker_plugin'), [republish/0]).
 
-:- rdf_meta
-    gripper(+),
-    gripper_int(r),
-    attach_object_to_gripper(r),
-    release_object_from_gripper(r)
-    .
+
+:- use_module(library('ros/marker/marker_plugin'), [republish/0]).
+:- use_module(library('model/objects/object_info'), [is_suturo_object/1]).
 
 %% init_gripper is det.
 %
@@ -19,8 +15,7 @@
 %
 %
 init_gripper :-
-    get_gripper_link(Gripper),
-    %rdf_instance_from_class(knowrob:'EnduringThing-Localized', belief_state, Gripper),
+    gripper(Gripper),
     tell(has_type(Gripper, owl:'NamedIndividual')),
     tell(triple(Gripper, knowrob:'frameName', hand_palm_link)).
 
@@ -37,3 +32,7 @@ all_objects_in_gripper(Instances):-
         once(has_location(Object, ObjectLocation)),
         triple(ObjectLocation, soma:'isSupportedBy', Gripper)
         ), Instances).
+
+
+gripper(Gripper) :-
+    Gripper = hand_palm_link.

@@ -28,7 +28,8 @@
 :- use_module(library('model/environment/furnitures'), 
     [
         has_surface/2,
-        all_furnitures/1
+        all_furnitures/1,
+        is_furniture/1
     ]).
 
 :- use_module(library('model/objects/object_info'), 
@@ -36,6 +37,7 @@
         is_suturo_object/1,
         hsr_existing_objects/1
     ]).
+:- use_module(library('locations/spatial_comp'), [surface_dimensions/4]).
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

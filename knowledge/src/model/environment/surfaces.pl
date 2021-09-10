@@ -2,12 +2,10 @@
 :- module(surfaces,
     [   create_surface/3,
         surfaces_not_visited/1,
-        visited/1,
         set_surface_visited/1,
         set_surface_not_visited/1,
         all_surfaces/1,
-        is_surface/1,
-        compareDistances/3,   
+        is_surface/1,  
         get_perception_surface_region/2,
         has_table_shape/1,
         has_shelf_shape/1,
@@ -138,7 +136,7 @@ visited(Surface) :-
 init_visit_state(Surface) :-
     tell(has_type(VisitState, hsr_rooms:'VisitState')),
     tell(triple(Surface, hsr_rooms:'hasVisitState', VisitState)),
-    tell(triple(VisitState, hsr_rooms:'visited', false)).
+    tell(triple(VisitState, hsr_rooms:'visited', true)).
 
 
 %% update_visit_state(?Surface, ?State) is nondet.
@@ -152,16 +150,6 @@ update_visit_state(Surface, State) :-
     triple(Surface, hsr_rooms:'hasVisitState', VisitState),
     forall(triple(VisitState, hsr_rooms:'visited', _), tripledb_forget(VisitState, hsr_rooms:'visited', _)),
     tell(triple(VisitState, hsr_rooms:'visited', State)).
-
-
-% compares the Distance of two things (Surface or Object) to the Robot based on compare/3.
-compareDistances(Order, Thing1, Thing2) :-
-    distance_to_robot(Thing1, Dist1),
-    distance_to_robot(Thing2, Dist2),
-    (Dist1 = Dist2 % prevent predsort from deleting duplicate distances
-        -> compare(Order, 0, Dist2)
-        ; compare(Order, Dist1, Dist2))
-    .
 
 
 %% get_perception_surface_region(Surface, ?PerceptionName)

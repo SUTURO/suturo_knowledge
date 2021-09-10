@@ -1,8 +1,11 @@
 :- module(predefined_locations,
     [
-
+        object_at_predefined_location/3,
+        surfaces_at_predefined_location/3
     ]).
 
+
+:- use_module(library('model/environment/furnitures'), [has_surface/2]).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%% predefined object locations %%%%%%%%

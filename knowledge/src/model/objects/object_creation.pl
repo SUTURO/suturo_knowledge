@@ -1,8 +1,6 @@
-:- module(object_creation, [
-    create_object/9,
-    set_dimension_semantics/4,
-    set_object_color/3,
-    set_color_semantics/2 
+:- module(object_creation, 
+    [
+        create_object/9
     ]).
 
 :- rdf_db:rdf_register_ns(hsr_objects, 'http://www.semanticweb.org/suturo/ontologies/2020/3/objects#', [keep(true)]).

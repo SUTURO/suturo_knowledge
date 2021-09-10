@@ -82,7 +82,6 @@ init_furnitures :-
 %
 init_furniture(FurnitureLink) :-
     split_string(FurnitureLink, ":", "", [_, Type, Shape]),
-    writeln(FurnitureLink),
     create_furniture(Type, Furniture),
     tell(has_urdf_name(Furniture, FurnitureLink)),
     assign_furniture_location(Furniture),

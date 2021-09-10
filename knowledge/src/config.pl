@@ -4,7 +4,6 @@
       threshold_for_group/1,
       threshold_surface/2,
       min_space_between_objects/1,
-      urdf_surface_prefix/1,
       allowed_class_distance/1,
       min_class_confidence/1, 
       min_shape_confidence/1,
@@ -16,9 +15,8 @@
       context_speech_new_class/1,
       context_speech_basket/1,
       context_speech_table/1,
-      get_urdf_id/1,
-      get_urdf_origin/1,
-      get_gripper_link/1
+      robot_velocity/1,
+      door_opening_time/1
     ]).
 
 
@@ -37,14 +35,6 @@
 offsets(Offset) :-
     Offset = [0, -0.05, 0.05, -0.1, 0.1, -0.15, 0.15, -0.2, 0.2, -0.25, 0.25, -0.3, 0.3, -0.35, 0.35, -0.4, 0.4, -0.45, 0.45, -0.5, 0.5, -0.55, 0.55, -0.6, 0.6, -0.65, 0.65, -0.7, 0.7, -0.75, 0.75, -0.8, 0.8].
 
-%% get_gripper_link(Gripper) is det.
-%
-% Return the link name.
-%
-% @param Gripper the variable to be filled with the link name
-%
-get_gripper_link(Gripper) :-
-    Gripper = hand_palm_link.
 
 
 % max physical Distance between objects for them to be in a group
@@ -58,8 +48,7 @@ threshold_surface(ThresholdAbove, ThresholdBelow) :-
 min_space_between_objects(Meters) :-
     Meters = 0.1.
 
-urdf_surface_prefix(Prefix) :-
-    Prefix = 'iai_kitchen/'.
+
 
 %% Distance is the maximum Distance (rdf_shortest_path) to another Object
 %% where the Object should still be sorted by class rather than other properties
@@ -80,6 +69,13 @@ min_color_confidence(Confidence) :-
 
 max_shelf_capacity(Capacity) :-
     Capacity = 4.
+
+robot_velocity(Velocity) :-
+    Velocity = 0.15. % Robot moves about 0.15 meters per second
+
+door_opening_time(Time) :-
+    Time is 60.  % Robot needs about 60 seconds to open a door
+
 
 %% Context is the Speech, the Robot should hold depending on the distance of the
 %% next Objects Class.
@@ -139,10 +135,4 @@ context_speech_basket(Context) :-
 
 context_speech_table(Context) :-
     Context = "I will put this on the Table".
-
-get_urdf_id(URDF) :-
-    URDF = arena.
-
-get_urdf_origin(Origin) :-
-    Origin = map.
 

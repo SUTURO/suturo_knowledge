@@ -1,9 +1,16 @@
 :- module(grasping,[
-    surface_pose_to_perceive_from/2,
     attach_object_to_gripper/1,
-    object_pose_to_grasp_from/2,
-    next_object/1
+    object_pose_to_grasp_from/2
 ]).
+
+
+:- use_module(library('locations/actual_locations'), [forget_object_at_location/1]).
+:- use_module(library('locations/spatial_comp'), 
+    [
+        hsr_lookup_transform/4,
+        surface_dimensions/4,
+        surface_front_edge_center_pose/2
+    ]).
 
 %% surface_pose_to_perceive_from(Surface, [[XPos,YPos,0],Rotation]) is nondet.
 %
@@ -55,21 +62,8 @@ object_pose_to_grasp_from(Object,[[XPose,YPose,0], Rotation]):-
     Offset is -(Depth / 2 + 0.5),
     tf_transform_point(Name, map, [Depth, Y,0], [XPose,YPose,_]).
 
-%% next_object_(BestObj) is nondet.
-%
-% Returns the next object to grasp
-%
-% @param BestObj the variable to be filled with the next object
-%
-next_object_(BestObj) :-
-    ignore(place_objects),
-    objects_not_handeled(Objects),
-    predsort(compareDistances, Objects, SortedObjs),
-    nth0(0, SortedObjs, BestObj).
 
-% from robocup?
-%surface_pose_to_perceive_from(Surface, [[2.75, 0.09, 0], [0.0, 0.0, -0.707106771713121, 0.707106790659974]]) :-
-%    has_urdf_name(Surface, "bin_b:bin_b:table_center"),!.
+
 
 
 

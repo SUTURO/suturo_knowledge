@@ -5,6 +5,10 @@
     ]).
 
 
+:- use_module(library('locations/actual_locations'), [object_at_location/4]).
+:-use_module(library('locations/predefined_locations'), [object_at_predefined_location/3]).
+:- use_module(library('model/objects/object_info'), [is_suturo_object/1]).
+
 
 misplaced_objects_at_predefined_location(Objects, RoomType, FurnitureType) :-
     findall(Object,

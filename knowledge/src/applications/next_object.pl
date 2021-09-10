@@ -18,10 +18,17 @@
         objects_not_handeled/1,
         handeled/1
     ]).
-
-:- use_module(library('locations/misplaced'),
+:- use_module(library('model/objects/object_info'), 
     [
-        is_misplaced/1
+        is_suturo_object/1,
+        hsr_existing_objects/1
+    ]).
+:- use_module(library('locations/misplaced'), [is_misplaced/1]).
+:- use_module(library('locations/spatial_comp'), 
+    [
+        object_pose/2,
+        surface_pose_in_map/2,
+        compareDistances/3
     ]).
 
 
@@ -79,7 +86,6 @@ next_object(Object, 1) :-
 
 
 next_object(Object, 2) :-
-    %ignore(place_objects),
     objects_not_handeled(ObjectsNotHandled),
     findall(Obj, (member(Obj, ObjectsNotHandled), is_misplaced(Obj)), Objects),
     predsort(compareDistances, Objects, SortedObjs),
@@ -297,25 +303,6 @@ has_destination(Path, Destination) :-
     triple(Path, hsr_rooms:'hasDestination', Destination);
     triple(Destination, hsr_rooms:'isDestinationOf', Path).
 
-
-filter_expensive_objects(Objects, FilteredObjects) :-
-    findall([Object, MeanCBRatio, MinCBRatio],
-    (
-        member(Object, Objects),
-        object_benefit(Object, BenefitAtom),
-        atom_number(BenefitAtom, Benefit),
-        findall(CBRatio, 
-        (
-            path_costs(_, Object, Costs),
-            CBRatio is Benefit /Costs
-        ),
-        AllCBRatios),
-        min_member(MinCBRatio, AllCBRatios),
-        sumlist(AllCBRatios, TotalCBRatios),
-        length(AllCBRatios, ObjectCount),
-        MeanCBRatio is TotalCBRatios / ObjectCount 
-    ), 
-    ObjectCBRatios).
 
 
 
