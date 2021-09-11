@@ -1,11 +1,20 @@
-:- module(general_logging, [
-    init_logging/1,
-    finish_logging/0,
-    scan_floor_logging/0,
-    scan_floor_logging/1,
-    search_surfaces_logging/0,
-    not_visited_logging/0
-    ]).
+%:- module(general_logging, [
+%    init_logging/1,
+%    finish_logging/0,
+%    scan_floor_logging/0,
+%    scan_floor_logging/1,
+%    search_surfaces_logging/0,
+%    not_visited_logging/0
+%    ]).
+
+% todo: implement minimal Neem
+% todo: make real episode-id
+
+
+%% ========================= all logs for neem-plan-1
+
+
+
 
 %%% neem_init() is det.
 %
@@ -72,9 +81,55 @@ scan_floor_logging(EpisodeID) :-
     tell(executes_task(InsertKnowledgeObjects, ReasoningTask)),
     writeln('===== ---> passed !').
 
-% todo:    move_hsr_logging(ID)
-% todo:    take_pose_action_logging(ID)
-% todo:    insert_knowledge_objects_logging(ID)
-% todo:    call_take_pose_action_logging(ID)
-% todo:    grasp_handling_logging(ID)
+%% ========================= all logs for neem-plan-2
 
+
+%%%
+%
+%
+%
+search_surfaces_logging :-
+    writeln('===== log: search surfaces'),
+    tell(is_action(SearchSurfaces)),
+    tell(has_participant(SearchSurfaces, 'hsr')),
+    tell(is_performed_by(SearchSurfaces, 'hsr')),
+    tell(has_type(SearchSurfaces, soma:'Reasoning')),
+    writeln('===== ---> passed !').
+
+%%%
+%
+%
+%
+not_visited_logging :-
+    writeln('===== log: setting surfaces as not visited'),
+    tell(is_action(SetSurfaces)),
+    tell(has_participant(SetSurfaces, 'hsr')),
+    tell(is_performed_by(SetSurfaces, 'hsr')),
+    tell(has_type(SetSurfaces, soma:'Reasoning')),
+    writeln('===== ---> passed !').
+
+%% ========================= other
+
+
+
+%%% log_setup() is nondet.
+%
+% Log the necessary infos for some Setup Task.
+%
+log_setup :-
+    writeln('===== log_setup'),
+    tell(is_action(SetupTask)),
+    tell(has_participant(SetupTask, 'hsr')),
+    tell(is_performed_by(SetupTask, 'hsr')),
+    % get_time(Start),
+    % get_time(End),
+    % tell(occurs(SetupTask) during [Start, End]),
+    tell(has_subevent(SetupTask, SetTableSource)),
+    tell(has_subevent(SetupTask, SetTargetSurface)),
+    tell(has_subevent(SetupTask, TakePoseAction)),
+    tell(has_type(Task1, soma:'GetTaskParameter')),
+    tell(has_type(Task2, soma:'AssumingPose')),
+    tell(executes_task(SetTableSource, Task1)),
+    tell(executes_task(SetTargetSurface, Task1)),
+    tell(executes_task(TakePoseAction, Task2)),
+    writeln('===== ---> passed !').
