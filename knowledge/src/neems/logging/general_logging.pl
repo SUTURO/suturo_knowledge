@@ -6,7 +6,9 @@
     take_pose_action_logging/1,
     insert_knowledge_objects_logging/1,
     call_take_pose_action_logging/1,
-    grasp_handling_logging/1
+    grasp_handling_logging/1,
+    log_begin_action/1,
+    log_ending_action/1
     ]).
 
 %%% neem_init() is det.
@@ -30,10 +32,10 @@ init_logging(EpisodeID) :-
 %
 finish_logging :-
     writeln('===== neem_terminate'),
-    get_time(EndTime),
-    atom_concat(NeemPath,'/',X1),
-    atom_concat(X1,EndTime,X2),
-    memorize(X2),
+%    get_time(EndTime),
+%    atom_concat(NeemPath,'/',X1),
+%    atom_concat(X1,EndTime,X2),
+%    memorize(X2),
     memorize('neem_plan_1'),
     writeln('===== ---> passed !').
 
@@ -163,3 +165,26 @@ grasp_handling_logging(EpisodeID) :-
     writeln('===== ---> passed !').
 
 
+% ===================================
+
+% Largely taken from CCL/neem-interface.pl
+log_begin_action(ActionID) :-
+    get_time(Begin),
+    tell(occurs(ActionID) since Begin),
+    !.
+
+log_ending_action(ActionID) :-
+ get_time(CurrentTime),
+ ask(triple(ActionID,dul:'hasTimeInterval',TimeInterval)),
+ tripledb_forget(TimeInterval, soma:'hasIntervalEnd', _),
+ tell(holds(TimeInterval, soma:'hasIntervalEnd', CurrentTime)),!.
+
+
+
+% 'http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#Action_BHSEMVGN'
+
+% ask(triple('http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#Action_BHSEMVGN', X,Y))
+
+% get_time(Ending),
+% ask(triple('http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#Action_BHSEMVGN', dul:'hasTimeInterval',TimeInterval)),
+%
