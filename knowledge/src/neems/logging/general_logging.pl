@@ -1,14 +1,15 @@
 :- module(general_logging, [
     init_logging/1,
     finish_logging/0,
-    scan_floor_logging/1,
+    scan_floor_logging/2,
     move_hsr_logging/1,
     take_pose_action_logging/1,
     insert_knowledge_objects_logging/1,
     call_take_pose_action_logging/1,
     grasp_handling_logging/1,
-    log_begin_action/1,
-    log_ending_action/1
+    begin_action_logging/1,
+    end_action_logging/1,
+    testing_logs/0
     ]).
 
 %%% neem_init() is det.
@@ -42,27 +43,26 @@ finish_logging :-
 %%% scan_floor_logging() is det.
 %
 % Log the actions to scan the floor.
-scan_floor_logging(EpisodeID) :-
+scan_floor_logging(EpisodeID, ActionID) :-
     writeln('===== log: scan floor'),
     writeln(['===== print: EpisodeID is: ', EpisodeID]),
     tell(is_action(ScanFloorSequence)),
+    writeln('here after is_action'),
     tell(has_participant(ScanFloorSequence, 'hsr')),
     tell(is_performed_by(ScanFloorSequence, 'hsr')),
-
-
-
     tell(has_subevent(ScanFloorSequence, GetConfidenceObjects)),
     tell(has_subevent(ScanFloorSequence, InsertKnowledgeObjects)),
-
-
-
+    writeln('here after has_subevent'),
     tell(has_type(PerceiveTask, soma:'Perceiving')),
     tell(has_type(ReasoningTask, soma:'Reasoning')),
-
-
     tell(executes_task(GetConfidenceObjects, PerceiveTask)),
     tell(executes_task(InsertKnowledgeObjects, ReasoningTask)),
-    is_setting_for(EpisodeID, ScanFloorSequence),
+    writeln('here after executes_task'),
+    tell(is_setting_for(EpisodeID, ScanFloorSequence)),
+    writeln('here after is_setting_for'),
+    ActionID = ScanFloorSequence,
+    writeln('here after ActionID = (...)'),
+    begin_action_logging(ActionID),
     writeln('===== ---> passed !').
 
 %%% scan_floor_logging() is det.
@@ -167,17 +167,26 @@ grasp_handling_logging(EpisodeID) :-
 
 % ===================================
 
-% Largely taken from CCL/neem-interface.pl
-log_begin_action(ActionID) :-
-    get_time(Begin),
-    tell(occurs(ActionID) since Begin),
+mem_event_begin(Event) :-
+    get_time(CurrentTime),
+    tell(occurs(Event) since CurrentTime),
     !.
 
-log_ending_action(ActionID) :-
+% Largely taken from CCL/neem-interface.pl
+begin_action_logging(X) :-
+    writeln('Here in begin action logging'),
+    get_time(Begin),
+    tell(occurs(X) since Begin),
+    !.
+
+end_action_logging(ActionID) :-
+ writeln('here in end_action_logging'),
  get_time(CurrentTime),
  ask(triple(ActionID,dul:'hasTimeInterval',TimeInterval)),
  tripledb_forget(TimeInterval, soma:'hasIntervalEnd', _),
- tell(holds(TimeInterval, soma:'hasIntervalEnd', CurrentTime)),!.
+ tell(holds(TimeInterval, soma:'hasIntervalEnd', CurrentTime)),
+ writeln(['==== ending Action: ', ActionID]),
+ !.
 
 
 
@@ -188,3 +197,9 @@ log_ending_action(ActionID) :-
 % get_time(Ending),
 % ask(triple('http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#Action_BHSEMVGN', dul:'hasTimeInterval',TimeInterval)),
 %
+
+testing_logs :-
+    init_logging(EpisodeID),
+    scan_floor_logging(EpisodeID, ActionID),
+    writeln(''),
+    end_action_logging(ActionID).
