@@ -8,7 +8,7 @@
     call_take_pose_action_logging/2,
     grasp_handling_logging/2,
     begin_action_logging/2,
-    end_action_logging/2,
+    end_action_logging/1,
     testing_logs/0
     ]).
 
