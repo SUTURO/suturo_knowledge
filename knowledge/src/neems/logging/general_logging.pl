@@ -184,25 +184,27 @@ end_action_logging(ActionID) :-
 testing_logs :-
     init_logging(EpisodeID),
     %% ===
-    scan_floor_logging(EpisodeID, ActionID),
-    end_action_logging(ActionID),
+    scan_floor_logging(EpisodeID, A),
+    end_action_logging(A),
     %% ===
-    move_hsr_logging(EpisodeID, ActionID),
-    end_action_logging(ActionID),
+    move_hsr_logging(EpisodeID, B),
+    end_action_logging(B),
     %% ===
-    call_take_pose_action_logging(EpisodeID, ActionID),
-    end_action_logging(ActionID),
+    call_take_pose_action_logging(EpisodeID, C),
+    end_action_logging(C),
     %% ===
-    insert_knowledge_objects_logging(EpisodeID, ActionID),
-    end_action_logging(ActionID),
+    insert_knowledge_objects_logging(EpisodeID, D),
+    end_action_logging(D),
     %% ===
-    call_take_pose_action_logging(EpisodeID, ActionID),
-    end_action_logging(ActionID),
+    call_take_pose_action_logging(EpisodeID, E),
+    end_action_logging(E),
     %% ===
-    move_hsr_logging(EpisodeID, ActionID),
-    end_action_logging(ActionID),
+    move_hsr_logging(EpisodeID, F),
+    end_action_logging(F),
     %% ===
-    grasp_handling_logging(EpisodeID, ActionID),
-    end_action_logging(ActionID).
+    grasp_handling_logging(EpisodeID, G),
+    end_action_logging(G),
+    %% ===
+    finish_logging.
 
 
