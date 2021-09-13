@@ -68,109 +68,92 @@ scan_floor_logging(EpisodeID, ActionID) :-
 %%% scan_floor_logging() is det.
 %
 % Log the actions to scan the floor.
-% todo: add EpisodeID
-move_hsr_logging(EpisodeID) :-
-    writeln('===== log: scan floor'),
-    writeln(['===== print: EpisodeID is: ', EpisodeID]),
+move_hsr_logging(EpisodeID, ActionID) :-
+    writeln('===== log: move hsr'),
     tell(is_action(ScanFloorSequence)),
     tell(has_participant(ScanFloorSequence, 'hsr')),
     tell(is_performed_by(ScanFloorSequence, 'hsr')),
-
-    % get this running
-    %get_time(Start),
-    %get_time(End),
-    %tell(occurs(SetupTask) during [Start, End]),
-
-    % get from  navigation_loggin
-    %tell(has_subevent(ScanTableSequence, MoveToTable)),
-    %tell(has_subevent(ScanTableSequence, TakePoseAction)),
-
     tell(has_subevent(ScanFloorSequence, GetConfidenceObjects)),
     tell(has_subevent(ScanFloorSequence, InsertKnowledgeObjects)),
-
-    % get from navigation_logging
-    %tell(has_type(NavTask, soma:'Navigating')),
-    %tell(has_type(PoseTask, soma:'AssumingPose')),
-
     tell(has_type(PerceiveTask, soma:'Perceiving')),
     tell(has_type(ReasoningTask, soma:'Reasoning')),
-
-    % get from navigation_logging
-    %tell(executes_task(MoveToTable, NavTask)),
-    %tell(executes_task(TakePoseAction, PoseTask)),
-
     tell(executes_task(GetConfidenceObjects, PerceiveTask)),
     tell(executes_task(InsertKnowledgeObjects, ReasoningTask)),
+    tell(is_setting_for(EpisodeID, ScanFloorSequence)),
+    ActionID = ScanFloorSequence,
+    begin_action_logging(ActionID),
     writeln('===== ---> passed !').
 
-take_pose_action_logging(EpisodeID) :-
+take_pose_action_logging(EpisodeID, ActionID) :-
     writeln('===== log: take pose action'),
-    tell(is_action(TakePoseAction)),
-    tell(has_participant(TakePoseAction, 'hsr')),
-    tell(is_performed_by(TakePoseAction, 'hsr')),
-
-    % get this running
-    %get_time(Start),
-    %get_time(End),
-    %tell(occurs(SetupTask) during [Start, End]),
-
-    % get from  navigation_loggin
-    %tell(has_subevent(ScanTableSequence, MoveToTable)),
-    %tell(has_subevent(ScanTableSequence, TakePoseAction)),
-
+    tell(is_action(ScanFloorSequence)),
+    tell(has_participant(ScanFloorSequence, 'hsr')),
+    tell(is_performed_by(ScanFloorSequence, 'hsr')),
     tell(has_subevent(ScanFloorSequence, GetConfidenceObjects)),
     tell(has_subevent(ScanFloorSequence, InsertKnowledgeObjects)),
-
-    % get from navigation_logging
-    %tell(has_type(NavTask, soma:'Navigating')),
-    %tell(has_type(PoseTask, soma:'AssumingPose')),
-
     tell(has_type(PerceiveTask, soma:'Perceiving')),
     tell(has_type(ReasoningTask, soma:'Reasoning')),
-
-    % get from navigation_logging
-    %tell(executes_task(MoveToTable, NavTask)),
-    %tell(executes_task(TakePoseAction, PoseTask)),
-
     tell(executes_task(GetConfidenceObjects, PerceiveTask)),
     tell(executes_task(InsertKnowledgeObjects, ReasoningTask)),
-    is_setting_for(EpisodeID, TakePoseAction),
+    tell(is_setting_for(EpisodeID, ScanFloorSequence)),
+    ActionID = ScanFloorSequence,
+    begin_action_logging(ActionID),
     writeln('===== ---> passed !').
 
-insert_knowledge_objects_logging(EpisodeID) :-
+
+insert_knowledge_objects_logging(EpisodeID, ActionID) :-
     writeln('===== log: insert knowledge objects'),
-    tell(is_action(InsertObjecst)),
-    tell(has_participant(InsertObjecst, 'hsr')),
-    tell(is_performed_by(InsertObjecst, 'hsr')),
-    is_setting_for(EpisodeID, InsertObjecst),
+    tell(is_action(ScanFloorSequence)),
+    tell(has_participant(ScanFloorSequence, 'hsr')),
+    tell(is_performed_by(ScanFloorSequence, 'hsr')),
+    tell(has_subevent(ScanFloorSequence, GetConfidenceObjects)),
+    tell(has_subevent(ScanFloorSequence, InsertKnowledgeObjects)),
+    tell(has_type(PerceiveTask, soma:'Perceiving')),
+    tell(has_type(ReasoningTask, soma:'Reasoning')),
+    tell(executes_task(GetConfidenceObjects, PerceiveTask)),
+    tell(executes_task(InsertKnowledgeObjects, ReasoningTask)),
+    tell(is_setting_for(EpisodeID, ScanFloorSequence)),
+    ActionID = ScanFloorSequence,
+    begin_action_logging(ActionID),
     writeln('===== ---> passed !').
 
 
 
 
-call_take_pose_action_logging(EpisodeID) :-
-    writeln('===== log: take pose action'),
-    tell(is_action(TakePoseAction)),
-    tell(has_participant(TakePoseAction, 'hsr')),
-    tell(is_performed_by(TakePoseAction, 'hsr')),
-    is_setting_for(EpisodeID, TakePoseAction),
+call_take_pose_action_logging(EpisodeID, ActionID) :-
+    writeln('===== log: call take pose action'),
+    tell(is_action(ScanFloorSequence)),
+    tell(has_participant(ScanFloorSequence, 'hsr')),
+    tell(is_performed_by(ScanFloorSequence, 'hsr')),
+    tell(has_subevent(ScanFloorSequence, GetConfidenceObjects)),
+    tell(has_subevent(ScanFloorSequence, InsertKnowledgeObjects)),
+    tell(has_type(PerceiveTask, soma:'Perceiving')),
+    tell(has_type(ReasoningTask, soma:'Reasoning')),
+    tell(executes_task(GetConfidenceObjects, PerceiveTask)),
+    tell(executes_task(InsertKnowledgeObjects, ReasoningTask)),
+    tell(is_setting_for(EpisodeID, ScanFloorSequence)),
+    ActionID = ScanFloorSequence,
+    begin_action_logging(ActionID),
     writeln('===== ---> passed !').
 
-grasp_handling_logging(EpisodeID) :-
+grasp_handling_logging(EpisodeID, ActionID) :-
     writeln('===== log: grasp handling'),
-    tell(is_action(GraspHandling)),
-    tell(has_participant(GraspHandling, 'hsr')),
-    tell(is_performed_by(GraspHandling, 'hsr')),
-    is_setting_for(EpisodeID, GraspHandling),
+    tell(is_action(ScanFloorSequence)),
+    tell(has_participant(ScanFloorSequence, 'hsr')),
+    tell(is_performed_by(ScanFloorSequence, 'hsr')),
+    tell(has_subevent(ScanFloorSequence, GetConfidenceObjects)),
+    tell(has_subevent(ScanFloorSequence, InsertKnowledgeObjects)),
+    tell(has_type(PerceiveTask, soma:'Perceiving')),
+    tell(has_type(ReasoningTask, soma:'Reasoning')),
+    tell(executes_task(GetConfidenceObjects, PerceiveTask)),
+    tell(executes_task(InsertKnowledgeObjects, ReasoningTask)),
+    tell(is_setting_for(EpisodeID, ScanFloorSequence)),
+    ActionID = ScanFloorSequence,
+    begin_action_logging(ActionID),
     writeln('===== ---> passed !').
 
 
 % ===================================
-
-mem_event_begin(Event) :-
-    get_time(CurrentTime),
-    tell(occurs(Event) since CurrentTime),
-    !.
 
 % Largely taken from CCL/neem-interface.pl
 begin_action_logging(X) :-
@@ -200,6 +183,26 @@ end_action_logging(ActionID) :-
 
 testing_logs :-
     init_logging(EpisodeID),
+    %% ===
     scan_floor_logging(EpisodeID, ActionID),
-    writeln(''),
+    end_action_logging(ActionID),
+    %% ===
+    move_hsr_logging(EpisodeID, ActionID),
+    end_action_logging(ActionID),
+    %% ===
+    call_take_pose_action_logging(EpisodeID, ActionID),
+    end_action_logging(ActionID),
+    %% ===
+    insert_knowledge_objects_logging(EpisodeID, ActionID),
+    end_action_logging(ActionID),
+    %% ===
+    call_take_pose_action_logging(EpisodeID, ActionID),
+    end_action_logging(ActionID),
+    %% ===
+    move_hsr_logging(EpisodeID, ActionID),
+    end_action_logging(ActionID),
+    %% ===
+    grasp_handling_logging(EpisodeID, ActionID),
     end_action_logging(ActionID).
+
+
