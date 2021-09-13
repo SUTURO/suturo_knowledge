@@ -2,13 +2,13 @@
     init_logging/1,
     finish_logging/0,
     scan_floor_logging/2,
-    move_hsr_logging/1,
-    take_pose_action_logging/1,
-    insert_knowledge_objects_logging/1,
-    call_take_pose_action_logging/1,
-    grasp_handling_logging/1,
-    begin_action_logging/1,
-    end_action_logging/1,
+    move_hsr_logging/2,
+    take_pose_action_logging/2,
+    insert_knowledge_objects_logging/2,
+    call_take_pose_action_logging/2,
+    grasp_handling_logging/2,
+    begin_action_logging/2,
+    end_action_logging/2,
     testing_logs/0
     ]).
 
