@@ -24,7 +24,11 @@
 		release_object_from_gripper/1
 	]).
 :- use_module(library('gripper/open_door')).
-:- use_module(library('beliefstate'), [object_goal_surface_/4]).
+:- use_module(library('beliefstate'), 
+	[
+		object_goal_surface_/4, 
+		group_objects_at/1
+	]).
 :- use_module(library('model/environment/furnitures'), [init_furnitures/0]).
 :- use_module(library('model/objects/object_creation'), [create_object/9]).
 :- use_module(library('config')).
