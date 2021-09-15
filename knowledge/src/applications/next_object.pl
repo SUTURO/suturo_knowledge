@@ -40,9 +40,15 @@ next_object(Object, 0) :-
         is_misplaced(NotHandledObject) 
     ), 
     PossibleObjects),
+    writeln("Possible Objects for next object"),
+    writeln(PossibleObjects),
     is_at(base_footprint, ['map', RobotPosition, _]),
     objects_costs(RobotPosition, PossibleObjects, Costs),
+    writeln("Object costs"),
+    writeln(Costs),
     objects_benefits(PossibleObjects, Benefits),
+    writeln("Object Benefits"),
+    writeln(Benefits),
     %max_member([_, NormalizationConstant], Costs),
     findall([CBRatio, Object],
     (
