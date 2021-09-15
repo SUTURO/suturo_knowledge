@@ -26,7 +26,7 @@
 :- use_module(library('gripper/open_door')).
 :- use_module(library('beliefstate'), 
 	[
-		object_goal_surface_/4, 
+		object_goal_surface/2, 
 		group_objects_at/1
 	]).
 :- use_module(library('model/environment/furnitures'), [init_furnitures/0]).
@@ -53,7 +53,8 @@
 		pose_is_outside/1, 
 		surfaces_not_visited_in_room/2, 
 		robot_in_room/1, 
-		surfaces_in_room/2
+		surfaces_in_room/2,
+		object_supported_by_surface/2
 	]).
 :- use_module(library('naturallanguage/nlg')).
 :- use_module(library('naturallanguage/nlp')).

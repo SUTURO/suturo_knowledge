@@ -29,7 +29,8 @@
         most_related_object/2,
         most_related_class/3,
         distance_to_object/3,
-        retract_all_planning/1
+        retract_all_planning/1,
+        object_goal_surface/2
     ]).
 
 :-rdf_db:rdf_register_ns(dul, 'http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#', [keep(true)]).
@@ -622,6 +623,8 @@ object_goal_surface_(Object, Surface, Context, RefObject) :-
     !.
 
 
+object_goal_surface(Object, Surface) :-
+    object_goal_surface_(Object, Surface, _, _).
 
 
 
