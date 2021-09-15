@@ -53,8 +53,8 @@
 :- use_module(library('locations/misplaced'), [misplaced_objects_at_predefined_location/3]).
 :- use_module(library('model/environment/surfaces'),
     [
-        has_table_shape/2,
-        has_bucket_shape/2
+        has_table_shape/1,
+        has_bucket_shape/1
     ]).
 
 :- rdf_meta
