@@ -24,6 +24,8 @@
     </include>
   </group>
 
+  <param name="locations_ontology_file" type="str" value="robocup_practice_easy_locations.owl"/>
+
   <!--these are ParamServer.(params) -->
   <param name="param_to_load_URDF_from" type="str" value="$(arg urdf_param)" />
   <param name="initial_package" type="string" value="knowledge" />
