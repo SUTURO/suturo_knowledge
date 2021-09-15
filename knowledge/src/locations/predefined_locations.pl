@@ -1,7 +1,8 @@
 :- module(predefined_locations,
     [
         object_at_predefined_location/3,
-        surfaces_at_predefined_location/3
+        surfaces_at_predefined_location/3,
+        surface_at_predefined_location/3
     ]).
 
 
