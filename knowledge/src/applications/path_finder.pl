@@ -7,6 +7,7 @@
 :- rdf_db:rdf_register_ns(hsr_rooms, 'http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#', [keep(true)]).
 
 :- use_module(library('model/environment/doors'),[get_door_state/2]).
+:- use_module(library('locations/spatial_comp'), [euclidean_distance/3]).
 
 shortest_path_between_rooms(OriginRoom, DestinationRoom, Path) :-
     robot_velocity(Velocity),

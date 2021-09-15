@@ -8,7 +8,8 @@
         compareDistances/3,
         surface_dimensions/4,
         surface_front_edge_center_pose/2,
-        surface_center_pose/2
+        surface_center_pose/2,
+        euclidean_distance/3
     ]).
 
 :- use_module(library('model/environment/surfaces'),

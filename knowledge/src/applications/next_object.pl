@@ -28,7 +28,8 @@
     [
         object_pose/2,
         surface_pose_in_map/2,
-        compareDistances/3
+        compareDistances/3,
+        euclidean_distance/3
     ]).
 
 

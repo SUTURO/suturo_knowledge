@@ -10,7 +10,8 @@
 :- use_module(library('locations/spatial_comp'), 
     [
         surface_pose_in_map/2,
-        compareDistances/3
+        compareDistances/3,
+        euclidean_distance/3
     ]).
 :- use_module(library('applications/next_object')).
 :- use_module(library('model/environment/furnitures'), 
