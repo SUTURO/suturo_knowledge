@@ -1,6 +1,7 @@
 :- module(manipulation_logging, [
     call_take_pose_action_logging/2,
-    grasp_handling_logging/2
+    grasp_handling_logging/2,
+    handle_objects_logging/2
     ]).
 
 call_take_pose_action_logging(EpisodeID, ActionID) :-
@@ -19,6 +20,10 @@ call_take_pose_action_logging(EpisodeID, ActionID) :-
     begin_action_logging(ActionID),
     writeln('===== ---> passed !').
 
+%%% grasp_handling_logging() is det.
+%
+%
+%
 grasp_handling_logging(EpisodeID, ActionID) :-
     writeln('===== log: grasp handling'),
     %% ==== main logs
@@ -35,4 +40,22 @@ grasp_handling_logging(EpisodeID, ActionID) :-
     begin_action_logging(ActionID),
     writeln('===== ---> passed !').
 
-% todo: handle_objects_logging
+%%% handle_objects_logging() is det.
+%
+%
+%
+handle_objects_logging(EpisodeID, ActionID) :-
+    writeln('===== log: handle objects'),
+    %% ==== main logs
+    tell(is_action(HandleObjectsAction)),
+    tell(has_participant(HandleObjectsAction,'hsr')),
+    tell(is_performed_by(HandleObjectsAction, 'hsr')),
+    %% ==== type logs
+    tell(has_type(ManipulatinTask, soma:'Manipulating')),
+    %% ==== execute logs
+    tell(executes_task(HandleObjectsAction, ManipulatinTask)),
+    %% ==== further main logs
+    ActionID = HandleObjectsAction,
+    tell(is_setting_for(EpisodeID, ActionID)),
+    begin_action_logging(ActionID),
+    writeln('===== ---> passed !').

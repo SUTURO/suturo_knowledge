@@ -65,11 +65,6 @@ end_action_logging(ActionID) :-
  !.
 
 
-
-
-
-
-
 testing_logs :-
     init_logging(EpisodeID),
     %% ===
@@ -93,6 +88,33 @@ testing_logs :-
     %% ===
     grasp_handling_logging(EpisodeID, G),
     end_action_logging(G),
+    %% ===
+    handle_objects_logging(EpisodeID, H),
+    end_action_logging(H),
+    %% ===
+    move_to_surface_logging(EpisodeID, I),
+    end_action_logging(I),
+    %% ===
+    deliver_object_logging(EpisodeID, J),
+    end_action_logging(J),
+    %% ===
+    perceive_surface_logging(EpisodeID, K),
+    end_action_logging(K),
+    %% ===
+    loop_over_rooms_logging(EpisodeID, L),
+    end_action_logging(L),
+    %% ===
+    next_object_logging(EpisodeID, M),
+    end_action_logging(M),
+    %% ===
+    loop_over_surfaces_logging(EpisodeID, N),
+    end_action_logging(N),
+    %% ===
+    set_surfaces_not_visited_logging(EpisodeID, O),
+    end_action_logging(O),
+    %% ===
+    define_surfaces_logging(EpisodeID, P),
+    end_action_logging(P),
     %% ===
     finish_logging.
 
