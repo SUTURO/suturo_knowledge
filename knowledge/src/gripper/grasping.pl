@@ -14,6 +14,7 @@
         surface_dimensions/4,
         surface_front_edge_center_pose/2
     ]).
+:- use_module(library('gripper/gripper_info'), [gripper/1]).
 
 %% surface_pose_to_perceive_from(Surface, [[XPos,YPos,0],Rotation]) is nondet.
 %
