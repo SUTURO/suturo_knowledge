@@ -6,6 +6,7 @@
         forget_object_at_location/1,
         surfaces_not_visited_in_room/2,
         robot_in_room/1,
+        furniture_in_room/2,
         pose_is_outside/1
     ]).
 

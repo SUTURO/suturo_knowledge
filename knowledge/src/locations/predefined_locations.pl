@@ -7,7 +7,9 @@
 
 
 :- use_module(library('model/environment/furnitures'), [has_surface/2]).
-
+ 
+:- use_module(library('locations/actual_locations'), [furniture_in_room/2])
+.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%% predefined object locations %%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
