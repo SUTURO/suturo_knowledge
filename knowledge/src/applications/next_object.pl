@@ -31,6 +31,7 @@
         compareDistances/3,
         euclidean_distance/3
     ]).
+:- use_module(library('locations/predefined_locations'), [object_at_predefined_location/3]).
 
 
 next_object(Object, 0) :-
