@@ -12,11 +12,16 @@
 :- use_module(library('lang/terms/is_at'), [is_at/2]).
 :- use_module(library('utility/algebra'), [transform_close_to/3]).
 
-:- use_module(library('gripper/gripper_info'), [init_gripper/0]).
+:- use_module(library('gripper/gripper_info'), 
+	[
+		init_gripper/0,
+		all_objects_in_gripper/1
+	]).
 :- use_module(library('gripper/grasping'),
 	[
 		surface_pose_to_perceive_from/2,
-		object_pose_to_grasp_from/2
+		object_pose_to_grasp_from/2,
+		attach_object_to_gripper/1
 	]).
 :- use_module(library('gripper/placing'), 
 	[
@@ -67,7 +72,6 @@
 		surface_center_pose/2,
 		object_pose/2
 	]).
-
 :- ros_package_iri(knowledge, 'package://knowledge/owl/objects.owl').
 :- ros_package_iri(knowledge, 'package://knowledge/owl/rooms.owl').
 :- ros_package_iri(knowledge, 'package://knowledge/owl/locations.owl').
