@@ -34,10 +34,15 @@
 
 next_object(Object, 0) :-
     objects_not_handeled(NotHandledObjects),
+    writeln("Objects not handled"),
+    writeln(NotHandeledObjects),
     findall(NotHandledObject, 
     (
+        writeln("Object"),
+        writeln(NotHandledObject),
         member(NotHandledObject, NotHandledObjects),
-        is_misplaced(NotHandledObject) 
+        is_misplaced(NotHandledObject),
+        writeln("Is Misplaced")
     ), 
     PossibleObjects),
     writeln("Possible Objects for next object"),
