@@ -1,15 +1,26 @@
-:- module(navigation_logging, []).
+:- module(navigation_logging, [
+    move_hsr_logging/2
+    ]).
 
 
-%%% log_navigation_sequence() is nondet.
+%%% scan_floor_logging() is det.
 %
-% Log the necessary infos for navigating.
-%
-log_navigation_sequence :-
-    %tell(has_subevent(ScanTableSequence, MoveToTable)),
-    %tell(has_subevent(ScanTableSequence, TakePoseAction)),
-    %tell(has_type(NavTask, soma:'Navigating')),
-    %tell(has_type(PoseTask, soma:'AssumingPose')),
-    %tell(executes_task(MoveToTable, NavTask)),
-    %tell(executes_task(TakePoseAction, PoseTask)),
-    X.
+% Log the actions to scan the floor.
+move_hsr_logging(EpisodeID, ActionID) :-
+    writeln('===== log: move hsr'),
+    %% ==== main logs
+    tell(is_action(MoveHsrAction)),
+    tell(has_participant(MoveHsrAction,'hsr')),
+    tell(is_performed_by(MoveHsrAction, 'hsr')),
+    %% ==== type logs
+    tell(has_type(NavigationTask, soma:'NavigationTask')),
+    %% ==== execute logs
+    tell(executes_task(MoveHsrAction, NavigationTask)),
+    %% ==== further main logs
+    ActionID = MoveHsrAction,
+    tell(is_setting_for(EpisodeID, ActionID)),
+    begin_action_logging(ActionID),
+    writeln('===== ---> passed !').
+
+% todo: move_to_surface_logging
+% todo: deliver_object_logging

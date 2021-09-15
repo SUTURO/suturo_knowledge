@@ -1,40 +1,25 @@
-:- module(perception_logging, []).
+:- module(perception_logging, [
+    scan_floor_logging/2
+    ]).
 
-%%% log_scan_table_sequence() is nondet.
+%%% scan_floor_logging() is det.
 %
-% Log the necessary infos for the Scan Table Sequence Task.
+% Log the actions to scan the floor.
 %
-log_scan_table_sequence :-
-    writeln('===== log_scan_table_sequence'),
-    tell(is_action(ScanTableSequence)),
-    tell(has_participant(ScanTableSequence, 'hsr')),
-    tell(is_performed_by(ScanTableSequence, 'hsr')),
-
-    % get this running
-    %get_time(Start),
-    %get_time(End),
-    %tell(occurs(SetupTask) during [Start, End]),
-
-    % get from  navigation_loggin
-    %tell(has_subevent(ScanTableSequence, MoveToTable)),
-    %tell(has_subevent(ScanTableSequence, TakePoseAction)),
-
-    tell(has_subevent(ScanTableSequence, GetConfidenceObjects)),
-    tell(has_subevent(ScanTableSequence, InsertKnowledgeObjects)),
-
-    % get from navigation_logging
-    %tell(has_type(NavTask, soma:'Navigating')),
-    %tell(has_type(PoseTask, soma:'AssumingPose')),
-
-    tell(has_type(PerceiveTask, soma:'Perceiving')),
-    tell(has_type(ReasoningTask, soma:'Reasoning')),
-
-    % get from navigation_logging
-    %tell(executes_task(MoveToTable, NavTask)),
-    %tell(executes_task(TakePoseAction, PoseTask)),
-
-    tell(executes_task(GetConfidenceObjects, PerceiveTask)),
-    tell(executes_task(InsertKnowledgeObjects, ReasoningTask)),
+scan_floor_logging(EpisodeID, ActionID) :-
+    writeln('===== log: scan floor'),
+    %% ==== main logs
+    tell(is_action(ScanFloorAction)),
+    tell(has_participant(ScanFloorAction,'hsr')),
+    tell(is_performed_by(ScanFloorAction, 'hsr')),
+    %% ==== type logs
+    tell(has_type(PhysicalTask, soma:'PhysicalTask')),
+    %% ==== execute logs
+    tell(executes_task(ScanFloorAction, PhysicalTask)),
+    %% ==== further main logs
+    ActionID = ScanFloorAction,
+    tell(is_setting_for(EpisodeID, ActionID)),
+    begin_action_logging(ActionID),
     writeln('===== ---> passed !').
 
-:- writeln('Here in perception logging').
+% todo: perceive_surface_logging
