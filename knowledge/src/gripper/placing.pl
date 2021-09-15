@@ -19,7 +19,7 @@
         surface_pose_in_map/2,
         surface_dimensions/4
 	]).
-:- use_module(library('model/environment/furnitures'),
+:- use_module(library('model/environment/surfaces'),
     [
         has_table_shape/1,
         has_bucket_shape/1
