@@ -9,6 +9,8 @@
 :- rdf_db:rdf_register_ns(hsr_objects, 'http://www.semanticweb.org/suturo/ontologies/2020/3/objects#', [keep(true)]).
 :- rdf_db:rdf_register_ns(robocup, 'http://www.semanticweb.org/suturo/ontologies/2020/2/Robocup#', [keep(true)]).
 
+:- use_module(library('ros/marker/marker_plugin'), [marker_message_new/3, republish/0]).
+
 
 :- use_module(library('beliefstate')).
 :- use_module(library('locations/spatial_comp'),
