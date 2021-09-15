@@ -8,7 +8,9 @@
         robot_in_room/1,
         furniture_in_room/2,
         pose_is_outside/1,
-        object_supported_by_surface/2
+        object_supported_by_surface/2,
+        objects_supported_by_surface/2,
+        objects_supported_by_surfaces/2
     ]).
 
 

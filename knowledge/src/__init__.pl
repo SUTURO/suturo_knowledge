@@ -64,7 +64,8 @@
 	[
 		hsr_lookup_transform/4,
 		surface_front_edge_center_pose/2,
-		surface_center_pose/2
+		surface_center_pose/2,
+		object_pose/2
 	]).
 
 :- ros_package_iri(knowledge, 'package://knowledge/owl/objects.owl').
