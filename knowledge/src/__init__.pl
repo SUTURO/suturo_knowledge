@@ -36,6 +36,7 @@
 	]).
 :- use_module(library('model/environment/furnitures'), [init_furnitures/0]).
 :- use_module(library('model/objects/object_creation'), [create_object/9]).
+:- use_module(library('model/objects/object_manipulation'), [set_object_handeled/1]).
 :- use_module(library('config')).
 :- use_module(library('urdf')).
 :- use_module(library('model/environment/surfaces'), 
