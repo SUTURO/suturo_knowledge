@@ -7,8 +7,8 @@
 
 
 is_suturo_object(Object) :-
-    has_type(Object, knowrob:'EnduringThing-Localized');
-    has_type(Object, hsr_objects:'Unknown').
+    has_type(Object, dul:'PhysicalObject'),
+    triple(Object, hsr_objects:'supportable', true).
 
 
 % returns a list of all the Objects know to the Knowledgebase
