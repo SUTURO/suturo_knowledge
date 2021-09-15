@@ -39,6 +39,8 @@ surface_pose_to_perceive_from(Surface, [[XPos,YPos,0],Rotation]):-
 % @param Objects the object which will be grasped
 %
 attach_object_to_gripper(Object) :-
+    writeln("Call Attach object to gripper"),
+    writeln(Object),
     forget_object_at_location(Object),
     gripper(Gripper),
     has_location(Object, ObjectLocation),

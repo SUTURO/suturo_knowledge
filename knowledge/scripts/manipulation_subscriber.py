@@ -9,7 +9,7 @@ def callback(data):
 
     if data.mode == 0:
         object_frame_id = data.object_frame_id
-        query = "once(attach_object_to_gripper(hsr_objects:'" + object_frame_id + "'))."
+        query = "once(attach_object_to_gripper('http://www.semanticweb.org/suturo/ontologies/2020/3/objects#" + object_frame_id + "'))."
         rospy.loginfo(query)
         prolog.all_solutions(query)
     elif data.mode == 1:
