@@ -19,8 +19,8 @@
 	]).
 :- use_module(library('model/environment/furnitures'),
     [
-        has_table_shape/2,
-        has_bucket_shape/2
+        has_table_shape/1,
+        has_bucket_shape/1
     ]).
 :- use_module(library('locations/actual_locations'),
     [
