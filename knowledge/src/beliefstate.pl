@@ -39,7 +39,9 @@
 
 :- use_module(library('locations/actual_locations'), 
     [
-        place_objects/0
+        place_objects/0,
+        objects_supported_by_surface/2,
+        objects_supported_by_surfaces/2
     ]).
 :- use_module(library('locations/predefined_locations'), 
     [
