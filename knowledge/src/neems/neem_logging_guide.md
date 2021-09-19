@@ -16,6 +16,8 @@ Technically speaking it is a set of logged data within the **mongo DB** that con
 During plan execution, the robot is able to log its perceived environment and to export the memorised logs into a NEEM-folder. This folder can be later loaded into any kind of **mongo DB** as a new Collection.
 <br>
 For further guidance please visit the KnowRob webiste: http://knowrob.org and consult the NEEM-Handbook:  https://ease-crc.github.io/soma/owl/current/NEEM-Handbook.pdf
+<br>
+For further guidance on Episodic Memory please visit the Wikipedia article: https://en.wikipedia.org/wiki/Episodic_memory
 
 ### About SOMA
 
@@ -48,8 +50,6 @@ Currently, it is represented within the two branches of **neem-testing** (planni
 - All predicates called in the **execute-cleanup.lisp** are defined here
 
 #### suturo-neem-logger branch (knowledge)
-##### general_logs.pl
-- This module holds general functions to start & conclude the logging
 
 ##### general_logs.pl
 - This module holds all necessary functions to start & conclude the logging  
@@ -108,28 +108,45 @@ Currently, it is represented within the two branches of **neem-testing** (planni
 
 ### developing new logs
 - In case you come across an action that is not represented correctly by the existing logs, you are free to create a new one
-- For this, you need to do 2 things: (1) Define a new logging predicate (2) Create a suitable function in the **prolog-neem-query**
+- For this, you need to do 2 things: (1) Define a new logging predicate (2) Create a suitable function in the **prolog-neem-query.lisp**
 - Explanation:
 - (1.1) In the **neems** directory within knowledge, select a module that represent the appropriate logging use case
-- (1.2) Write a new predicate corresponding to the following structure:
+- (1.2) Write a new predicate corresponding to the following structure: 
     - main logs 
     - type logs 
     - execute logs 
     - further main logs 
-- naming conventions
-
-### compact recap
-- do this, then that
-
+    - (those calls can be made differently, however it helps as a good practice)
+- (1.3) Consider the naming conventions: **some_action_logging(EpisodeID,ActionID) :-**
+- (2.1) In the **prolog-neem-query.lisp** create a function to call the aforementioned predicate
+- (2.2) Consider the naming conventions: **(defun log-some-action (id)**
 
 -----------------
 
 ### Q&A
 ##### Why do we need to log it that way?
-- smth
+- For a NEEM to correctly represent the agents experiences, it needs to consist of one **Episode** and the corresponding **Actions**
+- Every **Action** must be referenced to the **Episode**, and in addition contain the information on how long it took
+- We realise this by passing the necessary **IDs** into every logging predicate:
+    - ``tell(is_setting_for(EpisodeID, ActionID))``
+    - ``begin_action_logging(ActionID)``
+    - ``end_action_logging(ActionID)``
+- However this must be managed from CRAM, in that the **execute.lisp** calls all necessary functions
+- This is why we make use of two variables:
+    - ``(defvar episode-id NIL)``
+    - ``(defvar action-id NIL)``
+- Those **IDs** are then passed into the functions of **prolog-neem-query.lisp** and are returned respectively
+    
 ##### Is it the only way to log NEEMs ?
-- CRAM Cloud Logger (ccl)
+- No, the actual tool is the CRAM Cloud Logger (ccl)
+- However due to technical complications we decided to create an own implementation on the context of SUTURO
+- You should however take a look at the ccl and try it out yourself 
+
 ##### Does the suturo-neem-logger cover all use cases? 
-- what about data from other components?
-- also with the params, SOMA
+- No, the **suturo-neem-logger** covers the existing plans of SUTURO but not further possible use cases
+- Additionally, further data (eg. from other components such as Giskard/RoboSherlock) is not being logged but could however be potentially useful
+- Please feel free to extend the functionality of this application, thereby trying out new aspects of the SOMA ontology and other components 
+    - You can also extend and alter the parameters of the predicates, since they currently only pass IDs
+    - However consult your tutors in case they would rather want you to make use of the aforementioned ccl
+
 
