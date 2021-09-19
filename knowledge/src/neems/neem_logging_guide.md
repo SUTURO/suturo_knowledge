@@ -1,5 +1,6 @@
 # neem-logging-guide
 This guide will give a comprehensive overview of the **suturo-neem-logger** and its practices, alongside an useful introduction into the concepts of **NEEMs**.
+<br>
 Please notice that a similar kind of content already exists in the **Final Report 20/21**. This file is to be seen as an hands-on developer-guide for beginners.  
 ![logging format](images/logging_format.png)
 ![soma](images/SOMA.png)
