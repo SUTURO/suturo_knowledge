@@ -36,7 +36,7 @@
     </rdf:Description>
 
 
-    <rdf:Description rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Unknown">
+    <rdf:Description rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#UnknownObject">
         <hsr_rooms:hasPredefinedLocation rdf:resource="http://www.semanticweb.org/suturo/ontologies/locations#PredefinedLocation0"/>
     </rdf:Description>
 
