@@ -288,10 +288,6 @@ path_down(SourceType, TargetType, Distance) :-
 
 
 same_color(Source, Target):-
-<<<<<<< HEAD
-=======
-    %all_objects_on_target_surfaces(Objects),
->>>>>>> master
     object_at_predefined_location(Source, RoomType, FurnitureType),
     surfaces_at_predefined_location(Surfaces, RoomType, FurnitureType),
     objects_supported_by_surfaces(Surfaces, Objects),
@@ -300,10 +296,6 @@ same_color(Source, Target):-
     triple(Target, hsr_objects:'colour', Color).
     
 same_size(Source, Target):-
-<<<<<<< HEAD
-=======
-    %all_objects_on_target_surfaces(Objects),
->>>>>>> master
     object_at_predefined_location(Source, RoomType, FurnitureType),
     surfaces_at_predefined_location(Surfaces, RoomType, FurnitureType),
     objects_supported_by_surfaces(Surfaces, Objects),
