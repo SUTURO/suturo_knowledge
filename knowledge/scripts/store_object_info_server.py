@@ -56,7 +56,7 @@ class StoreObjectInfoServer(object):
             if not solutions:  # if class is not known
                 rospy.logwarn(
                     "The class '" + obj_class + "' has no equivalent in kowledge-ontology. Setting class to Other.")
-                obj_class = "Apple" # <- instantiate as Other
+                obj_class = "Other" # <- instantiate as Other
             # --- further information from perception
             confidence_class = str(data.confidence_class)
             shape = str(data.shape)
