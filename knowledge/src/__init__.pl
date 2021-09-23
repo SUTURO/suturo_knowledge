@@ -39,6 +39,8 @@
 :- use_module(library('model/objects/object_manipulation'), [set_object_handeled/1]).
 :- use_module(library('config')).
 :- use_module(library('urdf')).
+:- use_directory('naturallanguage').
+
 :- use_module(library('model/environment/surfaces'), 
 	[
 		set_surface_visited/1,
@@ -73,6 +75,7 @@
 		surface_center_pose/2,
 		object_pose/2
 	]).
+
 :- ros_package_iri(knowledge, 'package://knowledge/owl/objects.owl').
 :- ros_package_iri(knowledge, 'package://knowledge/owl/rooms.owl').
 :- ros_package_iri(knowledge, 'package://knowledge/owl/locations.owl').
