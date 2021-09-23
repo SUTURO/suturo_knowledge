@@ -19,6 +19,15 @@
     deliver_object_pose/2
     ]).
 
+:- use_module(library('locations/actual_locations'), 
+    [
+        objects_in_room/2
+    ]).
+
+:- use_module(library('model/objects/object_info'), 
+    [
+        hsr_existing_objects/1
+    ]).
 
 
 %%%%%%%%%%% objects with color
