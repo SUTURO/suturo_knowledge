@@ -9,7 +9,7 @@ def callback(data):
 
     if data.mode == 0:
         object_frame_id = data.object_frame_id
-        query = "attach_object_to_gripper(hsr_objects:'" + object_frame_id + "')."
+        query = "once(attach_object_to_gripper('http://www.semanticweb.org/suturo/ontologies/2020/3/objects#" + object_frame_id + "'))."
         rospy.loginfo(query)
         prolog.all_solutions(query)
     elif data.mode == 1:
@@ -23,8 +23,8 @@ def callback(data):
         quaty = quaternion.y
         quatz = quaternion.z
         quatw = quaternion.w
-        query = "release_object_from_gripper([[" + str(posx) + "," + str(posy) + "," + str(posz) + "],[" + \
-                str(quatx) + "," + str(quaty) + "," + str(quatz) + "," + str(quatw) + "]])."
+        query = "once(release_object_from_gripper([[" + str(posx) + "," + str(posy) + "," + str(posz) + "],[" + \
+                str(quatx) + "," + str(quaty) + "," + str(quatz) + "," + str(quatw) + "]]))."
 
         rospy.loginfo(query)
         prolog.all_solutions(query)

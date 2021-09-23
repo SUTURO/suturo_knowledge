@@ -1,5 +1,6 @@
 :- module(nlp,
     [
+
     matching_object_by_color_in_room_name/4,
     matching_object_by_color_in_room_id/4,
     matching_object_by_color_in_furniture_id/4,
@@ -17,6 +18,7 @@
     all_room_names_with_id/1,
     deliver_object_pose/2
     ]).
+
 
 
 %%%%%%%%%%% objects with color
@@ -43,7 +45,6 @@ matching_object_by_color_everywhere(TargetColorClass, ObjectId, Conf):-
     find_object_of_color_in_list(ListOfObjects, TargetColorClass, ObjectId, Conf).
 
 %%%%%%%%%%% objects without color
-
 
 matching_object_in_room_name(ObjectName, RoomName, Obj):-
     matching_room(RoomName,RoomId),
@@ -81,8 +82,6 @@ color_class_by_name(GivenName,ColorClass):-
     ),[(_,ColorClass)]).% Because we check ClassName = GivenName findall should only find one tuple 
                 
        
-
-
 
 %%%%%OBJECTS%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -144,4 +143,3 @@ deliver_object_pose("left", Pose):-
 deliver_object_pose('right', [[0.2131, 3.9596, 0],[0, 0, 0.99998, -0.0067647]]).
 deliver_object_pose("right", Pose):-
     deliver_object_pose('right', Pose).
-

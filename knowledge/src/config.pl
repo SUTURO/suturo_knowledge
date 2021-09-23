@@ -4,7 +4,6 @@
       threshold_for_group/1,
       threshold_surface/2,
       min_space_between_objects/1,
-      urdf_surface_prefix/1,
       allowed_class_distance/1,
       min_class_confidence/1, 
       min_shape_confidence/1,
@@ -15,7 +14,9 @@
       context_speech_sort_by_size/3,
       context_speech_new_class/1,
       context_speech_basket/1,
-      get_urdf_id/1
+      context_speech_table/1,
+      robot_velocity/1,
+      door_opening_time/1
     ]).
 
 
@@ -34,6 +35,8 @@
 offsets(Offset) :-
     Offset = [0, -0.05, 0.05, -0.1, 0.1, -0.15, 0.15, -0.2, 0.2, -0.25, 0.25, -0.3, 0.3, -0.35, 0.35, -0.4, 0.4, -0.45, 0.45, -0.5, 0.5, -0.55, 0.55, -0.6, 0.6, -0.65, 0.65, -0.7, 0.7, -0.75, 0.75, -0.8, 0.8].
 
+
+
 % max physical Distance between objects for them to be in a group
 threshold_for_group(Threshold) :-
     Threshold = 0.15.
@@ -43,10 +46,9 @@ threshold_surface(ThresholdAbove, ThresholdBelow) :-
     ThresholdBelow = -0.05.
 
 min_space_between_objects(Meters) :-
-    Meters = 0.05.
+    Meters = 0.1.
 
-urdf_surface_prefix(Prefix) :-
-    Prefix = 'iai_kitchen/'.
+
 
 %% Distance is the maximum Distance (rdf_shortest_path) to another Object
 %% where the Object should still be sorted by class rather than other properties
@@ -57,7 +59,7 @@ allowed_class_distance(Distance) :-
 %% Minimum Confidence where the perceived Object class should still be stored.
 %% Classes with lower confidence get 'Other' as fallback.
 min_class_confidence(Confidence) :-
-    Confidence = 0.5.
+    Confidence >= 0.5.
 
 min_shape_confidence(Confidence) :-
     Confidence = 0.5.
@@ -67,6 +69,13 @@ min_color_confidence(Confidence) :-
 
 max_shelf_capacity(Capacity) :-
     Capacity = 4.
+
+robot_velocity(Velocity) :-
+    Velocity = 0.15. % Robot moves about 0.15 meters per second
+
+door_opening_time(Time) :-
+    Time is 60.  % Robot needs about 60 seconds to open a door
+
 
 %% Context is the Speech, the Robot should hold depending on the distance of the
 %% next Objects Class.
@@ -124,7 +133,6 @@ context_speech_new_class(Context) :-
 context_speech_basket(Context) :-
     Context = "I will put this in the Basket".
 
-
-get_urdf_id(URDF) :-
-    URDF = arena.
+context_speech_table(Context) :-
+    Context = "I will put this on the Table".
 

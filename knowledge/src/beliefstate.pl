@@ -5,12 +5,16 @@
       belief_class_of/2,
       hsr_belief_at_update/2,
       merge_object_into_group/1,
-      group_target_objects/0,
       group_shelf_objects/0,
       group_table_objects/0,
       group_objects_at/1,
       group_objects/1,
       group_mean_pose/3,
+      all_groups_on_tablelike_surface/2,
+      group_position_on_surface/3,
+      group_dimensions/3,
+      same_color/2,
+      same_size/2,
       % Placing Objects
       assert_object_supposed_surface/1,
       object_goal_surface_/4,
@@ -25,13 +29,38 @@
         most_related_object/2,
         most_related_class/3,
         distance_to_object/3,
-        retract_all_planning/1
+        retract_all_planning/1,
+        object_goal_surface/2
     ]).
 
 :-rdf_db:rdf_register_ns(dul, 'http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#', [keep(true)]).
 :- rdf_db:rdf_register_ns(hsr_objects, 'http://www.semanticweb.org/suturo/ontologies/2020/3/objects#', [keep(true)]).
 :- rdf_db:rdf_register_ns(robocup, 'http://www.semanticweb.org/suturo/ontologies/2020/2/Robocup#', [keep(true)]).
 
+:- use_module(library('locations/actual_locations'), 
+    [
+        place_objects/0,
+        objects_supported_by_surface/2,
+        objects_supported_by_surfaces/2
+    ]).
+:- use_module(library('locations/predefined_locations'), 
+    [
+        object_at_predefined_location/3,
+        surfaces_at_predefined_location/3
+    ]).
+:- use_module(library('locations/spatial_comp'),
+	[
+		hsr_existing_object_at/3,
+        compareDistances/3,
+        surface_dimensions/4
+	]).
+:- use_module(library('gripper/gripper_info'), [all_objects_in_gripper/1]).
+:- use_module(library('locations/misplaced'), [misplaced_objects_at_predefined_location/3]).
+:- use_module(library('model/environment/surfaces'),
+    [
+        has_table_shape/1,
+        has_bucket_shape/1
+    ]).
 
 :- rdf_meta
     new_perceived_at(r,+,+,r),
@@ -75,16 +104,6 @@ merge_object_into_group(Instance) :-
     forall(triple(Other,hsr_objects:'inGroup',_),tripledb_forget(Other,hsr_objects:'inGroup',_)),
     tell(triple(Other, hsr_objects:'inGroup', WG)).
 
-group_target_objects :-
-    all_objects_on_target_surfaces(Objs),
-    group_objects(Objs).
-
-% Returns always true if the bucket is target.
-group_target_objects :-
-    all_target_surfaces(Surfaces),
-    member(Surface, Surfaces),
-    is_bucket(Surface).
-
 group_shelf_objects :-
     all_objects_in_whole_shelf(Objs),
     group_objects(Objs).
@@ -96,7 +115,7 @@ group_table_objects :-
 group_objects_at([X,Y,Z]) :-
     Transform = ['map', _, [X,Y,Z], [0,0,1,0]],
     hsr_existing_object_at(Transform, 0.05, Obj),
-    find_supporting_surface(Obj, Surface),
+    object_supported_by_surface(Obj, Surface),
     objects_on_surface(Objs, Surface),
     group_objects(Objs).
 
@@ -142,7 +161,7 @@ group_mean_pose(Group, Transform, Rotation) :-
     Zmean is Ztotal / L,
     Transform = [Xmean, Ymean, Zmean],
     once(triple(Member, hsr_objects:'inGroup', Group)),
-    find_supporting_surface(Member, Surface),
+    object_supported_by_surface(Member, Surface),
     surface_pose_in_map(Surface, [_, Rotation]),
     %object_frame_name(Group, Frame),
     %object_pose_update(Group, ['map', Frame, Transform, Rotation]).
@@ -194,7 +213,6 @@ most_related_object(Source, Target) :-
 
 most_related_object(Source, Target):-
     same_color(Source, Target),
-    writeln("color"),
     context_speech_sort_by_color(Source, Target, Context),
     allowed_class_distance(MaxDist),
     Distance is MaxDist + 1,
@@ -203,7 +221,6 @@ most_related_object(Source, Target):-
 
 most_related_object(Source, Target):-
     same_size(Source, Target),
-    writeln("size"),
     context_speech_sort_by_size(Source, Target, Context),
     allowed_class_distance(MaxDist),
     Distance is MaxDist + 2,
@@ -218,7 +235,10 @@ most_related_class(Source, Target, Distance) :-
     %distance_to_object(Source, Target, Distance).
 
 distance_to_object(Source, Target, Distance) :-
-    all_objects_on_target_surfaces(Objs),
+    %all_objects_on_target_surfaces(Objs),
+    object_at_predefined_location(Source, RoomType, FurnitureType),
+    surfaces_at_predefined_location(Surfaces, RoomType, FurnitureType),
+    objects_supported_by_surfaces(Surfaces, Objs),
     member(Target, Objs),
     not(same_as(Source, Target)),
     has_type(Target, TargetType),
@@ -268,13 +288,17 @@ path_down(SourceType, TargetType, Distance) :-
 
 
 same_color(Source, Target):-
-    all_objects_on_target_surfaces(Objects),
+    object_at_predefined_location(Source, RoomType, FurnitureType),
+    surfaces_at_predefined_location(Surfaces, RoomType, FurnitureType),
+    objects_supported_by_surfaces(Surfaces, Objects),
     member(Target, Objects),
     triple(Source, hsr_objects:'colour', Color),
     triple(Target, hsr_objects:'colour', Color).
     
 same_size(Source, Target):-
-    all_objects_on_target_surfaces(Objects),
+    object_at_predefined_location(Source, RoomType, FurnitureType),
+    surfaces_at_predefined_location(Surfaces, RoomType, FurnitureType),
+    objects_supported_by_surfaces(Surfaces, Objects),
     member(Target, Objects),
     triple(Source, hsr_objects:'size', Size),
     triple(Target, hsr_objects:'size', Size).
@@ -308,7 +332,8 @@ retract_all_planning(Object) :-
 % stores the surface and the distance to its RefObject in RDF.
  object_most_similar_surface(Object, Surface) :-
     most_related_object(Object, RefObject),
-    find_supporting_surface(RefObject, Surface),
+    %find_supporting_surface(RefObject, Surface),
+    object_supported_by_surface(RefObject, Surface),
     forall(triple(Object, supposedSurface, _), tripledb_forget(Object, supposedSurface, _)),
     tell(triple(Object, supposedSurface, Surface)),
     forall(triple(Object, refObject, _), tripledb_forget(Object, refObject, _)),
@@ -317,21 +342,22 @@ retract_all_planning(Object) :-
 % OtherObjects returns a list of all the objects, that one day 
 % would be put on Surface.
 objects_on_same_surface_in_future(Surface, OtherObjects) :-
-    objects_on_surface(AlreadyPlacedObjects, Surface),
-    all_objects_on_source_surfaces(SourceObjects1),
+    %objects_on_surface(AlreadyPlacedObjects, Surface),
+    objects_supported_by_surface(Surface, AlreadyPlacedObjects),
+    surface_at_predefined_location(Surface, RoomType, FurnitureType),
+    misplaced_objects_at_predefined_location(SourceObjects1, RoomType, FurnitureType),
+    %all_objects_on_source_surfaces(SourceObjects1),
     all_objects_in_gripper(SourceObjects2),
     append(SourceObjects1, SourceObjects2, SourceObjects),
-    writeln(SourceObjects),
     findall(Obj,
     (
         member(Obj, SourceObjects),
-        writeln(Obj),
-        object_most_similar_surface(Obj, Surfacet),
-        writeln(Surfacet)
+        object_most_similar_surface(Obj, Surface)
     ),
-        FutureObjects),
+    FutureObjects),
     append(AlreadyPlacedObjects, FutureObjects, OtherObjectsUnsorted),
-    predsort(compareLogicalDistances, OtherObjectsUnsorted, OtherObjects).
+    predsort(compareLogicalDistances, OtherObjectsUnsorted, OtherObjectsList),
+    list_to_set(OtherObjectsList, OtherObjects).
 
 % compares the logical Distance of two Objects to their ReferenceObject on Target-Surface based on compare/3.
 compareLogicalDistances(Order, Object1, Object2) :-
@@ -386,8 +412,130 @@ objects_fit_on_surface_(Objects, Surface) :-
     surface_dimensions(Surface, _, SurfaceWidth, _),
     SurfaceWidth >= Sum.
 
-next_empty_surface(Surface) :-
-    all_target_surfaces(Surfaces),
+
+object_fit_on_tablelike_surface(Object, Surface, RefObject) :-
+    objects_supported_by_surface(Surface, []),
+    RefObject = Object,
+    !.
+
+object_fit_on_tablelike_surface(Object, Surface, RefObject) :-
+    all_groups_on_tablelike_surface(Surface, Groups),
+    findall([X, Group],
+    (
+        member(Group, Groups),
+        group_position_on_surface(Group, Surface, [X, _, _])
+    ),
+    GroupPositions),
+    sort(GroupPositions, SortedGroupPositions),
+    nth0(0, SortedGroupPositions, [_, FirstGroup]),
+    object_fit_in_group(Object, FirstGroup, Surface, SortedGroupPositions, RefObject),
+    !.
+
+object_fit_in_group(Object, Group, Surface, OtherGroups, RefObject) :-
+    surface_dimensions(Surface, SurfaceDepth, SurfaceWidth, _),
+    group_dimensions(Group, GroupWidth, GroupDepth),  
+    object_dimensions(Object, ObjectWidth, ObjectDepth, _),
+    min_space_between_objects(MinSpace),
+    group_position_on_surface(Group, Surface, [XGroup, _, _]),
+    FreeWidth is SurfaceWidth - MinSpace - GroupWidth - MinSpace,
+    FreeDepth is SurfaceDepth - (SurfaceDepth/2 - XGroup),
+    ((ObjectDepth < FreeWidth, ObjectWidth < FreeDepth)
+    -> (
+        (nextto([_, Group], [_, NextGroup], OtherGroups)
+        -> (object_fit_in_group(Object, NextGroup, Surface, OtherGroups, RefObject))
+        ; (most_right_object_in_group(Group, Surface, RefObject))
+    ))
+    ;
+    (
+        (nextto([_, PreviousGroup], [_, Group], OtherGroups)
+        -> (most_right_object_in_group(PreviousGroup, Surface, RefObject))
+        ; (
+            FreeDepth2 is SurfaceDepth - (SurfaceDepth/2 - XGroup) - GroupDepth - 2*MinSpace,
+            ObjectDepth < FreeDepth2,
+            RefObject = Object
+        )
+    ))),
+    !.
+
+
+most_right_object_in_group(Group, Surface, Member) :-
+    has_urdf_name(Surface, SurfaceLink),
+    findall([X, Object], 
+    (
+        triple(Object, hsr_objects:'inGroup', Group),
+        object_tf_frame(Object, ObjectFrame),
+        tf_lookup_transform(SurfaceLink, ObjectFrame, pose([X,_,_], _))
+    ), 
+    Objects),
+    sort(Objects, SortedObjects),
+    last(SortedObjects, [_, Member]).
+
+
+all_groups_on_tablelike_surface(Surface, Groups) :-
+    objects_supported_by_surface(Surface, AlreadyPlacedObjects),
+    findall(Group,
+    (
+        member(Object, AlreadyPlacedObjects),
+        triple(Object, hsr_objects:'inGroup', Group)
+    ),
+    GroupList),
+    list_to_set(GroupList, Groups).
+
+
+group_dimensions(Group, Width, Depth) :-
+    findall([X, Object],
+    (
+        triple(Object, hsr_objects:'inGroup', Group),
+        is_at(Object, [_, [X,_,_], _])
+    ), 
+    Xs),
+    findall([Y, Object],
+    (
+        triple(Object, hsr_objects:'inGroup', Group),
+        is_at(Object, [_, [_,Y,_], _])
+    ),
+    Ys),
+    sort(Xs, SortedXs),
+    sort(Ys, SortedYs),
+    nth0(0, SortedXs, [FirstX, FirstObjectX]), last(SortedXs, [LastX, LastObjectX]),
+    nth0(0, SortedYs, [FirstY, FirstObjectY]), last(SortedYs, [LastY, LastObjectY]),
+    object_dimensions(FirstObjectX, FirstObjectXWidth, _, _), MinX is FirstX - FirstObjectXWidth/2,
+    object_dimensions(LastObjectX, LastObjectXWidth, _, _), MaxX is LastX + LastObjectXWidth/2,
+    object_dimensions(FirstObjectY, _, FirstObjectYDepth, _), MinY is FirstY - FirstObjectYDepth/2,
+    object_dimensions(LastObjectY, _, LastObjectYDepth, _), MaxY is LastY + LastObjectYDepth/2,
+    Width is MaxX - MinX,
+    Depth is MaxY - MinY.
+
+
+group_position_on_surface(Group, Surface, Position) :-
+    has_urdf_name(Surface, SurfaceLink),
+    findall(X,
+    (
+        triple(Object, hsr_objects:'inGroup', Group),
+        object_tf_frame(Object, ObjectFrame),
+        object_dimensions(Object, ObjectWidth, _, _),
+        tf_lookup_transform(SurfaceLink, ObjectFrame, pose([XCenter,_,_], _)),
+        X is XCenter + ObjectWidth/2
+    ), 
+    Xs),
+    findall(Y,
+    (
+        triple(Object, hsr_objects:'inGroup', Group),
+        object_tf_frame(Object, ObjectFrame),
+        object_dimensions(Object, _, ObjectDepth, _),
+        tf_lookup_transform(SurfaceLink, ObjectFrame, pose([_,YCenter,_], _)),
+        Y is YCenter - ObjectDepth/2
+    ),
+    Ys),
+    sort(Xs, SortedXs),
+    sort(Ys, SortedYs),
+    last(Xs, LastX),
+    nth0(0, Ys, FirstY),
+    Position = [LastX, FirstY, 0].
+
+
+next_empty_surface([RoomType, FurnitureType], Surface) :-
+    surfaces_at_predefined_location(Surfaces, RoomType, FurnitureType),
     predsort(compareDistances, Surfaces, SortedSurfaces),
     next_empty_surface_(SortedSurfaces, Surface).
 
@@ -401,38 +549,70 @@ next_empty_surface_(Surfaces, Surface) :-
 
 % In case there is a bucket, put everything in it
 % To Do: Cannot handle multiple surfaces including at least one bucket right now.
-assert_object_supposed_surface(Object) :-
-    all_target_surfaces(Surfaces),
-    member(Surface, Surfaces),
-    is_bucket(Surface),
-    all_objects_on_source_surfaces(Objs),
-    context_speech_basket(Context),
-    forall(member(Obj, Objs), assert_all_planning(Obj, Surface, 0, Context, Obj)),
-    assert_all_planning(Object, Surface, 0, Context, Object).
+%assert_object_supposed_surface(Object) :-
+%    %all_target_surfaces(Surfaces),
+%    not object_at_predefined_location(Object, _, _),
+%    writeln("Goal is bucket"),
+%    bucket_surfaces(BucketSurfaces),
+%    predsort(compareDistances, BucketSurfaces, SortedSurfaces),
+%    nth0(0, SortedSurfaces, Surface),
+%    findall(Obj, 
+%    (
+%        not object_at_predefined_location(Obj, _, _)
+%    ), Objs),
+%    context_speech_basket(Context),
+%    forall(member(Obj, Objs), assert_all_planning(Obj, Surface, 0, Context, Obj)),
+%    assert_all_planning(Object, Surface, 0, Context, Object).
+
 
 assert_object_supposed_surface(Object) :-
-    writeln("Hallo4"),
+    object_at_predefined_location(Object, RoomType, FurnitureType),
+    surfaces_at_predefined_location(Surfaces, RoomType, FurnitureType),
+    nth0(0, Surfaces, Surface),
+    has_table_shape(Surface),
+    once((
+        member(TargetSurface, Surfaces),
+        once(object_fit_on_tablelike_surface(Object, TargetSurface, RefObject))
+    )),
+    context_speech_table(Context),
+    assert_all_planning(Object, TargetSurface, 0, Context, RefObject).
+
+
+assert_object_supposed_surface(Object) :-
+    object_at_predefined_location(Object, RoomType, FurnitureType),
+    surfaces_at_predefined_location(Surfaces, RoomType, FurnitureType),
+    nth0(0, Surfaces, Surface),
+    has_bucket_shape(Surface),
+    predsort(compareDistances, Surfaces, SortedSurfaces),
+    nth0(0, SortedSurfaces, TargetSurface),
+    context_speech_basket(Context),
+    assert_all_planning(Object, TargetSurface, 0, Context, Object).
+
+assert_object_supposed_surface(Object) :-
     object_most_similar_surface(Object, Surface),
-    writeln("Hallo5"),
-    writeln(Surface),
     objects_on_same_surface_in_future(Surface, OtherObjects),
-    writeln("Hallo6"),
     objects_fit_on_surface(OtherObjects, Surface, _, NotFittingObjects),
     forall(member(NotFittingObject, NotFittingObjects), retract_all_planning(NotFittingObject)),
     (   member(Object, NotFittingObjects)
         -> assert_object_new_empty_surface(Object)
-        ).
+        ; ros_info("All objects fit on surface")
+    ).
 
 % First object to be placed in case of empty target surfaces
 assert_object_supposed_surface(Object) :- % to do: what happens when there already are supposedSurfaces, but the according objects are not placed yet?
-    all_objects_on_target_surfaces([]),
+    object_at_predefined_location(Object, RoomType, FurnitureType),
+    surfaces_at_predefined_location(Surfaces, RoomType, FurnitureType),
+    objects_supported_by_surfaces(Surfaces, []),
     assert_object_new_empty_surface(Object).
 
 assert_object_new_empty_surface(Object) :-
-    next_empty_surface(Surface),
+    object_at_predefined_location(Object, RoomType, FurnitureType),
+    Location = [RoomType, FurnitureType],
+    next_empty_surface(Location, Surface),
     context_speech_new_class(Context),
     assert_all_planning(Object, Surface, 0, Context, Object),
     !.
+
 
 object_goal_surface_(Object, Surface, Context, RefObject) :-
     triple(Object, supposedSurface, Surface),
@@ -440,13 +620,16 @@ object_goal_surface_(Object, Surface, Context, RefObject) :-
     triple(Object, refObject, RefObject),
     !.
 
+
 object_goal_surface_(Object, Surface, Context, RefObject) :-
-    place_objects,
+    ignore(place_objects),
     assert_object_supposed_surface(Object),
     object_goal_surface_(Object, Surface, Context, RefObject),
     !.
-    
 
+
+object_goal_surface(Object, Surface) :-
+    object_goal_surface_(Object, Surface, _, _).
 
 
 

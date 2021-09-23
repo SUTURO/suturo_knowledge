@@ -1,8 +1,9 @@
 <launch>
   <arg name="urdf_param" default="/hsrb_lab" />
-  <arg name="urdf_launch_file" default="cleanup_bringup" />
+  <arg name="urdf_launch_file" default="test_next_object" />
   <arg name="standalone" default="false" />
   <arg name="nlg" default="true" />
+  <arg name="nlp" default="true" />
 
   <group if="$(arg standalone)">
     <include file="$(find suturo_bringup)/launch/$(arg urdf_launch_file).launch" pass_all_args="true">
@@ -18,8 +19,12 @@
       <arg name="gazebo" value="false"/>
       <arg name="suturo_rviz" value="true"/>
       <arg name="run_snap_map" value="false"/>
+      <arg name="world" default="suturo_test_next_object.world"/>
+      <arg name="publish_robot_description" default="false"/>
     </include>
   </group>
+
+  <param name="locations_ontology_file" type="str" value="robocup_practice_easy_locations.owl"/>
 
   <!--these are ParamServer.(params) -->
   <param name="param_to_load_URDF_from" type="str" value="$(arg urdf_param)" />
@@ -35,6 +40,9 @@
   
   <group if="$(arg nlg)">
     <include file="$(find suturo_nlg)/launch/suturo_nlg.launch" />
+  </group>
+  <group if="$(arg nlp)">
+    <include file="$(find suturo_textparser)/launch/suturo_nlp_goandget.launch" />
   </group>
 
 </launch>

@@ -76,6 +76,17 @@
     
 
 
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#hasDestination -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#hasDestination">
+        <rdfs:subPropertyOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#hasLocation"/>
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#isDestinationOf"/>
+    </owl:ObjectProperty>
+    
+
+
+
     <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#hasHandleState -->
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#hasHandleState">
@@ -93,6 +104,14 @@
     </owl:ObjectProperty>
     
 
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#hasOrigin -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#hasOrigin">
+        <rdfs:subPropertyOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#hasLocation"/>
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#isOriginOf"/>
+    </owl:ObjectProperty>
+    
 
     <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#hasPredefinedLocation -->
 
@@ -159,10 +178,27 @@
     
 
 
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#isDestinationOf -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#isDestinationOf">
+        <rdfs:subPropertyOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#isLocationOf"/>
+    </owl:ObjectProperty>
+    
+
+
     <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#isInCornerOf -->
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#isInCornerOf">
         <rdfs:subPropertyOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#hasLocation"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#isOriginOf -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#isOriginOf">
+        <rdfs:subPropertyOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#isLocationOf"/>
     </owl:ObjectProperty>
     
 
@@ -309,22 +345,6 @@
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Bed">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#DesignedFurniture"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#BigContainer -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#BigContainer">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Container"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#BlackBucket -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#BlackBucket">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Bucket"/>
     </owl:Class>
     
 
@@ -488,14 +508,6 @@
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#FurnitureSurface">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Surface"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#GreenBucket -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#GreenBucket">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Bucket"/>
     </owl:Class>
     
 
@@ -671,14 +683,6 @@
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#SleepingRoom">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Room"/>
         <TtSName>bedroom</TtSName>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#SmallContainer -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#SmallContainer">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Container"/>
     </owl:Class>
     
 
