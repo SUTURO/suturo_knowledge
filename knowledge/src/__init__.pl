@@ -39,6 +39,8 @@
 :- use_module(library('model/objects/object_manipulation'), [set_object_handeled/1]).
 :- use_module(library('config')).
 :- use_module(library('urdf')).
+:- use_directory('naturallanguage').
+
 :- use_module(library('model/environment/surfaces'), 
 	[
 		set_surface_visited/1,
@@ -60,10 +62,9 @@
 		surfaces_not_visited_in_room/2, 
 		robot_in_room/1, 
 		surfaces_in_room/2,
-		object_supported_by_surface/2
+		object_supported_by_surface/2,
+        objects_in_room/2
 	]).
-:- use_module(library('naturallanguage/nlg')).
-:- use_module(library('naturallanguage/nlp')).
 :- use_module(library('applications/next_object'), [next_object/2]).
 :- use_module(library('applications/path_finder'), [shortest_path_between_rooms/3]).
 :- use_module(library('locations/spatial_comp'),
@@ -73,6 +74,7 @@
 		surface_center_pose/2,
 		object_pose/2
 	]).
+
 :- ros_package_iri(knowledge, 'package://knowledge/owl/objects.owl').
 :- ros_package_iri(knowledge, 'package://knowledge/owl/rooms.owl').
 :- ros_package_iri(knowledge, 'package://knowledge/owl/locations.owl').

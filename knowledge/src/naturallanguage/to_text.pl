@@ -1,16 +1,17 @@
-:- module(nlg,
+:- module(id_to_text,
     [
-    object_tts/2,
-    surface_tts/2,
-    room_tts/2
+    objectid_to_text/2,
+    surfaceid_to_text/2,
+    roomid_to_text/2,
+    colorclass_to_text/2
     ]).
 
 :- rdf_meta
-    object_tts(r,?),
-    surface_tts(r,?),
-    room_tts(r,?).
+    objectid_to_text(r,?),
+    surfaceid_to_text(r,?),
+    roomid_to_text(r,?).
 
-object_tts(ObjID,Name):-
+objectid_to_text(ObjID,Name):-
     (ask(has_type(ObjID, ObjClass))
     ->  (ask(triple(ObjClass, 'http://www.semanticweb.org/suturo/ontologies/2020/3/objects#TtSName',_))
         -> ask(triple(ObjClass, 'http://www.semanticweb.org/suturo/ontologies/2020/3/objects#TtSName', Name))
@@ -30,7 +31,7 @@ object_tts(ObjID,Name):-
     ).
 
 
-surface_tts(SurID,Name):-
+surfaceid_to_text(SurID,Name):-
     % TODO what is SurID?
     % like iai_kitchen/bookshelf_clone_0_floor_1_piece ?
     % like http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#PhysicalObject_BWLUONCK ?
@@ -56,6 +57,11 @@ surface_tts(SurID,Name):-
     atomic_concat('the ', NameWoThe, Name).
     % Name e.g. the bed table 
 
-%TODO
-room_tts(RoomID,Name):-
+
+colorclass_to_text(ColorClass, ColorName):-
+    split_string(ColorClass,"#","",Split),
+    nth0(1,Split,ColorName).
+
+
+roomid_to_text(RoomID,Name):-
     Name  = RoomID.

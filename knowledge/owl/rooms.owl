@@ -76,6 +76,7 @@
     
 
 
+
     <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#hasDestination -->
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#hasDestination">
@@ -83,6 +84,7 @@
         <owl:inverseOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#isDestinationOf"/>
     </owl:ObjectProperty>
     
+
 
 
     <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#hasHandleState -->
@@ -110,7 +112,6 @@
         <owl:inverseOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#isOriginOf"/>
     </owl:ObjectProperty>
     
-
 
     <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#hasPredefinedLocation -->
 
@@ -175,6 +176,7 @@
         <rdfs:domain rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Room"/>
     </owl:ObjectProperty>
     
+
 
 
     <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#isDestinationOf -->
