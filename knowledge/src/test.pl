@@ -85,18 +85,6 @@ setup_suturo_test_rooms :-
     )).
 
 
-%setup_suturo_test_objects :-
-%    get_suturo_test_objects(TestObjects),
-%    length(TestObjects, Count),
-%    (Count == 0
-%    -> (
-%        create_object('http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Bowl', 0.8, ['map', [1.3, -0.17, 0.619873], [0, 0, 0, 1]], [0.3, 0.3, 0.3], _, 1.0, [255, 0, 0], 1.0, _),
-%        create_object('http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Cokecan', 0.9, ['map', [1.3, 0.07, 0.619873], [0, 0, 0, 1]], [0.4, 0.4, 0.4], _, 1.0, [255, 0, 0], 1.0, _),
-%        create_object('http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Cokecan', 0.9, ['map', [0.7, 4.8, 0.81], [0, 0, 0, 1]], [0.4, 0.4, 0.4], _, 1.0, [255, 0, 0], 1.0, _),
-%        create_object('http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Spoon', 0.96, ['map', [0.7, 4.8, 0.44], [0, 0, 0, 1]], [0.2, 0.2, 0.2], _, 1.0, [0, 0, 255], 1.0, _)
-%    )).  
-
-
 setup_suturo_test_objects :-
     create_object('http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Bowl', 0.8, ['map', [2.5, 4.0, 0.619873], [0, 0, 0, 1]], [0.3, 0.3, 0.3], _, 1.0, [255, 0, 0], 1.0, _),
     create_object('http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Cokecan', 0.9, ['map', [1.5, 1.0, 0.619873], [0, 0, 0, 1]], [0.4, 0.4, 0.4], _, 1.0, [255, 0, 0], 1.0, _),

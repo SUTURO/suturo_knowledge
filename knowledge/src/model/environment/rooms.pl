@@ -89,11 +89,24 @@ init_room(RoomLink) :-
     assign_room_surfaces(Room).
 
 
+%% init_outside is det
+%
+% Creates a single instance of type hsr_rooms:'Outside' and 
+% assigns surfaces
+%
 init_outside :-
     tell(has_type(Outside, hsr_rooms:'Outside')),
     assign_room_surfaces(Outside).
 
 
+
+%% create_room(?RoomLink, ?Room) is nondet
+%
+% creates an instance of type hsr_rooms:'Room'
+%
+% @param RoomLink, URDF link name as string
+% @param Room, created room instance
+%
 create_room(RoomLink, Room) :-
     sub_string(RoomLink,_,_,_,"kitchen"),
     tell(has_type(Room, hsr_rooms:'Kitchen')),
@@ -126,11 +139,25 @@ create_room(RoomLink, Room) :-
     !.
 
 
+%% assign_room_points(?Room, ?RoomLink) is nondet
+%
+% Assigns center and corner points to the given room instance
+%
+% @param Room, room instance
+% @param RoomLink, URDF room link name as string
+%
 assign_room_points(Room, RoomLink) :-
     assign_room_center_point(Room, RoomLink),
     assign_room_corner_points(Room, RoomLink).
 
 
+%% assign_room_center_point(?Room, ?RoomLink) is det
+%
+% Assigns the center point to the given room instance
+%
+% @param Room, room instance
+% @param RoomLink, URDF room link name
+%
 assign_room_center_point(Room, RoomLink) :-
     tell(has_type(CenterPoint, knowrob:'Point')),
     tell(has_urdf_name(CenterPoint, RoomLink)),
@@ -139,6 +166,13 @@ assign_room_center_point(Room, RoomLink) :-
     tell(triple(CenterPointLocation, knowrob:'isInCenterOf', Room)).
 
 
+%% assign_room_corner_points(?Room, ?RoomLink) is nondet
+%
+% Assigns all associated corner points to the given room instance
+%
+% @param Room, room instance
+% @param Room Link, URDF room link name
+%
 assign_room_corner_points(Room, RoomLink) :-
     tell(has_type(CornerPointCollection, dul:'Collection')),
     get_urdf_id(URDF),
@@ -158,11 +192,28 @@ assign_room_corner_points(Room, RoomLink) :-
     tell(triple(CornerPointLocation, hsr_rooms:'isInCornerOf', Room)).
 
 
+%% assign_room_surfaces(?Room) is det
+%
+% Assigns an instance of type hsr_rooms:'Floor' as 
+% a surface to the given room instance
+%
+% @param Room, room instance
+%
 assign_room_surfaces(Room) :-
     tell(has_type(Floor, hsr_rooms:'Floor')),
     tell(triple(Room, hsr_rooms:'hasSurface', Floor)).
 
 
+
+%% room_center_point_position is nondet
+%
+% returns the position of the center point of the
+% given room instance
+%
+% @param Room, room instance
+% @param RoomLink, URDF room link name as string
+% @param [X, Y, Z], position in cartesian coordinates
+%
 room_center_point_position(Room, RoomLink, [X, Y, Z]) :-
     triple(CenterPointLocation, knowrob:'isInCenterOf', Room),
     has_location(CenterPoint, CenterPointLocation),
@@ -171,6 +222,15 @@ room_center_point_position(Room, RoomLink, [X, Y, Z]) :-
     tf_lookup_transform(Origin, RoomLink, pose([X, Y, Z], _)).
 
 
+
+%% room_corner_point_positions(?Room, ?Positions) is nondet
+%
+% returns all corner point positions of the corner points
+% of then given room instance
+%
+% @param Room, room instance
+% @param Positions, list of cartesian coordinates
+%
 room_corner_point_positions(Room, Positions) :-
     once((
         triple(CornerPointLocation, hsr_rooms:'isInCornerOf', Room),
@@ -186,6 +246,11 @@ room_corner_point_positions(Room, Positions) :-
     )).
 
 
+%% connect_rooms is det
+%
+% Links all room linkage instances to the rooms it connects
+%
+%
 connect_rooms :-
     forall((
         is_room_linkage(RoomLinkage),
@@ -194,6 +259,14 @@ connect_rooms :-
     assign_connecting_rooms(RoomLinkage, RoomLinkageLink)).
 
 
+
+%% assign_connecting_rooms(?RoomLinkage, ?RoomLinkageLink) is nondet
+%
+% assigns the connected rooms to the given room linkage
+%
+% @param RoomLinkage, room linkage instance
+% @param RoomLinkageLink, URDF room linkage name as string
+%
 assign_connecting_rooms(RoomLinkage, RoomLinkageLink) :-
     split_string(RoomLinkageLink, ":", "", [ExpRoom1Link, ExpRoom2Link, _]),
     has_type(Room1, hsr_rooms:'Room'),

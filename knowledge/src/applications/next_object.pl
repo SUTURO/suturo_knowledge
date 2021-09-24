@@ -38,6 +38,13 @@
     ]).
 
 
+%% next_object(?Object, 0) is nondet
+%
+% Returns the next object to handle by using the greedy algorithm
+%
+% @param Object, object instance
+% @param 0, algorithm identifier as integer
+%
 next_object(Object, 0) :-
     objects_not_handeled(NotHandledObjects),
     writeln("Objects not handled"),
@@ -75,6 +82,14 @@ next_object(Object, 0) :-
     !.
 
 
+%% next_object(?Object, 1) is nondet
+%
+% Returns the next object to handle by 
+% using the cheapest insertion algorithm
+%
+% @param Object, object instance
+% @param 1, algorithm identifier as integer
+%
 next_object(Object, 1) :-
     create_object_paths,
     create_start_mark_paths,
@@ -102,6 +117,14 @@ next_object(Object, 1) :-
     )).
 
 
+%% next_object(?Object, 2) is nondet
+%
+% Returns the next object to handle by 
+% returning the object, which is closest to the robot
+%
+% @param Object, object instance
+% @param 2, algorithm identifier as integer
+%
 next_object(Object, 2) :-
     objects_not_handeled(ObjectsNotHandled),
     findall(Obj, (member(Obj, ObjectsNotHandled), is_misplaced(Obj)), Objects),
@@ -109,12 +132,24 @@ next_object(Object, 2) :-
     nth0(0, SortedObjs, Object).
 
 
+%% forget_tour is det
+%
+% Removes a created tour from the knowledge base
+%
+%
 forget_tour :-
     writeln("Call forget tour"),
     forall(triple(Object, dul:'follows', _), tripledb_forget(Object, dul:'follows', _)),
     forall(has_type(StartMark, hsr_rooms:'StartMark'), tripledb_forget(StartMark, _, _)).
 
 
+%% current_tour(?Tour) is det
+%
+% returns a tour consisting of a sequence of objects
+% The sequence is the sequence, in which objects should be handeled
+%
+% @param Tour, list of object pairs
+%
 current_tour(Tour) :-
     objects_not_handeled(NotHandeledObjects),
     findall([Predecessor, Object],
@@ -125,6 +160,12 @@ current_tour(Tour) :-
     Tour).
 
 
+%% objects_not_in_current_tour(?Objects) is det
+%
+% returns all objects not part of the tour
+%
+% @param Objects, list of objects
+%
 objects_not_in_current_tour(Objects) :-
     objects_not_handeled(NotHandeledObjects),
     findall(Object,
@@ -135,6 +176,11 @@ objects_not_in_current_tour(Objects) :-
     Objects).
 
 
+%% cheapest_insertion is det
+%
+% performs the cheapest insertion algorithm
+%
+%
 cheapest_insertion :-
     objects_not_in_current_tour([]).
 
@@ -168,6 +214,16 @@ cheapest_insertion :-
     cheapest_insertion.
 
 
+%% object_insertion_costs(?ObjectToInsert, ?Object1, Object2, ?Costs) is nondet
+%
+% Calculates the costs when ObjectToInsert is inserted in the tour between
+% Object1 and Object2
+%
+% @param ObjectToInsert, object instance
+% @param Object1, object instance
+% @param Object2, object instance
+% @param Costs, float
+%
 object_insertion_costs(ObjectToInsert, Object1, Object2, Costs) :-
     path_costs(Object1, Object2, CurrentPathCosts),
     path_costs(Object1, ObjectToInsert, CostsToNewObject),
@@ -175,6 +231,14 @@ object_insertion_costs(ObjectToInsert, Object1, Object2, Costs) :-
     Costs is CostsToNewObject + CostsFromNewObject - CurrentPathCosts.
     
 
+%% insert_object_into_tour(?ObjectToInsert, ?Object1, ?Object2) is nondet
+%
+% Inserts  ObjectToInsert between Object1 and Object2 into the current tour
+%
+% @param ObjectToInsert, object instance
+% @param Object1, object instance
+% @param Object2, object instance 
+%
 insert_object_into_tour(ObjectToInsert, Object1, Object2) :-
     tripledb_forget(Object2, dul:'follows', Object1),
     tell(triple(ObjectToInsert, dul:'follows', Object1)),
@@ -182,6 +246,12 @@ insert_object_into_tour(ObjectToInsert, Object1, Object2) :-
 
 
 
+%% current_object(?Object) is nondet
+%
+% returns the object, which has been handled last
+%
+% @param Object, object instance
+%
 current_object(Object) :-
     is_suturo_object(Object),
     handeled(Object),
@@ -189,6 +259,13 @@ current_object(Object) :-
     not handeled(SuccessorObject).
 
 
+%% objects_benefits(?Objects, ?ObjectBenefits) is det
+%
+% returns the object benefits for a list of obejects
+%
+% @param Objects, list of object instances
+% @param ObjectBenefits, list of floats
+%
 objects_benefits(Objects, ObjectBenefits) :-
     findall([Object, Benefit],
     (
@@ -198,10 +275,25 @@ objects_benefits(Objects, ObjectBenefits) :-
     ObjectBenefits).
 
 
+%% object_benefit(?Object, ?Benefit) is nondet
+%
+% returns the benefit for object Object
+%
+% @param Object, object instance
+% @param Benefit, float
+%
 object_benefit(Object, Benefit) :-
     ask(triple(Object, hsr_objects:'hasConfidenceClassValue', Benefit)).
 
 
+%% objects_costs(?OriginPosition, ?Objects, ?ObjectCosts) is det
+%
+% returns the object costs for a list of objects
+%
+% @param Objects, list of object instances
+% @param ObjectCosts, list of floats
+% @param OriginPosition, position as cartesian coordinates
+%
 objects_costs(OriginPosition, Objects, ObjectCosts) :-
     findall([Object, Costs],
     (
@@ -211,6 +303,14 @@ objects_costs(OriginPosition, Objects, ObjectCosts) :-
     ObjectCosts).
 
 
+%% object_costs(?OriginPosition, ?Object, ?Costs) is nondet
+%
+% returns the benefit for object Object
+%
+% @param Object, object instance
+% @param Benefit, float
+% @param OriginPosition, position as cartesian coordinates
+%
 object_costs(OriginPosition, Object, Costs) :-
     distance_to_go(OriginPosition, Object, DistanceToGo),
     %robot_velocity(RobotVelocity),
@@ -218,23 +318,55 @@ object_costs(OriginPosition, Object, Costs) :-
     Costs is DistanceToGo.
 
 
+%% distance_to_go(?OriginPosition, ?Object, ?Distance) is nondet
+%
+% calculates the distance from OriginPosition to Object and from
+% Object to the Predefined locations
+%
+% @param OriginPosition, position in cartesian coordinates
+% @param Object, object instance
+% @param Distance, float
+%
 distance_to_go(OriginPosition, Object, Distance) :-
     distance_to_object(OriginPosition, Object, DistanceToObject),
     distance_to_goal_location(Object, DistanceToLocation),
     Distance is DistanceToObject + DistanceToLocation.
 
 
+%% distance_to_object(?OriginPosition, ?Object, ?Distance) is nondet
+%
+% calculates the distance from OriginPosition to Object
+%
+% @param OriginPosition, position in cartesian coordinates
+% @param Object, object instance
+% @param Distance, float
+%
 distance_to_object(OriginPosition, Object, Distance) :-
     object_pose(Object, [_, _,[X, Y, _], _]),
     euclidean_distance(OriginPosition, [X, Y, 0], Distance).
 
 
+%% distance_to_goal_location(?Object, ?Distance) is nondet
+%
+% calculates the distance from Object to the Predefined Location
+%
+% @param OriginPosition, position in cartesian coordinates
+% @param Object, object instance
+% @param Distance, float
+%
 distance_to_goal_location(Object, Distance) :-
     object_goal_location(Object, GoalPosition),
     object_pose(Object, [_, _,ObjectPosition, _]),
     euclidean_distance(ObjectPosition, GoalPosition, Distance).
 
 
+%% object_goal_location(?Object, ?GoalPosition) is nondet
+%
+% returns the goal position for Object
+%
+% @param Object, object instance
+% @param GoalPosition, position in cartesian coordinates
+%
 object_goal_location(Object, GoalPosition) :-
     object_pose(Object, [_, _,ObjectPosition, _]),
     object_at_predefined_location(Object, RoomType, FurnitureType),
@@ -243,6 +375,12 @@ object_goal_location(Object, GoalPosition) :-
     surface_pose_in_map(GoalSurface, [GoalPosition, _]).
 
 
+%% create_object_pathsis det
+%
+% creates an instance of type hsr_rooms:'Path' for all
+% pairs od object instances
+%
+%
 create_object_paths :-
     hsr_existing_objects(Objects),
     forall(
@@ -261,6 +399,12 @@ create_object_paths :-
         assign_object_path_costs(Object2, Object1, Path2)
     )).
 
+
+%% create_start_mark_paths is det
+%
+% creates a path from the current position of the robot
+% to all object intances
+%
 create_start_mark_paths :-
     objects_not_handeled(NotHandeledObjects),
     forall(
@@ -279,12 +423,29 @@ create_start_mark_paths :-
     )).
 
 
+%% create_object_path(?Object1, Object2, Path) is det
+%
+% creates an instance of type hsr_rooms:'Path' between 
+% Object1 and Object2
+%
+% @param Object1, object instance
+% @param Object2, object instance
+% @param Path, path instance
+%
+%
 create_object_path(Object1, Object2, Path) :-
     tell(has_type(Path, hsr_rooms:'Path')),
     tell(triple(Object1, hsr_rooms:'isOriginOf', Path)),
     tell(triple(Object2, hsr_rooms:'isDestinationOf', Path)).
 
 
+%% has_object_path(?Object1, ?Object2) is nondet
+%
+% True if there exists a path between Object1 and Object2
+%
+% @param Object1, object instance
+% @param Object2, object instance
+%
 has_object_path(Object1, Object2) :-
     ( triple(Object1, hsr_rooms:'isOriginOf', Path), 
       triple(Object2, hsr_rooms:'isDestinationOf', Path));
@@ -292,12 +453,28 @@ has_object_path(Object1, Object2) :-
       triple(Object1, hsr_rooms:'isDestinationOf', Path)).
 
 
+%% assign_object_path_costs(?Origin, ?Destination, ?Path) is nondet
+%
+% Calculates the path costs of Path connecting Origin and Destination
+%
+% @param Origin, object instance
+% @param Destination, object instance
+% @param Path, path instance
+%
 assign_object_path_costs(Origin, Destination, Path) :-
     object_goal_location(Origin, GoalPosition),
     object_costs(GoalPosition, Destination, Costs),
     tell(triple(Path, hsr_rooms:'hasCosts', Costs)).
 
 
+%% path_costs(?Origin, ?Destination, ?Costs) is nondet
+%
+% CReturns the costs of the path connecting Origin and Destination
+%
+% @param Origin, object instance
+% @param Destination, object instance
+% @param Costs, float
+%
 path_costs(Origin, Destination, Costs) :-
     has_origin(Path, Origin),
     has_destination(Path, Destination),

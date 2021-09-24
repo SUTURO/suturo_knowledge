@@ -91,10 +91,11 @@ object_at_location(Object, Room, Furniture, Surface) :-
     !.
 
 
-%%
+%% forget_object_at_location(?Object) is nondet
 %
+% Removes the actual location of Object from the knowledge base
 %
-%
+% @param Object, object instance
 %
 forget_object_at_location(Object) :-
     (
@@ -109,6 +110,13 @@ forget_object_at_location(Object) :-
     not has_location(Object, _).
 
 
+%% object_in_room(?Object, ?Room) is nondet
+%
+% True if Object is located in Room
+%
+% @param Object, object instance
+% @param Room, room instance
+%
 object_in_room(Object, Room) :-
     once(has_location(Object, ObjectLocation)),
     triple(ObjectLocation, knowrob:'isInsideOf', Room),
@@ -124,6 +132,13 @@ object_in_room(Object, Room) :-
     tell(triple(ObjectLocation, knowrob:'isInsideOf', Room)).
 
 
+%% objects_in_room(?Room, ?Objects) is det
+%
+% Returns all objects located in Room
+%
+% @param Room, room instance
+% @param Objects, list of object instances
+%
 objects_in_room(Room, Objects) :-
     findall(Object,
     (
@@ -133,6 +148,13 @@ objects_in_room(Room, Objects) :-
     Objects).
 
 
+%% object_on_furniture(?Object, ?Furniture) is nondet
+%
+% True if Object is located on Fruniture
+%
+% @param Object, object instance
+% @param Furniture, furniture instance
+%
 object_on_furniture(Object, Furniture) :-
     once(has_location(Object, ObjectLocation)),
     triple(ObjectLocation, knowrob:'isInsideOf', Furniture),
@@ -150,6 +172,13 @@ object_on_furniture(Object, Furniture) :-
     object_supported_by_surface(Object, Surface).
 
 
+%% objects_on_furniture(?Furniture, ?Objects) is det
+%
+% Returns all objects located on Furniture
+%
+% @param Furniture, furniture instance
+% @param Objects, list of object instances
+%
 objects_on_furniture(Furniture, Objects) :-
     findall(Object,
     (
@@ -159,6 +188,14 @@ objects_on_furniture(Furniture, Objects) :-
     Objects).
 
 
+
+%% objects_supported_by_surface(?Object, ?Surface) is nondet
+%
+% True if Object is located on Surface
+%
+% @param Object, object instance
+% @param Surface, surface instance
+%
 object_supported_by_surface(Object, Surface) :-
     once(has_location(Object, ObjectLocation)),
     triple(ObjectLocation, soma:'isSupportedBy', Surface),
@@ -173,6 +210,14 @@ object_supported_by_surface(Object, Surface) :-
     tell(triple(ObjectLocation, soma:'isSupportedBy', Surface)).
 
 
+
+%% objects_supported_by_surface(?Surface, ?Objects) is det
+%
+% returns all objects located on Surface
+%
+% @param Surface, surface instance
+% @param Objects, list of object instances
+%
 objects_supported_by_surface(Surface, Objects) :-
     findall(Object,
     (
@@ -182,6 +227,13 @@ objects_supported_by_surface(Surface, Objects) :-
     Objects).
 
 
+%% objects_supported_by_surfaces(?Surfaces, ?Objects) is det
+%
+% returns all objects located on the list of Surfaces
+%
+% @param Surfaces, list of surface instances
+% @param Objects, list of object instances
+%
 objects_supported_by_surfaces(Surfaces, Objects) :-
     findall(Object,
     (
@@ -196,7 +248,13 @@ objects_supported_by_surfaces(Surfaces, Objects) :-
 %%%%%%%%%% actual furniture location %%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
+%% furniture_in_room(?Furniture, ?Room) is nondet
+%
+% True if Furniture is located in Room
+%
+% @param Furniture, furniture instance
+% @param Room, room instance
+%
 furniture_in_room(Furniture, Room) :-
     once(has_location(Furniture, FurnitureLocation)),
     triple(FurnitureLocation, knowrob:'isInsideOf', Room),
@@ -213,7 +271,13 @@ furniture_in_room(Furniture, Room) :-
     !.
 
 
-
+%% furnitures_in_room(?Room, ?Furnitures) is det
+%
+% returns all furnitures located in Room
+%
+% @param Furnitures, list of furniture instances
+% @param Room, room instance
+%
 furnitures_in_room(Room, Furnitures) :-
     all_furnitures(AllFurnitures),
     findall(Furniture, 
@@ -229,11 +293,25 @@ furnitures_in_room(Room, Furnitures) :-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
+%% surface_in_room(?Surface, ?Room) is nondet
+%
+% True if Surface is located in Room
+%
+% @param Surface, surface instance
+% @param Room, room instance
+%
 surface_in_room(Surface, Room) :-
     has_surface(Furniture, Surface),
     furniture_in_room(Furniture, Room).
 
 
+%% surfaces_in_room(?Room, ?Surfaces) is det
+%
+% returns all surfaces located in Room
+%
+% @param Surfaces, list of surface instances
+% @param Room, room instance
+%
 surfaces_in_room(Room, Surfaces) :-
     furnitures_in_room(Room, Furnitures),
     findall(Surface, 
@@ -244,6 +322,13 @@ surfaces_in_room(Room, Surfaces) :-
     Surfaces).
 
 
+%% surfaces_not_visited_in_room(?Room, ?Surfaces) is det
+%
+% returns all surfaces not visited located in Room 
+%
+% @param Surfaces, list of surface instances
+% @param Room, room instance
+%
 surfaces_not_visited_in_room(Room, Surfaces) :-
     is_room(Room),
     surfaces_not_visited(SurfacesNotVisited),
@@ -260,6 +345,12 @@ surfaces_not_visited_in_room(Room, Surfaces) :-
 %%%%%%%%%% actual robot location %%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+%% robot_in_room(?Room) is nondet
+%
+% True if robot is located in Room
+%
+% @param Room, room instance
+%
 robot_in_room(Room) :-
     get_urdf_origin(Origin),
     tf_lookup_transform(Origin, 'base_footprint', pose(RobotPosition, _)),
@@ -272,6 +363,13 @@ robot_in_room(Room) :-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
+%% position_in_room(?Position, ?Room) is nondet
+%
+% True if  Position is located in Room
+%
+% @param Room, room instance
+% @param Postion, point as cartesian coordinates
+%
 position_in_room(Position, Room) :-
     is_room(Room),
     room_corner_point_positions(Room, CornerPoints),
@@ -284,11 +382,24 @@ position_in_room(_, Room) :-
     !.
 
 
+%% pose_is_outside(?Position) is nondet
+%
+% True if Position is outside
+%
+% @param Position, point as cartesian coordinates
+%
 pose_is_outside(Position) :-
     position_in_room(Position, Room),
     has_type(Room, hsr_rooms:'Outside').
 
 
+%% position_supported_by_surface(?Position, ?Surface) is nondet
+%
+% True if Position is located on Surface
+%
+% @param Position, point as cartesian coordinates
+% @param Surface, surface instance
+%
 % Position is relative to map
 position_supported_by_surface(Position, Surface) :-
     is_surface(Surface),
@@ -315,6 +426,14 @@ position_supported_by_surface([X,Y,Z], Surface) :-
 %%%%%%%%%%%% Point in Polygon Test %%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+
+%% point_in_polygon(?Q, ?PolygonCornerPoints) is nondet
+%
+% True id Q is located inside the area defined by PolygonCornerPoints
+%
+% @param Q, point as cartesian coordinates
+% @param PolygonCornerPoints, lits of points as cartesian coordinates
+%
 point_in_polygon(Q, PolygonCornerPoints) :-
     nth0(0, PolygonCornerPoints, First),
     InitialSign is -1,

@@ -66,10 +66,10 @@ get_door_state(Door, DoorState) :-
     ).
 
 
-%% init_doors
+%% init_doors is nondet
 %  
-%  Creates an object instance of concept door
-%  for each door specified in the URDF
+%  Creates a room linkage instance
+%  for each door and passage specified in the URDF
 %  in the knowledge base and initializes
 %  its opening angle to 0.0 (fully closed)
 init_doors :-
@@ -88,6 +88,14 @@ init_doors :-
     create_passage(_, Link)).
 
 
+%% init_door(?DoorLink) is nondet
+%
+% Initializes a single instance of
+% concept Door and creates door joint 
+% door hinge and door handles
+%
+% @param DoorLink, string of corresponding URDF link name
+%
 init_door(DoorLink) :-
     create_door(DoorLink, Door),
     create_door_joint(DoorLink),
@@ -95,11 +103,26 @@ init_door(DoorLink) :-
     create_door_handles(Door, DoorLink).
 
 
+%% create_door(?DoorLink, ?Door) is nondet
+%
+% Creates a single instance of
+% concept Door
+%
+% @param DoorLink, string of corresponding URDF link name
+% @param Door, created door instance
+%
 create_door(DoorLink, Door) :-
     tell(has_type(Door, hsr_rooms:'Door')),
     tell(has_urdf_name(Door, DoorLink)).
 
 
+%% create_door_joint(?DoorLink) is nondet
+%
+% Creates the door joint as an instance of 
+% concept soma:'Joint'
+%
+% @param DoorLink, string of corresponding URDF link name
+%
 create_door_joint(DoorLink) :-
     get_urdf_id(URDF),
     urdf_link_parent_joint(URDF, DoorLink, DoorJointName),
@@ -110,6 +133,14 @@ create_door_joint(DoorLink) :-
     tell(triple(DoorJointState, soma:'hasJointPosition', 0.0)).
 
 
+%% create_door_hinge(?Door, ?DoorLink) is nondet
+%
+% Creates the door hinge as an instance of 
+% concept hsr_rooms:'Hinge'
+%
+% @param Door, door instance
+% @param DoorLink, string of corresponding URDF link name
+%
 create_door_hinge(Door, DoorLink) :-
     get_urdf_id(URDF),
     urdf_link_parent_joint(URDF, DoorLink, HingeJointName),
@@ -119,6 +150,14 @@ create_door_hinge(Door, DoorLink) :-
     tell(triple(Door, knowrob:'doorHingedTo', Hinge)).
 
 
+%% create_door_handles(?Door, ?DoorLink) is nondet
+%
+% Creates the door handles as instances of 
+% concept hsr_rooms:'DoorHandle'
+%
+% @param Door, door instance
+% @param DoorLink, string of corresponding URDF link name
+%
 create_door_handles(Door, DoorLink) :-
     get_urdf_id(URDF),
     urdf_link_child_joints(URDF, DoorLink, ChildJoints),
@@ -142,12 +181,23 @@ create_door_handles(Door, DoorLink) :-
     )).
 
 
+%% create_passage(?Passagem ?PassageLink) is nondet
+%
+% Creates an instance of concept hsr_rooms:'Passage'
+%
+% @param Passage, the created passage instance
+% @param PassageLink, the URDF link name
+%
 create_passage(Passage, PassageLink) :-
     tell(has_type(Passage, hsr_rooms:'Passage')),
     tell(has_urdf_name(Passage, PassageLink)).
 
 
-
+%% init_door_paths is det 
+%
+% Creates an instance of the concept hsr_rooms:'Path'
+% for all pairs of room linkages linked to the same room
+%
 init_door_paths :-
     findall([OriginLinkage, DestinationLinkage],
     (   
@@ -170,6 +220,15 @@ init_door_paths :-
     )).
 
 
+%% assign_path_costs(?Path, ?Origin, ?Destination) is nondet
+%
+% Calculates the distance between Origin and Destination and 
+% assigns the calculated distance to Path as path costs
+%
+% @param Path, path instance
+% @param Origin, room linkage instance
+% @param Destination, room linkage instance
+%
 assign_path_costs(Path, Origin, Destination) :-
     has_urdf_name(Origin, OriginURDFName),
     urdf_frame_add_prefix_(OriginURDFName, OriginLink),
@@ -195,6 +254,13 @@ assign_path_costs(Path, Origin, Destination) :-
     )).
 
 
+%% update_door_paths(?Door) is nondet
+%
+% Recalculates path costs for all path instances
+% associated with the given room linkage instance 
+%
+% @param Door, a room linkage instance
+%
 update_door_paths(Door) :-
     findall(Path, 
     (
@@ -210,7 +276,13 @@ update_door_paths(Door) :-
     )).
 
 
-
+%% door_joint(?Door, ?DoorJoint) is nondet
+%
+% Returns the door joint of the given door instance
+%
+% @param Door, door instance
+% @param DoorJoint, door joint instance
+%
 door_joint(Door, DoorJoint) :-
     has_urdf_name(Door, DoorLink),
     get_urdf_id(URDF),
@@ -218,9 +290,24 @@ door_joint(Door, DoorJoint) :-
     has_urdf_name(DoorJoint, DoorJointName).
 
 
+%% door_hinge(?Door, ?Hinge) is nondet
+%
+% Returns the hinge of the given door instance
+%
+% @param Door, door instance
+% @param Hinge, hinge instance
+%
 door_hinge(Door, Hinge) :-
     triple(Door, knowrob:'doorHingedTo', Hinge).
 
+
+%% door_handles(?Door, ?DoorHandles) is nondet
+%
+% Returns the door handles of the given door
+%
+% @param Door, door instance
+% @param DoorHandles, list of door handle instances
+%
 door_handles(Door, DoorHandles) :-
     findall(DoorHandle,
     (
@@ -229,10 +316,26 @@ door_handles(Door, DoorHandles) :-
     ), 
     DoorHandles).
 
+
+%% inside_door_handle(?Door, ?DoorHandle) is nondet
+%
+% Returns the inside door handle of the given door
+%
+% @param Door, door instance
+% @param DoorHandle, door handle instance
+%
 inside_door_handle(Door, DoorHandle) :-
     triple(Location, soma:'isInsideOf', Door),
     once(has_location(DoorHandle, Location)).
 
+
+%% outside_door_handle(?Door, ?DoorHandle) is nondet
+%
+% Returns the outside door handle of the given door
+%
+% @param Door, door instance
+% @param DoorHandle, door handle instance
+%
 outside_door_handle(Door, DoorHandle) :-
     triple(Location, hsr_rooms:'isOutsideOf', Door),
     once(has_location(DoorHandle, Location)).

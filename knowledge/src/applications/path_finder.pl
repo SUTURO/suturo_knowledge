@@ -9,6 +9,15 @@
 :- use_module(library('model/environment/doors'),[get_door_state/2]).
 :- use_module(library('locations/spatial_comp'), [euclidean_distance/3]).
 
+
+%% shortest_path_between_rooms(?OriginRoom, ?DestinationRoom, ?Path) is nondet
+%
+% returns the shortest path between OriginRoom and DestinationRoom
+%
+% @param OriginRoom, room instance
+% @param DestinationRoom, room instance
+% @param Path, list of room linkages
+%
 shortest_path_between_rooms(OriginRoom, DestinationRoom, Path) :-
     robot_velocity(Velocity),
     door_opening_time(OpeningTime),
@@ -42,6 +51,17 @@ shortest_path_between_rooms(OriginRoom, DestinationRoom, Path) :-
 %%%%%%%%%%%%%%%% A* Algorithm %%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+
+%% a_star(?Origin, ?DistanceToOrigin, ?Destination, ?Path, ?Costs) is nondet
+%
+% Performs the A* star algorithm to optimize over paths between room linakges
+%
+% @param Origin, room linkage instance
+% @param DistanceToOrigin, float
+% @param Destination, room linkage instance
+% @param Path, path instance
+% @param Costs, float
+%
 a_star(Origin, DistanceToOrigin, Destination, Path, Costs) :-
     OpenList = [Origin],
     ClosedList = [],
