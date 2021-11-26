@@ -28,8 +28,8 @@ class StoreObjectInfoServer(object):
 
         success = True
 
-	if goal.detectionData == []:
-	    rospy.loginfo('detectionData was empty')
+        if goal.detectionData == []:
+            rospy.loginfo('detectionData was empty')
 
         for data in goal.detectionData:
 
@@ -82,12 +82,12 @@ class StoreObjectInfoServer(object):
             # (1) is_legal_obj_position
             # (2) create_object_at()
             query_string = ("is_legal_obj_position([" + ", ".join([x, y, z]) + "]),"+
-				"create_object('http://www.semanticweb.org/suturo/ontologies/2020/3/objects#" + obj_class + "'," + confidence_class + "," +
-				"['" + source_frame + "',[" + ", ".join([x, y, z]) + "],[" + ", ".join([qx, qy, qz, qw]) + "]]," +
-				"[" + ", ".join([depth, width, height]) + "], " +
-				"'box'," + "1" + # TODO shape conf is allways 1
-				",[" + ", ".join([r, g, b]) + "], " + confidence_color +
-				", ObjID).")
+                                "create_object('http://www.semanticweb.org/suturo/ontologies/2020/3/objects#" + obj_class + "'," + confidence_class + "," +
+                                "['" + source_frame + "',[" + ", ".join([x, y, z]) + "],[" + ", ".join([qx, qy, qz, qw]) + "]]," +
+                                "[" + ", ".join([depth, width, height]) + "], " +
+                                "'box'," + "1" + # TODO shape conf is allways 1
+                                ",[" + ", ".join([r, g, b]) + "], " + confidence_color +
+                                ", ObjID).")
 
             rospy.loginfo('Send query: \n' + query_string)
             solutions = prolog.all_solutions(query_string)
