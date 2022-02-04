@@ -30,13 +30,13 @@
   <param name="param_to_load_URDF_from" type="str" value="$(arg urdf_param)" />
   <param name="initial_package" type="string" value="knowledge" />
 
-  <node name="rosprolog" pkg="rosprolog" type="rosprolog_node" cwd="node" output="screen"/>
+  <node name="rosprolog" pkg="rosprolog" type="rosprolog_node" cwd="node"/>
 
-  <node name="store_object_info_server" pkg="knowledge" type="store_object_info_server.py" output="screen"/>
+  <node name="store_object_info_server" pkg="knowledge" type="store_object_info_server.py"/>
 
-  <node name="manipulation_subscriber" pkg="knowledge" type="manipulation_subscriber.py" output="screen"/>
+  <node name="manipulation_subscriber" pkg="knowledge" type="manipulation_subscriber.py"/>
 
-  <node name="marker_objectstate" pkg="knowledge" type="marker_objectstate.py" output="screen"/>
+  <node name="marker_objectstate" pkg="knowledge" type="marker_objectstate.py"/>
   
   <group if="$(arg nlg)">
     <include file="$(find suturo_nlg)/launch/suturo_nlg.launch" />
