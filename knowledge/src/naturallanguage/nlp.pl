@@ -14,6 +14,8 @@
     deliver_object_pose/2
     ]).
 
+:- use_module(library('actual_locations'),[objects_in_room/2]).
+
 :- rdf_meta
     all_obj_names(r),
     all_obj_names_with_id(r),
