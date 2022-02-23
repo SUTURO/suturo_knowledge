@@ -51,10 +51,22 @@ create_object(PerceivedObjectType, PercTypeConf, [Frame,Position,Rotation], [Wid
 
     %%% ================ Object validation
     % TODO make this dynamic to constraints
-    object_size_ok([Width, Depth, Height]), % Dont add the object when the size is to big/small
-    validate_confidence(class, PercTypeConf, TypeConf),
-    validate_confidence(shape, PercShapeConf, ShapeConf),
-    validate_confidence(color, PercColorConf, ColorConf),
+    (
+	object_size_ok([Width, Depth, Height]); % Dont add the object when the size is to big/small
+	ros_info("Object size not ok"), fail()
+    ),
+    (
+	validate_confidence(class, PercTypeConf, TypeConf);
+	ros_info("Class confidence not ok"), fail()
+    ),
+    (
+	validate_confidence(shape, PercShapeConf, ShapeConf);
+	ros_info("Shape confidence not ok"), fail()
+    ),
+    (
+	validate_confidence(color, PercColorConf, ColorConf);
+	ros_info("Color confidence not ok"), fail()
+    ),
     object_type_handling(PerceivedObjectType, PercTypeConf, ObjectType), % When the PercTypeConf is to low the Type is set to Other, Otherwise ObjectType is the same as PerceivedObjectType
 
     %%% ================ Object creation

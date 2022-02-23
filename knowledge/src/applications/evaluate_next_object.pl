@@ -45,22 +45,22 @@ evaluate_next_object(Algorithm, ObjectCount, Time, RemainingTime, FinalScore) :-
         generate_score(Object, Score)
     ),
     ObjectScores),
-    writeln("Object Scores"),
-    writeln(ObjectScores),
+    ros_info("Object Scores"),
+    ros_info(ObjectScores),
     perform_next_object_search(Algorithm, ObjectScores, Time, 0.0, RemainingTime, FinalScore).
 
 
 perform_next_object_search(Algorithm, ObjectScores, Time, CurrentScore, UpdatedTime, UpdatedScore) :-
     Time > 0.0,
-    writeln("Next Iteration Perform Next Object Search"),
+    ros_info("Next Iteration Perform Next Object Search"),
     ( next_object(Object, Algorithm)
-    -> (writeln("Next chosen object"),
-        writeln(Object),
+    -> (ros_info("Next chosen object"),
+        ros_info(Object),
         once(object_goal_location(Object, GoalPosition)),
         surface_pose_in_map(GoalSurface, [GoalPosition, _]),
         has_surface(GoalFurniture, GoalSurface),
-        writeln("Move object to Furniture"),
-        writeln(GoalFurniture),
+        ros_info("Move object to Furniture"),
+        ros_info(GoalFurniture),
         move_next_object(Object, GoalPosition, Costs),
         move_robot(GoalPosition),
         member([Object, ObjectScore], ObjectScores),
@@ -71,15 +71,15 @@ perform_next_object_search(Algorithm, ObjectScores, Time, CurrentScore, UpdatedT
     );
     (
         next_surface(Surface, GoalPosition, Costs),
-        writeln("Next chosen Surface"),
-        writeln(Surface),
+        ros_info("Next chosen Surface"),
+        ros_info(Surface),
         move_robot(GoalPosition),
         NewTime is Time - Costs,
         NewScore is CurrentScore
     )),
-    writeln("Time and Score after one cycle"),
-    writeln(NewTime),
-    writeln(NewScore),
+    ros_info("Time and Score after one cycle"),
+    ros_info(NewTime),
+    ros_info(NewScore),
     perform_next_object_search(Algorithm, ObjectScores, NewTime, NewScore, UpdatedTime, UpdatedScore),
     !.
 
@@ -190,7 +190,7 @@ random_object_locations(Class, Surfaces) :-
         triple(Location, knowrob:'isOntopOf', FurnitureType)
     ),
     NotPossibleFurnitures),
-    writeln(NotPossibleFurnitures),
+    ros_info(NotPossibleFurnitures),
     findall(Furniture,
     (
         member(Furniture, AllFurnitures),

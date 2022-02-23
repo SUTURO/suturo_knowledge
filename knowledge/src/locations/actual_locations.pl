@@ -10,7 +10,8 @@
         pose_is_outside/1,
         object_supported_by_surface/2,
         objects_supported_by_surface/2,
-        objects_supported_by_surfaces/2
+	objects_supported_by_surfaces/2,
+	objects_in_room/2
     ]).
 
 

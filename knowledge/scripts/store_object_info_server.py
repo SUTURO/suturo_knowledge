@@ -51,7 +51,7 @@ class StoreObjectInfoServer(object):
                 obj_class = "Other"
 
             class_test_query = "is_class(hsr_objects:'" + obj_class + "')." # via knowrob, eg. Gummy Bears / Pringles Originals
-            print(class_test_query)
+            rospy.loginfo(class_test_query)
             solutions = prolog.all_solutions(class_test_query) # bool
             if not solutions:  # if class is not known
                 rospy.logwarn(

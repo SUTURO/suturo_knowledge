@@ -9,7 +9,6 @@
 :-use_module(library('locations/predefined_locations'), [object_at_predefined_location/3]).
 :- use_module(library('model/objects/object_info'), [is_suturo_object/1]).
 
-
 misplaced_objects_at_predefined_location(Objects, RoomType, FurnitureType) :-
     findall(Object,
     (
@@ -22,9 +21,9 @@ misplaced_objects_at_predefined_location(Objects, RoomType, FurnitureType) :-
 
 is_misplaced(Object) :-
     object_at_location(Object, Room, Furniture, _),
-    writeln("Current Location"),
-    writeln(Furniture),
+    ros_info("Current Location"),
+    ros_info(Furniture),
     object_at_predefined_location(Object, RoomType, FurnitureType),
-    writeln("Predefined Location"),
-    writeln(FurnitureType),
+    ros_info("Predefined Location"),
+    ros_info(FurnitureType),
     not (has_type(Room, RoomType), has_type(Furniture, FurnitureType)).

@@ -40,39 +40,40 @@
 
 next_object(Object, 0) :-
     objects_not_handeled(NotHandledObjects),
-    writeln("Objects not handled"),
-    writeln(NotHandledObjects),
+    ros_info("Objects not handled"),
+    ros_info(NotHandledObjects),
     findall(NotHandledObject, 
     (
         member(NotHandledObject, NotHandledObjects),
-        writeln("Object"),
-        writeln(NotHandledObject),
+        ros_info("Object"),
+        ros_info(NotHandledObject),
         is_misplaced(NotHandledObject),
-        writeln("Is Misplaced")
+        ros_info("Is Misplaced")
     ), 
     PossibleObjects),
-    writeln("Possible Objects for next object"),
-    writeln(PossibleObjects),
-    is_at(base_footprint, ['map', RobotPosition, _]),
-    objects_costs(RobotPosition, PossibleObjects, Costs),
-    writeln("Object costs"),
-    writeln(Costs),
-    objects_benefits(PossibleObjects, Benefits),
-    writeln("Object Benefits"),
-    writeln(Benefits),
-    %max_member([_, NormalizationConstant], Costs),
-    findall([CBRatio, Object],
-    (
-        member([Object, BenefitAtom], Benefits),
-        atom_number(BenefitAtom, Benefit),
-        member([Object, Cost], Costs),
-        %CBRatio is Benefit / (Cost / NormalizationConstant)
-        CBRatio is Benefit / Cost
-    ),
-    ObjectCBRatios),
-    list_to_set(ObjectCBRatios, ObjectCBRatiosSet),
-    max_member([_, Object], ObjectCBRatios),
-    !.
+    ros_info("Possible Objects for next object"),
+    ros_info(PossibleObjects),
+    %% is_at(base_footprint, ['map', RobotPosition, _]),
+    %% (objects_costs(RobotPosition, PossibleObjects, Costs); ros_info("objects_costs failed"), fail()),
+    %% ros_info("Object costs"),
+    %% ros_info(Costs),
+    %% objects_benefits(PossibleObjects, Benefits),
+    %% ros_info("Object Benefits"),
+    %% ros_info(Benefits),
+    %% %max_member([_, NormalizationConstant], Costs),
+    %% findall([CBRatio, Object],
+    %% (
+    %%     member([Object, BenefitAtom], Benefits),
+    %%     atom_number(BenefitAtom, Benefit),
+    %%     member([Object, Cost], Costs),
+    %%     %CBRatio is Benefit / (Cost / NormalizationConstant)
+    %%     CBRatio is Benefit / Cost
+    %% ),
+    %% ObjectCBRatios),
+    %% list_to_set(ObjectCBRatios, ObjectCBRatiosSet),
+    %% max_member([_, Object], ObjectCBRatios),
+    %% !.
+    [Object|_] = PossibleObjects.
 
 
 next_object(Object, 1) :-
@@ -110,7 +111,7 @@ next_object(Object, 2) :-
 
 
 forget_tour :-
-    writeln("Call forget tour"),
+    ros_info("Call forget tour"),
     forall(triple(Object, dul:'follows', _), tripledb_forget(Object, dul:'follows', _)),
     forall(has_type(StartMark, hsr_rooms:'StartMark'), tripledb_forget(StartMark, _, _)).
 
@@ -206,7 +207,12 @@ objects_costs(OriginPosition, Objects, ObjectCosts) :-
     findall([Object, Costs],
     (
         member(Object, Objects),
-        object_costs(OriginPosition, Object, Costs)
+        (
+	    object_costs(OriginPosition, Object, Costs);
+	    format(string(MSG), "object_costs(~w, ~w, ObjectCosts) failed", [OriginPosition, Objects]),
+	    ros_warn(MSG),
+	    fail()
+	)
     ),
     ObjectCosts).
 
@@ -219,28 +225,60 @@ object_costs(OriginPosition, Object, Costs) :-
 
 
 distance_to_go(OriginPosition, Object, Distance) :-
-    distance_to_object(OriginPosition, Object, DistanceToObject),
-    distance_to_goal_location(Object, DistanceToLocation),
+    (distance_to_object(OriginPosition, Object, DistanceToObject);
+     format(string(MSG), "distance_to_object(~w, ~w, DistanceToObject) failed", [OriginPosition, Object]),
+     ros_warn(MSG),
+     fail()
+    ),
+    (distance_to_goal_location(Object, DistanceToLocation);
+     format(string(MSG), "distance_to_goal_location(~w, DistanceToLocation) failed", [OriginPosition]),
+     ros_warn(MSG),
+     fail()
+    ),
     Distance is DistanceToObject + DistanceToLocation.
 
 
 distance_to_object(OriginPosition, Object, Distance) :-
-    object_pose(Object, [_, _,[X, Y, _], _]),
+    (object_pose(Object, [_, _,[X, Y, _], _]);
+     format(string(MSG), "object_pose(~w, [_, _,[X, Y, _], _]) failed", [Object]),
+     ros_warn(MSG),
+     fail()
+    ),
     euclidean_distance(OriginPosition, [X, Y, 0], Distance).
 
 
 distance_to_goal_location(Object, Distance) :-
-    object_goal_location(Object, GoalPosition),
+    (object_goal_location(Object, GoalPosition);
+     format(string(MSG), "object_goal_location(~w, GoalPosition) failed", [Object]),
+     ros_warn(MSG),
+     fail()
+    ),
     object_pose(Object, [_, _,ObjectPosition, _]),
     euclidean_distance(ObjectPosition, GoalPosition, Distance).
 
 
 object_goal_location(Object, GoalPosition) :-
     object_pose(Object, [_, _,ObjectPosition, _]),
-    object_at_predefined_location(Object, RoomType, FurnitureType),
-    once(surface_at_predefined_location(GoalSurface, RoomType, FurnitureType)),
-    has_urdf_name(GoalSurface, Name),
-    surface_pose_in_map(GoalSurface, [GoalPosition, _]).
+    (object_at_predefined_location(Object, RoomType, FurnitureType);
+     format(string(MSG), "object_at_predefined_location(~w, RoomType, FurnitureType) failed", [Object]),
+     ros_warn(MSG),
+     fail()
+    ),
+    (once(surface_at_predefined_location(GoalSurface, RoomType, FurnitureType));
+     format(string(MSG), "once(surface_at_predefined_location(GoalSurface, ~w, ~w) failed", [RoomType, FurnitureType]),
+     ros_warn(MSG),
+     fail()
+    ),
+    (has_urdf_name(GoalSurface, Name);
+     format(string(MSG), "has_urdf_name(~w, Name) failed", [GoalSurface]),
+     ros_warn(MSG),
+     fail()
+    ),
+    (surface_pose_in_map(GoalSurface, [GoalPosition, _]);
+     format(string(MSG), "surface_pose_in_map(~w, [GoalPosition, _]) failed", [GoalSurface]),
+     ros_warn(MSG),
+     fail()
+    ).
 
 
 create_object_paths :-

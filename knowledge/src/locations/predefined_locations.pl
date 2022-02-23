@@ -37,9 +37,9 @@ object_in_predefined_room(Object, RoomType) :-
 
 object_on_predefined_furniture(Object, FurnitureType) :-
     has_predefined_location(Object, Location),
-    (triple(Location, knowrob:'isOntopOf', FurnitureType);
-    triple(Location, knowrob:'isInsideOf', FurnitureType)),
-    subclass_of(FurnitureType, soma:'DesignedFurniture').
+    triple(Location, knowrob:'isOntopOf', FurnitureType).
+    %triple(Location, knowrob:'isInsideOf', FurnitureType)).
+    %subclass_of(FurnitureType, soma:'DesignedFurniture').
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

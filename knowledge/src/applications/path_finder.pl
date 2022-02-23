@@ -89,7 +89,7 @@ expand_node(CurrentNode, Destination, OpenList, ClosedList, NewOpenList) :-
             F is NewG + Distance,
             update_a_star_attributes(SuccessorNode, CurrentNode, NewG, F)
         );
-            writeln("A* No cheaper path found")
+            ros_info("A* No cheaper path found")
         )
     )),
     union(Successors, OpenList, NewOpenList), 
