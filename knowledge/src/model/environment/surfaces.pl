@@ -158,13 +158,13 @@ update_visit_state(Surface, State) :-
 %
 % @param Surface A surface IRI, PerceptionName region name as string
 %
-get_perception_surface_region(Surface, PerceptionName):-
-    has_shelf_shape(Surface),
-    has_urdf_name(Surface,Name),
-    split_string(Surface, ":","",SurfaceSplit),
-    nth0(0,SurfaceSplit,Name),sub_atom(Surface, _, 1, 0, Number),
-    string_concat(Name,"_floor_",Temp),
-    string_concat(Temp,Number,PerceptionName),!.
+%% get_perception_surface_region(Surface, PerceptionName):-
+%%     has_shelf_shape(Surface),
+%%     has_urdf_name(Surface,Name),
+%%     split_string(Surface, ":","",SurfaceSplit),
+%%     nth0(0,SurfaceSplit,Name),sub_atom(Surface, _, 1, 0, Number),
+%%     string_concat(Name,"_floor_",Temp),
+%%     string_concat(Temp,Number,PerceptionName),!.
 
 
 %% get_perception_surface_region(Surface, ?PerceptionName)
@@ -174,10 +174,12 @@ get_perception_surface_region(Surface, PerceptionName):-
 % @param Surface A surface IRI, PerceptionName region name as string
 %
 get_perception_surface_region(Surface, PerceptionName):-
-    not(has_shelf_shape(Surface)),    
     has_urdf_name(Surface,Name),
     split_string(Name, ":","",SurfaceSplit),
-    nth0(0,SurfaceSplit,PerceptionName).
+    (has_shelf_shape(Surface),Index = 2;
+     not(has_shelf_shape(Surface)),Index = 0),
+    nth0(Index,SurfaceSplit,PerceptionName).
+
 
 
 %% create_surface(Shape, Link, ?Surface)
