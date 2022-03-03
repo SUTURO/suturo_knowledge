@@ -304,6 +304,7 @@ same_size(Source, Target):-
     triple(Target, hsr_objects:'size', Size).
 
 assert_all_planning(Object, Surface, Distance, Context, RefObject) :-
+    ros_info("assert_all_planning"),
     forall(triple(Object, supposedSurface, _), tripledb_forget(Object, supposedSurface, _)),
     tell(triple(Object, supposedSurface, Surface)),
     forall(triple(Object, refObject, _), tripledb_forget(Object, refObject, _)),
@@ -330,7 +331,8 @@ retract_all_planning(Object) :-
 
 % Returns the supposed Surface for the Object and
 % stores the surface and the distance to its RefObject in RDF.
- object_most_similar_surface(Object, Surface) :-
+object_most_similar_surface(Object, Surface) :-
+    ros_info("object_most_similar_surface"),
     most_related_object(Object, RefObject),
     %find_supporting_surface(RefObject, Surface),
     object_supported_by_surface(RefObject, Surface),
@@ -566,8 +568,14 @@ next_empty_surface_(Surfaces, Surface) :-
 
 
 assert_object_supposed_surface(Object) :-
+    format(string(LogMSG1),"assert_object_supposed_surface1 for ~w", Object),
+    ros_info(LogMSG1),
     object_at_predefined_location(Object, RoomType, FurnitureType),
+    format(string(LogMSG2),"assert_object_supposed_surface1: RoomType ~w, FurnitureType: ~w", [RoomType, FurnitureType]),
+    ros_info(LogMSG2),
     surfaces_at_predefined_location(Surfaces, RoomType, FurnitureType),
+    format(string(LogMSG3),"assert_object_supposed_surface1: Surfaces: ~w", [Surfaces]),
+    ros_info(LogMSG3),
     nth0(0, Surfaces, Surface),
     has_table_shape(Surface),
     once((
@@ -579,6 +587,8 @@ assert_object_supposed_surface(Object) :-
 
 
 assert_object_supposed_surface(Object) :-
+    format(string(LogMSG1),"assert_object_supposed_surface2 for ~w", Object),
+    ros_info(LogMSG1),
     object_at_predefined_location(Object, RoomType, FurnitureType),
     surfaces_at_predefined_location(Surfaces, RoomType, FurnitureType),
     nth0(0, Surfaces, Surface),
@@ -589,6 +599,8 @@ assert_object_supposed_surface(Object) :-
     assert_all_planning(Object, TargetSurface, 0, Context, Object).
 
 assert_object_supposed_surface(Object) :-
+    format(string(LogMSG1),"assert_object_supposed_surface3 for ~w", Object),
+    ros_info(LogMSG1),
     object_most_similar_surface(Object, Surface),
     objects_on_same_surface_in_future(Surface, OtherObjects),
     objects_fit_on_surface(OtherObjects, Surface, _, NotFittingObjects),
@@ -600,6 +612,8 @@ assert_object_supposed_surface(Object) :-
 
 % First object to be placed in case of empty target surfaces
 assert_object_supposed_surface(Object) :- % to do: what happens when there already are supposedSurfaces, but the according objects are not placed yet?
+    format(string(LogMSG1),"assert_object_supposed_surface4 for ~w", Object),
+    ros_info(LogMSG1),
     object_at_predefined_location(Object, RoomType, FurnitureType),
     surfaces_at_predefined_location(Surfaces, RoomType, FurnitureType),
     objects_supported_by_surfaces(Surfaces, []),
@@ -615,20 +629,34 @@ assert_object_new_empty_surface(Object) :-
 
 
 object_goal_surface_(Object, Surface, Context, RefObject) :-
+    format(string(LogMSG1),"object_goal_surface1 for ~w", Object),
+    ros_info(LogMSG1),
     triple(Object, supposedSurface, Surface),
+    format(string(LogMSG2),"object_goal_surface1: supposedSurface is ~w", Surface),
+    ros_info(LogMSG2),
     triple(Object, context, Context),
+    format(string(LogMSG3),"object_goal_surface1: context is ~w", Context),
+    ros_info(LogMSG3),
     triple(Object, refObject, RefObject),
+    format(string(LogMSG4),"object_goal_surface1: refObject is ~w", RefObject),
+    ros_info(LogMSG4),
     !.
 
 
 object_goal_surface_(Object, Surface, Context, RefObject) :-
+    format(string(LogMSG5),"object_goal_surface2: Object is ~w", Object),
+    ros_info(LogMSG5),
     ignore(place_objects),
+    ros_info("object_goal_surface2: ignore finished"),
     assert_object_supposed_surface(Object),
+    ros_info("object_goal_surface2: assert finished"),
     object_goal_surface_(Object, Surface, Context, RefObject),
     !.
 
 
 object_goal_surface(Object, Surface) :-
+    format(string(Log),"object_goal_surface(~w, Surface)", [Object]),
+    ros_info(Log),
     object_goal_surface_(Object, Surface, _, _).
 
 

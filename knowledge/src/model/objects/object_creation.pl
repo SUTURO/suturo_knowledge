@@ -49,23 +49,34 @@
 % TODO validate reachable in create_object: @param for colision avoidance, inferr distance via self position + obj position, inferr size of gripper and check with the existing size
 create_object(PerceivedObjectType, PercTypeConf, [Frame,Position,Rotation], [Width, Depth, Height], 'box', PercShapeConf, Color, PercColorConf, ObjID):-
 
+    format(string(Logmsg),"create_object(~n  Type: ~w,~n  TypeConf: ~w,~n  FPR: ~w,~n  WDH: ~w,~n  'box',~n  ShapeConf: ~w,~n  Color: ~w,~n  ColorConf:~w,~n  ObjID~n)",[
+	       PerceivedObjectType,
+	       PercTypeConf,
+	       [Frame,Position,Rotation],
+	       [Width, Depth, Height],
+	       PercShapeConf,
+	       Color,
+	       PercColorConf
+	   ]),
+    ros_info(Logmsg),
+    
     %%% ================ Object validation
     % TODO make this dynamic to constraints
     (
-	object_size_ok([Width, Depth, Height]); % Dont add the object when the size is to big/small
-	ros_info("Object size not ok"), fail()
+	object_size_ok([Width, Depth, Height]) -> true; % Dont add the object when the size is to big/small
+	(ros_info("Object size not ok"), fail())
     ),
     (
-	validate_confidence(class, PercTypeConf, TypeConf);
-	ros_info("Class confidence not ok"), fail()
+	validate_confidence(class, PercTypeConf, TypeConf) -> true;
+	(ros_info("Class confidence not ok"), fail())
     ),
     (
-	validate_confidence(shape, PercShapeConf, ShapeConf);
-	ros_info("Shape confidence not ok"), fail()
+	validate_confidence(shape, PercShapeConf, ShapeConf) -> true;
+	(ros_info("Shape confidence not ok"), fail())
     ),
     (
-	validate_confidence(color, PercColorConf, ColorConf);
-	ros_info("Color confidence not ok"), fail()
+	validate_confidence(color, PercColorConf, ColorConf) -> true;
+	(ros_info("Color confidence not ok"), fail())
     ),
     object_type_handling(PerceivedObjectType, PercTypeConf, ObjectType), % When the PercTypeConf is to low the Type is set to Other, Otherwise ObjectType is the same as PerceivedObjectType
 

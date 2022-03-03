@@ -49,9 +49,22 @@ object_on_predefined_furniture(Object, FurnitureType) :-
 surface_at_predefined_location(Surface, RoomType, FurnitureType) :-
     has_surface(Furniture, Surface),
     has_type(Furniture, FurnitureType),
+    %% (has_type(Furniture, FurnitureType) -> true;(
+    %% 	 format(Logmsg1,"surface_at_predefined_location: has_type(~w, ~w) failed", [Furniture, FurnitureType]),
+    %% 	 ros_info(Logmsg1)
+    %% )),
     subclass_of(FurnitureType, soma:'DesignedFurniture'),
-    furniture_in_room(Furniture, Room),
-    has_type(Room, RoomType),
+    (furniture_in_room(Furniture, Room) -> true;(
+	 ros_info("Log2"),
+	 format(string(Logmsg2),"surface_at_predefined_location: furniture_in_room(~w, Room) failed", [Furniture]),
+	 ros_info(Logmsg2)
+     )
+    ),
+    (has_type(Room, RoomType) -> true;(
+	 ros_info("Log3"),
+	 format(string(Logmsg3),"surface_at_predefined_location: has_type(~w, ~w) failed", [Room, RoomType]),
+	 ros_info(Logmsg3)
+     )),
     subclass_of(RoomType, hsr_rooms:'Room').
 
 
