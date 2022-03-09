@@ -26,12 +26,32 @@
 %
 surface_pose_to_perceive_from(Surface, [[XPos,YPos,0],Rotation]):-
     has_urdf_name(Surface, SurfaceLink),
-    surface_dimensions(Surface,X,_,_),
+    surface_dimensions(Surface,X,Y,_),
+    %% We want the robot to see the whole table, but be as near to it as possible.
+    %% The viewing angle of the hsrb is a bit more than 35° to either side, so 70° in total.
+    %% To calculate the distance to the table, we now can use formulas for a triangle with a right angle
+
+    %% hsb
+    %% |\<-- alpha
+    %% | \
+    %% B  \
+    %% |   \
+    %% |    \
+    %% --A----
+    %% table
+
+    %% tan(35°) = 0,7
+    %% tan(alpha) = A/B
+    %% B = A/tan(alpha)
+    %% Y is twice the length of the half
+    B is (Y / 1.4),
+    %% B is the minimum distance from the from to see the whole from side with a viewing angle of 35°
     HalfX is X / 2,
-    XOffset is (X * -1.75) - HalfX,
-    (XOffset >= -0.6  - HalfX
-    -> XOffsetUsed is -0.6  - HalfX
-    ; XOffsetUsed is (X * -1.75) - HalfX),
+    XOffset is -(HalfX + B),
+    %% The robot should be at least 0.6m away from the edge of the surface in any case.
+    (XOffset >= -0.6  - HalfX ->
+      XOffsetUsed is -0.6  - HalfX;
+      XOffsetUsed is XOffset),
     tf_transform_point(SurfaceLink, map, [XOffsetUsed, 0, 0], [XPos,YPos,_]),
     tf_lookup_transform('map', SurfaceLink, pose(_,Rotation)).
 
