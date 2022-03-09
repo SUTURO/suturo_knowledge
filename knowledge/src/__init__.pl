@@ -66,6 +66,7 @@
 :- use_module(library('naturallanguage/nlp')).
 :- use_module(library('applications/next_object'), [next_object/2]).
 :- use_module(library('applications/path_finder'), [shortest_path_between_rooms/3]).
+:- use_module(library('applications/clean_table'), [temporary_storage_surface/1, temporary_storage_pose/2]).
 :- use_module(library('locations/spatial_comp'),
 	[
 		hsr_lookup_transform/4,
