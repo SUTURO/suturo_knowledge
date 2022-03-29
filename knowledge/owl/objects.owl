@@ -565,6 +565,12 @@
     
 
 
+    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Airplane_Part -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Airplane_Part"/>
+    
+
+
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#AlbiRaspberryJuice -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#AlbiRaspberryJuice">
@@ -3092,6 +3098,12 @@
     
 
 
+    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#009_gelatin_box -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#009_gelatin_box"/>
+    
+
+
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#010_potted_meat_can -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#010_potted_meat_can">
@@ -3169,6 +3181,18 @@
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#019_pitcher_base">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Pitcher"/>
     </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#021_bleach_cleanser -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#021_bleach_cleanser"/>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#022_windex_bottle -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#022_windex_bottle"/>
     
 
 
@@ -3428,6 +3452,12 @@
     
 
 
+    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#059_chain -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#059_chain"/>
+    
+
+
     <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#062_dice -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#062_dice">
@@ -3561,6 +3591,84 @@
     <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#065-j_cups">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#Cup"/>
     </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#070-a_colored_wood_blocks -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#070-a_colored_wood_blocks"/>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#071_nine_hole_peg_test -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#071_nine_hole_peg_test"/>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#072-a_toy_airplane -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#072-a_toy_airplane"/>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#072-b_toy_airplane -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#072-b_toy_airplane"/>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#072-c_toy_airplane -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#072-c_toy_airplane"/>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#072-d_toy_airplane -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#072-d_toy_airplane"/>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#072-e_toy_airplane -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#072-e_toy_airplane"/>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#072-f_toy_airplane -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#072-f_toy_airplane"/>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#072-g_toy_airplane -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#072-g_toy_airplane"/>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#072-h_toy_airplane -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#072-h_toy_airplane"/>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#072-i_toy_airplane -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#072-i_toy_airplane"/>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#072-j_toy_airplane -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#072-j_toy_airplane"/>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2020/3/objects#072-k_toy_airplane -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2020/3/objects#072-k_toy_airplane"/>
     
 
 
