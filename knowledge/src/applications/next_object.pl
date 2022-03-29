@@ -53,27 +53,26 @@ next_object(Object, 0) :-
     PossibleObjects),
     ros_info("Possible Objects for next object"),
     ros_info(PossibleObjects),
-    %% is_at(base_footprint, ['map', RobotPosition, _]),
-    %% (objects_costs(RobotPosition, PossibleObjects, Costs); ros_info("objects_costs failed"), fail()),
-    %% ros_info("Object costs"),
-    %% ros_info(Costs),
-    %% objects_benefits(PossibleObjects, Benefits),
-    %% ros_info("Object Benefits"),
-    %% ros_info(Benefits),
-    %% %max_member([_, NormalizationConstant], Costs),
-    %% findall([CBRatio, Object],
-    %% (
-    %%     member([Object, BenefitAtom], Benefits),
-    %%     atom_number(BenefitAtom, Benefit),
-    %%     member([Object, Cost], Costs),
-    %%     %CBRatio is Benefit / (Cost / NormalizationConstant)
-    %%     CBRatio is Benefit / Cost
-    %% ),
-    %% ObjectCBRatios),
-    %% list_to_set(ObjectCBRatios, ObjectCBRatiosSet),
-    %% max_member([_, Object], ObjectCBRatios),
-    %% !.
-    [Object|_] = PossibleObjects.
+    once(is_at(base_footprint, ['map', RobotPosition, _]) -> true; ros_info("next_object: is_at failed.")),
+    objects_costs(RobotPosition, PossibleObjects, Costs),
+    ros_info("Object costs"),
+    ros_info(Costs),
+    objects_benefits(PossibleObjects, Benefits),
+    ros_info("Object Benefits"),
+    ros_info(Benefits),
+    %max_member([_, NormalizationConstant], Costs),
+    findall([CBRatio, Object],
+    (
+        member([Object, BenefitAtom], Benefits),
+        atom_number(BenefitAtom, Benefit),
+        member([Object, Cost], Costs),
+        %CBRatio is Benefit / (Cost / NormalizationConstant)
+        CBRatio is Benefit / Cost
+    ),
+    ObjectCBRatios),
+    list_to_set(ObjectCBRatios, ObjectCBRatiosSet),
+    max_member([_, Object], ObjectCBRatios),
+    !.
 
 
 next_object(Object, 1) :-

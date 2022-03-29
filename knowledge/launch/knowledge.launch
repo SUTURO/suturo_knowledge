@@ -30,9 +30,7 @@
   <param name="param_to_load_URDF_from" type="str" value="$(arg urdf_param)" />
   <param name="initial_package" type="string" value="knowledge" />
 
-  <node name="rosprolog" pkg="rosprolog" type="rosprolog_node" cwd="node">
-    <param name="initial_goal" type="string" value="tf_logger_enable" />
-  </node>
+  <node name="rosprolog" pkg="rosprolog" type="rosprolog_node" cwd="node"/>
 
   <node name="store_object_info_server" pkg="knowledge" type="store_object_info_server.py"/>
 

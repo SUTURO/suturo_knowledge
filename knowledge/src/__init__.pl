@@ -72,6 +72,7 @@
 		hsr_lookup_transform/4,
 		surface_front_edge_center_pose/2,
 		surface_center_pose/2,
+		surface_dimensions/4,
 		object_pose/2
 	]).
 :- ros_package_iri(knowledge, 'package://knowledge/owl/objects.owl').
@@ -115,6 +116,8 @@
 
 :- ros_param_get_string('/param_to_load_URDF_from', Param),
     load_surfaces_from_param(Param).
+
+:- tf_logger_enable.
 
 :- ignore(hsr_lookup_transform('map', 'base_footprint', _, _)). % Why does this help with TF erros??
 

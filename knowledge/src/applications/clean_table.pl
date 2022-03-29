@@ -56,7 +56,7 @@ temporary_storage_pose_(Instance, [Translation, Rotation], Surface) :-
             tf_transform_pose(SurfaceLink, 'map', pose([RefX, RefY, 0.1], [0, 0, 0, 1]), pose(Translation, Rotation)),
 
             tell(has_type(NewGroup, hsr_objects:'Group')),
-            tell(triple(Instance, hsr_objects:'inGroup', NewGroup)),
+            tell(triple(Instance, hsr_objects:'inGroup', NewGroup))
         );
      (NGroups = 1 ->
           (
