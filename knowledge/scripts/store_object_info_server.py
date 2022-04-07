@@ -1,5 +1,6 @@
 #! /usr/bin/env python
 
+import re
 import rospy
 import rosprolog_client
 import actionlib
@@ -42,10 +43,8 @@ class StoreObjectInfoServer(object):
             rospy.wait_for_service('/rosprolog/query')
 
             obj_class = str(data.obj_class)
-            if obj_class.startswith("-"):
-                obj_class = obj_class[1:]
             if obj_class:
-                obj_class = obj_class.capitalize().replace('_', '')
+                obj_class = re.sub(r"^[0-9_-]+|_","",obj_class).capitalize()
             else:
                 rospy.loginfo("The given class name is empty. Setting to OTHER.")
                 obj_class = "Other"
@@ -55,7 +54,7 @@ class StoreObjectInfoServer(object):
             solutions = prolog.all_solutions(class_test_query) # bool
             if not solutions:  # if class is not known
                 rospy.logwarn(
-                    "The class '" + obj_class + "' has no equivalent in kowledge-ontology. Setting class to Other.")
+                    "The class '" + obj_class + "' has no equivalent in knowledge-ontology. Setting class to Other.")
                 obj_class = "Other" # <- instantiate as Other
             # --- further information from perception
             confidence_class = str(data.confidence_class)
