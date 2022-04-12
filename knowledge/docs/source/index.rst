@@ -39,6 +39,7 @@ Welcome to knowledge pkg docs's documentation!
 
    pages/scripts/store_object_info_server
    pages/scripts/manipulation_listener
+   pages/scripts/marker_objectstate
 
 .. toctree::
    :maxdepth: 2
