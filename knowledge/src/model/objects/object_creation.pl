@@ -115,10 +115,14 @@ create_object(PerceivedObjectType, PercTypeConf, [Frame,Position,Rotation], [Wid
     tell(has_type(ObjectLocation, soma:'Location')),
     tell(triple(ObjID, dul:'hasLocation', ObjectLocation)),
 
+    % Used by clean_table to get the pose where the objects should be brought back to
+    (store_starting_location(ObjID, Frame,Position,Rotation) -> true;ros_info("store_starting_location failed")),
+
     %%% ================ visualization marker array publish
     % TODO why not working with 1x ?
     marker_plugin:republish,
-    marker_plugin:republish.
+    marker_plugin:republish,
+    ros_info("create_object finished").
 
 
 %%%%%%%%%% asserts Dimension Semantic is the object tall/flat/long/small/big? %%%%%%%%%%
@@ -202,3 +206,15 @@ set_color_semantics(ObjID, [1, 1, 1]) :-
 % Used so when no color is given the query does not fail
 set_color_semantics(_, _) :-
     true.
+
+store_starting_location(ObjID, Frame, [X, Y, Z], [RX, RY, RZ, RW]) :-
+    tell(triple(ObjID, suturo:'start_pose_frame', Frame)),
+    
+    tell(triple(ObjID, suturo:'start_pose_x', X)),
+    tell(triple(ObjID, suturo:'start_pose_y', Y)),
+    tell(triple(ObjID, suturo:'start_pose_z', Z)),
+
+    tell(triple(ObjID, suturo:'start_pose_rx', RX)),
+    tell(triple(ObjID, suturo:'start_pose_ry', RY)),
+    tell(triple(ObjID, suturo:'start_pose_rz', RZ)),
+    tell(triple(ObjID, suturo:'start_pose_rw', RW)).

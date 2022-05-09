@@ -35,6 +35,9 @@
 		group_objects_at/1
 	]).
 :- use_module(library('model/environment/furnitures'), [init_furnitures/0]).
+
+:- rdf_register_ns('suturo','http://www.semanticweb.org/suturo/ontologies/2020/3/objects#',[keep(true)]).
+
 :- use_module(library('model/objects/object_creation'), [create_object/9]).
 :- use_module(library('model/objects/object_manipulation'), [set_object_handeled/1]).
 :- use_module(library('config')).
@@ -66,7 +69,16 @@
 :- use_module(library('naturallanguage/nlp')).
 :- use_module(library('applications/next_object'), [next_object/2]).
 :- use_module(library('applications/path_finder'), [shortest_path_between_rooms/3]).
-:- use_module(library('applications/clean_table'), [temporary_storage_surface/1, temporary_storage_pose/2]).
+:- use_module(library('applications/clean_table'),
+	      [
+		  temporary_storage_surface/1,
+		  temporary_storage_pose/2,
+		  stored_objects/1,
+		  source_pose/3,
+		  default_surface/2,
+		  get_sponge_surface/1,
+		  get_sponge_surfaces/1
+	      ]).
 :- use_module(library('locations/spatial_comp'),
 	[
 		hsr_lookup_transform/4,

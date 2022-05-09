@@ -1,7 +1,12 @@
 :- module(clean_table,
 	  [
 	      temporary_storage_surface/1,
-	      temporary_storage_pose/2
+	      temporary_storage_pose/2,
+	      stored_objects/1,
+	      source_pose/3,
+	      default_surface/2,
+	      get_sponge_surface/1,
+	      get_sponge_surfaces/1
 	  ]).
 
 :- use_module(library('beliefstate')).
@@ -18,6 +23,8 @@
 :- rdf_meta
    temporary_storage_surface(?),
    temporary_storage_pose(-, ?).
+
+:- dynamic temporary_storage_group/1.
 
 temporary_storage_surface(Surface) :-
     has_urdf_name(Surface,"long_table:table:table_center").
@@ -53,10 +60,11 @@ temporary_storage_pose_(Instance, [Translation, Rotation], Surface) :-
             RefX is (-SurfaceWidth/2) + MinSpace + ObjectDepth/2,
 	    %%      to the left and space away and to the center of the object
             RefY is SurfaceDepth/2 - MinSpace - ObjectWidth/2,
-            tf_transform_pose(SurfaceLink, 'map', pose([RefX, RefY, 0.1], [0, 0, 0, 1]), pose(Translation, Rotation)),
+            tf_transform_pose(SurfaceLink, 'map', pose([RefX, RefY, 0.07], [0, 0, 0, 1]), pose(Translation, Rotation)),
 
             tell(has_type(NewGroup, hsr_objects:'Group')),
-            tell(triple(Instance, hsr_objects:'inGroup', NewGroup))
+            tell(triple(Instance, hsr_objects:'inGroup', NewGroup)),
+	    assertz(temporary_storage_group(NewGroup))
         );
      (NGroups = 1 ->
           (
@@ -65,6 +73,9 @@ temporary_storage_pose_(Instance, [Translation, Rotation], Surface) :-
 	      %% group_position_on_surface returns the hind left corner, but we need the front right
 	      group_position_on_surface(Group, Surface, [GroupX, GroupY, _]),
               group_dimensions(Group, GroupDepth, GroupWidth),
+	      
+	      format(string(Log3), "group info: XY= ~w, ~w; DH= ~w ~w", [GroupX, GroupY, GroupDepth, GroupWidth]),
+	      ros_info(Log3),
 
 	      %% start at the back of the group, go to the front, and go back to the center of the object.
 	      %% this way all object align their start at the local x coordinate
@@ -72,7 +83,7 @@ temporary_storage_pose_(Instance, [Translation, Rotation], Surface) :-
 
 	      %% start at the left, go to the right, add the spacer, go to the center of the new object
 	      RefY is GroupY - GroupWidth - MinSpace - ObjectWidth/2,
-              tf_transform_pose(SurfaceLink, 'map', pose([RefX, RefY, 0.1], [0, 0, 0, 1]), pose(Translation, Rotation)),
+              tf_transform_pose(SurfaceLink, 'map', pose([RefX, RefY, 0.07], [0, 0, 0, 1]), pose(Translation, Rotation)),
 	      tell(triple(Instance, hsr_objects:'inGroup', Group))
           );
       %% Idk how groups are supposed to work and i don't have the time to try it now.
@@ -80,3 +91,31 @@ temporary_storage_pose_(Instance, [Translation, Rotation], Surface) :-
       (ros_info("Ngroups Fail"),fail()))),
     !.
 
+stored_objects(Instances) :-
+    temporary_storage_group(Group),
+    findall(Instance, triple(Instance, hsr_objects:'inGroup', Group), Instances).
+
+source_pose(ObjID, Frame, [[X, Y, Z], [RX, RY, RZ, RW]]) :-
+    triple(ObjID, suturo:'start_pose_frame', Frame),
+    
+    triple(ObjID, suturo:'start_pose_x', X),
+    triple(ObjID, suturo:'start_pose_y', Y),
+    triple(ObjID, suturo:'start_pose_z', Z),
+
+    triple(ObjID, suturo:'start_pose_rx', RX),
+    triple(ObjID, suturo:'start_pose_ry', RY),
+    triple(ObjID, suturo:'start_pose_rz', RZ),
+    triple(ObjID, suturo:'start_pose_rw', RW).
+
+%% default_surface(Class, Surface)
+:- dynamic default_surface/2.
+
+get_sponge_surface(Surface) :-
+    has_type(Sponge, hsr_objects:'Sponge'),
+    object_supported_by_surface(Sponge, Surface).
+
+get_sponge_surface(Surface) :-
+    default_surface(hsr_objects:'Sponge',Surface).
+
+get_sponge_surfaces(Surfaces) :-
+    findall(Surface, get_sponge_surface(Surface), Surfaces).
