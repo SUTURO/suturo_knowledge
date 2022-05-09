@@ -63,11 +63,17 @@ next_object(Object, 0) :-
     %max_member([_, NormalizationConstant], Costs),
     findall([CBRatio, Object],
     (
-        member([Object, BenefitAtom], Benefits),
-        atom_number(BenefitAtom, Benefit),
-        member([Object, Cost], Costs),
-        %CBRatio is Benefit / (Cost / NormalizationConstant)
-        CBRatio is Benefit / Cost
+	member([Object, BenefitAtom], Benefits),
+	atom_number(BenefitAtom, Benefit),
+	ros_info("Benefit is"),
+	ros_info(Benefit),
+	member([Object, Cost], Costs),
+	ros_info("Cost is"),
+	ros_info(Cost),
+	%CBRatio is Benefit / (Cost / NormalizationConstant)
+	CBRatio is Benefit / Cost,
+	ros_info("CBRatio is"),
+	ros_info(CBRatio)
     ),
     ObjectCBRatios),
     list_to_set(ObjectCBRatios, ObjectCBRatiosSet),
@@ -207,7 +213,7 @@ objects_costs(OriginPosition, Objects, ObjectCosts) :-
     (
         member(Object, Objects),
         (
-	    object_costs(OriginPosition, Object, Costs);
+	    object_costs(OriginPosition, Object, Costs)-> true ;
 	    format(string(MSG), "object_costs(~w, ~w, ObjectCosts) failed", [OriginPosition, Objects]),
 	    ros_warn(MSG),
 	    fail()
@@ -224,12 +230,12 @@ object_costs(OriginPosition, Object, Costs) :-
 
 
 distance_to_go(OriginPosition, Object, Distance) :-
-    (distance_to_object(OriginPosition, Object, DistanceToObject);
+    (distance_to_object(OriginPosition, Object, DistanceToObject) -> true;
      format(string(MSG), "distance_to_object(~w, ~w, DistanceToObject) failed", [OriginPosition, Object]),
      ros_warn(MSG),
      fail()
     ),
-    (distance_to_goal_location(Object, DistanceToLocation);
+    (distance_to_goal_location(Object, DistanceToLocation) -> true;
      format(string(MSG), "distance_to_goal_location(~w, DistanceToLocation) failed", [OriginPosition]),
      ros_warn(MSG),
      fail()
@@ -238,7 +244,7 @@ distance_to_go(OriginPosition, Object, Distance) :-
 
 
 distance_to_object(OriginPosition, Object, Distance) :-
-    (object_pose(Object, [_, _,[X, Y, _], _]);
+    (object_pose(Object, [_, _,[X, Y, _], _]) -> true;
      format(string(MSG), "object_pose(~w, [_, _,[X, Y, _], _]) failed", [Object]),
      ros_warn(MSG),
      fail()
@@ -247,7 +253,7 @@ distance_to_object(OriginPosition, Object, Distance) :-
 
 
 distance_to_goal_location(Object, Distance) :-
-    (object_goal_location(Object, GoalPosition);
+    (object_goal_location(Object, GoalPosition) -> true;
      format(string(MSG), "object_goal_location(~w, GoalPosition) failed", [Object]),
      ros_warn(MSG),
      fail()
@@ -258,22 +264,22 @@ distance_to_goal_location(Object, Distance) :-
 
 object_goal_location(Object, GoalPosition) :-
     object_pose(Object, [_, _,ObjectPosition, _]),
-    (object_at_predefined_location(Object, RoomType, FurnitureType);
+    (object_at_predefined_location(Object, RoomType, FurnitureType)-> true;
      format(string(MSG), "object_at_predefined_location(~w, RoomType, FurnitureType) failed", [Object]),
      ros_warn(MSG),
      fail()
     ),
-    (once(surface_at_predefined_location(GoalSurface, RoomType, FurnitureType));
+    (once(surface_at_predefined_location(GoalSurface, RoomType, FurnitureType))-> true;
      format(string(MSG), "once(surface_at_predefined_location(GoalSurface, ~w, ~w) failed", [RoomType, FurnitureType]),
      ros_warn(MSG),
      fail()
     ),
-    (has_urdf_name(GoalSurface, Name);
+    (has_urdf_name(GoalSurface, Name) -> true;
      format(string(MSG), "has_urdf_name(~w, Name) failed", [GoalSurface]),
      ros_warn(MSG),
      fail()
     ),
-    (surface_pose_in_map(GoalSurface, [GoalPosition, _]);
+    (surface_pose_in_map(GoalSurface, [GoalPosition, _]) -> true;
      format(string(MSG), "surface_pose_in_map(~w, [GoalPosition, _]) failed", [GoalSurface]),
      ros_warn(MSG),
      fail()
