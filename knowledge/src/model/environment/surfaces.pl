@@ -222,6 +222,11 @@ create_surface(Shape, Link, Surface) :-
     tell(has_urdf_name(Surface, Link)),
     init_visit_state(Surface).
 
+create_surface(Shape, Link, Surface) :-
+    sub_string(Shape,_,_,_,"drawer"),
+    tell(has_type(Surface, hsr_rooms:'DrawerOpening')),
+    tell(has_urdf_name(Surface, Link)),
+    init_visit_state(Surface).
 
 %% supported_surface(?SurfaceLink)
 %

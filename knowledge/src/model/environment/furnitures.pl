@@ -132,6 +132,11 @@ create_furniture(FurnitureType, Furniture) :-
     !.
 
 create_furniture(FurnitureType, Furniture) :-
+    sub_string(FurnitureType,_,_,_,"drawer"),
+    tell(has_type(Furniture, hsr_rooms:'Drawer')),
+    !.
+
+create_furniture(FurnitureType, Furniture) :-
     sub_string(FurnitureType,_,_,_,"fridge"),
     tell(has_type(Furniture, hsr_rooms:'Fridge')),
     !.
@@ -211,6 +216,14 @@ assign_surfaces(Furniture, FurnitureLink, Shape) :-
     create_surface(Shape, SurfaceLink, Surface),
     tell(has_surface(Furniture, Surface)).
 
+assign_surfaces(Furniture, FurnitureLink, Shape) :-
+    sub_string(Shape,_,_,_,"drawer"),
+    tell(triple(Furniture, soma:'hasShape', hsr_rooms:'DrawerShape')),
+    string_concat(Name, ":drawer_front_top", FurnitureLink),
+    atom_concat(Name, ":drawer_center", SurfaceLink),
+    create_surface(Shape, SurfaceLink, Surface),
+    tell(has_surface(Furniture, Surface)).
+
 
 %% assign_furniture_location(?Furniture) is nondet
 %
@@ -232,5 +245,6 @@ assign_furniture_location(Furniture) :-
 is_furniture_link(Link) :-
     sub_string(Link,_,_,_,"table_front_edge_center");
     sub_string(Link,_,_,_,"shelf_base_center");
-    sub_string(Link,_,_,_,"bucket_front_edge_center").
+    sub_string(Link,_,_,_,"bucket_front_edge_center");
+    sub_string(Link,_,_,_,"drawer_front_top").
 
