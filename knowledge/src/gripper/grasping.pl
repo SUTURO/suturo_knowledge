@@ -18,6 +18,14 @@
     ]).
 :- use_module(library('gripper/gripper_info'), [gripper/1]).
 
+
+%% TODO Test if this works and search for better values.
+surface_pose_to_perceive_from(Surface, [[XPos,YPos,0],Rotation]):-
+    has_type(Surface, hsr_rooms:'DrawerOpening'),
+    has_urdf_name(Surface, SurfaceLink),
+    tf_transform_point(SurfaceLink, map, [-0.95, 0, 0], [XPos,YPos,_]),
+    tf_lookup_transform('map', SurfaceLink, pose(_,Rotation)).
+
 %% surface_pose_to_perceive_from(Surface, [[XPos,YPos,0],Rotation]) is nondet.
 %
 % Returns the position to take on when perceiving from surface
@@ -31,7 +39,7 @@ surface_pose_to_perceive_from(Surface, [[XPos,YPos,0],Rotation]):-
     %% The viewing angle of the hsrb is a bit more than 35° to either side, so 70° in total.
     %% To calculate the distance to the table, we now can use formulas for a triangle with a right angle
 
-    %% hsb
+    %% hsrb
     %% |\<-- alpha
     %% | \
     %% B  \
