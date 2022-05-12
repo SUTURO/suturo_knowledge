@@ -47,7 +47,8 @@
 		set_surface_visited/1,
 		set_surface_not_visited/1,
 		surfaces_not_visited/1,
-		get_perception_surface_region/2
+		get_perception_surface_region/2,
+		surface_rel_pose/5
 	]).
 :- use_module(library('model/environment/rooms'), [init_rooms/0, connect_rooms/0, all_rooms/1]).
 :- use_module(library('model/environment/doors'), 

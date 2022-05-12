@@ -9,7 +9,8 @@
         get_perception_surface_region/2,
         has_table_shape/1,
         has_shelf_shape/1,
-        has_bucket_shape/1
+        has_bucket_shape/1,
+	surface_rel_pose/5
     ]).
 
 
@@ -250,3 +251,21 @@ square_big_enough(X,Y):- %TODO Support other shapes
     -> true
     ; fail
     ).
+
+%! surface_rel_pose(+Surface:, +X, +Y, +Zdistance, ?Pose) is nondet
+%
+% Get the pose at the specified x/y coordinate on the surface.
+% the pose is rotated 180 degrees around the x axis for the gripper.
+%
+% @param X front/back relative position. X=0 means middle, X=-1 means front, X=1 means back.
+% @param Y right/left relative position. Y=0 means middle, Y=-1 means right, Y=1 means left.
+% @param Zdistance The distance from the table. This parameter is useful for wipe, where the sponge needs to be a littlebit above the table. Negative is down, positive is up.
+% @param Pose is the resulting pose in `[Translation, Rotation]`
+% @tbd DOESN'T WORK FOR NON-TABLE-SHAPES
+surface_rel_pose(Surface, X, Y, Zdistance, [Translation, Rotation]) :-
+    has_table_shape(Surface),
+    surface_dimensions(Surface, SurfaceWidth, SurfaceDepth, _),
+    Xrel is X*SurfaceDepth/2,
+    Yrel is Y*SurfaceWidth/2,
+    has_urdf_name(Surface, SurfaceLink),
+    tf_transform_pose(SurfaceLink, 'map', pose([Xrel, Yrel, Zdistance], [1, 0, 0, 0]), pose(Translation, Rotation)).
