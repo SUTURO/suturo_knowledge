@@ -15,6 +15,7 @@ prolog = rosprolog_client.Prolog()
 # preempted or fails, this Server will return succeeded=true.
 # todo : make more clear and smaller
 class StoreObjectInfoServer(object):
+    # TODO this variable doesn't get used, why is it here?
     _feedback = action.StoreObjectInfoFeedback()
     _result = action.StoreObjectInfoResult()
 
@@ -44,6 +45,7 @@ class StoreObjectInfoServer(object):
 
             obj_class = str(data.obj_class)
             if obj_class:
+                # see README.md for why this regex exists and what it does.
                 obj_class = re.sub(r"^[0-9_-]+|_","",obj_class).capitalize()
             else:
                 rospy.loginfo("The given class name is empty. Setting to OTHER.")
@@ -75,6 +77,7 @@ class StoreObjectInfoServer(object):
             qy = str(data.pose.pose.orientation.y)
             qz = str(data.pose.pose.orientation.z)
             qw = str(data.pose.pose.orientation.w)
+            # TODO region_splits isn't used, why does this exist?
             region_splits = str(data.region).split('_')
 
             # checks if the obj position is valid, eg. distance to surface
