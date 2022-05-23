@@ -57,6 +57,11 @@
 		init_door_paths/0,
 		get_door_state/2
 	]).
+:- use_module(library('model/environment/drawers'),
+	      [
+		  store_drawer_knob/3,
+		  drawer_knob/3
+	      ]).
 :- use_module(library('locations/actual_locations'), 
 	[
 		is_legal_obj_position/1,
@@ -77,8 +82,8 @@
 		  stored_objects/1,
 		  source_pose/3,
 		  default_surface/2,
-		  get_sponge_surface/1,
-		  get_sponge_surfaces/1
+		  get_current_or_default_surface/2,
+		  get_current_or_default_surfaces/2
 	      ]).
 :- use_module(library('locations/spatial_comp'),
 	[

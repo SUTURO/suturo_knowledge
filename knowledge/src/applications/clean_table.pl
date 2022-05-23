@@ -5,8 +5,8 @@
 	      stored_objects/1,
 	      source_pose/3,
 	      default_surface/2,
-	      get_sponge_surface/1,
-	      get_sponge_surfaces/1
+	      get_current_or_default_surface/2,
+	      get_current_or_default_surfaces/2
 	  ]).
 
 :- use_module(library('beliefstate')).
@@ -44,23 +44,25 @@ temporary_storage_pose_(Instance, [Translation, Rotation], Surface) :-
     %% Note: the SurfaceLink is in the center of the surface
 
     min_space_between_objects(MinSpace),
-    object_dimensions(Instance, ObjectWidth, ObjectDepth, _),
+    object_dimensions(Instance, ObjectWidth, ObjectDepth, ObjectHeight),
     all_groups_on_tablelike_surface(Surface, Groups),
     surface_dimensions(Surface, SurfaceWidth, SurfaceDepth, SurfaceHeight),
     length(Groups, NGroups),
     format(string(Log2), "temporary_storage_pose_/3 variables. Groups: ~w, NGroups:~w", [Groups, NGroups]),
     ros_info(Log2),
-
+    
+    %      to the front   and space away and to the center of the object
+    RefX is (-SurfaceWidth/2) + MinSpace + ObjectDepth/2,
+    
+    RefZ is ObjectHeight/2,
 
 
     (NGroups = 0
     ->
 	(
-	    %%      to the front   and space away and to the center of the object
-            RefX is (-SurfaceWidth/2) + MinSpace + ObjectDepth/2,
 	    %%      to the left and space away and to the center of the object
             RefY is SurfaceDepth/2 - MinSpace - ObjectWidth/2,
-            tf_transform_pose(SurfaceLink, 'map', pose([RefX, RefY, 0.07], [0, 0, 0, 1]), pose(Translation, Rotation)),
+            tf_transform_pose(SurfaceLink, 'map', pose([RefX, RefY, RefZ], [0, 0, 0, 1]), pose(Translation, Rotation)),
 
             tell(has_type(NewGroup, hsr_objects:'Group')),
             tell(triple(Instance, hsr_objects:'inGroup', NewGroup)),
@@ -74,16 +76,19 @@ temporary_storage_pose_(Instance, [Translation, Rotation], Surface) :-
 	      group_position_on_surface(Group, Surface, [GroupX, GroupY, _]),
               group_dimensions(Group, GroupDepth, GroupWidth),
 	      
-	      format(string(Log3), "group info: XY= ~w, ~w; DH= ~w ~w", [GroupX, GroupY, GroupDepth, GroupWidth]),
+	      format(string(Log3), "group info: XY= ~w, ~w; DW= ~w ~w", [GroupX, GroupY, GroupDepth, GroupWidth]),
 	      ros_info(Log3),
 
 	      %% start at the back of the group, go to the front, and go back to the center of the object.
 	      %% this way all object align their start at the local x coordinate
-	      RefX is GroupX - GroupDepth + ObjectDepth/2,
+
+	      % Don't rely on the rest of the group, just get the number directly from the Surface before the branch.
+	      % % 0.17 as temp fix for GroupDepth being way too high.
+	      % RefX is GroupX - 0.17 + ObjectDepth/2,
 
 	      %% start at the left, go to the right, add the spacer, go to the center of the new object
 	      RefY is GroupY - GroupWidth - MinSpace - ObjectWidth/2,
-              tf_transform_pose(SurfaceLink, 'map', pose([RefX, RefY, 0.07], [0, 0, 0, 1]), pose(Translation, Rotation)),
+              tf_transform_pose(SurfaceLink, 'map', pose([RefX, RefY, RefZ], [0, 0, 0, 1]), pose(Translation, Rotation)),
 	      tell(triple(Instance, hsr_objects:'inGroup', Group))
           );
       %% Idk how groups are supposed to work and i don't have the time to try it now.
@@ -108,14 +113,15 @@ source_pose(ObjID, Frame, [[X, Y, Z], [RX, RY, RZ, RW]]) :-
     triple(ObjID, suturo:'start_pose_rw', RW).
 
 %% default_surface(Class, Surface)
+% TODO nicht mit predicates sondern in die owl dateien
 :- dynamic default_surface/2.
 
-get_sponge_surface(Surface) :-
-    has_type(Sponge, hsr_objects:'Sponge'),
-    object_supported_by_surface(Sponge, Surface).
+get_current_or_default_surface(Type, Surface) :-
+    has_type(Object, Type),
+    object_supported_by_surface(Object, Surface).
 
-get_sponge_surface(Surface) :-
-    default_surface(hsr_objects:'Sponge',Surface).
+get_current_or_default_surface(Type, Surface) :-
+    default_surface(Type, Surface).
 
-get_sponge_surfaces(Surfaces) :-
-    findall(Surface, get_sponge_surface(Surface), Surfaces).
+get_current_or_default_surfaces(Type, Surfaces) :-
+    findall(Surface, get_current_or_default_surface(Type, Surface), Surfaces).
