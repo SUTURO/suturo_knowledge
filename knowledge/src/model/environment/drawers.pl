@@ -7,6 +7,9 @@
 
 :- rdf_db:rdf_register_ns(hsr_rooms, 'http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#', [keep(true)]).
 
+%% store_drawer_knob(+ObjID, +Pose, box(+Width, +Depth, +Height)) is nondet.
+%
+% Stores the information about the drawer_knob in the knowledge base.
 store_drawer_knob(ObjID, [Position, Rotation], box(Width, Depth, Height)) :-
     tell(has_type(ObjID, hsr_rooms:drawer_knob)),
     tell(triple(ObjID, hsr_rooms:hasPosition, term(Position))),
@@ -15,6 +18,9 @@ store_drawer_knob(ObjID, [Position, Rotation], box(Width, Depth, Height)) :-
     tell(triple(ShapeRegion, hsr_rooms:hasDepth, Depth)),
     tell(triple(ShapeRegion, hsr_rooms:hasHeight, Height)).
 
+%% drawer_knob(?ObjID, ?Pose, box(?Width, ?Depth, ?Height)) is nondet.
+%
+% Retrieves information about the drawer_knob from the knowledgebase.
 drawer_knob(ObjID, [Position, Rotation], box(Width, Depth, Height)) :-
     has_type(ObjID, hsr_rooms:drawer_knob),
     triple(ObjID, hsr_rooms:hasPosition, term(Position)),
