@@ -12,6 +12,7 @@
    Dies generiet eine TAGS Datei, die Emacs nutzen kann, um zur Definition eines Predicates zu springen.  
    Man kann auch zwischen `find` und `-iname` Pfade angeben, die alle durchsucht werden sollen.
    `find ../../.. -iname '*.pl' -exec etags --lang=prolog {} +` zum Beispiel indexiert alles vom Ordner 3 Ebenen höher.
+4. Posen werden hier immer relativ zu `map` im Format `[[x, y, z], [qx, qy, qz, qw]]` (also Liste von Position als XYZ und Rotation als Quaternion) übergeben.
 
 ## Altlasten, bei denen ich die Designentscheidungen noch nicht ganz verstehe:
 - `marker_objectstate.py` republisht alle `/visualization_marker_array` als Objekte auf `/object_state`.
