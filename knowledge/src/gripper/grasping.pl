@@ -26,11 +26,12 @@ surface_pose_to_perceive_from(Surface, [[XPos,YPos,0],Rotation]):-
     tf_transform_point(SurfaceLink, map, [-0.95, 0, 0], [XPos,YPos,_]),
     tf_lookup_transform('map', SurfaceLink, pose(_,Rotation)).
 
-%% surface_pose_to_perceive_from(Surface, [[XPos,YPos,0],Rotation]) is nondet.
+%% surface_pose_to_perceive_from(+Surface, ?Pose) is nondet.
 %
 % Returns the position to take on when perceiving from surface
 %
-% @param BestObj the variable to be filled with the next object
+% @param Surface The surface that should be percieved.
+% @param Pose The pose the Robot base should be at to percieve the surface.
 %
 surface_pose_to_perceive_from(Surface, [[XPos,YPos,0],Rotation]):-
     has_urdf_name(Surface, SurfaceLink),
