@@ -89,7 +89,7 @@ init_furniture(FurnitureLink) :-
 
 
 
-%% create_furniture(?FurnitureType, ?Furniture) is nondet
+%% create_furniture(+FurnitureType, ?Furniture) is nondet
 %
 % Creates an instance of the type derived from FurnitureType
 %

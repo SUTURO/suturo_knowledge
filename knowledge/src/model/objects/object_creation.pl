@@ -206,7 +206,10 @@ set_color_semantics(ObjID, [1, 1, 1]) :-
 % Used so when no color is given the query does not fail
 set_color_semantics(_, _) :-
     true.
-
+%% store_starting_location(+ObjID, +Frame, +Position, +Rotation) is nondet.
+%
+% This stores the starting location of the Object.
+% This is used for the cleanup plan.
 store_starting_location(ObjID, Frame, [X, Y, Z], [RX, RY, RZ, RW]) :-
     tell(triple(ObjID, suturo:'start_pose_frame', Frame)),
     
