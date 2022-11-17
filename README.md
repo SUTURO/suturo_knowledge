@@ -1,5 +1,11 @@
 # suturo_knowledge
 
+We decided to restart the knowledge Package in WiSe 2022/23.
+
+The old code stays in knowledge_old for reference.
+
+Style guides for the new code will be added shortly.
+
 ## Wichtige Informationen (Designentscheidungen, Prolog patterns, etc):
 1. Bei `tell(is_at(name,...))` wird vom Namen am Anfang Zahlen und Minusse entfernt. Damit weniger Bugs auftreten, sind die Knowledge Objektklassen angepasst und store_object_info_server.py passt die Namen entsprechend an.
    Damit `marker_objectstate.py` den Klassennamen einfach erkennen kann, werden auch alle Unterstriche aus dem Klassennamen entfernt.  
