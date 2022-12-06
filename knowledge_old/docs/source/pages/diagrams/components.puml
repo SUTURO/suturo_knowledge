@@ -1,0 +1,19 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+skinparam  {
+BackGroundColor white;
+}
+package  suturo_knowledge  {
+frame scripts #technology{
+skinparam componentStyle uml1
+component store_object_info_server{
+}
+}
+skinparam componentStyle uml2
+frame src {
+component object_state{
+}
+}
+}
+@enduml

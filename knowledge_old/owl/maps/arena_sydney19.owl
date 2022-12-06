@@ -1,0 +1,311 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://www.semanticweb.org/suturo/ontologies/2021/2/arena_sydney19#"
+     xml:base="http://www.semanticweb.org/suturo/ontologies/2021/2/arena_sydney19"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:rooms="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#">
+    <owl:Ontology rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/2/arena_sydney19">
+        <owl:imports rdf:resource="package://knowledge/owl/rooms.owl"/>
+    </owl:Ontology>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#hasRoomTypeRole -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#hasRoomTypeRole"/>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#hasSurface -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#hasSurface"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Bedroom -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Bedroom"/>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Kitchen -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Kitchen"/>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#LivingRoom -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#LivingRoom"/>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Office -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Office"/>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Room -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Room"/>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Wall -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Wall"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Individuals
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/2/arena_sydney19#bedroom -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/2/arena_sydney19#bedroom">
+        <rdf:type rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Bedroom"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/2/arena_sydney19#bedroom_1 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/2/arena_sydney19#bedroom_1">
+        <rdf:type rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Room"/>
+        <rooms:hasRoomTypeRole rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/2/arena_sydney19#bedroom"/>
+        <rooms:hasSurface rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/2/arena_sydney19#bedroom_wall_1"/>
+        <rooms:hasSurface rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/2/arena_sydney19#bedroom_wall_2"/>
+        <rooms:hasSurface rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/2/arena_sydney19#bedroom_wall_3"/>
+        <rooms:hasSurface rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/2/arena_sydney19#bedroom_wall_4"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/2/arena_sydney19#bedroom_wall_1 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/2/arena_sydney19#bedroom_wall_1">
+        <rdf:type rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Wall"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/2/arena_sydney19#bedroom_wall_2 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/2/arena_sydney19#bedroom_wall_2">
+        <rdf:type rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Wall"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/2/arena_sydney19#bedroom_wall_3 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/2/arena_sydney19#bedroom_wall_3">
+        <rdf:type rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Wall"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/2/arena_sydney19#bedroom_wall_4 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/2/arena_sydney19#bedroom_wall_4">
+        <rdf:type rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Wall"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/2/arena_sydney19#kitchen -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/2/arena_sydney19#kitchen">
+        <rdf:type rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Kitchen"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/2/arena_sydney19#kitchen_1 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/2/arena_sydney19#kitchen_1">
+        <rdf:type rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Room"/>
+        <rooms:hasRoomTypeRole rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/2/arena_sydney19#kitchen"/>
+        <rooms:hasSurface rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/2/arena_sydney19#kitchen_wall_1"/>
+        <rooms:hasSurface rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/2/arena_sydney19#kitchen_wall_2"/>
+        <rooms:hasSurface rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/2/arena_sydney19#kitchen_wall_3"/>
+        <rooms:hasSurface rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/2/arena_sydney19#kitchen_wall_4"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/2/arena_sydney19#kitchen_wall_1 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/2/arena_sydney19#kitchen_wall_1">
+        <rdf:type rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Wall"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/2/arena_sydney19#kitchen_wall_2 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/2/arena_sydney19#kitchen_wall_2">
+        <rdf:type rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Wall"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/2/arena_sydney19#kitchen_wall_3 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/2/arena_sydney19#kitchen_wall_3">
+        <rdf:type rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Wall"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/2/arena_sydney19#kitchen_wall_4 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/2/arena_sydney19#kitchen_wall_4">
+        <rdf:type rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Wall"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/2/arena_sydney19#livingroom -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/2/arena_sydney19#livingroom">
+        <rdf:type rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#LivingRoom"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/2/arena_sydney19#livingroom_1 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/2/arena_sydney19#livingroom_1">
+        <rdf:type rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Room"/>
+        <rooms:hasRoomTypeRole rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/2/arena_sydney19#livingroom"/>
+        <rooms:hasSurface rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/2/arena_sydney19#livingroom_wall_1"/>
+        <rooms:hasSurface rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/2/arena_sydney19#livingroom_wall_2"/>
+        <rooms:hasSurface rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/2/arena_sydney19#livingroom_wall_3"/>
+        <rooms:hasSurface rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/2/arena_sydney19#livingroom_wall_4"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/2/arena_sydney19#livingroom_wall_1 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/2/arena_sydney19#livingroom_wall_1">
+        <rdf:type rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Wall"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/2/arena_sydney19#livingroom_wall_2 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/2/arena_sydney19#livingroom_wall_2">
+        <rdf:type rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Wall"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/2/arena_sydney19#livingroom_wall_3 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/2/arena_sydney19#livingroom_wall_3">
+        <rdf:type rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Wall"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/2/arena_sydney19#livingroom_wall_4 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/2/arena_sydney19#livingroom_wall_4">
+        <rdf:type rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Wall"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/2/arena_sydney19#office -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/2/arena_sydney19#office">
+        <rdf:type rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Office"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/2/arena_sydney19#office_1 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/2/arena_sydney19#office_1">
+        <rdf:type rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Room"/>
+        <rooms:hasRoomTypeRole rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/2/arena_sydney19#office"/>
+        <rooms:hasSurface rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/2/arena_sydney19#office_wall_1"/>
+        <rooms:hasSurface rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/2/arena_sydney19#office_wall_2"/>
+        <rooms:hasSurface rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/2/arena_sydney19#office_wall_3"/>
+        <rooms:hasSurface rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/2/arena_sydney19#office_wall_4"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/2/arena_sydney19#office_wall_1 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/2/arena_sydney19#office_wall_1">
+        <rdf:type rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Wall"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/2/arena_sydney19#office_wall_2 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/2/arena_sydney19#office_wall_2">
+        <rdf:type rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Wall"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/2/arena_sydney19#office_wall_3 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/2/arena_sydney19#office_wall_3">
+        <rdf:type rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Wall"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/suturo/ontologies/2021/2/arena_sydney19#office_wall_4 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/suturo/ontologies/2021/2/arena_sydney19#office_wall_4">
+        <rdf:type rdf:resource="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms#Wall"/>
+    </owl:NamedIndividual>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi -->
+

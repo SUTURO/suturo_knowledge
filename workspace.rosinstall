@@ -1,0 +1,44 @@
+- git:
+    local-name: dul
+    uri: https://github.com/ease-crc/dul.git
+    version: master
+- git:
+    local-name: ease_ontology
+    uri: https://github.com/knowrob/ease_ontology.git
+    version: master
+- git:
+    local-name: iai_common_msgs
+    uri: https://github.com/code-iai/iai_common_msgs.git
+    version: 673045b2364e54b569438794b0240486e4afae2b
+- git:
+    local-name: knowrob
+    uri: https://github.com/knowrob/knowrob.git
+    version: f367e8c07c4756f5df8fbc737c2f6a56b51880fc
+- git:
+    local-name: genowl
+    uri: https://github.com/knowrob/genowl.git
+    version: master
+- git: 
+    local-name: rosprolog
+    uri: https://github.com/knowrob/rosprolog.git
+    version: master
+- git:
+    local-name: rosowl
+    uri: https://github.com/knowrob/rosowl.git
+    version: master
+- git:
+    local-name: rosjava_build_tools
+    uri: https://github.com/rosjava/rosjava_build_tools.git
+    version: kinetic
+- git:
+    local-name: suturo_nlp
+    uri: https://github.com/SUTURO/suturo_nlp.git
+    version: master
+- git:
+    local-name: aliencontrol
+    uri: https://github.com/acschaefer/aliencontrol.git
+    version: master
+- git:
+    local-name: suturo_knowledge
+    uri: https://github.com/SUTURO/suturo_knowledge.git
+    version: robocup

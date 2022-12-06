@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog prefer="public" xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
+    <uri id="User Entered Import Resolution" name="package://knowledge/owl/rooms.owl" uri="file:/home/reni/knowledge_ws_new_knowrob/src/suturo_knowledge/knowledge/owl/rooms.owl"/>
+    <uri id="User Entered Import Resolution" name="package://knowrob/owl/URDF.owl" uri="file:/home/reni/knowledge_ws_new_knowrob/src/knowrob/owl/URDF.owl"/>
+    <uri id="User Entered Import Resolution" name="http://www.ontologydesignpatterns.org/ont/dul/IOLite.owl" uri="file:/home/reni/knowledge_ws_new_knowrob/src/knowrob/owl/external/IOLite.owl"/>
+    <uri id="User Entered Import Resolution" name="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl" uri="file:/home/reni/knowledge_ws_new_knowrob/src/knowrob/owl/external/DUL.owl"/>
+    <uri id="User Entered Import Resolution" name="http://www.ease-crc.org/ont/SOMA.owl" uri="file:/home/reni/knowledge_ws_new_knowrob/src/knowrob/owl/external/SOMA.owl"/>
+    <uri id="User Entered Import Resolution" name="http://knowrob.org/kb/knowrob.owl" uri="file:/home/reni/knowledge_ws_new_knowrob/src/knowrob/owl/knowrob.owl"/>
+    <uri id="User Entered Import Resolution" name="http://www.semanticweb.org/suturo/ontologies/2021/0/rooms" uri="file:/home/reni/knowledge_ws_new_knowrob/src/suturo_knowledge/knowledge/owl/rooms.owl"/>
+    <group id="Folder Repository, directory=, recursive=true, Auto-Update=true, version=2" prefer="public" xml:base="">
+        <uri id="Automatically generated entry, Timestamp=1615653466028" name="http://www.semanticweb.org/suturo/ontologies/2021/1/sim_door_rooms" uri="sim_door_rooms.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1615653466028" name="http://www.semanticweb.org/suturo/ontologies/2021/2/arena_sydney19" uri="arena_sydney19.owl"/>
+    </group>
+</catalog>
