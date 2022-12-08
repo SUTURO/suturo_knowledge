@@ -15,3 +15,10 @@
 :- rdf_register_ns(soma_home, 'http://www.ease-crc.org/ont/SOMA-HOME.owl#', [keep(true)]).
 
 :- use_directory('model').
+
+:- ros_param_get_string("/suturo_room_viz/urdf_param", Param),
+   load_urdf_from_param(Param).
+
+:- tf_logger_enable.
+
+:- init_furnitures.
