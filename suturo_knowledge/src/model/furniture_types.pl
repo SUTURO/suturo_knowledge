@@ -12,7 +12,9 @@ is_type(Obj, Type) ?>
     has_type(Obj, Type).
 
 is_type(Obj, Type) +>
-    new_iri(Obj, Type),
+    ( var(Obj) ->
+      new_iri(Obj, Type);
+      true),
     has_type(Obj, Type).
 
 

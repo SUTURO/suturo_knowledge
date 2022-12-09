@@ -1,4 +1,6 @@
 %% This module loads and creates furniture in the database.
+%
+% Additionally it currently has predicates used in load_urdf_from_param/1 and init_furnitures/0 that should be moved somewhere else as soon as we have time.
 :- module(furniture_creation,
 	  [
 	      create_table/2,
@@ -33,16 +35,16 @@ is_furniture_link(Link) :-
 
 
 
-/**
-* is called as inital_goal in the launch file
-*/
+%%
+% is called as inital_goal in the launch file
+% loads the urdf xml data stored in the ros parameter named Param
 load_urdf_from_param(Param):-
     ros_param_get_string(Param,S), % S is the urdf file (a xml file) as a string
     get_urdf_id(URDF),
-    urdf_load_xml(URDF,S),
-    get_urdf_origin(Origin).
-    % set_post_origin hangs
-    %urdf_set_pose_to_origin(URDF,Origin).
+    urdf_load_xml(URDF,S).
+    % set_pose_origin hangs because i can't supply the load_rdf option to urdf_load_xml/2
+    % get_urdf_origin(Origin),
+    % urdf_set_pose_to_origin(URDF,Origin).
     % was in the old suturo code, looks like it doesn't do anything useful
     %urdf_link_names(URDF,Links).
 
@@ -54,10 +56,9 @@ load_urdf_from_param(Param):-
 init_furnitures :-
     get_urdf_id(URDF),
     urdf_link_names(URDF, Links),
-    forall((
-		  member(FurnitureLink, Links),
-		  is_furniture_link(FurnitureLink)
-	      ),
+    forall((member(FurnitureLink, Links),
+	    is_furniture_link(FurnitureLink)
+	   ),
 	   init_furniture(FurnitureLink)).
 
 %% init_furnitures(?FurnitureLink) is nondet
@@ -70,13 +71,21 @@ init_furnitures :-
 init_furniture(FurnitureLink) :-
     split_string(FurnitureLink, ":", "", [_, Type, Shape]),
     create_furniture(Type, Furniture),
-    kb_project(has_urdf_name(Furniture, FurnitureLink)).
+    % Workaround: furniture that doesn't have a type and couldn't get created shouldn't have a urdf name.
+    (var(Furniture) -> true;
+     kb_project(has_urdf_name(Furniture, FurnitureLink))).
+    % TODO not implemented yet
     %assign_furniture_location(Furniture),
     %assign_surfaces(Furniture, FurnitureLink, Shape).
 
 has_urdf_name(Object, URDFName) ?+>
     triple(Object, urdf:'hasURDFName', URDFName).
 
+%% has_tf_name(Object, TFName)
+%
+% gets the tf name of an object.
+% for objects that have a urdf name, the TFName is based on the urdf name.
+% for other objects, it is the part after the #
 has_tf_name(Object, TFName) :-
     % anything with a # is an object and not a urdf name
     sub_string(Object, _, _, After, "#"),
@@ -88,11 +97,16 @@ has_tf_name(Object, TFName) :-
     ),
     !.
 
+% has_tf_name for urdf names
 has_tf_name(URDFName, TFName) :-
+    % using a not here so the cut 3 lines above is a green cut.
     not(sub_string(URDFName, _, _, _, "#")),
     % TODO don't hardcode iai_kitchen
     atom_concat('iai_kitchen/', URDFName, TFName).
 
+%% create_furniture(+FurnitureType, -Furniture)
+%
+% create a furniture iri and project the type based on the link name
 create_furniture(FurnitureType, Furniture) :-
     sub_string(FurnitureType,_,_,_,"table"),
     kb_project(is_table(Furniture)),
@@ -102,6 +116,11 @@ create_furniture(_, _) :-
     % Ignore unknown furniture for now
     true.
 
+%% create_table(-Table, +Dimensions)
+%
+% directly create a table with the specified dimensions.
+%
+% @param Dimensions is a list of Depth, Width, and Height
 create_table(Table, [Depth, Width, Height]) :-
     kb_project(is_table(Table)),
     kb_project(is_shape(Shape)),
