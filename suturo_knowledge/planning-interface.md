@@ -59,7 +59,7 @@ URDFName: tall_table:table:table_front_edge_center.
 
 
 % Notice that there are single quotes around the urdf because it contains non [a-z_] characters.
-?- furniture_creation:has_urdf_name(Object, 'tall_table:table:table_front_edge_center').
+?- has_urdf_name(Object, 'tall_table:table:table_front_edge_center').
 Object: http://www.ease-crc.org/ont/SOMA-HOME.owl#Table_MBOLQEWJ.
 
 
@@ -75,7 +75,7 @@ has_tf_name(+Object, -TFName) is semidet.
 
 Examples:
 ```
-?- furniture_creation:has_tf_name('tall_table:table:table_front_edge_center',TFName).
+?- has_tf_name('tall_table:table:table_front_edge_center',TFName).
 TFName: iai_kitchen/tall_table:table:table_front_edge_center.
 
 
