@@ -5,7 +5,9 @@
 	  [
 	      create_table/2,
 	      load_urdf_from_param/1,
-	      init_furnitures/0
+	      init_furnitures/0,
+	      has_urdf_name/2,
+	      has_tf_name/2
 	  ]).
 
 :- use_module(furniture_types,
@@ -73,11 +75,29 @@ init_furniture(FurnitureLink) :-
     create_furniture(Type, Furniture),
     % Workaround: furniture that doesn't have a type and couldn't get created shouldn't have a urdf name.
     (var(Furniture) -> true;
-     kb_project(has_urdf_name(Furniture, FurnitureLink))).
+     kb_project(has_urdf_name(Furniture, FurnitureLink)),
+     % TODO: don't hardcode the shape
+     [Depth, Width, Height] = [1,1,1],
+     kb_project(is_shape(Shape)),
+     kb_project(is_boxShape(ShapeRegion)),
+     kb_project(holds(Furniture, soma:hasShape, Shape)),
+     kb_project(holds(Shape, dul:hasRegion, ShapeRegion)),
+     % Doesn't use object_dimensions/4 because it throws an exception
+     kb_project(holds(ShapeRegion, soma:hasDepth, Depth)),
+     kb_project(holds(ShapeRegion, soma:hasWidth, Width)),
+     kb_project(holds(ShapeRegion, soma:hasHeight, Height))
+    ).
     % TODO not implemented yet
     %assign_furniture_location(Furniture),
     %assign_surfaces(Furniture, FurnitureLink, Shape).
 
+%% has_urdf_name(?Object, ?URDFName) is nondet.
+%
+% Looks up which object has which urdfname
+% works in both directions
+%
+% part of the planning interface.
+% the api should stay stable.
 has_urdf_name(Object, URDFName) ?+>
     triple(Object, urdf:'hasURDFName', URDFName).
 
@@ -86,6 +106,9 @@ has_urdf_name(Object, URDFName) ?+>
 % gets the tf name of an object.
 % for objects that have a urdf name, the TFName is based on the urdf name.
 % for other objects, it is the part after the #
+%
+% part of the planning interface.
+% the api should stay stable.
 has_tf_name(Object, TFName) :-
     % anything with a # is an object and not a urdf name
     sub_string(Object, _, _, After, "#"),
