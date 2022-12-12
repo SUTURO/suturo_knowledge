@@ -84,7 +84,6 @@ TFName: iai_kitchen/tall_table:table:table_front_edge_center.
 ```
 
 ## Getting the pose of an object
-Note: not implemented yet
 
 ```prolog
 object_pose(+Object, -PoseStamped) is semidet.

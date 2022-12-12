@@ -15,5 +15,5 @@
 - The confidence that perception has is not stored for now.
 
 ## Furniture only
-- Tables are an instance of `soma_home:'Table'`
+- Tables are an instance of `soma:'Table'`
 - The shape of a Furniture is stored in a way that `'model_SOMA':object_shape/5` can find the correct information.

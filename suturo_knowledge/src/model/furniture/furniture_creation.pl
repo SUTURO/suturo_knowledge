@@ -95,7 +95,10 @@ init_furniture(FurnitureLink) :-
      % Doesn't use object_dimensions/4 because it throws an exception
      kb_project(holds(ShapeRegion, soma:hasDepth, Depth)),
      kb_project(holds(ShapeRegion, soma:hasWidth, Width)),
-     kb_project(holds(ShapeRegion, soma:hasHeight, Height))
+     kb_project(holds(ShapeRegion, soma:hasHeight, Height)),
+     universal_scope(Scope),
+     atom_concat('iai_kitchen/', FurnitureLink, FurnitureFrame),
+     tf_set_pose(Furniture, [FurnitureFrame, [0,0,0], [0,0,0,1]], Scope)
     ).
     % TODO not implemented yet
     %assign_furniture_location(Furniture),

@@ -4,5 +4,7 @@
 % make sure types and util is loaded before furniture and object since they use is_type from here.
 :- ensure_loaded('types').
 
+:- ensure_loaded('pose').
+
 :- use_directory('furniture').
 :- use_directory('object').
