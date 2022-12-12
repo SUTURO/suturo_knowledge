@@ -2,6 +2,7 @@
 :- module(furniture_types,
 	  [
 	      is_table/1,
+	      is_drawer/1,
 	      is_type/2
 	  ]).
 
@@ -19,4 +20,7 @@ is_type(Obj, Type) +>
 
 
 is_table(Table) ?+>
-    is_type(Table, soma_home:'Table').
+    is_type(Table, soma:'Table').
+
+is_drawer(Object) ?+>
+    is_type(Object, soma:'Drawer').

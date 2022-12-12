@@ -13,7 +13,8 @@
 :- use_module(furniture_types,
 	      [
 		  is_type/2,
-		  is_table/1
+		  is_table/1,
+		  is_drawer/1
 	      ]).
 
 
@@ -41,9 +42,10 @@ is_furniture_link(Link) :-
 % is called as inital_goal in the launch file
 % loads the urdf xml data stored in the ros parameter named Param
 load_urdf_from_param(Param):-
-    ros_param_get_string(Param,S), % S is the urdf file (a xml file) as a string
-    get_urdf_id(URDF),
-    urdf_load_xml(URDF,S).
+    (ros_param_get_string(Param,S) -> % S is the urdf file (a xml file) as a string
+	 get_urdf_id(URDF),
+	 urdf_load_xml(URDF,S)
+    ; ros_warn("Error getting ros Parameter for environment urdf")).
     % set_pose_origin hangs because i can't supply the load_rdf option to urdf_load_xml/2
     % get_urdf_origin(Origin),
     % urdf_set_pose_to_origin(URDF,Origin).
@@ -133,6 +135,11 @@ has_tf_name(URDFName, TFName) :-
 create_furniture(FurnitureType, Furniture) :-
     sub_string(FurnitureType,_,_,_,"table"),
     kb_project(is_table(Furniture)),
+    !.
+
+create_furniture(FurnitureType, Furniture) :-
+    sub_string(FurnitureType,_,_,_,"drawer"),
+    kb_project(is_drawer(Furniture)),
     !.
 
 create_furniture(_, _) :-
