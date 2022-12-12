@@ -14,6 +14,9 @@
 :- rdf_register_ns(soma,      'http://www.ease-crc.org/ont/SOMA.owl#',      [keep(true)]).
 :- rdf_register_ns(soma_home, 'http://www.ease-crc.org/ont/SOMA-HOME.owl#', [keep(true)]).
 
+%% Make sure util is loaded before model
+:- ensure_loaded('util').
+
 :- use_directory('model').
 
 :- ros_param_get_string("/suturo_room_viz/urdf_param", Param),

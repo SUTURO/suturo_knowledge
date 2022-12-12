@@ -1,8 +1,6 @@
-%% This file contains all the types of recognized furniture
-:- module(furniture_types,
+%% This module contains predicates that are for both furniture and objects.
+:- module(types,
 	  [
-	      is_table/1,
-	      is_drawer/1,
 	      is_type/2
 	  ]).
 
@@ -17,10 +15,3 @@ is_type(Obj, Type) +>
       new_iri(Obj, Type);
       true),
     has_type(Obj, Type).
-
-
-is_table(Table) ?+>
-    is_type(Table, soma:'Table').
-
-is_drawer(Object) ?+>
-    is_type(Object, soma:'Drawer').

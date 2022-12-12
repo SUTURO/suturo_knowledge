@@ -5,14 +5,22 @@
 	  [
 	      create_table/2,
 	      load_urdf_from_param/1,
-	      init_furnitures/0,
-	      has_urdf_name/2,
-	      has_tf_name/2
+	      init_furnitures/0
 	  ]).
+
+:- use_module('../../util',
+	      [
+		  has_urdf_name/2,
+		  has_tf_name/2
+	      ]).
+
+:- use_module('../types',
+	      [
+		  is_type/2
+	      ]).
 
 :- use_module(furniture_types,
 	      [
-		  is_type/2,
 		  is_table/1,
 		  is_drawer/1
 	      ]).
@@ -92,42 +100,6 @@ init_furniture(FurnitureLink) :-
     % TODO not implemented yet
     %assign_furniture_location(Furniture),
     %assign_surfaces(Furniture, FurnitureLink, Shape).
-
-%% has_urdf_name(?Object, ?URDFName) is nondet.
-%
-% Looks up which object has which urdfname
-% works in both directions
-%
-% part of the planning interface.
-% the api should stay stable.
-has_urdf_name(Object, URDFName) ?+>
-    triple(Object, urdf:'hasURDFName', URDFName).
-
-%% has_tf_name(Object, TFName)
-%
-% gets the tf name of an object.
-% for objects that have a urdf name, the TFName is based on the urdf name.
-% for other objects, it is the part after the #
-%
-% part of the planning interface.
-% the api should stay stable.
-has_tf_name(Object, TFName) :-
-    % anything with a # is an object and not a urdf name
-    sub_string(Object, _, _, After, "#"),
-    (
-	has_urdf_name(Object, URDFName) ->
-	has_tf_name(URDFName, TFName);
-	% for stuff that doesn't have a urdf name, use the last part of the iri
-	sub_atom(Object, _, After, 0, TFName)
-    ),
-    !.
-
-% has_tf_name for urdf names
-has_tf_name(URDFName, TFName) :-
-    % using a not here so the cut 3 lines above is a green cut.
-    not(sub_string(URDFName, _, _, _, "#")),
-    % TODO don't hardcode iai_kitchen
-    atom_concat('iai_kitchen/', URDFName, TFName).
 
 %% create_furniture(+FurnitureType, -Furniture)
 %
