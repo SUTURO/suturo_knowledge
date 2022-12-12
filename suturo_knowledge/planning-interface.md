@@ -4,11 +4,11 @@
 Each section contains
 1. a short description of a possible use case
 2. the definition of the predicate
-3. a codeblock with multiple examples, each one seperated by 2 newlines
+3. a codeblock with multiple examples, each one separated by 2 newlines
 
 The examples are in the following format:
 1. `?- ` followed by a query
-2. The variable instanciations that Prolog found.
+2. The variable instantiations that Prolog found.
 
 Meaning of the symbols in front of the parameter:
 These symbols are the same as on <https://www.swi-prolog.org/pldoc/man?section=modes>.
@@ -19,10 +19,10 @@ In short:
 
 The definitions of what it is is also taken from there.
 In short:
-- `det` means it will always succed once
+- `det` means it will always succeed once
 - `semidet` means it will succeed once or fail
-- `nondet` may succed any number of times (this means `cut:lazy-cdr` might be needed to get all values)
-- `multi` succeds at least once
+- `nondet` may succeed any number of times (this means `cut:lazy-cdr` might be needed to get all values)
+- `multi` succeeds at least once
 
 ## Data types
 
@@ -97,6 +97,7 @@ Pose: ['iai_kitchen/tall_table:table:table_front_edge_center', [0,0,0], [0,0,0,1
 
 ## Getting important poses of furnitures
 Note: not implemented yet
+
 Gets a position relative to a furniture based on the type of relation.
 
 Valid `Type`s are `perceive` and `interact`. This list might be expanded later.
