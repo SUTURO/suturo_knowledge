@@ -2,7 +2,11 @@
 :- module(util,
 	  [
 	      has_urdf_name/2,
-	      has_tf_name/2
+	      has_tf_name/2,
+	      ros_info/2,
+	      ros_warn/2,
+	      ros_error/2,
+	      ros_debug/2
 	  ]).
 
 :- use_module(library('lang/terms/triple'),
@@ -45,3 +49,23 @@ has_tf_name(URDFName, TFName) :-
     not(sub_string(URDFName, _, _, _, "#")),
     % TODO don't hardcode iai_kitchen
     atom_concat('iai_kitchen/', URDFName, TFName).
+
+%% ros_debug(+Format, +Arguments)
+ros_debug(Format, Arguments) :-
+    format(string(MSG), Format, Arguments),
+    ros_debug(MSG).
+
+%% ros_info(+Format, +Arguments)
+ros_info(Format, Arguments) :-
+    format(string(MSG), Format, Arguments),
+    ros_info(MSG).
+
+%% ros_warn(+Format, +Arguments)
+ros_warn(Format, Arguments) :-
+    format(string(MSG), Format, Arguments),
+    ros_warn(MSG).
+
+%% ros_error(+Format, +Arguments)
+ros_error(Format, Arguments) :-
+    format(string(MSG), Format, Arguments),
+    ros_error(MSG).

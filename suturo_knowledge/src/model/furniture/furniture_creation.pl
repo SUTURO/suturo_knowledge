@@ -11,7 +11,8 @@
 :- use_module('../../util',
 	      [
 		  has_urdf_name/2,
-		  has_tf_name/2
+		  has_tf_name/2,
+		  ros_warn/2
 	      ]).
 
 :- use_module('../types',
@@ -100,9 +101,7 @@ assign_furniture_shape(Furniture, FurnitureLink) :-
     urdf_link_collision_shape(URDF, CollisionLink, ShapeTerm, _),
     (box(Depth, Width, Height) = ShapeTerm ->
 	 true;
-     ros_warn("Shape is not a box"),
-     ros_warn(CollisionLink),
-     ros_warn(ShapeTerm),
+     ros_warn("Shape is not a box: ~w~nFrom link ~w", [ShapeTerm, CollisionLink]),
      [Depth, Width, Height] = [1,1,1]),
     kb_project(is_shape(Shape)),
     kb_project(is_boxShape(ShapeRegion)),
@@ -151,9 +150,8 @@ create_furniture(FurnitureType, Furniture) :-
     !.
 
 create_furniture(FurnitureType, Furniture) :-
+    ros_warn("Unknown furniture type ~w", [FurnitureType]),
     kb_project(new_iri(Furniture, soma:'DesignedFurniture')),
-    ros_warn("Unknown furniture type"),
-    ros_warn(FurnitureType),
     !.
 
 %% create_table(-Table, +Dimensions)
