@@ -81,28 +81,49 @@ init_furnitures :-
 % @param FurnitureLink String of URDF Link name
 %
 init_furniture(FurnitureLink) :-
-    split_string(FurnitureLink, ":", "", [_, Type, Shape]),
+    split_string(FurnitureLink, ":", "", [_, Type, _]),
     create_furniture(Type, Furniture),
     % Workaround: furniture that doesn't have a type and couldn't get created shouldn't have a urdf name.
-    (var(Furniture) -> true;
-     kb_project(has_urdf_name(Furniture, FurnitureLink)),
-     % TODO: don't hardcode the shape
-     [Depth, Width, Height] = [1,1,1],
-     kb_project(is_shape(Shape)),
-     kb_project(is_boxShape(ShapeRegion)),
-     kb_project(holds(Furniture, soma:hasShape, Shape)),
-     kb_project(holds(Shape, dul:hasRegion, ShapeRegion)),
-     % Doesn't use object_dimensions/4 because it throws an exception
-     kb_project(holds(ShapeRegion, soma:hasDepth, Depth)),
-     kb_project(holds(ShapeRegion, soma:hasWidth, Width)),
-     kb_project(holds(ShapeRegion, soma:hasHeight, Height)),
-     universal_scope(Scope),
-     atom_concat('iai_kitchen/', FurnitureLink, FurnitureFrame),
-     tf_set_pose(Furniture, [FurnitureFrame, [0,0,0], [0,0,0,1]], Scope)
-    ).
-    % TODO not implemented yet
-    %assign_furniture_location(Furniture),
-    %assign_surfaces(Furniture, FurnitureLink, Shape).
+    atom(Furniture),
+    kb_project(has_urdf_name(Furniture, FurnitureLink)),
+    assign_furniture_location(Furniture, FurnitureLink),
+    assign_furniture_shape(Furniture, FurnitureLink).
+
+assign_furniture_location(Furniture, FurnitureLink) :-
+    universal_scope(Scope),
+    atom_concat('iai_kitchen/', FurnitureLink, FurnitureFrame),
+    tf_set_pose(Furniture, [FurnitureFrame, [0,0,0], [0,0,0,1]], Scope).
+
+assign_furniture_shape(Furniture, FurnitureLink) :-
+    get_urdf_id(URDF),
+    collision_link(FurnitureLink, CollisionLink),
+    urdf_link_collision_shape(URDF, CollisionLink, ShapeTerm, _),
+    (box(Depth, Width, Height) = ShapeTerm ->
+	 true;
+     ros_warn("Shape is not a box"),
+     ros_warn(CollisionLink),
+     ros_warn(ShapeTerm),
+     [Depth, Width, Height] = [1,1,1]),
+    kb_project(is_shape(Shape)),
+    kb_project(is_boxShape(ShapeRegion)),
+    kb_project(holds(Furniture, soma:hasShape, Shape)),
+    kb_project(holds(Shape, dul:hasRegion, ShapeRegion)),
+    % Doesn't use object_dimensions/4 because it throws an exception
+    kb_project(holds(ShapeRegion, soma:hasDepth, Depth)),
+    kb_project(holds(ShapeRegion, soma:hasWidth, Width)),
+    kb_project(holds(ShapeRegion, soma:hasHeight, Height)).
+
+collision_link(FurnitureLink, CollisionLink) :-
+    sub_atom(FurnitureLink, Before, _, After, '_front_edge'),
+    sub_atom(FurnitureLink, 0, Before, _, Prefix),
+    sub_atom(FurnitureLink, _, After, 0, Suffix),
+    atom_concat(Prefix, Suffix, CollisionLink).
+
+collision_link(FurnitureLink, CollisionLink) :-
+    sub_atom(FurnitureLink, Before, _, After, '_front_top'),
+    sub_atom(FurnitureLink, 0, Before, _, Prefix),
+    sub_atom(FurnitureLink, _, After, 0, Suffix),
+    atomic_list_concat([Prefix, '_center', Suffix], CollisionLink).
 
 %% create_furniture(+FurnitureType, -Furniture)
 %
@@ -117,9 +138,11 @@ create_furniture(FurnitureType, Furniture) :-
     kb_project(is_drawer(Furniture)),
     !.
 
-create_furniture(_, _) :-
-    % Ignore unknown furniture for now
-    true.
+create_furniture(FurnitureType, Furniture) :-
+    kb_project(new_iri(Furniture, soma:'DesignedFurniture')),
+    ros_warn("Unknown furniture type"),
+    ros_warn(FurnitureType),
+    !.
 
 %% create_table(-Table, +Dimensions)
 %
