@@ -96,7 +96,6 @@ Pose: ['iai_kitchen/tall_table:table:table_front_edge_center', [0,0,0], [0,0,0,1
 ```
 
 ## Getting important poses of furnitures
-Note: not implemented yet
 
 Gets a position relative to a furniture based on the type of relation.
 
@@ -104,4 +103,10 @@ Valid `Type`s are `perceive` and `interact`. This list might be expanded later.
 
 ```prolog
 furniture_rel_pose(+Furniture, +Type, -PoseStamped) is semidet.
+```
+
+Examples:
+```
+?- furniture_rel_pose('http://www.ease-crc.org/ont/SOMA.owl#Table_YTORLZXJ',perceive,Pose).
+Pose: ['iai_kitchen/long_table:table:table_front_edge_center', [-0.7, 0.0, 0.0], [0.0, 0.0, 0.0, 1.0]].
 ```
