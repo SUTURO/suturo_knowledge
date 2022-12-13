@@ -96,7 +96,6 @@ Pose: ['iai_kitchen/tall_table:table:table_front_edge_center', [0,0,0], [0,0,0,1
 ```
 
 ## Getting important poses of furnitures
-Note: not implemented yet
 
 Gets a position relative to a furniture based on the type of relation.
 
