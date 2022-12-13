@@ -40,7 +40,7 @@ get_urdf_origin(Origin) :-
 %
 is_furniture_link(Link) :-
     sub_string(Link,_,_,_,"table_front_edge_center");
-%    sub_string(Link,_,_,_,"shelf_base_center");
+    sub_string(Link,_,_,_,"shelf_base_center");
 %    sub_string(Link,_,_,_,"bucket_front_edge_center");
     sub_string(Link,_,_,_,"drawer_front_top").
 
@@ -125,17 +125,33 @@ collision_link(FurnitureLink, CollisionLink) :-
     sub_atom(FurnitureLink, _, After, 0, Suffix),
     atomic_list_concat([Prefix, '_center', Suffix], CollisionLink).
 
+collision_link(FurnitureLink, CollisionLink) :-
+    atom_concat(Prefix, 'shelf_base_center', FurnitureLink),
+    atom_concat(Prefix, 'shelf_back', CollisionLink).
+
 %% create_furniture(+FurnitureType, -Furniture)
 %
 % create a furniture iri and project the type based on the link name
+% TODO: bucket, container, tray
+
 create_furniture(FurnitureType, Furniture) :-
-    sub_string(FurnitureType,_,_,_,"table"),
-    kb_project(is_table(Furniture)),
+    sub_string(FurnitureType,_,_,_,"container"),
+    kb_project(is_type(Furniture, soma:'DesignedContainer')),
     !.
 
 create_furniture(FurnitureType, Furniture) :-
     sub_string(FurnitureType,_,_,_,"drawer"),
     kb_project(is_drawer(Furniture)),
+    !.
+
+create_furniture(FurnitureType, Furniture) :-
+    sub_string(FurnitureType,_,_,_,"shelf"),
+    kb_project(is_type(Furniture, soma:'Shelf')),
+    !.
+
+create_furniture(FurnitureType, Furniture) :-
+    sub_string(FurnitureType,_,_,_,"table"),
+    kb_project(is_table(Furniture)),
     !.
 
 create_furniture(FurnitureType, Furniture) :-
