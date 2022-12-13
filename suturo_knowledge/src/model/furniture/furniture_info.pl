@@ -30,23 +30,21 @@ get_table_pose(Pose) :-
 % @param Type The type of relation. It can be "perceive" or "interact".
 % @param PoseStamped The position relative to the furniture.
 %
-furniture_rel_pose(+Furniture, +Type, -PoseStamped) :-
+furniture_rel_pose(Furniture, Type, PoseStamped) :-
  	% if the type is "perceive", call the furniture_rel_pose_perceive/2 predicate
- 	(Type = perceive,
-	 furniture_rel_pose_perceive(Furniture, PoseStamped)),
-   % if the type is "interact", call the furniture_rel_pose_interact/2 predicate
-   (Type = interact,
-	furniture_rel_pose_interact(Furniture, Result)),
-	% if the type is not "perceive" or "interact", return an error message
-	(Type \= perceive,
-	 Type \= interact,
-	 write('Error: Type should be "perceive" or "interact".')).
+ 	(Type = perceive
+	 ->	furniture_rel_pose_perceive(Furniture, PoseStamped)
+    % if the type is "interact", call the furniture_rel_pose_interact/2 predicate
+	; Type = interact
+	 ->	furniture_rel_pose_interact(Furniture, PoseStamped)
+	% if the type is not defined, return an error message
+	; ros_error('Error: Type should be "perceive" or "interact".')).
 
-furniture_rel_pose_perceive(+Furniture, -PoseStamped) :-
+furniture_rel_pose_perceive(Furniture, PoseStamped) :-
 	% Get the PoseStamped of the Furniture
 	object_pose(Furniture, [Frame, [X,Y,Z], Rotation]),
-	XNew is X + 0.7,
-    PoseStamped = [Frame, [XNew,Y,Z], FurnitureRotation].
+	XNew is X - 0.7,
+    PoseStamped = [Frame, [XNew,Y,Z], Rotation].
 	% deg_to_rad(70, CameraViewAngle)
 	
 	% TODO: Calculate perceiving position relative to the Furniture
@@ -61,9 +59,9 @@ furniture_rel_pose_perceive(+Furniture, -PoseStamped) :-
     % Furniture
 	% % B = A / tan(alpha)
 
-furniture_rel_pose_interact(+Furniture, -PoseStamped) :-
+furniture_rel_pose_interact(Furniture, PoseStamped) :-
 	% Get the PoseStamped of the Furniture
 	object_pose(Furniture, [Frame, [X,Y,Z], Rotation]),
-	XNew is X + 0.5,
-    PoseStamped = [Frame, [XNew,Y,Z], FurnitureRotation].
+	XNew is X - 0.5,
+    PoseStamped = [Frame, [XNew,Y,Z], Rotation].
 	% TODO: Calculate interacting position relative to the Furniture
