@@ -318,8 +318,9 @@ build/
 
 # julius grammar
 
-knowledge/owl/catalog-v001.xml
-
 *.dfa
 *.dict
 *.term
+
+# protege
+**/catalog-*.xml
