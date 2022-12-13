@@ -105,3 +105,9 @@ Valid `Type`s are `perceive` and `interact`. This list might be expanded later.
 ```prolog
 furniture_rel_pose(+Furniture, +Type, -PoseStamped) is semidet.
 ```
+
+Examples:
+```
+?- furniture_rel_pose('http://www.ease-crc.org/ont/SOMA-HOME.owl#Table_LTKIUPNG', perceive, Pose)
+Pose: ['iai_kitchen/tall_table:table:table_front_edge_center', [0,1,0], [0,0,0,1]]
+```
