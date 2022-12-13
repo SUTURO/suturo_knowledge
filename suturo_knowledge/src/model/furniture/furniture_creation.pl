@@ -114,16 +114,12 @@ assign_furniture_shape(Furniture, FurnitureLink) :-
     kb_project(holds(ShapeRegion, soma:hasHeight, Height)).
 
 collision_link(FurnitureLink, CollisionLink) :-
-    sub_atom(FurnitureLink, Before, _, After, '_front_edge'),
-    sub_atom(FurnitureLink, 0, Before, _, Prefix),
-    sub_atom(FurnitureLink, _, After, 0, Suffix),
-    atom_concat(Prefix, Suffix, CollisionLink).
+    atom_concat(Prefix, '_front_edge_center', FurnitureLink),
+    atom_concat(Prefix, '_center', CollisionLink).
 
 collision_link(FurnitureLink, CollisionLink) :-
-    sub_atom(FurnitureLink, Before, _, After, '_front_top'),
-    sub_atom(FurnitureLink, 0, Before, _, Prefix),
-    sub_atom(FurnitureLink, _, After, 0, Suffix),
-    atomic_list_concat([Prefix, '_center', Suffix], CollisionLink).
+    atom_concat(Prefix, '_front_top', FurnitureLink),
+    atom_concat(Prefix, '_center', CollisionLink).
 
 collision_link(FurnitureLink, CollisionLink) :-
     atom_concat(Prefix, 'shelf_base_center', FurnitureLink),
