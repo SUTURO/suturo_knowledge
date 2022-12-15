@@ -54,5 +54,8 @@ component_rel_pose_interact(Component, PoseStamped) :-
 
 component_rel_pose_grasp(Component, PoseStamped) :-
     has_type(Component, soma:'Drawer'),
-    has_urdf_name(Destination, 'drawer:drawer:drawer_knob'),
-    object_pose(Destination, PoseStamped).
+    has_urdf_name(Destination, 'drawer:drawer:drawer_front_top'),
+    object_pose(Destination, [Frame, [X,Y,Z], Rotation]),
+    XNew is X - 0.3,
+    ZNew is Z - 0.078,
+    PoseStamped = [Frame, [XNew,Y,ZNew], Rotation].

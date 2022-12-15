@@ -15,15 +15,17 @@
 container_rel_pose(Container, Type, PoseStamped) :-
     % if the type is "perceive", call the container_rel_pose_perceive/2 predicate
     (Type = perceive
-    ->	container_rel_pose_perceive(Container, PoseStamped)
-   % if the type is "interact", call the container_rel_pose_interact/2 predicate
-   ; Type = interact
-    ->	container_rel_pose_interact(Container, PoseStamped)
-   ; Type = destination
-    ->	container_rel_pose_destination(Container, PoseStamped)
-   % if the type is not defined, return an error message
-   ; ros_error('The container_rel_pose type ~w is not defined.', [Type]),
-     false
+     ->	container_rel_pose_perceive(Container, PoseStamped)
+    % if the type is "interact", call the container_rel_pose_interact/2 predicate
+    ; Type = interact
+     ->	container_rel_pose_interact(Container, PoseStamped)
+    ; Type = destination
+     ->	container_rel_pose_destination(Container, PoseStamped)
+    ; Type = grasp
+     ->	container_rel_pose_grasp(Container, PoseStamped)
+    % if the type is not defined, return an error message
+    ; ros_error('The container_rel_pose type ~w is not defined.', [Type]),
+      false
     ).
 
 container_rel_pose_perceive(Container, PoseStamped) :-
@@ -65,3 +67,12 @@ container_rel_pose_destination(Container, PoseStamped) :-
     YNew is Y - 0.1,
     ZNew is Z + 0.51,
     PoseStamped = [Frame, [X,YNew,ZNew], Rotation].
+
+container_rel_pose_grasp(Container, PoseStamped) :-
+    has_type(Container, soma:'CerealBox'),
+    has_urdf_name(Destination, 'tall_table:table:table_front_edge_center'),
+    object_pose(Destination, [Frame, [X,Y,Z], _]),
+    XNew is X + 0.05,
+    YNew is Y + 0.1,
+    ZNew is Z + 0.08,
+    PoseStamped = [Frame, [XNew,YNew,ZNew], [-0.0029949, 0.0014875, -0.0784591, 0.9969117]].
