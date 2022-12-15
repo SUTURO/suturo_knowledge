@@ -19,8 +19,11 @@ container_rel_pose(Container, Type, PoseStamped) :-
    % if the type is "interact", call the container_rel_pose_interact/2 predicate
    ; Type = interact
     ->	container_rel_pose_interact(Container, PoseStamped)
+   ; Type = destination
+    ->	container_rel_pose_destination(Container, PoseStamped)
    % if the type is not defined, return an error message
-   ; ros_error('The container_rel_pose type ~w is not defined.', [Type])
+   ; ros_error('The container_rel_pose type ~w is not defined.', [Type]),
+     false
     ).
 
 container_rel_pose_perceive(Container, PoseStamped) :-
@@ -48,3 +51,17 @@ container_rel_pose_interact(Container, PoseStamped) :-
 	XNew is X - 0.5,
     PoseStamped = [Frame, [XNew,Y,Z], Rotation].
 	% TODO: Calculate interacting position relative to the container
+
+%% container_rel_pose_destination(+Container, -PoseStamped) is semidet.
+%
+% Gets the destination pose of the cereal box.
+%
+% @param PoseStamped The destination pose of the cereal box.
+%
+container_rel_pose_destination(Container, PoseStamped) :-
+    has_type(Container, soma:'CerealBox'),
+    has_urdf_name(Destination, 'shelf:shelf:shelf_base_center'),
+    object_pose(Destination, [Frame, [X,Y,Z], Rotation]),
+    YNew is Y - 0.1,
+    ZNew is Z + 0.51,
+    PoseStamped = [Frame, [X,YNew,ZNew], Rotation].

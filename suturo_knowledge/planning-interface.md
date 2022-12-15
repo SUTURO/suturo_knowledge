@@ -124,7 +124,12 @@ Pose: ['iai_kitchen/tall_table:table:table_front_edge_center', [0,0,0], [0,0,0,1
 
 Gets a position relative to the object based on the type of relation.
 
-Valid `Type`s are `perceive` and `interact`. This list might be expanded later.
+Valid `Type`s are 
+ - `perceive`: (Optimal) Pose for the robot to position at to perceive the object
+ - `interact`: (Optimal) Pose for the robot to position at to interact with the object (eg. grasp with the gripper)
+ - `destination`: Returns the destination pose of an object. The destination pose is the pose where the object should be placed based on their predefined locations and current context. The destination might change over time.
+ 
+ This list might be expanded later.
 
 ```prolog
 object_rel_pose(+Object, +Type, -PoseStamped) is semidet.
@@ -134,18 +139,7 @@ Example:
 ```prolog
 ?- object_rel_pose('http://www.ease-crc.org/ont/SOMA.owl#Table_YTORLZXJ', perceive, Pose).
 Pose: ['iai_kitchen/long_table:table:table_front_edge_center', [-0.7, 0.0, 0.0], [0.0, 0.0, 0.0, 1.0]].
-```
 
-### Getting destination poses of objects
-
-Returns the destination pose of an object. The destination pose is the pose where the object should be placed based on their predefined locations and current context. The destination might change over time. 
-
-```prolog
-object_dest_pose(+Object, -PoseStamped) is semidet.
-```
-
-Example:
-```prolog
-?- object_dest_pose('http://www.ease-crc.org/ont/SOMA.owl#CerealBox_ORBVSJWQ', Pose).
-Pose: ['iai_kitchen/shelf:shelf:shelf_base_center', [0.0, -0.01, -0.1], [0.0, 0.0, 0.0, 1.0]].
+?- object_rel_pose('http://www.ease-crc.org/ont/SOMA.owl#CerealBox_JDHUPSME', destination, Pose).
+Pose: ['iai_kitchen/shelf:shelf:shelf_base_center', [0.0, -0.1, 0.51], [0.0, 0.0, 0.0, 1.0]].
 ```

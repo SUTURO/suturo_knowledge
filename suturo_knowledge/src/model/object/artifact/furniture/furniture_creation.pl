@@ -20,13 +20,6 @@
 		  is_type/2
 	      ]).
 
-:- use_module(furniture_types,
-	      [
-		  is_table/1,
-		  is_drawer/1
-	      ]).
-
-
 get_urdf_id(URDF) :-
     URDF = arena.
 

@@ -36,7 +36,8 @@ furniture_rel_pose(Furniture, Type, PoseStamped) :-
 	; Type = interact
 	 ->	furniture_rel_pose_interact(Furniture, PoseStamped)
 	% if the type is not defined, return an error message
-	; ros_error('The furniture_rel_pose type ~w is not defined.', [Type])
+	; ros_error('The furniture_rel_pose type ~w is not defined.', [Type]),
+	  false
 	).
 
 furniture_rel_pose_perceive(Furniture, PoseStamped) :-

@@ -15,12 +15,15 @@
 component_rel_pose(Component, Type, PoseStamped) :-
     % if the type is "perceive", call the component_rel_pose_perceive/2 predicate
     (Type = perceive
-    ->	component_rel_pose_perceive(Component, PoseStamped)
-   % if the type is "interact", call the component_rel_pose_interact/2 predicate
-   ; Type = interact
-    ->	component_rel_pose_interact(Component, PoseStamped)
-   % if the type is not defined, return an error message
-   ; ros_error('The component_rel_pose type ~w is not defined.', [Type])
+     ->	component_rel_pose_perceive(Component, PoseStamped)
+    % if the type is "interact", call the component_rel_pose_interact/2 predicate
+    ; Type = interact
+     ->	component_rel_pose_interact(Component, PoseStamped)
+    ; Type = grasp
+     ->	component_rel_pose_grasp(Component, PoseStamped)
+    % if the type is not defined, return an error message
+    ; ros_error('The component_rel_pose type ~w is not defined.', [Type]),
+      false
     ).
 
 component_rel_pose_perceive(Component, PoseStamped) :-
@@ -48,3 +51,8 @@ component_rel_pose_interact(Component, PoseStamped) :-
 	XNew is X - 0.5,
     PoseStamped = [Frame, [XNew,Y,Z], Rotation].
 	% TODO: Calculate interacting position relative to the component
+
+component_rel_pose_grasp(Component, PoseStamped) :-
+    has_type(Component, soma:'Drawer'),
+    has_urdf_name(Destination, 'drawer:drawer:drawer_knob'),
+    object_pose(Destination, PoseStamped).
