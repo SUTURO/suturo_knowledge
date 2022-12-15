@@ -27,7 +27,7 @@ In short:
 ## Data types
 
 ### Object
-An iri, for example `'http://www.ease-crc.org/ont/SOMA-HOME.owl#Table_MBOLQEWJ'` that denotes an object.
+An iri, for example `'http://www.ease-crc.org/ont/SOMA.owl#Table_MBOLQEWJ'` that denotes an object.
 
 ### PoseStamped
 A list of Frame, Position and Rotation.
@@ -43,7 +43,7 @@ has_urdf_name(?Object, ?URDFName) is nondet.
 ```
 
 Examples:
-```
+```prolog
 ?- has_urdf_name(Object, URDFName).
 Object: http://knowrob.org/kb/IAI-kitchen.owl#iai_kitchen_fridge_door_handle,
 URDFName: iai_fridge_door_handle ;
@@ -51,19 +51,19 @@ URDFName: iai_fridge_door_handle ;
 Object: http://knowrob.org/kb/IAI-kitchen.owl#iai_kitchen_oven_area_area,
 URDFName: oven_area_area ;
 
-Object: http://www.ease-crc.org/ont/SOMA-HOME.owl#Table_LXEIYGPZ,
+Object: http://www.ease-crc.org/ont/SOMA.owl#Table_LXEIYGPZ,
 URDFName: long_table:table:table_front_edge_center ;
 
-Object: http://www.ease-crc.org/ont/SOMA-HOME.owl#Table_MBOLQEWJ,
+Object: http://www.ease-crc.org/ont/SOMA.owl#Table_MBOLQEWJ,
 URDFName: tall_table:table:table_front_edge_center.
 
 
 % Notice that there are single quotes around the urdf because it contains non [a-z_] characters.
 ?- has_urdf_name(Object, 'tall_table:table:table_front_edge_center').
-Object: http://www.ease-crc.org/ont/SOMA-HOME.owl#Table_MBOLQEWJ.
+Object: http://www.ease-crc.org/ont/SOMA.owl#Table_MBOLQEWJ.
 
 
-?- furniture_creation:has_urdf_name('http://www.ease-crc.org/ont/SOMA-HOME.owl#Table_MBOLQEWJ', URDFName).
+?- furniture_creation:has_urdf_name('http://www.ease-crc.org/ont/SOMA.owl#Table_MBOLQEWJ', URDFName).
 URDFName: tall_table:table:table_front_edge_center.
 ```
 
@@ -74,28 +74,49 @@ has_tf_name(+Object, -TFName) is semidet.
 ```
 
 Examples:
-```
+```prolog
 ?- has_tf_name('tall_table:table:table_front_edge_center',TFName).
 TFName: iai_kitchen/tall_table:table:table_front_edge_center.
 
 
-?- has_tf_name('http://www.ease-crc.org/ont/SOMA-HOME.owl#Table_LTKIUPNG', TFName).
+?- has_tf_name('http://www.ease-crc.org/ont/SOMA.owl#Table_LTKIUPNG', TFName).
 TFName: iai_kitchen/tall_table:table:table_front_edge_center.
 ```
+## Objects
+## Create an object
 
-## Getting the pose of an object
+Create an object of a given Type at the given PoseStamped.
+```prolog
+%% create_object(-Object, +Type, +PoseStamped) is det.
+% 
+% Create an object of type Type at the given PoseStamped.
+%
+% @param Object The object iri that is created
+% @param Type The type of the object (full iri) TODO: add ability to use namespace short form
+% @param PoseStamped The pose of the object
+%
+create_object(Object, Type, [Frame, [X,Y,Z], [RX,RY,RZ,RW]]) :-
+```
+
+Examples:
+```prolog
+?- object_create(Object, 'http://www.ease-crc.org/ont/SOMA.owl#CerealBox', ['iai_kitchen/long_table:table:table_front_edge_center', [0,1,1], [0,0,0.70711,0.70711]]).
+Object: http://www.ease-crc.org/ont/SOMA.owl#CerealBox_LTKIUPNG
+```
+
+### Getting the pose of an object
 
 ```prolog
 object_pose(+Object, -PoseStamped) is semidet.
 ```
 
 Examples:
-```
-?- object_pose('http://www.ease-crc.org/ont/SOMA-HOME.owl#Table_LTKIUPNG', Pose)
+```prolog
+?- object_pose('http://www.ease-crc.org/ont/SOMA.owl#Table_LTKIUPNG', Pose)
 Pose: ['iai_kitchen/tall_table:table:table_front_edge_center', [0,0,0], [0,0,0,1]]
 ```
 
-## Getting important poses for objects like furniture
+### Getting important poses for the robot to interact with objects
 
 Gets a position relative to the object based on the type of relation.
 
@@ -106,7 +127,7 @@ object_rel_pose(+Object, +Type, -PoseStamped) is semidet.
 ```
 
 Examples:
-```
+```prolog
 ?- object_rel_pose('http://www.ease-crc.org/ont/SOMA.owl#Table_YTORLZXJ', perceive, Pose).
 Pose: ['iai_kitchen/long_table:table:table_front_edge_center', [-0.7, 0.0, 0.0], [0.0, 0.0, 0.0, 1.0]].
 ```
