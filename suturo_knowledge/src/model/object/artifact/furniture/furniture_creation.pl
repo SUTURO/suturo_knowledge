@@ -8,14 +8,14 @@
 	      init_furnitures/0
 	  ]).
 
-:- use_module('../../util',
+:- use_module('../../../../util',
 	      [
 		  has_urdf_name/2,
 		  has_tf_name/2,
 		  ros_warn/2
 	      ]).
 
-:- use_module('../types',
+:- use_module('../../../types',
 	      [
 		  is_type/2
 	      ]).
@@ -141,7 +141,7 @@ create_furniture(FurnitureType, Furniture) :-
 
 create_furniture(FurnitureType, Furniture) :-
     sub_string(FurnitureType,_,_,_,"shelf"),
-    kb_project(is_type(Furniture, soma:'Shelf')),
+    kb_project(is_shelf(Furniture)),
     !.
 
 create_furniture(FurnitureType, Furniture) :-

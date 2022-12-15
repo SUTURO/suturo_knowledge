@@ -3,12 +3,10 @@
 	[
 		%get_drawer_pose/1,
 		get_table_pose/1,
-		furniture_rel_pose/3,
-		furniture_rel_pose_perceive/2,
-		furniture_rel_pose_interact/2
+		furniture_rel_pose/3
 	]).
 
-:- use_module('../../math',
+:- use_module('../../../../math',
 	[
 		deg_to_rad/2
 	]).
