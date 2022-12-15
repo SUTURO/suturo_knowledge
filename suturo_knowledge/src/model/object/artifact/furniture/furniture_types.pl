@@ -6,7 +6,7 @@
 	      is_drawer/1
 	  ]).
 
-:- use_module('../../../types',
+:- use_module('../../types',
 	      [
 		  is_type/2
 	      ]).

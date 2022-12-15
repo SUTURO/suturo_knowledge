@@ -19,6 +19,7 @@ object_rel_pose(Object, Type, PoseStamped) :-
      ->	furniture_rel_pose(Object, Type, PoseStamped)
     ; ros_error('Error: Unknown object class of object ~w.', [Object])).
 
+% TODO: use parentclass "DesignedFurniture"
 is_furniture(Object) :-
     has_type(Object, soma:'Table'); 
     has_type(Object, soma:'Shelf');

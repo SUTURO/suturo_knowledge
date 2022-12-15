@@ -15,7 +15,7 @@
 		  ros_warn/2
 	      ]).
 
-:- use_module('../../../types',
+:- use_module('../../types',
 	      [
 		  is_type/2
 	      ]).
