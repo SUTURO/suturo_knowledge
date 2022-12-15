@@ -36,12 +36,17 @@ object_dest_pose(Object, PoseStamped) :-
     % cereal_box_dest_pose(PoseStamped).
     (has_type(Object, soma:'CerealBox') 
      -> cereal_box_dest_pose(PoseStamped)
-     ; ros_error('Unknown destination pose for object ~w of type ~w')).
+     ; ros_error('Unknown destination pose for object ~w of type ~w', [Object])).
 
-:- trace(object_dest_pose).
-
+%% cereal_box_dest_pose(-PoseStamped) is semidet.
+%
+% Gets the destination pose of the cereal box.
+%
+% @param PoseStamped The destination pose of the cereal box.
+%
 cereal_box_dest_pose(PoseStamped) :-
     has_urdf_name(Destination, 'shelf:shelf:shelf_base_center'),
     object_pose(Destination, [Frame, [X,Y,Z], Rotation]),
-    YNew is Y - 0.50,
-    PoseStamped = [Frame, [X,YNew,Z], Rotation].
+    YNew is Y - 0.51,
+    ZNew is Z - 0.1,
+    PoseStamped = [Frame, [X,YNew,ZNew], Rotation].

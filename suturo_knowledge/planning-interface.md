@@ -104,7 +104,7 @@ create_object(-Object, +Type, +PoseStamped) is det.
 
 Example:
 ```prolog
-?- object_create(Object, 'http://www.ease-crc.org/ont/SOMA.owl#CerealBox', ['iai_kitchen/long_table:table:table_front_edge_center', [0,1,1], [0,0,0.70711,0.70711]]).
+?- create_object(Object, 'http://www.ease-crc.org/ont/SOMA.owl#CerealBox', ['iai_kitchen/long_table:table:table_front_edge_center', [0,1,1], [0,0,0.70711,0.70711]]).
 Object: http://www.ease-crc.org/ont/SOMA.owl#CerealBox_LTKIUPNG
 ```
 
@@ -134,4 +134,18 @@ Example:
 ```prolog
 ?- object_rel_pose('http://www.ease-crc.org/ont/SOMA.owl#Table_YTORLZXJ', perceive, Pose).
 Pose: ['iai_kitchen/long_table:table:table_front_edge_center', [-0.7, 0.0, 0.0], [0.0, 0.0, 0.0, 1.0]].
+```
+
+### Getting destination poses of objects
+
+Returns the destination pose of an object. The destination pose is the pose where the object should be placed based on their predefined locations and current context. The destination might change over time. 
+
+```prolog
+object_dest_pose(+Object, -PoseStamped) is semidet.
+```
+
+Example:
+```prolog
+?- object_dest_pose('http://www.ease-crc.org/ont/SOMA.owl#CerealBox_ORBVSJWQ', Pose).
+Pose: ['iai_kitchen/shelf:shelf:shelf_base_center', [0.0, -0.01, -0.1], [0.0, 0.0, 0.0, 1.0]].
 ```
