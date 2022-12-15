@@ -2,3 +2,4 @@
 % This means objects that were percieved during runtime and objets that is semi-hardcoded in the semantic map.
 
 :- use_directory('object').
+:- use_directory('semantic_map').

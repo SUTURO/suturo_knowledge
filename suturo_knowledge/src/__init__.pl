@@ -24,4 +24,4 @@
 
 :- tf_logger_enable.
 
-:- init_furnitures.
+:- init_semantic_map.
