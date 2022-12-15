@@ -14,16 +14,14 @@
 % @param PoseStamped The position relative to the Object.
 %
 object_rel_pose(Object, Type, PoseStamped) :-
-    % if the object class is "DesignedFurniture", call the furniture_rel_pose/3 predicate
-    (is_furniture(Object)
+    % call the appropriate predicate based on the type of the object
+    (has_type(Object, soma:'DesignedComponent')
+     ->	component_rel_pose(Object, Type, PoseStamped)
+    ; has_type(Object, soma:'DesignedContainer')
+     ->	container_rel_pose(Object, Type, PoseStamped)
+    ; has_type(Object, soma:'DesignedFurniture')
      ->	furniture_rel_pose(Object, Type, PoseStamped)
-    ; ros_error('Error: Unknown object class of object ~w.', [Object])).
-
-% TODO: use parentclass "DesignedFurniture"
-is_furniture(Object) :-
-    has_type(Object, soma:'Table'); 
-    has_type(Object, soma:'Shelf');
-    has_type(Object, soma:'Drawer').
+    ; ros_error('Error: Unknown object class for object_rel_pose: object ~w.', [Object])).
 
 %% object_dest_pose(+Object, -PoseStamped) is semidet.
 %  
@@ -31,7 +29,6 @@ is_furniture(Object) :-
 %  The destination pose is the pose where the object should be placed.
 %
 %  @param Object The object for which the relative pose is requested.
-%  @param Type The type of the pose.
 %  @param PoseStamped The destination pose of the object.
 %
 object_dest_pose(Object, PoseStamped) :-

@@ -1,4 +1,4 @@
-%furniture informations
+% furniture informations
 :- module(furniture_info,
 	[
 		%get_drawer_pose/1,
@@ -36,7 +36,8 @@ furniture_rel_pose(Furniture, Type, PoseStamped) :-
 	; Type = interact
 	 ->	furniture_rel_pose_interact(Furniture, PoseStamped)
 	% if the type is not defined, return an error message
-	; ros_error('Error: Type should be "perceive" or "interact".')).
+	; ros_error('The furniture_rel_pose type ~w is not defined.', [Type])
+	).
 
 furniture_rel_pose_perceive(Furniture, PoseStamped) :-
 	% Get the PoseStamped of the Furniture
