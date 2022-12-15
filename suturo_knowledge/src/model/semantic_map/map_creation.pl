@@ -6,4 +6,9 @@
 	  ]).
 
 init_semantic_map :-
+	init_artifacts.
+
+init_artifacts :-
+	init_components,
+	init_containers,
 	init_furnitures.

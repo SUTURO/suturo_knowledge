@@ -1,4 +1,4 @@
-%% This module loads and creates furniture in the database.
+%% This module loads and creates designed furniture in the database.
 %
 % Additionally it currently has predicates used in load_urdf_from_param/1 and init_furnitures/0 that should be moved somewhere else as soon as we have time.
 :- module(furniture_creation,
