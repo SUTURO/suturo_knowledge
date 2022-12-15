@@ -1,4 +1,4 @@
-% This folder contains for everyting related to physical artifacts
+% This folder contains everything related to physical artifacts
 
 :- use_directory('component').
 :- use_directory('container').

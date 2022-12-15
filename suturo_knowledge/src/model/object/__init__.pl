@@ -1,4 +1,4 @@
-% This folder contains for everyting related to physical objects
+% This folder contains everything related to physical objects
 
 :- ensure_loaded('types').
 :- ensure_loaded('pose').
