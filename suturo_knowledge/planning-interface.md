@@ -1,5 +1,11 @@
 # Planning API
 
+## Overview
+- [Readers guide](#readers-guide)
+- [Data types](#data-types)
+- [Utils](#utils)
+- [Objects](#objects)
+
 ## Readers guide
 Each section contains
 1. a short description of a possible use case
@@ -27,7 +33,7 @@ In short:
 ## Data types
 
 ### Object
-An iri, for example `'http://www.ease-crc.org/ont/SOMA.owl#Table_MBOLQEWJ'` that denotes an object.
+An iri, for example `'http://www.ease-crc.org/ont/SOMA.owl#Table_MBOLQEWJ'` that denotes an individual object.
 
 ### PoseStamped
 A list of Frame, Position and Rotation.
@@ -35,14 +41,16 @@ Position and Rotation are each a list of length 3 and 4.
 
 `[Frame, [X, Y, Z], [RX, RY, RZ, RW]]`
 
-## Getting the object for a link name
+## Utils
+
+### Getting the object for a link name
 This is useful for getting data about specific environment furniture, for example the tall table.
 
 ```prolog
 has_urdf_name(?Object, ?URDFName) is nondet.
 ```
 
-Examples:
+Example:
 ```prolog
 ?- has_urdf_name(Object, URDFName).
 Object: http://knowrob.org/kb/IAI-kitchen.owl#iai_kitchen_fridge_door_handle,
@@ -67,13 +75,13 @@ Object: http://www.ease-crc.org/ont/SOMA.owl#Table_MBOLQEWJ.
 URDFName: tall_table:table:table_front_edge_center.
 ```
 
-## Getting the TF Frame
+### Getting the TF Frame
 
 ```prolog
 has_tf_name(+Object, -TFName) is semidet.
 ```
 
-Examples:
+Example:
 ```prolog
 ?- has_tf_name('tall_table:table:table_front_edge_center',TFName).
 TFName: iai_kitchen/tall_table:table:table_front_edge_center.
@@ -83,22 +91,18 @@ TFName: iai_kitchen/tall_table:table:table_front_edge_center.
 TFName: iai_kitchen/tall_table:table:table_front_edge_center.
 ```
 ## Objects
-## Create an object
+Any physical object that has a proper space region.
+
+### Create an object
 
 Create an object of a given Type at the given PoseStamped.
+
+The `Type` has to be the full iri for now. The ability to use namespace short form in future is planned.
 ```prolog
-%% create_object(-Object, +Type, +PoseStamped) is det.
-% 
-% Create an object of type Type at the given PoseStamped.
-%
-% @param Object The object iri that is created
-% @param Type The type of the object (full iri) TODO: add ability to use namespace short form
-% @param PoseStamped The pose of the object
-%
-create_object(Object, Type, [Frame, [X,Y,Z], [RX,RY,RZ,RW]]) :-
+create_object(-Object, +Type, +PoseStamped) is det.
 ```
 
-Examples:
+Example:
 ```prolog
 ?- object_create(Object, 'http://www.ease-crc.org/ont/SOMA.owl#CerealBox', ['iai_kitchen/long_table:table:table_front_edge_center', [0,1,1], [0,0,0.70711,0.70711]]).
 Object: http://www.ease-crc.org/ont/SOMA.owl#CerealBox_LTKIUPNG
@@ -110,7 +114,7 @@ Object: http://www.ease-crc.org/ont/SOMA.owl#CerealBox_LTKIUPNG
 object_pose(+Object, -PoseStamped) is semidet.
 ```
 
-Examples:
+Example:
 ```prolog
 ?- object_pose('http://www.ease-crc.org/ont/SOMA.owl#Table_LTKIUPNG', Pose)
 Pose: ['iai_kitchen/tall_table:table:table_front_edge_center', [0,0,0], [0,0,0,1]]
@@ -126,7 +130,7 @@ Valid `Type`s are `perceive` and `interact`. This list might be expanded later.
 object_rel_pose(+Object, +Type, -PoseStamped) is semidet.
 ```
 
-Examples:
+Example:
 ```prolog
 ?- object_rel_pose('http://www.ease-crc.org/ont/SOMA.owl#Table_YTORLZXJ', perceive, Pose).
 Pose: ['iai_kitchen/long_table:table:table_front_edge_center', [-0.7, 0.0, 0.0], [0.0, 0.0, 0.0, 1.0]].
