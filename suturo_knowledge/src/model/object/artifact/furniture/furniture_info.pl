@@ -6,7 +6,7 @@
 		furniture_rel_pose/3
 	]).
 
-:- use_module('../../../../math',
+:- use_module(library('util/math'),
 	[
 		deg_to_rad/2
 	]).

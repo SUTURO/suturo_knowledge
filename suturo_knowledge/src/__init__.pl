@@ -15,8 +15,7 @@
 :- rdf_register_ns(soma_home, 'http://www.ease-crc.org/ont/SOMA-HOME.owl#', [keep(true)]).
 
 %% Make sure utils are loaded before model and other directories
-:- ensure_loaded('math').
-:- ensure_loaded('util').
+:- use_directory('util').
 
 :- use_directory('model').
 

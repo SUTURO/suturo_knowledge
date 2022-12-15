@@ -8,14 +8,14 @@
 	      init_furnitures/0
 	  ]).
 
-:- use_module('../../../../util',
+:- use_module(library('util/util'),
 	      [
 		  has_urdf_name/2,
 		  has_tf_name/2,
 		  ros_warn/2
 	      ]).
 
-:- use_module('../../types',
+:- use_module(library('model/object/types'),
 	      [
 		  is_type/2
 	      ]).
