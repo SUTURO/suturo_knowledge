@@ -94,7 +94,7 @@ assign_furniture_shape(Furniture, FurnitureLink) :-
     urdf_link_collision_shape(URDF, CollisionLink, ShapeTerm, _),
     (box(Depth, Width, Height) = ShapeTerm ->
 	 true;
-     ros_warn("Shape is not a box: ~w~nFrom link ~w", [ShapeTerm, CollisionLink]),
+     ros_warn('Shape is not a box: ~w~n From link ~w', [ShapeTerm, CollisionLink]),
      [Depth, Width, Height] = [1,1,1]),
     kb_project(is_shape(Shape)),
     kb_project(is_boxShape(ShapeRegion)),
