@@ -34,6 +34,17 @@
         <rdfs:comment>A shelf (The whole piece of furniture, consisting of several shelves) is typically used to organize and store objects, such as books, dishes, or other items, and can be found in various settings, such as homes, offices, and stores.</rdfs:comment>
         <rdfs:isDefinedBy>http://www.ease-crc.org/ont/SUTURO.owl</rdfs:isDefinedBy>
     </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SOMA.owl#ShelfBoard -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA.owl#ShelfBoard">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#DesignedComponent"/>
+        <rdfs:comment>A shelf is a flat piece of wood, metal, or glass which is attached to a wall or to the sides of a cupboard. Shelves are used for keeping things on.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+        <rdfs:label>Shelf board</rdfs:label>
+    </owl:Class>
 </rdf:RDF>
 
 
