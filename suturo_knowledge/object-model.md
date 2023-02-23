@@ -17,3 +17,17 @@
 ## Furniture only
 - Tables are an instance of `soma:'Table'`
 - The shape of a Furniture is stored in a way that `'model_SOMA':object_shape/5` can find the correct information.
+
+# object_shape storage:
+For syncronisation with Giskard, objects also need to have shapes attached to them.
+For reference, here is the relevant code from `'model_SOMA':object_shape/5` for boxes.
+```
+triple(Obj,soma:hasShape,Shape),
+triple(Shape,dul:hasRegion,SR),
+```
+For Boxes:
+```
+triple(SR, soma:hasDepth,  X),
+triple(SR, soma:hasWidth,  Y),
+triple(SR, soma:hasHeight, Z),
+```
