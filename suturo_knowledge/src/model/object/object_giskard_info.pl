@@ -24,18 +24,21 @@ giskard_updates(LastUpdateTime, CurrentUpdateTime, ObjectData) :-
 		kb_call(triple(Object, suturo:isManagedBy, suturo_knowledge), Scope, _FScope)
 	    ),
 	    ObjectList),
-    maplist(giskard_object_shape, ObjectList, ObjectData),
+    maplist(giskard_object_data, ObjectList, ObjectData),
     !.
 
-%% giskard_object_shape(+Object, -Shape) is semidet.
+%% giskard_object_data(+Object, -Data) is semidet.
 %
-% giskard_object_shape looks up the shape of the object and returns the data that should be send to giskard
+% giskard_object_data looks up the shape of the object and returns the data that should be send to giskard
 % For information about the format of the result data, look at the documentation of giskard_updates/3.
 %
 % @param Object An Object IRI
 % @param Shape The shape data used by giskard
-giskard_object_shape(Object, [create, Object, ShapeTerm]) :-
-    kb_call(object_shape(Object, _Frame, ShapeTerm, _Pose, _Material)),
+giskard_object_data(Object, [create, Object, [Frame, Pos, Rot], ShapeTerm]) :-
+    kb_call(object_shape(Object, _Frame, ShapeTerm, [Frame, Pos, Rot], _Material)),
+    % in case the shape origin has not been set, assume the object is directly at the frame.
+    (ground(Pos); Pos = [0,0,0]),
+    (ground(Rot); Rot = [0,0,0,1]),
     !.
 
 %% giskard_test is det.
