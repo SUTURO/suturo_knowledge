@@ -65,6 +65,7 @@
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#AdjustableWrench">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Wrench"/>
         <rdfs:comment>An adjustable wrench is a hand-held tool with a movable jaw that can be adjusted to fit nuts, bolts, and other objects of different sizes, used for turning or tightening them.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
 
@@ -74,6 +75,17 @@
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Apple">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Fruit"/>
         <rdfs:comment>An apple is a round or oval-shaped fruit with a red, green, or yellow skin, a crisp, juicy flesh, and a core with seeds in the center.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#Ball -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Ball">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#DesignedTool"/>
+        <rdfs:comment>A ball is a spherical object typically used in sports, games, or as a toy, made from various materials and usually bounced, thrown, or kicked.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
 
@@ -83,6 +95,37 @@
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Banana">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Fruit"/>
         <rdfs:comment>A banana is a long, curved fruit with a yellow skin that is easy to peel, a soft, sweet flesh, and small seeds inside.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#Baseball -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Baseball">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Ball"/>
+        <rdfs:comment>A baseball is a ball used in the sport of baseball, made of cork or rubber, and covered with leather or synthetic materials, and is roughly the size of an adult&apos;s fist.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#Bed -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Bed">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#DesignedFurniture"/>
+        <rdfs:comment>A bed is a piece of furniture for sleeping or resting on that typically includes a mattress and a frame.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#BlankCreditCard -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#BlankCreditCard">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#CreditCard"/>
+        <rdfs:comment>A blank credit card is a standard-size rectangular piece of plastic with no personal or financial information embossed or encoded on it, used as a blank template for creating customized credit, debit, or ID cards.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
 
@@ -92,6 +135,7 @@
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Block">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#DesignedComponent"/>
         <rdfs:comment>A block is a solid piece of hard material, such as wood, stone or metal, that is used as a construction material, as a support or to hold other objects.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
 
@@ -100,7 +144,39 @@
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Bolt">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Fastener"/>
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#MetalHardware"/>
         <rdfs:comment>A bolt is a cylindrical or cone-shaped metal fastener with a threaded end used for securing two objects together, often requiring a nut and washer to hold it in place.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#Book -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Book">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#PrintedMatter"/>
+        <rdfs:comment>A book is a written or printed work consisting of pages bound together, typically containing a story, information, or other forms of expression.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#Bookcase -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Bookcase">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl.owl#ShelfUnit"/>
+        <rdfs:comment>A bookcase is a piece of furniture with horizontal shelves used to store books.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#BoxLid -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#BoxLid">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Lid"/>
+        <rdfs:comment>A box lid is a removable cover that fits over the top of a box, providing protection and keeping the contents secure.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
 
@@ -110,6 +186,7 @@
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Brand">
         <rdfs:subClassOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#SocialObject"/>
         <rdfs:comment>A brand is a is a name, term, design, symbol or any other feature that identifies and distinguishes a company, product or service from other companies or products in the same market. It is the unique identity that represents the company and its reputation, and can influence consumer behavior and loyalty.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
 
@@ -119,6 +196,7 @@
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Can">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#DesignedContainer"/>
         <rdfs:comment>A can is a cylindrical container usually made of metal or aluminum, used for storing food, beverages, or other products.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
 
@@ -128,6 +206,7 @@
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Cereal">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#ProcessedFood"/>
         <rdfs:comment>Cereal is a type of food made from processed grains that is typically eaten for breakfast.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
 
@@ -137,6 +216,17 @@
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#CerealBowl">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Bowl"/>
         <rdfs:comment>A cereal bowl is a deep dish used for serving breakfast cereal with milk.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#Chain -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Chain">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Fastener"/>
+        <rdfs:comment>A chain is a series of metal links or rings, typically made of steel or other metals, connected together to form a flexible, strong, and durable tool for lifting, towing, securing, or transmitting power.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
 
@@ -146,6 +236,7 @@
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#CheezItCrackerBox">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl.owl#CrackerBox"/>
         <rdfs:comment>A box containing, or at least intended to contain, Cheeze-It brand crackers. A cracker is a flat, dry-baked pastry, usually made from flour.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
 
@@ -155,6 +246,7 @@
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#ChipsCan">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Can"/>
         <rdfs:comment>Chips can refers to a cylindrical container that holds potato chips.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
 
@@ -170,6 +262,7 @@
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:comment>A clamp is a mechanical device with two jaws that can be adjusted to hold an object in place, used for woodworking, metalworking, and other types of manual work.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
 
@@ -179,6 +272,7 @@
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#CleaningTool">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#DesignedTool"/>
         <rdfs:comment>A cleaning tool is an instrument used for cleaning or scrubbing surfaces.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
 
@@ -188,6 +282,27 @@
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#CleanserBottle">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Bottle"/>
         <rdfs:comment>A container typically made of plastic or glass that holds cleaning products such as liquid soap, bleach, or other household chemicals.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#ClearBox -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#ClearBox">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Box"/>
+        <rdfs:comment>A clear box is a transparent container made of plastic, glass, or other clear materials, designed to hold and display objects while keeping them visible and protected.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#CoatRack -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#CoatRack">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Rack"/>
+        <rdfs:comment>A coat rack is a free-standing or wall-mounted piece of furniture that is designed to hold coats, hats, scarves, and other outerwear.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
 
@@ -197,6 +312,27 @@
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#CoffeCan">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Can"/>
         <rdfs:comment>A coffee can is a cylindrical container typically made of metal or plastic, used for storing and transporting coffee or other dry goods.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#ColoredWoodBlock -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#ColoredWoodBlock">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#WoodBlock"/>
+        <rdfs:comment>Colored wood blocks are toys that consist of various sized wooden blocks that are painted in different colors and shapes for children to play with.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#CreditCard -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#CreditCard">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#DesignedTool"/>
+        <rdfs:comment>A credit card is a standard-size rectangular piece of plastic. It is a payment card that allows the cardholder to borrow funds from a financial institution to make purchases and pay them back with interest over time.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
 
@@ -206,7 +342,18 @@
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#DesignedFabric">
         <rdfs:subClassOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#DesignedArtifact"/>
         <rdfs:comment>Fabric is a flexible, woven material consisting of a network of natural or artificial fibers, often used for making clothing and other textile products.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
         <rdfs:label>Designed fabric</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#Dice -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Dice">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Toy"/>
+        <rdfs:comment>Dice are small, cube-shaped objects with markings on each face, typically used in games of chance and gambling, to generate random numbers, or for other recreational purposes.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
 
@@ -216,6 +363,7 @@
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#DominoSugarBox">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#SugarBox"/>
         <rdfs:comment>A box containing, or at least usually intended to contain, Domino brand sugar.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
 
@@ -225,6 +373,7 @@
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Fastener">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#HouseholdHardware"/>
         <rdfs:comment>A fastener is a hardware device used to join two or more objects together, allowing for the creation of non-permanent joints that can be easily removed or disassembled.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
 
@@ -233,6 +382,7 @@
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#FlatScrewdriver">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#ScrewDriver"/>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
 
@@ -242,6 +392,17 @@
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Flavor">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Intrinsic"/>
         <rdfs:comment>Flavor refers to the sensory experience of food or drink, specifically its taste and aroma.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#FoamBrick -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#FoamBrick">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Block"/>
+        <rdfs:comment>A foam brick is a soft, rectangular block made of foam, used for support or cushioning, often in sports or fitness activities.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
 
@@ -251,6 +412,17 @@
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Food">
         <rdfs:subClassOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#BiologicalObject"/>
         <rdfs:comment>Food refers to any substance consumed by living organisms that provide nutritional support for the body&apos;s growth, development, and maintenance.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#Footlocker -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Footlocker">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#DesignedContainer"/>
+        <rdfs:comment>A type of storage trunk used to hold clothing and other personal items.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
 
@@ -260,6 +432,7 @@
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#ForceConcentratingTool">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#DesignedTool"/>
         <rdfs:comment>Force-concentrating tools are hand tools designed to concentrate a force onto a small area to enable the user to exert a greater amount of force than would otherwise be possible.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
 
@@ -269,6 +442,7 @@
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#FrenchsMustardBottle">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#MustardBottle"/>
         <rdfs:comment>French&apos;s Mustard bottle refers to a squeezable container that dispenses French&apos;s brand of yellow mustard.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
 
@@ -278,6 +452,7 @@
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Fruit">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Food"/>
         <rdfs:comment>Fruit is the sweet and fleshy product of a tree or other plant that contains seed and can be eaten as food.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
 
@@ -287,6 +462,17 @@
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#GelatinBox">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Box"/>
         <rdfs:comment>A box containing, or at least normally intended to contain, gelatin.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#GolfBall -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#GolfBall">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Ball"/>
+        <rdfs:comment>A golf ball is a small, round ball used in the sport of golf, typically made of rubber and synthetic materials, with dimples on its surface to increase lift and reduce drag.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
 
@@ -302,6 +488,7 @@
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:comment>A hammer is a hand-held tool with a heavy metal head and a handle used for driving nails, breaking objects apart, or shaping metal.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
 
@@ -309,8 +496,9 @@
     <!-- http://www.ease-crc.org/ont/SUTURO.owl#HouseholdHardware -->
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#HouseholdHardware">
-        <rdfs:subClassOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#DesignedArtifact"/>
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#DesignedTool"/>
         <rdfs:comment>Household hardware (or simply, hardware) is equipment that can be touched or held by hand such as keys, locks, nuts, screws, washers, hinges, latches, handles, wire, chains, belts, plumbing supplies, electrical supplies, tools, utensils, cutlery and machine parts.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
 
@@ -320,6 +508,7 @@
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#JellOChocolatePuddingBox">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#PuddingBox"/>
         <rdfs:comment>A box containing, or at least normally intended to contain, Jell-O brand chocolate flavored pudding powder.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
 
@@ -329,6 +518,7 @@
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#JellOStrawberryGelatinBox">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#GelatinBox"/>
         <rdfs:comment>A box containing, or at least normally intended to contain, Jell-O brand strawberry flavored gelatin.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
 
@@ -338,6 +528,27 @@
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#LargeMarker">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#WritingTool"/>
         <rdfs:comment>A large marker is a pen-like writing tool with a wide, felt tip used for creating bold, colorful marks or lettering on posters, signs, or other large surfaces.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#Lego -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Lego">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Toy"/>
+        <rdfs:comment>LEGO is a popular construction toy consisting of colorful interlocking plastic bricks and other components that can be assembled and reconfigured into various shapes and structures.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#LegoDuplo -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#LegoDuplo">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Lego"/>
+        <rdfs:comment>Lego Duplo is a line of Lego building toys designed for children aged 1.5 to 5 years old.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
 
@@ -347,6 +558,7 @@
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Lemon">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Fruit"/>
         <rdfs:comment>A lemon is a yellow citrus fruit with a sour taste, acidic juice, and versatile use in cooking and beverages.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
 
@@ -356,6 +568,48 @@
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Liquid">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Food"/>
         <rdfs:comment>Liquid food is a type of food that is in a liquid state and can be consumed without chewing.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#Magazine -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Magazine">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#PrintedMatter"/>
+        <rdfs:comment>A magazine is a publication containing articles and illustrations, often on a particular subject or aimed at a particular audience.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#Marble -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Marble">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Ball"/>
+        <rdfs:comment>A marble is a small, spherical toy made of glass, stone, or other materials, used in games, competitions, or for decoration.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#MetalHardware -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#MetalHardware">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#DesignedTool"/>
+        <rdfs:comment>Metal hardware refers to various metal components, such as nuts, bolts, screws, washers, and hinges, used in manufacturing and construction to join or secure different objects or materials together.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#Microwave -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Microwave">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Appliance"/>
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#DesignedContainer"/>
+        <rdfs:comment>A microwave is an appliance that cooks or heats up food by using microwave radiation to excite the molecules in the food.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
 
@@ -365,6 +619,17 @@
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Milk">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Liquid"/>
         <rdfs:comment>Milk is a nutrient-rich liquid that comes from cows or other mammals and is commonly consumed by humans.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#MiniSoccerBall -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#MiniSoccerBall">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Ball"/>
+        <rdfs:comment>A mini soccer ball is a smaller version of a regulation soccer ball, often used for training, indoor or recreational play, or for promotional or decorative purposes.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
 
@@ -374,6 +639,7 @@
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Mug">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Cup"/>
         <rdfs:comment>A mug is a cylindrical-shaped cup, usually made of ceramic, porcelain, or glass, with a handle for holding and drinking hot beverages such as coffee or tea.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
 
@@ -383,6 +649,7 @@
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#MustardBottle">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Bottle"/>
         <rdfs:comment>Mustard bottle refers to a squeezable container that dispenses mustard.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
 
@@ -391,7 +658,29 @@
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Nail">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Fastener"/>
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#MetalHardware"/>
         <rdfs:comment>A nail is a thin, pointed metal or wood fastener with a flat head used for attaching or joining two objects together, or for securing an object to a surface.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#Napkin -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Napkin">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#DesignedFabric"/>
+        <rdfs:comment>A square piece of cloth or paper used at a meal to wipe the fingers or lips and to protect garments</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#NinePegHoleTest -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#NinePegHoleTest">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Toy"/>
+        <rdfs:comment>A pegboard with nine holes used for cognitive and psychomotor testing.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
 
@@ -400,7 +689,9 @@
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Nut">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Fastener"/>
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#MetalHardware"/>
         <rdfs:comment>A nut is a small, usually hexagonal-shaped metal or plastic fastener with a threaded hole used for securing a bolt or screw in place.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
 
@@ -410,6 +701,7 @@
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Orange">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Fruit"/>
         <rdfs:comment>An orange is a round citrus fruit with a tough, bright orange skin, pulpy flesh with sections, and a juicy, tangy flavor.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
 
@@ -419,6 +711,7 @@
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#PadlockAndKeys">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#HouseholdHardware"/>
         <rdfs:comment>A padlock and keys are a security device used for locking and securing doors, gates, or other objects, consisting of a metal lock with a U-shaped bar and a set of keys to open and close it.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
 
@@ -428,6 +721,7 @@
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Peach">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Fruit"/>
         <rdfs:comment>A peach is a round fruit with a fuzzy skin, juicy flesh, a large pit in the center, and a sweet, delicate flavor.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
 
@@ -437,6 +731,7 @@
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Pear">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Fruit"/>
         <rdfs:comment>A pear is a sweet, juicy fruit with a bulbous shape, a thin skin, and a core with seeds in the center.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
 
@@ -446,6 +741,7 @@
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#PhillipsScrewdriver">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#ScrewDriver"/>
         <rdfs:comment>A Phillips screwdriver is a hand-held tool with a cross-shaped tip used for driving screws with a corresponding cross-shaped indentation in their head.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
 
@@ -455,6 +751,7 @@
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Pitcher">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#DesignedContainer"/>
         <rdfs:comment>A pitcher is a container, usually made of glass or ceramic, with a handle and spout used for holding and pouring beverages such as water, juice, or tea.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
 
@@ -464,6 +761,7 @@
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#PitcherLid">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Lid"/>
         <rdfs:comment>A pitcher lid is a cover used to close the opening of a pitcher and prevent the contents from spilling or becoming contaminated.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
 
@@ -473,6 +771,7 @@
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Plum">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Fruit"/>
         <rdfs:comment>A plum is a small, round or oval-shaped fruit with a smooth, edible skin, juicy, sweet or tart flesh, and a small pit in the center.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
 
@@ -482,6 +781,7 @@
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#PottedMeatCan">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Can"/>
         <rdfs:comment>A can containing, or at least normally intended to contain, potted meat</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
 
@@ -491,6 +791,7 @@
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#PowerDrill">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#ForceConcentratingTool"/>
         <rdfs:comment>A power drill is a motorized tool used for making holes in a variety of materials, or for driving screws or bolts into them, often used in woodworking, metalworking, or construction projects.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
 
@@ -500,6 +801,17 @@
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#PringlesChipsCan">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#ChipsCan"/>
         <rdfs:comment>Pringles chips can refers to a cylindrical container that holds Pringles brand potato chips.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#PrintedMatter -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#PrintedMatter">
+        <rdfs:subClassOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#DesignedArtifact"/>
+        <rdfs:comment>Printed matter refers to any material that has been printed, including books, magazines, newspapers, brochures, flyers, posters, and other forms of printed media.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
 
@@ -509,6 +821,7 @@
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#ProcessedFood">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Dish"/>
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Food"/>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
 
@@ -518,6 +831,47 @@
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#PuddingBox">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Box"/>
         <rdfs:comment>A box containing, or at least normally intended to contain pudding powder.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#Rack -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Rack">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#DesignedFurniture"/>
+        <rdfs:comment>A rack is a framework or support structure used for holding or organizing various objects or equipment in a specific arrangement or pattern.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#Racquetball -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Racquetball">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Ball"/>
+        <rdfs:comment>A racquetball ball is a small, hollow rubber ball used in the sport of racquetball, designed to be bouncy and to move quickly in the enclosed court.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#Rope -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Rope">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Fastener"/>
+        <rdfs:comment>A rope is a length of thick, strong, twisted or braided fibers or cords, typically made of natural or synthetic materials, used for tying, lifting, pulling, or securing objects or people.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#RubiksCube -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#RubiksCube">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Toy"/>
+        <rdfs:comment>A Rubik&apos;s Cube is a three-dimensional puzzle game that consists of a cube with six faces, each made up of nine smaller squares of different colors, and the object of the game is to twist and turn the cube to solve the puzzle by aligning the colors on each face.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
 
@@ -533,6 +887,7 @@
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:comment>Scissors are a cutting tool consisting of two blades joined together by a pivot, used for cutting paper, fabric, hair, or other materials.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
 
@@ -542,6 +897,7 @@
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#ScotchBriteDobieSponge">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Sponge"/>
         <rdfs:comment>A Scotch Brite Dobie sponge is a small, rectangular sponge with a scrubbing surface on one side, designed for cleaning dishes and surfaces.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
 
@@ -550,7 +906,9 @@
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Screw">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Fastener"/>
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#MetalHardware"/>
         <rdfs:comment>A screw is a threaded metal or wood fastener with a pointed tip used for attaching two objects together or for securing an object in place.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
 
@@ -565,6 +923,7 @@
                 <owl:someValuesFrom rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#DesignedHandle"/>
             </owl:Restriction>
         </rdfs:subClassOf>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
 
@@ -574,6 +933,18 @@
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#ScrubCleanserBottle">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#CleanserBottle"/>
         <rdfs:comment>A Scrub Cleanser bottle is a container, typically made of plastic, glass, or metal, used to hold a cleaning solution that is designed to scrub and clean surfaces such as sinks, tubs, and toilets.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#Sink -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Sink">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Appliance"/>
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#DesignedContainer"/>
+        <rdfs:comment>A sink is a bowl-shaped fixture used for washing hands, dishes, and other small objects, typically located in a kitchen or bathroom.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
 
@@ -583,6 +954,7 @@
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Skillet">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Pan"/>
         <rdfs:comment>A skillet is a flat-bottomed pan with slanted sides and a long handle, used for frying, sautéing, or searing foods.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
 
@@ -592,6 +964,7 @@
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#SkilletLid">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Lid"/>
         <rdfs:comment>A skillet lid is a cover made of metal or glass that fits onto a skillet and is used to prevent splatters and retain heat while cooking.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
 
@@ -601,6 +974,17 @@
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#SmallMarker">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#WritingTool"/>
         <rdfs:comment>A small marker is a pen-like writing tool with a narrow, pointed tip used for writing or drawing with precision, often used for labeling, highlighting, or coloring.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#SoftBall -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#SoftBall">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Ball"/>
+        <rdfs:comment>A soft ball is a ball made of a softer, lighter material than a regulation baseball, often used in recreational or amateur leagues, or in games played by children.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
 
@@ -610,6 +994,7 @@
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#SoupCan">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Can"/>
         <rdfs:comment>Soup can refers to a cylindrical metal container that holds condensed or ready-to-eat soup.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
 
@@ -619,6 +1004,7 @@
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#SpamPottedMeatCan">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#PottedMeatCan"/>
         <rdfs:comment>A can containing, or at least normally intended to contain, Spam brand potted meat.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
 
@@ -628,6 +1014,7 @@
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Sponge">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#CleaningTool"/>
         <rdfs:comment>A sponge is a porous material that is typically used for cleaning surfaces or absorbing liquid.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
 
@@ -637,6 +1024,7 @@
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#SprayBottle">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Bottle"/>
         <rdfs:comment>A spray bottle is a type of container that holds liquid and has a nozzle that can spray the liquid in a fine mist or stream.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
 
@@ -646,6 +1034,7 @@
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#StarkistTunaFishCan">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#TunaFishCan"/>
         <rdfs:comment>Starkist Tuna fish can refers to a metal container used to store and preserve Starkist brand tuna fish.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
 
@@ -655,6 +1044,7 @@
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Strawberry">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Fruit"/>
         <rdfs:comment>A strawberry is a small, red fruit with a juicy texture, sweet taste, and tiny seeds on the surface, commonly used in desserts or as a snack.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
 
@@ -664,6 +1054,7 @@
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#SugarBox">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Box"/>
         <rdfs:comment>A box containing, or at least usually intended to contain, sugar.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
 
@@ -673,6 +1064,37 @@
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#TableCloth">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#DesignedFabric"/>
         <rdfs:comment>A tablecloth is a large, rectangular piece of fabric or vinyl used to cover and protect a dining table from spills and stains, as well as to add aesthetic appeal to the setting.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#Television -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Television">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Appliance"/>
+        <rdfs:comment>A device that receives and displays video signals and has a tuner to change channels.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#TennisBall -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#TennisBall">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Ball"/>
+        <rdfs:comment>A tennis ball is a small, round ball made of rubber with a fuzzy, felt-like outer layer, used in the sport of tennis, as well as in other games, such as fetch for dogs.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#Timer -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Timer">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#HouseholdHardware"/>
+        <rdfs:comment>A timer is a device used to measure and indicate the passing of a set amount of time.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
 
@@ -682,6 +1104,67 @@
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#TomatoSoupCan">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#SoupCan"/>
         <rdfs:comment>Tomato soup can refers to a cylindrical metal container that holds condensed or ready-to-eat tomato soup.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#Toy -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Toy">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#DesignedTool"/>
+        <rdfs:comment>A toy is an object designed for children or adults to play with, often for amusement or education, and can range from simple objects to complex electronic devices.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#ToyAirplane -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#ToyAirplane">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Toy"/>
+        <rdfs:comment>A toy airplane is a miniature version of an airplane designed for children to play with.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#TrashBag -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#TrashBag">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#TrashContainer"/>
+        <rdfs:comment>A bag made of plastic or other materials that is used to contain waste material.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#TrashBin -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#TrashBin">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#TrashContainer"/>
+        <rdfs:comment>A container for holding waste or garbage.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#Tray -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Tray">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#HouseholdHardware"/>
+        <rdfs:comment>A flat, shallow container with a raised rim, typically used for carrying food and drink, or for holding small items or loose material.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#Tshirt -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Tshirt">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#DesignedFabric"/>
+        <rdfs:comment>A T-shirt is a type of unisex fabric shirt named after the T shape of its body and sleeves.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
 
@@ -691,6 +1174,17 @@
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#TunaFishCan">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Can"/>
         <rdfs:comment>Tuna fish can refers to a metal container used to store and preserve tuna fish.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#Washer -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Washer">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#MetalHardware"/>
+        <rdfs:comment>A washer is a thin, flat ring-shaped object, typically made of metal, rubber, or plastic, used to distribute the load of a threaded fastener such as a screw or bolt, or as a spacer, seal, or locking device.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
 
@@ -700,6 +1194,7 @@
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#WindexSprayBottle">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#SprayBottle"/>
         <rdfs:comment>A Windex Spray bottle is a plastic container with a trigger or pump sprayer used to hold a cleaning solution specifically designed to clean glass surfaces.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
 
@@ -709,6 +1204,7 @@
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#WoodBlock">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Block"/>
         <rdfs:comment>A wood block is a solid piece of wood cut into a rectangular or square shape, used for carving, chopping, or as a decorative item.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
 
@@ -724,6 +1220,7 @@
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:comment>A wrench is a hand tool with a handle and adjustable jaws or a fixed socket used for gripping and turning nuts, bolts, and other fasteners.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
 
@@ -733,6 +1230,7 @@
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#WritingTool">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#DesignedTool"/>
         <rdfs:comment>A writing tool is a device used to inscribe characters onto a surface, such as paper or digital media, and can include pens, pencils, markers, styluses, and digital pens.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
 
@@ -752,6 +1250,7 @@
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl.owl#CrackerBox">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Box"/>
         <rdfs:comment>A box containing, or at least intended to contain, crackers. A cracker is a flat, dry-baked pastry, usually made from flour.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
 
@@ -769,11 +1268,25 @@
     <!-- http://www.ease-crc.org/ont/SUTURO.owl.owl#ShelfUnit -->
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl.owl#ShelfUnit">
-        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#DesignedFurniture"/>
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Rack"/>
         <rdfs:comment>A shelf unit is a piece of furniture consisting of several shelves, designed to hold books, decor, and other items and is typically made of wood or metal.</rdfs:comment>
         <rdfs:isDefinedBy>http://www.ease-crc.org/ont/SUTURO.owl</rdfs:isDefinedBy>
         <rdfs:label>Shelf unit</rdfs:label>
     </owl:Class>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Annotations
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Spatula">
+        <rdfs:comment>A spatula is a flat, broad kitchen tool with a long handle used for flipping and lifting food items, such as pancakes, eggs, or burgers, while cooking.</rdfs:comment>
+    </rdf:Description>
     
 
 
@@ -793,4 +1306,3 @@
 
 
 <!-- Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi -->
-
