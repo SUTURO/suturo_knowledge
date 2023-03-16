@@ -164,7 +164,7 @@
     <!-- http://www.ease-crc.org/ont/SUTURO.owl#Bookcase -->
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Bookcase">
-        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl.owl#ShelfUnit"/>
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#ShelfUnit"/>
         <rdfs:comment>A bookcase is a piece of furniture with horizontal shelves used to store books.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
@@ -234,7 +234,7 @@
     <!-- http://www.ease-crc.org/ont/SUTURO.owl#CheezItCrackerBox -->
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#CheezItCrackerBox">
-        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl.owl#CrackerBox"/>
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#CrackerBox"/>
         <rdfs:comment>A box containing, or at least intended to contain, Cheeze-It brand crackers. A cracker is a flat, dry-baked pastry, usually made from flour.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
@@ -938,6 +938,16 @@
     
 
 
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#Shelf -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Shelf">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#DesignedComponent"/>
+        <rdfs:comment>A shelf is a flat piece of wood, metal, or glass which is attached to a wall or to the sides of a cupboard. Shelves are used for keeping things on.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
     <!-- http://www.ease-crc.org/ont/SUTURO.owl#Sink -->
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Sink">
@@ -1235,9 +1245,9 @@
     
 
 
-    <!-- http://www.ease-crc.org/ont/SUTURO.owl.owl#CoatRack -->
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#CoatRack -->
 
-    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl.owl#CoatRack">
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#CoatRack">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Rack"/>
         <rdfs:comment>A coat rack is a free-standing or wall-mounted piece of furniture that is designed to hold coats, hats, scarves, and other outerwear.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
@@ -1245,9 +1255,9 @@
     
 
 
-    <!-- http://www.ease-crc.org/ont/SUTURO.owl.owl#CrackerBox -->
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#CrackerBox -->
 
-    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl.owl#CrackerBox">
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#CrackerBox">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Box"/>
         <rdfs:comment>A box containing, or at least intended to contain, crackers. A cracker is a flat, dry-baked pastry, usually made from flour.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
@@ -1255,38 +1265,14 @@
     
 
 
-    <!-- http://www.ease-crc.org/ont/SUTURO.owl.owl#Shelf -->
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#ShelfUnit -->
 
-    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl.owl#Shelf">
-        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#DesignedComponent"/>
-        <rdfs:comment>A shelf is a flat piece of wood, metal, or glass which is attached to a wall or to the sides of a cupboard. Shelves are used for keeping things on.</rdfs:comment>
-        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.ease-crc.org/ont/SUTURO.owl.owl#ShelfUnit -->
-
-    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl.owl#ShelfUnit">
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#ShelfUnit">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Rack"/>
         <rdfs:comment>A shelf unit is a piece of furniture consisting of several shelves, designed to hold books, decor, and other items and is typically made of wood or metal.</rdfs:comment>
         <rdfs:isDefinedBy>http://www.ease-crc.org/ont/SUTURO.owl</rdfs:isDefinedBy>
         <rdfs:label>Shelf unit</rdfs:label>
     </owl:Class>
-    
-
-
-    <!-- 
-    ///////////////////////////////////////////////////////////////////////////////////////
-    //
-    // Annotations
-    //
-    ///////////////////////////////////////////////////////////////////////////////////////
-     -->
-
-    <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Spatula">
-        <rdfs:comment>A spatula is a flat, broad kitchen tool with a long handle used for flipping and lifting food items, such as pancakes, eggs, or burgers, while cooking.</rdfs:comment>
-    </rdf:Description>
     
 
 
