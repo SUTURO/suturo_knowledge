@@ -143,3 +143,17 @@ Pose: ['iai_kitchen/long_table:table:table_front_edge_center', [-0.7, 0.0, 0.0],
 ?- object_rel_pose('http://www.ease-crc.org/ont/SOMA.owl#CerealBox_JDHUPSME', destination, Pose).
 Pose: ['iai_kitchen/shelf:shelf:shelf_base_center', [0.0, -0.1, 0.51], [0.0, 0.0, 0.0, 1.0]].
 ```
+
+### Semantic Similarity Measure
+
+Calculates the similarity between two classes.
+
+```prolog
+wu_palmer_similarity(Class1, Class2, Similarity) is semidet.
+```
+
+Example:
+```prolog
+?- wu_palmer_similarity("http://www.ease-crc.org/ont/SUTURO.owl#Banana", "http://www.ease-crc.org/ont/SUTURO.owl#Strawberry", Similarity).
+Similarity: 0.8747.
+```
