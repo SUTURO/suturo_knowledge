@@ -7,12 +7,33 @@
      xmlns:xml="http://www.w3.org/XML/1998/namespace"
      xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
      xmlns:SOMA="http://www.ease-crc.org/ont/SOMA.owl#"
-     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:SUTURO="http://www.ease-crc.org/ont/SUTURO.owl#">
     <owl:Ontology rdf:about="http://www.ease-crc.org/ont/SUTURO.owl">
         <owl:imports rdf:resource="http://www.ease-crc.org/ont/SOMA-HOME.owl"/>
         <owl:imports rdf:resource="http://www.ease-crc.org/ont/SOMA.owl"/>
         <owl:imports rdf:resource="package://knowrob/owl/URDF.owl"/>
     </owl:Ontology>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Annotation properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#id -->
+
+    <owl:AnnotationProperty rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#id">
+        <rdfs:comment>Used to re-identify the same object by other subgroups like Perception if, for example, the name or IRI is changed.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:AnnotationProperty>
     
 
 
@@ -235,6 +256,7 @@
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#CheezItCrackerBox">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#CrackerBox"/>
+        <SUTURO:id>1</SUTURO:id>
         <rdfs:comment>A box containing, or at least intended to contain, Cheeze-It brand crackers. A cracker is a flat, dry-baked pastry, usually made from flour.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
@@ -300,6 +322,7 @@
     <!-- http://www.ease-crc.org/ont/SUTURO.owl#CoatRack -->
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#CoatRack">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Rack"/>
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Rack"/>
         <rdfs:comment>A coat rack is a free-standing or wall-mounted piece of furniture that is designed to hold coats, hats, scarves, and other outerwear.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
@@ -322,6 +345,16 @@
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#ColoredWoodBlock">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#WoodBlock"/>
         <rdfs:comment>Colored wood blocks are toys that consist of various sized wooden blocks that are painted in different colors and shapes for children to play with.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#CrackerBox -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#CrackerBox">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Box"/>
+        <rdfs:comment>A box containing, or at least intended to contain, crackers. A cracker is a flat, dry-baked pastry, usually made from flour.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
@@ -948,6 +981,17 @@
     
 
 
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#ShelfUnit -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#ShelfUnit">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Rack"/>
+        <rdfs:comment>A shelf unit is a piece of furniture consisting of several shelves, designed to hold books, decor, and other items and is typically made of wood or metal.</rdfs:comment>
+        <rdfs:isDefinedBy>http://www.ease-crc.org/ont/SUTURO.owl</rdfs:isDefinedBy>
+        <rdfs:label>Shelf unit</rdfs:label>
+    </owl:Class>
+    
+
+
     <!-- http://www.ease-crc.org/ont/SUTURO.owl#Sink -->
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Sink">
@@ -1109,6 +1153,16 @@
     
 
 
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#Tomato -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Tomato">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Vegetable"/>
+        <rdfs:comment>A tomato is a fruit that is commonly used as a culinary vegetable and is known for its juicy flesh, bright color, and versatile flavor.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
     <!-- http://www.ease-crc.org/ont/SUTURO.owl#TomatoSoupCan -->
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#TomatoSoupCan">
@@ -1189,6 +1243,16 @@
     
 
 
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#Vegetable -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Vegetable">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Food"/>
+        <rdfs:comment>A vegetable is a plant or part of a plant that is typically eaten as food and is not classified as a fruit, seed, or spice.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
     <!-- http://www.ease-crc.org/ont/SUTURO.owl#Washer -->
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Washer">
@@ -1245,37 +1309,6 @@
     
 
 
-    <!-- http://www.ease-crc.org/ont/SUTURO.owl#CoatRack -->
-
-    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#CoatRack">
-        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Rack"/>
-        <rdfs:comment>A coat rack is a free-standing or wall-mounted piece of furniture that is designed to hold coats, hats, scarves, and other outerwear.</rdfs:comment>
-        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.ease-crc.org/ont/SUTURO.owl#CrackerBox -->
-
-    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#CrackerBox">
-        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Box"/>
-        <rdfs:comment>A box containing, or at least intended to contain, crackers. A cracker is a flat, dry-baked pastry, usually made from flour.</rdfs:comment>
-        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.ease-crc.org/ont/SUTURO.owl#ShelfUnit -->
-
-    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#ShelfUnit">
-        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Rack"/>
-        <rdfs:comment>A shelf unit is a piece of furniture consisting of several shelves, designed to hold books, decor, and other items and is typically made of wood or metal.</rdfs:comment>
-        <rdfs:isDefinedBy>http://www.ease-crc.org/ont/SUTURO.owl</rdfs:isDefinedBy>
-        <rdfs:label>Shelf unit</rdfs:label>
-    </owl:Class>
-    
-
-
     <!-- 
     ///////////////////////////////////////////////////////////////////////////////////////
     //
@@ -1292,3 +1325,4 @@
 
 
 <!-- Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi -->
+

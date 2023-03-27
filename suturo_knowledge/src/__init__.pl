@@ -2,17 +2,17 @@
 :- register_ros_package(knowrob).
 :- register_ros_package(suturo_knowledge).
 
-:- load_owl('package://suturo_knowledge/owl/suturo.owl',
-	    % Each option can only be used once
-	    [namespace(suturo,   'http://www.ease-crc.org/ont/SUTURO#')]).
+% Load the main SUTURO ontology
+:- load_owl('package://suturo_knowledge/owl/suturo.owl', [namespace(suturo, 'http://www.ease-crc.org/ont/SUTURO.owl#')]).
 
-% Import rdf_register_ns/3 into here so it can be used to register additional namespaces
+% Imports to register additional namespaces
 :- use_module(library('semweb/rdf_db'), 
-		[ rdf_register_ns/3 ]).
+		[ rdf_register_prefix/3 ]).
 
-% Register soma Namespaces here, as we can only use one option in the load_owl predicate.
-:- rdf_register_ns(soma,      'http://www.ease-crc.org/ont/SOMA.owl#',      [keep(true)]).
-:- rdf_register_ns(soma_home, 'http://www.ease-crc.org/ont/SOMA-HOME.owl#', [keep(true)]).
+% Register other namespaces here, as we can only use one option in the load_owl predicate.
+:- rdf_register_prefix(soma, 'http://www.ease-crc.org/ont/SOMA.owl#', [keep(true)]).
+:- rdf_register_prefix(soma_home, 'http://www.ease-crc.org/ont/SOMA-HOME.owl#', [keep(true)]).
+:- rdf_register_prefix(dul, 'http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#', [keep(true)]).
 
 %% Make sure utils are loaded before model and other directories
 :- use_directory('util').

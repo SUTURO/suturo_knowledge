@@ -3,6 +3,7 @@
 	  [
 	      has_urdf_name/2,
 	      has_tf_name/2,
+	      split_iri/3,
 	      ros_info/2,
 	      ros_warn/2,
 	      ros_error/2,
@@ -49,6 +50,26 @@ has_tf_name(URDFName, TFName) :-
     not(sub_string(URDFName, _, _, _, "#")),
     % TODO don't hardcode iai_kitchen
     atom_concat('iai_kitchen/', URDFName, TFName).
+
+
+% split_iri(+IRI, -Prefix, -ClassIdentifier)
+% 
+% Splits an IRI of the form <Prefix>#<ClassIdentifier> into the prefix part and the class identifier.
+% 
+% @param IRI The IRI to split
+% @param Prefix The prefix part of the IRI
+% @param ClassIdentifier The class identifier part of the IRI
+% 
+split_iri(IRI, Prefix, ClassIdentifier) :-
+    sub_atom(IRI, Before, _, After, '#'),
+    !,
+    sub_atom(IRI, 0, Before, _, Prefix),
+    sub_atom(IRI, _, After, 0, ClassIdentifier).
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Debugging
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %% ros_debug(+Format, +Arguments)
 ros_debug(Format, Arguments) :-
