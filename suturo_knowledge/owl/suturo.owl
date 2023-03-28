@@ -28,10 +28,10 @@
     
 
 
-    <!-- http://www.ease-crc.org/ont/SUTURO.owl#id -->
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#perceptionId -->
 
-    <owl:AnnotationProperty rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#id">
-        <rdfs:comment>Used to re-identify the same object by other subgroups like Perception if, for example, the name or IRI is changed.</rdfs:comment>
+    <owl:AnnotationProperty rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#perceptionId">
+        <rdfs:comment>Used to re-identify the same object by the Perception Subgroup if, for example, the name or IRI is changed. Corresponds to the ID in the  annotations/label mapping of their image datasets.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:AnnotationProperty>
     
@@ -45,6 +45,30 @@
     ///////////////////////////////////////////////////////////////////////////////////////
      -->
 
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SOMA.owl#Bottle -->
+
+    <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Bottle">
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">51</SUTURO:perceptionId>
+    </rdf:Description>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SOMA.owl#Bowl -->
+
+    <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Bowl">
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">33</SUTURO:perceptionId>
+    </rdf:Description>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SOMA.owl#Cup -->
+
+    <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Cup">
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">35</SUTURO:perceptionId>
+    </rdf:Description>
     
 
 
@@ -65,6 +89,14 @@
     
 
 
+    <!-- http://www.ease-crc.org/ont/SOMA.owl#DesignedHandle -->
+
+    <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#DesignedHandle">
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">29</SUTURO:perceptionId>
+    </rdf:Description>
+    
+
+
     <!-- http://www.ease-crc.org/ont/SOMA.owl#Dish -->
 
     <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Dish">
@@ -77,7 +109,27 @@
 
     <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Knife">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Cutlery"/>
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">10</SUTURO:perceptionId>
     </rdf:Description>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SOMA.owl#Plate -->
+
+    <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Plate">
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">34</SUTURO:perceptionId>
+    </rdf:Description>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#AbrasiveSponge -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#AbrasiveSponge">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Sponge"/>
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">7</SUTURO:perceptionId>
+        <rdfs:comment rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+        <rdfs:comment>An abrasive sponge is a cleaning tool designed to scrub away tough dirt and grime from surfaces using its rough, abrasive surface. It is typically made from materials such as nylon, polyester, or natural fibers, and is commonly used in the kitchen and bathroom for cleaning dishes, pots, pans, and other surfaces.</rdfs:comment>
+    </owl:Class>
     
 
 
@@ -125,6 +177,7 @@
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Baseball">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Ball"/>
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">17</SUTURO:perceptionId>
         <rdfs:comment>A baseball is a ball used in the sport of baseball, made of cork or rubber, and covered with leather or synthetic materials, and is roughly the size of an adult&apos;s fist.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
@@ -146,6 +199,17 @@
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#BlankCreditCard">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#CreditCard"/>
         <rdfs:comment>A blank credit card is a standard-size rectangular piece of plastic with no personal or financial information embossed or encoded on it, used as a blank template for creating customized credit, debit, or ID cards.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#BleachCleanserBottle -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#BleachCleanserBottle">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#CleanserBottle"/>
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">2</SUTURO:perceptionId>
+        <rdfs:comment>A bleach cleanser bottle is a container designed to hold a cleaning solution that contains bleach, a powerful disinfectant and stain remover. It typically has a nozzle or cap that dispenses the solution in a controlled manner to effectively clean and sanitize surfaces.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
@@ -256,7 +320,6 @@
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#CheezItCrackerBox">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#CrackerBox"/>
-        <SUTURO:id>1</SUTURO:id>
         <rdfs:comment>A box containing, or at least intended to contain, Cheeze-It brand crackers. A cracker is a flat, dry-baked pastry, usually made from flour.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
@@ -303,6 +366,7 @@
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#CleanserBottle">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Bottle"/>
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">2</SUTURO:perceptionId>
         <rdfs:comment>A container typically made of plastic or glass that holds cleaning products such as liquid soap, bleach, or other household chemicals.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
@@ -344,6 +408,7 @@
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#ColoredWoodBlock">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#WoodBlock"/>
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">27</SUTURO:perceptionId>
         <rdfs:comment>Colored wood blocks are toys that consist of various sized wooden blocks that are painted in different colors and shapes for children to play with.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
@@ -385,6 +450,7 @@
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Dice">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Toy"/>
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">24</SUTURO:perceptionId>
         <rdfs:comment>Dice are small, cube-shaped objects with markings on each face, typically used in games of chance and gambling, to generate random numbers, or for other recreational purposes.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
@@ -434,6 +500,7 @@
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#FoamBrick">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Block"/>
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">23</SUTURO:perceptionId>
         <rdfs:comment>A foam brick is a soft, rectangular block made of foam, used for support or cushioning, often in sports or fitness activities.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
@@ -500,10 +567,22 @@
     
 
 
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#GlassCleanerSprayBottle -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#GlassCleanerSprayBottle">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#SprayBottle"/>
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">3</SUTURO:perceptionId>
+        <rdfs:comment>A glass cleaner spray bottle is a container designed to hold a cleaning solution specifically formulated for cleaning glass surfaces. It typically has a spray nozzle that dispenses the solution in a fine mist for easy application onto the surface.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
     <!-- http://www.ease-crc.org/ont/SUTURO.owl#GolfBall -->
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#GolfBall">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Ball"/>
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">20</SUTURO:perceptionId>
         <rdfs:comment>A golf ball is a small, round ball used in the sport of golf, typically made of rubber and synthetic materials, with dimples on its surface to increase lift and reduce drag.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
@@ -551,6 +630,17 @@
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#JellOStrawberryGelatinBox">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#GelatinBox"/>
         <rdfs:comment>A box containing, or at least normally intended to contain, Jell-O brand strawberry flavored gelatin.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#Kiwi -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Kiwi">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Fruit"/>
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">50</SUTURO:perceptionId>
+        <rdfs:comment>Kiwi is a small, oval-shaped fruit with brown fuzzy skin and bright green flesh inside, packed with nutrients such as vitamin C, vitamin K, and potassium. It has a tangy, sweet flavor and is often eaten raw, added to salads or smoothies, or used as a garnish.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
@@ -620,7 +710,19 @@
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Marble">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Ball"/>
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">25</SUTURO:perceptionId>
         <rdfs:comment>A marble is a small, spherical toy made of glass, stone, or other materials, used in games, competitions, or for decoration.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#MetalBowl -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#MetalBowl">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Bowl"/>
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">5</SUTURO:perceptionId>
+        <rdfs:comment>A metal bowl is a container made from metal material, typically stainless steel or aluminum, and used for various purposes such as mixing ingredients, serving food, or as a decorative object. It is durable, easy to clean, and can withstand high temperatures, making it ideal for use in the kitchen.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
@@ -631,6 +733,28 @@
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#MetalHardware">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#DesignedTool"/>
         <rdfs:comment>Metal hardware refers to various metal components, such as nuts, bolts, screws, washers, and hinges, used in manufacturing and construction to join or secure different objects or materials together.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#MetalMug -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#MetalMug">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Mug"/>
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">6</SUTURO:perceptionId>
+        <rdfs:comment>A metal mug is a drinking vessel made from metal material, typically stainless steel or copper, and designed to hold hot or cold beverages. It is sturdy, reusable, and often used for camping, outdoor activities, or as a travel mug.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#MetalPlate -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#MetalPlate">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Plate"/>
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">9</SUTURO:perceptionId>
+        <rdfs:comment>A metal plate is a flat, thin, and usually circular or rectangular piece of metal material, often made from stainless steel or aluminum. It is commonly used for serving food, as a component in machinery, or for decorative purposes, and is durable and easy to clean.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
@@ -661,6 +785,7 @@
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#MiniSoccerBall">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Ball"/>
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">15</SUTURO:perceptionId>
         <rdfs:comment>A mini soccer ball is a smaller version of a regulation soccer ball, often used for training, indoor or recreational play, or for promotional or decorative purposes.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
@@ -702,6 +827,7 @@
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Napkin">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#DesignedFabric"/>
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">38</SUTURO:perceptionId>
         <rdfs:comment>A square piece of cloth or paper used at a meal to wipe the fingers or lips and to protect garments</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
@@ -783,6 +909,7 @@
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Pitcher">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#DesignedContainer"/>
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">1</SUTURO:perceptionId>
         <rdfs:comment>A pitcher is a container, usually made of glass or ceramic, with a handle and spout used for holding and pouring beverages such as water, juice, or tea.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
@@ -795,6 +922,25 @@
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Lid"/>
         <rdfs:comment>A pitcher lid is a cover used to close the opening of a pitcher and prevent the contents from spilling or becoming contaminated.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#PlasticChain -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#PlasticChain">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Chain"/>
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">21</SUTURO:perceptionId>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#PlasticKnife -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#PlasticKnife">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Knife"/>
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">47</SUTURO:perceptionId>
+        <rdfs:comment>A plastic knife is a cutting tool made from plastic material, typically polypropylene or polystyrene, and is lightweight and disposable. It is commonly used for cutting soft foods such as cake or fruit, or as a safer alternative to metal knives in environments where metal utensils are not allowed.</rdfs:comment>
     </owl:Class>
     
 
@@ -833,6 +979,7 @@
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#PringlesChipsCan">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#ChipsCan"/>
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">48</SUTURO:perceptionId>
         <rdfs:comment>Pringles chips can refers to a cylindrical container that holds Pringles brand potato chips.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
@@ -883,6 +1030,7 @@
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Racquetball">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Ball"/>
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">19</SUTURO:perceptionId>
         <rdfs:comment>A racquetball ball is a small, hollow rubber ball used in the sport of racquetball, designed to be bouncy and to move quickly in the enclosed court.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
@@ -893,6 +1041,7 @@
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Rope">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Fastener"/>
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">26</SUTURO:perceptionId>
         <rdfs:comment>A rope is a length of thick, strong, twisted or braided fibers or cords, typically made of natural or synthetic materials, used for tying, lifting, pulling, or securing objects or people.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
@@ -928,7 +1077,7 @@
     <!-- http://www.ease-crc.org/ont/SUTURO.owl#ScotchBriteDobieSponge -->
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#ScotchBriteDobieSponge">
-        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Sponge"/>
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#AbrasiveSponge"/>
         <rdfs:comment>A Scotch Brite Dobie sponge is a small, rectangular sponge with a scrubbing surface on one side, designed for cleaning dishes and surfaces.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
@@ -961,20 +1110,11 @@
     
 
 
-    <!-- http://www.ease-crc.org/ont/SUTURO.owl#ScrubCleanserBottle -->
-
-    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#ScrubCleanserBottle">
-        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#CleanserBottle"/>
-        <rdfs:comment>A Scrub Cleanser bottle is a container, typically made of plastic, glass, or metal, used to hold a cleaning solution that is designed to scrub and clean surfaces such as sinks, tubs, and toilets.</rdfs:comment>
-        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
-    </owl:Class>
-    
-
-
     <!-- http://www.ease-crc.org/ont/SUTURO.owl#Shelf -->
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Shelf">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#DesignedComponent"/>
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">31</SUTURO:perceptionId>
         <rdfs:comment>A shelf is a flat piece of wood, metal, or glass which is attached to a wall or to the sides of a cupboard. Shelves are used for keeping things on.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
@@ -1007,6 +1147,7 @@
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Skillet">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Pan"/>
+        <SUTURO:perceptionId rdf:resource="8"/>
         <rdfs:comment>A skillet is a flat-bottomed pan with slanted sides and a long handle, used for frying, sautéing, or searing foods.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
@@ -1037,7 +1178,18 @@
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#SoftBall">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Ball"/>
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">16</SUTURO:perceptionId>
         <rdfs:comment>A soft ball is a ball made of a softer, lighter material than a regulation baseball, often used in recreational or amateur leagues, or in games played by children.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#SoftScrubBleachCleanserBottle -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#SoftScrubBleachCleanserBottle">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#BleachCleanserBottle"/>
+        <rdfs:comment>A Soft Scrub Cleanser bottle is a container, typically made of plastic, glass, or metal, used to hold a cleaning solution that is designed to scrub and clean surfaces such as sinks, tubs, and toilets.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
@@ -1117,6 +1269,7 @@
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#TableCloth">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#DesignedFabric"/>
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">14</SUTURO:perceptionId>
         <rdfs:comment>A tablecloth is a large, rectangular piece of fabric or vinyl used to cover and protect a dining table from spills and stains, as well as to add aesthetic appeal to the setting.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
@@ -1137,6 +1290,7 @@
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#TennisBall">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Ball"/>
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">18</SUTURO:perceptionId>
         <rdfs:comment>A tennis ball is a small, round ball made of rubber with a fuzzy, felt-like outer layer, used in the sport of tennis, as well as in other games, such as fetch for dogs.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
@@ -1193,6 +1347,17 @@
     
 
 
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#ToyotaHSR -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#ToyotaHSR">
+        <rdfs:subClassOf rdf:resource="http://knowrob.org/kb/urdf.owl#Robot"/>
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">44</SUTURO:perceptionId>
+        <rdfs:comment>Toyota&apos;s HSR is a compact mobile cobot (collaborative robot) platform that can move around and fetch objects using a multi-DOF arm while avoiding obstacles. Operable by voice command or by tablet PC, HSR has a highly maneuverable, compact, and lightweight cylindrical body with a folding arm that enables it to pick up objects off the floor, suction up thin objects, retrieve objects from high locations, open curtains, and perform other household tasks.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
     <!-- http://www.ease-crc.org/ont/SUTURO.owl#TrashBag -->
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#TrashBag">
@@ -1207,6 +1372,7 @@
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#TrashBin">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#TrashContainer"/>
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">46</SUTURO:perceptionId>
         <rdfs:comment>A container for holding waste or garbage.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
@@ -1217,6 +1383,7 @@
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Tray">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#HouseholdHardware"/>
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">40</SUTURO:perceptionId>
         <rdfs:comment>A flat, shallow container with a raised rim, typically used for carrying food and drink, or for holding small items or loose material.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
@@ -1257,16 +1424,17 @@
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Washer">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#MetalHardware"/>
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">22</SUTURO:perceptionId>
         <rdfs:comment>A washer is a thin, flat ring-shaped object, typically made of metal, rubber, or plastic, used to distribute the load of a threaded fastener such as a screw or bolt, or as a spacer, seal, or locking device.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
 
 
-    <!-- http://www.ease-crc.org/ont/SUTURO.owl#WindexSprayBottle -->
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#WindexGlassCleanerSprayBottle -->
 
-    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#WindexSprayBottle">
-        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#SprayBottle"/>
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#WindexGlassCleanerSprayBottle">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#GlassCleanerSprayBottle"/>
         <rdfs:comment>A Windex Spray bottle is a plastic container with a trigger or pump sprayer used to hold a cleaning solution specifically designed to clean glass surfaces.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
@@ -1317,12 +1485,55 @@
     ///////////////////////////////////////////////////////////////////////////////////////
      -->
 
+    <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA-HOME.owl#DesignedChair">
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">39</SUTURO:perceptionId>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA-HOME.owl#KitchenCabinet">
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">28</SUTURO:perceptionId>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#CerealBox">
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">41</SUTURO:perceptionId>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Cupboard">
+        <rdfs:comment>A cupboard is a piece of furniture used for storage, typically in the kitchen or dining room, and often used for storing dishes, glassware, and food items. It can come in various shapes and sizes, ranging from small wall-mounted cabinets to larger standalone units with multiple shelves and compartments.</rdfs:comment>
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">49</SUTURO:perceptionId>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Dishwasher">
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">42</SUTURO:perceptionId>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#DishwasherTab">
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">43</SUTURO:perceptionId>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Door">
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">30</SUTURO:perceptionId>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Fork">
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">12</SUTURO:perceptionId>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Glass">
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">36</SUTURO:perceptionId>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Pot">
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">37</SUTURO:perceptionId>
+    </rdf:Description>
     <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Spatula">
         <rdfs:comment>A spatula is a flat, broad kitchen tool with a long handle used for flipping and lifting food items, such as pancakes, eggs, or burgers, while cooking.</rdfs:comment>
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">13</SUTURO:perceptionId>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Spoon">
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">11</SUTURO:perceptionId>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Table">
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">32</SUTURO:perceptionId>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#WineGlass">
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">4</SUTURO:perceptionId>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#Person">
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">45</SUTURO:perceptionId>
     </rdf:Description>
 </rdf:RDF>
 
 
 
 <!-- Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi -->
-
