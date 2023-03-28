@@ -4,7 +4,7 @@
         wu_palmer_similarity/3,
         path_up/3,
         path_down/3,
-        find_path_down/3,
+        path/3,
         shortest_path/3,
         superclasses/2,
         subclasses/2,
@@ -23,7 +23,7 @@
 :- rdf_meta(wu_palmer_similarity(r,r,-)).
 :- rdf_meta(path_up(r,r,-)).
 :- rdf_meta(path_down(r,r,?)).
-:- rdf_meta(find_path_down(r,r,-)).
+:- rdf_meta(path(r,r,t)).
 :- rdf_meta(shortest_path(r,r,-)).
 :- rdf_meta(superclasses(r,-)).
 :- rdf_meta(subclasses(r,-)).
@@ -76,6 +76,32 @@ find_lcs([Class|_], Classes, Class) :-
 find_lcs([_|ClassesA], ClassesB, LCS) :-
     find_lcs(ClassesA, ClassesB, LCS).
 
+%% path(+A, +B, -Path).
+%
+% Compute path between classes A and B
+%
+% @param A      OWL class
+% @param B      OWL class
+% @param Path  List of elements along the path between A and B
+%
+path(A, B, [Path]) :-
+    subclass_of(A, B),
+    path_up(A, B, Path).
+path(A, B, [Path]) :-
+    subclass_of(B, A),
+    path_down(A, B, Path).
+path(A, B, [A|Path]) :-
+    % go upwards, and for all paths check if you have a direct way down to the goal
+    path_up(A, dul:'Entity', U),
+    find_path_down(U, B, Path).
+  
+find_path_down([UPa|_], B, [UPa|D]) :-
+    path_down(UPa, B, D).
+find_path_down([UPa|Up], B, [UPa|D]) :-
+    \+ path_down(UPa, B, D),
+    find_path_down(Up, B, D).
+find_path_down([], _, []).
+
 %% path_up(+ClassA, +ClassB, -Path) is nondet.
 %
 % Finds all paths from ClassA upwards to ClassB.
@@ -87,7 +113,7 @@ find_lcs([_|ClassesA], ClassesB, LCS) :-
 %
 path_up(ClassA, ClassA, []).
 path_up(ClassA, ClassB, [SuperClass|Path]) :-
-    findall(SC, subclass_of(ClassA, SC), SuperClasses),
+    direct_superclasses(ClassA, SuperClasses),
     member(SuperClass, SuperClasses),
     path_up(SuperClass, ClassB, Path).
 
@@ -105,13 +131,6 @@ path_down(ClassA, ClassB, [SubClass|Path]) :-
     direct_subclasses(ClassA, SubClasses),
     member(SubClass, SubClasses),
     path_down(SubClass, ClassB, Path).
-
-find_path_down([UPa|_], B, [UPa|D]) :-
-    path_down(UPa, B, D).
-find_path_down([UPa|Up], B, [UPa|D]) :-
-    \+ path_down(UPa, B, D),
-    find_path_down(Up, B, D).
-find_path_down([], _, []).
 
 %% superclasses(+Class, -SuperClasses) is det.
 %
@@ -172,47 +191,6 @@ direct_subclasses(Class, DirectSubClasses) :-
         subclass_of(SubClass, Class),
         (direct_superclasses(SubClass, SuperClasses), member(Class, SuperClasses))
     ), DirectSubClasses).
-
-% Define a predicate that finds the shortest path between two classes
-shortest_path(Source, Destination, Path) :-
-    % Initialize the queue with the source class and mark it as visited
-    bfs([(0, Source, [])], [Source], Destination, Path).
-
-% Define the BFS algorithm
-bfs([(Distance, Current, Path) | Queue], _, Current, Path) :-
-    % If the destination is found, return the path
-    ros_warn('Found path: ~w', [Path]),
-    reverse([Current | Path], Path).
-bfs([(Distance, Current, Path) | Queue], Visited, Destination, Path) :-
-    ros_warn('2 Distance: ~w, Current: ~w, Path: ~w, Queue: ~w, Visited: ~w', [Distance, Current, Path, Queue, Visited]),
-    % Explore the subclasses of the current class
-    direct_subclasses(Current, Subclasses),
-    ros_warn('2 subclasses of ~w: ~w', [Current, Subclasses]),
-    !.
-    % addNeighbors(Subclasses, Distance, Current, Path, Queue1, NewVisited, FinalVisited),
-    % % Continue the BFS algorithm with the new queue and visited set
-    % bfs(Queue1, FinalVisited, Destination, Path).
-bfs([(Distance, Current, [])], Visited, Destination, Path) :-
-    % If the destination is not found yet, but the queue is empty, go up to the superclasses again
-    direct_superclasses(Current, Superclasses),
-    ros_warn('1 Superclasses of ~w: ~w', [Current, Superclasses]),
-    addNeighbors(Superclasses, Distance, Current, Path, Queue, Visited, NewVisited),
-    ros_warn('New queue: ~w', [Queue1]),
-    bfs(Queue, NewVisited, Destination, Path).
-
-% Define a helper predicate that adds the neighbors of a class to the queue
-addNeighbors([], _, _, _, Queue, Visited, Visited).
-addNeighbors([Neighbor | Neighbors], Distance, Current, Path, Queue, Visited, NewVisited) :-
-    % Add the neighbor to the queue if it hasn't been visited yet
-    not(member(Neighbor, Visited)),
-    NewDistance is Distance + 1,
-    append(Path, [Current], NewPath),
-    append(Queue, [(NewDistance, Neighbor, NewPath)], NewQueue),
-    addNeighbors(Neighbors, Distance, Current, Path, NewQueue, [Neighbor | Visited], NewVisited).
-addNeighbors([Neighbor | Neighbors], Distance, Current, Path, Queue, Visited, NewVisited) :-
-    % Skip the neighbor if it has already been visited
-    member(Neighbor, Visited),
-    addNeighbors(Neighbors, Distance, Current, Path, Queue, Visited, NewVisited).
 
 %% is_bnode(+IRI) is det.
 %
