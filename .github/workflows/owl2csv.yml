@@ -1,0 +1,28 @@
+name: owl2csv
+
+on:
+  push:
+    branches: [suturobocup]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Download owl2csv
+        uses: curl-actions/download@v2
+        with:
+          url: https://github.com/malte3d/Owl2Csv/releases/download/1.0.0/owl2csv-1.0.0.jar
+          output: owl2csv.jar
+
+      - name: Run owl2csv
+        run: java -jar -i "suturo.owl" -o "SUTURO_Objects.csv" --root "http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#PhysicalObject" -mapping "iri_mapping.csv" -namespaces "iri_namespaces.csv"
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: SUTURO_Objects.csv
+          path: SUTURO_Objects.csv
