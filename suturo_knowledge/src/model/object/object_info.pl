@@ -147,8 +147,8 @@ rotate_dir('+x', '+y').
 rotate_dir('-y', '+x').
 rotate_dir('+y', '-x').
 
-direction_quaternion('+x', [0,0,0,1]).
-direction_quaternion('-x', [0,0,1,0]).
+direction_quaternion('+x', [0,0,1,0]).
+direction_quaternion('-x', [0,0,0,1]).
 direction_quaternion('+y', [0,0,0.7071067811865475,-0.7071067811865475]).
 direction_quaternion('-y', [0,0,0.7071067811865475,0.7071067811865475]).
 
