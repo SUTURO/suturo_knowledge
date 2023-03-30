@@ -131,7 +131,6 @@ ID;IRI Name;IRI Namespace;Natural Name;Description
 ;JaFettarmeHMilchMilkPack;http://www.ease-crc.org/ont/SUTURO.owl#;JaFettarmeHMilchMilkPack;JaFettarmeHMilchMilkPack
 ;JamJar;http://www.ease-crc.org/ont/SOMA.owl#;JamJar;A jar which holds, or at least is intended to usually hold, jam.
 ;Jar;http://www.ease-crc.org/ont/SOMA.owl#;Jar;A container used for long-term storage of some liquid or viscous dish.
-;JellOChocolateBox;http://www.ease-crc.org/ont/SUTURO.owl#;JellOChocolateBox;A box containing, or at least normally intended to contain, Jell-O brand chocolate flavored gelatin.
 ;JellOChocolatePuddingBox;http://www.ease-crc.org/ont/SUTURO.owl#;JellOChocolatePuddingBox;A box containing, or at least normally intended to contain, Jell-O brand chocolate flavored pudding powder.
 ;JellOStrawberryBox;http://www.ease-crc.org/ont/SUTURO.owl#;JellOStrawberryBox;A box containing, or at least normally intended to contain, Jell-O brand strawberry flavored gelatin.
 ;Jello;http://www.ease-crc.org/ont/SUTURO.owl#;Jello;Jello, also known as gelatin, is a sweet dessert made by combining gelatin powder with hot water, sugar, and flavorings, then cooling and setting the mixture in a mold. It is a popular treat for both children and adults, and comes in a variety of flavors and colors.

@@ -616,6 +616,12 @@
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#CrackerBox">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Box"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedCategory"/>
+                <owl:allValuesFrom rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Food"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
         <rdfs:comment>A box containing, or at least intended to contain, crackers. A cracker is a flat, dry-baked pastry, usually made from flour.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
@@ -877,16 +883,6 @@
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#JaFettarmeHMilchMilkPack">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#MilkPack"/>
-        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.ease-crc.org/ont/SUTURO.owl#JellOChocolateBox -->
-
-    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#JellOChocolateBox">
-        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#JelloBox"/>
-        <rdfs:comment>A box containing, or at least normally intended to contain, Jell-O brand chocolate flavored gelatin.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
@@ -1503,6 +1499,12 @@
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#PuddingBox">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Box"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedCategory"/>
+                <owl:allValuesFrom rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Food"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
         <rdfs:comment>A box containing, or at least normally intended to contain pudding powder.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
@@ -1689,7 +1691,6 @@
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Skillet">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Pan"/>
-        <SUTURO:perceptionId rdf:resource="http://www.ease-crc.org/ont/8"/>
         <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">8</SUTURO:perceptionId>
         <rdfs:comment>A skillet is a flat-bottomed pan with slanted sides and a long handle, used for frying, sautéing, or searing foods.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
