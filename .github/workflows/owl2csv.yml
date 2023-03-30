@@ -13,13 +13,10 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Download owl2csv
-        uses: curl-actions/download@v2
-        with:
-          url: https://github.com/malte3d/Owl2Csv/releases/download/1.0.0/owl2csv-1.0.0.jar
-          output: owl2csv.jar
+        run: curl -L -o owl2csv.jar https://github.com/malte3d/Owl2Csv/releases/download/1.0.0/owl2csv-1.0.0.jar
 
       - name: Run owl2csv
-        run: java -jar -i "suturo.owl" -o "SUTURO_Objects.csv" --root "http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#PhysicalObject" -mapping "iri_mapping.csv" -namespaces "iri_namespaces.csv"
+        run: java -jar owl2csv.jar -i "suturo.owl" -o "SUTURO_Objects.csv" --root "http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#PhysicalObject" -mapping "iri_mapping.csv" -namespaces "iri_namespaces.csv"
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
