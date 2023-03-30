@@ -15,6 +15,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
+      - name: Set up Java 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: "corretto"
+          java-version: "17"
+
       - name: Download owl2csv
         run: |
           curl -L -o owl2csv.zip https://github.com/malte3d/Owl2Csv/releases/download/$OWL2CSV_VERSION/owl2csv-$OWL2CSV_VERSION.zip
