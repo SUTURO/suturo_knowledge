@@ -30,6 +30,9 @@ object_rel_pose(Object, Type, PoseStamped) :-
 object_rel_pose(Object, perceive, Options, PoseStamped) :-
     object_perceive_pose(Object, Options, PoseStamped), !.
 
+object_rel_pose(Object, place, Options, PoseStamped) :-
+    object_place_pose(Object, Options, PoseStamped), !.
+
 object_rel_pose(Object, Type, _Options, PoseStamped) :-
     % call the appropriate predicate based on the type of the object
     (has_type(Object, soma:'DesignedComponent')
@@ -43,11 +46,7 @@ object_rel_pose(Object, Type, _Options, PoseStamped) :-
     ).
 
 object_perceive_pose(Object, Options, PoseStamped) :-
-    object_pose(Object, Pose),
-    %kb_call(object_shape(Object, _, ShapeTerm, Pose, _)),
-    %ShapeTerm = box(0.1, 0.2, 0.3),
-    % TODO: Fix object_shape
-    tmp_object_shape(Object, ShapeTerm),
+    center_pose(Object, Pose, ShapeTerm),
     option(direction(Dir), Options, '-x'),
     dir_size(Dir, ShapeTerm, Size),
     perceive_distance(Object, PerceiveDistance),
@@ -63,6 +62,41 @@ perceive_distance(Object, PerceiveDistance) :-
 
 perceive_distance(_Object, 0.67).
 
+object_place_pose(Object, Options, PoseStamped) :-
+    center_pose(Object, Pose, ShapeTerm),
+    option(direction(Dir), Options, '-x'),
+    % Index and MaxIndex are 1-based
+    option(index(Index), Options),
+    option(maxindex(MaxIndex), Options),
+    % TODO get better distance from furniture edge
+    Distance = 0.15,
+    rotate_dir(Dir, RotDir),
+    dir_size(RotDir, ShapeTerm, Space),
+    dir_size(Dir, ShapeTerm, Size),
+    ToFront is Size-Distance,
+    rel_pose(Dir, Pose, ToFront, FrontPose),
+    PartSpace is Space / MaxIndex,
+    HalfSpace is -(Space / 2),
+    rel_pose(RotDir, FrontPose, HalfSpace, FrontCornerPose),
+    Shift is (Index - 0.5) * PartSpace,
+    rel_pose(RotDir, FrontCornerPose, Shift, PoseStamped),
+    !.
+
+%% center_pose(+Object, -Pose, -ShapeTerm) is semidet.
+center_pose(Object, Pose, ShapeTerm) :-
+    %kb_call(object_shape(Object, _, ShapeTerm, Pose, _)),
+    % TODO: Fix object_shape
+    object_pose(Object, BasePose),
+    tmp_object_shape(Object, ShapeTerm),
+    (  kb_call(is_table(Object)) % Base Pose is front edge center for tables
+    -> move_to_center(BasePose, ShapeTerm, Pose)
+    ;  Pose = BasePose),
+    !.    
+
+move_to_center([Frame,[X,Y,Z], Rotation], ShapeTerm, [Frame,[X2,Y,Z], Rotation]) :-
+    dir_size('-x', ShapeTerm, Size),
+    X2 is X + (Size/2).
+
 %% dir_size(+Dir, +Object, -Size) is semidet.
 %
 % get the size of an object in a direction
@@ -70,6 +104,11 @@ dir_size('-x', box(Size,_,_), Size) :- !.
 dir_size('+x', box(Size,_,_), Size) :- !.
 dir_size('-y', box(_,Size,_), Size) :- !.
 dir_size('+y', box(_,Size,_), Size) :- !.
+
+rotate_dir('-x', '-y').
+rotate_dir('+x', '+y').
+rotate_dir('-y', '+x').
+rotate_dir('+y', '-x').
 
 rel_pose(Dir, [Frame,[X,Y,Z],Rotation], Distance, [Frame,PositionOut,Rotation]) :-
     rel_pose0(Dir, [X,Y,Z], Distance, PositionOut).
