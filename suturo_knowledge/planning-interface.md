@@ -129,11 +129,19 @@ Valid `Type`s are
  - `interact`: (Optimal) Pose for the robot to position at to interact with the object (eg. grasp with the gripper)
  - `destination`: Returns the destination pose of an object. The destination pose is the pose where the object should be placed based on their predefined locations and current context. The destination might change over time.
  
+Valid entries in the Option list are
+- `direction(Dir)` with `Dir` being one of `['-x', '+x', '-y', '+y']`. This Option specifies the direction from which the robot should approach the object.
+  For example, if `direction('-x')` is set, the position will have an x value that is smaller than the x value of the object.
+  Currently this is only implemented for perceive.
+  The default is `direction('-x')`.
+ 
  This list might be expanded later.
 
 ```prolog
 object_rel_pose(+Object, +Type, -PoseStamped) is semidet.
+object_rel_pose(+Object, +Type, +Options, -PoseStamped) is semidet.
 ```
+
 
 Example:
 ```prolog
