@@ -12,7 +12,9 @@
 % Register other namespaces here, as we can only use one option in the load_owl predicate.
 :- rdf_register_prefix(soma, 'http://www.ease-crc.org/ont/SOMA.owl#', [keep(true)]).
 :- rdf_register_prefix(soma_home, 'http://www.ease-crc.org/ont/SOMA-HOME.owl#', [keep(true)]).
+:- rdf_register_prefix(soma_obj, 'http://www.ease-crc.org/ont/SOMA-OBJ.owl#', [keep(true)]).
 :- rdf_register_prefix(dul, 'http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#', [keep(true)]).
+:- rdf_register_prefix(urdf, 'http://knowrob.org/kb/urdf.owl#', [keep(true)]).
 
 %% Make sure utils are loaded before model and other directories
 :- use_directory('util').
