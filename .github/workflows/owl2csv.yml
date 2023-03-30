@@ -3,6 +3,7 @@ name: owl2csv
 on:
   push:
     branches: [suturobocup]
+  workflow_dispatch:
 
 env:
   OWL2CSV_VERSION: 1.0.0
