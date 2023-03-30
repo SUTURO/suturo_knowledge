@@ -13,7 +13,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Set up Java 17
         uses: actions/setup-java@v3
@@ -30,7 +30,17 @@ jobs:
         run: java -jar owl2csv-1.0.0/owl2csv-1.0.0.jar -i "suturo_knowledge/owl/suturo.owl" -o "SUTURO_Objects.csv" --root "http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#PhysicalObject" -mapping "suturo_knowledge/owl/iri_mapping.csv" -namespaces "suturo_knowledge/owl/iri_namespaces.csv"
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
-          name: SUTURO_Objects.csv
-          path: SUTURO_Objects.csv
+          name: SUTURO_Objects
+          path: |
+            SUTURO_Objects.csv
+            obj.names
+
+      - name: Release artifacts
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: |
+            SUTURO_Objects.csv
+            obj.names
