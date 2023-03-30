@@ -58,13 +58,14 @@ object_rel_pose(Object, Type, _Options, PoseStamped) :-
 %% object_perceive_pose(+Object, +Options, -PoseStamped) is semidet.
 %
 % get the pose from which the object should be perceived.
-object_perceive_pose(Object, Options, PoseStamped) :-
+object_perceive_pose(Object, Options, [Frame, Pos, Rotation]) :-
     center_pose(Object, Pose, ShapeTerm),
     option(direction(Dir), Options, '-x'),
     dir_size(Dir, ShapeTerm, Size),
     perceive_distance(Object, PerceiveDistance),
     Distance is (Size/2) + PerceiveDistance, %% TODO make this number depend on the target object
-    rel_pose(Dir, Pose, Distance, PoseStamped),
+    direction_quaternion(Dir, Rotation),
+    rel_pose(Dir, Pose, Distance, [Frame, Pos, _]),
     !.
 
 perceive_distance(Object, PerceiveDistance) :-
@@ -86,7 +87,7 @@ perceive_distance(_Object, 0.67).
 % Get the Pose on a Table where an object should be placed.
 % The Options index and maxindex are mandatory.
 % If they are not present, this fails.
-object_place_pose(Object, Options, PoseStamped) :-
+object_place_pose(Object, Options, [Frame, Pos, Rotation]) :-
     center_pose(Object, Pose, ShapeTerm),
     option(direction(Dir), Options, '-x'),
     % Index and MaxIndex are 1-based
@@ -103,7 +104,8 @@ object_place_pose(Object, Options, PoseStamped) :-
     HalfSpace is -(Space / 2),
     rel_pose(RotDir, FrontPose, HalfSpace, FrontCornerPose),
     Shift is (Index - 0.5) * PartSpace,
-    rel_pose(RotDir, FrontCornerPose, Shift, PoseStamped),
+    direction_quaternion(Dir, Rotation),
+    rel_pose(RotDir, FrontCornerPose, Shift, [Frame, Pos, _]),
     !.
 
 %% center_pose(+Object, -Pose, -ShapeTerm) is semidet.
@@ -144,6 +146,11 @@ rotate_dir('-x', '-y').
 rotate_dir('+x', '+y').
 rotate_dir('-y', '+x').
 rotate_dir('+y', '-x').
+
+direction_quaternion('+x', [0,0,1,0]).
+direction_quaternion('-x', [0,0,0,1]).
+direction_quaternion('+y', [0,0,0.7071067811865475,-0.7071067811865475]).
+direction_quaternion('-y', [0,0,0.7071067811865475,0.7071067811865475]).
 
 %% rel_pose(+Dir, +PoseIn, +Distance, -PoseOut) is det.
 %
