@@ -1,7 +1,0 @@
-iri;namespace
-http://www.ease-crc.org/ont/SUTURO.owl#;suturo
-http://www.ease-crc.org/ont/SOMA.owl#;soma
-http://www.ease-crc.org/ont/SOMA-HOME.owl#;soma_home
-http://www.ease-crc.org/ont/SOMA-OBJ.owl#;soma_obj
-http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#;dul
-http://knowrob.org/kb/urdf.owl#;urdf
