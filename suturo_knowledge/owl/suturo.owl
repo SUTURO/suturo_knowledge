@@ -2250,6 +2250,7 @@
         <rdfs:comment>Pancake mix is a pre-made dry mixture of flour, baking powder, salt, and other ingredients that is used to make pancakes quickly and easily. It typically requires the addition of liquid ingredients such as milk, eggs, and oil, and can be customized with various flavors and additions such as chocolate chips or blueberries.</rdfs:comment>
     </rdf:Description>
     <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Pot">
+        <rdfs:comment>Pot is a container, typically made of ceramic or clay, used for cooking, serving, or storing food. It comes in various shapes, sizes, and designs and is a common household item found in many cultures around the world.</rdfs:comment>
         <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">16</SUTURO:perceptionId>
     </rdf:Description>
     <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Spatula">
