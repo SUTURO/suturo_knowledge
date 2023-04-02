@@ -28,7 +28,7 @@ jobs:
           unzip owl2anything.zip
 
       - name: Run owl2anything
-        run: java -jar owl2anything-$OWL2ANYTHING_VERSION/owl2anything-$OWL2ANYTHING_VERSION.jar -i "suturo_knowledge/owl/suturo.owl" -o "SUTURO_Objects.csv" --root "http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#PhysicalObject" --mapping "owl2anything-$OWL2ANYTHING_VERSION/owl2anything/iri_mapping_default.csv" --namespaces "owl2anything-$OWL2ANYTHING_VERSION/owl2anything/iri_namespaces_default.csv"
+        run: java -jar owl2anything-$OWL2ANYTHING_VERSION/owl2anything-$OWL2ANYTHING_VERSION.jar -i "suturo_knowledge/owl/suturo.owl" --root "http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#PhysicalObject" --mapping "owl2anything-$OWL2ANYTHING_VERSION/owl2anything/iri_mapping_default.csv" --namespaces "owl2anything-$OWL2ANYTHING_VERSION/owl2anything/iri_namespaces_default.csv"
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
