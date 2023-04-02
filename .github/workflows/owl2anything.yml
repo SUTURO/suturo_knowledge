@@ -60,7 +60,7 @@ jobs:
         run: |
           if [[ $(git diff --name-only --diff-filter=ACMRTUXB HEAD -- owl2anything/output/) ]]; then
             git add owl2anything/output/*
-            git commit -m "Updated SUTURO Objects to #$(echo ${GITHUB_SHA} | cut -c1-7) (workflow run #${{ github.run_number }})"
+            git commit -m "Updated SUTURO Objects to $(echo ${GITHUB_SHA} | cut -c1-7) (workflow ${{ github.workflow	 }}:${{ github.run_id }})"
             git push origin website
           else
             echo "No changes detected in owl2anything output directory. Skipping commit and push to website."
