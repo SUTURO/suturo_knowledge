@@ -7,6 +7,7 @@ on:
 
 env:
   OWL2ANYTHING_VERSION: 1.0.3
+  OWL2ANYTHING_ARTIFACTS: owl2anything-output
 
 jobs:
   build:
@@ -30,10 +31,10 @@ jobs:
       - name: Run owl2anything
         run: java -jar owl2anything-$OWL2ANYTHING_VERSION/owl2anything-$OWL2ANYTHING_VERSION.jar -i "suturo_knowledge/owl/suturo.owl" --root "http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#PhysicalObject" --mapping "owl2anything-$OWL2ANYTHING_VERSION/owl2anything/iri_mapping_default.csv" --namespaces "owl2anything-$OWL2ANYTHING_VERSION/owl2anything/iri_namespaces_default.csv"
 
-      - name: Upload owl2anything output
+      - name: Upload owl2anything output artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: owl2anything-output
+          name: $OWL2ANYTHING_ARTIFACTS
           path: |
             owl2anything/output/*
 
@@ -47,6 +48,13 @@ jobs:
         with:
           ref: website
           fetch-depth: 0
+
+      - name: Download owl2anything output artifacts to website branch
+        uses: actions/download-artifact@v3
+        with:
+          name: $OWL2ANYTHING_ARTIFACTS
+          path: owl2anything/output/
+
 
       - name: Commit and push owl2anything output to website branch
         run: |
