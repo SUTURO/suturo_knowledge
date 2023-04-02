@@ -30,9 +30,26 @@ jobs:
       - name: Run owl2anything
         run: java -jar owl2anything-$OWL2ANYTHING_VERSION/owl2anything-$OWL2ANYTHING_VERSION.jar -i "suturo_knowledge/owl/suturo.owl" --root "http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#PhysicalObject" --mapping "owl2anything-$OWL2ANYTHING_VERSION/owl2anything/iri_mapping_default.csv" --namespaces "owl2anything-$OWL2ANYTHING_VERSION/owl2anything/iri_namespaces_default.csv"
 
-      - name: Upload artifacts
+      - name: Upload owl2anything output
         uses: actions/upload-artifact@v3
         with:
           name: owl2anything-output
           path: |
             owl2anything/output/*
+
+      - name: Configure Git
+        run: |
+          git config --global user.name "${{ github.event.head_commit.author.name }}"
+          git config --global user.email "${{ github.event.head_commit.author.email }}"
+
+      - name: Checkout website branch
+        uses: actions/checkout@v3
+        with:
+          ref: website
+          fetch-depth: 0
+
+      - name: Commit and push owl2anything output to website branch
+        run: |
+          git add owl2anything/output/*
+          git commit -m "Updated SUTURO Objects to #${{ github.sha }} (workflow run #${{ github.run_number }})"
+          git push origin website
