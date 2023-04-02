@@ -2090,7 +2090,7 @@
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Tshirt">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#DesignedFabric"/>
-        <rdfs:comment>A T-shirt is a type of unisex fabric shirt named after the T shape of its body and sleeves.</rdfs:comment>
+        <rdfs:comment>A T-shirt is a type of unisex fabric shirt named after the T shape of its body and sleeves. It is typically made of cotton and features short sleeves and a round neckline. It is a casual and comfortable piece of clothing that is often worn for everyday activities.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
