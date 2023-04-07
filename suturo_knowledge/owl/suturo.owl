@@ -70,12 +70,6 @@
     
 
 
-    <!-- http://knowrob.org/kb/urdf.owl#Robot -->
-
-    <owl:Class rdf:about="http://knowrob.org/kb/urdf.owl#Robot"/>
-    
-
-
     <!-- http://www.ease-crc.org/ont/SOMA.owl#Bottle -->
 
     <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Bottle">
@@ -87,12 +81,6 @@
     <!-- http://www.ease-crc.org/ont/SOMA.owl#Bowl -->
 
     <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Bowl">
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedCategory"/>
-                <owl:allValuesFrom rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Tableware"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
         <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">29</SUTURO:perceptionId>
     </rdf:Description>
     
@@ -101,12 +89,6 @@
     <!-- http://www.ease-crc.org/ont/SOMA.owl#CerealBox -->
 
     <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#CerealBox">
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedCategory"/>
-                <owl:allValuesFrom rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Food"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
         <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">55</SUTURO:perceptionId>
     </rdf:Description>
     
@@ -115,12 +97,6 @@
     <!-- http://www.ease-crc.org/ont/SOMA.owl#Cup -->
 
     <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Cup">
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedCategory"/>
-                <owl:allValuesFrom rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Tableware"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
         <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">53</SUTURO:perceptionId>
     </rdf:Description>
     
@@ -130,12 +106,6 @@
 
     <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Cutlery">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#HouseholdHardware"/>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedCategory"/>
-                <owl:allValuesFrom rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Cutlery"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
         <rdfs:comment>Cutlery refers to utensils used for eating or serving food such as forks, knives, spoons, and serving spoons.</rdfs:comment>
     </rdf:Description>
     
@@ -177,26 +147,7 @@
     <!-- http://www.ease-crc.org/ont/SOMA.owl#MilkPack -->
 
     <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#MilkPack">
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedCategory"/>
-                <owl:allValuesFrom rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Drink"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
         <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">63</SUTURO:perceptionId>
-    </rdf:Description>
-    
-
-
-    <!-- http://www.ease-crc.org/ont/SOMA.owl#PepperShaker -->
-
-    <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#PepperShaker">
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedCategory"/>
-                <owl:allValuesFrom rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Spice"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
     </rdf:Description>
     
 
@@ -212,12 +163,6 @@
     <!-- http://www.ease-crc.org/ont/SOMA.owl#SaltShaker -->
 
     <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#SaltShaker">
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedCategory"/>
-                <owl:allValuesFrom rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Spice"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
         <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">34</SUTURO:perceptionId>
     </rdf:Description>
     
@@ -539,12 +484,6 @@
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#CoffeePack">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Pack"/>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedCategory"/>
-                <owl:allValuesFrom rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Food"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
         <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">31</SUTURO:perceptionId>
         <rdfs:comment>A coffee pack typically refers to a package containing ground coffee or coffee beans used for making coffee, usually in a drip coffee maker, espresso machine, or French press. The packaging is designed to keep the coffee fresh and flavorful, and often includes information on the type of roast, flavor profile, and origin of the coffee.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
@@ -585,12 +524,6 @@
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#CookieBox">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Box"/>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedCategory"/>
-                <owl:allValuesFrom rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Food"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
         <rdfs:comment>A cookie box is a container made of cardboard or other materials that is used to store and transport cookies. It usually has a lid that can be opened and closed for easy access to the cookies inside.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
@@ -611,12 +544,6 @@
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#CrackerBox">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Box"/>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedCategory"/>
-                <owl:allValuesFrom rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Food"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
         <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">10</SUTURO:perceptionId>
         <rdfs:comment>A box containing, or at least intended to contain, crackers. A cracker is a flat, dry-baked pastry, usually made from flour.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
@@ -770,12 +697,6 @@
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Fruit">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Food"/>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedCategory"/>
-                <owl:allValuesFrom rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Fruit"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
         <rdfs:comment>Fruit is the sweet and fleshy product of a tree or other plant that contains seed and can be eaten as food.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
@@ -863,12 +784,6 @@
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#IceTeaBox">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Box"/>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedCategory"/>
-                <owl:allValuesFrom rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Drink"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
         <rdfs:comment>An ice tea box is a container or package that holds ice tea bags or mix to make ice tea. It can come in various sizes and designs, and usually contains instructions for making the ice tea.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
@@ -919,12 +834,6 @@
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#JelloBox">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Box"/>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedCategory"/>
-                <owl:allValuesFrom rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Food"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
         <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">48</SUTURO:perceptionId>
         <rdfs:comment>A box containing, or at least normally intended to contain, jello.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
@@ -946,12 +855,6 @@
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#JuiceBox">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Box"/>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedCategory"/>
-                <owl:allValuesFrom rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Drink"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
         <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">70</SUTURO:perceptionId>
         <rdfs:comment>A juice box is a container made of paperboard, with a small attached plastic straw, used for packaging and drinking juice. They are typically single-serving and convenient for on-the-go consumption.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
@@ -1296,12 +1199,6 @@
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#OreganoShaker">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Shaker"/>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedCategory"/>
-                <owl:allValuesFrom rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Spice"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
         <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">65</SUTURO:perceptionId>
         <rdfs:comment>An oregano shaker is a container used for storing and dispensing dried oregano spice, which is commonly used in cooking to add flavor and aroma to dishes. The shaker typically has small holes or slots on the top to allow for controlled dispensing of the oregano flakes.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
@@ -1333,12 +1230,6 @@
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#PancakeMixBottle">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Bottle"/>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedCategory"/>
-                <owl:allValuesFrom rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Food"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
         <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">71</SUTURO:perceptionId>
         <rdfs:comment>A pancake mix bottle is a container that holds pre-made pancake batter, ready to be cooked. These bottles usually come with a nozzle for easy pouring and can be found in different sizes and shapes.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
@@ -1515,12 +1406,6 @@
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#PuddingBox">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Box"/>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedCategory"/>
-                <owl:allValuesFrom rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Food"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
         <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">19</SUTURO:perceptionId>
         <rdfs:comment>A box containing, or at least normally intended to contain pudding powder.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
@@ -1782,12 +1667,6 @@
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#SoupCan">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Can"/>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedCategory"/>
-                <owl:allValuesFrom rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Food"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
         <rdfs:comment>Soup can refers to a cylindrical metal container that holds condensed or ready-to-eat soup.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
@@ -1912,12 +1791,6 @@
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#TeaBagBox">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Box"/>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedCategory"/>
-                <owl:allValuesFrom rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Drink"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
         <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">73</SUTURO:perceptionId>
         <rdfs:comment>A tea bag box is a container used for storing and organizing tea bags, typically made of cardboard or other durable materials and featuring separate compartments for different types or flavors of tea. These boxes are commonly used in households, offices, and restaurants to keep tea bags readily available for brewing.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
@@ -2011,12 +1884,6 @@
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#ToothpasteTube">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Tube"/>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedCategory"/>
-                <owl:allValuesFrom rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#HygieneProduct"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
         <rdfs:comment>A toothpaste tube is a soft plastic or aluminum container that holds toothpaste for brushing teeth. The tube is typically sealed with a screw-on cap or flip-top lid and is squeezed to dispense the toothpaste.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
@@ -2120,12 +1987,6 @@
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#TunaFishCan">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Can"/>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedCategory"/>
-                <owl:allValuesFrom rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Food"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
         <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">68</SUTURO:perceptionId>
         <rdfs:comment>Tuna fish can refers to a metal container used to store and preserve tuna fish.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
