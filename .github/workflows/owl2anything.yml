@@ -2,7 +2,7 @@ name: owl2anything
 
 on:
   push:
-    branches: [suturobocup]
+    branches: [master]
   workflow_dispatch:
 
 env:
