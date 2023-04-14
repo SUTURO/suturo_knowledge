@@ -66,6 +66,12 @@ ros_warn(Format, Arguments) :-
     ros_warn(MSG).
 
 %% ros_error(+Format, +Arguments)
+%
+% Logs an error message and formats with the given arguments.
+%
+% @param Format The format string
+% @param Arguments The arguments to the format string
+%
 ros_error(Format, Arguments) :-
     format(string(MSG), Format, Arguments),
     ros_error(MSG).
