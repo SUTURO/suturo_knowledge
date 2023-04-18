@@ -113,10 +113,10 @@ object_place_pose(Object, Options, [Frame, Pos, Rotation]) :-
 % This predicate returns the shape and the center pose of an Object.
 % If the object is of type table, it is assumed that the pose is the front edge center and as that should be moved_to_center/3 d.
 center_pose(Object, Pose, ShapeTerm) :-
-    %kb_call(object_shape(Object, _, ShapeTerm, Pose, _)),
+    object_shape_workaround(Object, _, ShapeTerm, _, _),
     % TODO: Fix object_shape
     object_pose(Object, BasePose),
-    tmp_object_shape(Object, ShapeTerm),
+    %tmp_object_shape(Object, ShapeTerm),
     (  kb_call(is_table(Object)) % Base Pose is front edge center for tables
     -> move_to_center(BasePose, ShapeTerm, Pose)
     ;  Pose = BasePose),

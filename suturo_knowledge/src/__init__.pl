@@ -19,6 +19,9 @@
 %% Make sure utils are loaded before model and other directories
 :- use_directory('util').
 
+%% Load the object_shape workaround
+:- ensure_loaded('shape_workaround').
+
 :- use_directory('model').
 
 :- ros_param_get_string("/suturo_room_viz/urdf_param", Param),
