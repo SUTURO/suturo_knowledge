@@ -151,3 +151,5 @@ Pose: ['iai_kitchen/long_table:table:table_front_edge_center', [-0.7, 0.0, 0.0],
 ?- object_rel_pose('http://www.ease-crc.org/ont/SOMA.owl#CerealBox_JDHUPSME', destination, Pose).
 Pose: ['iai_kitchen/shelf:shelf:shelf_base_center', [0.0, -0.1, 0.51], [0.0, 0.0, 0.0, 1.0]].
 ```
+
+For more details, see [`src/model/object/object_rel_pose/README.md`](src/model/object/object_rel_pose/README.md).
