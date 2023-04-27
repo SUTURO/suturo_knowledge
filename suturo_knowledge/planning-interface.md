@@ -103,7 +103,7 @@ The Options that can be processed are:
 - `shape(ShapeTerm)` - optional, the shape the object has. If not specified, knowledge will have no shape information about this object.
 ```prolog
 create_object(-Object, +Type, +PoseStamped) is det.
-create_object(-Object, +Type, +PoseStamped, Options) is det.
+create_object(-Object, +Type, +PoseStamped, +Options) is det.
 ```
 
 Example:
