@@ -97,15 +97,21 @@ Any physical object that has a proper space region.
 
 Create an object of a given Type at the given PoseStamped.
 
-The `Type` has to be the full iri for now. The ability to use namespace short form in future is planned.
+The `Type` can be the full IRI or the namespace:'Name' form.
+
+The Options that can be processed are:
+- `shape(ShapeTerm)` - optional, the shape the object has. If not specified, knowledge will have no shape information about this object.
 ```prolog
 create_object(-Object, +Type, +PoseStamped) is det.
+create_object(-Object, +Type, +PoseStamped, Options) is det.
 ```
 
 Example:
 ```prolog
 ?- create_object(Object, 'http://www.ease-crc.org/ont/SOMA.owl#CerealBox', ['iai_kitchen/long_table:table:table_front_edge_center', [0,1,1], [0,0,0.70711,0.70711]]).
 Object: http://www.ease-crc.org/ont/SOMA.owl#CerealBox_LTKIUPNG
+?- create_object(Object, soma:'CerealBox', ['iai_kitchen/long_table:table:table_front_edge_center', [0,1,1], [0,0,0.70711,0.70711]], [shape(box(0.1,0.1,0.1))]).
+Object: http://www.ease-crc.org/ont/SOMA.owl#CerealBox_UGQKEYVD
 ```
 
 ### Getting the pose of an object
