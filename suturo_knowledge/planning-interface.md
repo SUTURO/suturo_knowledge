@@ -97,15 +97,21 @@ Any physical object that has a proper space region.
 
 Create an object of a given Type at the given PoseStamped.
 
-The `Type` has to be the full iri for now. The ability to use namespace short form in future is planned.
+The `Type` can be the full IRI or the namespace:'Name' form.
+
+The Options that can be processed are:
+- `shape(ShapeTerm)` - optional, the shape the object has. If not specified, knowledge will have no shape information about this object.
 ```prolog
 create_object(-Object, +Type, +PoseStamped) is det.
+create_object(-Object, +Type, +PoseStamped, +Options) is det.
 ```
 
 Example:
 ```prolog
 ?- create_object(Object, 'http://www.ease-crc.org/ont/SOMA.owl#CerealBox', ['iai_kitchen/long_table:table:table_front_edge_center', [0,1,1], [0,0,0.70711,0.70711]]).
-Object: http://www.ease-crc.org/ont/SOMA.owl#CerealBox_LTKIUPNG
+Object: http://www.ease-crc.org/ont/SOMA.owl#CerealBox_LTKIUPNG.
+?- create_object(Object, soma:'CerealBox', ['iai_kitchen/long_table:table:table_front_edge_center', [0,1,1], [0,0,0.70711,0.70711]], [shape(box(0.1,0.1,0.1))]).
+Object: http://www.ease-crc.org/ont/SOMA.owl#CerealBox_BHVKCONR.
 ```
 
 ### Getting the pose of an object
@@ -119,6 +125,24 @@ Example:
 ?- object_pose('http://www.ease-crc.org/ont/SOMA.owl#Table_LTKIUPNG', Pose)
 Pose: ['iai_kitchen/tall_table:table:table_front_edge_center', [0,0,0], [0,0,0,1]]
 ```
+
+### Object Pose and Shape Information
+Because of [knowrob#368](https://github.com/knowrob/knowrob/issues/368) this is currently not done via `object_shape/5` but via `object_shape_workaround/5`.
+
+```prolog
+object_shape_workaround(?Obj, ?Frame, ?ShapeTerm, ?Pose, ?Material) is semidet.
+```
+
+Example:
+```prolog
+?- object_shape_workaround(soma:'CerealBox', Frame, ShapeTerm, Pose, Material).
+Frame: CerealBox_BHVKCONR,
+Material: {'term': ['material', {'term': ['rgba', '_', '_', '_', '_']}]},
+Pose: ['CerealBox_BHVKCONR', '_', '_'],
+ShapeTerm: {'term': ['box', 0.1, 0.1, 0.1]}.
+```
+Note that this is not the format you will see in lisp, there the `term` stuff is probably translated to a lispier structure, like `(box 0.1 0.1 0.1)`.
+There might be a better predicate for this in the future, and the blanks in the pose might be a real position and rotation in the future. The `_` indicates that there is no value for this place.
 
 ### Getting important poses for the robot to interact with objects
 
@@ -151,3 +175,5 @@ Pose: ['iai_kitchen/long_table:table:table_front_edge_center', [-0.7, 0.0, 0.0],
 ?- object_rel_pose('http://www.ease-crc.org/ont/SOMA.owl#CerealBox_JDHUPSME', destination, Pose).
 Pose: ['iai_kitchen/shelf:shelf:shelf_base_center', [0.0, -0.1, 0.51], [0.0, 0.0, 0.0, 1.0]].
 ```
+
+For more details, see [`src/model/object/object_rel_pose/README.md`](src/model/object/object_rel_pose/README.md).
