@@ -1,7 +1,7 @@
 %% This module contains predicates that are for object types.
 :- module(types,
 	  [
-	      is_type/2
+	      is_type(r,r)
 	  ]).
 
 %%
