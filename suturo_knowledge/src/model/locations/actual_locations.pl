@@ -1,9 +1,10 @@
 :-module(actual_locations,
     [
+        object_locations/1,
         table_locations/1,
         shelf_locations/1,
         drawer_locations/1,
-        object_locations/1
+        robot_location/1
     ]
     ).
 
@@ -15,6 +16,13 @@
  
 
 %get actual object locations
+
+%create_object, object_pose
+object_locations(Location):-
+    fail.
+    %create_object(Object, Type, PoseStamped).
+    %object_pose(Object, PoseStamped).
+
 
 %get actual furniture location
 table_locations(Location) :-
@@ -32,3 +40,6 @@ drawer_locations(Location) :-
 %get actual surface location
 
 %get actual robot location
+robot_location(Location):-
+    object_pose(base_footprint, Location).
+    
