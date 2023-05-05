@@ -1,6 +1,7 @@
 :- module(next_object,
     [
         next_object/1
+        
     ]).
 
 %% next_object(+Object) is semidet.
