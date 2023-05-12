@@ -1,0 +1,1033 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#"
+     xml:base="http://www.ease-crc.org/ont/SUTURO-LABENV.owl"
+     xmlns:dc="http://purl.org/dc/elements/1.1/"
+     xmlns:DUL="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:SOMA="http://www.ease-crc.org/ont/SOMA.owl#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+    <owl:Ontology rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl">
+        <owl:imports rdf:resource="https://raw.githubusercontent.com/SUTURO/suturo_knowledge/master/suturo_knowledge/owl/suturo.owl"/>
+    </owl:Ontology>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#hasBaseLinkName -->
+
+    <owl:DatatypeProperty rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#hasBaseLinkName"/>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#hasEndLinkName -->
+
+    <owl:DatatypeProperty rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#hasEndLinkName"/>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#pathToCadModel -->
+
+    <owl:DatatypeProperty rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#pathToCadModel"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsBeingClosed -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsBeingClosed">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Affordance"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsBeingOpened -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsBeingOpened">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Affordance"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsBeingSitOn -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsBeingSitOn">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Affordance"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsGrasping -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsGrasping">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Affordance"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsPuttingDown -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsPuttingDown">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Affordance"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsStoring -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsStoring">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Affordance"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsStoringCloth -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsStoringCloth">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsStoring"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsStoringCutlery -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsStoringCutlery">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsStoring"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsStoringItems -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsStoringItems">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsStoring"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsStoringSmallItems -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsStoringSmallItems">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsStoring"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#CanBeAShelf -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#CanBeAShelf">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Deposition"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#CanBeClosed -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#CanBeClosed">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Disposition"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#CanBeOpened -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#CanBeOpened">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Disposition"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#CanBeSatOn -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#CanBeSatOn">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Deposition"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#CanClose -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#CanClose">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Capability"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#CanGrasp -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#CanGrasp">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Capability"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#CanOpen -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#CanOpen">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Capability"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#CanSit -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#CanSit">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Capability"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Capability -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Capability"/>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#IAIKitchen -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#IAIKitchen">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Kitchen"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Openable_Shelf -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Openable_Shelf">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Shelf"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#hasPhysicalComponent"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onClass rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Shelf_Door_Left"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#hasPhysicalComponent"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onClass rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Shelf_Door_Right"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Rigidity -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Rigidity">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Intrinsic"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#ShelvedObject -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#ShelvedObject">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#DepositedObject"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#StoragePlace -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#StoragePlace">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Destination"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Storing -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Storing">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#PuttingDown"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Room"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Bucket -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Bucket">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#TrashContainer"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Door -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Door">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Door"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#hasPhysicalComponent"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2</owl:qualifiedCardinality>
+                <owl:onClass rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Door_Handle"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Door_Handle -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Door_Handle">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#DesignedHandle"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Floor -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Floor">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Floor"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Shelf -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Shelf">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl.owl#Shelf"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Shelf_Door -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Shelf_Door">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Door"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Shelf_Door_Left -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Shelf_Door_Left">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Shelf_Door"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Shelf_Door_Right -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Shelf_Door_Right">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Shelf_Door"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Table -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Table">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Table"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Walls -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Walls">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Wall"/>
+    </owl:Class>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Individuals
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsClosing_0 -->
+
+    <owl:NamedIndividual rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsClosing_0">
+        <rdf:type rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsBeingClosed"/>
+        <SOMA:definesBearer rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsClosing_0_Bearer"/>
+        <SOMA:definesTrigger rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsClosing_0_Trigger"/>
+        <DUL:definesTask rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsClosing_0_Task"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsClosing_0_Bearer -->
+
+    <owl:NamedIndividual rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsClosing_0_Bearer">
+        <rdf:type rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#MovedObject"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsClosing_0_Task -->
+
+    <owl:NamedIndividual rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsClosing_0_Task">
+        <rdf:type rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Closing"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsClosing_0_Trigger -->
+
+    <owl:NamedIndividual rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsClosing_0_Trigger">
+        <rdf:type rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#AgentRole"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsGrasping_0 -->
+
+    <owl:NamedIndividual rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsGrasping_0">
+        <rdf:type rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsGrasping"/>
+        <SOMA:definesBearer rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsGrasping_0_Bearer"/>
+        <SOMA:definesTrigger rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsGrasping_0_Trigger"/>
+        <DUL:definesTask rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsGrasping_0_Task"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsGrasping_0_Bearer -->
+
+    <owl:NamedIndividual rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsGrasping_0_Bearer">
+        <rdf:type rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Patient"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsGrasping_0_Task -->
+
+    <owl:NamedIndividual rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsGrasping_0_Task">
+        <rdf:type rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Grasping"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsGrasping_0_Trigger -->
+
+    <owl:NamedIndividual rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsGrasping_0_Trigger">
+        <rdf:type rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#AgentRole"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsOpening_0 -->
+
+    <owl:NamedIndividual rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsOpening_0">
+        <rdf:type rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsBeingOpened"/>
+        <SOMA:definesBearer rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsOpening_0_Bearer"/>
+        <SOMA:definesTrigger rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsOpening_0_Trigger"/>
+        <DUL:definesTask rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsOpening_0_Task"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsOpening_0_Bearer -->
+
+    <owl:NamedIndividual rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsOpening_0_Bearer">
+        <rdf:type rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#MovedObject"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsOpening_0_Task -->
+
+    <owl:NamedIndividual rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsOpening_0_Task">
+        <rdf:type rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Opening"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsOpening_0_Trigger -->
+
+    <owl:NamedIndividual rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsOpening_0_Trigger">
+        <rdf:type rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#AgentRole"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsPuttingDown_0 -->
+
+    <owl:NamedIndividual rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsPuttingDown_0">
+        <rdf:type rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsPuttingDown"/>
+        <SOMA:definesBearer rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsPuttingDown_0_Bearer"/>
+        <SOMA:definesTrigger rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsPuttingDown_0_Trigger"/>
+        <DUL:definesTask rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsPuttingDown_0_Task"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsPuttingDown_0_Bearer -->
+
+    <owl:NamedIndividual rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsPuttingDown_0_Bearer">
+        <rdf:type rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Destination"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsPuttingDown_0_Task -->
+
+    <owl:NamedIndividual rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsPuttingDown_0_Task">
+        <rdf:type rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#PuttingDown"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsPuttingDown_0_Trigger -->
+
+    <owl:NamedIndividual rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsPuttingDown_0_Trigger">
+        <rdf:type rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#ShelvedObject"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsSitting_0 -->
+
+    <owl:NamedIndividual rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsSitting_0">
+        <rdf:type rdf:resource="http://www.ease-crc.org/ont/SOMA-HOME.owl#AffordsBeingSitOn"/>
+        <SOMA:definesBearer rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsSitting_0_Bearer"/>
+        <SOMA:definesTrigger rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsSitting_0_Trigger"/>
+        <DUL:definesTask rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsSitting_0_Task"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsSitting_0_Bearer -->
+
+    <owl:NamedIndividual rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsSitting_0_Bearer">
+        <rdf:type rdf:resource="http://www.ease-crc.org/ont/SOMA-HOME.owl#SittingDestination"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsSitting_0_Task -->
+
+    <owl:NamedIndividual rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsSitting_0_Task">
+        <rdf:type rdf:resource="http://www.ease-crc.org/ont/SOMA-HOME.owl#Sitting"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsSitting_0_Trigger -->
+
+    <owl:NamedIndividual rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsSitting_0_Trigger">
+        <rdf:type rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#AgentRole"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsStoringCloth_0 -->
+
+    <owl:NamedIndividual rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsStoringCloth_0">
+        <rdf:type rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsStoringCloth"/>
+        <SOMA:definesBearer rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsStoringCloth_0_Bearer"/>
+        <SOMA:definesTrigger rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsStoringCloth_0_Trigger"/>
+        <DUL:definesTask rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsStoringCloth_0_Task"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsStoringCloth_0_Bearer -->
+
+    <owl:NamedIndividual rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsStoringCloth_0_Bearer">
+        <rdf:type rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#StoragePlace"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsStoringCloth_0_Task -->
+
+    <owl:NamedIndividual rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsStoringCloth_0_Task">
+        <rdf:type rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Storing"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsStoringCloth_0_Trigger -->
+
+    <owl:NamedIndividual rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsStoringCloth_0_Trigger">
+        <rdf:type rdf:resource="http://www.ease-crc.org/ont/SOMA-OBJ.owl#StoredObject"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsStoringCutlery_0 -->
+
+    <owl:NamedIndividual rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsStoringCutlery_0">
+        <rdf:type rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsStoringCutlery"/>
+        <SOMA:definesBearer rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsStoringCutlery_0_Bearer"/>
+        <SOMA:definesTrigger rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsStoringCutlery_0_Trigger"/>
+        <DUL:definesTask rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsStoringCutlery_0_Task"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsStoringCutlery_0_Bearer -->
+
+    <owl:NamedIndividual rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsStoringCutlery_0_Bearer">
+        <rdf:type rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#StoragePlace"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsStoringCutlery_0_Task -->
+
+    <owl:NamedIndividual rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsStoringCutlery_0_Task">
+        <rdf:type rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Storing"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsStoringCutlery_0_Trigger -->
+
+    <owl:NamedIndividual rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsStoringCutlery_0_Trigger">
+        <rdf:type rdf:resource="http://www.ease-crc.org/ont/SOMA-OBJ.owl#StoredObject"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsStoringItems_0 -->
+
+    <owl:NamedIndividual rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsStoringItems_0">
+        <rdf:type rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsStoringItems"/>
+        <SOMA:definesBearer rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsStoringItems_0_Bearer"/>
+        <SOMA:definesTrigger rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsStoringItems_0_Trigger"/>
+        <DUL:definesTask rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsStoringItems_0_Task"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsStoringItems_0_Bearer -->
+
+    <owl:NamedIndividual rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsStoringItems_0_Bearer">
+        <rdf:type rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#StoragePlace"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsStoringItems_0_Task -->
+
+    <owl:NamedIndividual rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsStoringItems_0_Task">
+        <rdf:type rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Storing"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsStoringItems_0_Trigger -->
+
+    <owl:NamedIndividual rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsStoringItems_0_Trigger">
+        <rdf:type rdf:resource="http://www.ease-crc.org/ont/SOMA-OBJ.owl#StoredObject"/>
+        <SOMA:definesBearer rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsStoringSmallItems_0_Bearer"/>
+        <SOMA:definesTrigger rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsStoringSmallItems_0_Trigger"/>
+        <DUL:definesTask rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsStoringSmallItems_0_Task"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsStoringSmallItems_0 -->
+
+    <owl:NamedIndividual rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsStoringSmallItems_0">
+        <rdf:type rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsStoringSmallItems"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsStoringSmallItems_0_Bearer -->
+
+    <owl:NamedIndividual rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsStoringSmallItems_0_Bearer">
+        <rdf:type rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#StoragePlace"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsStoringSmallItems_0_Task -->
+
+    <owl:NamedIndividual rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsStoringSmallItems_0_Task">
+        <rdf:type rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Storing"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsStoringSmallItems_0_Trigger -->
+
+    <owl:NamedIndividual rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsStoringSmallItems_0_Trigger">
+        <rdf:type rdf:resource="http://www.ease-crc.org/ont/SOMA-OBJ.owl#StoredObject"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Bucket_0 -->
+
+    <owl:NamedIndividual rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Bucket_0">
+        <rdf:type rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Bucket"/>
+        <hasBaseLinkName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">bucket:bucket_center</hasBaseLinkName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Door_0 -->
+
+    <owl:NamedIndividual rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Door_0">
+        <rdf:type rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Door"/>
+        <SOMA:hasDisposition rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Door_0_CanBeClosed"/>
+        <SOMA:hasDisposition rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Door_0_CanBeOpened"/>
+        <SOMA:hasPhysicalComponent rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Door_Handle_Inside"/>
+        <SOMA:hasPhysicalComponent rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Door_Handle_Outside"/>
+        <hasBaseLinkName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">suturo_labenv:door_center</hasBaseLinkName>
+        <hasEndLinkName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">suturo_labenv:door_handle_inside</hasEndLinkName>
+        <hasEndLinkName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">suturo_labenv:door_handle_outside</hasEndLinkName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Door_0_CanBeClosed -->
+
+    <owl:NamedIndividual rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Door_0_CanBeClosed">
+        <rdf:type rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#CanBeClosed"/>
+        <DUL:isDescribedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsClosing_0"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Door_0_CanBeOpened -->
+
+    <owl:NamedIndividual rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Door_0_CanBeOpened">
+        <rdf:type rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#CanBeOpened"/>
+        <DUL:isDescribedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsOpening_0"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Door_Handle_Inside -->
+
+    <owl:NamedIndividual rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Door_Handle_Inside">
+        <rdf:type rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Door_Handle"/>
+        <SOMA:hasDisposition rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Door_Handle_Inside_CanBeGrasped"/>
+        <hasBaseLinkName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">suturo_labenv:door_handle_inside</hasBaseLinkName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Door_Handle_Inside_CanBeGrasped -->
+
+    <owl:NamedIndividual rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Door_Handle_Inside_CanBeGrasped">
+        <rdf:type rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Graspability"/>
+        <DUL:isDescribedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsGrasping_0"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Door_Handle_Outside -->
+
+    <owl:NamedIndividual rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Door_Handle_Outside">
+        <rdf:type rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Door_Handle"/>
+        <SOMA:hasDisposition rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Door_Handle_Outside_CanBeGrasped"/>
+        <hasBaseLinkName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">suturo_labenv:door_handle_outside</hasBaseLinkName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Door_Handle_Outside_CanBeGrasped -->
+
+    <owl:NamedIndividual rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Door_Handle_Outside_CanBeGrasped">
+        <rdf:type rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Graspability"/>
+        <DUL:isDescribedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsGrasping_0"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Floor_o -->
+
+    <owl:NamedIndividual rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Floor_o">
+        <rdf:type rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Floor"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Room_0 -->
+
+    <owl:NamedIndividual rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Room_0">
+        <rdf:type rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv"/>
+        <DUL:hasComponent rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Bucket_0"/>
+        <DUL:hasComponent rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Shelf_Openable_0"/>
+        <DUL:hasComponent rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Table_left_table"/>
+        <DUL:hasComponent rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Table_pc_table"/>
+        <DUL:hasComponent rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Table_right_table"/>
+        <hasBaseLinkName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">suturo_labenv:room_center_link</hasBaseLinkName>
+        <hasEndLinkName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">bucket:bucket_center</hasEndLinkName>
+        <hasEndLinkName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">left_table:table_center</hasEndLinkName>
+        <hasEndLinkName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">pc_table:table_center</hasEndLinkName>
+        <hasEndLinkName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">right_table:table_center</hasEndLinkName>
+        <hasEndLinkName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">shelf:shelf_center</hasEndLinkName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Shelf_Door_Left_0 -->
+
+    <owl:NamedIndividual rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Shelf_Door_Left_0">
+        <rdf:type rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Shelf_Door_Left"/>
+        <SOMA:hasDisposition rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Shelf_Door_Left_0_CanBeClosed"/>
+        <SOMA:hasDisposition rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Shelf_Door_Left_0_CanBeOpened"/>
+        <hasBaseLinkName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">shelf:shelf_door_left</hasBaseLinkName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Shelf_Door_Left_0_CanBeClosed -->
+
+    <owl:NamedIndividual rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Shelf_Door_Left_0_CanBeClosed">
+        <rdf:type rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#CanBeClosed"/>
+        <DUL:isDescribedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsClosing_0"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Shelf_Door_Left_0_CanBeOpened -->
+
+    <owl:NamedIndividual rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Shelf_Door_Left_0_CanBeOpened">
+        <rdf:type rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#CanBeOpened"/>
+        <DUL:isDescribedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsOpening_0"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Shelf_Door_Right_0 -->
+
+    <owl:NamedIndividual rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Shelf_Door_Right_0">
+        <rdf:type rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Shelf_Door_Right"/>
+        <SOMA:hasDisposition rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Shelf_Door_Right_0_CanBeClosed"/>
+        <SOMA:hasDisposition rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Shelf_Door_Right_0_CanBeOpened"/>
+        <hasBaseLinkName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">shelf:shelf_door_right</hasBaseLinkName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Shelf_Door_Right_0_CanBeClosed -->
+
+    <owl:NamedIndividual rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Shelf_Door_Right_0_CanBeClosed">
+        <rdf:type rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#CanBeClosed"/>
+        <DUL:isDescribedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsClosing_0"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Shelf_Door_Right_0_CanBeOpened -->
+
+    <owl:NamedIndividual rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Shelf_Door_Right_0_CanBeOpened">
+        <rdf:type rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#CanBeOpened"/>
+        <DUL:isDescribedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsOpening_0"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Shelf_Openable_0 -->
+
+    <owl:NamedIndividual rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Shelf_Openable_0">
+        <rdf:type rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Openable_Shelf"/>
+        <SOMA:hasDisposition rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Shelf_Openable_0_CanStoreItems"/>
+        <hasBaseLinkName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">shelf:shelf_center</hasBaseLinkName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Shelf_Openable_0_CanStoreItems -->
+
+    <owl:NamedIndividual rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Shelf_Openable_0_CanStoreItems">
+        <rdf:type rdf:resource="http://www.ease-crc.org/ont/SOMA-OBJ.owl#Storage"/>
+        <DUL:isDescribedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsStoringItems_0"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Table_CanBeAShelf -->
+
+    <owl:NamedIndividual rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Table_CanBeAShelf">
+        <rdf:type rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#CanBeAShelf"/>
+        <DUL:isDescribedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#AffordsPuttingDown_0"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Table_left_table -->
+
+    <owl:NamedIndividual rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Table_left_table">
+        <rdf:type rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Table"/>
+        <SOMA:hasDisposition rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Table_CanBeAShelf"/>
+        <hasBaseLinkName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">left_table:table_center</hasBaseLinkName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Table_pc_table -->
+
+    <owl:NamedIndividual rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Table_pc_table">
+        <rdf:type rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Table"/>
+        <SOMA:hasDisposition rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Table_CanBeAShelf"/>
+        <hasBaseLinkName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">pc_table:table_center</hasBaseLinkName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Table_right_table -->
+
+    <owl:NamedIndividual rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Table_right_table">
+        <rdf:type rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Table"/>
+        <SOMA:hasDisposition rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Table_CanBeAShelf"/>
+        <hasBaseLinkName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">right_table:table_center</hasBaseLinkName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Wall_1 -->
+
+    <owl:NamedIndividual rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Wall_1">
+        <rdf:type rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Walls"/>
+        <hasBaseLinkName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">wall_1_link</hasBaseLinkName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Wall_10 -->
+
+    <owl:NamedIndividual rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Wall_10">
+        <rdf:type rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Walls"/>
+        <hasBaseLinkName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">wall_10_link</hasBaseLinkName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Wall_11 -->
+
+    <owl:NamedIndividual rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Wall_11">
+        <rdf:type rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Walls"/>
+        <hasBaseLinkName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">wall_11_link</hasBaseLinkName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Wall_12 -->
+
+    <owl:NamedIndividual rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Wall_12">
+        <rdf:type rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Walls"/>
+        <hasBaseLinkName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">wall_12_link</hasBaseLinkName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Wall_13 -->
+
+    <owl:NamedIndividual rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Wall_13">
+        <rdf:type rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Walls"/>
+        <hasBaseLinkName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">wall_13_link</hasBaseLinkName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Wall_2 -->
+
+    <owl:NamedIndividual rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Wall_2">
+        <rdf:type rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Walls"/>
+        <hasBaseLinkName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">wall_2_link</hasBaseLinkName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Wall_3 -->
+
+    <owl:NamedIndividual rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Wall_3">
+        <rdf:type rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Walls"/>
+        <hasBaseLinkName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">wall_3_link</hasBaseLinkName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Wall_4 -->
+
+    <owl:NamedIndividual rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Wall_4">
+        <rdf:type rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Walls"/>
+        <hasBaseLinkName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">wall_4_link</hasBaseLinkName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Wall_5 -->
+
+    <owl:NamedIndividual rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Wall_5">
+        <rdf:type rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Walls"/>
+        <hasBaseLinkName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">wall_5_link</hasBaseLinkName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Wall_6 -->
+
+    <owl:NamedIndividual rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Wall_6">
+        <rdf:type rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Walls"/>
+        <hasBaseLinkName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">wall_6_link</hasBaseLinkName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Wall_7 -->
+
+    <owl:NamedIndividual rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Wall_7">
+        <rdf:type rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Walls"/>
+        <hasBaseLinkName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">wall_7_link</hasBaseLinkName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Wall_8 -->
+
+    <owl:NamedIndividual rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Wall_8">
+        <rdf:type rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Walls"/>
+        <hasBaseLinkName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">wall_8_link</hasBaseLinkName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Wall_9 -->
+
+    <owl:NamedIndividual rdf:about="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Wall_9">
+        <rdf:type rdf:resource="http://www.ease-crc.org/ont/SUTURO-LABENV.owl#Suturo_LabEnv_Walls"/>
+        <hasBaseLinkName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">wall_9_link</hasBaseLinkName>
+    </owl:NamedIndividual>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi -->
+
