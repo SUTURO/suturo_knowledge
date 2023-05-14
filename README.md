@@ -30,12 +30,13 @@ The documentation is also deployed to the [SUTURO Knowledge Website](https://sut
 
 - **Visual Studio Code**  
   Install the [`VSC-Prolog`](https://marketplace.visualstudio.com/items?itemName=arthurwang.vsc-prolog) extension to get syntax highlighting and code completion for Prolog in VS Code.
-
-<div style="display: flex; align-items: center; justify-content: center; padding-top: 40px">
-  <a href="https://www.uni-bremen.de/" style="padding: 0 80px">
+___
+<p align="center">
+  <a href="https://www.uni-bremen.de/">
     <img height="40" src="https://suturo.github.io/suturo_knowledge/assets/images/uni-bremen-logo-footer.png">
   </a>
-  <a href="https://github.com/suturo" style="padding: 0 80px">
-    <img height="40"  src="https://suturo.github.io/suturo_knowledge/assets/images/suturo-logo-footer.png">
+  <span>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</span>
+  <a href="https://github.com/suturo">
+    <img height="40" src="https://suturo.github.io/suturo_knowledge/assets/images/suturo-logo-footer.png">
   </a>
-</div>
+</p>
