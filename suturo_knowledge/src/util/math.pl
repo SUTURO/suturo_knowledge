@@ -1,7 +1,7 @@
 %% The math module contains predicates that provide basic mathematical utils
 :- module(math,
 	  [
-        deg_to_rad/2
+        deg_to_rad(+, -)
 	  ]).
 
 

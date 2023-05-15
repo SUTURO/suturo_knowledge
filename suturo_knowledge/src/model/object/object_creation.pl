@@ -1,6 +1,6 @@
 :- module(object_creation,
 	[
-            create_object(-,r,+),
+		create_object(-,r,+),
 	    create_object(-,r,+,+)
 	]).
 
