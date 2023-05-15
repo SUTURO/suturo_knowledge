@@ -21,16 +21,21 @@ The documentation is also deployed to the [SUTURO Knowledge Website](https://sut
 
 - **Emacs**  
   If you want to edit Prolog with Emacs, use the following command in in the `src` directory:
-  > find -iname '*.pl' -exec etags --lang=prolog {} +
-
+  ```bash
+  find -iname '*.pl' -exec etags --lang=prolog {} +  
+  ```
   This will generate a TAGS file that Emacs can use to jump to the definition of a predicate.  
   You can also specify paths to be searched between `find` and `-iname`.  
   The following for example indexes everything from the folder 3 levels up:
-  > find ../../.. -iname '*.pl' -exec etags --lang=prolog {} +
+  ```bash
+  find ../../.. -iname '*.pl' -exec etags --lang=prolog {} +
+  ```
 
 - **Visual Studio Code**  
   Install the [`VSC-Prolog`](https://marketplace.visualstudio.com/items?itemName=arthurwang.vsc-prolog) extension to get syntax highlighting and code completion for Prolog in VS Code.
-___
+
+---
+
 <p align="center">
   <a href="https://www.uni-bremen.de/">
     <img height="40" src="https://suturo.github.io/suturo_knowledge/assets/images/uni-bremen-logo-footer.png">
