@@ -70,6 +70,12 @@
     
 
 
+    <!-- http://knowrob.org/kb/urdf.owl#Robot -->
+
+    <owl:Class rdf:about="http://knowrob.org/kb/urdf.owl#Robot"/>
+    
+
+
     <!-- http://www.ease-crc.org/ont/SOMA.owl#Bottle -->
 
     <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Bottle">
@@ -156,22 +162,6 @@
 
     <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Plate">
         <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">52</SUTURO:perceptionId>
-    </rdf:Description>
-    
-
-
-    <!-- http://www.ease-crc.org/ont/SOMA.owl#SaltShaker -->
-
-    <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#SaltShaker">
-        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">34</SUTURO:perceptionId>
-    </rdf:Description>
-    
-
-
-    <!-- http://www.ease-crc.org/ont/SOMA.owl#Tableware -->
-
-    <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Tableware">
-        <rdfs:comment>Tableware refers to the dishes, utensils, and other items used for serving and eating food. This can include plates, bowls, cups, silverware, and serving platters, among other things.</rdfs:comment>
     </rdf:Description>
     
 
@@ -2085,6 +2075,12 @@
     <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA-HOME.owl#KitchenCabinet">
         <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">9</SUTURO:perceptionId>
     </rdf:Description>
+    <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#BakedGood">
+        <rdfs:comment>Baked goods are food items made by cooking or baking ingredients such as flour, sugar, eggs, and butter, resulting in a wide variety of products like bread, pastries, cakes, and cookies. They are typically characterized by their fluffy or crispy texture, and they are enjoyed as snacks or desserts.</rdfs:comment>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Bread">
+        <rdfs:comment>Bread is a staple food made from a dough of flour, water, and yeast or other leavening agents, which is then baked. It is known for its characteristic crust and soft interior, and it comes in various shapes and sizes, serving as a versatile food item for sandwiches, toasts, or enjoyed on its own. In European cuisine, pancakes refer to thin and flat cakes made from a batter of flour, eggs, and milk or buttermilk. They are usually larger and thinner than American-style pancakes and are commonly enjoyed with sweet or savory fillings, such as jam, Nutella, cheese, or vegetables.</rdfs:comment>
+    </rdf:Description>
     <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Cupboard">
         <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">3</SUTURO:perceptionId>
         <rdfs:comment>A cupboard is a piece of furniture used for storage, typically in the kitchen or dining room, and often used for storing dishes, glassware, and food items. It can come in various shapes and sizes, ranging from small wall-mounted cabinets to larger standalone units with multiple shelves and compartments.</rdfs:comment>
@@ -2107,22 +2103,31 @@
     <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Glass">
         <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">30</SUTURO:perceptionId>
     </rdf:Description>
+    <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Pancake">
+        <rdfs:comment>Pancakes are a type of flat, round, and fluffy breakfast food made from a batter of flour, eggs, milk, and a leavening agent, typically baking powder or baking soda. They are cooked on a griddle or frying pan and are often served with toppings such as syrup, fruit, or whipped cream, making them a popular choice for a delicious morning meal.</rdfs:comment>
+    </rdf:Description>
     <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#PancakeMix">
         <rdfs:comment>Pancake mix is a pre-made dry mixture of flour, baking powder, salt, and other ingredients that is used to make pancakes quickly and easily. It typically requires the addition of liquid ingredients such as milk, eggs, and oil, and can be customized with various flavors and additions such as chocolate chips or blueberries.</rdfs:comment>
     </rdf:Description>
     <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Pot">
-        <rdfs:comment>Pot is a container, typically made of ceramic or clay, used for cooking, serving, or storing food. It comes in various shapes, sizes, and designs and is a common household item found in many cultures around the world.</rdfs:comment>
         <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">16</SUTURO:perceptionId>
+        <rdfs:comment>Pot is a container, typically made of ceramic or clay, used for cooking, serving, or storing food. It comes in various shapes, sizes, and designs and is a common household item found in many cultures around the world.</rdfs:comment>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#SaltShaker">
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">34</SUTURO:perceptionId>
     </rdf:Description>
     <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Spatula">
-        <rdfs:comment>A spatula is a flat, broad kitchen tool with a long handle used for flipping and lifting food items, such as pancakes, eggs, or burgers, while cooking.</rdfs:comment>
         <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">6</SUTURO:perceptionId>
+        <rdfs:comment>A spatula is a flat, broad kitchen tool with a long handle used for flipping and lifting food items, such as pancakes, eggs, or burgers, while cooking.</rdfs:comment>
     </rdf:Description>
     <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Spoon">
         <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">40</SUTURO:perceptionId>
     </rdf:Description>
     <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Table">
         <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">28</SUTURO:perceptionId>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Tableware">
+        <rdfs:comment>Tableware refers to the dishes, utensils, and other items used for serving and eating food. This can include plates, bowls, cups, silverware, and serving platters, among other things.</rdfs:comment>
     </rdf:Description>
     <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#WineGlass">
         <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">24</SUTURO:perceptionId>
@@ -2134,5 +2139,5 @@
 
 
 
-<!-- Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi -->
+<!-- Generated by the OWL API (version 4.5.25.2023-02-15T19:15:49Z) https://github.com/owlcs/owlapi -->
 
