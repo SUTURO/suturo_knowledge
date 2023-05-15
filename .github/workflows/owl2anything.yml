@@ -62,11 +62,8 @@ jobs:
         run: |
           # Only commit if there are changes in the owl2anything output directory
           if [[ $(git diff --name-only --diff-filter=ACMRTUXB HEAD -- docs/objects/owl2anything/output/) ]]; then
-
-            COMMIT_MESSAGE="Updated SUTURO Objects to $(echo ${GITHUB_SHA} | cut -c1-7) (${{ github.workflow }}:${{ github.run_number }} :rocket:)"
-
             git add docs/objects/owl2anything/output/*
-            git commit -m "$COMMIT_MESSAGE"
+            git commit -m "Updated SUTURO Objects to $(echo ${GITHUB_SHA} | cut -c1-7) (${{ github.workflow }}:${{ github.run_number }} :rocket:)"
             git push origin website
 
             # Trigger the mkdocs workflow to build and deploy the website with the new artifacts
@@ -75,12 +72,7 @@ jobs:
               -H "Accept: application/vnd.github+json" \
               -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}"\
               https://api.github.com/repos/suturo/suturo_knowledge/actions/workflows/mkdocs.yml/dispatches \
-              -d '{
-                "ref": "website",
-                "inputs": {
-                  "run_title": "'"$COMMIT_MESSAGE"'"
-                }
-              }'
+              -d '{"ref": "website"}'
           else
             echo "No changes detected in owl2anything output directory. Skipping commit and push to website."
           fi
