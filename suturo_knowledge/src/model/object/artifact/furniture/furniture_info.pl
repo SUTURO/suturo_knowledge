@@ -1,9 +1,8 @@
 % furniture informations
 :- module(furniture_info,
 	[
-		%get_drawer_pose/1,
-		get_table_pose/1,
-		furniture_rel_pose/3
+		get_table_pose(-),
+		furniture_rel_pose(r,+,-)
 	]).
 
 :- use_module(library('util/math'),
@@ -11,11 +10,12 @@
 		deg_to_rad/2
 	]).
 
-%%
+%% get_table_pose(-Pose) is semidet.
 %
+% Gets the pose of the table.
 %
-%get_drawer_pose(Pose) :-
-
+% @param Pose The pose of the table.
+%
 get_table_pose(Pose) :-
     tf_lookup_transform('map', 'iai_kitchen/tall_table:table:table_front_edge_center', pose(Position, Rotation)),
     Pose = [map, Position, Rotation].

@@ -3,8 +3,8 @@
 % Additionally it currently has predicates used in load_urdf_from_param/1 and init_furnitures/0 that should be moved somewhere else as soon as we have time.
 :- module(furniture_creation,
 	  [
-	      create_table/2,
-	      load_urdf_from_param/1,
+	      create_table(-,+),
+	      load_urdf_from_param(+),
 	      init_furnitures/0
 	  ]).
 

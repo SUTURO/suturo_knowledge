@@ -1,7 +1,7 @@
 % container informations
 :- module(container_info,
 	[
-		container_rel_pose/3
+		container_rel_pose(r,+,-)
 	]).
 
 %% container_rel_pose(+Container, +Type, -PoseStamped) is semidet.

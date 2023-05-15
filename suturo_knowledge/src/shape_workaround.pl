@@ -2,7 +2,7 @@
 % A Module to workaround a bug with object_shape/5.
 % See [knowrob#368](https://github.com/knowrob/knowrob/issues/368) for more information.
 :- module(shape_workaround,
-	  [object_shape_workaround/5]
+	  [object_shape_workaround(r,?,?,?,?)]
 	 ).
 
 :- use_module(library('model/SOMA'),
@@ -10,7 +10,7 @@
 	     ).
 
 
-%% object_shape_workaround(Obj, Frame, ShapeTerm, Pose, Material) is semidet.
+%% object_shape_workaround(+Obj, ?Frame, ?ShapeTerm, ?Pose, ?Material) is nondet.
 %
 % This is a workaround for [knowrob#368](https://github.com/knowrob/knowrob/issues/368).
 % Note that this workaround can only return the first result of calling object_shape.
