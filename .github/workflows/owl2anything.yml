@@ -2,7 +2,10 @@ name: owl2anything
 
 on:
   push:
-    branches: [master]
+    branches:
+      - master
+    paths:
+      - "suturo_knowledge/owl/suturo.owl"
   workflow_dispatch:
 
 env:
