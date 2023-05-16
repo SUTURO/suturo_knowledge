@@ -1,7 +1,8 @@
 %% The object info module contains predicates that provide information about the objects and their role in the world.
 :- module(object_info,
 	  [
-      	object_pose(r,-)
+      	object_pose(r,-),
+		tiny_object/1
 	  ]).
 
 :- use_module(library('ros/tf/tf'),
@@ -13,3 +14,13 @@
 % Get the pose of an object.
 object_pose(Object, PoseStamped) :-
     tf:tf_get_pose(Object, PoseStamped).
+
+
+tiny_object(Object) :-
+	object_shape(Object,_,ShapeTerm,_,_),
+	ShapeTerm = box(X,Y,Z),
+	(
+		X =< 0.05;
+		Y =< 0.05;
+		Z =< 0.05
+	).
