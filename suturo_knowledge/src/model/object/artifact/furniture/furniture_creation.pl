@@ -3,7 +3,6 @@
 % Additionally it currently has predicates used in load_urdf_from_param/1 and init_furnitures/0 that should be moved somewhere else as soon as we have time.
 :- module(furniture_creation,
 	  [
-	      create_table(-,+),
 	      load_urdf_from_param(+),
 	      init_furnitures/0
 	  ]).
@@ -11,7 +10,6 @@
 :- use_module(library('util/util'),
 	      [
 		  has_urdf_name/2,
-		  has_tf_name/2,
 		  ros_warn/2
 	      ]).
 
@@ -95,42 +93,14 @@ init_furniture(FurnitureLink) :-
     furniture_shape(FurnitureLink, ShapeTerm),
     create_object(Furniture, Class, Pose, [shape(ShapeTerm), data_source(semantic_map)]),
     kb_project(has_urdf_name(Furniture, FurnitureLink)).
-    %% create_furniture(Type, Furniture),
-    %% % Workaround: furniture that doesn't have a type and couldn't get created shouldn't have a urdf name.
-    %% atom(Furniture),
-    %% kb_project(has_urdf_name(Furniture, FurnitureLink)),
-    %% assign_furniture_location(Furniture, FurnitureLink),
-    %% assign_furniture_shape(Furniture, FurnitureLink).
 
 furniture_pose(FurnitureLink, [FurnitureFrame, [0,0,0], [0,0,0,1]]) :-
     atom_concat('iai_kitchen/', FurnitureLink, FurnitureFrame).
-
-assign_furniture_location(Furniture, FurnitureLink) :-
-    universal_scope(Scope),
-    atom_concat('iai_kitchen/', FurnitureLink, FurnitureFrame),
-    tf_set_pose(Furniture, [FurnitureFrame, [0,0,0], [0,0,0,1]], Scope).
 
 furniture_shape(FurnitureLink, ShapeTerm) :-
     get_urdf_id(URDF),
     collision_link(FurnitureLink, CollisionLink),
     urdf_link_collision_shape(URDF, CollisionLink, ShapeTerm, _).
-
-assign_furniture_shape(Furniture, FurnitureLink) :-
-    get_urdf_id(URDF),
-    collision_link(FurnitureLink, CollisionLink),
-    urdf_link_collision_shape(URDF, CollisionLink, ShapeTerm, _),
-    (box(Depth, Width, Height) = ShapeTerm ->
-	 true;
-     ros_warn('Shape is not a box: ~w~n From link ~w', [ShapeTerm, CollisionLink]),
-     [Depth, Width, Height] = [1,1,1]),
-    kb_project(is_shape(Shape)),
-    kb_project(is_boxShape(ShapeRegion)),
-    kb_project(holds(Furniture, soma:hasShape, Shape)),
-    kb_project(holds(Shape, dul:hasRegion, ShapeRegion)),
-    % Doesn't use object_dimensions/4 because it throws an exception
-    kb_project(holds(ShapeRegion, soma:hasDepth, Depth)),
-    kb_project(holds(ShapeRegion, soma:hasWidth, Width)),
-    kb_project(holds(ShapeRegion, soma:hasHeight, Height)).
 
 collision_link(FurnitureLink, CollisionLink) :-
     atom_concat(Prefix, '_front_edge_center', FurnitureLink),
@@ -172,55 +142,3 @@ furniture_class(FurnitureType, FurnitureClass) :-
     ros_warn("Unknown furniture type ~w", [FurnitureType]),
     FurnitureClass = soma:'DesignedFurniture',
     !.
-
-%% create_furniture(+FurnitureType, -Furniture)
-%
-% create a furniture iri and project the type based on the link name
-% TODO: bucket, container, tray
-
-create_furniture(FurnitureType, Furniture) :-
-    sub_string(FurnitureType,_,_,_,"container"),
-    kb_project(is_type(Furniture, soma:'DesignedContainer')),
-    !.
-
-create_furniture(FurnitureType, Furniture) :-
-    sub_string(FurnitureType,_,_,_,"drawer"),
-    kb_project(is_drawer(Furniture)),
-    !.
-
-create_furniture(FurnitureType, Furniture) :-
-    sub_string(FurnitureType,_,_,_,"shelf"),
-    kb_project(is_shelf(Furniture)),
-    !.
-
-create_furniture(FurnitureType, Furniture) :-
-    sub_string(FurnitureType,_,_,_,"table"),
-    kb_project(is_table(Furniture)),
-    !.
-
-create_furniture(FurnitureType, Furniture) :-
-    ros_warn("Unknown furniture type ~w", [FurnitureType]),
-    kb_project(new_iri(Furniture, soma:'DesignedFurniture')),
-    !.
-
-%% create_table(-Table, +Dimensions)
-%
-% directly create a table with the specified dimensions.
-%
-% @param Dimensions is a list of Depth, Width, and Height
-create_table(Table, [Depth, Width, Height]) :-
-    kb_project(is_table(Table)),
-    kb_project(is_shape(Shape)),
-    kb_project(is_boxShape(ShapeRegion)),
-    kb_project(holds(Table, soma:hasShape, Shape)),
-    kb_project(holds(Shape, dul:hasRegion, ShapeRegion)),
-    % Doesn't use object_dimensions/4 because it throws an exception
-    kb_project(holds(ShapeRegion, soma:hasDepth, Depth)),
-    kb_project(holds(ShapeRegion, soma:hasWidth, Width)),
-    kb_project(holds(ShapeRegion, soma:hasHeight, Height)).
-
-is_shape(Shape) ?+>
-    is_type(Shape, soma:'Shape').
-
-is_boxShape(ShapeRegion) ?+>
-    is_type(ShapeRegion, soma:'BoxShape').
