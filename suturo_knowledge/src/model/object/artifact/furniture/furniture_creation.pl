@@ -20,6 +20,16 @@
 		  is_type/2
 	      ]).
 
+:- use_module(library('model/object/object_creation'),
+	      [
+		  create_object/4
+	      ]).
+
+:- use_module(library('semweb/rdf_prefixes'),
+	      [
+		  rdf_global_id/2
+	      ]).
+
 get_urdf_id(URDF) :-
     URDF = arena.
 
@@ -76,17 +86,34 @@ init_furnitures :-
 %
 init_furniture(FurnitureLink) :-
     split_string(FurnitureLink, ":", "", [_, Type, _]),
-    create_furniture(Type, Furniture),
-    % Workaround: furniture that doesn't have a type and couldn't get created shouldn't have a urdf name.
-    atom(Furniture),
-    kb_project(has_urdf_name(Furniture, FurnitureLink)),
-    assign_furniture_location(Furniture, FurnitureLink),
-    assign_furniture_shape(Furniture, FurnitureLink).
+    furniture_class(Type, ClassTerm),
+    % The rdf meta only does compile-time expansion of soma:'Table' and friends.
+    % Because of that, the expansion is done explicitly.
+    % TODO check if there is a better method for this.
+    rdf_global_id(ClassTerm, Class),
+    furniture_pose(FurnitureLink, Pose),
+    furniture_shape(FurnitureLink, ShapeTerm),
+    create_object(Furniture, Class, Pose, [shape(ShapeTerm), data_source(semantic_map)]),
+    kb_project(has_urdf_name(Furniture, FurnitureLink)).
+    %% create_furniture(Type, Furniture),
+    %% % Workaround: furniture that doesn't have a type and couldn't get created shouldn't have a urdf name.
+    %% atom(Furniture),
+    %% kb_project(has_urdf_name(Furniture, FurnitureLink)),
+    %% assign_furniture_location(Furniture, FurnitureLink),
+    %% assign_furniture_shape(Furniture, FurnitureLink).
+
+furniture_pose(FurnitureLink, [FurnitureFrame, [0,0,0], [0,0,0,1]]) :-
+    atom_concat('iai_kitchen/', FurnitureLink, FurnitureFrame).
 
 assign_furniture_location(Furniture, FurnitureLink) :-
     universal_scope(Scope),
     atom_concat('iai_kitchen/', FurnitureLink, FurnitureFrame),
     tf_set_pose(Furniture, [FurnitureFrame, [0,0,0], [0,0,0,1]], Scope).
+
+furniture_shape(FurnitureLink, ShapeTerm) :-
+    get_urdf_id(URDF),
+    collision_link(FurnitureLink, CollisionLink),
+    urdf_link_collision_shape(URDF, CollisionLink, ShapeTerm, _).
 
 assign_furniture_shape(Furniture, FurnitureLink) :-
     get_urdf_id(URDF),
@@ -116,6 +143,35 @@ collision_link(FurnitureLink, CollisionLink) :-
 collision_link(FurnitureLink, CollisionLink) :-
     atom_concat(Prefix, 'shelf_base_center', FurnitureLink),
     atom_concat(Prefix, 'shelf_back', CollisionLink).
+
+%% furniture_class(+FurnitureType, -FurnitureClass) is det.
+%
+% get the owl class of a furniture type based on the name used in the semantic map files.
+% TODO: bucket, container, tray
+furniture_class(FurnitureType, FurnitureClass) :-
+    sub_string(FurnitureType,_,_,_,"container"),
+    FurnitureClass = soma:'DesignedContainer',
+    !.
+
+furniture_class(FurnitureType, FurnitureClass) :-
+    sub_string(FurnitureType,_,_,_,"drawer"),
+    FurnitureClass = soma:'Drawer',
+    !.
+
+furniture_class(FurnitureType, FurnitureClass) :-
+    sub_string(FurnitureType,_,_,_,"shelf"),
+    FurnitureClass = soma:'Shelf',
+    !.
+
+furniture_class(FurnitureType, FurnitureClass) :-
+    sub_string(FurnitureType,_,_,_,"table"),
+    FurnitureClass = soma:'Table',
+    !.
+
+furniture_class(FurnitureType, FurnitureClass) :-
+    ros_warn("Unknown furniture type ~w", [FurnitureType]),
+    FurnitureClass = soma:'DesignedFurniture',
+    !.
 
 %% create_furniture(+FurnitureType, -Furniture)
 %
