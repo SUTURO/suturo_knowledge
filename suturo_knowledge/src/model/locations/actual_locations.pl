@@ -1,6 +1,6 @@
 :-module(actual_locations,
     [
-        object_locations/1,
+        object_locations/2,
         table_locations/1,
         shelf_locations/1,
         drawer_locations/1,
@@ -16,12 +16,9 @@
  
 
 %get actual object locations
-
-%create_object, object_pose
-object_locations(Location):-
-    fail.
-    %create_object(Object, Type, PoseStamped).
-    %object_pose(Object, PoseStamped).
+object_locations(Object, Location):-
+    triple(Object, suturo:hasDataSource, perception),
+    kb_call(is_at(Object,[map,Location,_])).
 
 
 %get actual furniture location
@@ -41,5 +38,6 @@ drawer_locations(Location) :-
 
 %get actual robot location
 robot_location(Location):-
-    object_pose(base_footprint, Location).
+    kb_call(is_at(base_footprint,[map,Location,_])).
+
     

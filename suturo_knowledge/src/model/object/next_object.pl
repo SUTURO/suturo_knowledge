@@ -1,13 +1,16 @@
 :- module(next_object,
     [
-        next_object/1
+        next_object/1,
+        distance_to_object/2
         
     ]).
-
+:- use_module(library('model/locations/spatial_computations')).
+:- use_module(library('model/locations/actual_locations')).
 %% next_object(+Object) is semidet.
 %
 % Choose the next best object to grasp.
 next_object(Object):-
+%triple(Object, suturo:hasDataSource, perception),
     fail.
 % try if object is already handled
 % try if not handled objects are misplaced
@@ -66,8 +69,10 @@ distance_to_go(OriginPosition, Object, Distance):-
 %% distance_to_object(+OriginPosition, +Object, -Distance)is semidet.
 %
 % Calculate distance the point we get for an object.
-distance_to_object(OriginPosition, Object, Distance):-
-    fail.
+distance_to_object(Object, Distance):-
+    kb_call(is_at(Object,[map,ObjectLocation,_])),
+    robot_location(RobotLocation),
+    euclidean_distance(ObjectLocation, RobotLocation, Distance).
 % calcluta euclidian distance between robot and an object
 
 
