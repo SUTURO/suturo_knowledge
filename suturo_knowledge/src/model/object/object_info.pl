@@ -1,7 +1,7 @@
 %% The object info module contains predicates that provide information about the objects and their role in the world.
 :- module(object_info,
 	  [
-        object_pose/2
+      	object_pose(r,-)
 	  ]).
 
 :- use_module(library('ros/tf/tf'),

@@ -1,13 +1,13 @@
 :- module(object_creation,
 	[
-            create_object(-,r,+),
+		create_object(-,r,+),
 	    create_object(-,r,+,+)
 	]).
 
 :- rdf_meta(shape_class(+,r)).
 
 %% create_object(-Object, +Type, +PoseStamped) is det.
-% 
+%
 % Create an object of type Type at the given PoseStamped.
 %
 % @param Object The object iri that is created
@@ -22,12 +22,15 @@ create_object(Object, Type, PoseStamped) :-
 % see create_object/3 for the simple documentation.
 % This predicate also processes options:
 % - shape(ShapeTerm)
+% - data_source(DataSource) (should be either perception or semantic_map, as described in [object_model.md](../../../object_model.md)
 create_object(Object, Type, [Frame, [X,Y,Z], [RX,RY,RZ,RW]], Options) :-
     from_current_scope(Scope),
     kb_project(is_type(Object, Type), Scope),
     tf_set_pose(Object, [Frame, [X,Y,Z], [RX,RY,RZ,RW]], Scope),
     option(shape(Shape), Options, none),
     assert_shape(Object, Shape, Scope),
+    option(data_source(DataSource), Options, perception),
+    kb_project(triple(Object, suturo:hasDataSource, DataSource)),
     !.
 
 assert_shape(_Object, none, _Scope) :- !.
