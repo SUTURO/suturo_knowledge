@@ -13,7 +13,7 @@ env:
   OWL2ANYTHING_VERSION: 1.0.3
 
 jobs:
-  build:
+  owl2anything:
     runs-on: ubuntu-20.04
 
     steps:
@@ -41,6 +41,12 @@ jobs:
           path: |
             owl2anything/output/*
 
+  publish:
+
+    runs-on: ubuntu-20.04
+    needs: owl2anything
+
+    steps:
       - name: Configure Git
         run: |
           git config --global user.name "${{ github.event.head_commit.author.name }}"
