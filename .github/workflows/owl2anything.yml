@@ -6,6 +6,7 @@ on:
       - master
     paths:
       - "suturo_knowledge/owl/suturo.owl"
+      - ".github/workflows/owl2anything.yml"
   workflow_dispatch:
 
 env:
