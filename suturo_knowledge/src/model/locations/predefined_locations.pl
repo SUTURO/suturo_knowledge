@@ -1,4 +1,6 @@
 %get predefined object locations
-%get predefined surface locations
+predefined_location(Object, Location):-
+    fail.
+
 
 
