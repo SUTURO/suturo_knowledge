@@ -6,7 +6,9 @@
         distance_to_goal_location/2,
         distance_to_go/2,
         object_costs/2,
-        object_cost/2
+        object_cost/2,
+        object_benefit/2,
+        objects_bonus/2
         
     ]).
 :- use_module(library('model/locations/spatial_computations')).
@@ -21,15 +23,18 @@ next_object(Object):-
 % then we have possible objects to choose the next best object
 % get robots position
 % calculate cost for robot position and possible objects
-    object_costs(['http://www.ease-crc.org/ont/SOMA.owl#CerealBox_DJKSNWTO','http://www.ease-crc.org/ont/SOMA.owl#Knife_DPIWFBTL'],ObjectCosts),
-    maplist(nth0(1), ObjectCosts, Costs),
-    min_list(Costs, MinCost),
-    MinObjects = [Object, MinCost],
-    member(MinObjects, ObjectCosts),
+
 % calculate benefit for possible objects
 % return object bonus
-    object_bonus(Object,Bonus).
-
+    objects_bonus(['http://www.ease-crc.org/ont/SOMA.owl#CerealBox_DJKSNWTO','http://www.ease-crc.org/ont/SOMA.owl#Knife_VWTYMOZB'],ObjectsBonus),
+    findall(Object,
+        (member([Object,Bonus], ObjectsBonus),
+            Bonus=0),
+        Bonus0),
+    object_costs(Bonus0,ObjectCosts),
+    maplist(nth0(1), ObjectCosts, Costs),
+    min_list(Costs, MinCost),
+    member([Object, MinCost], ObjectCosts).
 
 %% object_bendefits(+Object, -ObjectBenefits) is semidet.
 %
@@ -41,7 +46,7 @@ objects_bendefits(Objects, ObjectBenefits) :-
 %
 % Calculate object benefit (class confidence of an object)
 object_benefit(Object, Benefit):-
-    fail.
+    ask(triple(Object, hsr_objects:'hasConfidenceClassValue', Benefit)).
 % calculate confidence class value(measure a confidence that a robot has about the recognition of objects)
 
 
@@ -64,6 +69,14 @@ object_cost(Object, Cost):-
     distance_to_go(Object,DistanceToGo),
     Cost is DistanceToGo.
 % Calculate distance the point we get for an object and the distance we have to go.
+
+objects_bonus(Objects, ObjectBonus):-
+    findall([Object,Bonus],
+        (
+            member(Object,Objects),
+            object_bonus(Object,Bonus)
+        ),
+    ObjectBonus).
 
 %% object_bonus(+Object, -Bonus) is semidet.
 %
