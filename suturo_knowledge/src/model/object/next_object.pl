@@ -8,7 +8,8 @@
         object_costs/2,
         object_cost/2,
         object_benefit/2,
-        objects_bonus/2
+        objects_bonus/2,
+        objects_benefits/2
         
     ]).
 :- use_module(library('model/locations/spatial_computations')).
@@ -23,30 +24,41 @@ next_object(Object):-
 % then we have possible objects to choose the next best object
 % get robots position
 % calculate cost for robot position and possible objects
-
 % calculate benefit for possible objects
 % return object bonus
-    objects_bonus(['http://www.ease-crc.org/ont/SOMA.owl#CerealBox_DJKSNWTO','http://www.ease-crc.org/ont/SOMA.owl#Knife_VWTYMOZB'],ObjectsBonus),
-    findall(Object,
-        (member([Object,Bonus], ObjectsBonus),
-            Bonus=0),
-        Bonus0),
-    object_costs(Bonus0,ObjectCosts),
-    maplist(nth0(1), ObjectCosts, Costs),
-    min_list(Costs, MinCost),
-    member([Object, MinCost], ObjectCosts).
+    findall(Object, 
+        is_suturo_object(Object),
+        Objects
+        ),
+    findall([Object,Score],
+        (member(Object,Objects),
+        object_bonus(Object, 0),
+        object_benefit(Object, Benefit),
+        object_cost(Object,Cost),
+        Score is Benefit/Cost),
+        ObjectScore),
+    ros_info([objectscore,ObjectScore]),
+    maplist(nth0(1), ObjectScore, Scores),
+    ros_info([scores,Scores]),
+    max_list(Scores, MaxScore),
+    member([Object, MaxScore], ObjectScore).
 
 %% object_bendefits(+Object, -ObjectBenefits) is semidet.
 %
 %find benefits for all objects 
-objects_bendefits(Objects, ObjectBenefits) :-
-    fail.
+objects_benefits(Objects, ObjectBenefits) :-
+    findall([Object,Benefit],
+        (
+            member(Object,Objects),
+            object_benefit(Object,Benefit)
+        ),
+    ObjectBenefits).
 
 %% object_benefit(+Object, -Benefit) is semidet.
 %
 % Calculate object benefit (class confidence of an object)
 object_benefit(Object, Benefit):-
-    ask(triple(Object, hsr_objects:'hasConfidenceClassValue', Benefit)).
+    ask(triple(Object, suturo:'hasConfidenceValue', Benefit)).
 % calculate confidence class value(measure a confidence that a robot has about the recognition of objects)
 
 

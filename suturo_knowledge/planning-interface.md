@@ -101,6 +101,7 @@ The `Type` can be the full IRI or the namespace:'Name' form.
 
 The Options that can be processed are:
 - `shape(ShapeTerm)` - optional, the shape the object has. If not specified, knowledge will have no shape information about this object.
+- class_confidence -  a confidence that a robot has about the recognition of objects
 ```prolog
 create_object(-Object, +Type, +PoseStamped) is det.
 create_object(-Object, +Type, +PoseStamped, +Options) is det.
