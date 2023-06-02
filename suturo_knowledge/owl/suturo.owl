@@ -62,11 +62,41 @@
     <!-- 
     ///////////////////////////////////////////////////////////////////////////////////////
     //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#hasDataSource -->
+
+    <owl:DatatypeProperty rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#hasDataSource">
+        <rdfs:subPropertyOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#hasDataValue"/>
+        <rdfs:domain rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#Entity"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment xml:lang="en">Where the information for this Entity came from.
+
+For example the Tables come from semantic_map, while the objects perception got are from perception.</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
     // Classes
     //
     ///////////////////////////////////////////////////////////////////////////////////////
      -->
 
+    
+
+
+    <!-- http://knowrob.org/kb/urdf.owl#Robot -->
+
+    <owl:Class rdf:about="http://knowrob.org/kb/urdf.owl#Robot"/>
     
 
 
@@ -156,22 +186,6 @@
 
     <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Plate">
         <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">52</SUTURO:perceptionId>
-    </rdf:Description>
-    
-
-
-    <!-- http://www.ease-crc.org/ont/SOMA.owl#SaltShaker -->
-
-    <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#SaltShaker">
-        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">34</SUTURO:perceptionId>
-    </rdf:Description>
-    
-
-
-    <!-- http://www.ease-crc.org/ont/SOMA.owl#Tableware -->
-
-    <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Tableware">
-        <rdfs:comment>Tableware refers to the dishes, utensils, and other items used for serving and eating food. This can include plates, bowls, cups, silverware, and serving platters, among other things.</rdfs:comment>
     </rdf:Description>
     
 
@@ -627,6 +641,7 @@
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#FlatScrewdriver">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#ScrewDriver"/>
+        <rdfs:comment>A flat screwdriver is a hand tool characterized by a flat and narrow blade with a tip that fits into slotted screw heads. It is used for turning or tightening screws that have a single straight slot, commonly found in various mechanical and household applications.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
@@ -784,7 +799,7 @@
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#IceTeaBox">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Box"/>
-        <rdfs:comment>An ice tea box is a container or package that holds ice tea bags or mix to make ice tea. It can come in various sizes and designs, and usually contains instructions for making the ice tea.</rdfs:comment>
+        <rdfs:comment>An ice tea box refers to the container or packaging used to store and sell iced tea, usually in a ready-to-drink form. The box may contain individual servings or larger quantities, and can be made of various materials such as cardboard, plastic, or glass.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
@@ -1551,6 +1566,7 @@
                 <owl:someValuesFrom rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#DesignedHandle"/>
             </owl:Restriction>
         </rdfs:subClassOf>
+        <rdfs:comment>A screwdriver is a hand tool consisting of a handle and a shaft with a shaped tip designed to fit into the corresponding slot or recess of a screw head. It is used for turning screws to fasten or loosen them in a wide range of applications, from construction and carpentry to electronics and household repairs.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
@@ -2071,6 +2087,14 @@
     
 
 
+    <!-- http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#BiologicalObject -->
+
+    <rdf:Description rdf:about="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#BiologicalObject">
+        <rdfs:comment>A biological object refers to any living entity, organism, or part thereof that is associated with biological systems or processes. It encompasses a wide range of living things, including plants, animals, microorganisms, cells, tissues, organs, and biological molecules, and is a fundamental concept in the field of biology.</rdfs:comment>
+    </rdf:Description>
+    
+
+
     <!-- 
     ///////////////////////////////////////////////////////////////////////////////////////
     //
@@ -2084,6 +2108,15 @@
     </rdf:Description>
     <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA-HOME.owl#KitchenCabinet">
         <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">9</SUTURO:perceptionId>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#BakedGood">
+        <rdfs:comment>Baked goods are food items made by cooking or baking ingredients such as flour, sugar, eggs, and butter, resulting in a wide variety of products like bread, pastries, cakes, and cookies. They are typically characterized by their fluffy or crispy texture, and they are enjoyed as snacks or desserts.</rdfs:comment>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Bread">
+        <rdfs:comment>Bread is a staple food made from a dough of flour, water, and yeast or other leavening agents, which is then baked. It is known for its characteristic crust and soft interior, and it comes in various shapes and sizes, serving as a versatile food item for sandwiches, toasts, or enjoyed on its own. In European cuisine, pancakes refer to thin and flat cakes made from a batter of flour, eggs, and milk or buttermilk. They are usually larger and thinner than American-style pancakes and are commonly enjoyed with sweet or savory fillings, such as jam, Nutella, cheese, or vegetables.</rdfs:comment>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Compartment">
+        <rdfs:comment>A compartment is a distinct, enclosed space within a larger structure or system, often used to separate or organize different components or elements. It helps to compartmentalize and manage complex systems by providing a segregated environment for specific functions or entities.</rdfs:comment>
     </rdf:Description>
     <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Cupboard">
         <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">3</SUTURO:perceptionId>
@@ -2107,12 +2140,18 @@
     <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Glass">
         <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">30</SUTURO:perceptionId>
     </rdf:Description>
+    <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Pancake">
+        <rdfs:comment>Pancakes are a type of flat, round, and fluffy breakfast food made from a batter of flour, eggs, milk, and a leavening agent, typically baking powder or baking soda. They are cooked on a griddle or frying pan and are often served with toppings such as syrup, fruit, or whipped cream, making them a popular choice for a delicious morning meal.</rdfs:comment>
+    </rdf:Description>
     <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#PancakeMix">
         <rdfs:comment>Pancake mix is a pre-made dry mixture of flour, baking powder, salt, and other ingredients that is used to make pancakes quickly and easily. It typically requires the addition of liquid ingredients such as milk, eggs, and oil, and can be customized with various flavors and additions such as chocolate chips or blueberries.</rdfs:comment>
     </rdf:Description>
     <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Pot">
         <rdfs:comment>Pot is a container, typically made of ceramic or clay, used for cooking, serving, or storing food. It comes in various shapes, sizes, and designs and is a common household item found in many cultures around the world.</rdfs:comment>
         <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">16</SUTURO:perceptionId>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#SaltShaker">
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">34</SUTURO:perceptionId>
     </rdf:Description>
     <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Spatula">
         <rdfs:comment>A spatula is a flat, broad kitchen tool with a long handle used for flipping and lifting food items, such as pancakes, eggs, or burgers, while cooking.</rdfs:comment>
@@ -2123,6 +2162,9 @@
     </rdf:Description>
     <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Table">
         <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">28</SUTURO:perceptionId>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Tableware">
+        <rdfs:comment>Tableware refers to the dishes, utensils, and other items used for serving and eating food. This can include plates, bowls, cups, silverware, and serving platters, among other things.</rdfs:comment>
     </rdf:Description>
     <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#WineGlass">
         <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">24</SUTURO:perceptionId>

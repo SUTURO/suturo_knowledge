@@ -1,13 +1,13 @@
 %% The Util module contains predicates that (currently) don't fit into other modules.
 :- module(util,
 	  [
-	      has_urdf_name/2,
-	      has_tf_name/2,
-	      split_iri/3,
-	      ros_info/2,
-	      ros_warn/2,
-	      ros_error/2,
-	      ros_debug/2
+	      has_urdf_name(?,?),
+	      has_tf_name(?,?),
+          split_iri(+, -, -),
+	      ros_info(+,+),
+	      ros_warn(+,+),
+	      ros_error(+,+),
+	      ros_debug(+,+)
 	  ]).
 
 :- use_module(library('lang/terms/triple'),
@@ -25,7 +25,7 @@
 has_urdf_name(Object, URDFName) ?+>
     triple(Object, urdf:'hasURDFName', URDFName).
 
-%% has_tf_name(Object, TFName)
+%% has_tf_name(?Object, ?TFName) is nondet.
 %
 % gets the tf name of an object.
 % for objects that have a urdf name, the TFName is based on the urdf name.
@@ -44,7 +44,10 @@ has_tf_name(Object, TFName) :-
     ),
     !.
 
-% has_tf_name for urdf names
+%% has_tf_name(?Object, ?TFName) is semidet.
+%
+% gets the tf name of an object that has a urdf name
+%
 has_tf_name(URDFName, TFName) :-
     % using a not here so the cut 3 lines above is a green cut.
     not(sub_string(URDFName, _, _, _, "#")),
@@ -72,16 +75,34 @@ split_iri(IRI, Prefix, ClassIdentifier) :-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %% ros_debug(+Format, +Arguments)
+%
+% Logs a debug message and formats with the given arguments.
+%
+% @param Format The format string
+% @param Arguments The arguments to the format string
+%
 ros_debug(Format, Arguments) :-
     format(string(MSG), Format, Arguments),
     ros_debug(MSG).
 
 %% ros_info(+Format, +Arguments)
+%
+% Logs an info message and formats with the given arguments.
+%
+% @param Format The format string
+% @param Arguments The arguments to the format string
+%
 ros_info(Format, Arguments) :-
     format(string(MSG), Format, Arguments),
     ros_info(MSG).
 
 %% ros_warn(+Format, +Arguments)
+%
+% Logs a warning message and formats with the given arguments.
+%
+% @param Format The format string
+% @param Arguments The arguments to the format string
+%
 ros_warn(Format, Arguments) :-
     format(string(MSG), Format, Arguments),
     ros_warn(MSG).

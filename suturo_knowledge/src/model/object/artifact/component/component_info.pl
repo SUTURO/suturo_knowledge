@@ -1,7 +1,7 @@
 % component informations
 :- module(component_info,
 	[
-		component_rel_pose/3
+		component_rel_pose(r,+,-)
 	]).
 
 %% component_rel_pose(+Component, +Type, -PoseStamped) is semidet.

@@ -1,5 +1,7 @@
 <p align="center">
-  <img width="150" src="https://suturo.github.io/suturo_knowledge/assets/images/suturo-knowledge-full-1000.png">
+  <a href="https://suturo.github.io/suturo_knowledge/">
+    <img width="150" src="https://suturo.github.io/suturo_knowledge/assets/images/suturo-knowledge-full-1000.png">
+  </a>
 </p>
 
 # suturo_knowledge

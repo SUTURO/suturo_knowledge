@@ -3,21 +3,29 @@
 % Additionally it currently has predicates used in load_urdf_from_param/1 and init_furnitures/0 that should be moved somewhere else as soon as we have time.
 :- module(furniture_creation,
 	  [
-	      create_table/2,
-	      load_urdf_from_param/1,
+	      load_urdf_from_param(+),
 	      init_furnitures/0
 	  ]).
 
 :- use_module(library('util/util'),
 	      [
 		  has_urdf_name/2,
-		  has_tf_name/2,
 		  ros_warn/2
 	      ]).
 
 :- use_module(library('model/object/types'),
 	      [
 		  is_type/2
+	      ]).
+
+:- use_module(library('model/object/object_creation'),
+	      [
+		  create_object/4
+	      ]).
+
+:- use_module(library('semweb/rdf_prefixes'),
+	      [
+		  rdf_global_id/2
 	      ]).
 
 get_urdf_id(URDF) :-
@@ -76,34 +84,23 @@ init_furnitures :-
 %
 init_furniture(FurnitureLink) :-
     split_string(FurnitureLink, ":", "", [_, Type, _]),
-    create_furniture(Type, Furniture),
-    % Workaround: furniture that doesn't have a type and couldn't get created shouldn't have a urdf name.
-    atom(Furniture),
-    kb_project(has_urdf_name(Furniture, FurnitureLink)),
-    assign_furniture_location(Furniture, FurnitureLink),
-    assign_furniture_shape(Furniture, FurnitureLink).
+    furniture_class(Type, ClassTerm),
+    % The rdf meta only does compile-time expansion of soma:'Table' and friends.
+    % Because of that, the expansion is done explicitly.
+    % TODO check if there is a better method for this.
+    rdf_global_id(ClassTerm, Class),
+    furniture_pose(FurnitureLink, Pose),
+    furniture_shape(FurnitureLink, ShapeTerm),
+    create_object(Furniture, Class, Pose, [shape(ShapeTerm), data_source(semantic_map)]),
+    kb_project(has_urdf_name(Furniture, FurnitureLink)).
 
-assign_furniture_location(Furniture, FurnitureLink) :-
-    universal_scope(Scope),
-    atom_concat('iai_kitchen/', FurnitureLink, FurnitureFrame),
-    tf_set_pose(Furniture, [FurnitureFrame, [0,0,0], [0,0,0,1]], Scope).
+furniture_pose(FurnitureLink, [FurnitureFrame, [0,0,0], [0,0,0,1]]) :-
+    atom_concat('iai_kitchen/', FurnitureLink, FurnitureFrame).
 
-assign_furniture_shape(Furniture, FurnitureLink) :-
+furniture_shape(FurnitureLink, ShapeTerm) :-
     get_urdf_id(URDF),
     collision_link(FurnitureLink, CollisionLink),
-    urdf_link_collision_shape(URDF, CollisionLink, ShapeTerm, _),
-    (box(Depth, Width, Height) = ShapeTerm ->
-	 true;
-     ros_warn('Shape is not a box: ~w~n From link ~w', [ShapeTerm, CollisionLink]),
-     [Depth, Width, Height] = [1,1,1]),
-    kb_project(is_shape(Shape)),
-    kb_project(is_boxShape(ShapeRegion)),
-    kb_project(holds(Furniture, soma:hasShape, Shape)),
-    kb_project(holds(Shape, dul:hasRegion, ShapeRegion)),
-    % Doesn't use object_dimensions/4 because it throws an exception
-    kb_project(holds(ShapeRegion, soma:hasDepth, Depth)),
-    kb_project(holds(ShapeRegion, soma:hasWidth, Width)),
-    kb_project(holds(ShapeRegion, soma:hasHeight, Height)).
+    urdf_link_collision_shape(URDF, CollisionLink, ShapeTerm, _).
 
 collision_link(FurnitureLink, CollisionLink) :-
     atom_concat(Prefix, '_front_edge_center', FurnitureLink),
@@ -117,54 +114,31 @@ collision_link(FurnitureLink, CollisionLink) :-
     atom_concat(Prefix, 'shelf_base_center', FurnitureLink),
     atom_concat(Prefix, 'shelf_back', CollisionLink).
 
-%% create_furniture(+FurnitureType, -Furniture)
+%% furniture_class(+FurnitureType, -FurnitureClass) is det.
 %
-% create a furniture iri and project the type based on the link name
+% get the owl class of a furniture type based on the name used in the semantic map files.
 % TODO: bucket, container, tray
-
-create_furniture(FurnitureType, Furniture) :-
+furniture_class(FurnitureType, FurnitureClass) :-
     sub_string(FurnitureType,_,_,_,"container"),
-    kb_project(is_type(Furniture, soma:'DesignedContainer')),
+    FurnitureClass = soma:'DesignedContainer',
     !.
 
-create_furniture(FurnitureType, Furniture) :-
+furniture_class(FurnitureType, FurnitureClass) :-
     sub_string(FurnitureType,_,_,_,"drawer"),
-    kb_project(is_drawer(Furniture)),
+    FurnitureClass = soma:'Drawer',
     !.
 
-create_furniture(FurnitureType, Furniture) :-
+furniture_class(FurnitureType, FurnitureClass) :-
     sub_string(FurnitureType,_,_,_,"shelf"),
-    kb_project(is_shelf(Furniture)),
+    FurnitureClass = soma:'Shelf',
     !.
 
-create_furniture(FurnitureType, Furniture) :-
+furniture_class(FurnitureType, FurnitureClass) :-
     sub_string(FurnitureType,_,_,_,"table"),
-    kb_project(is_table(Furniture)),
+    FurnitureClass = soma:'Table',
     !.
 
-create_furniture(FurnitureType, Furniture) :-
+furniture_class(FurnitureType, FurnitureClass) :-
     ros_warn("Unknown furniture type ~w", [FurnitureType]),
-    kb_project(new_iri(Furniture, soma:'DesignedFurniture')),
+    FurnitureClass = soma:'DesignedFurniture',
     !.
-
-%% create_table(-Table, +Dimensions)
-%
-% directly create a table with the specified dimensions.
-%
-% @param Dimensions is a list of Depth, Width, and Height
-create_table(Table, [Depth, Width, Height]) :-
-    kb_project(is_table(Table)),
-    kb_project(is_shape(Shape)),
-    kb_project(is_boxShape(ShapeRegion)),
-    kb_project(holds(Table, soma:hasShape, Shape)),
-    kb_project(holds(Shape, dul:hasRegion, ShapeRegion)),
-    % Doesn't use object_dimensions/4 because it throws an exception
-    kb_project(holds(ShapeRegion, soma:hasDepth, Depth)),
-    kb_project(holds(ShapeRegion, soma:hasWidth, Width)),
-    kb_project(holds(ShapeRegion, soma:hasHeight, Height)).
-
-is_shape(Shape) ?+>
-    is_type(Shape, soma:'Shape').
-
-is_boxShape(ShapeRegion) ?+>
-    is_type(ShapeRegion, soma:'BoxShape').
