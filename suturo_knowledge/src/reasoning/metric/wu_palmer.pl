@@ -1,15 +1,14 @@
 %% The WuPalmer module contains predicates that can calculate the similarity between two classes of an ontology.
 :- module(wu_palmer,
 	  [
-        wu_palmer_similarity/3,
-        path_up/3,
-        path_down/3,
-        path/3,
-        shortest_path/3,
-        superclasses/2,
-        subclasses/2,
-        direct_superclasses/2,
-        direct_subclasses/2
+        wu_palmer_similarity(r,r,-),
+        path_up(r,r,-),
+        path_down(r,r,-),
+        path(r,r,-),
+        superclasses(r,-),
+        subclasses(r,-),
+        direct_superclasses(r,-),
+        direct_subclasses(r,-)
 	  ]).
 
 :- use_module(library('semweb/rdf_db')).
@@ -19,16 +18,6 @@
 		  split_iri/3,
 		  ros_warn/2
 	      ]).
-
-:- rdf_meta(wu_palmer_similarity(r,r,-)).
-:- rdf_meta(path_up(r,r,-)).
-:- rdf_meta(path_down(r,r,?)).
-:- rdf_meta(path(r,r,t)).
-:- rdf_meta(shortest_path(r,r,-)).
-:- rdf_meta(superclasses(r,-)).
-:- rdf_meta(subclasses(r,-)).
-:- rdf_meta(direct_superclasses(r,-)).
-:- rdf_meta(direct_subclasses(r,-)).
 
 %% wu_palmer_similarity(+ClassA, +ClassB, -Similarity) is det.
 %

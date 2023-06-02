@@ -3,4 +3,3 @@
 
 :- use_directory('object').
 :- use_directory('semantic_map').
-:- use_directory('metric').
