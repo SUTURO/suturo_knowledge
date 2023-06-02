@@ -70,9 +70,9 @@
     
 
 
-    <!-- http://www.ease-crc.org/ont/SUTURO.owl#handeled -->
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#handled -->
 
-    <owl:DatatypeProperty rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#handeled">
+    <owl:DatatypeProperty rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#handled">
         <rdfs:subPropertyOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#hasDataValue"/>
         <rdfs:domain rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#Entity"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>

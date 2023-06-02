@@ -26,9 +26,9 @@ next_object(Object):-
 % return object bonus
 % calculate cost benefit ratio
 % choose the object with the highest ratio
-    objects_not_handeled(NotHandeledObjects),
+    objects_not_handled(NothandledObjects),
     findall([Object,CBRatio],
-        (member(Object,NotHandeledObjects),
+        (member(Object,NothandledObjects),
         object_bonus(Object, 0),
         object_benefit(Object, Benefit),
         object_cost(Object,Cost),
@@ -37,7 +37,7 @@ next_object(Object):-
         (ObjectCBRatio0 == []
         -> 
         findall([Object,CBRatio],
-            (member(Object,NotHandeledObjects),   
+            (member(Object,NothandledObjects),   
             object_benefit(Object, Benefit),
             object_cost(Object,Cost),
             CBRatio is Benefit/Cost),
@@ -47,7 +47,7 @@ next_object(Object):-
     maplist(nth0(1), ObjectCBRatio, CBRatios),
     max_list(CBRatios, MaxCBRatio),
     member([Object, MaxCBRatio], ObjectCBRatio),
-    set_object_handeled(Object),
+    set_object_handled(Object),
     !.
 
 
