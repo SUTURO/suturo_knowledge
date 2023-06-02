@@ -7,6 +7,8 @@
 		set_object_handeled/1,
 		set_object_not_handeled/1,
 		update_handle_state/2,
+		handeled/1,
+		not_handeled/1,
 		objects_not_handeled/1
 	  ]).
 
@@ -45,10 +47,10 @@ tiny_object(Object) :-
 	)
 ).
 
+
 is_suturo_object(Object):-
 	is_physical_object(Object),
 	triple(Object, suturo:'hasDataSource', DataSource).
-
 
 set_object_handeled(Object) :-
 	update_handle_state(Object, true).
@@ -57,7 +59,26 @@ set_object_not_handeled(Object) :-
 	update_handle_state(Object, false).
 
 update_handle_state(Object, State) :-
-	is_suturo_object(Object).
+	is_suturo_object(Object),
+	triple(Object, suturo:'hasHandleState', HandleState),
+	forall(triple(HandleState, suturo:'handeled', OldValue),
+		kb_unproject(triple(HandleState, suturo:'handeled', OldValue))),
+    kb_project(triple(HandleState, suturo:'handeled', State)).
+
+handeled(Object) :-
+	is_suturo_object(Object),
+	triple(Object, suturo:'hasHandleState', HandleState),
+	triple(HandleState, suturo:'handeled', true).
+
+not_handeled(Object) :-
+	is_suturo_object(Object),
+	triple(Object, suturo:'hasHandleState', HandleState),
+	triple(HandleState, suturo:'handeled', false).
 
 objects_not_handeled(Object):-
-	fail.
+    findall(Object,
+    (
+        is_suturo_object(Object),
+        not_handeled(Object)
+    ),
+    Objects).

@@ -34,6 +34,9 @@ create_object(Object, Type, [Frame, [X,Y,Z], [RX,RY,RZ,RW]], Options) :-
     kb_project(triple(Object, suturo:hasDataSource, DataSource)),
 	option(confidence_value(ConfidenceValue), Options, 1),
     kb_project(triple(Object, suturo:hasConfidenceValue, ConfidenceValue)),
+    kb_project((new_iri(HandleState),
+				triple(Object, suturo:hasHandleState, HandleState),
+				triple(HandleState,suturo:handeled,false))),
     !.
 
 assert_shape(_Object, none, _Scope) :- !.
