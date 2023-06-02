@@ -75,7 +75,7 @@ not_handeled(Object) :-
 	triple(Object, suturo:'hasHandleState', HandleState),
 	triple(HandleState, suturo:'handeled', false).
 
-objects_not_handeled(Object):-
+objects_not_handeled(Objects):-
     findall(Object,
     (
         is_suturo_object(Object),

@@ -1,15 +1,15 @@
 :- module(next_object,
     [
         next_object/1,
-        distance_to_object/2,
-        object_bonus/2,
-        distance_to_goal_location/2,
-        distance_to_go/2,
+        objects_benefits/2,
+        object_benefit/2,
         object_costs/2,
         object_cost/2,
-        object_benefit/2,
         objects_bonus/2,
-        objects_benefits/2
+        object_bonus/2,
+        distance_to_go/2,
+        distance_to_object/2,
+        distance_to_goal_location/2
         
     ]).
 :- use_module(library('model/locations/spatial_computations')).
@@ -18,30 +18,38 @@
 %
 % Choose the next best object to grasp.
 next_object(Object):-
-%triple(Object, suturo:hasDataSource, perception)
 % try if object is already handled
 % try if not handled objects are misplaced
 % then we have possible objects to choose the next best object
-% get robots position
 % calculate cost for robot position and possible objects
 % calculate benefit for possible objects
 % return object bonus
-    findall(Object, 
-        is_suturo_object(Object),
-        Objects
-        ),
-    findall([Object,Score],
-        (member(Object,Objects),
+% calculate cost benefit ratio
+% choose the object with the highest ratio
+    objects_not_handeled(NotHandeledObjects),
+    findall([Object,CBRatio],
+        (member(Object,NotHandeledObjects),
         object_bonus(Object, 0),
         object_benefit(Object, Benefit),
         object_cost(Object,Cost),
-        Score is Benefit/Cost),
-        ObjectScore),
-    ros_info([objectscore,ObjectScore]),
-    maplist(nth0(1), ObjectScore, Scores),
-    ros_info([scores,Scores]),
-    max_list(Scores, MaxScore),
-    member([Object, MaxScore], ObjectScore).
+        CBRatio is Benefit/Cost),
+        ObjectCBRatio0),
+        (ObjectCBRatio0 == []
+        -> 
+        findall([Object,CBRatio],
+            (member(Object,NotHandeledObjects),   
+            object_benefit(Object, Benefit),
+            object_cost(Object,Cost),
+            CBRatio is Benefit/Cost),
+            ObjectCBRatio)
+        ;   ObjectCBRatio0 = ObjectCBRatio
+        ),
+    maplist(nth0(1), ObjectCBRatio, CBRatios),
+    max_list(CBRatios, MaxCBRatio),
+    member([Object, MaxCBRatio], ObjectCBRatio),
+    set_object_handeled(Object),
+    !.
+
 
 %% object_bendefits(+Object, -ObjectBenefits) is semidet.
 %
