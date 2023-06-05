@@ -23,7 +23,7 @@
 		  ros_warn/2
 	      ]).
 
-%% wu_palmer_similarity(+ClassA, +ClassB, -Similarity) is det.
+%% wu_palmer_similarity(+ClassA, +ClassB, -Similarity) is semidet.
 %
 % Calculates the Wu-Palmer similarity between two classes.
 % The similarity can be 0 < similarity <= 1.
@@ -33,9 +33,17 @@
 % @param ClassB Second of the two classes
 % @param Similarity The similarty measure between 0 (not similar) and 1 (most similar)
 %
-wu_palmer_similarity(ClassA, ClassA, 1) :- 
+wu_palmer_similarity(ClassA, ClassB, MaxSimilarity) :-
+    findall(Similarity, find_wu_palmer_similarity(ClassA, ClassB, Similarity), Similarities),
+    max_list(Similarities, MaxSimilarity).
+
+%% find_wu_palmer_similarity(+ClassA, +ClassB, -Similarity) is nondet.
+%
+% Helper predicate to find all possible LCSs and calculate the similarity for each of them.
+%
+find_wu_palmer_similarity(ClassA, ClassA, 1) :- 
     !.
-wu_palmer_similarity(ClassA, ClassB, Similarity) :-
+find_wu_palmer_similarity(ClassA, ClassB, Similarity) :-
     % Get the least common subsumer (LCS)
     lcs(ClassA, ClassB, LCS),
     % Calculate the depth of the LCS and both classes
@@ -49,7 +57,7 @@ wu_palmer_similarity(ClassA, ClassB, Similarity) :-
 %
 % Least common subsumer/superclass (LCS) of two classes.
 % The LCS is the most specific class that is a superclass of both classes.
-% If there are multiple LCSs, the LCS with the lowest depth in the ontology hierarchy is returned.
+% If one of the classes is present multiple times in the ontology hierarchy, there might be multiple LCSs.
 %
 % @param ClassA One of the two classes
 % @param ClassB Second of the two classes
@@ -62,8 +70,6 @@ lcs(ClassA, ClassB, LCS) :-
     member(LCS, CommonSuperClasses),
     \+ (
         member(OtherCommonSuperClass, CommonSuperClasses),
-        member(OtherCommonSuperClass, SuperClassesA),
-        member(OtherCommonSuperClass, SuperClassesB),
         OtherCommonSuperClass \= LCS,
         superclasses(OtherCommonSuperClass, OtherSuperClasses),
         member(LCS, OtherSuperClasses)
