@@ -1,4 +1,6 @@
-%% The WuPalmer module contains predicates that can calculate the similarity between two classes of an ontology.
+%% Semantic Similarity
+% The Semantic Similarity module contains predicates that can calculate the similarity between two classes of an ontology.
+% It further contains predicates to find superclasses and subclasses of a class and calculate the depth of a class in the ontology hierarchy.
 :- module(semantic_similarity,
 	  [
         wu_palmer_similarity(r,r,-),
@@ -7,7 +9,9 @@
         subclasses(r,-),
         direct_superclasses(r,-),
         direct_subclasses(r,-),
-        class_depths(r,-)
+        class_depths(r,-),
+        min_class_depth(r,-),
+        max_class_depth(r,-)
 	  ]).
 
 :- use_module(library('semweb/rdf_db')).
@@ -21,49 +25,49 @@
 
 %% wu_palmer_similarity(+ClassA, +ClassB, -Similarity) is det.
 %
-% Calculates the Wu-Palmer similarity between two classes
+% Calculates the Wu-Palmer similarity between two classes.
+% The similarity can be 0 < similarity <= 1.
+% The similarity can never be zero because the depth of the LCS is never zero (the depth of the root of taxonomy is one). 
 %
 % @param ClassA One of the two classes
 % @param ClassB Second of the two classes
 % @param Similarity The similarty measure between 0 (not similar) and 1 (most similar)
 %
+wu_palmer_similarity(ClassA, ClassA, 1) :- 
+    !.
 wu_palmer_similarity(ClassA, ClassB, Similarity) :-
     % Get the least common subsumer (LCS)
     lcs(ClassA, ClassB, LCS),
     % Calculate the depth of the LCS and both classes
-    (class_depths(LCS, DepthsLCS), min_list(DepthsLCS, DepthLCS)),
-    (class_depths(ClassA, DepthsClassA), min_list(DepthsClassA, DepthClassA)),
-    (class_depths(ClassB, DepthsClassB), min_list(DepthsClassB, DepthClassB)),
+    min_class_depth(LCS, DepthLCS),
+    min_class_depth(ClassA, DepthClassA),
+    min_class_depth(ClassB, DepthClassB),
     % Calculate the Wu-Palmer similarity measure
     Similarity is (2 * DepthLCS) / (DepthClassA + DepthClassB).
 
-%% lcs(+ClassA, +ClassB, -LCS) is semidet.
+%% lcs(+ClassA, +ClassB, -LCS) is nondet.
 %
 % Least common subsumer/superclass (LCS) of two classes.
+% The LCS is the most specific class that is a superclass of both classes.
+% If there are multiple LCSs, the LCS with the lowest depth in the ontology hierarchy is returned.
 %
 % @param ClassA One of the two classes
 % @param ClassB Second of the two classes
 % @param LCS The least common subsumer of the two classes
 %
 lcs(ClassA, ClassB, LCS) :-
-    % Get the superclasses of both classes
     superclasses(ClassA, SuperClassesA),
     superclasses(ClassB, SuperClassesB),
-    ros_warn('Superclasses of ~w: ~w', [ClassA, SuperClassesA]),
-    ros_warn('Superclasses of ~w: ~w', [ClassB, SuperClassesB]),
-    % Find the least common subsumer (LCS)
-    find_lcs(SuperClassesA, SuperClassesB, LCS).
-
-%% find_lcs(+ClassList1, +ClassList2, -LCS) is semidet.
-%
-% Helper predicate to find the least common subsumer (LCS).
-% ClassesA are expected be ordered from most specific to least specific.
-%
-find_lcs([Class|_], Classes, Class) :-
-    member(Class, Classes),
-    !.
-find_lcs([_|ClassesA], ClassesB, LCS) :-
-    find_lcs(ClassesA, ClassesB, LCS).
+    intersection(SuperClassesA, SuperClassesB, CommonSuperClasses),
+    member(LCS, CommonSuperClasses),
+    \+ (
+        member(OtherCommonSuperClass, CommonSuperClasses),
+        member(OtherCommonSuperClass, SuperClassesA),
+        member(OtherCommonSuperClass, SuperClassesB),
+        OtherCommonSuperClass \= LCS,
+        superclasses(OtherCommonSuperClass, OtherSuperClasses),
+        member(LCS, OtherSuperClasses)
+    ).
 
 %% superclasses(+Class, -SuperClasses) is det.
 %
@@ -72,7 +76,7 @@ find_lcs([_|ClassesA], ClassesB, LCS) :-
 % Blank nodes are excluded from the results.
 %
 % @param Class The IRI or abbreviated name of the class.
-% @param SuperClasses A list of all direct and indirect superclasses, ordered from most specific to least specific.
+% @param SuperClasses A list of all direct and indirect superclasses
 %
 superclasses(Class, SuperClasses) :-
     setof(SuperClass, find_superclass(Class, SuperClass), SuperClasses).
@@ -169,3 +173,25 @@ find_class_depth(Class, Visited, Depth) :-
             Depth is SuperClassDepth + 1
         )
     ).
+
+%% min_class_depth(+Class, -Depth) is det.
+%
+% Finds the minimum depth level of the given class in the ontology hierarchy.
+%
+% @param Class The IRI or abbreviated name of the class.
+% @param Depth The minimum depth level of the given class.
+%
+min_class_depth(Class, Depth) :-
+    class_depths(Class, Depths),
+    min_list(Depths, Depth).
+
+%% max_class_depth(+Class, -Depth) is det.
+%
+% Finds the maximum depth level of the given class in the ontology hierarchy.
+%
+% @param Class The IRI or abbreviated name of the class.
+% @param Depth The maximum depth level of the given class.
+%
+max_class_depth(Class, Depth) :-
+    class_depths(Class, Depths),
+    max_list(Depths, Depth).
