@@ -24,6 +24,7 @@ create_object(Object, Type, PoseStamped) :-
 % This predicate also processes options:
 % - shape(ShapeTerm)
 % - data_source(DataSource) (should be either perception or semantic_map, as described in [object_model.md](../../../object_model.md)
+% - confidence_value(ConfidenceValue) (Confidence is between 0 and 1)
 create_object(Object, Type, [Frame, [X,Y,Z], [RX,RY,RZ,RW]], Options) :-
     from_current_scope(Scope),
     kb_project(is_type(Object, Type), Scope),
@@ -31,7 +32,12 @@ create_object(Object, Type, [Frame, [X,Y,Z], [RX,RY,RZ,RW]], Options) :-
     option(shape(Shape), Options, none),
     assert_shape(Object, Shape, Scope, SR),
     option(data_source(DataSource), Options, perception),
-    kb_project(triple(Object, suturo:hasDataSource, DataSource), Scope),
+    kb_project(triple(Object, suturo:hasDataSource, DataSource)),
+	option(confidence_value(ConfidenceValue), Options, 1),
+    kb_project(triple(Object, suturo:hasConfidenceValue, ConfidenceValue)),
+    kb_project((new_iri(HandleState),
+				triple(Object, suturo:hasHandleState, HandleState),
+				triple(HandleState,suturo:handled,false))),
     % doesn't work currently, see https://github.com/knowrob/knowrob/issues/371 for more information.
     %assert_origin(SR, Scope),
     !.
