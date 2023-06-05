@@ -1,8 +1,10 @@
 %% Semantic Similarity
 % The Semantic Similarity module contains predicates that can calculate the similarity between two classes of an ontology.
+% This is usefull to find the most similar class to a given class.
 % It further contains predicates to find superclasses and subclasses of a class and calculate the depth of a class in the ontology hierarchy.
 :- module(semantic_similarity,
 	  [
+        most_similar_object(r,+,-),
         wu_palmer_similarity(r,r,-),
         lcs(r,r,-),
         superclasses(r,-),
@@ -22,6 +24,30 @@
 		  is_bnode/1,
 		  ros_warn/2
 	      ]).
+
+%% most_similar_object(+Object, +InputObjects, -MostSimilarObject) is semidet.
+%
+% Finds the most similar object to the given object from a list of objects.
+% The similarity is calculated using the Wu-Palmer similarity measure.
+%
+% @param Object The IRI or abbreviated name of the object instance.
+% @param InputObjects A list of object instances to compare the given object to.
+% @param MostSimilarObject The object instance from the list that is most similar to the given object.
+%
+most_similar_object(Object, InputObjects, MostSimilarObject) :-
+    triple(Object, rdf:type, ClassA),
+    findall(
+        Similarity-InputObject,
+        (
+            member(InputObject, InputObjects),
+            triple(InputObject, rdf:type, ClassB),
+            wu_palmer_similarity(ClassA, ClassB, Similarity)
+        ),
+        SimilaritiesAndObjects
+    ),
+    sort(SimilaritiesAndObjects, SortedSimilaritiesAndObjects),
+    reverse(SortedSimilaritiesAndObjects, DescendingSimilaritiesAndObjects),
+    DescendingSimilaritiesAndObjects = [_-MostSimilarObject|_].
 
 %% wu_palmer_similarity(+ClassA, +ClassB, -Similarity) is semidet.
 %
