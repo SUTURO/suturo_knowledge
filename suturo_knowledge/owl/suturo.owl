@@ -28,15 +28,6 @@
     
 
 
-    <!-- http://www.ease-crc.org/ont/SUTURO.owl#hierarchyLevel -->
-
-    <owl:AnnotationProperty rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#hierarchyLevel">
-        <rdfs:comment>The hierarchy level defines the depth of the entity in the knowledge tree hierarchy. It can be present on multiple levels and therefore have multiple hierarchyLevels.</rdfs:comment>
-        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
-    </owl:AnnotationProperty>
-    
-
-
     <!-- http://www.ease-crc.org/ont/SUTURO.owl#perceptionId -->
 
     <owl:AnnotationProperty rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#perceptionId">
