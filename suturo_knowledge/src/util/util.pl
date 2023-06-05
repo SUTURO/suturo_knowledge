@@ -4,11 +4,14 @@
 	      has_urdf_name(?,?),
 	      has_tf_name(?,?),
           split_iri(+, -, -),
+          is_bnode(+),
 	      ros_info(+,+),
 	      ros_warn(+,+),
 	      ros_error(+,+),
 	      ros_debug(+,+)
 	  ]).
+
+:- use_module(library('semweb/rdf_db')).
 
 :- use_module(library('lang/terms/triple'),
 	      [
@@ -57,18 +60,28 @@ has_tf_name(URDFName, TFName) :-
 
 % split_iri(+IRI, -Prefix, -ClassIdentifier)
 % 
-% Splits an IRI of the form <Prefix>#<ClassIdentifier> into the prefix part and the class identifier.
+% Splits an IRI of the form <OntologyURI>#<ClassIdentifier> into the prefix part and the class identifier.
 % 
 % @param IRI The IRI to split
-% @param Prefix The prefix part of the IRI
+% @param OntologyURI The prefix part of the IRI, usually the namespace/ontology uri
 % @param ClassIdentifier The class identifier part of the IRI
 % 
-split_iri(IRI, Prefix, ClassIdentifier) :-
+split_iri(IRI, OntologyURI, ClassIdentifier) :-
     sub_atom(IRI, Before, _, After, '#'),
     !,
-    sub_atom(IRI, 0, Before, _, Prefix),
+    sub_atom(IRI, 0, Before, _, OntologyURI),
     sub_atom(IRI, _, After, 0, ClassIdentifier).
 
+
+%% is_bnode(+IRI) is det.
+%
+% True if the given IRI is a blank node.
+%
+% @param IRI The IRI to check
+%
+is_bnode(IRI) :-
+    split_iri(IRI, _, ClassIdentifier),
+    rdf_is_bnode(ClassIdentifier).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Debugging
