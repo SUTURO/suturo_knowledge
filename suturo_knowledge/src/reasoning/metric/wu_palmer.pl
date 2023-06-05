@@ -8,7 +8,8 @@
         superclasses(r,-),
         subclasses(r,-),
         direct_superclasses(r,-),
-        direct_subclasses(r,-)
+        direct_subclasses(r,-),
+        class_depths(r,-)
 	  ]).
 
 :- use_module(library('semweb/rdf_db')).
@@ -190,3 +191,39 @@ direct_subclasses(Class, DirectSubClasses) :-
 is_bnode(IRI) :-
     split_iri(IRI, _, ClassIdentifier),
     rdf_is_bnode(ClassIdentifier).
+
+%% class_depths(+Class, -Depths) is det.
+%
+% Finds all depth levels of the given class in the ontology hierarchy.
+% The depth of a class is defined as the number of superclass links from the class to the root of the ontology.
+% Each depth level is calculated by traversing the hierarchy from the class upwards to the root.
+% The root of the ontology is a class that has no superclasses.
+%
+% @param Class The IRI or abbreviated name of the class.
+% @param Depths A list of all depth levels of the given class, each represented by an integer.
+%
+class_depths(Class, Depths) :-
+    findall(Depth, class_depth(Class, [], Depth), Depths).
+
+%% class_depth(+Class, +Visited, -Depth) is nondet.
+%
+% Finds a depth level of the given class in the ontology hierarchy by traversing the hierarchy from the class upwards to the root.
+% The depth is represented by an integer.
+% To avoid infinite loops caused by cycles in the hierarchy, it keeps track of the visited classes.
+%
+% @param Class The IRI or abbreviated name of the class.
+% @param Visited A list of classes that have already been visited during the traversal.
+% @param Depth The depth level of the given class.
+%
+class_depth(Class, Visited, Depth) :-
+    direct_superclasses(Class, DirectSuperClasses),
+    ros_warn('DirectSuperClasses ~w', [Class]),
+    exclude(member(Visited), DirectSuperClasses, UnvisitedSuperClasses),
+    (
+        UnvisitedSuperClasses = [] -> Depth = 0;
+        (
+            member(SuperClass, UnvisitedSuperClasses),
+            class_depth(SuperClass, [Class|Visited], SuperClassDepth),
+            Depth is SuperClassDepth + 1
+        )
+    ).
