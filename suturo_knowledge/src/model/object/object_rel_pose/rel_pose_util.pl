@@ -1,8 +1,6 @@
 :- module(rel_pose_util,
 	  [
 	      fix_direction(+,-),
-	      center_pose(r,-,-),
-	      move_to_center(+,-,-),
 	      dir_size(+,+,-),
 	      rotate_dir(+,-),
 	      direction_quaternion(+,-),
@@ -17,28 +15,6 @@ fix_direction(-x,'-x'):- !.
 fix_direction(+x,'+x'):- !.
 fix_direction(-y,'-y'):- !.
 fix_direction(+y,'+y'):- !.
-
-%% center_pose(+Object, -Pose, -ShapeTerm) is semidet.
-%
-% This predicate returns the shape and the center pose of an Object.
-% If the object is of type table, it is assumed that the pose is the front edge center and as that should be moved_to_center/3 d.
-center_pose(Object, Pose, ShapeTerm) :-
-    object_shape_workaround(Object, _, ShapeTerm, _, _),
-    % TODO: Fix object_shape
-    object_pose(Object, BasePose),
-    %tmp_object_shape(Object, ShapeTerm),
-    (  kb_call(is_table(Object)) % Base Pose is front edge center for tables
-    -> move_to_center(BasePose, ShapeTerm, Pose)
-    ;  Pose = BasePose),
-    !.    
-
-%% move_to_center(+FrontEdgePose, +ShapeTerm, -CenterPose) is semidet.
-%
-% Move the position by half the size in x direction.
-% This is useful to get from the table:front_edge_center to the center of the table.
-move_to_center([Frame,[X,Y,Z], Rotation], ShapeTerm, [Frame,[X2,Y,Z], Rotation]) :-
-    dir_size('-x', ShapeTerm, Size),
-    X2 is X + (Size/2).
 
 %% dir_size(+Dir, +Object, -Size) is semidet.
 %

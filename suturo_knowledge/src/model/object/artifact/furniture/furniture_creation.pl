@@ -108,7 +108,7 @@ furniture_shape(FurnitureLink, ShapeTerm) :-
     urdf_link_collision_shape(URDF, CollisionLink, ShapeTerm, _).
 
 collision_link(CollisionLink, CollisionLink) :-
-    atom_concat(Prefix, 'table_center', CollisionLink).
+    atom_concat(_Prefix, 'table_center', CollisionLink).
 
 collision_link(FurnitureLink, CollisionLink) :-
     atom_concat(Prefix, '_front_top', FurnitureLink),

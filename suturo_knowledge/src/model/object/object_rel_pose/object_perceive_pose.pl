@@ -13,7 +13,8 @@
 %
 % get the pose from which the object should be perceived.
 object_perceive_pose(Object, Options, [Frame, Pos, Rotation]) :-
-    center_pose(Object, Pose, ShapeTerm),
+    object_shape_workaround(Object, _, ShapeTerm, _, _),
+    object_pose(Object, Pose),
     option(direction(Dir), Options, '-x'),
     dir_size(Dir, ShapeTerm, Size),
     perceive_distance(Object, PerceiveDistance),
