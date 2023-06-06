@@ -103,7 +103,7 @@ assert_relative_position(Object, Scope) :-
 suturo_is_ontop_of(Object, Furniture, Distance) :-
     object_shape_workaround(Furniture, Frame, ShapeTerm, [_, [XX, YY, ZZ], _], _),
     kb_call(is_at(Object, [Frame, [X,Y,Z], _])),
-    ShapeTerm = box(DX, DY, DZ),
+    ShapeTerm = box(DX, DY, _DZ),
     default_value(XX, 0),
     default_value(YY, 0),
     default_value(ZZ, 0),
@@ -116,8 +116,9 @@ suturo_is_ontop_of(Object, Furniture, Distance) :-
     Y =< -YY + DY/2,
     Y >= -YY - DY/2,
     % Z has to be above
-    Z >= -ZZ + DZ/2,
-    Distance is Z - (-ZZ + DZ/2).
+    % this code assumes that the frame is at the top center of the furniture.
+    Z >= ZZ,
+    Distance is Z + ZZ.
 
 %% from_current_scope(-Scope) is det.
 %

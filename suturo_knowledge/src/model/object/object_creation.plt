@@ -21,7 +21,7 @@ object_creation_cleanup :-
 	tf_mng_drop.
 
 :- rdf_meta(test_table(+,r,-,-)).
-test_table(1, soma:'Table', [map, [2,-2,0.5], [0,0,0,1]], [dataSource(semantic_map), shape(box(3,2,1))]).
+test_table(1, soma:'Table', [map, [2,-2,1], [0,0,0,1]], [dataSource(semantic_map), shape(box(3,2,1))]).
 
 setup_test_table(Num, Table) :-
     test_table(Num, Type, Pose, Options),
