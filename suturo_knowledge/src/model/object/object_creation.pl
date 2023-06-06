@@ -6,6 +6,8 @@
 
 :- rdf_meta(shape_class(+,r)).
 
+:- use_module(library('util/util'), [default_value/2]).
+
 %% create_object(-Object, +Type, +PoseStamped) is det.
 %
 % Create an object of type Type at the given PoseStamped.
@@ -32,6 +34,10 @@ create_object(Object, Type, [Frame, [X,Y,Z], [RX,RY,RZ,RW]], Options) :-
     option(shape(Shape), Options, none),
     assert_shape(Object, Shape, Scope, SR),
     option(data_source(DataSource), Options, perception),
+    (  DataSource == perception
+       % ignore, because maybe object is not above any furniture
+    -> ignore(assert_relative_position(Object, Scope))
+    ;  true),
     kb_project(triple(Object, suturo:hasDataSource, DataSource)),
 	option(confidence_value(ConfidenceValue), Options, 1),
     kb_project(triple(Object, suturo:hasConfidenceValue, ConfidenceValue)),
@@ -82,6 +88,38 @@ assert_shape_region(SR, cylinder(Radius,Length), Scope) :-
 assert_shape_region(SR, sphere(Radius), Scope) :-
 	kb_project(triple(SR, soma:hasRadius, Radius), Scope),
 	!.
+
+assert_relative_position(Object, Scope) :-
+    findall([Furniture, Distance],
+            % only objects of the semantic map can be stood on
+            (triple(Furniture, suturo:hasDataSource, semantic_map),
+             suturo_is_ontop_of(Object, Furniture, Distance)),
+            Furnitures),
+    maplist(nth0(1), Furnitures, Distances),
+    min_list(Distances, MinumumDistance),
+    member([Furniture,MinumumDistance], Furnitures),
+    kb_project(triple(Object, soma:isOntopOf, Furniture), Scope).
+
+suturo_is_ontop_of(Object, Furniture, Distance) :-
+    object_shape_workaround(Furniture, Frame, ShapeTerm, [_, [XX, YY, ZZ], _], _),
+    %% is at works the wrong way for indirect queries.
+	iri_xml_namespace(Object, _, ObjectFrame),
+    kb_call(is_at(Furniture, [ObjectFrame, [X,Y,Z], _])),
+    ShapeTerm = box(DX, DY, DZ),
+    default_value(XX, 0),
+    default_value(YY, 0),
+    default_value(ZZ, 0),
+    % Assuming z is up direction,
+    % X and Y have to be above the area of the table.
+    % so between center + diameter / 2 and center - diameter / 2.
+    % center is at -offset
+    X =< -XX + DX/2,
+    X >= -XX - DX/2,
+    Y =< -YY + DY/2,
+    Y >= -YY - DY/2,
+    % Z has to be above
+    Z >= -ZZ + DZ/2,
+    Distance is Z - (-ZZ + DZ/2).
 
 %% from_current_scope(-Scope) is det.
 %
