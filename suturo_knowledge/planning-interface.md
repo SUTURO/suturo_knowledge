@@ -101,6 +101,7 @@ The `Type` can be the full IRI or the namespace:'Name' form.
 
 The Options that can be processed are:
 - `shape(ShapeTerm)` - optional, the shape the object has. If not specified, knowledge will have no shape information about this object.
+- class_confidence -  a confidence that a robot has about the recognition of objects
 ```prolog
 create_object(-Object, +Type, +PoseStamped) is det.
 create_object(-Object, +Type, +PoseStamped, +Options) is det.
@@ -179,3 +180,34 @@ Pose: ['iai_kitchen/shelf:shelf:shelf_base_center', [0.0, -0.1, 0.51], [0.0, 0.0
 ```
 
 For more details, see [`src/model/object/object_rel_pose/README.md`](src/model/object/object_rel_pose/README.md).
+
+### Semantic Similarity Measure
+
+#### Most Similar Object
+
+Finds the most similar object to the given object from a list of objects.
+
+```prolog	
+most_similar_object(+Object, +InputObjects, -MostSimilarObject) is semidet.
+```
+
+Example:
+```prolog
+?- most_similar_object('http://www.ease-crc.org/ont/SUTURO.owl#Strawberry_FDMTIOJK', ['http://www.ease-crc.org/ont/SOMA.owl#CerealBox_QHUCMGZP', 'http://www.ease-crc.org/ont/SUTURO.owl#Banana_WRQHESGO', 'http://www.ease-crc.org/ont/SOMA.owl#Knife_SZIFXLCO'], Object).
+
+Object: 'http://www.ease-crc.org/ont/SUTURO.owl#Banana_WRQHESGO'.
+```
+
+#### Wu-Palmer Similarity
+
+Calculates the Wu-Palmer similarity between two classes. The similarity can be 0 < similarity <= 1.  
+
+```prolog
+wu_palmer_similarity(Class1, Class2, Similarity) is semidet.
+```
+
+Example:
+```prolog
+?- wu_palmer_similarity(suturo:'Banana', suturo:'Strawberry', Similarity).
+Similarity: 0.875.
+```
