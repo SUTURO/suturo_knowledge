@@ -9,7 +9,9 @@
 		update_handle_state(r,+),
 		handled(r),
 		not_handled(r),
-		objects_not_handled(-)
+		objects_not_handled(-),
+		predefined_origin_location(r,-),
+	  	predefined_destination_location(r,-)
 	  ]).
 
 :- use_module(library('ros/tf/tf'),
@@ -131,3 +133,25 @@ objects_not_handled(Objects):-
         not_handled(Object)
     ),
     Objects).
+
+%% predefined_origin_location(+Class, -OriginLocation) is semidet.
+%
+% Get the predefined origin location of an object class.
+% The OriginLocation is the location (reference object) where the object is placed at the beginning of the task.
+% 
+% @param Class The IRI or abbreviated name of the class. 
+% @param OriginLocation The predefined origin location.
+%
+predefined_origin_location(Class, OriginLocation) :-
+    holds(Class, suturo:hasOriginLocation, OriginLocation).
+
+%% predefined_destination_location(+Class, -DestinationLocation) is semidet.
+%
+% Get the predefined destination location of an object class.
+% The DestinationLocation is the location (reference object) where the object should placed at the end of the task.
+% 
+% @param Class The IRI or abbreviated name of the class. 
+% @param DestinationLocation The predefined destination location.
+%
+predefined_destination_location(Class, DestinationLocation) :-
+    holds(Class, suturo:hasDestinationLocation, DestinationLocation).

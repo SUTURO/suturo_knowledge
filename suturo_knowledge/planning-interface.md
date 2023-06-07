@@ -181,6 +181,27 @@ Pose: ['iai_kitchen/shelf:shelf:shelf_base_center', [0.0, -0.1, 0.51], [0.0, 0.0
 
 For more details, see [`src/model/object/object_rel_pose/README.md`](src/model/object/object_rel_pose/README.md).
 
+### Getting the predefined location of an object
+
+For `Serving Breakfast` the predicate `init_object_info_serving_breakfast.` has to be called first to load/initialize the predefined locations.
+
+Get the predefined origin and destination location of object classes.
+The predefined locations are the location (or reference object) where the object is placed at the beginning of the task or should be placed at the end of the task.
+
+```prolog
+predefined_origin_location(+Object, -Location) is semidet.
+predefined_destination_location(+Class, -DestinationLocation) is semidet.
+```
+
+Example:
+```prolog
+?- predefined_origin_location(soma:'Bowl', OriginLocation).
+OriginLocation: 'http://www.ease-crc.org/ont/SOMA.owl#Table_FNSVGYRI'.
+
+?- predefined_origin_location(soma:'Bowl', DestinationLocation).
+DestinationLocation: 'http://www.ease-crc.org/ont/SOMA.owl#Table_BPXIQGES'.
+```
+
 ### Semantic Similarity Measure
 
 #### Most Similar Object
