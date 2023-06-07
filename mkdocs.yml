@@ -1,0 +1,56 @@
+site_name: SUTURO Knowledge
+repo_name: suturo_knowledge
+repo_url: https://github.com/SUTURO/suturo_knowledge
+edit_uri: https://github.com/SUTURO/suturo_knowledge/edit/master/docs
+theme:
+  name: "material"
+  language: en
+  favicon: assets/images/favicon.png
+  logo: assets/images/suturo-knowledge-logo-white-512.png
+  font:
+    text: Montserrat
+  icon:
+    repo: fontawesome/brands/github
+  features:
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.path
+    - navigation.top
+    - toc.integrate
+    - search.suggest
+    - content.action.edit
+    - content.code.copy
+  palette:
+    - scheme: suturo
+      primary: custom
+plugins:
+  - search
+markdown_extensions:
+  - attr_list
+  - md_in_html
+  - def_list
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+  - pymdownx.emoji:
+      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+extra_css:
+  - https://cdn.datatables.net/v/dt/jq-3.6.0/dt-1.13.4/r-2.4.1/datatables.min.css
+  - assets/stylesheets/extra.css
+extra_javascript:
+  - https://cdn.datatables.net/v/dt/jq-3.6.0/dt-1.13.4/r-2.4.1/datatables.min.js
+  - assets/javascripts/extra.js
+nav:
+  - Overview: index.md
+  - Planning API: planning-interface.md
+  - Objects: objects.md
