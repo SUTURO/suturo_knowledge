@@ -167,7 +167,7 @@ predefined_destination_location(+Class, -DestinationLocation) is semidet.
 ```
 
 !!! warning
-    For `Serving Breakfast` the predicate `init_object_info_serving_breakfast.` has to be called first to load/initialize the challenge specific predefined locations.
+    For `Serving Breakfast` the predicate `init_serving_breakfast.` has to be called first to load/initialize the challenge specific predefined locations.
 
 Example:
 ```prolog

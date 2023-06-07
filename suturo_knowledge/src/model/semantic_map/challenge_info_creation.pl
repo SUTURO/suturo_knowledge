@@ -1,7 +1,7 @@
-%% This module initializes predefined information about objects in the environment
-:- module(object_info_creation,
+%% This module initializes challenge specific predefined information.
+:- module(challenge_info_creation,
 	  [
-        init_object_info_serving_breakfast/0
+            init_serving_breakfast/0
 	  ]).
 
 :- use_module(library('util/util'),
@@ -9,8 +9,8 @@
       ros_info/2
       ]).
 
-init_object_info_serving_breakfast :-
-    ros_info('Initializing object info for serving breakfast', []),
+init_serving_breakfast :-
+    ros_info('Initializing object info for serving breakfast...', []),
     has_urdf_name(OriginLocation, 'shelf:shelf:shelf_base_center'),
     kb_project(holds(soma:'Bowl', suturo:hasOriginLocation, OriginLocation)),
     kb_project(holds(soma:'CerealBox', suturo:hasOriginLocation, OriginLocation)),
@@ -20,4 +20,5 @@ init_object_info_serving_breakfast :-
     kb_project(holds(soma:'Bowl', suturo:hasDestinationLocation, DestinationLocation)),
     kb_project(holds(soma:'CerealBox', suturo:hasDestinationLocation, DestinationLocation)),
     kb_project(holds(soma:'Spoon', suturo:hasDestinationLocation, DestinationLocation)),
-    kb_project(holds(soma:'MilkPack', suturo:hasDestinationLocation, DestinationLocation)).
+    kb_project(holds(soma:'MilkPack', suturo:hasDestinationLocation, DestinationLocation)),
+    ros_info('Serving breakfast initialized.', []).
