@@ -48,14 +48,36 @@
     
 
 
-    <!-- http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedCategory -->
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#hasDestinationLocation -->
 
-    <owl:ObjectProperty rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedCategory">
-        <rdfs:subPropertyOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#isClassifiedBy"/>
-        <rdfs:comment>A predefined category refers to a pre-existing grouping or classification of items, objects, or entities based on specific criteria or characteristics. It is a standardized method of organizing and categorizing things that can simplify the process of identifying and describing them.</rdfs:comment>
-        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
-        <rdfs:label xml:lang="en">has predefined category</rdfs:label>
+    <owl:ObjectProperty rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#hasDestinationLocation">
+        <rdfs:subPropertyOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedLocation"/>
     </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#hasOriginLocation -->
+
+    <owl:ObjectProperty rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#hasOriginLocation">
+        <rdfs:subPropertyOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedLocation"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedLocation -->
+
+    <owl:ObjectProperty rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedLocation">
+        <rdfs:subPropertyOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#associatedWith"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#hasLocation -->
+
+    <rdf:Description rdf:about="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#hasLocation">
+        <rdfs:subPropertyOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasDestinationLocation"/>
+        <rdfs:subPropertyOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasOriginLocation"/>
+    </rdf:Description>
     
 
 
@@ -141,6 +163,12 @@ For example the Tables come from semantic_map, while the objects perception got 
     <!-- http://www.ease-crc.org/ont/SOMA.owl#Bowl -->
 
     <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Bowl">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#hasPositionData"/>
+                <owl:hasValue>Text</owl:hasValue>
+            </owl:Restriction>
+        </rdfs:subClassOf>
         <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">29</SUTURO:perceptionId>
     </rdf:Description>
     
