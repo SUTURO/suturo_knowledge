@@ -125,11 +125,13 @@ There might be a better predicate for this in the future, and the blanks in the 
 Gets a position relative to the object based on the type of relation.
 
 Valid `Type`s are 
+
  - `perceive`: (Optimal) Pose for the robot to position at to perceive the object
  - `interact`: (Optimal) Pose for the robot to position at to interact with the object (eg. grasp with the gripper)
  - `destination`: Returns the destination pose of an object. The destination pose is the pose where the object should be placed based on their predefined locations and current context. The destination might change over time.
  
-Valid entries in the Option list are
+Valid entries in the `Options` list are
+
 - `direction(Dir)` with `Dir` being one of `['-x', '+x', '-y', '+y']`. This Option specifies the direction from which the robot should approach the object.
   For example, if `direction('-x')` is set, the position will have an x value that is smaller than the x value of the object.
   Currently this is only implemented for perceive.
@@ -170,9 +172,9 @@ predefined_destination_location(+Class, -DestinationLocation) is semidet.
 Example:
 ```prolog
 ?- predefined_origin_location(soma:'Bowl', OriginLocation).
-OriginLocation: 'http://www.ease-crc.org/ont/SOMA.owl#Table_FNSVGYRI'.
+OriginLocation: 'http://www.ease-crc.org/ont/SOMA.owl#Shelf_FNSVGYRI'.
 
-?- predefined_origin_location(soma:'Bowl', DestinationLocation).
+?- predefined_destination_location(soma:'Bowl', DestinationLocation).
 DestinationLocation: 'http://www.ease-crc.org/ont/SOMA.owl#Table_BPXIQGES'.
 ```
 
