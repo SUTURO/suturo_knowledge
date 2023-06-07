@@ -11,7 +11,7 @@
 
 init_object_info_serving_breakfast :-
     ros_info('Initializing object info for serving breakfast', []),
-    has_urdf_name(OriginLocation, 'right_table:table:table_front_edge_center'),
+    has_urdf_name(OriginLocation, 'shelf:shelf:shelf_base_center'),
     kb_project(holds(soma:'Bowl', suturo:hasOriginLocation, OriginLocation)),
     kb_project(holds(soma:'CerealBox', suturo:hasOriginLocation, OriginLocation)),
     kb_project(holds(soma:'Spoon', suturo:hasOriginLocation, OriginLocation)),
