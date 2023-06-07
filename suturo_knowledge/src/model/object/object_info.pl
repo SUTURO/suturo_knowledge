@@ -2,7 +2,14 @@
 :- module(object_info,
 	  [
       	object_pose(r,-),
-      	object_predefined_destination_location(r,-)
+		tiny_object/1,
+		is_suturo_object/1,
+		set_object_handled/1,
+		set_object_not_handled/1,
+		update_handle_state/2,
+		handled/1,
+		not_handled/1,
+		objects_not_handled/1
 	  ]).
 
 :- use_module(library('ros/tf/tf'),
@@ -14,23 +21,3 @@
 % Get the pose of an object.
 object_pose(Object, PoseStamped) :-
     tf:tf_get_pose(Object, PoseStamped).
-
-%% object_predefined_origin_location(+Object, -PoseStamped) is semidet.
-%
-% Get the predefined origin location of an object.
-% 
-% @param Object The object.
-% @param PoseStamped The pose of the predefined origin location.
-%
-object_predefined_origin_location(Object, PoseStamped) :-
-    false.
-
-%% object_predefined_destination_location(+Object, -PoseStamped) is semidet.
-%
-% Get the predefined destination location of an object.
-% 
-% @param Object The object.
-% @param PoseStamped The pose of the predefined destination location.
-%
-object_predefined_destination_location(Object, PoseStamped) :-
-    false.
