@@ -1,5 +1,12 @@
 # Planning API Documentation
 
+## Quick lookup for planning
+
+Dropping the database: execute this in the shell and restart knowledge.
+```bash
+mongo roslog --eval "db.dropDatabase()"
+```
+
 ## Readers guide
 
 Each code documentation section contains:
