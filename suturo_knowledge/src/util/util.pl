@@ -10,7 +10,8 @@
 	      ros_info(+,+),
 	      ros_warn(+,+),
 	      ros_error(+,+),
-	      ros_debug(+,+)
+	      ros_debug(+,+),
+	      default_value(?,+)
 	  ]).
 
 :- use_module(library('semweb/rdf_db')).
@@ -154,3 +155,12 @@ ros_warn(Format, Arguments) :-
 ros_error(Format, Arguments) :-
     format(string(MSG), Format, Arguments),
     ros_error(MSG).
+
+%% default_value(?Term, +Value)
+%
+% if Term is a var, unify it with Value
+% otherwise leave it as it is.
+default_value(Term, Value) :-
+    (  var(Term)
+    -> Term = Value
+    ;  true).
