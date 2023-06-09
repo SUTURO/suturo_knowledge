@@ -103,7 +103,6 @@ furniture_pose(UrdfLink, [ObjectFrame, [0,0,0], [0,0,0,1]]) :-
 furniture_shape(UrdfLink, ShapeTerm) :-
     get_urdf_id(URDF),
     collision_link(UrdfLink, CollisionLink),
-    ros_info('CollisionLink ~w', [CollisionLink]),
     urdf_link_collision_shape(URDF, CollisionLink, ShapeTerm, _).
 
 %% collision_link(+UrdfLink, -CollisionLink) is semidet.
