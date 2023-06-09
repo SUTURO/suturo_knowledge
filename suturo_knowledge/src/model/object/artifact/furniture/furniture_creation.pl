@@ -1,6 +1,4 @@
 %% This module loads and creates designed furniture in the database.
-%
-% Additionally it currently has predicates used in load_urdf_from_param/1 and init_furnitures/0 that should be moved somewhere else as soon as we have time.
 :- module(furniture_creation,
 	  [
 	      load_urdf_from_param(+),
@@ -10,7 +8,8 @@
 :- use_module(library('util/util'),
 	      [
 		  has_urdf_name/2,
-		  ros_warn/2
+		  ros_warn/2,
+		  ros_info/2
 	      ]).
 
 :- use_module(library('model/object/types'),
@@ -34,6 +33,19 @@ get_urdf_id(URDF) :-
 get_urdf_origin(Origin) :-
     Origin = map.
 
+%% load_urdf_from_param(+Param) is det.
+%
+% Is called as inital_goal in the launch file
+% Loads the urdf xml data stored in the ros parameter named Param and creates a URDF instance in the database
+%
+% @param Param Name of the ros parameter containing the urdf xml data
+%
+load_urdf_from_param(Param):-
+    (ros_param_get_string(Param, S) -> % S is the urdf file (a xml file) as a string
+	 get_urdf_id(URDF),
+	 urdf_load_xml(URDF, S)
+    ; ros_warn("Error getting ros Parameter for environment urdf")).
+
 %% is_furniture_link(?Link) is nondet
 %
 % True if Link is a link of a furniture in the URDF
@@ -41,26 +53,10 @@ get_urdf_origin(Origin) :-
 % @param Link Name of a URDF Link as String
 %
 is_furniture_link(Link) :-
+    ros_info("~w", [Link]),
     sub_string(Link,_,_,_,"table_front_edge_center");
     sub_string(Link,_,_,_,"shelf_base_center");
-%    sub_string(Link,_,_,_,"bucket_front_edge_center");
     sub_string(Link,_,_,_,"drawer_front_top").
-
-
-
-%%
-% is called as inital_goal in the launch file
-% loads the urdf xml data stored in the ros parameter named Param
-load_urdf_from_param(Param):-
-    (ros_param_get_string(Param,S) -> % S is the urdf file (a xml file) as a string
-	 get_urdf_id(URDF),
-	 urdf_load_xml(URDF,S)
-    ; ros_warn("Error getting ros Parameter for environment urdf")).
-    % set_pose_origin hangs because i can't supply the load_rdf option to urdf_load_xml/2
-    % get_urdf_origin(Origin),
-    % urdf_set_pose_to_origin(URDF,Origin).
-    % was in the old suturo code, looks like it doesn't do anything useful
-    %urdf_link_names(URDF,Links).
 
 %% init_furnitures is nondet
 %
