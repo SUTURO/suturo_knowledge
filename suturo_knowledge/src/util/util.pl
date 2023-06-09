@@ -5,6 +5,8 @@
 	      has_tf_name(?,?),
           split_iri(+, -, -),
           is_bnode(+),
+          last_element(+, -),
+          second_last_element(+, -),
 	      ros_info(+,+),
 	      ros_warn(+,+),
 	      ros_error(+,+),
@@ -82,6 +84,28 @@ split_iri(IRI, OntologyURI, ClassIdentifier) :-
 is_bnode(IRI) :-
     split_iri(IRI, _, ClassIdentifier),
     rdf_is_bnode(ClassIdentifier).
+
+%% last_element(+List, -LastElement) is det.
+%
+% Returns the last element of a list
+%
+% @param List List of elements
+% @param LastElement Last element of the list
+%
+last_element([X], X).
+last_element([_|T], X) :- 
+    last_element(T, X).
+
+%% second_last_element(+List, -SecondLastElement) is det.
+%
+% Returns the second last element of a list
+%
+% @param List List of elements
+% @param SecondLastElement Second last element of the list
+%
+second_last_element([X,_], X).
+second_last_element([_|T], X) :- 
+    second_last_element(T, X).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Debugging
