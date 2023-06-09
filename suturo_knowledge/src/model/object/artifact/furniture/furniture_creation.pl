@@ -1,4 +1,4 @@
-%% This module loads and creates designed furniture in the database.
+%% This module loads and creates objects from the semantic map in the database.
 :- module(furniture_creation,
 	  [
 	      load_urdf_from_param(+),
@@ -48,13 +48,13 @@ load_urdf_from_param(Param):-
 	 urdf_load_xml(URDF, S)
     ; ros_error("Error getting ros Parameter for environment urdf")).
 
-%% is_furniture_link(?Link) is nondet
+%% is_semantic_map_object(?Link) is nondet
 %
-% True if Link is a link of a furniture in the URDF
+% True if Link should be loaded for the knowledge semantic map
 %
 % @param Link Name of a URDF Link as String
 %
-is_furniture_link(Link) :-
+is_semantic_map_object(Link) :-
     (
         sub_string(Link,_,_,_,"table_center");
         sub_string(Link,_,_,_,"shelf_base_center");
@@ -62,71 +62,81 @@ is_furniture_link(Link) :-
         sub_string(Link,_,_,_,"door_center");
         sub_string(Link,_,_,_,"shelf_floor_");
         sub_string(Link,_,_,_,"shelf_door_");
-        sub_string(Link,_,_,_,"bucket_center")
+        sub_string(Link,_,_,_,"bucket_surface_center")
     ), % TODO: We exclude handles for now. They dont have consistent urdf link names
     \+ sub_string(Link,_,_,_,"handle").
 
-%% init_furnitures is nondet
+%% init_furnitures is det.
 %
-% Reads all furnitures from the URDF and creates an
-% instance of type soma:'DesignedFurniture' for each
+% Reads all relevant objects from the URDF and creates them as their respective instances
 %
 init_furnitures :-
     get_urdf_id(URDF),
     urdf_link_names(URDF, Links),
-    forall((member(FurnitureLink, Links),
-	    is_furniture_link(FurnitureLink)
+    forall((member(UrdfLink, Links),
+	    is_semantic_map_object(UrdfLink)
 	   ),
-	   init_furniture(FurnitureLink)).
+	   init_furniture(UrdfLink)).
 
-%% init_furnitures(?FurnitureLink) is nondet
+%% init_furnitures(?UrdfLink) is semidet.
 %
-% Creates a furniture instance of type soma:'DesignedFurniture'
-% and assigns surfaces
+% Creates an object instance of the respective class for the given URDF link and assigns surfaces
 %
-% @param FurnitureLink String of URDF Link name
+% @param UrdfLink Urdf link
 %
-init_furniture(FurnitureLink) :-
-    urdf_link_class(FurnitureLink, ClassTerm),
+init_furniture(UrdfLink) :-
+    urdf_link_class(UrdfLink, ClassTerm),
     rdf_global_id(ClassTerm, Class),
-    ros_info('Class ~w', [Class]),
-    furniture_pose(FurnitureLink, Pose),
-    furniture_shape(FurnitureLink, ShapeTerm),
+    furniture_pose(UrdfLink, Pose),
+    furniture_shape(UrdfLink, ShapeTerm),
     create_object(Furniture, Class, Pose, [shape(ShapeTerm), data_source(semantic_map)]),
-    kb_project(has_urdf_name(Furniture, FurnitureLink)),
+    kb_project(has_urdf_name(Furniture, UrdfLink)),
 	% backwards compatibility with table_front_edge_center for planning
-	(  atom_concat(Prefix, 'table_center', FurnitureLink)
+	(  atom_concat(Prefix, 'table_center', UrdfLink)
 	-> (atom_concat(Prefix, 'table_front_edge_center', ExtraLink),
 		kb_project(has_urdf_name(Furniture, ExtraLink)))
 	;  true).
 
-furniture_pose(FurnitureLink, [FurnitureFrame, [0,0,0], [0,0,0,1]]) :-
-    atom_concat('iai_kitchen/', FurnitureLink, FurnitureFrame).
+furniture_pose(UrdfLink, [ObjectFrame, [0,0,0], [0,0,0,1]]) :-
+    atom_concat('iai_kitchen/', UrdfLink, ObjectFrame).
 
-furniture_shape(FurnitureLink, ShapeTerm) :-
+furniture_shape(UrdfLink, ShapeTerm) :-
     get_urdf_id(URDF),
-    ros_info('URDF ~w', [URDF]),
-    collision_link(FurnitureLink, CollisionLink),
+    collision_link(UrdfLink, CollisionLink),
     ros_info('CollisionLink ~w', [CollisionLink]),
     urdf_link_collision_shape(URDF, CollisionLink, ShapeTerm, _).
 
+%% collision_link(+UrdfLink, -CollisionLink) is semidet.
+%
+% Helper predicate to define the collision link for a urdf link
+%
+% @param UrdfLink Name of the objects urdf link as String
+% @param CollisionLink Name of the collision link as String
+%
 collision_link(CollisionLink, CollisionLink) :-
-    atom_concat(_Prefix, 'table_center', CollisionLink).
-
-collision_link(FurnitureLink, CollisionLink) :-
-    atom_concat(Prefix, '_front_top', FurnitureLink),
+    atom_concat(_, 'table_center', CollisionLink);
+    atom_concat(_, 'door_center', CollisionLink);
+    sub_string(CollisionLink,_,_,_,"shelf_floor_");
+    sub_string(CollisionLink,_,_,_,"shelf_door_").
+collision_link(UrdfLink, CollisionLink) :-
+    atom_concat(Prefix, '_front_top', UrdfLink),
     atom_concat(Prefix, '_center', CollisionLink).
-
-collision_link(FurnitureLink, CollisionLink) :-
-    atom_concat(Prefix, 'shelf_base_center', FurnitureLink),
+collision_link(UrdfLink, CollisionLink) :-
+    atom_concat(Prefix, 'bucket_surface_center', UrdfLink),
+    atom_concat(Prefix, 'bucket_center', CollisionLink).
+collision_link(UrdfLink, CollisionLink) :-
+    atom_concat(Prefix, 'shelf_base_center', UrdfLink),
+    atom_concat(Prefix, 'shelf_back', CollisionLink).
+collision_link(UrdfLink, CollisionLink) :-
+    atom_concat(Prefix, 'shelf_base_center', UrdfLink),
     atom_concat(Prefix, 'shelf_back', CollisionLink).
 
 %% urdf_link_class(+UrdfLink, -Class) is semidet.
 %
-% Returns the owl class of a furniture link based on the name used in the semantic map files.
+% Returns the owl class of a urdf link based on the name used in the semantic map files.
 %
-% @param UrdfLink Name of the furniture link as String
-% @param Class Class of the furniture link as owl term
+% @param UrdfLink Name of the urdf link as String
+% @param Class Class of the urdf link as owl term
 %
 urdf_link_class(UrdfLink, Class) :-
     split_string(UrdfLink, ":", "", List),
@@ -138,7 +148,7 @@ urdf_link_class(UrdfLink, Class) :-
 % Helper predicate to get the owl class of the last part of the urdf link name used in the semantic map files.
 % 
 % @param LinkName Last part of of the urdf link as String
-% @param Class Class of the furniture type as owl term
+% @param Class Class of the urdf link type as owl term
 %
 link_name_class(LinkName, Class) :-
     sub_string(LinkName,_,_,_,"container"),
