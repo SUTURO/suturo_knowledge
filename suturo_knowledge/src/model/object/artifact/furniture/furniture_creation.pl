@@ -41,7 +41,7 @@ get_urdf_origin(Origin) :-
 % @param Link Name of a URDF Link as String
 %
 is_furniture_link(Link) :-
-    sub_string(Link,_,_,_,"table_front_edge_center");
+    sub_string(Link,_,_,_,"table_center");
     sub_string(Link,_,_,_,"shelf_base_center");
 %    sub_string(Link,_,_,_,"bucket_front_edge_center");
     sub_string(Link,_,_,_,"drawer_front_top").
@@ -92,7 +92,12 @@ init_furniture(FurnitureLink) :-
     furniture_pose(FurnitureLink, Pose),
     furniture_shape(FurnitureLink, ShapeTerm),
     create_object(Furniture, Class, Pose, [shape(ShapeTerm), data_source(semantic_map)]),
-    kb_project(has_urdf_name(Furniture, FurnitureLink)).
+    kb_project(has_urdf_name(Furniture, FurnitureLink)),
+	% backwards compatibility with table_front_edge_center for planning
+	(  atom_concat(Prefix, 'table_center', FurnitureLink)
+	-> (atom_concat(Prefix, 'table_front_edge_center', ExtraLink),
+		kb_project(has_urdf_name(Furniture, ExtraLink)))
+	;  true).
 
 furniture_pose(FurnitureLink, [FurnitureFrame, [0,0,0], [0,0,0,1]]) :-
     atom_concat('iai_kitchen/', FurnitureLink, FurnitureFrame).
@@ -102,9 +107,8 @@ furniture_shape(FurnitureLink, ShapeTerm) :-
     collision_link(FurnitureLink, CollisionLink),
     urdf_link_collision_shape(URDF, CollisionLink, ShapeTerm, _).
 
-collision_link(FurnitureLink, CollisionLink) :-
-    atom_concat(Prefix, '_front_edge_center', FurnitureLink),
-    atom_concat(Prefix, '_center', CollisionLink).
+collision_link(CollisionLink, CollisionLink) :-
+    atom_concat(_Prefix, 'table_center', CollisionLink).
 
 collision_link(FurnitureLink, CollisionLink) :-
     atom_concat(Prefix, '_front_top', FurnitureLink),
