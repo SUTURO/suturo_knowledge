@@ -15,7 +15,8 @@
 % The Options index and maxindex are mandatory.
 % If they are not present, this fails.
 object_place_pose(Object, Options, [Frame, Pos, Rotation]) :-
-    center_pose(Object, Pose, ShapeTerm),
+    object_shape_workaround(Object, _, ShapeTerm, _, _),
+    object_pose(Object, Pose),
     option(direction(Dir), Options, '-x'),
     % Index and MaxIndex are 1-based
     option(index(Index), Options),

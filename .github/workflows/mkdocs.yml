@@ -4,6 +4,10 @@ on:
   push:
     branches:
       - master
+    paths:
+      - "docs/**"
+      - "mkdocs.yml"
+      - ".github/workflows/mkdocs.yml"
   workflow_dispatch:
 permissions:
   contents: write

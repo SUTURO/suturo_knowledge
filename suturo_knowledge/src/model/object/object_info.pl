@@ -3,7 +3,7 @@
 	  [
       	object_pose(r,-),
 		tiny_object(r),
-		is_suturo_object(r),
+		is_perceived_object(r),
 		set_object_handled(r),
 		set_object_not_handled(r),
 		update_handle_state(r,+),
@@ -55,18 +55,17 @@ tiny_object(Object) :-
 	)
 ).
 
-%% is_suturo_object(+Object) is semidet.
+%% is_perceived_object(+Object) is semidet.
 %
-% True if the object is a Suturo object.
-% An object is a Suturo object if its a physical object and has a data source. 
+% True if the object is a physical object and has the a data source 'perception'. 
 %
 % @param Object The object to check.
 %
-is_suturo_object(Object):-
+is_perceived_object(Object):-
 	is_physical_object(Object),
-	triple(Object, suturo:'hasDataSource', DataSource).
+	holds(Object, suturo:'hasDataSource', perception).
 
-%% is_physical_object(+Object) is det.
+%% set_object_handled(+Object) is det.
 %
 % Sets the state of the object to handled.
 %
@@ -75,7 +74,7 @@ is_suturo_object(Object):-
 set_object_handled(Object) :-
 	update_handle_state(Object, true).
 	
-%% is_physical_object(+Object) is det.
+%% set_object_not_handled(+Object) is det.
 %
 % Sets the state of the object to not handled.
 %
@@ -92,7 +91,7 @@ set_object_not_handled(Object) :-
 % @param State The new state of the object. (true or false)
 %
 update_handle_state(Object, State) :-
-	is_suturo_object(Object),
+	is_perceived_object(Object),
 	triple(Object, suturo:'hasHandleState', HandleState),
 	forall(triple(HandleState, suturo:'handled', OldValue),
 		kb_unproject(triple(HandleState, suturo:'handled', OldValue))),
@@ -105,7 +104,7 @@ update_handle_state(Object, State) :-
 % @param Object The object to check.
 %
 handled(Object) :-
-	is_suturo_object(Object),
+	is_perceived_object(Object),
 	triple(Object, suturo:'hasHandleState', HandleState),
 	triple(HandleState, suturo:'handled', true).
 
@@ -116,20 +115,20 @@ handled(Object) :-
 % @param Object The object to check.
 %
 not_handled(Object) :-
-	is_suturo_object(Object),
+	is_perceived_object(Object),
 	triple(Object, suturo:'hasHandleState', HandleState),
 	triple(HandleState, suturo:'handled', false).
 
 %% objects_not_handled(-Objects) is det.
 %
-% Returns a list of all objects that are not handled.
+% Returns a list of all perceived objects that are not handled.
 %
 % @param Objects The list of objects that are not handled.
 %
 objects_not_handled(Objects):-
     findall(Object,
     (
-        is_suturo_object(Object),
+        is_perceived_object(Object),
         not_handled(Object)
     ),
     Objects).
@@ -144,6 +143,9 @@ objects_not_handled(Objects):-
 %
 predefined_origin_location(Class, OriginLocation) :-
     holds(Class, suturo:hasOriginLocation, OriginLocation).
+predefined_origin_location(Class, OriginLocation) :-
+	subclass_of(Class, dul:'PhysicalObject'),
+    holds(dul:'PhysicalObject', suturo:hasOriginLocation, OriginLocation).
 
 %% predefined_destination_location(+Class, -DestinationLocation) is semidet.
 %
@@ -155,3 +157,6 @@ predefined_origin_location(Class, OriginLocation) :-
 %
 predefined_destination_location(Class, DestinationLocation) :-
     holds(Class, suturo:hasDestinationLocation, DestinationLocation).
+predefined_destination_location(Class, DestinationLocation) :-
+	subclass_of(Class, dul:'PhysicalObject'),
+    holds(dul:'PhysicalObject', suturo:hasDestinationLocation, DestinationLocation).
