@@ -1,6 +1,7 @@
 :- module(next_object,
     [
         next_object/1,
+        next_object1/1,
         objects_benefits/2,
         object_benefit/2,
         object_costs/2,
@@ -49,6 +50,37 @@ next_object(Object):-
     member([Object, MaxCBRatio], ObjectCBRatio),
     set_object_handled(Object),
     !.
+
+next_object1(Object):-
+    set_object_handled('http://www.ease-crc.org/ont/SOMA.owl#DishwasherTab_DHYTQEXW'),
+    objects_not_handled(NothandledObjects),
+    findall([Object,CBRatio],
+        (member(Object,NothandledObjects),
+        object_bonus(Object, 500),
+        object_benefit(Object, Benefit),
+        object_cost(Object,Cost),
+        CBRatio is Benefit/Cost),
+        ObjectCBRatio0),
+        (ObjectCBRatio0 == []
+        -> 
+        findall([Object,CBRatio],
+            (member(Object,NothandledObjects),   
+            object_benefit(Object, Benefit),
+            object_cost(Object,Cost),
+            CBRatio is Benefit/Cost),
+            ObjectCBRatio)
+        ;   ObjectCBRatio0 = ObjectCBRatio
+        ),
+        (ObjectCBRatio == []
+            ->
+            Object = 'http://www.ease-crc.org/ont/SOMA.owl#DishwasherTab_DHYTQEXW'
+            ;
+            maplist(nth0(1), ObjectCBRatio, CBRatios),
+            max_list(CBRatios, MaxCBRatio),
+            member([Object, MaxCBRatio], ObjectCBRatio),
+            set_object_handled(Object)
+        ),
+        !.
 
 
 %% object_bendefits(+Object, -ObjectBenefits) is semidet.
