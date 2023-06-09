@@ -1649,6 +1649,7 @@ For example the Tables come from semantic_map, while the objects perception got 
         <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">25</SUTURO:perceptionId>
         <rdfs:comment>A shelf board is a flat piece of wood, metal, or glass which is attached to a wall or to the sides of a cupboard. Shelves are used for keeping things on.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+        <rdfs:label>Shelf board</rdfs:label>
     </owl:Class>
     
 
