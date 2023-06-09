@@ -144,6 +144,9 @@ objects_not_handled(Objects):-
 %
 predefined_origin_location(Class, OriginLocation) :-
     holds(Class, suturo:hasOriginLocation, OriginLocation).
+predefined_origin_location(Class, OriginLocation) :-
+	subclass_of(Class, dul:'PhysicalObject'),
+    holds(dul:'PhysicalObject', suturo:hasOriginLocation, OriginLocation).
 
 %% predefined_destination_location(+Class, -DestinationLocation) is semidet.
 %
@@ -155,3 +158,6 @@ predefined_origin_location(Class, OriginLocation) :-
 %
 predefined_destination_location(Class, DestinationLocation) :-
     holds(Class, suturo:hasDestinationLocation, DestinationLocation).
+predefined_destination_location(Class, DestinationLocation) :-
+	subclass_of(Class, dul:'PhysicalObject'),
+    holds(dul:'PhysicalObject', suturo:hasDestinationLocation, DestinationLocation).
