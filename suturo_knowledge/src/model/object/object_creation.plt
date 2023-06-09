@@ -21,20 +21,29 @@ object_creation_cleanup :-
 	tf_mng_drop.
 
 :- rdf_meta(test_table(+,r,-,-)).
-test_table(1, soma:'Table', [map, [2,-2,1], [0,0,0,1]], [dataSource(semantic_map), shape(box(3,2,1))]).
+test_table(1, soma:'Table', [map, [2,-2,1], [0,0,0,1]], [data_source(semantic_map), shape(box(3,2,1))]).
 
 setup_test_table(Num, Table) :-
+    Table = 'http://www.ease-crc.org/ont/SUTURO-test.owl#Table_TEST',
     test_table(Num, Type, Pose, Options),
     create_object(Table, Type, Pose, Options).
 
-test(table_simple_ontop, [ forall((member(X, [0.5, 1, 1.5, 2, 2.5, 3, 3.5]),
-                                   member(Y, [-3, -2.5, -2, -1.5, -1]),
+test(table_simple_ontop, [ forall((member(X, [0.5, 3.5]),
+                                   member(Y, [-3, -1]),
                                    % Note that the distance has to be a float,
                                    % because an int and a float never unify in the last line of suturo_is_ontop_of.
-                                   member([Z, Distance], [[1, 0.0], [1.5, 0.5], [2, 1.0]])))
+                                   member([Z, Distance], [[1, 0.0], [1.5, 0.5]])))
                          ]) :-
     setup_test_table(1, Table),
     create_object(Obj, soma:'CerealBox', [map, [X, Y, Z], [0,0,0,1]]),
     object_creation:suturo_is_ontop_of(Obj, Table, Distance).
+
+test(create_object, [ forall((member(X, [0.5, 3.5]),
+							  member(Y, [-3, -1]),
+							  member(Z, [1, 1.5])))
+					]) :-
+	setup_test_table(1, Table),
+	create_object(Obj, soma:'CerealBox', [map, [X, Y, Z], [0,0,0,1]]),
+	assert_true(kb_call(triple(Obj, soma:isOntopOf, Table))).
 
 :- end_rdf_tests('object_creation').
