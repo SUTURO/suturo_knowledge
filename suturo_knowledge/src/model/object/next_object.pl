@@ -14,12 +14,14 @@
         distance_to_goal_location/2
         
     ]).
+
 :- use_module(library('model/locations/spatial_computations')).
 :- use_module(library('model/locations/actual_locations')).
+
 %% next_object(+Object) is semidet.
 %
 % Choose the next best object to grasp.
-next_object(Object):-
+%
 % try if object is already handled
 % try if not handled objects are misplaced
 % then we have possible objects to choose the next best object
@@ -28,6 +30,8 @@ next_object(Object):-
 % return object bonus
 % calculate cost benefit ratio
 % choose the object with the highest ratio
+%
+next_object(Object):-
     objects_not_handled(NothandledObjects),
     findall([Object,CBRatio],
         (member(Object,NothandledObjects),
@@ -180,6 +184,7 @@ object_bonus(Object, Bonus):-
 distance_to_go(Object, Distance):-
     distance_to_object(Object,DistanceToObject),
     distance_to_goal_location(Object, DistanceToGoalLocation),
+    ros_info('Distance to goal location: ~w', [DistanceToGoalLocation]),
     Distance is DistanceToObject + DistanceToGoalLocation.
 % calculate distance to object and distance to goal location
 
@@ -189,7 +194,9 @@ distance_to_go(Object, Distance):-
 % Calculate distance the point we get for an object
 distance_to_object(Object, Distance):-
     kb_call(is_at(Object,[map,ObjectLocation,_])),
+    ros_info('Object location: ~w', [ObjectLocation]),
     robot_location(RobotLocation),
+    ros_info('Robot location: ~w', [RobotLocation]),
     euclidean_distance(ObjectLocation, RobotLocation, Distance).
 % calcluta euclidian distance between robot and an object
 
