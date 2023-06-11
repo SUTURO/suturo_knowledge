@@ -192,15 +192,15 @@ Gets the next best object to pick based on the current context.
 This reasoner calculates the next best object to pick based on factors like the distance of the object to the robot and the destination location, the benefit (bonus points) and the confidence of the object detection by Perception.
 
 !!! info
-    For `next_best_object` to work, the objects have to be created first with the `create_object` predicate.
+    For `next_object` to work, the objects have to be created first with the `create_object` predicate.
 
 ```prolog
-next_best_object(-Object) is nondet.
+next_object(-Object) is nondet.
 ```
 
 Example:
 ```prolog
-?- next_best_object(Object).
+?- next_object(Object).
 
 Object: 'http://www.ease-crc.org/ont/SUTURO.owl#Banana_WRQHESGO'.
 ```
