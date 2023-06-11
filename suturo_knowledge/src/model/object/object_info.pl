@@ -14,9 +14,7 @@
 	  	predefined_destination_location(r,-)
 	  ]).
 
-:- use_module(library('ros/tf/tf'),
-	      % actually uses tf:tf_get_pose, but that is not exported by tf
-	      []).
+:- use_module(library('ros/tf/tf')).
 
 %% object_pose(+Object, -PoseStamped) is semidet.
 %
