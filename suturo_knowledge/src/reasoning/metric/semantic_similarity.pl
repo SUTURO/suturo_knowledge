@@ -35,12 +35,12 @@
 % @param MostSimilarObject The object instance from the list that is most similar to the given object.
 %
 most_similar_object(Object, InputObjects, MostSimilarObject) :-
-    triple(Object, rdf:type, ClassA),
+    has_type(Object, ClassA),
     findall(
         Similarity-InputObject,
         (
             member(InputObject, InputObjects),
-            triple(InputObject, rdf:type, ClassB),
+            has_type(Object, ClassB),
             wu_palmer_similarity(ClassA, ClassB, Similarity)
         ),
         SimilaritiesAndObjects

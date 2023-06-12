@@ -1,17 +1,16 @@
 %% The Util module contains predicates that (currently) don't fit into other modules.
 :- module(util,
 	  [
-	      has_urdf_name(?,?),
-	      has_tf_name(?,?),
-          split_iri(+, -, -),
-          is_bnode(+),
-          last_element(+, -),
-          second_last_element(+, -),
-	      ros_info(+,+),
-	      ros_warn(+,+),
-	      ros_error(+,+),
-	      ros_debug(+,+),
-	      default_value(?,+)
+        from_current_scope(-),
+        split_iri(+, -, -),
+        is_bnode(+),
+        last_element(+, -),
+        second_last_element(+, -),
+        ros_info(+,+),
+        ros_warn(+,+),
+        ros_error(+,+),
+        ros_debug(+,+),
+        default_value(?,+)
 	  ]).
 
 :- use_module(library('semweb/rdf_db')).
@@ -21,44 +20,30 @@
 		  triple/3
 	      ]).
 
-%% has_urdf_name(?Object, ?URDFName) is nondet.
+%% from_current_scope(-Scope) is det.
 %
-% Looks up which object has which urdfname
-% works in both directions
+% The scope of facts that are true from now until infinity.
 %
-% part of the planning interface.
-% the api should stay stable.
-has_urdf_name(Object, URDFName) ?+>
-    triple(Object, urdf:'hasURDFName', URDFName).
+% @param Scope A scope dictionary.
+%
+from_current_scope(dict{
+		       time: dict{
+				 since: =(double(Now)),
+				 until: =(double('Infinity'))
+	}
+}) :- get_time(Now).
 
-%% has_tf_name(?Object, ?TFName) is nondet.
+%% default_value(?Term, +DefaultValue) is det.
 %
-% gets the tf name of an object.
-% for objects that have a urdf name, the TFName is based on the urdf name.
-% for other objects, it is the part after the #
+% if Term is a var, unify it with DefaultValue otherwise leave it as it is.
 %
-% part of the planning interface.
-% the api should stay stable.
-has_tf_name(Object, TFName) :-
-    % anything with a # is an object and not a urdf name
-    sub_string(Object, _, _, After, "#"),
-    (
-	has_urdf_name(Object, URDFName) ->
-	has_tf_name(URDFName, TFName);
-	% for stuff that doesn't have a urdf name, use the last part of the iri
-	sub_atom(Object, _, After, 0, TFName)
-    ),
-    !.
-
-%% has_tf_name(?Object, ?TFName) is semidet.
+% @param Term The term to unify
+% @param DefaultValue The value to unify with
 %
-% gets the tf name of an object that has a urdf name
-%
-has_tf_name(URDFName, TFName) :-
-    % using a not here so the cut 3 lines above is a green cut.
-    not(sub_string(URDFName, _, _, _, "#")),
-    % TODO don't hardcode iai_kitchen
-    atom_concat('iai_kitchen/', URDFName, TFName).
+default_value(Term, DefaultValue) :-
+    (var(Term)
+    -> Term = DefaultValue
+    ;  true).
 
 
 % split_iri(+IRI, -Prefix, -ClassIdentifier)
@@ -155,12 +140,3 @@ ros_warn(Format, Arguments) :-
 ros_error(Format, Arguments) :-
     format(string(MSG), Format, Arguments),
     ros_error(MSG).
-
-%% default_value(?Term, +Value)
-%
-% if Term is a var, unify it with Value
-% otherwise leave it as it is.
-default_value(Term, Value) :-
-    (  var(Term)
-    -> Term = Value
-    ;  true).

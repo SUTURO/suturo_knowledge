@@ -1,12 +1,17 @@
 :- module(object_creation,
 	[
 		create_object(-,r,+),
-	    create_object(-,r,+,+)
+	    create_object(-,r,+,+),
+        assert_relative_position(r,+)
 	]).
 
 :- rdf_meta(shape_class(+,r)).
 
-:- use_module(library('util/util'), [default_value/2]).
+:- use_module(library('util/util'), 
+    [
+        from_current_scope/1,
+        default_value/2
+    ]).
 
 %% create_object(-Object, +Type, +PoseStamped) is det.
 %
@@ -119,16 +124,3 @@ suturo_is_ontop_of(Object, Furniture, Distance) :-
     % this code assumes that the frame is at the top center of the furniture.
     Z >= ZZ,
     Distance is Z + ZZ.
-
-%% from_current_scope(-Scope) is det.
-%
-% The scope of facts that are true from now until infinity.
-%
-% @param Scope A scope dictionary.
-%
-from_current_scope(dict{
-		       time: dict{
-				 since: =(double(Now)),
-				 until: =(double('Infinity'))
-	}
-}) :- get_time(Now).

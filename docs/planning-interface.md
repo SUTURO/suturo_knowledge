@@ -1,12 +1,5 @@
 # Planning API Documentation
 
-## Quick lookup for planning
-
-Dropping the database: execute this in the shell and restart knowledge.
-```bash
-mongo roslog --eval "db.dropDatabase()"
-```
-
 ## Readers guide
 
 Each code documentation section contains:
@@ -47,10 +40,10 @@ To successfully utilize the Knowledge-Planning API, the following 4 predicates a
 - `next_object(-Object)`: Returns the next best object to be processed/picked for a given challenge
 
 ### Serve Breakfast
-[![](https://mermaid.ink/img/pako:eNqNVF1v2jAU_StXfgHUQAMtjeqHPmxdpZVVRe3TVqrIcS7UI9hZbPqxiv--6yRAoNVEJOzE99zj43vMfWfSpMg4s_hniVripRKzQiwmGiAXhVNS5UI7GCMIS2MhMXfK6A_xMpwJrZWe7QdHPjjS5iXDdIY-Ou5eXIw53JhnhDuTGAdKOwPuibYpUBN8rpx8Qg0vfkiNKUBZMDnqdfqIQ15gilOlMY1NoWZKx5mRwstrW7MQvPWFtmwF0B1vgD9qQAdouxm6Bgesk8FMIaFM67cadSupHyk4fBUJLbj45_X3q-urq8uGNJP8RuniArM4NxbbrX0syWrlvpzqGen96LYsq_ViCX_vxCLHdKuyRoIn8_p8pWRFSaWzTpB1O3K3JBweWkqouK7ocZ3G9-Y4ERZjidphQYIewl5IYsJeP4CwN-w_rpe2Q78XPj7uu0mC17p2RG9wyKtr5ANllb1-lW6OUwJxfYwamZZQEDoF5ewOIRVbFigcxlXN293bcg5g5w4cNSqyLXenzq3oPytkRcbB0xxk9A6wdDkT8gCLU7RO6eoCNm-id9qrO9BdJ5IMeWP8r69nh_g6VnK-kVF6UB6JnADhysCn2tv088FSRafBd4c51oki8XfGOmoqlibfM_TMs9ZlbfzD17zHA5hSN_DZhoaihlpo29wYHYBEsjRLzGsAC5XNcyHnHRawBRYLoVJqde9ey4RR8gInjNMr7SGWmZuwiV4RVCyduX_TknFXLDFgyzylO1J3RsanIrOb1W-pcqbYLGL5eVP11LK1Box64C9jton0zfg7e2X85Kx3etZ4ooC9Md4fnvcGYRRFg5CmwfB0FbC_JQE5Uz3D8Dw6ifpRtPoHFBTn2Q?type=png)](https://mermaid.live/edit#pako:eNqNVF1v2jAU_StXfgHUQAMtjeqHPmxdpZVVRe3TVqrIcS7UI9hZbPqxiv--6yRAoNVEJOzE99zj43vMfWfSpMg4s_hniVripRKzQiwmGiAXhVNS5UI7GCMIS2MhMXfK6A_xMpwJrZWe7QdHPjjS5iXDdIY-Ou5eXIw53JhnhDuTGAdKOwPuibYpUBN8rpx8Qg0vfkiNKUBZMDnqdfqIQ15gilOlMY1NoWZKx5mRwstrW7MQvPWFtmwF0B1vgD9qQAdouxm6Bgesk8FMIaFM67cadSupHyk4fBUJLbj45_X3q-urq8uGNJP8RuniArM4NxbbrX0syWrlvpzqGen96LYsq_ViCX_vxCLHdKuyRoIn8_p8pWRFSaWzTpB1O3K3JBweWkqouK7ocZ3G9-Y4ERZjidphQYIewl5IYsJeP4CwN-w_rpe2Q78XPj7uu0mC17p2RG9wyKtr5ANllb1-lW6OUwJxfYwamZZQEDoF5ewOIRVbFigcxlXN293bcg5g5w4cNSqyLXenzq3oPytkRcbB0xxk9A6wdDkT8gCLU7RO6eoCNm-id9qrO9BdJ5IMeWP8r69nh_g6VnK-kVF6UB6JnADhysCn2tv088FSRafBd4c51oki8XfGOmoqlibfM_TMs9ZlbfzD17zHA5hSN_DZhoaihlpo29wYHYBEsjRLzGsAC5XNcyHnHRawBRYLoVJqde9ey4RR8gInjNMr7SGWmZuwiV4RVCyduX_TknFXLDFgyzylO1J3RsanIrOb1W-pcqbYLGL5eVP11LK1Box64C9jton0zfg7e2X85Kx3etZ4ooC9Md4fnvcGYRRFg5CmwfB0FbC_JQE5Uz3D8Dw6ifpRtPoHFBTn2Q)
+[![](https://mermaid.ink/img/pako:eNqNVF1v2jAU_SuWXwA10EBLo_qhD1tXaWVVUfu0lSpynAv1CHZmm34M9b_v2gkQaDURCTvxPffk5J7LXVGhc6CMWvizBCXgUvKZ4YuJIqTkxkkhS64cGQPhFlcjoHRSqw_xEC64UlLN9oMjHxwp_VJAPgMfHXcvLkaMSCVdasE8Q5oZ4PMpt24dHjNyo5-B3OlMO0Q6TdwTqjCgkG0unXgCRV78kmttiLREl6Aa7KWBHKZSQZ5qI2dSpYUW3KtvW73grPUFFbUi0h1vgD9qQIfg62bgGhxknUz0lGSYaf2rRt1K6kcKRr7yDA9c-vP6-9X11dVlQ5rOfoNwqYEiLbWFdmsfi7Japa-2fAa8P7oNVbdeLOLvHV-UkG9V1kjiybw-XylRUWLprOPo7I7cLQkjDy3JZVpX9LhOY3t7mnELqQDlwKCgh7gXo5i4149I3Bv2H9dH26Xfix8f991EwWtdO6I3OGBVl_lAqLLXL_PN5wQgrD-jRuYBSrjKiXR2hxCLLbC1HKRVzdvd27BHZKcHjhoV2Za7U-dW9J8VsiJjxNMcZPQOMLhccHGAxTlYJ1XVgM1O9E57dQe663hWAGus__X17BBfx1LMNzKCB-GT0AnCXQh8qr2NPx8MKjoNvjsooU7kme8Z63DmWNz8SFEzz1qXtfEPX_MeD8gUp4HP1riYGmpJ25Zaq4gIQEuLTL9GZCGLecnFvEMjugCz4DLHSbjyWiYUkxcwoQxv8R18WbgJnah3hPKl0_dvSlDmzBIiuixz7JF6cFI25YXdnH7LpdNmcwjh8aYauWHyRhRH5C-tt4n4TNmKvlJ2ctY7PWtcSUTfKOsPz3uDOEmSQYzbYHj6HtG_gQCdqa5hfJ6cJP0kef8HzwPyyw?type=png)](https://mermaid.live/edit#pako:eNqNVF1v2jAU_SuWXwA10EBLo_qhD1tXaWVVUfu0lSpynAv1CHZmm34M9b_v2gkQaDURCTvxPffk5J7LXVGhc6CMWvizBCXgUvKZ4YuJIqTkxkkhS64cGQPhFlcjoHRSqw_xEC64UlLN9oMjHxwp_VJAPgMfHXcvLkaMSCVdasE8Q5oZ4PMpt24dHjNyo5-B3OlMO0Q6TdwTqjCgkG0unXgCRV78kmttiLREl6Aa7KWBHKZSQZ5qI2dSpYUW3KtvW73grPUFFbUi0h1vgD9qQIfg62bgGhxknUz0lGSYaf2rRt1K6kcKRr7yDA9c-vP6-9X11dVlQ5rOfoNwqYEiLbWFdmsfi7Japa-2fAa8P7oNVbdeLOLvHV-UkG9V1kjiybw-XylRUWLprOPo7I7cLQkjDy3JZVpX9LhOY3t7mnELqQDlwKCgh7gXo5i4149I3Bv2H9dH26Xfix8f991EwWtdO6I3OGBVl_lAqLLXL_PN5wQgrD-jRuYBSrjKiXR2hxCLLbC1HKRVzdvd27BHZKcHjhoV2Za7U-dW9J8VsiJjxNMcZPQOMLhccHGAxTlYJ1XVgM1O9E57dQe663hWAGus__X17BBfx1LMNzKCB-GT0AnCXQh8qr2NPx8MKjoNvjsooU7kme8Z63DmWNz8SFEzz1qXtfEPX_MeD8gUp4HP1riYGmpJ25Zaq4gIQEuLTL9GZCGLecnFvEMjugCz4DLHSbjyWiYUkxcwoQxv8R18WbgJnah3hPKl0_dvSlDmzBIiuixz7JF6cFI25YXdnH7LpdNmcwjh8aYauWHyRhRH5C-tt4n4TNmKvlJ2ctY7PWtcSUTfKOsPz3uDOEmSQYzbYHj6HtG_gQCdqa5hfJ6cJP0kef8HzwPyyw)
 
 ### Storing Groceries
-[![](https://mermaid.ink/img/pako:eNrFVFFP2zAQ_isnv5SKNKRAicgDD4MxjYKogIcBRZHjXFuP1M4SF-gQ_31nJy1Z0NB4mJaHJL777nz3ffY9M6FTZBEr8ccClcAjyacFn48VQM4LI4XMuTIwQuAlvQuBuZFavfE7d8aVkmradg6tc6j0Y4bpFK131Ds4GEVwph8QLnSiDUhlNPACFYfHGSpItS5AlqBzVO0IQgqeSIUGuEodZG2wcSv8MAKdfEdh4gKzONclbnQOK1x8fXV-cXrz7aTjQSe3bckHpP_Nc9de6UFvRPhLw-c5pl2bcdirSmjYI7jtSC7je2kEFb1VFxG1vnHCS4wFKoMF7XEb-AHlD_y-B4E_6N-tTK-vvh_c3b3T9qpisE2tcRhVClkHPmCxNDNSg6gtZYqrWIfGupdTWRrQk5qm0tFpZigLl7hsECkK5AbjCrjRO3df4utqmaMHTVJoVZPYhQmJiFzM1gWn9VbvSXTFkwwrgb4cXbYEgj8L1OLK2DQfY0or230V-U942vyNp80P8aTwybTydm2fUzoP1gcJ2iKdw9pzKe6b57YKieAQqcTsk36Kr0--Hp8cHx-9e1_eoJ0gGRf_57rs_c11GVHrpA9f02H1cjWDpIVxKqdEl1Tc1g-ZFnw11uocF5hjjeSJPVKlodFXwkZDhy0qydhp1abN9_0GS7TqdpnH5ljMuUxp2j7bjcaMYuc4ZhH9pjjhi8yM2Vi9EJQvjL5cKsEiUyzQY4s8pWNVD2cWTXhWrq2fU2l0sTaiW55VY91Nd4_RGL7R-jWQ1ix6Zk8s2tnzd_caT-ixJYv6g31_OwjDcDugz_Zg98VjP10Corp6BsF-uBP2w_DlF-_ODPE?type=png)](https://mermaid.live/edit#pako:eNrFVFFP2zAQ_isnv5SKNKRAicgDD4MxjYKogIcBRZHjXFuP1M4SF-gQ_31nJy1Z0NB4mJaHJL777nz3ffY9M6FTZBEr8ccClcAjyacFn48VQM4LI4XMuTIwQuAlvQuBuZFavfE7d8aVkmradg6tc6j0Y4bpFK131Ds4GEVwph8QLnSiDUhlNPACFYfHGSpItS5AlqBzVO0IQgqeSIUGuEodZG2wcSv8MAKdfEdh4gKzONclbnQOK1x8fXV-cXrz7aTjQSe3bckHpP_Nc9de6UFvRPhLw-c5pl2bcdirSmjYI7jtSC7je2kEFb1VFxG1vnHCS4wFKoMF7XEb-AHlD_y-B4E_6N-tTK-vvh_c3b3T9qpisE2tcRhVClkHPmCxNDNSg6gtZYqrWIfGupdTWRrQk5qm0tFpZigLl7hsECkK5AbjCrjRO3df4utqmaMHTVJoVZPYhQmJiFzM1gWn9VbvSXTFkwwrgb4cXbYEgj8L1OLK2DQfY0or230V-U942vyNp80P8aTwybTydm2fUzoP1gcJ2iKdw9pzKe6b57YKieAQqcTsk36Kr0--Hp8cHx-9e1_eoJ0gGRf_57rs_c11GVHrpA9f02H1cjWDpIVxKqdEl1Tc1g-ZFnw11uocF5hjjeSJPVKlodFXwkZDhy0qydhp1abN9_0GS7TqdpnH5ljMuUxp2j7bjcaMYuc4ZhH9pjjhi8yM2Vi9EJQvjL5cKsEiUyzQY4s8pWNVD2cWTXhWrq2fU2l0sTaiW55VY91Nd4_RGL7R-jWQ1ix6Zk8s2tnzd_caT-ixJYv6g31_OwjDcDugz_Zg98VjP10Corp6BsF-uBP2w_DlF-_ODPE)
+[![](https://mermaid.ink/img/pako:eNq1VFFP2zAQ_iuWX0pFGlKgROSBh8GYRkFUwMOAVpHjXFuP1M5sF-gQ_31nJy1Z0aqhaXlw4rvvLnffZ98L5SoHmlADP-YgOZwINtFsNpSElExbwUXJpCUDIMzgqjmUVij5zu_dBZNSyMm6s--cfameCsgn4LyDztFRPyFCCpsaqzQGpROtOGgBZgkYJORCPQK5UpmyiLWKMA2SkacpSJIrpYkwRJUg1yMQyedlppjOCZO5x7xZXGSjCJV9B25TDUVaKgNbreMamN7eXF6d3307awWkVbrWxSPg9_alp8AEpDPAgGvLZiXkbZey36mqaNgTct8STKQPwnKse8dMoRgnjTXNmIGUg7SgMft9FEaYOQq7AYnCXne0NL0t3TAajTb1vCyWuIZWQEgqAZ0DHkEv7BR5R2KNyGEV7OFQ93EujCVqXHNkPJl2CkL7zKbBItfALKQVcKtz6d_I1c2ihIA0CcFdTWCbjFFDYHy6qjivf7VJnxuWFVCJ8-Xkek0c8mdx1tiyLs3HqFLSdV9F_heetn_jaftDPEl4tmt5267PCVjvIxm4Ir3D2UvBH5pntgpJyDFgicUn9Zzenn09PTs9Pdl4Wd6hvSAF4_9-VTjLhASbrL03XpiDv7kwA2wd9WErOpxevmYicGO9yjnSJSRz9ZNCcbYce3WOKyihRrLMHSljcTQastXQYQdLsm5YrdMWhmGDJdy12zSgM9AzJnKcxi_uR0OKsTMY0gQ_cxizeWGHdChfEcrmVl0vJKeJ1XMI6LzM8VjVw5smY1aYlfVzLnDErozgtxfV2PfTP6A4pu-UegvEPU1e6DNN9g7C_YPGEwd0QZNu7zDcjeI43o3wtdvbfw3oT58Aqa6eXnQY78XdOH79BSKEGOo?type=png)](https://mermaid.live/edit#pako:eNq1VFFP2zAQ_iuWX0pFGlKgROSBh8GYRkFUwMOAVpHjXFuP1M5sF-gQ_31nJy1Z0aqhaXlw4rvvLnffZ98L5SoHmlADP-YgOZwINtFsNpSElExbwUXJpCUDIMzgqjmUVij5zu_dBZNSyMm6s--cfameCsgn4LyDztFRPyFCCpsaqzQGpROtOGgBZgkYJORCPQK5UpmyiLWKMA2SkacpSJIrpYkwRJUg1yMQyedlppjOCZO5x7xZXGSjCJV9B25TDUVaKgNbreMamN7eXF6d3307awWkVbrWxSPg9_alp8AEpDPAgGvLZiXkbZey36mqaNgTct8STKQPwnKse8dMoRgnjTXNmIGUg7SgMft9FEaYOQq7AYnCXne0NL0t3TAajTb1vCyWuIZWQEgqAZ0DHkEv7BR5R2KNyGEV7OFQ93EujCVqXHNkPJl2CkL7zKbBItfALKQVcKtz6d_I1c2ihIA0CcFdTWCbjFFDYHy6qjivf7VJnxuWFVCJ8-Xkek0c8mdx1tiyLs3HqFLSdV9F_heetn_jaftDPEl4tmt5267PCVjvIxm4Ir3D2UvBH5pntgpJyDFgicUn9Zzenn09PTs9Pdl4Wd6hvSAF4_9-VTjLhASbrL03XpiDv7kwA2wd9WErOpxevmYicGO9yjnSJSRz9ZNCcbYce3WOKyihRrLMHSljcTQastXQYQdLsm5YrdMWhmGDJdy12zSgM9AzJnKcxi_uR0OKsTMY0gQ_cxizeWGHdChfEcrmVl0vJKeJ1XMI6LzM8VjVw5smY1aYlfVzLnDErozgtxfV2PfTP6A4pu-UegvEPU1e6DNN9g7C_YPGEwd0QZNu7zDcjeI43o3wtdvbfw3oT58Aqa6eXnQY78XdOH79BSKEGOo)
 
 ### Clean the Table
 [![](https://mermaid.ink/img/pako:eNqNVN9P2zAQ_lcsvxS0tKRAB_MDT12lESEq4GWjKHLsa-uR2pntAgXxv-_sJG1gE8IPtnO__N3dl3uhwkigjDr4swYtYKz4wvLVTBNSceuVUBXXnkyBcIe7FVB5ZfQ_-qguudZKL94rs6DMtHksQS4gaKf9s7MpIxfmAciVKYwnSntD_BKfsaDR_F55sQRNHsMmjbFEOWIq0K17xogpfoPwuYUyr4yDvd5YhedveFFC_vP8x-R8Mhn3EtKrAm71AHj_chnxu4T0p-hz7fmqArlP8PUFeNJakhCQmHmEJHihNASMznOsUYCQ9esUOkEYue0prvIG-oEPOFhnzwvuIBegPViEcpsOUoSRDoYJSQej4V0r2m3DQXp3975gCFXGREmM-hbz1hhY3a6ggAewG78MLkbHlLoBogu0-TQ-sqmuI1zL4KJsjO869RcWuIe8NtzrX8YTS3yzqQCPTml2dd8nc-wlcLHc4m6f6kTW8OTfxd22KOhIAc43bkFeKXHfdgWTqD1YICTim2ST7HKcfUScN4aRMSUXn6CLRBhK82DyhjFViPdJmkjllo_cLcGy_14_ZM3Xz7BmitXZwYoNjfkR5Qn3NR86iZRG1Jc9JLyS0BCmxbPfiXwFFTQReBG46TzOB4dH-P2RYNx3e3kwjN0P5hZWvOZgwzOa0BVYFEqcRi_hjRlFwxXMKMOrhDlfl35GZ_oVTfnam-uNFpR5u4aEriuJqTXDi7I5L91W-l0qb-xWCPHzoh57cfolFMfUL2N2jvhN2Qt9omx4Ojg86qxRQjcoPRkNToff0u06fE3oc4yAxW_W0fHhKD05fv0Lg0HIMQ?type=png)](https://mermaid.live/edit#pako:eNqNVN9P2zAQ_lcsvxS0tKRAB_MDT12lESEq4GWjKHLsa-uR2pntAgXxv-_sJG1gE8IPtnO__N3dl3uhwkigjDr4swYtYKz4wvLVTBNSceuVUBXXnkyBcIe7FVB5ZfQ_-qguudZKL94rs6DMtHksQS4gaKf9s7MpIxfmAciVKYwnSntD_BKfsaDR_F55sQRNHsMmjbFEOWIq0K17xogpfoPwuYUyr4yDvd5YhedveFFC_vP8x-R8Mhn3EtKrAm71AHj_chnxu4T0p-hz7fmqArlP8PUFeNJakhCQmHmEJHihNASMznOsUYCQ9esUOkEYue0prvIG-oEPOFhnzwvuIBegPViEcpsOUoSRDoYJSQej4V0r2m3DQXp3975gCFXGREmM-hbz1hhY3a6ggAewG78MLkbHlLoBogu0-TQ-sqmuI1zL4KJsjO869RcWuIe8NtzrX8YTS3yzqQCPTml2dd8nc-wlcLHc4m6f6kTW8OTfxd22KOhIAc43bkFeKXHfdgWTqD1YICTim2ST7HKcfUScN4aRMSUXn6CLRBhK82DyhjFViPdJmkjllo_cLcGy_14_ZM3Xz7BmitXZwYoNjfkR5Qn3NR86iZRG1Jc9JLyS0BCmxbPfiXwFFTQReBG46TzOB4dH-P2RYNx3e3kwjN0P5hZWvOZgwzOa0BVYFEqcRi_hjRlFwxXMKMOrhDlfl35GZ_oVTfnam-uNFpR5u4aEriuJqTXDi7I5L91W-l0qb-xWCPHzoh57cfolFMfUL2N2jvhN2Qt9omx4Ojg86qxRQjcoPRkNToff0u06fE3oc4yAxW_W0fHhKD05fv0Lg0HIMQ)
@@ -78,11 +71,13 @@ An object is any physical object that has a proper space region. Available objec
 
 Create an object of a given Type at the given PoseStamped.
 
-The `Type` can be the full IRI or the namespace:'Name' form.
+The `Type` can be the full IRI or the `namespace:'Name'` form.
 
 The Options that can be processed are:
-- `shape(ShapeTerm)` - optional, the shape the object has. If not specified, knowledge will have no shape information about this object.
-- class_confidence -  a confidence that a robot has about the recognition of objects
+
+- `shape(ShapeTerm)` _optional_ - The shape of the object. If not specified, Knowledge will have no shape information about this object.
+- `class_confidence` -  A confidence that a robot has about the recognition of objects
+  
 ```prolog
 create_object(-Object, +Type, +PoseStamped) is det.
 create_object(-Object, +Type, +PoseStamped, +Options) is det.
@@ -92,25 +87,34 @@ Example:
 ```prolog
 ?- create_object(Object, 'http://www.ease-crc.org/ont/SOMA.owl#CerealBox', ['iai_kitchen/long_table:table:table_front_edge_center', [0,1,1], [0,0,0.70711,0.70711]]).
 Object: http://www.ease-crc.org/ont/SOMA.owl#CerealBox_LTKIUPNG.
-?- create_object(Object, soma:'CerealBox', ['iai_kitchen/long_table:table:table_front_edge_center', [0,1,1], [0,0,0.70711,0.70711]], [shape(box(0.1,0.1,0.1))]).
+
+?- create_object(Object, soma:'CerealBox', ['map', [0,1,1], [0,0,0.70711,0.70711]], [shape(box(0.1,0.1,0.1))]).
 Object: http://www.ease-crc.org/ont/SOMA.owl#CerealBox_BHVKCONR.
 ```
 
 ### Pose and shape information
 
+To get or set the pose of an object, use the following predicate.  
+If an unset variable is passed for `PoseStamped`, the predicate will try to find a pose in the knowledge base.
+If the `PoseStamped` is fully specified, the predicate will set the pose in the knowledge base.
+
 ```prolog
-object_pose(+Object, -PoseStamped) is semidet.
+object_pose(+Object, ?PoseStamped) is semidet.
 ```
 
 Example:
 ```prolog
-?- object_pose('http://www.ease-crc.org/ont/SOMA.owl#Table_LTKIUPNG', Pose)
-Pose: ['iai_kitchen/tall_table:table:table_front_edge_center', [0,0,0], [0,0,0,1]]
+% Get the pose of an object
+?- object_pose('http://www.ease-crc.org/ont/SOMA.owl#Table_LTKIUPNG', PoseStamped)
+PoseStamped: ['map', [1,0,1], [0,0,0,1]]
+
+% Set/Update the pose of an object
+?- object_pose('http://www.ease-crc.org/ont/SOMA.owl#Table_LTKIUPNG', ['map', [2,1,0], [0,0,0,1]])
+true.
 ```
 
-Because of [knowrob#368](https://github.com/knowrob/knowrob/issues/368) this is currently not done via `object_shape/5` but via `object_shape_workaround/5`.
-
 The documentation of `object_shape/5` is viewable [here](https://knowrob.github.io/knowrob/master/model/SOMA.html#object_shape/5).
+Because of [knowrob#368](https://github.com/knowrob/knowrob/issues/368) this is currently not done via `object_shape/5` but via `object_shape_workaround/5`.
 
 ```prolog
 object_shape_workaround(?Obj, ?Frame, ?ShapeTerm, ?Pose, ?Material) is semidet.
@@ -169,12 +173,14 @@ Get the predefined origin and destination location of object classes.
 The predefined locations are the location (or reference object) where the object is placed at the beginning of the task or should be placed at the end of the task.
 
 ```prolog
-predefined_origin_location(+Object, -Location) is semidet.
-predefined_destination_location(+Class, -DestinationLocation) is semidet.
+predefined_origin_location(+Class, -OriginLocation) is nondet.
+predefined_destination_location(+Class, -DestinationLocation) is nondet.
 ```
 
 !!! warning
-    For `Serving Breakfast` the predicate `init_serving_breakfast.` has to be called first to load/initialize the challenge specific predefined locations.
+    For `Serving Breakfast` the predicate `init_serve_breakfast.` has to be called first to load/initialize the challenge specific predefined locations.
+    For `Storing Groceries` the predicate `init_storing_groceries.`.
+    For `Clean the Table` the predicate `init_clean_the_table.`.
 
 Example:
 ```prolog
@@ -183,6 +189,26 @@ OriginLocation: 'http://www.ease-crc.org/ont/SOMA.owl#Shelf_FNSVGYRI'.
 
 ?- predefined_destination_location(soma:'Bowl', DestinationLocation).
 DestinationLocation: 'http://www.ease-crc.org/ont/SOMA.owl#Table_BPXIQGES'.
+```
+
+### Next best object
+
+Gets the next best object to pick based on the current context.
+
+This reasoner calculates the next best object to pick based on factors like the distance of the object to the robot and the destination location, the benefit (bonus points) and the confidence of the object detection by Perception.
+
+!!! info
+    For `next_object` to work, the objects have to be created first with the `create_object` predicate.
+
+```prolog
+next_object(-Object) is nondet.
+```
+
+Example:
+```prolog
+?- next_object(Object).
+
+Object: 'http://www.ease-crc.org/ont/SUTURO.owl#Banana_WRQHESGO'.
 ```
 
 ### Semantic similarity measure
@@ -209,7 +235,7 @@ Object: 'http://www.ease-crc.org/ont/SUTURO.owl#Banana_WRQHESGO'.
 Calculates the Wu-Palmer similarity between two classes. The similarity can be 0 < similarity <= 1.  
 
 ```prolog
-wu_palmer_similarity(Class1, Class2, Similarity) is semidet.
+wu_palmer_similarity(+Class1, +Class2, -Similarity) is semidet.
 ```
 
 Example:
@@ -266,4 +292,13 @@ TFName: iai_kitchen/tall_table:table:table_front_edge_center.
 
 ?- has_tf_name('http://www.ease-crc.org/ont/SOMA.owl#Table_LTKIUPNG', TFName).
 TFName: iai_kitchen/tall_table:table:table_front_edge_center.
+```
+
+## Troubleshooting
+
+### Drop roslog database
+The roslog MongoDB database used in Knowledge increases relatively fast when working with the HSR.  
+To fix this, drop the roslog database on a regular bases. Execute this in the shell and restart Knowledge.
+```bash
+mongo roslog --eval "db.dropDatabase()"
 ```
