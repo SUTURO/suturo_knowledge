@@ -23,13 +23,13 @@
 % @param Object The next best object to pick
 %
 next_object(Object):-
-    exists(suturo:'StoringGroceries', _),
+    has_type(_, suturo:'StoringGroceries'),
     next_object_storing_groceries(Object).
 % next_object(Object):-
-%     exists(suturo:'ServeBreakfast', _),
+%     has_type(_, suturo:'ServeBreakfast'),
 %      ext_object_serve_breakfast(Object).
 % next_object(Object):-
-%     exists(suturo:'CleanTheTable', _),
+%     has_type(_, suturo:'CleanTheTable'),
 %     next_object_clean_the_table(Object).
 
 next_object_storing_groceries(NextObject) :-
@@ -54,10 +54,10 @@ next_object_storing_groceries(NextObject) :-
 % @param ObjectsAndCBRatio List of object and cost benifit ratio pairs
 % @param BestObject The best object to pick
 %
-find_best_object(ObjectsAndCBRatio, BestObject):-
-    maplist(nth0(1), ObjectsAndCBRatio, CBRatios),
-    max_list(CBRatios, MaxCBRatio),
-    member([BestObject, MaxCBRatio], ObjectsAndCBRatio).
+find_best_object(ObjectsAndCbRatio, BestObject):-
+    maplist(nth0(1), ObjectsAndCbRatio, CbRatios),
+    max_list(CbRatios, MaxCbRatio),
+    member([BestObject, MaxCbRatio], ObjectsAndCbRatio).
 
 %% object_bendefits(+Objects, -ObjectsBenefits) is semidet.
 %
@@ -174,7 +174,8 @@ distance_to_object(Object, Distance) :-
 distance_to_destination_location(Object, Distance) :-
     get_urdf_origin(Origin),
     kb_call(is_at(Object, [Origin, ObjectLocation, _])),
-    triple(Object, rdf:type, Class),
+    has_type(Object, Class),
+    % TODO use actual destination location
     predefined_destination_location(Class, DestinationLocationObject),
     kb_call(is_at(DestinationLocationObject, [Origin, DestinationLocation, _])),
     euclidean_distance(ObjectLocation, DestinationLocation, Distance).

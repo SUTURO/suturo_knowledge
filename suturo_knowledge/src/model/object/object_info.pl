@@ -1,7 +1,6 @@
 %% The object info module contains predicates that provide information about the objects and their role in the world.
 :- module(object_info,
 	  [
-		exists(r,-),
       	object_pose(r,?),
 		is_perceived_object(r),
 		set_object_handled(r),
@@ -21,16 +20,6 @@
 
 :- use_module(library('ros/tf/tf')).
 
-%% exists(+Class, -Object) is nondet.
-% 
-% Succeeds with an individual (object instance) of the given class (if any exists).
-%
-% @param Class The class to check.
-% @param Object An object instance of the given class.
-%
-exists(Class, Object) :-
-	kb_call(has_type(Object, Class)).
-
 %% object_pose(+Object, ?PoseStamped) is semidet.
 %
 % Get or set the pose of an object.
@@ -39,10 +28,12 @@ exists(Class, Object) :-
 % @param PoseStamped The pose of the object.
 %
 object_pose(Object, PoseStamped) :-
-	(var(PoseStamped)
-	 -> tf:tf_get_pose(Object, PoseStamped)
-	 ;  from_current_scope(Scope),
-	 	tf:tf_set_pose(Object, PoseStamped, Scope)).
+	var(PoseStamped),
+	tf:tf_get_pose(Object, PoseStamped),
+	!.
+object_pose(Object, PoseStamped) :-
+	from_current_scope(Scope),
+	tf:tf_set_pose(Object, PoseStamped, Scope).
 
 %% is_perceived_object(+Object) is semidet.
 %
