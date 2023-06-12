@@ -1,5 +1,6 @@
 %% size reasoner
-% This module contains predicates for size reasoning.
+% This module contains predicates for size reasoning. 
+% Anything related to the size, proportions or dimensions of objects should be in this module.
 :- module(size,
     [
       is_tiny(r)
