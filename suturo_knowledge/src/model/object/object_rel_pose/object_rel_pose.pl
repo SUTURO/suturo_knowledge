@@ -6,6 +6,7 @@
 
 :- use_module(object_perceive_pose).
 :- use_module(object_place_pose).
+:- use_module(object_destination_pose, [object_destination_pose/3]).
 
 %% object_rel_pose(+Object, +Type, -PoseStamped) is semidet.
 %
@@ -27,13 +28,16 @@ object_rel_pose(Object, Type, PoseStamped) :-
 %
 % See object_rel_pose/3 for basic information.
 % This predicate additionally accepts a list of options that might change the behavior of ceratin types.
-% 
+%
 
 object_rel_pose(Object, perceive, Options, PoseStamped) :-
     object_perceive_pose(Object, Options, PoseStamped), !.
 
 object_rel_pose(Object, place, Options, PoseStamped) :-
     object_place_pose(Object, Options, PoseStamped), !.
+
+object_rel_pose(Object, destination, Options, PoseStamped) :-
+    object_destination_pose(Object, Options, PoseStamped), !.
 
 object_rel_pose(Object, Type, _Options, PoseStamped) :-
     % call the appropriate predicate based on the type of the object
@@ -46,4 +50,3 @@ object_rel_pose(Object, Type, _Options, PoseStamped) :-
     ; ros_error('Error: Unknown object class for object_rel_pose: object ~w.', [Object]),
       false
     ).
-

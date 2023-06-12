@@ -34,7 +34,7 @@ init_serving_breakfast :-
 %
 init_storing_groceries :-
     ros_info('Initializing object info for storing groceries...', []),
-    foreach((member(X,[0,1,2,3]),
+    foreach((member(X,[2,1]),
              atom_concat('shelf:shelf:shelf_floor_', X, UrdfName),
              has_urdf_name(DestinationLocation, UrdfName)),
             % TODO fix expanding namespaces to use namespace:Resource here.
