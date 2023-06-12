@@ -2,8 +2,6 @@
     [
         next_object(-),
         next_object_storing_groceries(-),
-        next_object1(-),
-        next_object2(-),
         objects_benefits(+, -),
         object_benefit(r, -),
         object_costs(+, -),
@@ -27,21 +25,19 @@
 next_object(Object):-
     exists(suturo:'StoringGroceries', _),
     next_object_storing_groceries(Object).
-next_object(Object):-
-    exists(suturo:'ServeBreakfast', _),
-    fail.
-    % next_object_serve_breakfast(Object).
-next_object(Object):-
-    exists(suturo:'CleanTheTable', _),
-    fail.
-    % next_object_clean_the_table(Object).
+% next_object(Object):-
+%     exists(suturo:'ServeBreakfast', _),
+%      ext_object_serve_breakfast(Object).
+% next_object(Object):-
+%     exists(suturo:'CleanTheTable', _),
+%     next_object_clean_the_table(Object).
 
 next_object_storing_groceries(NextObject) :-
     objects_not_handled(NothandledObjects),
     findall([Object, CbRatio],
         (
             member(Object, NothandledObjects),   
-            object_bonus(Object, Bonus),
+            % object_bonus(Object, Bonus),
             object_benefit(Object, Benefit),
             object_cost(Object, Cost),
             CbRatio is Benefit / Cost
@@ -51,69 +47,6 @@ next_object_storing_groceries(NextObject) :-
     find_best_object(ObjectsAndCbRatio, NextObject),
     set_object_handled(NextObject),
     !.
-
-next_object1(Object):-
-    set_object_handled('http://www.ease-crc.org/ont/SOMA.owl#DishwasherTab_GUSPBNMR'),
-    objects_not_handled(NothandledObjects),
-    findall([Object,CBRatio],
-        (member(Object,NothandledObjects),
-        object_bonus(Object, 500),
-        object_benefit(Object, Benefit),
-        object_cost(Object,Cost),
-        CBRatio is Benefit/Cost),
-        ObjectCBRatio0),
-        (ObjectCBRatio0 == []
-        -> 
-        findall([Object,CBRatio],
-            (member(Object,NothandledObjects),   
-            object_benefit(Object, Benefit),
-            object_cost(Object,Cost),
-            CBRatio is Benefit/Cost),
-            ObjectCBRatio)
-        ;   ObjectCBRatio0 = ObjectCBRatio
-        ),
-        (ObjectCBRatio == []
-            ->
-            Object = 'http://www.ease-crc.org/ont/SOMA.owl#DishwasherTab_GUSPBNMR'
-            ;
-            maplist(nth0(1), ObjectCBRatio, CBRatios),
-            max_list(CBRatios, MaxCBRatio),
-            member([Object, MaxCBRatio], ObjectCBRatio),
-            set_object_handled(Object)
-        ),
-        !.
-
-
-next_object2(Object):-
-    set_object_handled('http://www.ease-crc.org/ont/SOMA.owl#DishwasherTab_GUSPBNMR'),
-    objects_not_handled(NothandledObjects),
-    findall([Object,CBRatio],
-        (member(Object,NothandledObjects),
-        object_bonus(Object, 0),
-        object_benefit(Object, Benefit),
-        object_cost(Object,Cost),
-        CBRatio is Benefit/Cost),
-        ObjectCBRatio0),
-        (ObjectCBRatio0 == []
-        -> 
-        findall([Object,CBRatio],
-            (member(Object,NothandledObjects),   
-            object_benefit(Object, Benefit),
-            object_cost(Object,Cost),
-            CBRatio is Benefit/Cost),
-            ObjectCBRatio)
-        ;   ObjectCBRatio0 = ObjectCBRatio
-        ),
-        (ObjectCBRatio == []
-            ->
-            Object = 'http://www.ease-crc.org/ont/SOMA.owl#DishwasherTab_GUSPBNMR'
-            ;
-            maplist(nth0(1), ObjectCBRatio, CBRatios),
-            max_list(CBRatios, MaxCBRatio),
-            member([Object, MaxCBRatio], ObjectCBRatio),
-            set_object_handled(Object)
-        ),
-        !.
 
 %% find_best_object(+Objects, -BestObject) is semidet.
 %
@@ -177,7 +110,7 @@ object_costs(Objects, ObjectsCosts) :-
 % @param Cost The cost for the given object
 %
 object_cost(Object, Cost) :-
-    distance_to_go(Object,DistanceToGo),
+    distance_to_go(Object, DistanceToGo),
     Cost is DistanceToGo.
 
 %% objects_bonus(+Objects, -ObjectsBonus) is semidet.
@@ -241,6 +174,12 @@ distance_to_object(Object, Distance) :-
 %
 distance_to_destination_location(Object, Distance) :-
     get_urdf_origin(Origin),
-    kb_call(is_at(Object,[Origin, ObjectLocation, _])),
-    DestinationLocation = [1, 2, 0], % TODO get goal location from knowledge base
+    kb_call(is_at(Object, [Origin, ObjectLocation, _])),
+    % triple(Object, rdf:type, Class),
+    % ros_info('Class: ~w', [Class]),
+    % predefined_destination_location(Class, DestinationLocationObject),
+    % ros_info('DestinationLocationObject: ~w', [DestinationLocationObject]),
+    % kb_call(is_at(DestinationLocationObject, [A, DestinationLocation, _])),
+    % ros_info('DestinationLocation: ~w', [DestinationLocation]),
+    DestinationLocation is [1,0,1],
     euclidean_distance(ObjectLocation, DestinationLocation, Distance).
