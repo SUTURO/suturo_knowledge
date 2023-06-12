@@ -72,15 +72,6 @@
     
 
 
-    <!-- http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#hasLocation -->
-
-    <rdf:Description rdf:about="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#hasLocation">
-        <rdfs:subPropertyOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasDestinationLocation"/>
-        <rdfs:subPropertyOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasOriginLocation"/>
-    </rdf:Description>
-    
-
-
     <!-- 
     ///////////////////////////////////////////////////////////////////////////////////////
     //
@@ -1542,6 +1533,18 @@ For example the Tables come from semantic_map, while the objects perception got 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#RedMetalCup">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Cup"/>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#RoboCupChallenge -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#RoboCupChallenge">
+        <rdfs:subClassOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#Plan"/>
+        <rdfs:comment>The RoboCup@Home competition consists of a series of challenges/tests which the robots have to solve, and the specific tests will change over the years to become more advanced. The performance of the robots is evaluated based on a score derived from competition rules and evaluation by a jury.
+
+The challenges in the RoboCup@Home competition are designed to test a variety of skills relevant to domestic service robots.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#"/>
     </owl:Class>
     
 

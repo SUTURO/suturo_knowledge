@@ -2,8 +2,8 @@
 :- module(object_info,
 	  [
       	object_pose(r,?),
-		tiny_object(r),
 		is_perceived_object(r),
+		is_misplaced_object(r),
 		set_object_handled(r),
 		set_object_not_handled(r),
 		update_handle_state(r,+),
@@ -29,41 +29,15 @@
 % @param PoseStamped The pose of the object.
 %
 object_pose(Object, PoseStamped) :-
-	(var(PoseStamped)
-	 -> tf:tf_get_pose(Object, PoseStamped)
-	 ;  from_current_scope(Scope),
-	 tf:tf_set_pose(Object, PoseStamped, Scope)).
-
-%% tiny_object(+Object) is semidet.
-%
-% True if the object is tiny according to the RoboCup rulebook.
-% The RoboCup rulebook states that objects with any side smaller than 5cm are considered tiny.
-%
-% @param Object The object to check.
-%
-tiny_object(Object) :-
-	object_shape_workaround(Object,_,ShapeTerm,_,_),
-(
-	ShapeTerm = box(X,Y,Z),
-	(
-		X =< 0.05;
-		Y =< 0.05;
-		Z =< 0.05
-	);
-	ShapeTerm = cylinder(Radius,Length),
-	(
-		Radius =< 0.025;
-		Length =< 0.05
-	);
-	ShapeTerm = sphere(Radius),
-	(
-		Radius =< 0.025
-	);
-	ShapeTerm = mesh(File, Scale),
-	(
-		false
-	)
-).
+	var(PoseStamped),
+	tf:tf_get_pose(Object, PoseStamped),
+	!.
+object_pose(Object, PoseStamped) :-
+	from_current_scope(Scope),
+	tf:tf_set_pose(Object, PoseStamped, Scope).
+	% TODO: Reset/Update the relative position of the object
+	% ignore(kb_unproject(holds(Object, soma:isOntopOf, _)),
+	% ignore(assert_relative_position(Object, Scope)).
 
 %% is_perceived_object(+Object) is semidet.
 %
@@ -74,6 +48,19 @@ tiny_object(Object) :-
 is_perceived_object(Object):-
 	is_physical_object(Object),
 	holds(Object, suturo:'hasDataSource', perception).
+
+%% is_misplaced_object(+Object) is semidet.
+%
+% True if the object is a perceived object and is misplaced.
+% An object is misplaced if it is on top of its predefined origin location.
+%
+% @param Object The object to check.
+%
+is_misplaced_object(Object):-
+	is_perceived_object(Object),
+	has_type(Object, Class),
+	predefined_origin_location(Class, OriginLocation),
+	holds(Object, soma:isOntopOf, OriginLocation).
 
 %% set_object_handled(+Object) is det.
 %
@@ -121,11 +108,12 @@ handled(Object) :-
 %% not_handled(+Object) is semidet.
 %
 % True if the object is not handled.
+% An object is not handled if it is perceived, still at its predefined origin location and if the handled state is set to false.
 %
 % @param Object The object to check.
 %
 not_handled(Object) :-
-	is_perceived_object(Object),
+	is_misplaced_object(Object),
 	triple(Object, suturo:'hasHandleState', HandleState),
 	triple(HandleState, suturo:'handled', false).
 
@@ -136,12 +124,7 @@ not_handled(Object) :-
 % @param Objects The list of objects that are not handled.
 %
 objects_not_handled(Objects):-
-    findall(Object,
-    (
-        is_perceived_object(Object),
-        not_handled(Object)
-    ),
-    Objects).
+    findall(Object, (not_handled(Object)), Objects).
 
 %% predefined_origin_location(+Class, -OriginLocation) is semidet.
 %
