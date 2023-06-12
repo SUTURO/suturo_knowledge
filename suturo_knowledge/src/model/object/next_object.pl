@@ -15,7 +15,7 @@
         
     ]).
 
-:- use_module(library('model/locations/spatial_computations')).
+:- use_module(library('reasoning/spatial/distance')).
 :- use_module(library('model/locations/actual_locations')).
 
 %% next_object(+Object) is semidet.
@@ -184,7 +184,6 @@ object_bonus(Object, Bonus):-
 distance_to_go(Object, Distance):-
     distance_to_object(Object,DistanceToObject),
     distance_to_goal_location(Object, DistanceToGoalLocation),
-    ros_info('Distance to goal location: ~w', [DistanceToGoalLocation]),
     Distance is DistanceToObject + DistanceToGoalLocation.
 % calculate distance to object and distance to goal location
 
@@ -194,12 +193,8 @@ distance_to_go(Object, Distance):-
 % Calculate distance the point we get for an object
 distance_to_object(Object, Distance):-
     kb_call(is_at(Object,[map,ObjectLocation,_])),
-    ros_info('Object location: ~w', [ObjectLocation]),
     robot_location(RobotLocation),
-    ros_info('Robot location: ~w', [RobotLocation]),
     euclidean_distance(ObjectLocation, RobotLocation, Distance).
-% calcluta euclidian distance between robot and an object
-
 
 
 %%distance_to_goal_location(+Object, -Distance) is semidet.
