@@ -1,17 +1,18 @@
 %% The Util module contains predicates that (currently) don't fit into other modules.
 :- module(util,
 	  [
-	      has_urdf_name(?,?),
-	      has_tf_name(?,?),
-          split_iri(+, -, -),
-          is_bnode(+),
-          last_element(+, -),
-          second_last_element(+, -),
-	      ros_info(+,+),
-	      ros_warn(+,+),
-	      ros_error(+,+),
-	      ros_debug(+,+),
-	      default_value(?,+)
+        from_current_scope(-),
+        has_urdf_name(?,?),
+        has_tf_name(?,?),
+        split_iri(+, -, -),
+        is_bnode(+),
+        last_element(+, -),
+        second_last_element(+, -),
+        ros_info(+,+),
+        ros_warn(+,+),
+        ros_error(+,+),
+        ros_debug(+,+),
+        default_value(?,+)
 	  ]).
 
 :- use_module(library('semweb/rdf_db')).
@@ -20,6 +21,31 @@
 	      [
 		  triple/3
 	      ]).
+
+%% from_current_scope(-Scope) is det.
+%
+% The scope of facts that are true from now until infinity.
+%
+% @param Scope A scope dictionary.
+%
+from_current_scope(dict{
+		       time: dict{
+				 since: =(double(Now)),
+				 until: =(double('Infinity'))
+	}
+}) :- get_time(Now).
+
+%% default_value(?Term, +DefaultValue) is det.
+%
+% if Term is a var, unify it with DefaultValue otherwise leave it as it is.
+%
+% @param Term The term to unify
+% @param DefaultValue The value to unify with
+%
+default_value(Term, DefaultValue) :-
+    (var(Term)
+    -> Term = DefaultValue
+    ;  true).
 
 %% has_urdf_name(?Object, ?URDFName) is nondet.
 %
@@ -155,12 +181,3 @@ ros_warn(Format, Arguments) :-
 ros_error(Format, Arguments) :-
     format(string(MSG), Format, Arguments),
     ros_error(MSG).
-
-%% default_value(?Term, +Value)
-%
-% if Term is a var, unify it with Value
-% otherwise leave it as it is.
-default_value(Term, Value) :-
-    (  var(Term)
-    -> Term = Value
-    ;  true).

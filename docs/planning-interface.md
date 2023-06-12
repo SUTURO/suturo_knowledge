@@ -98,19 +98,27 @@ Object: http://www.ease-crc.org/ont/SOMA.owl#CerealBox_BHVKCONR.
 
 ### Pose and shape information
 
+To get or set the pose of an object, use the following predicate.  
+If an unset variable is passed for `PoseStamped`, the predicate will try to find a pose in the knowledge base.
+If the `PoseStamped` is fully specified, the predicate will set the pose in the knowledge base.
+
 ```prolog
-object_pose(+Object, -PoseStamped) is semidet.
+object_pose(+Object, ?PoseStamped) is semidet.
 ```
 
 Example:
 ```prolog
+% Get the pose of an object
 ?- object_pose('http://www.ease-crc.org/ont/SOMA.owl#Table_LTKIUPNG', Pose)
-Pose: ['iai_kitchen/tall_table:table:table_front_edge_center', [0,0,0], [0,0,0,1]]
+Pose: ['map', [1,0,1], [0,0,0,1]]
+
+% Set/Update the pose of an object
+?- object_pose('http://www.ease-crc.org/ont/SOMA.owl#Table_LTKIUPNG', ['map', [2,1,0], [0,0,0,1]])
+true.
 ```
 
-Because of [knowrob#368](https://github.com/knowrob/knowrob/issues/368) this is currently not done via `object_shape/5` but via `object_shape_workaround/5`.
-
 The documentation of `object_shape/5` is viewable [here](https://knowrob.github.io/knowrob/master/model/SOMA.html#object_shape/5).
+Because of [knowrob#368](https://github.com/knowrob/knowrob/issues/368) this is currently not done via `object_shape/5` but via `object_shape_workaround/5`.
 
 ```prolog
 object_shape_workaround(?Obj, ?Frame, ?ShapeTerm, ?Pose, ?Material) is semidet.
