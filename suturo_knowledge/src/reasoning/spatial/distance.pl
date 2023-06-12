@@ -1,5 +1,5 @@
 %% distance reasoner
-% This module contains predicates for calculating the distance between two objects or points.
+% This module contains predicates for calculating the distance between objects or points.
 :- module(distance,
 	  [
         euclidean_distance(+, +, -)

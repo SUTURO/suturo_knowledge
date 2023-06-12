@@ -1,6 +1,7 @@
 :- module(next_object,
     [
         next_object(-),
+        next_object_storing_groceries(-),
         next_object1(-),
         next_object2(-),
         objects_benefits(+, -),
@@ -17,42 +18,38 @@
 :- use_module(library('reasoning/metric/size')).
 :- use_module(library('reasoning/spatial/distance')).
 
-%% next_object(-Object) is semidet.
+%% next_object(-Object) is nondet.
 %
-% Choose the next best object to grasp.
+% Chooses the next best object to pick based on the current challenge
 %
-% try if object is already handled
-% try if not handled objects are misplaced
-% then we have possible objects to choose the next best object
-% calculate cost for robot position and possible objects
-% calculate benefit for possible objects
-% return object bonus
-% calculate cost benefit ratio
-% choose the object with the highest ratio
+% @param Object The next best object to pick
 %
 next_object(Object):-
+    exists(suturo:'StoringGroceries', _),
+    next_object_storing_groceries(Object).
+next_object(Object):-
+    exists(suturo:'ServeBreakfast', _),
+    fail.
+    % next_object_serve_breakfast(Object).
+next_object(Object):-
+    exists(suturo:'CleanTheTable', _),
+    fail.
+    % next_object_clean_the_table(Object).
+
+next_object_storing_groceries(NextObject) :-
     objects_not_handled(NothandledObjects),
-    findall([Object,CBRatio],
-        (member(Object,NothandledObjects),
-        object_bonus(Object, 0),
-        object_benefit(Object, Benefit),
-        object_cost(Object,Cost),
-        CBRatio is Benefit/Cost),
-        ObjectCBRatio0),
-        (ObjectCBRatio0 == []
-        -> 
-        findall([Object,CBRatio],
-            (member(Object,NothandledObjects),   
+    findall([Object, CbRatio],
+        (
+            member(Object, NothandledObjects),   
+            object_bonus(Object, Bonus),
             object_benefit(Object, Benefit),
-            object_cost(Object,Cost),
-            CBRatio is Benefit/Cost),
-            ObjectCBRatio)
-        ;   ObjectCBRatio0 = ObjectCBRatio
+            object_cost(Object, Cost),
+            CbRatio is Benefit / Cost
         ),
-    maplist(nth0(1), ObjectCBRatio, CBRatios),
-    max_list(CBRatios, MaxCBRatio),
-    member([Object, MaxCBRatio], ObjectCBRatio),
-    set_object_handled(Object),
+        ObjectsAndCbRatio),
+    ros_info('Objects and CB Ratios: ~w', [ObjectsAndCbRatio]),
+    find_best_object(ObjectsAndCbRatio, NextObject),
+    set_object_handled(NextObject),
     !.
 
 next_object1(Object):-
@@ -87,7 +84,6 @@ next_object1(Object):-
         !.
 
 
-
 next_object2(Object):-
     set_object_handled('http://www.ease-crc.org/ont/SOMA.owl#DishwasherTab_GUSPBNMR'),
     objects_not_handled(NothandledObjects),
@@ -118,6 +114,18 @@ next_object2(Object):-
             set_object_handled(Object)
         ),
         !.
+
+%% find_best_object(+Objects, -BestObject) is semidet.
+%
+% Finds the the object with the highest benefit to cost ratio.
+%
+% @param ObjectsAndCBRatio List of object and cost benifit ratio pairs
+% @param BestObject The best object to pick
+%
+find_best_object(ObjectsAndCBRatio, BestObject):-
+    maplist(nth0(1), ObjectsAndCBRatio, CBRatios),
+    max_list(CBRatios, MaxCBRatio),
+    member([BestObject, MaxCBRatio], ObjectsAndCBRatio).
 
 %% object_bendefits(+Objects, -ObjectsBenefits) is semidet.
 %

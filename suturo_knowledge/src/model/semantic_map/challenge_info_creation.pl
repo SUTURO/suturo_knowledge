@@ -1,21 +1,29 @@
 %% This module initializes challenge specific predefined information.
 :- module(challenge_info_creation,
 	  [
-            init_serving_breakfast/0,
-            init_storing_groceries/0
+            init_serve_breakfast/0,
+            init_storing_groceries/0,
+            init_clean_the_table/0
 	  ]).
+
+:- rdf_meta(activate_challenge(r)).
+:- rdf_meta(activate_challenge(r, -)).
 
 :- use_module(library('util/util'),
       [
       ros_info/2
       ]).
 
-%% init_serving_breakfast is det.
+%% init_serve_breakfast is det.
 %
-%  Initializes the object info for serving breakfast.
+% Initializes the predefined info for serving breakfast.
 %
-init_serving_breakfast :-
-    ros_info('Initializing object info for serving breakfast...', []),
+% This is a temporary solution until the challenge info can be loaded from an ontology.
+% This predicate should only be called once at the start of the challenge.
+%
+init_serve_breakfast :-
+    ros_info('Initializing info for "Serving Breakfast"...', []),
+    activate_challenge(suturo:'ServeBreakfast'),
     has_urdf_name(OriginLocation, 'shelf:shelf:shelf_base_center'),
     kb_project(holds(soma:'Bowl', suturo:hasOriginLocation, OriginLocation)),
     kb_project(holds(soma:'CerealBox', suturo:hasOriginLocation, OriginLocation)),
@@ -26,14 +34,43 @@ init_serving_breakfast :-
     kb_project(holds(soma:'CerealBox', suturo:hasDestinationLocation, DestinationLocation)),
     kb_project(holds(soma:'Spoon', suturo:hasDestinationLocation, DestinationLocation)),
     kb_project(holds(soma:'MilkPack', suturo:hasDestinationLocation, DestinationLocation)),
-    ros_info('Serving breakfast initialized.', []).
+    ros_info('"Serving Breakfast" initialized.', []).
 
 %% init_storing_groceries is det.
 %
-%  Initializes the object info for storing groceries.
+% Initializes the predefined info for storing groceries.
+%
+% This is a temporary solution until the challenge info can be loaded from an ontology.
+% This predicate should only be called once at the start of the challenge.
 %
 init_storing_groceries :-
-      ros_info('Initializing object info for storing groceries...', []),
+      ros_info('Initializing info for "Storing Groceries"...', []),
+      activate_challenge(suturo:'StoringGroceries'),
       has_urdf_name(DestinationLocation, 'shelf:shelf:shelf_base_center'),
       kb_project(holds(dul:'PhysicalObject', suturo:hasDestinationLocation, DestinationLocation)),
-      ros_info('Storing groceries initialized.', []).
+      ros_info('"Storing Groceries" initialized.', []).
+
+%% init_clean_the_table is det.
+%
+% Initializes the predefined info for clean the table.
+%
+% This is a temporary solution until the challenge info can be loaded from an ontology.
+% This predicate should only be called once at the start of the challenge.
+%
+init_clean_the_table :-
+      ros_info('Initializing info for "Clean the Table"...', []),
+      activate_challenge(suturo:'CleanTheTable'),
+      ros_info('"Clean the Table" initialized.', []).
+
+%% activate_challenge(+Challenge) is det.
+%
+% Activates the given challenge.
+%
+% @param Challenge The challenge class to activate.
+% @param ActivatedChallenge The activated challenge object.
+%
+activate_challenge(Challenge) :-
+      activate_challenge(Challenge, _).
+activate_challenge(Challenge, ActivatedChallenge) :-
+      from_current_scope(Scope),
+      kb_project(is_type(ActivatedChallenge, Challenge), Scope).
