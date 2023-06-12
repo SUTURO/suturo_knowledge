@@ -2,7 +2,6 @@
 :- module(object_info,
 	  [
       	object_pose(r,?),
-		tiny_object(r),
 		is_perceived_object(r),
 		set_object_handled(r),
 		set_object_not_handled(r),
@@ -32,38 +31,7 @@ object_pose(Object, PoseStamped) :-
 	(var(PoseStamped)
 	 -> tf:tf_get_pose(Object, PoseStamped)
 	 ;  from_current_scope(Scope),
-	 tf:tf_set_pose(Object, PoseStamped, Scope)).
-
-%% tiny_object(+Object) is semidet.
-%
-% True if the object is tiny according to the RoboCup rulebook.
-% The RoboCup rulebook states that objects with any side smaller than 5cm are considered tiny.
-%
-% @param Object The object to check.
-%
-tiny_object(Object) :-
-	object_shape_workaround(Object,_,ShapeTerm,_,_),
-(
-	ShapeTerm = box(X,Y,Z),
-	(
-		X =< 0.05;
-		Y =< 0.05;
-		Z =< 0.05
-	);
-	ShapeTerm = cylinder(Radius,Length),
-	(
-		Radius =< 0.025;
-		Length =< 0.05
-	);
-	ShapeTerm = sphere(Radius),
-	(
-		Radius =< 0.025
-	);
-	ShapeTerm = mesh(File, Scale),
-	(
-		false
-	)
-).
+	 	tf:tf_set_pose(Object, PoseStamped, Scope)).
 
 %% is_perceived_object(+Object) is semidet.
 %

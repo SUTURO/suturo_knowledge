@@ -15,9 +15,10 @@
         robot_location(-)
     ]).
 
+:- use_module(library('reasoning/metric/size')).
 :- use_module(library('reasoning/spatial/distance')).
 
-%% next_object(+Object) is semidet.
+%% next_object(-Object) is semidet.
 %
 % Choose the next best object to grasp.
 %
@@ -172,7 +173,7 @@ objects_bonus(Objects, ObjectBonus):-
 %
 % return object bonus.
 object_bonus(Object, Bonus):-
-    tiny_object(Object)
+    is_tiny(Object)
     -> Bonus=500
     ;  Bonus=0.
 %initialize object bonus
@@ -210,7 +211,6 @@ distance_to_goal_location(Object, Distance):-
 % determines object goal location
 object_goal_location(Object, GoalPosition) :-
     fail.
-
 
 robot_location(Location):-
     kb_call(is_at(base_footprint,[map,Location,_])).

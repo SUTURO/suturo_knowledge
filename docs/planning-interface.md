@@ -177,8 +177,8 @@ Get the predefined origin and destination location of object classes.
 The predefined locations are the location (or reference object) where the object is placed at the beginning of the task or should be placed at the end of the task.
 
 ```prolog
-predefined_origin_location(+Object, -Location) is semidet.
-predefined_destination_location(+Class, -DestinationLocation) is semidet.
+predefined_origin_location(+Class, -OriginLocation) is nondet.
+predefined_destination_location(+Class, -DestinationLocation) is nondet.
 ```
 
 !!! warning
