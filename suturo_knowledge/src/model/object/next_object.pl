@@ -11,7 +11,7 @@
         object_bonus(r, -),
         distance_to_go(r, -),
         distance_to_object(r, -),
-        distance_to_goal_location(r, -)
+        distance_to_destination_location(r, -)
     ]).
 
 :- use_module(library('reasoning/metric/size')).
@@ -119,87 +119,120 @@ next_object2(Object):-
         ),
         !.
 
-    
-
-%% object_bendefits(+Object, -ObjectBenefits) is semidet.
+%% object_bendefits(+Objects, -ObjectsBenefits) is semidet.
 %
-%find benefits for all objects 
-objects_benefits(Objects, ObjectBenefits) :-
+% Finds the benefit for all obects.
+%
+% @param Objects The objects to calculate the benefit for
+% @param ObjectsBenefits The benefits for the given objects
+%
+objects_benefits(Objects, ObjectsBenefits) :-
     findall([Object,Benefit],
         (
             member(Object,Objects),
             object_benefit(Object,Benefit)
         ),
-    ObjectBenefits).
+    ObjectsBenefits).
 
 %% object_benefit(+Object, -Benefit) is semidet.
 %
-% Calculate object benefit (class confidence of an object)
+% Calculates the object benefit.
+% The higher the detection confidence value by Perception the higher the benefit.
+%
+% @param Object The object to calculate the benefit for
+% @param Benefit The benefit for the given object
+%
 object_benefit(Object, Benefit):-
     ask(triple(Object, suturo:'hasConfidenceValue', Benefit)).
-% calculate confidence class value(measure a confidence that a robot has about the recognition of objects)
 
-
-%% object_costs(+Object, -ObjectCosts) is semidet.
+%% object_costs(+Objects, -ObjectsCosts) is semidet.
 %
-%find costs for all objects
-object_costs(Objects, ObjectCosts) :-
+% Finds the cost for all objects
+%
+% @param Objects The objects to calculate the cost for
+% @param ObjectCosts The costs for the given objects
+%
+object_costs(Objects, ObjectsCosts) :-
     findall([Object,Cost],
         (
             member(Object,Objects),
             object_cost(Object,Cost)
         ),
-    ObjectCosts).
+        ObjectsCosts).
 
 
 %% object_cost(+Object, -Costs) is semidet.
 %
-% Calculate object cost.
-object_cost(Object, Cost):-
+% Calculates the cost to handle the given object.
+%
+% @param Object The object to calculate the cost for
+% @param Cost The cost for the given object
+%
+object_cost(Object, Cost) :-
     distance_to_go(Object,DistanceToGo),
     Cost is DistanceToGo.
-% Calculate distance the point we get for an object and the distance we have to go.
 
-objects_bonus(Objects, ObjectBonus):-
-    findall([Object,Bonus],
-        (
-            member(Object,Objects),
-            object_bonus(Object,Bonus)
-        ),
-    ObjectBonus).
-
-%% object_bonus(+Object, -Bonus) is semidet.
+%% objects_bonus(+Objects, -ObjectsBonus) is semidet.
 %
-% return object bonus.
+% Finds the bonus for all objects
+%
+% @param Objects The objects to calculate the bonus for
+% @param ObjectsBonus The boni for the given objects
+%
+objects_bonus(Objects, ObjectsBonus):-
+    findall([Object, Bonus],
+        (
+            member(Object, Objects),
+            object_bonus(Object, Bonus)
+        ),
+        ObjectsBonus).
+
+%% object_bonus(+Object, -Bonus) is det.
+%
+% Returns the object bonus for the given object according to the RoboCup@Home rulebook.
+%
+% @param Object The object to calculate the bonus for
+% @param Bonus The bonus for the given object
+%
 object_bonus(Object, Bonus):-
     is_tiny(Object)
-    -> Bonus=500
-    ;  Bonus=0.
-%initialize object bonus
+    -> Bonus = 500
+    ;  Bonus = 0.
 
 %% distance_to_go(+Object, -Distance) is semidet.
 %
-% Calculate distance we have to go.
-distance_to_go(Object, Distance):-
-    distance_to_object(Object,DistanceToObject),
-    distance_to_goal_location(Object, DistanceToGoalLocation),
-    Distance is DistanceToObject + DistanceToGoalLocation.
-% calculate distance to object and distance to goal location
-
-
-%% distance_to_object(+Object, -Distance)is semidet.
+% Calculates the distance the robot would need to move to reach the object and then bring it to its destination location
 %
-% Calculate distance the point we get for an object
-distance_to_object(Object, Distance):-
-    kb_call(is_at(Object,[map,ObjectLocation,_])),
+% @param Object The object to calculate the distance for
+% @param Distance The overall distance from the robot to the objects and its destination location
+%
+distance_to_go(Object, Distance) :-
+    distance_to_object(Object, DistanceToObject),
+    distance_to_destination_location(Object, DistanceToDestinationLocation),
+    Distance is DistanceToObject + DistanceToDestinationLocation.
+
+%% distance_to_object(+Object, -Distance) is semidet.
+%
+% Calculates the distance the distance between the robot and the object location
+%
+% @param Object The object to calculate the distance to
+% @param Distance The distance between the robot and the object location
+distance_to_object(Object, Distance) :-
+    get_urdf_origin(Origin),
+    kb_call(is_at(Object,[Origin, ObjectLocation, _])),
     robot_location(RobotLocation),
     euclidean_distance(ObjectLocation, RobotLocation, Distance).
 
 
-%%distance_to_goal_location(+Object, -Distance) is semidet.
+%% distance_to_destination_location(+Object, -Distance) is semidet.
 %
-% Calculate distance between object position and goal position
-distance_to_goal_location(Object, Distance):-
-    kb_call(is_at(Object,[map,ObjectLocation,_])),
-    GoalLocation = [1, 2, 0], % Test value until predefined location implemented
-    euclidean_distance(ObjectLocation,GoalLocation,Distance).
+% Calculates the distance between object location and destination location
+%
+% @param Object The object to calculate the distance for
+% @param Distance The distance between the object and the destination location
+%
+distance_to_destination_location(Object, Distance) :-
+    get_urdf_origin(Origin),
+    kb_call(is_at(Object,[Origin, ObjectLocation, _])),
+    DestinationLocation = [1, 2, 0], % TODO get goal location from knowledge base
+    euclidean_distance(ObjectLocation, DestinationLocation, Distance).
