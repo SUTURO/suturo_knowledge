@@ -1,22 +1,21 @@
 :- module(next_object,
     [
-        next_object/1,
-        next_object1/1,
-        next_object2/1,
-        objects_benefits/2,
-        object_benefit/2,
-        object_costs/2,
-        object_cost/2,
-        objects_bonus/2,
-        object_bonus/2,
-        distance_to_go/2,
-        distance_to_object/2,
-        distance_to_goal_location/2
-        
+        next_object(-),
+        next_object1(-),
+        next_object2(-),
+        objects_benefits(+, -),
+        object_benefit(r, -),
+        object_costs(+, -),
+        object_cost(r, -),
+        objects_bonus(+, -),
+        object_bonus(r, -),
+        distance_to_go(r, -),
+        distance_to_object(r, -),
+        distance_to_goal_location(r, -),
+        robot_location(-)
     ]).
 
 :- use_module(library('reasoning/spatial/distance')).
-:- use_module(library('model/locations/actual_locations')).
 
 %% next_object(+Object) is semidet.
 %
@@ -213,12 +212,5 @@ object_goal_location(Object, GoalPosition) :-
     fail.
 
 
-
-
-
-
-
-
-
-
-
+robot_location(Location):-
+    kb_call(is_at(base_footprint,[map,Location,_])).
