@@ -205,12 +205,5 @@ distance_to_goal_location(Object, Distance):-
     GoalLocation = [1, 2, 0], % Test value until predefined location implemented
     euclidean_distance(ObjectLocation,GoalLocation,Distance).
 
-
-%%object_goal_location(+Object, -GoalPosition) is semidet.
-%
-% determines object goal location
-object_goal_location(Object, GoalPosition) :-
-    fail.
-
 robot_location(Location):-
     kb_call(is_at(base_footprint,[map,Location,_])).

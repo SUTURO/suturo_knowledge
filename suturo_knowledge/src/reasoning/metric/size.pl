@@ -30,7 +30,7 @@ is_tiny(Object) :-
         (
             Radius =< 0.025
         )
-    ; 	ShapeTerm = mesh(File, Scale),
+    ; 	ShapeTerm = mesh(_, _),
         ( 
             false
         )
