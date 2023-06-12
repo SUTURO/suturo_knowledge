@@ -43,7 +43,6 @@ next_object_storing_groceries(NextObject) :-
             CbRatio is Benefit / Cost
         ),
         ObjectsAndCbRatio),
-    ros_info('Objects and CB Ratios: ~w', [ObjectsAndCbRatio]),
     find_best_object(ObjectsAndCbRatio, NextObject),
     set_object_handled(NextObject),
     !.
@@ -175,11 +174,7 @@ distance_to_object(Object, Distance) :-
 distance_to_destination_location(Object, Distance) :-
     get_urdf_origin(Origin),
     kb_call(is_at(Object, [Origin, ObjectLocation, _])),
-    % triple(Object, rdf:type, Class),
-    % ros_info('Class: ~w', [Class]),
-    % predefined_destination_location(Class, DestinationLocationObject),
-    % ros_info('DestinationLocationObject: ~w', [DestinationLocationObject]),
-    % kb_call(is_at(DestinationLocationObject, [A, DestinationLocation, _])),
-    % ros_info('DestinationLocation: ~w', [DestinationLocation]),
-    DestinationLocation is [1,0,1],
+    triple(Object, rdf:type, Class),
+    predefined_destination_location(Class, DestinationLocationObject),
+    kb_call(is_at(DestinationLocationObject, [Origin, DestinationLocation, _])),
     euclidean_distance(ObjectLocation, DestinationLocation, Distance).
