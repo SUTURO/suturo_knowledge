@@ -1,12 +1,5 @@
 # Planning API Documentation
 
-## Quick lookup for planning
-
-Dropping the database: execute this in the shell and restart knowledge.
-```bash
-mongo roslog --eval "db.dropDatabase()"
-```
-
 ## Readers guide
 
 Each code documentation section contains:
@@ -78,11 +71,13 @@ An object is any physical object that has a proper space region. Available objec
 
 Create an object of a given Type at the given PoseStamped.
 
-The `Type` can be the full IRI or the namespace:'Name' form.
+The `Type` can be the full IRI or the `namespace:'Name'` form.
 
 The Options that can be processed are:
-- `shape(ShapeTerm)` - optional, the shape the object has. If not specified, knowledge will have no shape information about this object.
-- class_confidence -  a confidence that a robot has about the recognition of objects
+
+- `shape(ShapeTerm)` _optional_ - The shape of the object. If not specified, Knowledge will have no shape information about this object.
+- `class_confidence` -  A confidence that a robot has about the recognition of objects
+  
 ```prolog
 create_object(-Object, +Type, +PoseStamped) is det.
 create_object(-Object, +Type, +PoseStamped, +Options) is det.
@@ -92,7 +87,8 @@ Example:
 ```prolog
 ?- create_object(Object, 'http://www.ease-crc.org/ont/SOMA.owl#CerealBox', ['iai_kitchen/long_table:table:table_front_edge_center', [0,1,1], [0,0,0.70711,0.70711]]).
 Object: http://www.ease-crc.org/ont/SOMA.owl#CerealBox_LTKIUPNG.
-?- create_object(Object, soma:'CerealBox', ['iai_kitchen/long_table:table:table_front_edge_center', [0,1,1], [0,0,0.70711,0.70711]], [shape(box(0.1,0.1,0.1))]).
+
+?- create_object(Object, soma:'CerealBox', ['map', [0,1,1], [0,0,0.70711,0.70711]], [shape(box(0.1,0.1,0.1))]).
 Object: http://www.ease-crc.org/ont/SOMA.owl#CerealBox_BHVKCONR.
 ```
 
@@ -109,8 +105,8 @@ object_pose(+Object, ?PoseStamped) is semidet.
 Example:
 ```prolog
 % Get the pose of an object
-?- object_pose('http://www.ease-crc.org/ont/SOMA.owl#Table_LTKIUPNG', Pose)
-Pose: ['map', [1,0,1], [0,0,0,1]]
+?- object_pose('http://www.ease-crc.org/ont/SOMA.owl#Table_LTKIUPNG', PoseStamped)
+PoseStamped: ['map', [1,0,1], [0,0,0,1]]
 
 % Set/Update the pose of an object
 ?- object_pose('http://www.ease-crc.org/ont/SOMA.owl#Table_LTKIUPNG', ['map', [2,1,0], [0,0,0,1]])
@@ -183,6 +179,8 @@ predefined_destination_location(+Class, -DestinationLocation) is nondet.
 
 !!! warning
     For `Serving Breakfast` the predicate `init_serve_breakfast.` has to be called first to load/initialize the challenge specific predefined locations.
+    For `Storing Groceries` the predicate `init_storing_groceries.`.
+    For `Clean the Table` the predicate `init_clean_the_table.`.
 
 Example:
 ```prolog
@@ -237,7 +235,7 @@ Object: 'http://www.ease-crc.org/ont/SUTURO.owl#Banana_WRQHESGO'.
 Calculates the Wu-Palmer similarity between two classes. The similarity can be 0 < similarity <= 1.  
 
 ```prolog
-wu_palmer_similarity(Class1, Class2, Similarity) is semidet.
+wu_palmer_similarity(+Class1, +Class2, -Similarity) is semidet.
 ```
 
 Example:
@@ -294,4 +292,13 @@ TFName: iai_kitchen/tall_table:table:table_front_edge_center.
 
 ?- has_tf_name('http://www.ease-crc.org/ont/SOMA.owl#Table_LTKIUPNG', TFName).
 TFName: iai_kitchen/tall_table:table:table_front_edge_center.
+```
+
+## Troubleshooting
+
+### Drop roslog database
+The roslog MongoDB database used in Knowledge increases relatively fast when working with the HSR.  
+To fix this, drop the roslog database on a regular bases. Execute this in the shell and restart Knowledge.
+```bash
+mongo roslog --eval "db.dropDatabase()"
 ```
