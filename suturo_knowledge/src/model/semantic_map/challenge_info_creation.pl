@@ -33,7 +33,12 @@ init_serving_breakfast :-
 %  Initializes the object info for storing groceries.
 %
 init_storing_groceries :-
-      ros_info('Initializing object info for storing groceries...', []),
-      has_urdf_name(DestinationLocation, 'shelf:shelf:shelf_base_center'),
-      kb_project(holds(dul:'PhysicalObject', suturo:hasDestinationLocation, DestinationLocation)),
-      ros_info('Storing groceries initialized.', []).
+    ros_info('Initializing object info for storing groceries...', []),
+    foreach((member(X,[0,1,2,3]),
+             atom_concat('shelf:shelf:shelf_floor_', X, UrdfName),
+             has_urdf_name(DestinationLocation, UrdfName)),
+            % TODO fix expanding namespaces to use namespace:Resource here.
+            kb_project(triple('http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#PhysicalObject',
+                              'http://www.ease-crc.org/ont/SUTURO.owl#hasDestinationLocation',
+                              DestinationLocation))),
+    ros_info('Storing groceries initialized.', []).
