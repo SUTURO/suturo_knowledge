@@ -11,5 +11,6 @@
 %
 % @param Location The current location of the robot.
 %
-robot_location(Location):-
-    kb_call(is_at(base_footprint, [map, Location, _])).
+robot_location(Location) :-
+    get_urdf_origin(Origin),
+    kb_call(is_at(base_footprint, [Origin, Location, _])).
