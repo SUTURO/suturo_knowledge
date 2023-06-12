@@ -119,9 +119,6 @@ collision_link(UrdfLink, CollisionLink) :-
 collision_link(UrdfLink, CollisionLink) :-
     atom_concat(Prefix, 'shelf_base_center', UrdfLink),
     atom_concat(Prefix, 'shelf_back', CollisionLink).
-collision_link(UrdfLink, CollisionLink) :-
-    atom_concat(Prefix, 'shelf_base_center', UrdfLink),
-    atom_concat(Prefix, 'shelf_back', CollisionLink).
 
 %% urdf_link_class(+UrdfLink, -Class) is semidet.
 %

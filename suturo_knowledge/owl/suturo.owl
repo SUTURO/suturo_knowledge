@@ -72,15 +72,6 @@
     
 
 
-    <!-- http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#hasLocation -->
-
-    <rdf:Description rdf:about="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#hasLocation">
-        <rdfs:subPropertyOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasDestinationLocation"/>
-        <rdfs:subPropertyOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasOriginLocation"/>
-    </rdf:Description>
-    
-
-
     <!-- 
     ///////////////////////////////////////////////////////////////////////////////////////
     //

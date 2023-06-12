@@ -46,6 +46,8 @@ init_serve_breakfast :-
 init_storing_groceries :-
       ros_info('Initializing info for "Storing Groceries"...', []),
       activate_challenge(suturo:'StoringGroceries'),
+      has_urdf_name(OriginLocation, 'left_table:table:table_front_edge_center'),
+      kb_project(holds(dul:'PhysicalObject', suturo:hasOriginLocation, OriginLocation)),
       has_urdf_name(DestinationLocation, 'shelf:shelf:shelf_base_center'),
       kb_project(holds(dul:'PhysicalObject', suturo:hasDestinationLocation, DestinationLocation)),
       ros_info('"Storing Groceries" initialized.', []).
