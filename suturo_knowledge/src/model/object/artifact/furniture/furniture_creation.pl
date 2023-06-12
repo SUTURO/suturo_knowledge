@@ -7,7 +7,6 @@
 
 :- use_module(library('util/util'),
 	      [
-            has_urdf_name/2,
             last_element/2,
             ros_error/2,
             ros_warn/2,
@@ -28,12 +27,6 @@
 	      [
 		    rdf_global_id/2
 	      ]).
-
-get_urdf_id(URDF) :-
-    URDF = arena.
-
-get_urdf_origin(Origin) :-
-    Origin = map.
 
 %% load_urdf_from_param(+Param) is semidet.
 %

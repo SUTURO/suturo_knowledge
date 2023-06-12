@@ -11,8 +11,7 @@
         object_bonus(r, -),
         distance_to_go(r, -),
         distance_to_object(r, -),
-        distance_to_goal_location(r, -),
-        robot_location(-)
+        distance_to_goal_location(r, -)
     ]).
 
 :- use_module(library('reasoning/metric/size')).
@@ -204,6 +203,3 @@ distance_to_goal_location(Object, Distance):-
     kb_call(is_at(Object,[map,ObjectLocation,_])),
     GoalLocation = [1, 2, 0], % Test value until predefined location implemented
     euclidean_distance(ObjectLocation,GoalLocation,Distance).
-
-robot_location(Location):-
-    kb_call(is_at(base_footprint,[map,Location,_])).
