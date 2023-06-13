@@ -9,7 +9,9 @@
         object_bonus(r, -),
         distance_to_go(r, -),
         distance_to_object(r, -),
-        distance_to_destination_location(r, -)
+        distance_to_destination_location(r, -),
+        next_object_storing_groceries(-),
+        next_object_clean_the_table(-)
     ]).
 
 :- use_module(library('reasoning/metric/size')).
@@ -70,19 +72,37 @@ next_object_storing_groceries(NextObject) :-
 % @param NextObject The next best object to pick
 %
 next_object_clean_the_table(NextObject) :-
+    set_object_handled('http://www.ease-crc.org/ont/SOMA.owl#DishwasherTab_JNXLYOTW'),
     objects_not_handled(NothandledObjects),
     findall([Object, CbRatio],
         (
             member(Object, NothandledObjects),   
-            % object_bonus(Object, Bonus),
+            object_bonus(Object, 500),
             object_benefit(Object, Benefit),
             object_cost(Object, Cost),
             CbRatio is Benefit / Cost
         ),
-        ObjectsAndCbRatio),
-    find_best_object(ObjectsAndCbRatio, NextObject),
-    set_object_handled(NextObject),
-    !.
+        ObjectsAndCbRatio0
+        ),
+        (
+            ObjectsAndCbRatio0 ==[]
+            ->
+            findall([Object,CbRatio],
+                (member(Object,NothandledObjects),   
+                object_benefit(Object, Benefit),
+                object_cost(Object,Cost),
+                CbRatio is Benefit/Cost),
+                ObjectsAndCbRatio)
+            ;   ObjectsAndCbRatio0 = ObjectsAndCbRatio
+        ),
+        (ObjectsAndCbRatio == []
+            ->
+            NextObject = 'http://www.ease-crc.org/ont/SOMA.owl#DishwasherTab_JNXLYOTW'
+            ;
+            find_best_object(ObjectsAndCbRatio, NextObject),
+            set_object_handled(NextObject)
+        ),
+        !.
 
 %% find_best_object(+Objects, -BestObject) is semidet.
 %
