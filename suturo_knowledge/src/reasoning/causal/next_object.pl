@@ -1,7 +1,6 @@
 :- module(next_object,
     [
         next_object(-),
-        next_object_storing_groceries(-),
         objects_benefits(+, -),
         object_benefit(r, -),
         object_costs(+, -),
@@ -92,24 +91,10 @@ next_object_clean_the_table(NextObject) :-
 % @param ObjectsAndCBRatio List of object and cost benifit ratio pairs
 % @param BestObject The best object to pick
 %
-find_best_object(ObjectsAndCbRatio, BestObject):-
+find_best_object(ObjectsAndCbRatio, BestObject) :-
     maplist(nth0(1), ObjectsAndCbRatio, CbRatios),
     max_list(CbRatios, MaxCbRatio),
     member([BestObject, MaxCbRatio], ObjectsAndCbRatio).
-
-
-next_object_clean_the_table(NextObject) :-
-    fail.
-
-
-
-
-
-
-
-
-
-
 
 %% object_bendefits(+Objects, -ObjectsBenefits) is semidet.
 %
