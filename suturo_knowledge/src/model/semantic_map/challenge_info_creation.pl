@@ -62,6 +62,8 @@ init_storing_groceries :-
 init_clean_the_table :-
       ros_info('Initializing info for "Clean the Table"...', []),
       activate_challenge(suturo:'CleanTheTable'),
+      has_urdf_name(OriginLocation, 'left_table:table:table_front_edge_center'),
+      kb_project(holds(dul:'PhysicalObject', suturo:hasOriginLocation, OriginLocation)),
       ros_info('"Clean the Table" initialized.', []).
 
 %% activate_challenge(+Challenge) is det.

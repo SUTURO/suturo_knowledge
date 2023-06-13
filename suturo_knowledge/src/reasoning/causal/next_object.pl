@@ -51,6 +51,21 @@ next_object_storing_groceries(NextObject) :-
     set_object_handled(NextObject),
     !.
 
+next_object_clean_the_table(NextObject) :-
+    objects_not_handled(NothandledObjects),
+    findall([Object, CbRatio],
+        (
+            member(Object, NothandledObjects),   
+            % object_bonus(Object, Bonus),
+            object_benefit(Object, Benefit),
+            object_cost(Object, Cost),
+            CbRatio is Benefit / Cost
+        ),
+        ObjectsAndCbRatio),
+    find_best_object(ObjectsAndCbRatio, NextObject),
+    set_object_handled(NextObject),
+    !.
+
 %% find_best_object(+Objects, -BestObject) is semidet.
 %
 % Finds the the object with the highest benefit to cost ratio.
