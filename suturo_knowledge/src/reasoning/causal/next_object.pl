@@ -32,7 +32,7 @@ next_object(Object):-
     % next_object_serve_breakfast(Object).
 next_object(Object):-
     has_type(_, suturo:'CleanTheTable'),
-    next_object_storing_groceries(Object).
+    next_object_clean_the_table(Object).
     % TODO: Implement algorithm for CleanTheTable
     % next_object_clean_the_table(Object).
 
@@ -41,12 +41,25 @@ next_object_storing_groceries(NextObject) :-
     findall([Object, CbRatio],
         (
             member(Object, NothandledObjects),   
-            % object_bonus(Object, Bonus),
+            object_bonus(Object, 0),
             object_benefit(Object, Benefit),
             object_cost(Object, Cost),
             CbRatio is Benefit / Cost
         ),
-        ObjectsAndCbRatio),
+    ObjectsAndCbRatio0),
+
+    (
+        ObjectsAndCbRatio0 == []
+        ->
+        findall([Object, CbRatio],
+            (member(Object,NothandledObjects),   
+            object_benefit(Object, Benefit),
+            object_cost(Object,Cost),
+            CbRatio is Benefit/Cost),
+            ObjectsAndCbRatio)
+            ;
+            ObjectsAndCbRatio0 = ObjectsAndCbRatio 
+            ),
     find_best_object(ObjectsAndCbRatio, NextObject),
     set_object_handled(NextObject),
     !.
@@ -62,6 +75,20 @@ find_best_object(ObjectsAndCbRatio, BestObject):-
     maplist(nth0(1), ObjectsAndCbRatio, CbRatios),
     max_list(CbRatios, MaxCbRatio),
     member([BestObject, MaxCbRatio], ObjectsAndCbRatio).
+
+
+next_object_clean_the_table(NextObject) :-
+    fail.
+
+
+
+
+
+
+
+
+
+
 
 %% object_bendefits(+Objects, -ObjectsBenefits) is semidet.
 %
