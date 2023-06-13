@@ -200,6 +200,11 @@ This reasoner calculates the next best object to pick based on factors like the 
 !!! info
     For `next_object` to work, the objects have to be created first with the `create_object` predicate.
 
+!!! warning
+    For `Serving Breakfast` the predicate `init_serve_breakfast.` has to be called first for this to work.
+    For `Storing Groceries` the predicate `init_storing_groceries.`.
+    For `Clean the Table` the predicate `init_clean_the_table.`.
+
 ```prolog
 next_object(-Object) is nondet.
 ```

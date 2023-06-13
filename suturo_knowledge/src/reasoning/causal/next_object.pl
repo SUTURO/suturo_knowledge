@@ -22,19 +22,17 @@
 %
 % @param Object The next best object to pick
 %
-next_object(Object):-
+next_object(Object) :-
     has_type(_, suturo:'StoringGroceries'),
     next_object_storing_groceries(Object).
-next_object(Object):-
+next_object(Object) :-
     has_type(_, suturo:'ServeBreakfast'),
     next_object_storing_groceries(Object).
     % TODO: Implement algorithm for ServeBreakfast
     % next_object_serve_breakfast(Object).
-next_object(Object):-
+next_object(Object) :-
     has_type(_, suturo:'CleanTheTable'),
-    next_object_storing_groceries(Object).
-    % TODO: Implement algorithm for CleanTheTable
-    % next_object_clean_the_table(Object).
+    next_object_clean_the_table(Object).
 
 next_object_storing_groceries(NextObject) :-
     objects_not_handled(NothandledObjects),
@@ -51,6 +49,14 @@ next_object_storing_groceries(NextObject) :-
     set_object_handled(NextObject),
     !.
 
+%% next_object_clean_the_table(-NextObject) is nondet.
+%
+% Chooses the next best object to pick for the CleanTheTable challenge.
+% TODO: Implement optimized algorithm for CleanTheTable
+% This includes then handling of small cutlery like knife, spoons and forks and the DishwasherTab.
+%
+% @param NextObject The next best object to pick
+%
 next_object_clean_the_table(NextObject) :-
     objects_not_handled(NothandledObjects),
     findall([Object, CbRatio],
