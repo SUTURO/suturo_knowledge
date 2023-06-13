@@ -34,10 +34,11 @@ object_pose(Object, PoseStamped) :-
 	!.
 object_pose(Object, PoseStamped) :-
 	from_current_scope(Scope),
-	tf:tf_set_pose(Object, PoseStamped, Scope).
-	% TODO: Reset/Update the relative position of the object
-	% ignore(kb_unproject(holds(Object, soma:isOntopOf, _)),
-	% ignore(assert_relative_position(Object, Scope)).
+	tf:tf_set_pose(Object, PoseStamped, Scope),
+	% Update the relative (isOntopOf) position of the object
+	forall(triple(Object, soma:isOntopOf, OldValue),
+		kb_unproject(triple(Object, soma:isOntopOf, OldValue))),
+	ignore(assert_relative_position(Object, Scope)).
 
 %% is_perceived_object(+Object) is semidet.
 %
