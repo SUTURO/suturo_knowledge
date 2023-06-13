@@ -33,11 +33,6 @@ next_object(Object) :-
 next_object(Object) :-
     has_type(_, suturo:'CleanTheTable'),
     next_object_clean_the_table(Object).
-<<<<<<< HEAD
-    % TODO: Implement algorithm for CleanTheTable
-    % next_object_clean_the_table(Object).
-=======
->>>>>>> 00c700fddfbc16e9b2d315012fedcfef7b35e53a
 
 next_object_storing_groceries(NextObject) :-
     objects_not_handled(NothandledObjects),
