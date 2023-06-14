@@ -214,6 +214,14 @@ For example the Tables come from semantic_map, while the objects perception got 
     
 
 
+    <!-- http://www.ease-crc.org/ont/SOMA.owl#Drawer -->
+
+    <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Drawer">
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">60</SUTURO:perceptionId>
+    </rdf:Description>
+    
+
+
     <!-- http://www.ease-crc.org/ont/SOMA.owl#Knife -->
 
     <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Knife">
@@ -641,6 +649,16 @@ For example the Tables come from semantic_map, while the objects perception got 
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Toy"/>
         <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">54</SUTURO:perceptionId>
         <rdfs:comment>Dice are small, cube-shaped objects with markings on each face, typically used in games of chance and gambling, to generate random numbers, or for other recreational purposes.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#DishwasherTray -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#DishwasherTray">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Drawer"/>
+        <rdfs:comment>A dishwasher tray is a removable component in a dishwasher that holds dishes, glasses, and utensils during the washing cycle. It is designed with compartments and prongs to securely position and separate items for efficient cleaning.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
@@ -2193,9 +2211,6 @@ The challenges in the RoboCup@Home competition are designed to test a variety of
     </rdf:Description>
     <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Door">
         <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">20</SUTURO:perceptionId>
-    </rdf:Description>
-    <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Drawer">
-        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">60</SUTURO:perceptionId>
     </rdf:Description>
     <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Fork">
         <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">5</SUTURO:perceptionId>
