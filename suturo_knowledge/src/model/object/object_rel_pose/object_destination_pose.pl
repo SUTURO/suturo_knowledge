@@ -29,9 +29,9 @@ possible_pose(Furniture, ObjectDepth, [Frame, [X,Y,0], [0,0,0,1]]) :-
     object_shape_workaround(Furniture, Frame, ShapeTerm, _Pose, _Material),
     ShapeTerm = box(DX,DY,_DZ),
     robot_gripper_space(GripperSpace),
-    RightY is -DY/2 + GripperSpace/2 + 0.02,
+    RightY is -DY/2 + GripperSpace/2 + 0.05,
     LeftY is -RightY,
-    X is min(-DX + ObjectDepth, 0),
+    X is min(-DX/2 + ObjectDepth + 0.05, 0),
     for_loop(RightY, LeftY, 0.05, Y).
 
 for_loop(Start, End, _Delta, Start) :-
