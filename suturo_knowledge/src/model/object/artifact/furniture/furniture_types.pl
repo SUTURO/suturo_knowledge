@@ -28,7 +28,7 @@ is_table(Table) ?+>
 % @param Shelf The shelf to check.
 %
 is_shelf(Shelf) ?+>
-    is_type(Shelf, soma:'Shelf').
+    is_type(Shelf, suturo:'Shelf').
 
 %% is_drawer(+Drawer) is det.
 %
