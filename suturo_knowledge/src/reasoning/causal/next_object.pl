@@ -35,31 +35,39 @@ next_object(Object) :-
 
 next_object_storing_groceries(NextObject) :-
     objects_not_handled(NothandledObjects),
-    findall([Object, CbRatio],
+    find_next_object_storing_groceries(NothandledObjects, NextObject),
+    set_object_handled(NextObject),
+    !.
+
+%% find_next_object_storing_groceries(+Objects, -NextObject) is nondet.
+%
+% Chooses the next best object to pick for the StoringGroceries challenge.
+%
+% @param Objects The objects to choose from
+% @param NextObject The next best object to pick
+%
+find_next_object_storing_groceries(NothandledObjects, NextObject) :-
+    (
+        % First find objects without bonus
         (
-            member(Object, NothandledObjects),   
+            member(Object, NothandledObjects),
             object_bonus(Object, 0),
             object_benefit(Object, Benefit),
             object_cost(Object, Cost),
             CbRatio is Benefit / Cost
-        ),
-    ObjectsAndCbRatio0),
-
-    (
-        ObjectsAndCbRatio0 == []
-        ->
-        findall([Object, CbRatio],
-            (member(Object,NothandledObjects),   
+        )
+    ->
+        true
+    ;
+         % If no object without bonus is found, find objects with any bonus
+        (
+            member(Object, NothandledObjects),
             object_benefit(Object, Benefit),
             object_cost(Object,Cost),
-            CbRatio is Benefit/Cost),
-            ObjectsAndCbRatio)
-            ;
-            ObjectsAndCbRatio0 = ObjectsAndCbRatio 
-            ),
-    find_best_object(ObjectsAndCbRatio, NextObject),
-    set_object_handled(NextObject),
-    !.
+            CbRatio is Benefit/Cost
+        )
+    ),
+    find_best_object([[Object, CbRatio]], NextObject).
 
 %% next_object_clean_the_table(-NextObject) is nondet.
 %
