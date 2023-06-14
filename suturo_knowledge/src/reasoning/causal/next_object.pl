@@ -9,9 +9,7 @@
         object_bonus(r, -),
         distance_to_go(r, -),
         distance_to_object(r, -),
-        distance_to_destination_location(r, -),
-        next_object_storing_groceries(-),
-        next_object_clean_the_table(-)
+        distance_to_destination_location(r, -)
     ]).
 
 :- use_module(library('reasoning/metric/size')).
@@ -72,7 +70,7 @@ next_object_storing_groceries(NextObject) :-
 % @param NextObject The next best object to pick
 %
 next_object_clean_the_table(NextObject) :-
-    set_object_handled('http://www.ease-crc.org/ont/SOMA.owl#DishwasherTab_JNXLYOTW'),
+    set_object_handled(has_type(Object, soma:'DishwasherTab')),
     objects_not_handled(NothandledObjects),
     findall([Object, CbRatio],
         (
@@ -97,7 +95,7 @@ next_object_clean_the_table(NextObject) :-
         ),
         (ObjectsAndCbRatio == []
             ->
-            NextObject = 'http://www.ease-crc.org/ont/SOMA.owl#DishwasherTab_JNXLYOTW'
+            NextObject = has_type(Object, soma:'DishwasherTab')
             ;
             find_best_object(ObjectsAndCbRatio, NextObject),
             set_object_handled(NextObject)
