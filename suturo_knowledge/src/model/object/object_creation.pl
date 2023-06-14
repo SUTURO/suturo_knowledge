@@ -33,7 +33,10 @@ create_object(Object, Type, PoseStamped) :-
 % - data_source(DataSource) (should be either perception or semantic_map, as described in [object_model.md](../../../object_model.md)
 % - confidence_value(ConfidenceValue) (Confidence is between 0 and 1)
 create_object(Object, Type, PoseStamped, Options) :-
-	(  update_existing_object(Object, Type, PoseStamped)
+	(  %% if semantic map data triggers update, the startup hangs on has_type(_, soma:'Table').
+	   %% idk why, but it also makes sense to only try updating with perception data.
+	   option(data_source(perception), Options, perception),
+	   update_existing_object(Object, Type, PoseStamped)
 	-> true
 	;  create_new_object(Object, Type, PoseStamped, Options)).
 	%create_new_object(Object, Type, PoseStamped, Options).
@@ -65,7 +68,7 @@ create_new_object(Object, Type, [Frame, [X,Y,Z], [RX,RY,RZ,RW]], Options) :-
 % if there is one, Object is unified with that iri, otherwise Object is not touched.
 update_existing_object(Object, Type, [Frame, Pos, Rot]) :-
 	has_type(Other, Type),
-	triple(Other, suturo:hasDataSource, DataSource),
+	triple(Other, suturo:hasDataSource, _DataSource),
 	kb_call(is_at(Other,[Frame, Pos2, _])),
 	euclidean_distance(Pos, Pos2, Distance),
 	Distance < 0.10,
