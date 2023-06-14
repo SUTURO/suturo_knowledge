@@ -32,7 +32,13 @@ create_object(Object, Type, PoseStamped) :-
 % - shape(ShapeTerm)
 % - data_source(DataSource) (should be either perception or semantic_map, as described in [object_model.md](../../../object_model.md)
 % - confidence_value(ConfidenceValue) (Confidence is between 0 and 1)
-create_object(Object, Type, [Frame, [X,Y,Z], [RX,RY,RZ,RW]], Options) :-
+create_object(Object, Type, PoseStamped, Options) :-
+	(  update_existing_object(Object, Type, PoseStamped)
+	-> true
+	;  create_new_object(Object, Type, PoseStamped, Options)).
+	%create_new_object(Object, Type, PoseStamped, Options).
+
+create_new_object(Object, Type, [Frame, [X,Y,Z], [RX,RY,RZ,RW]], Options) :-
     from_current_scope(Scope),
     kb_project(is_type(Object, Type), Scope),
     tf_set_pose(Object, [Frame, [X,Y,Z], [RX,RY,RZ,RW]], Scope),
@@ -52,6 +58,21 @@ create_object(Object, Type, [Frame, [X,Y,Z], [RX,RY,RZ,RW]], Options) :-
     % doesn't work currently, see https://github.com/knowrob/knowrob/issues/371 for more information.
     %assert_origin(SR, Scope),
     !.
+
+%% update_existing_object(-Object, +Type, +PoseStamped) is det.
+%
+% check if there is already an object of that type near that Pose (in 0.10 m distance)
+% if there is one, Object is unified with that iri, otherwise Object is not touched.
+update_existing_object(Object, Type, [Frame, Pos, Rot]) :-
+	has_type(Other, Type),
+	triple(Other, suturo:hasDataSource, DataSource),
+	kb_call(is_at(Other,[Frame, Pos2, _])),
+	euclidean_distance(Pos, Pos2, Distance),
+	Distance < 0.10,
+	Object = Other,
+	from_current_scope(Scope),
+	% TODO: Merge other data
+	tf_set_pose(Object, [Frame, Pos, Rot], Scope).
 
 assert_shape(_Object, none, _Scope, _SR) :- !.
 assert_shape(Object, ShapeTerm, Scope, SR) :-
