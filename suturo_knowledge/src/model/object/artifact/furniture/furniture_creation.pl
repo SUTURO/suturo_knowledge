@@ -55,7 +55,8 @@ is_semantic_map_object(Link) :-
         sub_string(Link,_,_,_,"door_center");
         sub_string(Link,_,_,_,"shelf_floor_");
         sub_string(Link,_,_,_,"shelf_door_");
-        sub_string(Link,_,_,_,"bucket_surface_center")
+        sub_string(Link,_,_,_,"bucket_surface_center");
+        sub_string(Link,_,_,_,"dishwasher_tray_bottom")
     ), % TODO: We exclude handles for now. They dont have consistent urdf link names
     \+ sub_string(Link,_,_,_,"handle").
 
@@ -108,6 +109,7 @@ furniture_shape(UrdfLink, ShapeTerm) :-
 collision_link(CollisionLink, CollisionLink) :-
     atom_concat(_, 'table_center', CollisionLink);
     atom_concat(_, 'door_center', CollisionLink);
+    atom_concat(_, 'dishwasher_tray_bottom', CollisionLink);
     sub_string(CollisionLink,_,_,_,"shelf_floor_");
     sub_string(CollisionLink,_,_,_,"shelf_door_").
 collision_link(UrdfLink, CollisionLink) :-
@@ -166,6 +168,10 @@ link_name_class(LinkName, Class) :-
 link_name_class(LinkName, Class) :-
     sub_string(LinkName,_,_,_,"bucket"), % TODO: Fix this inconsistency in the urdf
     Class = suturo:'TrashBin',
+    !.
+link_name_class(LinkName, Class) :-
+    sub_string(LinkName,_,_,_,"dishwasher_tray"), % TODO: Fix this inconsistency in the urdf
+    Class = suturo:'DishwasherTray',
     !.
 link_name_class(LinkName, Class) :-
     ros_warn("Unknown link name type: ~w! Using default class soma:DesignedFurniture", [LinkName]),
