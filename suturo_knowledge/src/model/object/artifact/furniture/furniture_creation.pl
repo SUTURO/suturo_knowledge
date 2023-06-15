@@ -56,7 +56,8 @@ is_semantic_map_object(Link) :-
         sub_string(Link,_,_,_,"shelf_floor_");
         sub_string(Link,_,_,_,"shelf_door_");
         sub_string(Link,_,_,_,"bucket_surface_center");
-        sub_string(Link,_,_,_,"dishwasher_tray_bottom")
+        sub_string(Link,_,_,_,"dishwasher_tray_bottom");
+        sub_string(Link,_,_,_,"dishwasher_tray_2_bottom")
     ), % TODO: We exclude handles for now. They dont have consistent urdf link names
     \+ sub_string(Link,_,_,_,"handle").
 
@@ -68,6 +69,7 @@ init_furnitures :-
     get_urdf_id(URDF),
     urdf_link_names(URDF, Links),
     forall((member(UrdfLink, Links),
+        ros_info("~w", [UrdfLink]),
 	    is_semantic_map_object(UrdfLink)
 	   ),
 	   init_furniture(UrdfLink)).
@@ -110,6 +112,7 @@ collision_link(CollisionLink, CollisionLink) :-
     atom_concat(_, 'table_center', CollisionLink);
     atom_concat(_, 'door_center', CollisionLink);
     atom_concat(_, 'dishwasher_tray_bottom', CollisionLink);
+    atom_concat(_, 'dishwasher_tray_2_bottom', CollisionLink);
     sub_string(CollisionLink,_,_,_,"shelf_floor_");
     sub_string(CollisionLink,_,_,_,"shelf_door_").
 collision_link(UrdfLink, CollisionLink) :-
