@@ -69,7 +69,6 @@ init_furnitures :-
     get_urdf_id(URDF),
     urdf_link_names(URDF, Links),
     forall((member(UrdfLink, Links),
-        ros_info("~w", [UrdfLink]),
 	    is_semantic_map_object(UrdfLink)
 	   ),
 	   init_furniture(UrdfLink)).
