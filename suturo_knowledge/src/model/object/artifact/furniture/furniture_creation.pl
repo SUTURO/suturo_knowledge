@@ -69,6 +69,7 @@ init_furnitures :-
     get_urdf_id(URDF),
     urdf_link_names(URDF, Links),
     forall((member(UrdfLink, Links),
+        ros_info("~w", [UrdfLink]),
 	    is_semantic_map_object(UrdfLink)
 	   ),
 	   init_furniture(UrdfLink)).
@@ -90,7 +91,27 @@ init_furniture(UrdfLink) :-
 	(  atom_concat(Prefix, 'table_center', UrdfLink)
 	-> (atom_concat(Prefix, 'table_front_edge_center', ExtraLink),
 		kb_project(has_urdf_name(Furniture, ExtraLink)))
-	;  true).
+	;  true),
+    (  atom_concat(Prefix, 'dishwasher_tray_bottom', UrdfLink)
+    -> (atom_concat(Prefix, 'dishwasher_tray_back_side', ExtraLink1),
+        kb_project(has_urdf_name(Furniture, ExtraLink1))),
+        (atom_concat(Prefix, 'dishwasher_tray_front_side', ExtraLink2),
+        kb_project(has_urdf_name(Furniture, ExtraLink2))),
+        (atom_concat(Prefix, 'dishwasher_tray_left_side', ExtraLink3),
+        kb_project(has_urdf_name(Furniture, ExtraLink3))),
+        (atom_concat(Prefix, 'dishwasher_tray_right_side', ExtraLink4),
+        kb_project(has_urdf_name(Furniture, ExtraLink4)))
+    ;  true),
+    (  atom_concat(Prefix, 'dishwasher_tray_2_bottom', UrdfLink)
+    -> (atom_concat(Prefix, 'dishwasher_tray_2_back_side', ExtraLink1),
+        kb_project(has_urdf_name(Furniture, ExtraLink1))),
+        (atom_concat(Prefix, 'dishwasher_tray_2_front_side', ExtraLink2),
+        kb_project(has_urdf_name(Furniture, ExtraLink2))),
+        (atom_concat(Prefix, 'dishwasher_tray_2_left_side', ExtraLink3),
+        kb_project(has_urdf_name(Furniture, ExtraLink3))),
+        (atom_concat(Prefix, 'dishwasher_tray_2_right_side', ExtraLink4),
+        kb_project(has_urdf_name(Furniture, ExtraLink4)))
+    ;  true).
 
 furniture_pose(UrdfLink, [ObjectFrame, [0,0,0], [0,0,0,1]]) :-
     atom_concat('iai_kitchen/', UrdfLink, ObjectFrame).
