@@ -48,26 +48,31 @@ next_object_storing_groceries(NextObject) :-
 %
 find_next_object_storing_groceries(NothandledObjects, NextObject) :-
     (
-        % First find objects without bonus
-        (
-            member(Object, NothandledObjects),
-            object_bonus(Object, 0),
-            object_benefit(Object, Benefit),
-            object_cost(Object, Cost),
-            CbRatio is Benefit / Cost
-        )
+        % First try to find objects with a bonus of 0
+        setof([CbRatio, Object],
+            (
+                member(Object, NothandledObjects),
+                object_bonus(Object, 0),
+                object_benefit(Object, Benefit),
+                object_cost(Object, Cost),
+                CbRatio is Benefit / Cost
+            ),
+            SortedPairs0)
     ->
-        true
+        SortedPairs = SortedPairs0
     ;
-         % If no object without bonus is found, find objects with any bonus
-        (
-            member(Object, NothandledObjects),
-            object_benefit(Object, Benefit),
-            object_cost(Object,Cost),
-            CbRatio is Benefit/Cost
-        )
+        % If no objects with a bonus of 0 exist, find objects with any bonus
+        setof([CbRatio, Object],
+            (
+                member(Object, NothandledObjects),
+                object_benefit(Object, Benefit),
+                object_cost(Object, Cost),
+                CbRatio is Benefit / Cost
+            ),
+            SortedPairs)
     ),
-    find_best_object([[Object, CbRatio]], NextObject).
+    % The last element of SortedPairs is the pair with the highest CbRatio
+    last(SortedPairs, [_BestCbRatio, NextObject]).
 
 %% next_object_clean_the_table(-NextObject) is nondet.
 %
