@@ -235,6 +235,32 @@ Example:
 Object: 'http://www.ease-crc.org/ont/SUTURO.owl#Banana_WRQHESGO'.
 ```
 
+**Object handled state**
+
+To update the handled state of an object and remove or add it to the possible next objects, use the following predicates:
+
+Set objects to `handled=true`
+```prolog
+set_object_handled(+Object) is det.
+```
+
+Example:
+```prolog
+?- set_object_handled(http://www.ease-crc.org/ont/SUTURO.owl#Banana_WRQHESGO).
+true.
+```
+
+Set objects to `handled=false`
+```prolog
+set_object_not_handled(+Object) is det.
+```
+
+Example:
+```prolog
+?- set_object_not_handled(http://www.ease-crc.org/ont/SUTURO.owl#Banana_WRQHESGO).
+true.
+```
+
 ### Semantic similarity measure
 
 The semantic similarity measure is useful for sorting and grouping objects by similarity or category.
