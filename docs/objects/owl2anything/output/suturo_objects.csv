@@ -84,6 +84,7 @@ DinnerPlate;soma:'DinnerPlate';http://www.ease-crc.org/ont/SOMA.owl#;;A regular 
 Dish;soma:'Dish';http://www.ease-crc.org/ont/SOMA.owl#;;A dish is a prepared food item that is usually cooked and served on a plate, bowl, or platter.
 Dishwasher;soma:'Dishwasher';http://www.ease-crc.org/ont/SOMA.owl#;22;An appliance for washing dishes and cutlery automatically.
 DishwasherTab;soma:'DishwasherTab';http://www.ease-crc.org/ont/SOMA.owl#;49;A solid detergent inserted into dishwashers.
+DishwasherTray;suturo:'DishwasherTray';http://www.ease-crc.org/ont/SUTURO.owl#;;A dishwasher tray is a removable component in a dishwasher that holds dishes, glasses, and utensils during the washing cycle. It is designed with compartments and prongs to securely position and separate items for efficient cleaning.
 Dispenser;soma:'Dispenser';http://www.ease-crc.org/ont/SOMA.owl#;;A small container used to store and serve some flavoring substance for a dish or beverage.
 DominoSugarBox;suturo:'DominoSugarBox';http://www.ease-crc.org/ont/SUTURO.owl#;;A box containing, or at least usually intended to contain, Domino brand sugar.
 Door;soma:'Door';http://www.ease-crc.org/ont/SOMA.owl#;20;A hinged, sliding, or revolving barrier at the entrance to a building, room, or vehicle, or in the frame of a cupboard.

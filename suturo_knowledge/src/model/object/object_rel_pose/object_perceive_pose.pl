@@ -24,7 +24,7 @@ object_perceive_pose(Object, Options, [Frame, Pos, Rotation]) :-
     !.
 
 perceive_distance(Object, PerceiveDistance) :-
-    kb_call(is_shelf(Object)),
+    kb_call(has_type(Object, soma:'Cupboard')),
     !,
     % TODO don't hardcode these
     PerceiveDistance = 1.06.

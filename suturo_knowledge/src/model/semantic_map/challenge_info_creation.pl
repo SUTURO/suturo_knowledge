@@ -48,8 +48,13 @@ init_storing_groceries :-
       activate_challenge(suturo:'StoringGroceries'),
       has_urdf_name(OriginLocation, 'left_table:table:table_front_edge_center'),
       kb_project(holds(dul:'PhysicalObject', suturo:hasOriginLocation, OriginLocation)),
-      has_urdf_name(DestinationLocation, 'shelf:shelf:shelf_base_center'),
-      kb_project(holds(dul:'PhysicalObject', suturo:hasDestinationLocation, DestinationLocation)),
+      foreach((member(X,[2,1]),
+             atom_concat('shelf:shelf:shelf_floor_', X, UrdfName),
+             has_urdf_name(DestinationLocation, UrdfName)),
+            % TODO fix expanding namespaces to use namespace:Resource here.
+            kb_project(holds('http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#PhysicalObject',
+                             'http://www.ease-crc.org/ont/SUTURO.owl#hasDestinationLocation',
+                              DestinationLocation))),
       ros_info('"Storing Groceries" initialized.', []).
 
 %% init_clean_the_table is det.
@@ -64,7 +69,7 @@ init_clean_the_table :-
       activate_challenge(suturo:'CleanTheTable'),
       has_urdf_name(OriginLocation, 'left_table:table:table_front_edge_center'),
       kb_project(holds(dul:'PhysicalObject', suturo:hasOriginLocation, OriginLocation)),
-      has_urdf_name(DestinationLocation, 'shelf:shelf:shelf_base_center'),
+      has_urdf_name(DestinationLocation, 'imaginary_dishwasher:dishwasher_tray_bottom'),
       kb_project(holds(dul:'PhysicalObject', suturo:hasDestinationLocation, DestinationLocation)),
       ros_info('"Clean the Table" initialized.', []).
 

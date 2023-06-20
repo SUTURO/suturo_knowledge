@@ -6,7 +6,7 @@
 		is_misplaced_object(r),
 		set_object_handled(r),
 		set_object_not_handled(r),
-		update_handle_state(r,+),
+		update_handled_state(r,+),
 		handled(r),
 		not_handled(r),
 		objects_not_handled(-),
@@ -60,8 +60,8 @@ is_perceived_object(Object):-
 is_misplaced_object(Object):-
 	is_perceived_object(Object),
 	has_type(Object, Class),
-	predefined_origin_location(Class, OriginLocation),
-	holds(Object, soma:isOntopOf, OriginLocation).
+	predefined_destination_location(Class, DestLocation),
+	\+ holds(Object, soma:isOntopOf, DestLocation).
 
 %% set_object_handled(+Object) is det.
 %
@@ -70,7 +70,7 @@ is_misplaced_object(Object):-
 % @param Object The object to set the state of.
 %
 set_object_handled(Object) :-
-	update_handle_state(Object, true).
+	update_handled_state(Object, true).
 	
 %% set_object_not_handled(+Object) is det.
 %
@@ -79,16 +79,16 @@ set_object_handled(Object) :-
 % @param Object The object to set the state of.
 %
 set_object_not_handled(Object) :-
-	update_handle_state(Object, false).
+	update_handled_state(Object, false).
 
-%% update_handle_state(+Object, +State) is det.
+%% update_handled_state(+Object, +State) is det.
 %
 % Updates the handle state of an object.
 %
 % @param Object The object to update the handle state of.
 % @param State The new state of the object. (true or false)
 %
-update_handle_state(Object, State) :-
+update_handled_state(Object, State) :-
 	is_perceived_object(Object),
 	triple(Object, suturo:'hasHandleState', HandleState),
 	forall(triple(HandleState, suturo:'handled', OldValue),

@@ -92,6 +92,25 @@ Object: http://www.ease-crc.org/ont/SOMA.owl#CerealBox_LTKIUPNG.
 Object: http://www.ease-crc.org/ont/SOMA.owl#CerealBox_BHVKCONR.
 ```
 
+### Query an object
+
+To get existing objects for a class/type.
+
+```prolog
+has_type(-Object, +Class) is nondet.
+```
+
+Example:
+```prolog
+has_type(Object, 'http://www.ease-crc.org/ont/SOMA.owl#CerealBox').
+Object: http://www.ease-crc.org/ont/SOMA.owl#CerealBox_LTKIUPNG.
+
+has_type(Object, 'http://www.ease-crc.org/ont/SUTURO.owl#Apple').
+Object: http://www.ease-crc.org/ont/SUTURO.owl#Apple_LTKIUPNG ;
+Object: http://www.ease-crc.org/ont/SUTURO.owl#Apple_KFJSNPNG ;
+Object: http://www.ease-crc.org/ont/SUTURO.owl#Apple_KLDJKPNG.
+```
+
 ### Pose and shape information
 
 To get or set the pose of an object, use the following predicate.  
@@ -214,6 +233,32 @@ Example:
 ?- next_object(Object).
 
 Object: 'http://www.ease-crc.org/ont/SUTURO.owl#Banana_WRQHESGO'.
+```
+
+**Object handled state**
+
+To update the handled state of an object and remove or add it to the possible next objects, use the following predicates:
+
+Set objects to `handled=true`
+```prolog
+set_object_handled(+Object) is det.
+```
+
+Example:
+```prolog
+?- set_object_handled(http://www.ease-crc.org/ont/SUTURO.owl#Banana_WRQHESGO).
+true.
+```
+
+Set objects to `handled=false`
+```prolog
+set_object_not_handled(+Object) is det.
+```
+
+Example:
+```prolog
+?- set_object_not_handled(http://www.ease-crc.org/ont/SUTURO.owl#Banana_WRQHESGO).
+true.
 ```
 
 ### Semantic similarity measure

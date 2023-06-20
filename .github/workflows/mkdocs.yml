@@ -3,7 +3,7 @@ name: mkdocs
 on:
   push:
     branches:
-      - master
+      - robocup
     paths:
       - "docs/**"
       - "mkdocs.yml"

@@ -35,7 +35,7 @@ test(table_simple_ontop, [ forall((member(X, [0.5, 3.5]),
                                    member([Z, Distance], [[1, 0.0], [1.5, 0.5]])))
                          ]) :-
     setup_test_table(1, Table),
-    create_object(Obj, soma:'CerealBox', [map, [X, Y, Z], [0,0,0,1]]),
+    create_object(Obj, test:'CerealBox', [map, [X, Y, Z], [0,0,0,1]]),
     object_creation:suturo_is_ontop_of(Obj, Table, Distance).
 
 test(create_object, [ forall((member(X, [0.5, 3.5]),
@@ -43,7 +43,28 @@ test(create_object, [ forall((member(X, [0.5, 3.5]),
 							  member(Z, [1, 1.5])))
 					]) :-
 	setup_test_table(1, Table),
-	create_object(Obj, soma:'CerealBox', [map, [X, Y, Z], [0,0,0,1]]),
+	create_object(Obj, test:'CerealBox', [map, [X, Y, Z], [0,0,0,1]]),
 	assert_true(kb_call(triple(Obj, soma:isOntopOf, Table))).
+
+test(update_object, [cleanup(kb_unproject(
+								 triple(_, suturo:hasDataSource, perception)
+							 ))]) :-
+	create_object(X, test:'Test', [map, [0,0,0], [0,0,0,1]]),
+	create_object(Y, test:'Test', [map, [0.09,0,0], [0,0,0,1]]),
+	assert_equals(X,Y).
+
+test(update_object_not_space, [cleanup(kb_unproject(
+										   triple(_, suturo:hasDataSource, perception)
+									   ))]) :-
+	create_object(X, test:'Test', [map, [0,0,0], [0,0,0,1]]),
+	create_object(Y, test:'Test', [map, [0.11,0,0], [0,0,0,1]]),
+	assert_false(X == Y).
+
+test(update_object_not_type, [cleanup(kb_unproject(
+										  triple(_, suturo:hasDataSource, perception)
+							  ))]) :-
+	create_object(X, test:'TestA', [map, [0,0,0], [0,0,0,1]]),
+	create_object(Y, test:'TestB', [map, [0.09,0,0], [0,0,0,1]]),
+	assert_false(X == Y).
 
 :- end_rdf_tests('object_creation').

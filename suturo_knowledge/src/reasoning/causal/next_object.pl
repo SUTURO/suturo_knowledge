@@ -35,31 +35,44 @@ next_object(Object) :-
 
 next_object_storing_groceries(NextObject) :-
     objects_not_handled(NothandledObjects),
-    findall([Object, CbRatio],
-        (
-            member(Object, NothandledObjects),   
-            object_bonus(Object, 0),
-            object_benefit(Object, Benefit),
-            object_cost(Object, Cost),
-            CbRatio is Benefit / Cost
-        ),
-    ObjectsAndCbRatio0),
-
-    (
-        ObjectsAndCbRatio0 == []
-        ->
-        findall([Object, CbRatio],
-            (member(Object,NothandledObjects),   
-            object_benefit(Object, Benefit),
-            object_cost(Object,Cost),
-            CbRatio is Benefit/Cost),
-            ObjectsAndCbRatio)
-            ;
-            ObjectsAndCbRatio0 = ObjectsAndCbRatio 
-            ),
-    find_best_object(ObjectsAndCbRatio, NextObject),
+    find_next_object_storing_groceries(NothandledObjects, NextObject),
     set_object_handled(NextObject),
     !.
+
+%% find_next_object_storing_groceries(+Objects, -NextObject) is nondet.
+%
+% Chooses the next best object to pick for the StoringGroceries challenge.
+%
+% @param Objects The objects to choose from
+% @param NextObject The next best object to pick
+%
+find_next_object_storing_groceries(NothandledObjects, NextObject) :-
+    (
+        % First try to find objects with a bonus of 0
+        setof([CbRatio, Object],
+            (
+                member(Object, NothandledObjects),
+                object_bonus(Object, 0),
+                object_benefit(Object, Benefit),
+                object_cost(Object, Cost),
+                CbRatio is Benefit / Cost
+            ),
+            SortedPairs0)
+    ->
+        SortedPairs = SortedPairs0
+    ;
+        % If no objects with a bonus of 0 exist, find objects with any bonus
+        setof([CbRatio, Object],
+            (
+                member(Object, NothandledObjects),
+                object_benefit(Object, Benefit),
+                object_cost(Object, Cost),
+                CbRatio is Benefit / Cost
+            ),
+            SortedPairs)
+    ),
+    % The last element of SortedPairs is the pair with the highest CbRatio
+    last(SortedPairs, [_BestCbRatio, NextObject]).
 
 %% next_object_clean_the_table(-NextObject) is nondet.
 %
