@@ -108,7 +108,7 @@ next_object_clean_the_table(NextObject) :-
         ),
         (ObjectsAndCbRatio == []
             ->
-            NextObject = has_type(Object, soma:'DishwasherTab')
+            has_type(NextObject, soma:'DishwasherTab')
             ;
             find_best_object(ObjectsAndCbRatio, NextObject),
             set_object_handled(NextObject)
