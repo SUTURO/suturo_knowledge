@@ -2,3 +2,4 @@
 
 :- ensure_loaded('math').
 :- ensure_loaded('util').
+:- ensure_loaded('reset').

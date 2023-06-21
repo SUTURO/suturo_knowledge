@@ -31,4 +31,10 @@ test(possible_pose1) :-
            (assert_equals(X,-1.25),
             assert_true((-2 =< Y, Y =< 2)))).
 
+test(best_fitting_destination1, blocked('todo: finish this test')) :-
+    create_object(Table1, test:'Table', [map, [-1,0,1],[0,0,0,1]],
+                  [shape(box(1,1,1)), data_source(semantic_map)]),
+    create_object(Table2, test:'Table', [map, [1,0,1],[0,0,0,1]],
+                  [shape(box(1,1,1)), data_source(semantic_map)]).
+
 :- end_rdf_tests('object_destination_pose').
