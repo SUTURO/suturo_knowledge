@@ -3,7 +3,8 @@
 	  [
             init_serve_breakfast/0,
             init_storing_groceries/0,
-            init_clean_the_table/0
+            init_clean_the_table/0,
+	    init_clean_the_table_no_dishwasher/0
 	  ]).
 
 :- rdf_meta(activate_challenge(r)).
@@ -72,6 +73,16 @@ init_clean_the_table :-
       has_urdf_name(DestinationLocation, 'imaginary_dishwasher:dishwasher_tray_bottom'),
       kb_project(holds(dul:'PhysicalObject', suturo:hasDestinationLocation, DestinationLocation)),
       ros_info('"Clean the Table" initialized.', []).
+
+init_clean_the_table_no_dishwasher :-
+      ros_info('Initializing info for "Clean the Table"...', []),
+      activate_challenge(suturo:'CleanTheTable'),
+      has_urdf_name(OriginLocation, 'left_table:table:table_front_edge_center'),
+      kb_project(holds(dul:'PhysicalObject', suturo:hasOriginLocation, OriginLocation)),
+      has_urdf_name(DestinationLocation, 'kitchen_table:table:table_front_edge_center'),
+      kb_project(holds(dul:'PhysicalObject', suturo:hasDestinationLocation, DestinationLocation)),
+      ros_info('"Clean the Table" initialized.', []).
+
 
 %% activate_challenge(+Challenge) is det.
 %
