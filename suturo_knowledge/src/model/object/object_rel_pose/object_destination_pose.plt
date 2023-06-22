@@ -31,10 +31,21 @@ test(possible_pose1) :-
            (assert_equals(X,-1.25),
             assert_true((-2 =< Y, Y =< 2)))).
 
-test(best_fitting_destination1, blocked('todo: finish this test')) :-
+test(best_fitting_destination1) :-
     create_object(Table1, test:'Table', [map, [-1,0,1],[0,0,0,1]],
                   [shape(box(1,1,1)), data_source(semantic_map)]),
     create_object(Table2, test:'Table', [map, [1,0,1],[0,0,0,1]],
-                  [shape(box(1,1,1)), data_source(semantic_map)]).
+                  [shape(box(1,1,1)), data_source(semantic_map)]),
+    %
+    create_object(Obj, test:'Box', [map, [0,0,0], [0,0,0,1]]),
+    create_object(_Similar, test:'Box', [map, [-1,0,1.5], [0,0,0,1]]),
+    create_object(_NotSimilar, test:'Sphere', [map, [1,0,1.5], [0,0,0,1]]),
+    kb_project((subclass_of(test:'Box', test:top),
+                subclass_of(test:'Sphere', test:top),
+                triple(test:'Box', suturo:hasDestinationLocation, Table2),
+                triple(test:'Box', suturo:hasDestinationLocation, Table1)
+               )),
+    once(object_destination_pose:best_fitting_destination(Obj, Dest)),
+    assert_equals(Dest, Table1).
 
 :- end_rdf_tests('object_destination_pose').
