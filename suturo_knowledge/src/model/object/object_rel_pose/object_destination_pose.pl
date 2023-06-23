@@ -12,7 +12,7 @@ object_destination_pose(Object, Options, [Frame, Pos, Rotation]) :-
     % warning, this is still a rough draft.
     (  once(find_place(Object, Options, [Frame, Pos, Rotation]))
     -> true
-    ;  ros_error('could not find a valid destination pose for ~w', [Object])), fail.
+    ;  ros_error('could not find a valid destination pose for ~w', [Object]), fail).
 
 %% find_place(+Object, +Options, -PoseStamped) is nondet.
 %
