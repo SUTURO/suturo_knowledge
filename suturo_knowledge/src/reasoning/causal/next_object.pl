@@ -23,15 +23,20 @@
 %
 next_object(Object) :-
     has_type(_, suturo:'StoringGroceries'),
+    !,
     next_object_storing_groceries(Object).
 next_object(Object) :-
     has_type(_, suturo:'ServeBreakfast'),
+    !,
     next_object_storing_groceries(Object).
     % TODO: Implement algorithm for ServeBreakfast
     % next_object_serve_breakfast(Object).
 next_object(Object) :-
     has_type(_, suturo:'CleanTheTable'),
+    !,
     next_object_clean_the_table(Object).
+next_object(_Object) :-
+    ros_error('next_object: no challenge initialized').
 
 next_object_storing_groceries(NextObject) :-
     objects_not_handled(NothandledObjects),

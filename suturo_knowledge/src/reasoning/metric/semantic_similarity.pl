@@ -5,6 +5,7 @@
 :- module(semantic_similarity,
 	  [
         most_similar_object(r,+,-),
+        sort_by_similarity(r,t,-),
         wu_palmer_similarity(r,r,-),
         lcs(r,r,-),
         superclasses(r,-),
@@ -25,6 +26,8 @@
 		  ros_warn/2
 	      ]).
 
+:- use_module(library(pairs), [pairs_values/2]).
+
 %% most_similar_object(+Object, +InputObjects, -MostSimilarObject) is semidet.
 %
 % Finds the most similar object to the given object from a list of objects.
@@ -43,9 +46,9 @@ most_similar_object(Object, InputObjects, MostSimilarObject) :-
 %
 % Helper predicate to find the most similar object to the given object from a list of objects.
 %
-% If the similarity is 1.0, it immediately returns the current object as the most similar one (early termination). 
-% If the similarity of the current object (Similarity) is higher than the maximum similarity found so far (MaxSimilarity), 
-% it updates the maximum similarity and the most similar object (MaxSimilarity-MaxSimilarObject). 
+% If the similarity is 1.0, it immediately returns the current object as the most similar one (early termination).
+% If the similarity of the current object (Similarity) is higher than the maximum similarity found so far (MaxSimilarity),
+% it updates the maximum similarity and the most similar object (MaxSimilarity-MaxSimilarObject).
 % Otherwise, it continues to the next object in the list without updating the maximum similarity and object.
 %
 % @param InputObjects A list of object instances to compare the given object to.
@@ -62,11 +65,31 @@ most_similar_object_helper([InputObject|Rest], ClassA, MaxSimilarity-MaxSimilarO
     ; most_similar_object_helper(Rest, ClassA, MaxSimilarity-MaxSimilarObject, Result)
     ).
 
+%% sort_by_similarity(+Object,+InputObjects,-SortedInputObjects) is det.
+%
+% Like most_similar_object, but returns all inputs, sorted by similarity.
+% The most similar object will be the first element of the output list.
+% if an "object" in the list does not have a type, it is treated as similarity 0.
+sort_by_similarity(Object,InputObjects,SortedInputObjects) :-
+    has_type(Object, ClassA),
+    findall(
+        Similarity-InputObject,
+        (
+            member(InputObject, InputObjects),
+            (  has_type(InputObject, ClassB)
+            -> wu_palmer_similarity(ClassA, ClassB, Similarity)
+            ;  Similarity = 0)
+        ),
+        SimilaritiesAndObjects
+    ),
+    sort(1, @>=, SimilaritiesAndObjects, DescendingSimilaritiesAndObjects),
+    pairs_values(DescendingSimilaritiesAndObjects,SortedInputObjects).
+
 %% wu_palmer_similarity(+ClassA, +ClassB, -Similarity) is semidet.
 %
 % Calculates the Wu-Palmer similarity between two classes.
 % The similarity can be 0 < similarity <= 1.
-% The similarity can never be zero because the depth of the LCS is never zero (the depth of the root of taxonomy is one). 
+% The similarity can never be zero because the depth of the LCS is never zero (the depth of the root of taxonomy is one).
 %
 % @param ClassA One of the two classes
 % @param ClassB Second of the two classes
@@ -80,7 +103,7 @@ wu_palmer_similarity(ClassA, ClassB, MaxSimilarity) :-
 %
 % Helper predicate to find all possible LCSs and calculate the similarity for each of them.
 %
-find_wu_palmer_similarity(ClassA, ClassA, 1) :- 
+find_wu_palmer_similarity(ClassA, ClassA, 1) :-
     !.
 find_wu_palmer_similarity(ClassA, ClassB, Similarity) :-
     % Get the least common subsumer (LCS)

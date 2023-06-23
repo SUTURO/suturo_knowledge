@@ -12,16 +12,42 @@ object_destination_pose(Object, Options, [Frame, Pos, Rotation]) :-
     % warning, this is still a rough draft.
     (  once(find_place(Object, Options, [Frame, Pos, Rotation]))
     -> true
-    ;  ros_error('could not find a valid destination pose for ~w', [Object])).
+    ;  ros_error('could not find a valid destination pose for ~w', [Object])), fail.
 
 %% find_place(+Object, +Options, -PoseStamped) is nondet.
 %
 find_place(Object, _Options, PoseStamped) :-
-    has_type(Object, Type),
-    predefined_destination_location(Type, Destination),
+    % in case of best_fitting_destination not working properly, comment it
+    % and uncomment the next two lines
+    best_fitting_destination(Object, Destination),
+    %has_type(Object, Type),
+    %predefined_destination_location(Type, Destination)
     object_depth(Object, ObjectDepth),
     possible_pose(Destination, ObjectDepth, PoseStamped),
     check_for_collision(Destination, PoseStamped).
+
+:- rdf_meta(best_fitting_destination(r,-)).
+
+%% best_fitting_destination(+Object, -Destination) is nondet.
+%
+% search all possible destinations and
+% find the one where the objects already there match the best.
+% allows backtracking to find the second-best etc destination.
+best_fitting_destination(Object, Destination) :-
+    has_type(Object, Type),
+    findall([Destination,BestObject],
+            (predefined_destination_location(Type, Destination),
+             (  (findall(Obj, triple(Obj, soma:isOntopOf, Destination), Objects),
+                 most_similar_object(Object, Objects, BestObject))
+             -> true
+             ;  BestObject = none)),
+            Locations),
+    maplist(nth0(1),Locations,Objects),
+    sort_by_similarity(Object, Objects, SortedObjects),
+    % allow backtracking over the objects, so if one destination is full,
+    % the next best can be used.
+    member(TargetObject, SortedObjects),
+    member([Destination,TargetObject], Locations).
 
 possible_pose(Furniture, ObjectDepth, [Frame, [X,Y,0], [0,0,0,1]]) :-
     % assuming the frame is on top of the center of the furniture.

@@ -296,6 +296,14 @@ Similarity: 0.875.
 
 ## Utils
 
+### Resetting the data
+Delete all objects, what challenge was initiliazied, etc
+and initialize the semantic map furnitures again.
+
+```prolog
+reset_user_data
+```
+
 ### Getting the object for a link name
 This is useful for getting data about specific environment furniture, for example the tall table.
 
