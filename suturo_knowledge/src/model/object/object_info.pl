@@ -29,7 +29,7 @@
 % @param PoseStamped The pose of the object.
 %
 object_pose(Object, PoseStamped) :-
-	var(PoseStamped),
+	\+ ground(PoseStamped),
 	tf:tf_get_pose(Object, PoseStamped),
 	!.
 object_pose(Object, PoseStamped) :-
