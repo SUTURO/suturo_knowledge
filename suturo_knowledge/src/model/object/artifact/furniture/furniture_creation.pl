@@ -49,18 +49,19 @@ load_urdf_from_param(Param):-
 %
 is_semantic_map_object(Link) :-
     (
-        sub_string(Link,_,_,_,"table_center");
-        sub_string(Link,_,_,_,"shelf_base_center");
-        sub_string(Link,_,_,_,"drawer_front_top");
-        sub_string(Link,_,_,_,"drawer_bottom");
-        sub_string(Link,_,_,_,"door_center");
-        sub_string(Link,_,_,_,"shelf_floor_");
-        sub_string(Link,_,_,_,"shelf_door_");
-        sub_string(Link,_,_,_,"bucket_surface_center");
-        sub_string(Link,_,_,_,"dishwasher_tray_bottom");
-        sub_string(Link,_,_,_,"dishwasher_tray_2_bottom")
-    ), % TODO: We exclude handles for now. They dont have consistent urdf link names
-    \+ sub_string(Link,_,_,_,"handle").
+    sub_string(Link,_,_,_,"table_center");
+    sub_string(Link,_,_,_,"shelf_base_center");
+    sub_string(Link,_,_,_,"drawer_front_top");
+    sub_string(Link,_,_,_,"drawer_bottom");
+    sub_string(Link,_,_,_,"door_center");
+    sub_string(Link,_,_,_,"shelf_floor_");
+    sub_string(Link,_,_,_,"shelf_door_");
+    sub_string(Link,_,_,_,"bucket_surface_center");
+    sub_string(Link,_,_,_,"dishwasher_tray_bottom");
+    sub_string(Link,_,_,_,"dishwasher_tray_2_bottom");
+    sub_string(Link,_,_,_,"handle")
+    ),
+    !.
 
 %% init_furnitures is det.
 %
@@ -70,9 +71,9 @@ init_furnitures :-
     get_urdf_id(URDF),
     urdf_link_names(URDF, Links),
     forall((member(UrdfLink, Links),
-	    is_semantic_map_object(UrdfLink)
-	   ),
-	       init_furniture(UrdfLink)),
+	        is_semantic_map_object(UrdfLink)
+	       ),
+        init_furniture(UrdfLink)),
     ros_info('Semantic map initialized').
 
 %% init_furnitures(?UrdfLink) is semidet.
@@ -87,7 +88,7 @@ init_furniture(UrdfLink) :-
     furniture_pose(UrdfLink, Pose),
     furniture_shape(UrdfLink, ShapeTerm),
     create_object(Furniture, Class, Pose, [shape(ShapeTerm), data_source(semantic_map)]),
-    ros_info("Created Semantic map object for ~w", [UrdfLink]),
+    ros_info("Created semantic map object for ~w", [UrdfLink]),
     kb_project(has_urdf_name(Furniture, UrdfLink)),
 	% backwards compatibility with table_front_edge_center for planning
 	(  atom_concat(Prefix, 'table_center', UrdfLink)
@@ -136,6 +137,7 @@ collision_link(CollisionLink, CollisionLink) :-
     atom_concat(_, 'dishwasher_tray_bottom', CollisionLink);
     atom_concat(_, 'dishwasher_tray_2_bottom', CollisionLink);
     atom_concat(_, 'drawer_bottom', CollisionLink);
+    sub_string(CollisionLink,_,_,_,"handle");
     sub_string(CollisionLink,_,_,_,"shelf_floor_");
     sub_string(CollisionLink,_,_,_,"shelf_door_").
 collision_link(UrdfLink, CollisionLink) :-
@@ -198,6 +200,10 @@ link_name_class(LinkName, Class) :-
 link_name_class(LinkName, Class) :-
     sub_string(LinkName,_,_,_,"dishwasher_tray"), % TODO: Fix this inconsistency in the urdf
     Class = suturo:'DishwasherTray',
+    !.
+link_name_class(LinkName, Class) :-
+    sub_string(LinkName,_,_,_,"handle"),
+    Class = soma:'DesignedHandle',
     !.
 link_name_class(LinkName, Class) :-
     ros_warn("Unknown link name type: ~w! Using default class soma:DesignedFurniture", [LinkName]),
