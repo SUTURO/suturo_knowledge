@@ -67,4 +67,12 @@ test(update_object_not_type, [cleanup(kb_unproject(
 	create_object(Y, test:'TestB', [map, [0.09,0,0], [0,0,0,1]]),
 	assert_false(X == Y).
 
+test(test_rotated_furniture) :-
+	create_object(A, test:furniture, [map,
+								 [0,0,0],
+								 [0.0, 0.0, 0.707, 0.707]],
+				  [data_source(semantic_map), shape(box(0.1, 0.5, 0.1))]),
+	create_object(OA, test:obj, [map, [0.2, 0, 0.1], [0,0,0,1]]),
+	object_creation:suturo_is_ontop_of(OA, A, _).
+
 :- end_rdf_tests('object_creation').
