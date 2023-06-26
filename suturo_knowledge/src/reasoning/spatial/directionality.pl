@@ -10,12 +10,12 @@
 % sort a list of object from right to left
 % (according to the y axis from most negative to most positive)
 %
-sort_right_to_left(Reference, Objects, Sorted) :-
+sort_right_to_left(Reference, _Objects, _Sorted) :-
     \+ atom(Reference),
     !,
     ros_error('no reference frame in sort_right_to_left'),
     fail.
-sort_right_to_left(Reference, Objects, Sorted) :-
+sort_right_to_left(_Reference, Objects, _Sorted) :-
     \+ ground(Objects),
     !,
     ros_error('non-ground object list in sort_right_to_left'),
