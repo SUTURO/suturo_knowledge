@@ -1,150 +1,164 @@
-(:trashbin
- :trashbin)
-(:plasticknife
- :plasticknife)
-(:designedchair
- :designedchair)
-(:cupboard
- :cupboard)
-(:foambrick
- :foambrick)
-(:fork
- :fork)
-(:spatula
- :spatula)
-(:pitcher
- :pitcher)
-(:bleachcleanserbottle
- :bleachcleanserbottle)
-(:kitchencabinet
- :kitchencabinet)
-(:crackerbox
- :crackerbox)
-(:minisoccerball
- :minisoccerball)
-(:baseball
- :baseball)
-(:tablecloth
- :tablecloth)
-(:washer
- :washer)
-(:designedhandle
- :designedhandle)
-(:pot
- :pot)
-(:napkin
- :napkin)
-(:mustardbottle
- :mustardbottle)
-(:puddingbox
- :puddingbox)
-(:door
- :door)
-(:servingmat
- :servingmat)
-(:dishwasher
- :dishwasher)
-(:naturalperson
- :naturalperson)
-(:wineglass
- :wineglass)
-(:shelf
- :shelf)
-(:tray
- :tray)
-(:orange
- :orange)
-(:table
- :table)
-(:bowl
- :bowl)
-(:glass
- :glass)
-(:coffeepack
- :coffeepack)
-(:golfball
- :golfball)
-(:softball
- :softball)
-(:saltshaker
- :saltshaker)
-(:metalplate
- :metalplate)
-(:pringleschipscan
- :pringleschipscan)
-(:strawberry
- :strawberry)
-(:glasscleanerspraybottle
- :glasscleanerspraybottle)
-(:tennisball
- :tennisball)
-(:spoon
- :spoon)
-(:marble
- :marble)
-(:bottle
- :bottle)
-(:metalmug
- :metalmug)
-(:rope
- :rope)
-(:stackingblocks
- :stackingblocks)
-(:abrasivesponge
- :abrasivesponge)
-(:racquetball
- :racquetball)
-(:jellobox
- :jellobox)
-(:dishwashertab
- :dishwashertab)
-(:knife
- :knife)
-(:plasticchain
- :plasticchain)
-(:plate
- :plate)
-(:cup
- :cup)
-(:dice
- :dice)
-(:cerealbox
- :cerealbox)
-(:metalbowl
- :metalbowl)
-(:sugarbox
- :sugarbox)
-(:skillet
- :skillet)
-(:kiwi
- :kiwi)
-(:drawer
- :drawer)
-(:toyotahsr
- :toyotahsr)
-(:coffeecan
- :coffeecan)
-(:milkpack
- :milkpack)
-(:toothpaste
- :toothpaste)
-(:oreganoshaker
- :oreganoshaker)
-(:apple
- :apple)
-(:tomatosoupcan
- :tomatosoupcan)
-(:tunafishcan
- :tunafishcan)
-(:bag
- :bag)
-(:juicebox
- :juicebox)
-(:pancakemixbottle
- :pancakemixbottle)
-(:jellostrawberrybox
- :jellostrawberrybox)
-(:teabagbox
- :teabagbox)
-(:pastrybox
- :pastrybox)
+	(:trashbin
+	 :trashbin)
+	(:plasticknife
+	 :plasticknife)
+	(:designedchair
+	 :designedchair)
+	(:cupboard
+	 :cupboard)
+	(:foambrick
+	 :foambrick)
+	(:fork
+	 :fork)
+	(:spatula
+	 :spatula)
+	(:pitcher
+	 :pitcher)
+	(:bleachcleanserbottle
+	 :bleachcleanserbottle)
+	(:kitchencabinet
+	 :kitchencabinet)
+	(:crackerbox
+	 :crackerbox)
+	(:minisoccerball
+	 :minisoccerball)
+	(:baseball
+	 :baseball)
+	(:tablecloth
+	 :tablecloth)
+	(:washer
+	 :washer)
+	(:designedhandle
+	 :designedhandle)
+	(:pot
+	 :pot)
+	(:napkin
+	 :napkin)
+	(:mustardbottle
+	 :mustardbottle)
+	(:puddingbox
+	 :puddingbox)
+	(:door
+	 :door)
+	(:servingmat
+	 :servingmat)
+	(:dishwasher
+	 :dishwasher)
+	(:naturalperson
+	 :naturalperson)
+	(:wineglass
+	 :wineglass)
+	(:shelf
+	 :shelf)
+	(:tray
+	 :tray)
+	(:orange
+	 :orange)
+	(:table
+	 :table)
+	(:bowl
+	 :bowl)
+	(:glass
+	 :glass)
+	(:coffeepack
+	 :coffeepack)
+	(:golfball
+	 :golfball)
+	(:softball
+	 :softball)
+	(:saltshaker
+	 :saltshaker)
+	(:metalplate
+	 :metalplate)
+	(:pringleschipscan
+	 :pringleschipscan)
+	(:strawberry
+	 :strawberry)
+	(:glasscleanerspraybottle
+	 :glasscleanerspraybottle)
+	(:tennisball
+	 :tennisball)
+	(:spoon
+	 :spoon)
+	(:marble
+	 :marble)
+	(:bottle
+	 :bottle)
+	(:metalmug
+	 :metalmug)
+	(:rope
+	 :rope)
+	(:stackingblocks
+	 :stackingblocks)
+	(:abrasivesponge
+	 :abrasivesponge)
+	(:racquetball
+	 :racquetball)
+	(:jellobox
+	 :jellobox)
+	(:dishwashertab
+	 :dishwashertab)
+	(:knife
+	 :knife)
+	(:plasticchain
+	 :plasticchain)
+	(:plate
+	 :plate)
+	(:cup
+	 :cup)
+	(:dice
+	 :dice)
+	(:cerealbox
+	 :cerealbox)
+	(:metalbowl
+	 :metalbowl)
+	(:sugarbox
+	 :sugarbox)
+	(:skillet
+	 :skillet)
+	(:kiwi
+	 :kiwi)
+	(:drawer
+	 :drawer)
+	(:toyotahsr
+	 :toyotahsr)
+	(:coffeecan
+	 :coffeecan)
+	(:milkpack
+	 :milkpack)
+	(:toothpaste
+	 :toothpaste)
+	(:oreganoshaker
+	 :oreganoshaker)
+	(:apple
+	 :apple)
+	(:tomatosoupcan
+	 :tomatosoupcan)
+	(:tunafishcan
+	 :tunafishcan)
+	(:bag
+	 :bag)
+	(:juicebox
+	 :juicebox)
+	(:pancakemixbottle
+	 :pancakemixbottle)
+	(:jellostrawberrybox
+	 :jellostrawberrybox)
+	(:teabagbox
+	 :teabagbox)
+	(:pastrybox
+	 :pastrybox)
+	(:pear
+	 :pear)
+	(:lemon
+	 :lemon)
+	(:banana
+	 :banana)
+	(:designedhandle
+	 :designedhandle)
+	(:pottedmeatcan
+	 :pottedmeatcan)
+	(:peach
+	 :peach)
+	(:plum
+	 :plum)
