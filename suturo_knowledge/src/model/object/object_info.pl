@@ -60,8 +60,8 @@ is_perceived_object(Object):-
 is_misplaced_object(Object):-
 	is_perceived_object(Object),
 	has_type(Object, Class),
-	predefined_destination_location(Class, DestLocation),
-	\+ holds(Object, soma:isOntopOf, DestLocation).
+	forall(predefined_destination_location(Class, DestLocation),
+		\+ holds(Object, soma:isOntopOf, DestLocation)).
 
 %% set_object_handled(+Object) is det.
 %
