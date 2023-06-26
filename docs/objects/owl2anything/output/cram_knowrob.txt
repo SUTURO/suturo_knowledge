@@ -154,8 +154,6 @@
 	 "http://www.ease-crc.org/ont/SUTURO.owl#Lemon")
 	(:banana
 	 "http://www.ease-crc.org/ont/SUTURO.owl#Banana")
-	(:designedhandle
-	 "http://www.ease-crc.org/ont/SOMA.owl#DesignedHandle")
 	(:pottedmeatcan
 	 "http://www.ease-crc.org/ont/SUTURO.owl#PottedMeatCan")
 	(:peach

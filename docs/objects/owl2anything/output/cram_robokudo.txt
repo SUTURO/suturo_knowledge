@@ -154,8 +154,6 @@
 	 :lemon)
 	(:banana
 	 :banana)
-	(:designedhandle
-	 :designedhandle)
 	(:pottedmeatcan
 	 :pottedmeatcan)
 	(:peach
