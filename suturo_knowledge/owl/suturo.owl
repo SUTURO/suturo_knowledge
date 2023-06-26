@@ -333,6 +333,14 @@ For example the Tables come from semantic_map, while the objects perception got 
     
 
 
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#Bedroom -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Bedroom">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Room"/>
+    </owl:Class>
+    
+
+
     <!-- http://www.ease-crc.org/ont/SUTURO.owl#BlankCreditCard -->
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#BlankCreditCard">
@@ -1055,6 +1063,14 @@ For example the Tables come from semantic_map, while the objects perception got 
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Food"/>
         <rdfs:comment>Liquid food is a type of food that is in a liquid state and can be consumed without chewing.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#LivingRoom -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#LivingRoom">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Room"/>
     </owl:Class>
     
 

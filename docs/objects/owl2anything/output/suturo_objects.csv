@@ -12,6 +12,7 @@ Ball;suturo:'Ball';http://www.ease-crc.org/ont/SUTURO.owl#;;A ball is a spherica
 Banana;suturo:'Banana';http://www.ease-crc.org/ont/SUTURO.owl#;;A banana is a long, curved fruit with a yellow skin that is easy to peel, a soft, sweet flesh, and small seeds inside.
 Baseball;suturo:'Baseball';http://www.ease-crc.org/ont/SUTURO.owl#;12;A baseball is a ball used in the sport of baseball, made of cork or rubber, and covered with leather or synthetic materials, and is roughly the size of an adult's fist.
 Bed;suturo:'Bed';http://www.ease-crc.org/ont/SUTURO.owl#;;A bed is a piece of furniture for sleeping or resting on that typically includes a mattress and a frame.
+Bedroom;suturo:'Bedroom';http://www.ease-crc.org/ont/SUTURO.owl#;;Bedroom
 BedsideTable;soma_home:'BedsideTable';http://www.ease-crc.org/ont/SOMA-HOME.owl#;;A small table typically located next to a bed.
 BiologicalObject;dul:'BiologicalObject';http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#;;A biological object refers to any living entity, organism, or part thereof that is associated with biological systems or processes. It encompasses a wide range of living things, including plants, animals, microorganisms, cells, tissues, organs, and biological molecules, and is a fundamental concept in the field of biology.
 Blade;soma:'Blade';http://www.ease-crc.org/ont/SOMA.owl#;;A flat cutting edge of an object used to cut through other objects, such as the blade of a ventilator cutting through the air.
@@ -159,6 +160,7 @@ Lid;soma:'Lid';http://www.ease-crc.org/ont/SOMA.owl#;;A removable or hinged cove
 Limb;soma:'Limb';http://www.ease-crc.org/ont/SOMA.owl#;;An arm or leg of an embodied agent.
 Link;urdf:'Link';http://knowrob.org/kb/urdf.owl#;;Link
 Liquid;suturo:'Liquid';http://www.ease-crc.org/ont/SUTURO.owl#;;Liquid food is a type of food that is in a liquid state and can be consumed without chewing.
+LivingRoom;suturo:'LivingRoom';http://www.ease-crc.org/ont/SUTURO.owl#;;LivingRoom
 LowFatLongLastingMilk;suturo:'LowFatLongLastingMilk';http://www.ease-crc.org/ont/SUTURO.owl#;;Low-fat long-lasting milk is a type of milk that has been processed to remove some of the fat and extend its shelf life. This milk is typically heated to a high temperature, which kills off bacteria and enzymes that can cause spoilage, and then packaged in airtight containers.
 Magazine;suturo:'Magazine';http://www.ease-crc.org/ont/SUTURO.owl#;;A magazine is a publication containing articles and illustrations, often on a particular subject or aimed at a particular audience.
 Marble;suturo:'Marble';http://www.ease-crc.org/ont/SUTURO.owl#;41;A marble is a small, spherical toy made of glass, stone, or other materials, used in games, competitions, or for decoration.
