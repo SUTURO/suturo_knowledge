@@ -202,6 +202,7 @@ For example the Tables come from semantic_map, while the objects perception got 
 
     <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#DesignedHandle">
         <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">15</SUTURO:perceptionId>
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">78</SUTURO:perceptionId>
     </rdf:Description>
     
 
@@ -304,6 +305,7 @@ For example the Tables come from semantic_map, while the objects perception got 
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Banana">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Fruit"/>
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">77</SUTURO:perceptionId>
         <rdfs:comment>A banana is a long, curved fruit with a yellow skin that is easy to peel, a soft, sweet flesh, and small seeds inside.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
@@ -1039,6 +1041,7 @@ For example the Tables come from semantic_map, while the objects perception got 
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Lemon">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Fruit"/>
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">76</SUTURO:perceptionId>
         <rdfs:comment>A lemon is a yellow citrus fruit with a sour taste, acidic juice, and versatile use in cooking and beverages.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
@@ -1344,6 +1347,7 @@ For example the Tables come from semantic_map, while the objects perception got 
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Peach">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Fruit"/>
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">80</SUTURO:perceptionId>
         <rdfs:comment>A peach is a round fruit with a fuzzy skin, juicy flesh, a large pit in the center, and a sweet, delicate flavor.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
@@ -1364,6 +1368,7 @@ For example the Tables come from semantic_map, while the objects perception got 
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Pear">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Fruit"/>
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">75</SUTURO:perceptionId>
         <rdfs:comment>A pear is a sweet, juicy fruit with a bulbous shape, a thin skin, and a core with seeds in the center.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
@@ -1427,6 +1432,7 @@ For example the Tables come from semantic_map, while the objects perception got 
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Plum">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Fruit"/>
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">81</SUTURO:perceptionId>
         <rdfs:comment>A plum is a small, round or oval-shaped fruit with a smooth, edible skin, juicy, sweet or tart flesh, and a small pit in the center.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
@@ -1437,6 +1443,7 @@ For example the Tables come from semantic_map, while the objects perception got 
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#PottedMeatCan">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Can"/>
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">79</SUTURO:perceptionId>
         <rdfs:comment>A can containing, or at least normally intended to contain, potted meat</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
