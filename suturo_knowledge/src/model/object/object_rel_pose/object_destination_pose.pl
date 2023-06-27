@@ -3,8 +3,8 @@
               object_destination_pose/3
           ]).
 
-% TODO get updated value from kecks
-robot_gripper_space(0.20).
+% 10 cm space needed to both sides for the gripper to open completely
+robot_gripper_space(0.10).
 
 %% object_destination_pose(+Object, +Options, -PoseStamped) is semidet.
 %
@@ -12,7 +12,7 @@ object_destination_pose(Object, Options, [Frame, Pos, Rotation]) :-
     % warning, this is still a rough draft.
     (  once(find_place(Object, Options, [Frame, Pos, Rotation]))
     -> true
-    ;  ros_error('could not find a valid destination pose for ~w', [Object])), fail.
+    ;  ros_error('could not find a valid destination pose for ~w', [Object]), fail).
 
 %% find_place(+Object, +Options, -PoseStamped) is nondet.
 %
@@ -55,7 +55,7 @@ possible_pose(Furniture, ObjectDepth, [Frame, [X,Y,0], [0,0,0,1]]) :-
     object_shape_workaround(Furniture, Frame, ShapeTerm, _Pose, _Material),
     ShapeTerm = box(DX,DY,_DZ),
     robot_gripper_space(GripperSpace),
-    RightY is -DY/2 + GripperSpace/2 + 0.05,
+    RightY is -DY/2 + GripperSpace+0.05,
     LeftY is -RightY,
     X is min(-DX/2 + ObjectDepth + 0.05, 0),
     for_loop(RightY, LeftY, 0.05, Y).
@@ -70,11 +70,10 @@ for_loop(Start, End, Delta, Value) :-
 
 check_for_collision(Furniture, [Frame, [X,Y,Z], _Rot]) :-
     robot_gripper_space(RobotGripperSpace),
-    forall((kb_call((triple(Object, soma:isOntopOf, Furniture),
-                     is_at(Object, [Frame, [X2,Y2,Z2], _]))),
-            object_width(Object, Width)),
-           (Distance is RobotGripperSpace+Width,
-            \+ collides_pos([X,Y,Z], [X2,Y2,Z2], Distance))).
+    forall(kb_call((triple(Object, soma:isOntopOf, Furniture),
+                    is_at(Object, [Frame, [X2,Y2,Z2], _]))),
+	   % only the gripper space is needed, as teh object is completely in the gripper
+           \+ collides_pos([X,Y,Z], [X2,Y2,Z2], RobotGripperSpace)).
 
 collides_pos([X,Y,Z], [X2,Y2,Z2], Distance) :-
     abs(X-X2) =< Distance,
@@ -91,17 +90,4 @@ object_depth(_Object, 0.2).
 shape_depth(box(Depth,_,_), Depth) :- !.
 shape_depth(cylinder(Radius,_), Radius) :- !.
 shape_depth(sphere(Radius), Radius) :- !.
-% TODO mesh implementation
-
-
-object_width(Object, Depth) :-
-    object_shape_workaround(Object, _, ShapeTerm, _, _),
-    shape_width(ShapeTerm, Depth),
-    !.
-% default value
-object_width(_Object, 0.2).
-
-shape_width(box(_,Width,_), Width) :- !.
-shape_width(cylinder(Radius,_), Radius) :- !.
-shape_width(sphere(Radius), Radius) :- !.
 % TODO mesh implementation

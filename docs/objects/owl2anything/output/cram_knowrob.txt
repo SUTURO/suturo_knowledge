@@ -148,3 +148,15 @@
 	 "http://www.ease-crc.org/ont/SUTURO.owl#TeaBagBox")
 	(:pastrybox
 	 "http://www.ease-crc.org/ont/SUTURO.owl#PastryBox")
+	(:pear
+	 "http://www.ease-crc.org/ont/SUTURO.owl#Pear")
+	(:lemon
+	 "http://www.ease-crc.org/ont/SUTURO.owl#Lemon")
+	(:banana
+	 "http://www.ease-crc.org/ont/SUTURO.owl#Banana")
+	(:pottedmeatcan
+	 "http://www.ease-crc.org/ont/SUTURO.owl#PottedMeatCan")
+	(:peach
+	 "http://www.ease-crc.org/ont/SUTURO.owl#Peach")
+	(:plum
+	 "http://www.ease-crc.org/ont/SUTURO.owl#Plum")

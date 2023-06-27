@@ -150,6 +150,13 @@ ShapeTerm: {'term': ['box', 0.1, 0.1, 0.1]}.
 Note that this is not the format you will see in lisp, there the `term` stuff is probably translated to a lispier structure, like `(box 0.1 0.1 0.1)`.
 There might be a better predicate for this in the future, and the blanks in the pose might be a real position and rotation in the future. The `_` indicates that there is no value for this place.
 
+### Sorting objects by position
+```prolog
+sort_right_to_left(+RefereceFrame, +Objects, -SortedObjects) is det.
+```
+Sort a list of objects from right to left (on the y axis from - to +)
+relative to the reference frame.
+
 ### Poses for robot interaction
 
 Gets a position relative to the object based on the type of relation.

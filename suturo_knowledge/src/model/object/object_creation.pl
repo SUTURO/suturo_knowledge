@@ -71,7 +71,7 @@ update_existing_object(Object, Type, [Frame, Pos, Rot]) :-
 	triple(Other, suturo:hasDataSource, _DataSource),
 	kb_call(is_at(Other,[Frame, Pos2, _])),
 	euclidean_distance(Pos, Pos2, Distance),
-	Distance < 0.10,
+	Distance < 0.05,
 	Object = Other,
 	from_current_scope(Scope),
 	% TODO: Merge other data

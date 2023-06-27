@@ -88,7 +88,6 @@ find_next_object_storing_groceries(NothandledObjects, NextObject) :-
 % @param NextObject The next best object to pick
 %
 next_object_clean_the_table(NextObject) :-
-    set_object_handled(has_type(Object, soma:'DishwasherTab')),
     objects_not_handled(NothandledObjects),
     findall([Object, CbRatio],
         (
