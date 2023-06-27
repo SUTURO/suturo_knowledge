@@ -19,46 +19,56 @@ object_destination_pose(Object, Options, [Frame, Pos, Rotation]) :-
 find_place(Object, _Options, PoseStamped) :-
     % in case of best_fitting_destination not working properly, comment it
     % and uncomment the next two lines
-    best_fitting_destination(Object, Destination),
+    best_fitting_destination(Object, NextTo, Destination),
     %has_type(Object, Type),
     %predefined_destination_location(Type, Destination)
     object_depth(Object, ObjectDepth),
-    possible_pose(Destination, ObjectDepth, PoseStamped),
-    check_for_collision(Destination, PoseStamped).
+    (  possible_pose(Destination, NextTo, ObjectDepth, PoseStamped),
+       check_for_collision(Destination, PoseStamped)
+    ;  possible_pose(Destination, NextTo, ObjectDepth, PoseStamped)).
 
 :- rdf_meta(best_fitting_destination(r,-)).
 
-%% best_fitting_destination(+Object, -Destination) is nondet.
+%% best_fitting_destination(+Object, -NextTo, -Destination) is nondet.
 %
 % search all possible destinations and
 % find the one where the objects already there match the best.
 % allows backtracking to find the second-best etc destination.
-best_fitting_destination(Object, Destination) :-
+best_fitting_destination(Object, NextTo, Destination) :-
     has_type(Object, Type),
-    findall([Destination,BestObject],
+    findall(Obj-Destination,
             (predefined_destination_location(Type, Destination),
-             (  (findall(Obj, triple(Obj, soma:isOntopOf, Destination), Objects),
-                 most_similar_object(Object, Objects, BestObject))
-             -> true
-             ;  BestObject = none)),
-            Locations),
-    maplist(nth0(1),Locations,Objects),
-    sort_by_similarity(Object, Objects, SortedObjects),
-    % allow backtracking over the objects, so if one destination is full,
-    % the next best can be used.
-    member(TargetObject, SortedObjects),
-    member([Destination,TargetObject], Locations).
+             triple(Obj, soma:isOntopOf, Destination)),
+            ObjsDests),
+    pairs_keys(ObjsDests, Objs),
+    most_similar_object(Object, Objs, NextTo),
+    member(NextTo-Destination,ObjsDests).
 
-possible_pose(Furniture, ObjectDepth, [Frame, [X,Y,0], [0,0,0,1]]) :-
+possible_pose(Furniture, NextTo, ObjectDepth, [Frame, [X,Y,0], [0,0,0,1]]) :-
     % assuming the frame is on top of the center of the furniture.
     % and assuming the approach direction is from -x.
     object_shape_workaround(Furniture, Frame, ShapeTerm, _Pose, _Material),
+    kb_call(is_at(NextTo, [Frame, [_, CenterY, _], _])),
     ShapeTerm = box(DX,DY,_DZ),
     robot_gripper_space(GripperSpace),
     RightY is -DY/2 + GripperSpace+0.05,
     LeftY is -RightY,
     X is min(-DX/2 + ObjectDepth + 0.05, 0),
-    for_loop(RightY, LeftY, 0.05, Y).
+    MaxY is max(-RightY + CenterY, LeftY - CenterY),
+    Delta is GripperSpace/2,
+    increasing_alternating(MaxY, Delta, GripperSpace, YDiff),
+    Y is CenterY + YDiff,
+    Y >= RightY,
+    Y =< LeftY.
+
+increasing_alternating(_Max, _Delta, ValueIn, ValueOut) :-
+    ValueOut is ValueIn.
+increasing_alternating(_Max, _Delta, ValueIn, ValueOut) :-
+    ValueOut is -ValueIn.
+increasing_alternating(Max, Delta, ValueIn, ValueOut) :-
+    ValueMid is ValueIn+Delta,
+    Max >= ValueMid,
+    increasing_alternating(Max, Delta, ValueMid, ValueOut).
 
 for_loop(Start, End, _Delta, Start) :-
     (  Start =< End

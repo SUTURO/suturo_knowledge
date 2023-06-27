@@ -27,7 +27,8 @@ test(for_loop1, all(X == [-3,-2,-1,0,1,2,3])) :-
 
 test(possible_pose1) :-
     create_object(Table, test:'Table', [map, [0,0,1],[0,0,0,1]], [shape(box(3,2,1))]),
-    forall(object_destination_pose:possible_pose(Table, 0.2, [_Frame, [X,Y,0], [0,0,0,1]]),
+    create_object(Obj, test:'Obj', [map, [0,-1,0], [0,0,0,1]]),
+    forall(object_destination_pose:possible_pose(Table, Obj, 0.2, [_Frame, [X,Y,0], [0,0,0,1]]),
            (assert_equals(X,-1.25),
             assert_true((-2 =< Y, Y =< 2)))).
 
@@ -38,14 +39,15 @@ test(best_fitting_destination1) :-
                   [shape(box(1,1,1)), data_source(semantic_map)]),
     %
     create_object(Obj, test:'Box', [map, [0,0,0], [0,0,0,1]]),
-    create_object(_Similar, test:'Box', [map, [-1,0,1.5], [0,0,0,1]]),
+    create_object(Similar, test:'Box', [map, [-1,0,1.5], [0,0,0,1]]),
     create_object(_NotSimilar, test:'Sphere', [map, [1,0,1.5], [0,0,0,1]]),
     kb_project((subclass_of(test:'Box', test:top),
                 subclass_of(test:'Sphere', test:top),
                 triple(test:'Box', suturo:hasDestinationLocation, Table2),
                 triple(test:'Box', suturo:hasDestinationLocation, Table1)
                )),
-    once(object_destination_pose:best_fitting_destination(Obj, Dest)),
-    assert_equals(Dest, Table1).
+    once(object_destination_pose:best_fitting_destination(Obj, NextTo, Dest)),
+    assert_equals(Dest, Table1),
+    assert_equals(NextTo, Similar).
 
 :- end_rdf_tests('object_destination_pose').
