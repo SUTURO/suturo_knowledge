@@ -19,13 +19,21 @@ object_destination_pose(Object, Options, [Frame, Pos, Rotation]) :-
 find_place(Object, _Options, PoseStamped) :-
     % in case of best_fitting_destination not working properly, comment it
     % and uncomment the next two lines
-    best_fitting_destination(Object, NextTo, Destination),
-    %has_type(Object, Type),
-    %predefined_destination_location(Type, Destination)
-    object_depth(Object, ObjectDepth),
-    (  possible_pose(Destination, NextTo, ObjectDepth, PoseStamped),
+    (  best_fitting_destination(Object, NextTo, Destination),
+    -> object_depth(Object, ObjectDepth),
+       (  possible_pose(Destination, NextTo, ObjectDepth, PoseStamped),
+          check_for_collision(Destination, PoseStamped)
+       ;  ros_info('No collision-free pose for ~w, computing colliding pose', [Object])
+          possible_pose(Destination, NextTo, ObjectDepth, PoseStamped))
+    ;  ros_info('No Existing destination location has an object similar to ~w, getting a free destination', [Object]),
+       free_destination(Object, Destination),
+       free_destination_pose(Object, Destination, PoseStamped)
+    ;  ros_info('No Free destination, searching for one with a free space'),
+       has_type(Object, Type),
+       predefined_destination_location(Type, Destination),
+       possible_pose(Destination, Destination, ObjectDepth, PoseStamped),
        check_for_collision(Destination, PoseStamped)
-    ;  possible_pose(Destination, NextTo, ObjectDepth, PoseStamped)).
+    ).
 
 :- rdf_meta(best_fitting_destination(r,-)).
 
@@ -40,9 +48,22 @@ best_fitting_destination(Object, NextTo, Destination) :-
             (predefined_destination_location(Type, Destination),
              triple(Obj, soma:isOntopOf, Destination)),
             ObjsDests),
+    \+ ObjDests == [],
     pairs_keys(ObjsDests, Objs),
     most_similar_object(Object, Objs, NextTo),
     member(NextTo-Destination,ObjsDests).
+
+free_destination(Object, Destination) :-
+    has_type(Object, Type),
+    predefined_destination_location(Type, Destination),
+    \+ triple(_Obj, soma:isOntopOf, Destination).
+
+free_destination_pose(Object, Furniture, [Frame, [X,RightY,0], [0,0,0,1]]) :-
+    object_shape_workaround(Furniture, Frame, ShapeTerm, _Pose, _Material),
+    ShapeTerm = box(DX,DY,_DZ),
+    robot_gripper_space(GripperSpace),
+    RightY is -DY/2 + GripperSpace+0.05,
+    X is min(-DX/2 + ObjectDepth + 0.05, 0).
 
 possible_pose(Furniture, NextTo, ObjectDepth, [Frame, [X,Y,0], [0,0,0,1]]) :-
     % assuming the frame is on top of the center of the furniture.
