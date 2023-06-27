@@ -15,10 +15,14 @@ The whole arena is a room.
 room_entry(+Room, -Pose) is multi.
 room_exit(+Room, -Pose) is multi.
 is_inside_of(?Object, ?Room) is nondet.
+check_inside_room(+Object,+Room) is semidet.
 ```
 Note: `is_inside_of` only works for objects created
 (or updated via `object_pose(+,+)`)
 after the room has been created.
+
+For dynamic checks, especially for frames of the robot (for example `base_footprint`),
+you should use `check_inside_room`.
 
 ## Types
 ```prolog
