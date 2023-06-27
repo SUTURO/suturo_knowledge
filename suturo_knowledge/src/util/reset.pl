@@ -13,4 +13,5 @@ reset_user_data :-
     tf_mem_clear,
     % if the tf logger is not reinitialized, the static transforms will be missing.
     tf_logger_enable,
+    init_rooms,
     init_furnitures.

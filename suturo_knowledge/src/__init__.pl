@@ -30,4 +30,7 @@
 
 :- tf_logger_enable.
 
+% init the rooms before the furniture to make sure the furniture
+% is assigned its room.
+:- init_rooms.
 :- init_semantic_map.

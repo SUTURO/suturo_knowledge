@@ -2,7 +2,8 @@
           [ create_room(r, +, +, +, -),
             create_room_entry(r,+,-),
             create_room_exit(r,+,-),
-            create_room_entry_exit(r,+,-)
+            create_room_entry_exit(r,+,-),
+            init_rooms/0
           ]).
 
 :- use_module(room_relations).
@@ -38,3 +39,36 @@ create_room_entry_exit(Room, [Frame, [X,Y,Z], [RX,RY,RZ,RW]], Entry) :-
                 is_exit_from(Entry, Room),
                 is_entry_to(Entry, Room))),
     tf_set_pose(Entry, [Frame, [X,Y,Z], [RX,RY,RZ,RW]]).
+
+% see furniture_creation:init_furnitures for reference
+init_rooms :-
+    get_urdf_id(URDF),
+    urdf_link_names(URDF, Links),
+    forall((member(UrdfLink, Links),
+            room_type(UrdfLink, Type)
+           ),
+           init_room(UrdfLink, Type)),
+    ros_info('Semantic map rooms initialized').
+
+init_room(UrdfLink, Type) :-
+    (  init_room_0(UrdfLink, Type)
+    -> ros_info('Loaded room ~w', [UrdfLink])
+    ;  ros_warn('Failed to load room ~w', [UrdfLink])).
+
+init_room_0(UrdfLink, RoomType) :-
+    furniture_creation:furniture_pose(UrdfLink, Pose),
+    get_urdf_id(URDF),
+    urdf_link_collision_shape(URDF, UrdfLink, box(DX,DY,_), _),
+    create_room(RoomType, Pose, DX, DY, Room),
+    kb_project(has_urdf_name(Room, UrdfLink)).
+
+room_type(UrdfLink, Type) :-
+    atomic_list_concat([_,MapType,room_center_link], ':', UrdfLink),
+    room_map_type(MapType, Type).
+
+:- rdf_meta(room_map_type(-,r)).
+
+room_map_type(kitchen, soma:'Kitchen') :- !.
+room_map_type(living_room, suturo:'LivingRoom') :- !.
+room_map_type(bedroom, suturo:'Bedroom') :- !.
+%% TODO: add dynamic room type support

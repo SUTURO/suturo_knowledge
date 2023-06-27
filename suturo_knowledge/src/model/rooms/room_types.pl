@@ -9,10 +9,10 @@ is_kitchen(Room) ?+>
     is_type(Room, soma:'Kitchen').
 
 is_living_room(Room) ?+>
-    is_type(Room, soma:'LivingRoom').
+    is_type(Room, suturo:'LivingRoom').
 
 is_bedroom(Room) ?+>
-    is_type(Room, soma:'Bedroom').
+    is_type(Room, suturo:'Bedroom').
 
 is_room(Room) ?>
     has_type(Room, soma:'Room').
