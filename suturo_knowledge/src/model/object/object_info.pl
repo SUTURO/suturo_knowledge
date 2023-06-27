@@ -14,7 +14,7 @@
 	  	predefined_destination_location(r,-)
 	  ]).
 
-:- use_module(library('util/util'), 
+:- use_module(library('util/util'),
 	[
 		from_current_scope/1
 	]).
@@ -24,7 +24,7 @@
 %% object_pose(+Object, ?PoseStamped) is semidet.
 %
 % Get or set the pose of an object.
-% 
+%
 % @param Object The object to get or set the pose of.
 % @param PoseStamped The pose of the object.
 %
@@ -36,13 +36,11 @@ object_pose(Object, PoseStamped) :-
 	from_current_scope(Scope),
 	tf:tf_set_pose(Object, PoseStamped, Scope),
 	% Update the relative (isOntopOf) position of the object
-	forall(triple(Object, soma:isOntopOf, OldValue),
-		kb_unproject(triple(Object, soma:isOntopOf, OldValue))),
-	ignore(assert_relative_position(Object, Scope)).
+	update_relative_position(Object, Scope).
 
 %% is_perceived_object(+Object) is semidet.
 %
-% True if the object is a physical object and has the a data source 'perception'. 
+% True if the object is a physical object and has the a data source 'perception'.
 %
 % @param Object The object to check.
 %
@@ -71,7 +69,7 @@ is_misplaced_object(Object):-
 %
 set_object_handled(Object) :-
 	update_handled_state(Object, true).
-	
+
 %% set_object_not_handled(+Object) is det.
 %
 % Sets the state of the object to not handled.
@@ -131,8 +129,8 @@ objects_not_handled(Objects):-
 %
 % Get the predefined origin location of an object class.
 % The OriginLocation is the location (reference object) where the object is placed at the beginning of the task.
-% 
-% @param Class The IRI or abbreviated name of the class. 
+%
+% @param Class The IRI or abbreviated name of the class.
 % @param OriginLocation The predefined origin location.
 %
 predefined_origin_location(Class, OriginLocation) :-
@@ -145,8 +143,8 @@ predefined_origin_location(Class, OriginLocation) :-
 %
 % Get the predefined destination location of an object class.
 % The DestinationLocation is the location (reference object) where the object should placed at the end of the task.
-% 
-% @param Class The IRI or abbreviated name of the class. 
+%
+% @param Class The IRI or abbreviated name of the class.
 % @param DestinationLocation The predefined destination location.
 %
 predefined_destination_location(Class, DestinationLocation) :-
