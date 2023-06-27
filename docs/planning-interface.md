@@ -303,7 +303,7 @@ Similarity: 0.875.
 
 ## Rooms
 
-See [../suturo_knowledge/src/model/rooms/README.md](the rooms readme).
+See [the rooms readme](../suturo_knowledge/src/model/rooms/README.md).
 
 ## Utils
 
