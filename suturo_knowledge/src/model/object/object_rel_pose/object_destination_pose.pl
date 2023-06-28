@@ -57,7 +57,8 @@ free_destination(Object, Destination) :-
     \+ triple(_Obj, soma:isOntopOf, Destination).
 
 free_destination_pose(Furniture, ObjectDepth, [Frame, [X,RightY,0], [0,0,0,1]]) :-
-    object_shape_workaround(Furniture, Frame, ShapeTerm, _Pose, _Material),
+    object_shape_workaround(Furniture, _Frame, ShapeTerm, _Pose, _Material),
+    has_urdf_name(Furniture, Frame),
     ShapeTerm = box(DX,DY,_DZ),
     robot_gripper_space(GripperSpace),
     RightY is -DY/2 + GripperSpace+0.05,
@@ -66,8 +67,9 @@ free_destination_pose(Furniture, ObjectDepth, [Frame, [X,RightY,0], [0,0,0,1]]) 
 possible_pose(Furniture, NextTo, ObjectDepth, [Frame, [X,Y,0], [0,0,0,1]]) :-
     % assuming the frame is on top of the center of the furniture.
     % and assuming the approach direction is from -x.
-    object_shape_workaround(Furniture, Frame, ShapeTerm, _Pose, _Material),
-    kb_call(is_at(NextTo, [Frame, [_, CenterY, _], _])),
+    object_shape_workaround(Furniture, KnowledgeFrame, ShapeTerm, _Pose, _Material),
+    has_urdf_name(Furniture, Frame),
+    kb_call(is_at(NextTo, [KnowledgeFrame, [_, CenterY, _], _])),
     ShapeTerm = box(DX,DY,_DZ),
     robot_gripper_space(GripperSpace),
     RightY is -DY/2 + GripperSpace+0.05,
