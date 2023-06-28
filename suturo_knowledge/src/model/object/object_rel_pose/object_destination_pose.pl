@@ -17,17 +17,15 @@ object_destination_pose(Object, Options, [Frame, Pos, Rotation]) :-
 %% find_place(+Object, +Options, -PoseStamped) is nondet.
 %
 find_place(Object, _Options, PoseStamped) :-
-    % in case of best_fitting_destination not working properly, comment it
-    % and uncomment the next two lines
-    (  best_fitting_destination(Object, NextTo, Destination),
-    -> object_depth(Object, ObjectDepth),
-       (  possible_pose(Destination, NextTo, ObjectDepth, PoseStamped),
+    object_depth(Object, ObjectDepth),
+    (  best_fitting_destination(Object, NextTo, Destination)
+    -> (  possible_pose(Destination, NextTo, ObjectDepth, PoseStamped),
           check_for_collision(Destination, PoseStamped)
-       ;  ros_info('No collision-free pose for ~w, computing colliding pose', [Object])
+       ;  ros_info('No collision-free pose for ~w, computing colliding pose', [Object]),
           possible_pose(Destination, NextTo, ObjectDepth, PoseStamped))
     ;  ros_info('No Existing destination location has an object similar to ~w, getting a free destination', [Object]),
        free_destination(Object, Destination),
-       free_destination_pose(Object, Destination, PoseStamped)
+       free_destination_pose(Destination, ObjectDepth, PoseStamped)
     ;  ros_info('No Free destination, searching for one with a free space'),
        has_type(Object, Type),
        predefined_destination_location(Type, Destination),
@@ -48,7 +46,7 @@ best_fitting_destination(Object, NextTo, Destination) :-
             (predefined_destination_location(Type, Destination),
              triple(Obj, soma:isOntopOf, Destination)),
             ObjsDests),
-    \+ ObjDests == [],
+    \+ ObjsDests == [],
     pairs_keys(ObjsDests, Objs),
     most_similar_object(Object, Objs, NextTo),
     member(NextTo-Destination,ObjsDests).
@@ -58,7 +56,7 @@ free_destination(Object, Destination) :-
     predefined_destination_location(Type, Destination),
     \+ triple(_Obj, soma:isOntopOf, Destination).
 
-free_destination_pose(Object, Furniture, [Frame, [X,RightY,0], [0,0,0,1]]) :-
+free_destination_pose(Furniture, ObjectDepth, [Frame, [X,RightY,0], [0,0,0,1]]) :-
     object_shape_workaround(Furniture, Frame, ShapeTerm, _Pose, _Material),
     ShapeTerm = box(DX,DY,_DZ),
     robot_gripper_space(GripperSpace),
