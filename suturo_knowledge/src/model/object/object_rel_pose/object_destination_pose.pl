@@ -10,7 +10,10 @@ robot_gripper_space(0.10).
 %
 object_destination_pose(Object, Options, [Frame, Pos, Rotation]) :-
     % warning, this is still a rough draft.
-    (  once(find_place(Object, Options, [Frame, Pos, Rotation]))
+    (  once(find_place(Object, Options, [Frame, Pos, Rotation])),
+       atom_concat(Object,'-place-pose',PlaceFrame),
+       util:from_current_scope(Scope),
+       tf:tf_set_pose(PlaceFrame,[Frame, Pos, Rotation],Scope)
     -> true
     ;  ros_error('could not find a valid destination pose for ~w', [Object]), fail).
 
