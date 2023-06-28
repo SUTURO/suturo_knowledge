@@ -69,9 +69,12 @@ create_new_object(Object, Type, [Frame, [X,Y,Z], [RX,RY,RZ,RW]], Options) :-
 update_existing_object(Object, Type, [Frame, Pos, Rot]) :-
 	has_type(Other, Type),
 	triple(Other, suturo:hasDataSource, _DataSource),
-	kb_call(is_at(Other,[Frame, Pos2, _])),
-	euclidean_distance(Pos, Pos2, Distance),
-	Distance < 0.05,
+	(  has_type(_,suturo:'ServeBreakfast')
+	-> true
+	;  (kb_call(is_at(Other,[Frame, Pos2, _])),
+		euclidean_distance(Pos, Pos2, Distance),
+		Distance < 0.05)
+	),
 	Object = Other,
 	from_current_scope(Scope),
 	% TODO: Merge other data

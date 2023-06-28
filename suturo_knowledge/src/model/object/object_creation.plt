@@ -50,21 +50,31 @@ test(update_object, [cleanup(kb_unproject(
 								 triple(_, suturo:hasDataSource, perception)
 							 ))]) :-
 	create_object(X, test:'Test', [map, [0,0,0], [0,0,0,1]]),
-	create_object(Y, test:'Test', [map, [0.09,0,0], [0,0,0,1]]),
+	create_object(Y, test:'Test', [map, [0.04,0,0], [0,0,0,1]]),
 	assert_equals(X,Y).
 
 test(update_object_not_space, [cleanup(kb_unproject(
 										   triple(_, suturo:hasDataSource, perception)
 									   ))]) :-
 	create_object(X, test:'Test', [map, [0,0,0], [0,0,0,1]]),
-	create_object(Y, test:'Test', [map, [0.11,0,0], [0,0,0,1]]),
+	create_object(Y, test:'Test', [map, [0.06,0,0], [0,0,0,1]]),
 	assert_false(X == Y).
+
+test(update_object_not_space_serve, [cleanup(kb_unproject(
+										   triple(_, suturo:hasDataSource, perception)
+									))]) :-
+    %% ignore since the shelves are not there in the test.
+    ignore(challenge_info_creation:init_serve_breakfast),
+	create_object(X, test:'Test', [map, [0,0,0], [0,0,0,1]]),
+	create_object(Y, test:'Test', [map, [0.06,0,0], [0,0,0,1]]),
+	assert_true(X == Y).
+
 
 test(update_object_not_type, [cleanup(kb_unproject(
 										  triple(_, suturo:hasDataSource, perception)
 							  ))]) :-
 	create_object(X, test:'TestA', [map, [0,0,0], [0,0,0,1]]),
-	create_object(Y, test:'TestB', [map, [0.09,0,0], [0,0,0,1]]),
+	create_object(Y, test:'TestB', [map, [0.04,0,0], [0,0,0,1]]),
 	assert_false(X == Y).
 
 test(test_rotated_furniture) :-
