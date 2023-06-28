@@ -141,11 +141,13 @@ suturo_is_ontop_of(Object, Furniture, Distance) :-
     % X and Y have to be above the area of the table.
     % so between center + diameter / 2 and center - diameter / 2.
     % center is at -offset
-    X =< -XX + DX/2,
-    X >= -XX - DX/2,
-    Y =< -YY + DY/2,
-    Y >= -YY - DY/2,
+    % since localization is a bit off, allow 10cm leeway
+    Extra = 0.10,
+    X =< -XX + DX/2 + Extra,
+    X >= -XX - DX/2 - Extra,
+    Y =< -YY + DY/2 + Extra,
+    Y >= -YY - DY/2 - Extra,
     % Z has to be above
     % this code assumes that the frame is at the top center of the furniture.
-    Z >= ZZ,
+    Z >= ZZ - Extra/2,
     Distance is Z + ZZ.
