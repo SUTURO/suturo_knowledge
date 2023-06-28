@@ -7,7 +7,7 @@
 
 :- rdf_meta(shape_class(+,r)).
 
-:- use_module(library('util/util'), 
+:- use_module(library('util/util'),
     [
         from_current_scope/1,
         default_value/2
@@ -127,7 +127,8 @@ assert_relative_position(Object, Scope) :-
     maplist(nth0(1), Furnitures, Distances),
     min_list(Distances, MinumumDistance),
     member([Furniture,MinumumDistance], Furnitures),
-    kb_project(triple(Object, soma:isOntopOf, Furniture), Scope).
+    kb_project(triple(Object, soma:isOntopOf, Furniture), Scope),
+    ros_info('~w is ontop of ~w', [Object, Furniture]).
 
 suturo_is_ontop_of(Object, Furniture, Distance) :-
     object_shape_workaround(Furniture, Frame, ShapeTerm, [_, [XX, YY, ZZ], _], _),

@@ -40,6 +40,7 @@ next_object(_Object) :-
 
 next_object_storing_groceries(NextObject) :-
     objects_not_handled(NothandledObjects),
+    ros_info('Not handled objects: ~w', [NothandledObjects]),
     find_next_object_storing_groceries(NothandledObjects, NextObject),
     set_object_handled(NextObject),
     !.
@@ -93,7 +94,7 @@ next_object_clean_the_table(NextObject) :-
     objects_not_handled(NothandledObjects),
     findall([Object, CbRatio],
         (
-            member(Object, NothandledObjects),   
+            member(Object, NothandledObjects),
             object_bonus(Object, 500),
             object_benefit(Object, Benefit),
             object_cost(Object, Cost),
@@ -105,7 +106,7 @@ next_object_clean_the_table(NextObject) :-
             ObjectsAndCbRatio0 ==[]
             ->
             findall([Object,CbRatio],
-                (member(Object,NothandledObjects),   
+                (member(Object,NothandledObjects),
                 object_benefit(Object, Benefit),
                 object_cost(Object,Cost),
                 CbRatio is Benefit/Cost),
