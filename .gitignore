@@ -1,6 +1,8 @@
 # Für Emacs #
 *~
 \#*\#~
+\#*\#
+.#*
 
 # Für VSC
 .vscode/
