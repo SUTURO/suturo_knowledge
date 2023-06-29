@@ -1,6 +1,4 @@
 :- use_module(library('rostest')).
-:- use_module(library('ros/tf/tf')).
-:- use_module(library('ros/tf/tf_mongo')).
 :- use_module(library('util/suturo_test')).
 
 :- use_module('object_creation').
