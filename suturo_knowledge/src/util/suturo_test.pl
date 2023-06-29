@@ -11,9 +11,13 @@
 test_setup :-
     lang_query:default_graph(OldDefault),
     assertz(old_default(OldDefault)),
-    lang_query:set_default_graph(test_user).
+    lang_query:set_default_graph(test_user),
+    tf_mng_drop,
+    tf_logger_enable.
 
 test_cleanup :-
+    tf_logger_disable,
+    tf_mng_drop,
     drop_graph(test_user),
     old_default(OldDefault),
     retract(old_default(OldDefault)),
