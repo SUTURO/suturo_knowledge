@@ -3,3 +3,4 @@
 :- ensure_loaded('math').
 :- ensure_loaded('util').
 :- ensure_loaded('reset').
+:- ensure_loaded('suturo_test').
