@@ -3,6 +3,7 @@ AbrasiveSponge;suturo:'AbrasiveSponge';http://www.ease-crc.org/ont/SUTURO.owl#;4
 AdjustableWrench;suturo:'AdjustableWrench';http://www.ease-crc.org/ont/SUTURO.owl#;;An adjustable wrench is a hand-held tool with a movable jaw that can be adjusted to fit nuts, bolts, and other objects of different sizes, used for turning or tightening them.
 Apple;suturo:'Apple';http://www.ease-crc.org/ont/SUTURO.owl#;66;An apple is a round or oval-shaped fruit with a red, green, or yellow skin, a crisp, juicy flesh, and a core with seeds in the center.
 Appliance;soma:'Appliance';http://www.ease-crc.org/ont/SOMA.owl#;;A device designed to perform a specific task, and that can be operated in some way.
+Arena;suturo:'Arena';http://www.ease-crc.org/ont/SUTURO.owl#;;The whole arena where the robot is normally allowed to move.
 Arm;soma:'Arm';http://www.ease-crc.org/ont/SOMA.owl#;;A limb used to reach for objects.
 Armchair;soma_home:'Armchair';http://www.ease-crc.org/ont/SOMA-HOME.owl#;;A more comfortable chair that includes sides to support arms.
 ArtificialAgent;soma_obj:'ArtificialAgent';http://www.ease-crc.org/ont/SOMA-OBJ.owl#;;A physical object with artificial characteristics, which can perform actions to achieve desired goals, and typically has sensors and/or actuators. There can be non-physical artificial agents such as software programs but they are not considered here in the scope of artificial agent.
