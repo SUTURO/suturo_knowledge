@@ -50,7 +50,7 @@ init_storing_groceries :-
       has_urdf_name(OriginLocation, 'left_table:table:table_front_edge_center'),
       kb_project(holds(dul:'PhysicalObject', suturo:hasOriginLocation, OriginLocation)),
       foreach((member(X,[2,1]),
-             atom_concat('shelf:shelf:shelf_floor_', X, UrdfName),
+             atom_concat('open_shelf:shelf:shelf_floor_', X, UrdfName),
              has_urdf_name(DestinationLocation, UrdfName)),
             % TODO fix expanding namespaces to use namespace:Resource here.
             kb_project(holds('http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#PhysicalObject',
