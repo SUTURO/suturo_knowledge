@@ -24,6 +24,12 @@
 :- use_module(library('model/object/object_creation'),
               [ update_relative_position/2 ]).
 
+:- use_module(library(lists), [append/3]).
+
+:- rdf_meta(class_bfs(r,r,r)).
+:- rdf_meta(class_bfs(r,r,r,r)).
+:- rdf_meta(class_bfs(r,t,t,r,r)).
+
 %% object_pose(+Object, ?PoseStamped) is semidet.
 %
 % Get or set the pose of an object.
@@ -136,10 +142,7 @@ objects_not_handled(Objects):-
 % @param OriginLocation The predefined origin location.
 %
 predefined_origin_location(Class, OriginLocation) :-
-    holds(Class, suturo:hasOriginLocation, OriginLocation).
-predefined_origin_location(Class, OriginLocation) :-
-	subclass_of(Class, dul:'PhysicalObject'),
-    holds(dul:'PhysicalObject', suturo:hasOriginLocation, OriginLocation).
+    class_bfs(Class, suturo:hasOriginLocation, OriginLocation).
 
 %% predefined_destination_location(+Class, -DestinationLocation) is semidet.
 %
@@ -150,7 +153,29 @@ predefined_origin_location(Class, OriginLocation) :-
 % @param DestinationLocation The predefined destination location.
 %
 predefined_destination_location(Class, DestinationLocation) :-
-    holds(Class, suturo:hasDestinationLocation, DestinationLocation).
-predefined_destination_location(Class, DestinationLocation) :-
-	subclass_of(Class, dul:'PhysicalObject'),
-    holds(dul:'PhysicalObject', suturo:hasDestinationLocation, DestinationLocation).
+    class_bfs(Class, suturo:hasDestinationLocation, DestinationLocation).
+
+class_bfs(Subject, Predicate, Object) :-
+    var(Subject),
+    !,
+    ros_warn('class_bfs with var subject, falling back to normal triple ask'),
+    triple(Subject, Predicate, Object).
+class_bfs(Subject, Predicate, Object) :-
+    class_bfs(Subject, Predicate, Object, _RealSubject).
+class_bfs(Subject, Predicate, Object, RealSubject) :-
+    class_bfs(Predicate, [Subject], [Subject], RealSubject, Object).
+
+%% class_bfs(?Predicate, +ClassQueue, +Seen, ?ResultClass, ?Result) is nondet.
+%
+% this predicate does a bfs for superclasses that have
+% the predicate defined with the class as the subject.
+class_bfs(Predicate, [Head|_Tail], _Seen, Head, Result) :-
+    triple(Head, Predicate, Result).
+class_bfs(Predicate, [Head|Tail], Seen, ResultClass, Result) :-
+    findall(Superclass,
+            (subclass_of(Head,Superclass),
+             \+ member(Superclass,Seen)),
+            Superclasses),
+    append(Tail, Superclasses, NTail),
+    append(Seen, Superclasses, NSeen),
+    class_bfs(Predicate, NTail, NSeen, ResultClass, Result).

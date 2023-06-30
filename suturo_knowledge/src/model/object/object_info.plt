@@ -55,4 +55,13 @@ test(is_misplaced_false, [
     create_object(Obj,soma:'CerealBox', [map, [+2,0,0.6], [0,0,0,1]]),
     assert_false(is_misplaced_object(Obj)).
 
+test(class_bfs, [
+         setup(test_setup),
+         cleanup(test_cleanup)
+     ]) :-
+    kb_project((triple(test:superclass,test:pred,val),
+                triple(test:class,rdfs:subClassOf,test:superclass)
+               )),
+    assert_true(object_info:class_bfs(test:class,test:pred,val)).
+
 :- end_rdf_tests('object_info').
