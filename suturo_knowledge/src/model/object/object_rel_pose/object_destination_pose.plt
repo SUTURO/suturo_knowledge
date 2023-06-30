@@ -62,7 +62,7 @@ test(object_destination_pose_normal) :-
                 triple(test:'Box', suturo:hasDestinationLocation, Table1)
                )),
     object_destination_pose:object_destination_pose(Obj, [], [Frame, _Pos, Rot]),
-    assert_equals(Frame, table_urdf_for_manipulation),
+    assert_equals(Frame, 'iai_kitchen/table_urdf_for_manipulation'),
     assert_equals(Rot, [0,0,0,1]).
 
 test(object_destination_pose_empty) :-
@@ -76,7 +76,7 @@ test(object_destination_pose_empty) :-
                 triple(test:'Box', suturo:hasDestinationLocation, Table1)
                )),
     object_destination_pose:object_destination_pose(Obj, [], [Frame, _Pos, Rot]),
-    assert_equals(Frame, table_urdf_for_manipulation),
+    assert_equals(Frame, 'iai_kitchen/table_urdf_for_manipulation'),
     assert_equals(Rot, [0,0,0,1]).
 
 
