@@ -271,6 +271,14 @@ For example the Tables come from semantic_map, while the objects perception got 
     
 
 
+    <!-- http://www.ease-crc.org/ont/SOMA.owl#Table -->
+
+    <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Table">
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">28</SUTURO:perceptionId>
+    </rdf:Description>
+    
+
+
     <!-- http://www.ease-crc.org/ont/SUTURO.owl#AbrasiveSponge -->
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#AbrasiveSponge">
@@ -698,6 +706,15 @@ For example the Tables come from semantic_map, while the objects perception got 
     
 
 
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#DiningTable -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#DiningTable">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Table"/>
+        <rdfs:comment>A table mainly used for dining. Often placed inside of a living room.</rdfs:comment>
+    </owl:Class>
+    
+
+
     <!-- http://www.ease-crc.org/ont/SUTURO.owl#DishwasherTray -->
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#DishwasherTray">
@@ -1014,6 +1031,15 @@ For example the Tables come from semantic_map, while the objects perception got 
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Condiment"/>
         <rdfs:comment>Ketchup is a sweet and tangy condiment made from tomatoes, vinegar, sugar, and spices. It is commonly used as a topping for burgers, fries, and hot dogs, and is a popular ingredient in many sauces and dressings.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#KitchenTable -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#KitchenTable">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Table"/>
+        <rdfs:comment>A table that is placed inside a kitchen and that is used for doing kitchen tasks like preparing meals.</rdfs:comment>
     </owl:Class>
     
 
@@ -2299,9 +2325,6 @@ The challenges in the RoboCup@Home competition are designed to test a variety of
     </rdf:Description>
     <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Spoon">
         <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">40</SUTURO:perceptionId>
-    </rdf:Description>
-    <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Table">
-        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">28</SUTURO:perceptionId>
     </rdf:Description>
     <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Tableware">
         <rdfs:comment>Tableware refers to the dishes, utensils, and other items used for serving and eating food. This can include plates, bowls, cups, silverware, and serving platters, among other things.</rdfs:comment>

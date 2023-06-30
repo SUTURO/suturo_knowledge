@@ -190,6 +190,14 @@ link_name_class(LinkName, Class) :-
     Class = soma:'Cupboard',
     !.
 link_name_class(LinkName, Class) :-
+    atomic_list_concat([_,kitchen_table,_], ':', UrdfLink),
+    Class = suturo:'KitchenTable',
+    !.
+link_name_class(LinkName, Class) :-
+    atomic_list_concat([_,dining_table,_], ':', UrdfLink),
+    Class = suturo:'DiningTable',
+    !.
+link_name_class(LinkName, Class) :-
     sub_string(LinkName,_,_,_,"table"),
     Class = soma:'Table',
     !.
