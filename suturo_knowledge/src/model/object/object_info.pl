@@ -21,6 +21,9 @@
 
 :- use_module(library('ros/tf/tf')).
 
+:- use_module(library('model/object/object_creation'),
+              [ update_relative_position/2 ]).
+
 %% object_pose(+Object, ?PoseStamped) is semidet.
 %
 % Get or set the pose of an object.
@@ -36,8 +39,7 @@ object_pose(Object, PoseStamped) :-
 	from_current_scope(Scope),
 	tf:tf_set_pose(Object, PoseStamped, Scope),
 	% Update the relative (isOntopOf) position of the object
-	kb_unproject(triple(Object, soma:isOntopOf, _)),
-	ignore(assert_relative_position(Object, Scope)).
+	update_relative_position(Object, Scope).
 
 %% is_perceived_object(+Object) is semidet.
 %
