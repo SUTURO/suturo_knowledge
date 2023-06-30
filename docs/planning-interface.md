@@ -207,6 +207,7 @@ predefined_destination_location(+Class, -DestinationLocation) is nondet.
     For `Serving Breakfast` the predicate `init_serve_breakfast.` has to be called first to load/initialize the challenge specific predefined locations.
     For `Storing Groceries` the predicate `init_storing_groceries.`.
     For `Clean the Table` the predicate `init_clean_the_table.`.
+	For `GPSR` the predicate `init_gpsr.`.
 
 Example:
 ```prolog
