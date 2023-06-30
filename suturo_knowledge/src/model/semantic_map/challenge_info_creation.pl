@@ -5,7 +5,7 @@
             init_storing_groceries/0,
             init_clean_the_table/0,
 	        init_clean_the_table_no_dishwasher/0,
-            init_gprs/0
+            init_gpsr/0
 	  ]).
 
 :- rdf_meta(activate_challenge(r)).
@@ -86,16 +86,16 @@ init_clean_the_table_no_dishwasher :-
       ros_info('"Clean the Table" initialized.', []).
 
 
-%% init_gprs is det.
+%% init_gpsr is det.
 %
-% Initializes the predefined info for general purpouse ....
+% Initializes the predefined info for general purpouse service robot.
 %
 % This is a temporary solution until the challenge info can be loaded from an ontology.
 % This predicate should only be called once at the start of the challenge.
 %
 init_gprs :-
-      ros_info('Initializing info for "gprs"...'),
-      activate_challenge(suturo:'GPRS'),
+      ros_info('Initializing info for "gpsr"...'),
+      activate_challenge(suturo:'GPSR'),
       forall(
           (
               is_kitchen(Kitchen),
@@ -124,7 +124,7 @@ init_gprs :-
               is_shelf(Furniture)
           ),
           log_set(suturo:'CrackerBox', suturo:hasOriginLocation, Furniture)),
-      ros_info('"gprs" initialized.').
+      ros_info('"GPSR" initialized.').
 
 log_set(S,P,O) :-
     kb_project(triple(S,P,O)),
