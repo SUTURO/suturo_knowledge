@@ -29,6 +29,7 @@ you should use `check_inside_room`.
 is_kitchen(?Room) is nondet.
 is_living_room(?Room) is nondet.
 is_bedroom(?Room) is nondet.
+is_arena(?Room) is nondet.
 is_room(?Room) is nondet.
 new_room_type(+Type) is det.
 ```

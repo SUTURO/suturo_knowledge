@@ -14,6 +14,9 @@ is_living_room(Room) ?+>
 is_bedroom(Room) ?+>
     is_type(Room, suturo:'Bedroom').
 
+is_arena(Room) ?+>
+    is_type(Room, suturo:'Arena').
+
 is_room(Room) ?>
     has_type(Room, soma:'Room').
 

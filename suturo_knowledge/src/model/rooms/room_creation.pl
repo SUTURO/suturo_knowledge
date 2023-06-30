@@ -75,6 +75,7 @@ room_type(UrdfLink, Type) :-
 room_map_type(kitchen, soma:'Kitchen') :- !.
 room_map_type(living_room, suturo:'LivingRoom') :- !.
 room_map_type(bedroom, suturo:'Bedroom') :- !.
+room_map_type(arena, suturo:'Arena') :- !.
 %% TODO: add dynamic room type support
 
 init_connections(URDF,UrdfLink,Room) :-
