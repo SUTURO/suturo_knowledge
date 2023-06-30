@@ -25,8 +25,9 @@
 :- use_directory('model').
 :- use_directory('reasoning').
 
-:- ros_param_get_string("/suturo_room_viz/urdf_param", Param),
-   load_urdf_from_param(Param).
+:- once((  ros_param_get_string("/suturo_room_viz/urdf_param", Param),
+           load_urdf_from_param(Param)
+        ;  ros_warn('No semantic map loaded!'))).
 
 :- tf_logger_enable.
 
