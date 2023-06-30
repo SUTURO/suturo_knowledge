@@ -2,3 +2,4 @@
 
 :- ensure_loaded('distance').
 :- ensure_loaded('directionality').
+:- ensure_loaded('room_spatial').

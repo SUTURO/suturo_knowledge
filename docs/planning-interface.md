@@ -301,6 +301,10 @@ Example:
 Similarity: 0.875.
 ```
 
+## Rooms
+
+See [the rooms readme](../suturo_knowledge/src/model/rooms/README.md).
+
 ## Utils
 
 ### Resetting the data

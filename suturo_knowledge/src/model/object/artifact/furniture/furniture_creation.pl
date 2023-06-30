@@ -74,7 +74,7 @@ init_furnitures :-
 	        is_semantic_map_object(UrdfLink)
 	       ),
         init_furniture(UrdfLink)),
-    ros_info('Semantic map initialized').
+    ros_info('Semantic map furniture initialized').
 
 %% init_furnitures(?UrdfLink) is semidet.
 %

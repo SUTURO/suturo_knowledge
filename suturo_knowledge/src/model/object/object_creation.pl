@@ -6,12 +6,21 @@
 	]).
 
 :- rdf_meta(shape_class(+,r)).
+:- rdf_meta(create_new_object(-,r,+,+)).
 
 :- use_module(library('util/util'),
     [
         from_current_scope/1,
         default_value/2
     ]).
+
+:- use_module(library('model/rooms/room_relations'),
+              [ is_inside_of/2
+              ]).
+
+:- use_module(library('reasoning/spatial/room_spatial'),
+              [ check_inside_room/2
+              ]).
 
 %% create_object(-Object, +Type, +PoseStamped) is det.
 %
@@ -48,11 +57,9 @@ create_new_object(Object, Type, [Frame, [X,Y,Z], [RX,RY,RZ,RW]], Options) :-
     option(shape(Shape), Options, none),
     assert_shape(Object, Shape, Scope, SR),
     option(data_source(DataSource), Options, perception),
-    (  DataSource == perception
-       % ignore, because maybe object is not above any furniture
-    -> ignore(assert_relative_position(Object, Scope))
-    ;  true),
     kb_project(triple(Object, suturo:hasDataSource, DataSource), Scope),
+    % update_relative_position has to come after setting the data source.
+    update_relative_position(Object, Scope),
 	option(confidence_value(ConfidenceValue), Options, 1),
     kb_project(triple(Object, suturo:hasConfidenceValue, ConfidenceValue), Scope),
     kb_project((new_iri(HandleState),
@@ -121,6 +128,17 @@ assert_shape_region(SR, sphere(Radius), Scope) :-
 	kb_project(triple(SR, soma:hasRadius, Radius), Scope),
 	!.
 
+update_relative_position(Object, Scope) :-
+    forall(triple(Object, soma:isOntopOf, OldValue),
+           kb_unproject(triple(Object, soma:isOntopOf, OldValue))),
+    forall(is_inside_of(Object, OldRoom),
+           kb_unproject(is_inside_of(Object, OldRoom))),
+    (  triple(Object, suturo:hasDataSource, perception)
+       % ignore, because maybe object is not above any furniture
+    -> ignore(assert_relative_position(Object, Scope))
+    ;  true),
+    ignore(assert_inside_room(Object, Scope)).
+
 assert_relative_position(Object, Scope) :-
     findall([Furniture, Distance],
             % only objects of the semantic map can be stood on
@@ -132,6 +150,11 @@ assert_relative_position(Object, Scope) :-
     member([Furniture,MinumumDistance], Furnitures),
     kb_project(triple(Object, soma:isOntopOf, Furniture), Scope),
     ros_info('~w is ontop of ~w', [Object, Furniture]).
+
+assert_inside_room(Object, Scope) :-
+    forall((is_room(Room),
+            check_inside_room(Object, Room)),
+           kb_project(is_inside_of(Object, Room),Scope)).
 
 suturo_is_ontop_of(Object, Furniture, Distance) :-
     object_shape_workaround(Furniture, Frame, ShapeTerm, [_, [XX, YY, ZZ], _], _),
