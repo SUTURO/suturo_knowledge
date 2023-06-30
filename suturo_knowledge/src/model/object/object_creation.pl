@@ -130,10 +130,9 @@ assert_shape_region(SR, sphere(Radius), Scope) :-
 	!.
 
 update_relative_position(Object, Scope) :-
-    forall(triple(Object, soma:isOntopOf, OldValue),
-           kb_unproject(triple(Object, soma:isOntopOf, OldValue))),
-    forall(is_inside_of(Object, OldRoom),
-           kb_unproject(is_inside_of(Object, OldRoom))),
+    kb_unproject(triple(Object, soma:isOntopOf, _)),
+    %% kb_unproject doesn't work with the is_inside_of predicate
+    kb_unproject(triple(Object, soma:isInsideOf, _)),
     (  triple(Object, suturo:hasDataSource, perception)
        % ignore, because maybe object is not above any furniture
     -> ignore(assert_relative_position(Object, Scope))
