@@ -93,7 +93,7 @@ init_clean_the_table_no_dishwasher :-
 % This is a temporary solution until the challenge info can be loaded from an ontology.
 % This predicate should only be called once at the start of the challenge.
 %
-init_gprs :-
+init_gpsr :-
       ros_info('Initializing info for "gpsr"...'),
       activate_challenge(suturo:'GPSR'),
       forall(
