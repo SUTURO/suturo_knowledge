@@ -6,6 +6,7 @@
 	]).
 
 :- rdf_meta(shape_class(+,r)).
+:- rdf_meta(create_new_object(-,r,+,+)).
 
 :- use_module(library('util/util'),
     [
