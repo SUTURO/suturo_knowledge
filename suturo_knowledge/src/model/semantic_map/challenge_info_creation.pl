@@ -4,11 +4,13 @@
             init_serve_breakfast/0,
             init_storing_groceries/0,
             init_clean_the_table/0,
-	    init_clean_the_table_no_dishwasher/0
+	        init_clean_the_table_no_dishwasher/0,
+            init_gprs/0
 	  ]).
 
 :- rdf_meta(activate_challenge(r)).
 :- rdf_meta(activate_challenge(r, -)).
+:- rdf_meta(log_set(r,r,r)).
 
 :- use_module(library('util/util'),
       [
@@ -83,6 +85,50 @@ init_clean_the_table_no_dishwasher :-
       kb_project(holds(dul:'PhysicalObject', suturo:hasDestinationLocation, DestinationLocation)),
       ros_info('"Clean the Table" initialized.', []).
 
+
+%% init_gprs is det.
+%
+% Initializes the predefined info for general purpouse ....
+%
+% This is a temporary solution until the challenge info can be loaded from an ontology.
+% This predicate should only be called once at the start of the challenge.
+%
+init_gprs :-
+      ros_info('Initializing info for "gprs"...'),
+      activate_challenge(suturo:'GPRS'),
+      forall(
+          (
+              is_kitchen(Kitchen),
+              is_inside_of(Furniture,Kitchen),
+              once((is_table(Furniture);is_shelf(Furniture)))
+          ),
+          log_set(soma:'Cutlery', suturo:hasOriginLocation, Furniture)),
+      forall(
+          (
+              is_kitchen(Kitchen),
+              is_inside_of(Furniture,Kitchen),
+              is_shelf(Furniture)
+          ),
+          log_set(suturo:'Fruit', suturo:hasOriginLocation, Furniture)),
+      forall(
+          (
+              is_living_room(LivingRoom),
+              is_inside_of(Furniture,LivingRoom),
+              is_table(Furniture)
+          ),
+          log_set(soma:'Cup', suturo:hasOriginLocation, Furniture)),
+      forall(
+          (
+              is_living_room(LivingRoom),
+              is_inside_of(Furniture,LivingRoom),
+              is_shelf(Furniture)
+          ),
+          log_set(suturo:'CrackerBox', suturo:hasOriginLocation, Furniture)),
+      ros_info('"gprs" initialized.').
+
+log_set(S,P,O) :-
+    kb_project(triple(S,P,O)),
+    ros_info('Set ~w as ~w for ~w', [O, P, S]).
 
 %% activate_challenge(+Challenge) is det.
 %
