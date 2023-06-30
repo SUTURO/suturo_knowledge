@@ -21,6 +21,9 @@
 
 :- use_module(library('ros/tf/tf')).
 
+:- use_module(library('model/object/object_creation'),
+              [ update_relative_position/2 ]).
+
 %% object_pose(+Object, ?PoseStamped) is semidet.
 %
 % Get or set the pose of an object.

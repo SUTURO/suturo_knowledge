@@ -2,7 +2,8 @@
 	[
 		create_object(-,r,+),
 	    create_object(-,r,+,+),
-        assert_relative_position(r,+)
+        assert_relative_position(r,+),
+        update_relative_position(r,+)
 	]).
 
 :- rdf_meta(shape_class(+,r)).
