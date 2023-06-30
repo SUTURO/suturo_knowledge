@@ -61,7 +61,7 @@ free_destination(Object, Destination) :-
 
 free_destination_pose(Furniture, ObjectDepth, [Frame, [X,RightY,0], [0,0,0,1]]) :-
     object_shape_workaround(Furniture, _Frame, ShapeTerm, _Pose, _Material),
-    has_tf_name(Furniture, Frame).
+    has_tf_name(Furniture, Frame),
     ShapeTerm = box(DX,DY,_DZ),
     robot_gripper_space(GripperSpace),
     RightY is -DY/2 + GripperSpace+0.05,
