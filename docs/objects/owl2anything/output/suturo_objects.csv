@@ -82,6 +82,7 @@ DesignedSubstance;dul:'DesignedSubstance';http://www.ontologydesignpatterns.org/
 DesignedTool;soma:'DesignedTool';http://www.ease-crc.org/ont/SOMA.owl#;;An item designed to enable some action, in which it will play an instrumental role.
 DessertFork;soma:'DessertFork';http://www.ease-crc.org/ont/SOMA.owl#;;A smallar fork for eating desserts e.g. cake.
 Dice;suturo:'Dice';http://www.ease-crc.org/ont/SUTURO.owl#;54;Dice are small, cube-shaped objects with markings on each face, typically used in games of chance and gambling, to generate random numbers, or for other recreational purposes.
+DiningTable;suturo:'DiningTable';http://www.ease-crc.org/ont/SUTURO.owl#;;A table mainly used for dining. Often placed inside of a living room.
 DinnerPlate;soma:'DinnerPlate';http://www.ease-crc.org/ont/SOMA.owl#;;A regular size plate for eating a main meals.
 Dish;soma:'Dish';http://www.ease-crc.org/ont/SOMA.owl#;;A dish is a prepared food item that is usually cooked and served on a plate, bowl, or platter.
 Dishwasher;soma:'Dishwasher';http://www.ease-crc.org/ont/SOMA.owl#;22;An appliance for washing dishes and cutlery automatically.
@@ -147,6 +148,7 @@ Ketchup;suturo:'Ketchup';http://www.ease-crc.org/ont/SUTURO.owl#;;Ketchup is a s
 Kitchen;soma:'Kitchen';http://www.ease-crc.org/ont/SOMA.owl#;;A kitchen is a dedicated space in a home or establishment used for cooking, food preparation, and sometimes dining. It typically contains appliances such as a stove, refrigerator, and sink, as well as storage for cookware, utensils, and ingredients.
 KitchenCabinet;soma_home:'KitchenCabinet';http://www.ease-crc.org/ont/SOMA-HOME.owl#;9;A cupboard designed to be used in kitchen environments.
 KitchenKnife;soma:'KitchenKnife';http://www.ease-crc.org/ont/SOMA.owl#;;A tool designed to be used for kitchen related common tasks. Such as smearing a bread or cutting a cucumber.
+KitchenTable;suturo:'KitchenTable';http://www.ease-crc.org/ont/SUTURO.owl#;;A table that is placed inside a kitchen and that is used for doing kitchen tasks like preparing meals.
 KitchenUnit;soma_home:'KitchenUnit';http://www.ease-crc.org/ont/SOMA-HOME.owl#;;A piece of a fitted furniture typically containing cupboards, a sink, and an oven.
 Kiwi;suturo:'Kiwi';http://www.ease-crc.org/ont/SUTURO.owl#;59;Kiwi is a small, oval-shaped fruit with brown fuzzy skin and bright green flesh inside, packed with nutrients such as vitamin C, vitamin K, and potassium. It has a tangy, sweet flavor and is often eaten raw, added to salads or smoothies, or used as a garnish.
 Knife;soma:'Knife';http://www.ease-crc.org/ont/SOMA.owl#;50;An instrument composed of a blade fixed into a handle, used for cutting or as a weapon.
