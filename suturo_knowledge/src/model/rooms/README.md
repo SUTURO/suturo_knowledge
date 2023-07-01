@@ -16,6 +16,7 @@ room_entry(+Room, -Pose) is multi.
 room_exit(+Room, -Pose) is multi.
 is_inside_of(?Object, ?Room) is nondet.
 check_inside_room(+Object,+Room) is semidet.
+check_position_inside_room(+PoseStamped, +Room) is semidet.
 ```
 Note: `is_inside_of` only works for objects created
 (or updated via `object_pose(+,+)`)
