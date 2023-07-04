@@ -582,6 +582,17 @@ For example the Tables come from semantic_map, while the objects perception got 
     
 
 
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#CocoaBox -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#CocoaBox">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Box"/>
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">88</SUTURO:perceptionId>
+        <rdfs:comment>A cocoa box is a container, usually made of cardboard, metal, or plastic, designed to store and dispense cocoa powder. It often features a resealable lid or cap to maintain the freshness of the cocoa and prevent moisture from entering, and is valued for its ease of storage and use in household kitchens.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
     <!-- http://www.ease-crc.org/ont/SUTURO.owl#Coffee -->
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Coffee">
@@ -609,6 +620,17 @@ For example the Tables come from semantic_map, while the objects perception got 
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Pack"/>
         <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">31</SUTURO:perceptionId>
         <rdfs:comment>A coffee pack typically refers to a package containing ground coffee or coffee beans used for making coffee, usually in a drip coffee maker, espresso machine, or French press. The packaging is designed to keep the coffee fresh and flavorful, and often includes information on the type of roast, flavor profile, and origin of the coffee.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#ColaCan -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#ColaCan">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Can"/>
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">83</SUTURO:perceptionId>
+        <rdfs:comment>A cola can is a small, cylindrical container, often made of aluminum, used for holding and distributing carbonated soft drinks, particularly cola. It features a pull-tab or stay-on-tab at the top for easy opening and consumption, and is popular for its portability and recyclability.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
@@ -923,6 +945,17 @@ For example the Tables come from semantic_map, while the objects perception got 
     
 
 
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#IceTeaBottle -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#IceTeaBottle">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Bottle"/>
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">86</SUTURO:perceptionId>
+        <rdfs:comment>An iced tea bottle is a container, commonly made of plastic or glass, designed specifically for storing and dispensing iced tea. It typically features a screw-top or snap cap for resealability, allowing the beverage to stay fresh and chilled, and is favored for its portability and convenience.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
     <!-- http://www.ease-crc.org/ont/SUTURO.owl#IceTeaBox -->
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#IceTeaBox">
@@ -994,12 +1027,33 @@ For example the Tables come from semantic_map, while the objects perception got 
     
 
 
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#JuiceBottle -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#JuiceBottle">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Bottle"/>
+        <rdfs:comment>A juice bottle is a container, typically made from plastic or glass, that&apos;s specifically designed for storing and dispensing juice. It often features a screw-top or snap cap to maintain freshness and ease of use, and its portability makes it a popular choice for consumption at home or on the go.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
     <!-- http://www.ease-crc.org/ont/SUTURO.owl#JuiceBox -->
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#JuiceBox">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Box"/>
         <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">70</SUTURO:perceptionId>
         <rdfs:comment>A juice box is a container made of paperboard, with a small attached plastic straw, used for packaging and drinking juice. They are typically single-serving and convenient for on-the-go consumption.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#JuicePack -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#JuicePack">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Pack"/>
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">82</SUTURO:perceptionId>
+        <rdfs:comment>A juice pack is a portable container, often made of plastic or a combination of plastic, paper, and aluminum, designed to hold and dispense single servings of juice. It typically comes with a resealable cap or a pre-punched hole for a straw, providing a convenient option for on-the-go consumption and packed lunches.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
@@ -1348,6 +1402,23 @@ For example the Tables come from semantic_map, while the objects perception got 
     
 
 
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#OrangeJuiceBox -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#OrangeJuiceBox">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#JuiceBox"/>
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">87</SUTURO:perceptionId>
+        <rdfs:comment>An OrangeJuiceBox is a portable, typically single-serving container made of paperboard or other lightweight materials, designed to hold and dispense orange juice. It is commonly equipped with a straw or a pull-tab for easy consumption, and is popular for its convenience and use in packed lunches or on-the-go situations.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#OrangeJuiceStandUpPouch -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#OrangeJuiceStandUpPouch"/>
+    
+
+
     <!-- http://www.ease-crc.org/ont/SUTURO.owl#Oregano -->
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Oregano">
@@ -1667,6 +1738,7 @@ The challenges in the RoboCup@Home competition are designed to test a variety of
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#RubiksCube">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Toy"/>
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">88</SUTURO:perceptionId>
         <rdfs:comment>A Rubik&apos;s Cube is a three-dimensional puzzle game that consists of a cube with six faces, each made up of nine smaller squares of different colors, and the object of the game is to twist and turn the cube to solve the puzzle by aligning the colors on each face.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
@@ -2135,6 +2207,17 @@ The challenges in the RoboCup@Home competition are designed to test a variety of
     
 
 
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#TropicalJuiceBottle -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#TropicalJuiceBottle">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#JuiceBottle"/>
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">84</SUTURO:perceptionId>
+        <rdfs:comment>A tropical juice bottle is a container, typically made of plastic or glass, specifically designed to store and dispense juices made from tropical fruits. It usually features a screw-top or snap cap for freshness and ease of use, and is popular for its portability, making it suitable for on-the-go consumption.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
     <!-- http://www.ease-crc.org/ont/SUTURO.owl#Tshirt -->
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Tshirt">
@@ -2306,6 +2389,9 @@ The challenges in the RoboCup@Home competition are designed to test a variety of
     <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Kitchen">
         <rdfs:comment>A kitchen is a dedicated space in a home or establishment used for cooking, food preparation, and sometimes dining. It typically contains appliances such as a stove, refrigerator, and sink, as well as storage for cookware, utensils, and ingredients.</rdfs:comment>
     </rdf:Description>
+    <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#MilkBottle">
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">85</SUTURO:perceptionId>
+    </rdf:Description>
     <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Pancake">
         <rdfs:comment>Pancakes are a type of flat, round, and fluffy breakfast food made from a batter of flour, eggs, milk, and a leavening agent, typically baking powder or baking soda. They are cooked on a griddle or frying pan and are often served with toppings such as syrup, fruit, or whipped cream, making them a popular choice for a delicious morning meal.</rdfs:comment>
     </rdf:Description>
@@ -2328,6 +2414,9 @@ The challenges in the RoboCup@Home competition are designed to test a variety of
     </rdf:Description>
     <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Tableware">
         <rdfs:comment>Tableware refers to the dishes, utensils, and other items used for serving and eating food. This can include plates, bowls, cups, silverware, and serving platters, among other things.</rdfs:comment>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#WineBottle">
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">81</SUTURO:perceptionId>
     </rdf:Description>
     <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#WineGlass">
         <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">24</SUTURO:perceptionId>
