@@ -160,3 +160,21 @@
 	 :peach)
 	(:plum
 	 :plum)
+	(:winebottle
+	 :winebottle)
+	(:juicepack
+	 :juicepack)
+	(:colacan
+	 :colacan)
+	(:tropicaljuicebottle
+	 :tropicaljuicebottle)
+	(:milkbottle
+	 :milkbottle)
+	(:iceteabottle
+	 :iceteabottle)
+	(:orangejuicebox
+	 :orangejuicebox)
+	(:cocoabox
+	 :cocoabox)
+	(:rubikscube
+	 :rubikscube)

@@ -160,3 +160,21 @@
 	 "http://www.ease-crc.org/ont/SUTURO.owl#Peach")
 	(:plum
 	 "http://www.ease-crc.org/ont/SUTURO.owl#Plum")
+	(:winebottle
+	 "http://www.ease-crc.org/ont/SOMA.owl#WineBottle")
+	(:juicepack
+	 "http://www.ease-crc.org/ont/SUTURO.owl#JuicePack")
+	(:colacan
+	 "http://www.ease-crc.org/ont/SUTURO.owl#ColaCan")
+	(:tropicaljuicebottle
+	 "http://www.ease-crc.org/ont/SUTURO.owl#TropicalJuiceBottle")
+	(:milkbottle
+	 "http://www.ease-crc.org/ont/SOMA.owl#MilkBottle")
+	(:iceteabottle
+	 "http://www.ease-crc.org/ont/SUTURO.owl#IceTeaBottle")
+	(:orangejuicebox
+	 "http://www.ease-crc.org/ont/SUTURO.owl#OrangeJuiceBox")
+	(:cocoabox
+	 "http://www.ease-crc.org/ont/SUTURO.owl#CocoaBox")
+	(:rubikscube
+	 "http://www.ease-crc.org/ont/SUTURO.owl#RubiksCube")
