@@ -1581,7 +1581,7 @@ For example the Tables come from semantic_map, while the objects perception got 
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Plum">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Fruit"/>
-        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">80</SUTURO:perceptionId>
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">80</SUTURO:perceptionId>
         <rdfs:comment>A plum is a small, round or oval-shaped fruit with a smooth, edible skin, juicy, sweet or tart flesh, and a small pit in the center.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
@@ -1738,7 +1738,7 @@ The challenges in the RoboCup@Home competition are designed to test a variety of
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#RubiksCube">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Toy"/>
-        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">88</SUTURO:perceptionId>
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">89</SUTURO:perceptionId>
         <rdfs:comment>A Rubik&apos;s Cube is a three-dimensional puzzle game that consists of a cube with six faces, each made up of nine smaller squares of different colors, and the object of the game is to twist and turn the cube to solve the puzzle by aligning the colors on each face.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
