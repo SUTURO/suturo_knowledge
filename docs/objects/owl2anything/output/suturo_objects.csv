@@ -137,7 +137,7 @@ InductionCooktop;soma_home:'InductionCooktop';http://www.ease-crc.org/ont/SOMA-H
 JaFettarmeHMilchMilkPack;suturo:'JaFettarmeHMilchMilkPack';http://www.ease-crc.org/ont/SUTURO.owl#;;JaFettarmeHMilchMilkPack
 JamJar;soma:'JamJar';http://www.ease-crc.org/ont/SOMA.owl#;;A jar which holds, or at least is intended to usually hold, jam.
 Jar;soma:'Jar';http://www.ease-crc.org/ont/SOMA.owl#;;A container used for long-term storage of some liquid or viscous dish.
-JellOChocolatePuddingBox;suturo:'JellOChocolatePuddingBox';http://www.ease-crc.org/ont/SUTURO.owl#;;A box containing, or at least normally intended to contain, Jell-O brand chocolate flavored pudding powder.
+JellOChocolatePuddingBox;suturo:'JellOChocolatePuddingBox';http://www.ease-crc.org/ont/SUTURO.owl#;19;A box containing, or at least normally intended to contain, Jell-O brand chocolate flavored pudding powder.
 JellOStrawberryBox;suturo:'JellOStrawberryBox';http://www.ease-crc.org/ont/SUTURO.owl#;72;A box containing, or at least normally intended to contain, Jell-O brand strawberry flavored gelatin.
 Jello;suturo:'Jello';http://www.ease-crc.org/ont/SUTURO.owl#;;Jello, also known as gelatin, is a sweet dessert made by combining gelatin powder with hot water, sugar, and flavorings, then cooling and setting the mixture in a mold. It is a popular treat for both children and adults, and comes in a variety of flavors and colors.
 JelloBox;suturo:'JelloBox';http://www.ease-crc.org/ont/SUTURO.owl#;48;A box containing, or at least normally intended to contain, jello.
@@ -237,7 +237,7 @@ PrintedMatter;suturo:'PrintedMatter';http://www.ease-crc.org/ont/SUTURO.owl#;;Pr
 PrismaticJoint;soma_obj:'PrismaticJoint';http://www.ease-crc.org/ont/SOMA-OBJ.owl#;;A sliding joint that slides along an axis, and has a limited range specified by the upper and lower limits.
 PrismaticJoint;urdf:'PrismaticJoint';http://knowrob.org/kb/urdf.owl#;;A sliding joint that slides along the axis, and has a limited range specified by the upper and lower limits.
 ProcessedFood;suturo:'ProcessedFood';http://www.ease-crc.org/ont/SUTURO.owl#;;Processed food refers to food that has been altered in some way from its natural state through various methods such as canning, freezing, cooking, or adding preservatives and additives. It often contains high amounts of salt, sugar, and fat, and is typically less nutritious than fresh, unprocessed food.
-PuddingBox;suturo:'PuddingBox';http://www.ease-crc.org/ont/SUTURO.owl#;19;A box containing, or at least normally intended to contain pudding powder.
+PuddingBox;suturo:'PuddingBox';http://www.ease-crc.org/ont/SUTURO.owl#;;A box containing, or at least normally intended to contain pudding powder.
 Rack;soma:'Rack';http://www.ease-crc.org/ont/SOMA.owl#;;A frame for holding or storing things.
 Rack;suturo:'Rack';http://www.ease-crc.org/ont/SUTURO.owl#;;A rack is a framework or support structure used for holding or organizing various objects or equipment in a specific arrangement or pattern.
 Racquetball;suturo:'Racquetball';http://www.ease-crc.org/ont/SUTURO.owl#;47;A racquetball ball is a small, hollow rubber ball used in the sport of racquetball, designed to be bouncy and to move quickly in the enclosed court.

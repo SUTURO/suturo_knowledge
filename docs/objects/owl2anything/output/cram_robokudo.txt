@@ -36,8 +36,8 @@
 	 :napkin)
 	(:mustardbottle
 	 :mustardbottle)
-	(:puddingbox
-	 :puddingbox)
+	(:jellochocolatepuddingbox
+	 :jellochocolatepuddingbox)
 	(:door
 	 :door)
 	(:servingmat

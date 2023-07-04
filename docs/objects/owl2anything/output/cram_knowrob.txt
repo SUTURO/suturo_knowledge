@@ -36,8 +36,8 @@
 	 "http://www.ease-crc.org/ont/SUTURO.owl#Napkin")
 	(:mustardbottle
 	 "http://www.ease-crc.org/ont/SUTURO.owl#MustardBottle")
-	(:puddingbox
-	 "http://www.ease-crc.org/ont/SUTURO.owl#PuddingBox")
+	(:jellochocolatepuddingbox
+	 "http://www.ease-crc.org/ont/SUTURO.owl#JellOChocolatePuddingBox")
 	(:door
 	 "http://www.ease-crc.org/ont/SOMA.owl#Door")
 	(:servingmat
