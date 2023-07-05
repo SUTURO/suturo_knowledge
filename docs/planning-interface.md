@@ -198,7 +198,8 @@ For more details, see [`src/model/object/object_rel_pose/README.md`](src/model/o
 To get the predefined RoboCup name of an object or class or the object class of a RoboCup name, use the following predicates.
 
 ```prolog
-has_predefined_name(?ObjectOrClass, ?Name) is semidet.
+has_predefined_name(?Class, ?Name) is nondet.
+object_has_predefined_name(?Object, ?Name) is nondet.
 ```
 
 Example:
@@ -209,8 +210,11 @@ Class: 'http://www.ease-crc.org/ont/SUTURO.owl#TomatoSoupCan'.
 ?- has_predefined_name(soma:'WineBottle', Name).
 Name: red wine.
 
-?- has_predefined_name('http://www.ease-crc.org/ont/SUTURO.owl#CerealBoxRoboCup_PCMOTGKZ', Name).
+?- object_has_predefined_name('http://www.ease-crc.org/ont/SUTURO.owl#CerealBoxRoboCup_PCMOTGKZ', Name).
 Name: cornflakes.
+
+?- object_has_predefined_name(Object, snacks).
+Object: 'http://www.ease-crc.org/ont/SUTURO.owl#CerealBoxRoboCup_PCMOTGKZ'.
 ```
 
 ### Predefined object locations

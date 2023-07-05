@@ -12,7 +12,8 @@
 		objects_not_handled(-),
 		predefined_origin_location(r,-),
 	  	predefined_destination_location(r,-),
-		has_predefined_name(r,?)
+		has_predefined_name(r,?),
+		object_has_predefined_name(r,?)
 	  ]).
 
 :- use_module(library('util/util'),
@@ -181,16 +182,33 @@ class_bfs(Predicate, [Head|Tail], Seen, ResultClass, Result) :-
     append(Seen, Superclasses, NSeen),
     class_bfs(Predicate, NTail, NSeen, ResultClass, Result).
 
-%% has_predefined_name(?ClassOrObject, ?Name) is semidet.
+%% has_predefined_name(?Class, ?Name) is nondet.
 %
-% Get the predefined name of an object or class.
+% Get the predefined name of a class.
 %
-% @param ClassOrObject The IRI or abbreviated name of the class or object.
-% @param Name The predefined name of the object.
+% @param Class The IRI of the class.
+% @param Name The predefined name of the class.
 %
 has_predefined_name(Class, Name) :-
-    holds(Class, suturo:hasPredefinedName, Name), 
-	!.
-has_predefined_name(Object, Name) :-
-    has_type(Object, Class),
     holds(Class, suturo:hasPredefinedName, Name).
+
+%% object_has_predefined_name(?Object, ?Name) is nondet.
+%
+% Get the predefined name of an object.
+% If an object is given, only the exact name is returned.
+% If the object is not given, objects of subclasses are also returned.
+%
+% @param Object The IRI of the object.
+% @param Name The predefined name of the object.
+%
+object_has_predefined_name(Object, Name) :-
+    ground(Object),
+    % if the object is known, first try to get a predifined name that way
+    kb_call((has_type(Object, Class),
+             holds(Class, suturo:hasPredefinedName, Name))),
+    % if one exists, use only that
+    !.
+object_has_predefined_name(Object, Name) :-
+    % otherwise search through all classes (for that name) and then check if the object has that type.
+    kb_call((holds(Class, suturo:hasPredefinedName, Name),
+             has_type(Object, Class))).
