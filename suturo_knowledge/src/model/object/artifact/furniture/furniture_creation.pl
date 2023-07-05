@@ -158,9 +158,18 @@ collision_link(UrdfLink, CollisionLink) :-
 % @param Class Class of the urdf link as owl term
 %
 urdf_link_class(UrdfLink, Class) :-
+    atomic_list_concat([_,KnowledgeRole,_], ':', UrdfLink),
+    link_role_class(KnowledgeRole, Class),
+    !.
+urdf_link_class(UrdfLink, Class) :-
     split_string(UrdfLink, ":", "", List),
     last_element(List, LinkName),
     link_name_class(LinkName, Class).
+
+:- rdf_meta(link_role_class(+,r)).
+%% link_role_class(+KnowledgeRole, -Class) is semidet.
+link_role_class(kitchen_table,suturo:'KitchenTable') :- !.
+link_role_class(dining_table,suturo:'DiningTable') :- !.
 
 %% link_name_class(+LinkName, -Class) is semidet.
 %
@@ -188,14 +197,6 @@ link_name_class(LinkName, Class) :-
 link_name_class(LinkName, Class) :-
     sub_string(LinkName,_,_,_,"shelf_base"), % TODO: Fix this inconsistency in the urdf
     Class = soma:'Cupboard',
-    !.
-link_name_class(LinkName, Class) :-
-    atomic_list_concat([_,kitchen_table,_], ':', LinkName),
-    Class = suturo:'KitchenTable',
-    !.
-link_name_class(LinkName, Class) :-
-    atomic_list_concat([_,dining_table,_], ':', LinkName),
-    Class = suturo:'DiningTable',
     !.
 link_name_class(LinkName, Class) :-
     sub_string(LinkName,_,_,_,"table"),
