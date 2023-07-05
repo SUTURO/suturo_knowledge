@@ -27,6 +27,6 @@ perceive_distance(Object, PerceiveDistance) :-
     kb_call(has_type(Object, soma:'Cupboard')),
     !,
     % TODO don't hardcode these
-    PerceiveDistance = 1.06.
+    PerceiveDistance = 1.19.
 
 perceive_distance(_Object, 0.67).
