@@ -5,7 +5,7 @@
 :- module(semantic_similarity,
 	  [
         most_similar_object(r,+,-),
-        most_similar_object(r,+,-,-,-),
+        most_similar_object(r,+,-,-),
         sort_by_similarity(r,t,-),
         wu_palmer_similarity(r,r,-),
         lcs(r,r,-),
@@ -39,9 +39,7 @@
 % @param MostSimilarObject The object instance from the list that is most similar to the given object.
 %
 most_similar_object(Object, InputObjects, MostSimilarObject) :-
-    has_type(Object, ClassA),
-    most_similar_object_helper(InputObjects, ClassA, 0-_, Result),
-    Result = _-MostSimilarObject.
+    most_similar_object(Object, InputObjects, MostSimilarObject, _Similarity).
 
 %% most_similar_object(+Object, +InputObjects, -MostSimilarObject, -Similarity, -ThresholdReached) is semidet.
 %
@@ -54,10 +52,9 @@ most_similar_object(Object, InputObjects, MostSimilarObject) :-
 % @param Similarity The similarity between the given object and the most similar object.
 % @param ThresholdReached True if the similarity is above the threshold for Storing Groceries Challenge (>=0.8), false otherwise.
 %
-most_similar_object(Object, InputObjects, MostSimilarObject, Similarity, ThresholdReached) :-
+most_similar_object(Object, InputObjects, MostSimilarObject, Similarity) :-
     has_type(Object, ClassA),
-    most_similar_object_helper(InputObjects, ClassA, 0-_, Similarity-MostSimilarObject),
-    ThresholdReached = (Similarity >= 0.8).
+    most_similar_object_helper(InputObjects, ClassA, 0-_, Similarity-MostSimilarObject).
 
 %% most_similar_object_helper(+InputObjects, +ClassA, +MaxSimilarity-MaxSimilarObject, -Result) is det.
 %

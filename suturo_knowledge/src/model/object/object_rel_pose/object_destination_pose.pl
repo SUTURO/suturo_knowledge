@@ -51,7 +51,11 @@ best_fitting_destination(Object, NextTo, Destination) :-
             ObjsDests),
     \+ ObjsDests == [],
     pairs_keys(ObjsDests, Objs),
-    most_similar_object(Object, Objs, NextTo),
+    most_similar_object(Object, Objs, NextTo, Similarity),
+    ros_info('Most similar object to ~w is ~w with similarity ~w, checking if threashhold of 0.8 is reached',
+             [Object, NextTo, Similarity]
+            ),
+    Similarity >= 0.8,
     member(NextTo-Destination,ObjsDests).
 
 free_destination(Object, Destination) :-
