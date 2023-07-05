@@ -293,7 +293,7 @@ SugarBox;suturo:'SugarBox';http://www.ease-crc.org/ont/SUTURO.owl#;57;A box cont
 SugarDispenser;soma:'SugarDispenser';http://www.ease-crc.org/ont/SOMA.owl#;;A dispenser used to hold, or at least is intended to usually hold and serve, sugar.
 Surface;soma:'Surface';http://www.ease-crc.org/ont/SOMA.owl#;;The outside part or uppermost layer of something.
 Sweets;suturo:'Sweets';http://www.ease-crc.org/ont/SUTURO.owl#;;Sweets, also known as candy, are a type of confectionery made from sugar or a sugar substitute, and often flavored with fruit, chocolate, or other ingredients. They come in a wide variety of forms such as hard candies, gummies, caramels, and chocolates, and are enjoyed as a treat or dessert.
-Table;soma:'Table';http://www.ease-crc.org/ont/SOMA.owl#;28;A piece of furniture with a flat top and one or more legs.
+Table;soma:'Table';http://www.ease-crc.org/ont/SOMA.owl#;28;A table is a data structure that organizes information into rows and columns, forming a grid. Tables are widely used in databases and spreadsheets, where each row represents a data record and each column represents a data attribute.
 TableCloth;suturo:'TableCloth';http://www.ease-crc.org/ont/SUTURO.owl#;13;A tablecloth is a large, rectangular piece of fabric or vinyl used to cover and protect a dining table from spills and stains, as well as to add aesthetic appeal to the setting.
 TableFork;soma:'TableFork';http://www.ease-crc.org/ont/SOMA.owl#;;A regular size fork used for eating meals, e.g. for Spaghetti.
 TableKnife;soma:'TableKnife';http://www.ease-crc.org/ont/SOMA.owl#;;A knife used for eating or speading butter on bread.
