@@ -2176,6 +2176,15 @@ The challenges in the RoboCup@Home competition are designed to test a variety of
     
 
 
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#StudyRoom -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#StudyRoom">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Room"/>
+        <rdfs:comment>A room dedicated to studying and working, mostly by reading or writing.</rdfs:comment>
+    </owl:Class>
+    
+
+
     <!-- http://www.ease-crc.org/ont/SUTURO.owl#SugarBox -->
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#SugarBox">
