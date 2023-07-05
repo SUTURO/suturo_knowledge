@@ -133,9 +133,7 @@
         <rdfs:subPropertyOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#hasDataValue"/>
         <rdfs:domain rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#Entity"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-        <rdfs:comment xml:lang="en">Where the information for this Entity came from.
-
-For example the Tables come from semantic_map, while the objects perception got are from perception.</rdfs:comment>
+        <rdfs:comment xml:lang="en">The source of information for this entity can vary. For instance, tables are derived from the semantic map, whereas the objects perceived are obtained from Perception.</rdfs:comment>
     </owl:DatatypeProperty>
     
 
@@ -316,6 +314,7 @@ For example the Tables come from semantic_map, while the objects perception got 
 
     <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Table">
         <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">28</SUTURO:perceptionId>
+        <rdfs:comment>A table is a data structure that organizes information into rows and columns, forming a grid. Tables are widely used in databases and spreadsheets, where each row represents a data record and each column represents a data attribute.</rdfs:comment>
     </rdf:Description>
     
 
