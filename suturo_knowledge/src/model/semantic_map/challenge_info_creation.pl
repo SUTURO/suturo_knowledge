@@ -57,7 +57,7 @@ init_serve_breakfast :-
 init_storing_groceries :-
       ros_info('Initializing info for "Storing Groceries"...', []),
       activate_challenge(suturo:'StoringGroceries'),
-      once((has_urdf_name(OriginLocation, 'side_table1:side_table:table_center'),
+      once((has_robocup_name(OriginLocation, storing_groceries_table),
             log_set(dul:'PhysicalObject', suturo:hasOriginLocation, OriginLocation))
           ;
           (is_table(Table),
@@ -65,13 +65,13 @@ init_storing_groceries :-
       (  has_robocup_name(_,pantry)
       -> forall((has_robocup_name(DestinationLocation,pantry),
                  is_shelf(DestinationLocation),
-                 object_pose(DestinationLocation,[map,[_,_,Z],_Rot]),
+                 object_pose(DestinationLocation,[map,[_,_,Z],_]),
                  Z<0.9),
                 log_set(dul:'PhysicalObject',
                         suturo:'hasDestinationLocation',
                         DestinationLocation))
       ;  forall((is_shelf(DestinationLocation),
-                 object_pose(DestinationLocation,[map,[_,_,Z],_Rot]),
+                 object_pose(DestinationLocation,[map,[_,_,Z],_]),
                  Z<0.9),
                 log_set(dul:'PhysicalObject',
                         suturo:'hasDestinationLocation',
