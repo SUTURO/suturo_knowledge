@@ -1,7 +1,8 @@
 % furniture informations
 :- module(furniture_info,
 	[
-		furniture_rel_pose(r,+,-)
+		furniture_rel_pose(r,+,-),
+        has_robocup_name(r,?)
 	]).
 
 :- use_module(library('util/math'),
@@ -35,9 +36,9 @@ furniture_rel_pose_perceive(Furniture, PoseStamped) :-
 	XNew is X - 0.7,
     PoseStamped = [Frame, [XNew,Y,Z], Rotation].
 	% deg_to_rad(70, CameraViewAngle)
-	
+
 	% TODO: Calculate perceiving position relative to the Furniture
-	% 
+	%
 	% HSR
     % |\<-- alpha
     % | \
@@ -54,3 +55,10 @@ furniture_rel_pose_interact(Furniture, PoseStamped) :-
 	XNew is X - 0.5,
     PoseStamped = [Frame, [XNew,Y,Z], Rotation].
 	% TODO: Calculate interacting position relative to the Furniture
+
+%% has_robocup_name(?Furniture, ?Name) is nondet.
+%
+% get the knowledge_role assigned to a furniture in the semantic map.
+% make sure that the knowledge_role in there matches the robocup name.
+has_robocup_name(Furniture,Name) ?+>
+    holds(Furniture,suturo:hasRobocupName,Name).
