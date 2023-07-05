@@ -201,6 +201,7 @@ To get the predefined RoboCup name of an object or class or the object class of 
 has_predefined_name(?ObjectOrClass, ?Name) is semidet.
 ```
 
+Example:
 ```prolog
 ?- has_predefined_name(Class, 'tomato soup').
 Class: 'http://www.ease-crc.org/ont/SUTURO.owl#TomatoSoupCan'.
