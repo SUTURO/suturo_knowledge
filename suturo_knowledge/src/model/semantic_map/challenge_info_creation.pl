@@ -6,6 +6,7 @@
             init_clean_the_table/0,
 	        init_clean_the_table_no_dishwasher/0,
             init_gpsr/0,
+            init_locations_robocup_2023/0,
             init_predefined_names_robocup_2023/0
 	  ]).
 
@@ -97,39 +98,15 @@ init_clean_the_table_no_dishwasher :-
 init_gpsr :-
       ros_info('Initializing info for "gpsr"...'),
       activate_challenge(suturo:'GPSR'),
-      forall(
-          (
-              is_kitchen(Kitchen),
-              is_inside_of(Furniture,Kitchen),
-              once((is_table(Furniture);is_shelf(Furniture)))
-          ),
-          log_set(soma:'Cutlery', suturo:hasOriginLocation, Furniture)),
-      forall(
-          (
-              is_kitchen(Kitchen),
-              is_inside_of(Furniture,Kitchen),
-              is_shelf(Furniture)
-          ),
-          log_set(suturo:'Fruit', suturo:hasOriginLocation, Furniture)),
-      forall(
-          (
-              is_living_room(LivingRoom),
-              is_inside_of(Furniture,LivingRoom),
-              is_table(Furniture)
-          ),
-          log_set(soma:'Cup', suturo:hasOriginLocation, Furniture)),
-      forall(
-          (
-              is_living_room(LivingRoom),
-              is_inside_of(Furniture,LivingRoom),
-              is_shelf(Furniture)
-          ),
-          log_set(suturo:'CrackerBox', suturo:hasOriginLocation, Furniture)),
+      init_locations_robocup_2023,
       ros_info('"GPSR" initialized.').
 
 log_set(S,P,O) :-
-    kb_project(triple(S,P,O)),
-    ros_info('Set ~w as ~w for ~w', [O, P, S]).
+    kb_project(holds(S,P,O)),
+    iri_xml_namespace(S,_,WS),
+    iri_xml_namespace(P,_,WP),
+    iri_xml_namespace(O,_,WO),
+    ros_info('Set ~w ~w ~w', [WS, WP, WO]).
 
 %% activate_challenge(+Challenge) is det.
 %
@@ -143,6 +120,46 @@ activate_challenge(Challenge) :-
 activate_challenge(Challenge, ActivatedChallenge) :-
       from_current_scope(Scope),
       kb_project(is_type(ActivatedChallenge, Challenge), Scope).
+
+init_locations_robocup_2023 :-
+    forall(
+        (
+            is_bedroom(LivingRoom),
+            is_inside_of(Furniture,LivingRoom),
+            is_shelf(Furniture)
+          ),
+        log_set(suturo:'RoboCupCleaningSupplies', suturo:hasOriginLocation, Furniture)),
+    has_urdf_name(Cabinet, 'cabinet:table:table_center'),
+    log_set(suturo:'RoboCupDrinks', suturo:hasOriginLocation, Cabinet),
+    forall(member(X,[0,1,2,3,4,5,6]),
+           (
+               atom_concat('pantry:shelf:shelf_floor_',X,FloorName),
+               has_urdf_name(Floor,FloorName),
+               log_set(suturo:'RoboCupFood', suturo:hasOriginLocation, Floor)
+           )),
+    has_urdf_name(Desk, 'desk:table:table_center'),
+    log_set(suturo:'RoboCupFruits', suturo:hasOriginLocation, Desk),
+    forall(member(X,[0,1,2,3]),
+           (
+               atom_concat('bookshelf:shelf:shelf_floor_',X,FloorName),
+               has_urdf_name(Floor,FloorName),
+               log_set(suturo:'RoboCupToys', suturo:hasOriginLocation, Floor)
+           )),
+    forall(member(X,[1,2]),
+           (
+               atomic_list_concat(['side_table',X,':table:table_center'], TableName),
+               has_urdf_name(Table, TableName),
+               log_set(suturo:'RoboCupSnacks', suturo:hasOriginLocation, Table)
+           )),
+    forall(is_kitchen_table(Table),
+           (
+               log_set(suturo:'RoboCupDishes', suturo:hasOriginLocation, Table)
+           )),
+    ros_info('Set origin locations according to robocup 2023 data').
+
+
+
+
 
 %% init_predefined_names_robocup_2023 is det.
 %
