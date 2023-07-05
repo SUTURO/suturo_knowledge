@@ -150,6 +150,16 @@ For example the Tables come from semantic_map, while the objects perception got 
     
 
 
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName -->
+
+    <owl:DatatypeProperty rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName">
+        <rdfs:subPropertyOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#hasNameString"/>
+        <rdfs:comment>A predefined name refers to a name or label that is predetermined or established beforehand. It is typically assigned or chosen from a predefined set of names, often based on specific criteria or guidelines.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:DatatypeProperty>
+    
+
+
     <!-- 
     ///////////////////////////////////////////////////////////////////////////////////////
     //
@@ -193,7 +203,6 @@ For example the Tables come from semantic_map, while the objects perception got 
     <!-- http://www.ease-crc.org/ont/SOMA.owl#CerealBox -->
 
     <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#CerealBox">
-        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#RoboCupSnacks"/>
         <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">55</SUTURO:perceptionId>
     </rdf:Description>
     
@@ -537,6 +546,18 @@ For example the Tables come from semantic_map, while the objects perception got 
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Bowl"/>
         <rdfs:comment>A cereal bowl is a deep dish used for serving breakfast cereal with milk.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#CerealBoxRoboCup -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#CerealBoxRoboCup">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#CerealBox"/>
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#RoboCupSnacks"/>
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">89</SUTURO:perceptionId>
+        <rdfs:comment rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+        <rdfs:comment>The cereal box(es) used at RoboCup 2023 Bordeaux</rdfs:comment>
     </owl:Class>
     
 
