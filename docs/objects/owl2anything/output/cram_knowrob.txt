@@ -176,3 +176,5 @@
 	 "http://www.ease-crc.org/ont/SUTURO.owl#OrangeJuiceBox")
 	(:rubikscube
 	 "http://www.ease-crc.org/ont/SUTURO.owl#RubiksCube")
+	(:cerealboxrobocup
+	 "http://www.ease-crc.org/ont/SUTURO.owl#CerealBoxRoboCup")

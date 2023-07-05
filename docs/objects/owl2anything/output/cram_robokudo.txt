@@ -176,3 +176,5 @@
 	 :orangejuicebox)
 	(:rubikscube
 	 :rubikscube)
+	(:cerealboxrobocup
+	 :cerealboxrobocup)

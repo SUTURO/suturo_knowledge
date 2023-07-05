@@ -38,6 +38,7 @@ CeramicCooktop;soma_home:'CeramicCooktop';http://www.ease-crc.org/ont/SOMA-HOME.
 Cereal;suturo:'Cereal';http://www.ease-crc.org/ont/SUTURO.owl#;;Cereal is a type of food made from processed grains that is typically eaten for breakfast.
 CerealBowl;suturo:'CerealBowl';http://www.ease-crc.org/ont/SUTURO.owl#;;A cereal bowl is a deep dish used for serving breakfast cereal with milk.
 CerealBox;soma:'CerealBox';http://www.ease-crc.org/ont/SOMA.owl#;55;A box which holds, or at least is intended to usually hold, cereal flakes.
+CerealBoxRoboCup;suturo:'CerealBoxRoboCup';http://www.ease-crc.org/ont/SUTURO.owl#;89;CerealBoxRoboCup
 Chain;suturo:'Chain';http://www.ease-crc.org/ont/SUTURO.owl#;;A chain is a series of metal links or rings, typically made of steel or other metals, connected together to form a flexible, strong, and durable tool for lifting, towing, securing, or transmitting power.
 CheezItCrackerBox;suturo:'CheezItCrackerBox';http://www.ease-crc.org/ont/SUTURO.owl#;;A box containing, or at least intended to contain, Cheeze-It brand crackers. A cracker is a flat, dry-baked pastry, usually made from flour.
 ChemicalObject;dul:'ChemicalObject';http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#;;ChemicalObject
