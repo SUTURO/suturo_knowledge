@@ -19,6 +19,9 @@
       ros_info/2
       ]).
 
+:- use_module(library('model/object/artifact/furniture/furniture_info'),
+              [ has_robocup_name/2 ]).
+
 %% init_serve_breakfast is det.
 %
 % Initializes the predefined info for serving breakfast.
@@ -51,15 +54,25 @@ init_serve_breakfast :-
 init_storing_groceries :-
       ros_info('Initializing info for "Storing Groceries"...', []),
       activate_challenge(suturo:'StoringGroceries'),
-      has_urdf_name(OriginLocation, 'side_table1:table:table_center'),
-      log_set(dul:'PhysicalObject', suturo:hasOriginLocation, OriginLocation),
-      foreach((member(X,[0,1,2,3]),
-             atom_concat('pantry:shelf:shelf_floor_', X, UrdfName),
-             has_urdf_name(DestinationLocation, UrdfName)),
-            % TODO fix expanding namespaces to use namespace:Resource here.
-            log_set('http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#PhysicalObject',
-                             'http://www.ease-crc.org/ont/SUTURO.owl#hasDestinationLocation',
-                              DestinationLocation)),
+      once((has_urdf_name(OriginLocation, 'side_table1:side_table:table_center'),
+            log_set(dul:'PhysicalObject', suturo:hasOriginLocation, OriginLocation))
+          ;
+          (is_table(Table),
+           log_set(dul:'PhysicalObject', suturo:hasOriginLocation, Table))),
+      (  has_robocup_name(_,pantry)
+      -> forall((has_robocup_name(DestinationLocation,pantry),
+                 is_shelf(DestinationLocation),
+                 object_pose(DestinationLocation,[map,[_,_,Z],_Rot]),
+                 Z<0.9),
+                log_set(dul:'PhysicalObject',
+                        suturo:'hasDestinationLocation',
+                        DestinationLocation))
+      ;  forall((is_shelf(DestinationLocation),
+                 object_pose(DestinationLocation,[map,[_,_,Z],_Rot]),
+                 Z<0.9),
+                log_set(dul:'PhysicalObject',
+                        suturo:'hasDestinationLocation',
+                        DestinationLocation))),
       ros_info('"Storing Groceries" initialized.', []).
 
 %% init_clean_the_table is det.
