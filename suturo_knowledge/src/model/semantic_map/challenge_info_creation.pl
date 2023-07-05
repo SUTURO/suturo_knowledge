@@ -29,16 +29,16 @@
 init_serve_breakfast :-
     ros_info('Initializing info for "Serving Breakfast"...', []),
     activate_challenge(suturo:'ServeBreakfast'),
-    has_urdf_name(OriginLocation, 'shelf:shelf:shelf_base_center'),
-    kb_project(holds(soma:'Bowl', suturo:hasOriginLocation, OriginLocation)),
-    kb_project(holds(soma:'CerealBox', suturo:hasOriginLocation, OriginLocation)),
-    kb_project(holds(soma:'Spoon', suturo:hasOriginLocation, OriginLocation)),
-    kb_project(holds(soma:'MilkPack', suturo:hasOriginLocation, OriginLocation)),
-    has_urdf_name(DestinationLocation, 'left_table:table:table_front_edge_center'),
-    kb_project(holds(soma:'Bowl', suturo:hasDestinationLocation, DestinationLocation)),
-    kb_project(holds(soma:'CerealBox', suturo:hasDestinationLocation, DestinationLocation)),
-    kb_project(holds(soma:'Spoon', suturo:hasDestinationLocation, DestinationLocation)),
-    kb_project(holds(soma:'MilkPack', suturo:hasDestinationLocation, DestinationLocation)),
+    has_urdf_name(OriginLocation, 'pantry:shelf:shelf_floor_1'),
+    log_set(soma:'Bowl', suturo:hasOriginLocation, OriginLocation),
+    log_set(soma:'CerealBox', suturo:hasOriginLocation, OriginLocation),
+    log_set(soma:'Spoon', suturo:hasOriginLocation, OriginLocation),
+    log_set(soma:'MilkBottle', suturo:hasOriginLocation, OriginLocation),
+    has_urdf_name(DestinationLocation, 'kitchen_table:kitchen_table:table_center'),
+    log_set(soma:'Bowl', suturo:hasDestinationLocation, DestinationLocation),
+    log_set(soma:'CerealBox', suturo:hasDestinationLocation, DestinationLocation),
+    log_set(soma:'Spoon', suturo:hasDestinationLocation, DestinationLocation),
+    log_set(soma:'MilkBottle', suturo:hasDestinationLocation, DestinationLocation),
     ros_info('"Serving Breakfast" initialized.', []).
 
 %% init_storing_groceries is det.
@@ -51,15 +51,15 @@ init_serve_breakfast :-
 init_storing_groceries :-
       ros_info('Initializing info for "Storing Groceries"...', []),
       activate_challenge(suturo:'StoringGroceries'),
-      has_urdf_name(OriginLocation, 'left_table:table:table_front_edge_center'),
-      kb_project(holds(dul:'PhysicalObject', suturo:hasOriginLocation, OriginLocation)),
-      foreach((member(X,[2,1]),
-             atom_concat('open_shelf:shelf:shelf_floor_', X, UrdfName),
+      has_urdf_name(OriginLocation, 'side_table1:table:table_center'),
+      log_set(dul:'PhysicalObject', suturo:hasOriginLocation, OriginLocation),
+      foreach((member(X,[0,1,2,3]),
+             atom_concat('pantry:shelf:shelf_floor_', X, UrdfName),
              has_urdf_name(DestinationLocation, UrdfName)),
             % TODO fix expanding namespaces to use namespace:Resource here.
-            kb_project(holds('http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#PhysicalObject',
+            log_set('http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#PhysicalObject',
                              'http://www.ease-crc.org/ont/SUTURO.owl#hasDestinationLocation',
-                              DestinationLocation))),
+                              DestinationLocation)),
       ros_info('"Storing Groceries" initialized.', []).
 
 %% init_clean_the_table is det.
@@ -72,19 +72,19 @@ init_storing_groceries :-
 init_clean_the_table :-
       ros_info('Initializing info for "Clean the Table"...', []),
       activate_challenge(suturo:'CleanTheTable'),
-      has_urdf_name(OriginLocation, 'left_table:table:table_front_edge_center'),
-      kb_project(holds(dul:'PhysicalObject', suturo:hasOriginLocation, OriginLocation)),
-      has_urdf_name(DestinationLocation, 'imaginary_dishwasher:dishwasher_tray_bottom'),
-      kb_project(holds(dul:'PhysicalObject', suturo:hasDestinationLocation, DestinationLocation)),
+      has_urdf_name(OriginLocation, 'kitchen_table:kitchen_table:table_center'),
+      log_set(dul:'PhysicalObject', suturo:hasOriginLocation, OriginLocation),
+      has_urdf_name(DestinationLocation, 'dishwasher:table:table_center'),
+      log_set(dul:'PhysicalObject', suturo:hasDestinationLocation, DestinationLocation),
       ros_info('"Clean the Table" initialized.', []).
 
 init_clean_the_table_no_dishwasher :-
       ros_info('Initializing info for "Clean the Table"...', []),
       activate_challenge(suturo:'CleanTheTable'),
-      has_urdf_name(OriginLocation, 'left_table:table:table_front_edge_center'),
-      kb_project(holds(dul:'PhysicalObject', suturo:hasOriginLocation, OriginLocation)),
-      has_urdf_name(DestinationLocation, 'kitchen_table:table:table_front_edge_center'),
-      kb_project(holds(dul:'PhysicalObject', suturo:hasDestinationLocation, DestinationLocation)),
+      has_urdf_name(OriginLocation, 'kitchen_table:kitchen_table:table_center'),
+      log_set(dul:'PhysicalObject', suturo:hasOriginLocation, OriginLocation),
+      has_urdf_name(DestinationLocation, 'dishwasher:table:table_center'),
+      log_set(dul:'PhysicalObject', suturo:hasDestinationLocation, DestinationLocation),
       ros_info('"Clean the Table" initialized.', []).
 
 

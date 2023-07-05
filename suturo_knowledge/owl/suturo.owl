@@ -1502,12 +1502,6 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
     
 
 
-    <!-- http://www.ease-crc.org/ont/SUTURO.owl#OrangeJuiceStandUpPouch -->
-
-    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#OrangeJuiceStandUpPouch"/>
-    
-
-
     <!-- http://www.ease-crc.org/ont/SUTURO.owl#Oregano -->
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Oregano">
