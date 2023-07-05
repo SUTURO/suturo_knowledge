@@ -3,6 +3,7 @@
             is_living_room(r),
             is_bedroom(r),
             is_room(r),
+            is_study_room(r),
             new_room_type(r)]).
 
 is_kitchen(Room) ?+>
@@ -16,6 +17,9 @@ is_bedroom(Room) ?+>
 
 is_arena(Room) ?+>
     is_type(Room, suturo:'Arena').
+
+is_study_room(Room) ?+>
+    is_type(Room, suturo:'StudyRoom').
 
 is_room(Room) ?>
     has_type(Room, soma:'Room').
