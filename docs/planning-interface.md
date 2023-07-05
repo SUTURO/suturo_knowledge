@@ -193,6 +193,25 @@ Pose: ['iai_kitchen/shelf:shelf:shelf_base_center', [0.0, -0.1, 0.51], [0.0, 0.0
 
 For more details, see [`src/model/object/object_rel_pose/README.md`](src/model/object/object_rel_pose/README.md).
 
+### Predefined object names
+
+To get the predefined RoboCup name of an object or class or the object class of a RoboCup name, use the following predicates.
+
+```prolog
+has_predefined_name(?ObjectOrClass, ?Name) is semidet.
+```
+
+```prolog
+?- has_predefined_name(Class, 'tomato soup').
+Class: 'http://www.ease-crc.org/ont/SUTURO.owl#TomatoSoupCan'.
+
+?- has_predefined_name(soma:'WineBottle', Name).
+Name: red wine.
+
+?- has_predefined_name('http://www.ease-crc.org/ont/SUTURO.owl#CerealBoxRoboCup_PCMOTGKZ', Name).
+Name: cornflakes.
+```
+
 ### Predefined object locations
 
 Get the predefined origin and destination location of object classes.

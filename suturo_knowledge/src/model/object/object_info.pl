@@ -11,7 +11,8 @@
 		not_handled(r),
 		objects_not_handled(-),
 		predefined_origin_location(r,-),
-	  	predefined_destination_location(r,-)
+	  	predefined_destination_location(r,-),
+		has_predefined_name(r,?)
 	  ]).
 
 :- use_module(library('util/util'),
@@ -179,3 +180,17 @@ class_bfs(Predicate, [Head|Tail], Seen, ResultClass, Result) :-
     append(Tail, Superclasses, NTail),
     append(Seen, Superclasses, NSeen),
     class_bfs(Predicate, NTail, NSeen, ResultClass, Result).
+
+%% has_predefined_name(?ClassOrObject, ?Name) is semidet.
+%
+% Get the predefined name of an object or class.
+%
+% @param ClassOrObject The IRI or abbreviated name of the class or object.
+% @param Name The predefined name of the object.
+%
+has_predefined_name(Class, Name) :-
+    holds(Class, suturo:hasPredefinedName, Name), 
+	!.
+has_predefined_name(Object, Name) :-
+    has_type(Object, Class),
+    holds(Class, suturo:hasPredefinedName, Name).

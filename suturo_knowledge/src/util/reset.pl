@@ -17,4 +17,5 @@ reset_user_data :-
     % if the tf logger is not reinitialized, the static transforms will be missing.
     tf_logger_enable,
     init_rooms,
+    init_predefined_names_robocup_2023,
     init_furnitures.

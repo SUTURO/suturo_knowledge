@@ -5,7 +5,8 @@
             init_storing_groceries/0,
             init_clean_the_table/0,
 	        init_clean_the_table_no_dishwasher/0,
-            init_gpsr/0
+            init_gpsr/0,
+            init_predefined_names_robocup_2023/0
 	  ]).
 
 :- rdf_meta(activate_challenge(r)).
@@ -142,3 +143,52 @@ activate_challenge(Challenge) :-
 activate_challenge(Challenge, ActivatedChallenge) :-
       from_current_scope(Scope),
       kb_project(is_type(ActivatedChallenge, Challenge), Scope).
+
+%% init_predefined_names_robocup_2023 is det.
+%
+% Initializes the predefined names of RoboCup 2023 Bordeaux for the challenges.
+%
+% This is a temporary solution until the challenge info can be loaded from an ontology.
+% This predicate should only be called once at the start of knowledge.
+%
+init_predefined_names_robocup_2023 :-
+    kb_project(holds(suturo:'AbrasiveSponge', suturo:hasPredefinedName, 'sponge')),
+    kb_project(holds(suturo:'BleachCleanserBottle', suturo:hasPredefinedName, 'cleanser')),
+    kb_project(holds(soma:'WineBottle', suturo:hasPredefinedName, 'red wine')),
+    kb_project(holds(suturo:'JuicePack', suturo:hasPredefinedName, 'juice pack')),
+    kb_project(holds(suturo:'ColaCan', suturo:hasPredefinedName, 'cola')),
+    kb_project(holds(suturo:'TropicalJuiceBottle', suturo:hasPredefinedName, 'tropical juice')),
+    kb_project(holds(soma:'MilkBottle', suturo:hasPredefinedName, 'milk')),
+    kb_project(holds(suturo:'IceTeaBottle', suturo:hasPredefinedName, 'iced tea')),
+    kb_project(holds(suturo:'OrangeJuiceBox', suturo:hasPredefinedName, 'orange juice')),
+    kb_project(holds(suturo:'TunaFishCan', suturo:hasPredefinedName, 'tuna')),
+    kb_project(holds(suturo:'TomatoSoupCan', suturo:hasPredefinedName, 'tomato soup')),
+    kb_project(holds(suturo:'PottedMeatCan', suturo:hasPredefinedName, 'spam')),
+    kb_project(holds(suturo:'MustardBottle', suturo:hasPredefinedName, 'mustard')),
+    kb_project(holds(suturo:'JellOStrawberryBox', suturo:hasPredefinedName, 'strawberry jello')),
+    kb_project(holds(suturo:'JellOChocolatePuddingBox', suturo:hasPredefinedName, 'chocolate jello')),
+    kb_project(holds(suturo:'CoffeeCan', suturo:hasPredefinedName, 'coffee grounds')),
+    kb_project(holds(suturo:'Pear', suturo:hasPredefinedName, 'pear')),
+    kb_project(holds(suturo:'Plum', suturo:hasPredefinedName, 'plum')),
+    kb_project(holds(suturo:'Peach', suturo:hasPredefinedName, 'peach')),
+    kb_project(holds(suturo:'Lemon', suturo:hasPredefinedName, 'lemon')),
+    kb_project(holds(suturo:'Orange', suturo:hasPredefinedName, 'orange')),
+    kb_project(holds(suturo:'Banana', suturo:hasPredefinedName, 'banana')),
+    kb_project(holds(suturo:'Strawberry', suturo:hasPredefinedName, 'strawberry')),
+    kb_project(holds(suturo:'Apple', suturo:hasPredefinedName, 'apple')),
+    kb_project(holds(suturo:'TennisBall', suturo:hasPredefinedName, 'tennis ball')),
+    kb_project(holds(suturo:'MiniSoccerBall', suturo:hasPredefinedName, 'soccer ball')),
+    kb_project(holds(suturo:'RubiksCube'	, suturo:hasPredefinedName, 'rubiks cube')),
+    kb_project(holds(suturo:'Dice', suturo:hasPredefinedName, 'dice')),
+    kb_project(holds(suturo:'Baseball', suturo:hasPredefinedName, 'baseball')),
+    kb_project(holds(suturo:'PringlesChipsCan'	, suturo:hasPredefinedName, 'pringles')),
+    kb_project(holds(suturo:'Strawberry', suturo:hasPredefinedName, 'strawberry')),
+    kb_project(holds(suturo:'CerealBoxRoboCup', suturo:hasPredefinedName, 'cornflakes')),
+    kb_project(holds(suturo:'CrackerBox', suturo:hasPredefinedName, 'cheezit')),
+    kb_project(holds(soma:'Spoon', suturo:hasPredefinedName, 'spoon')),
+    kb_project(holds(soma:'Plate', suturo:hasPredefinedName, 'plate')),
+    kb_project(holds(soma:'Cup', suturo:hasPredefinedName, 'cup')),
+    kb_project(holds(soma:'Fork', suturo:hasPredefinedName, 'fork')),
+    kb_project(holds(soma:'Bowl', suturo:hasPredefinedName, 'bowl')),
+    kb_project(holds(soma:'Knife', suturo:hasPredefinedName, 'knife')),
+    ros_info('RoboCup 2023 predefined object names initialized').
