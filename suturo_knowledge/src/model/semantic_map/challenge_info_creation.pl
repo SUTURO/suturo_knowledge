@@ -124,8 +124,8 @@ activate_challenge(Challenge, ActivatedChallenge) :-
 init_locations_robocup_2023 :-
     forall(
         (
-            is_bedroom(LivingRoom),
-            is_inside_of(Furniture,LivingRoom),
+            is_bedroom(BedRoom),
+            is_inside_of(Furniture, BedRoom),
             is_shelf(Furniture)
           ),
         log_set(suturo:'RoboCupCleaningSupplies', suturo:hasOriginLocation, Furniture)),
