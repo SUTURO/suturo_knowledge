@@ -160,6 +160,17 @@ For example the Tables come from semantic_map, while the objects perception got 
     
 
 
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#hasRobocupName -->
+
+    <owl:DatatypeProperty rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#hasRobocupName">
+        <rdfs:subPropertyOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#hasNameString"/>
+        <rdfs:comment>The robocup name of a furniture instance.
+
+TODO: make this more descriptive and generalized.</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
     <!-- 
     ///////////////////////////////////////////////////////////////////////////////////////
     //
