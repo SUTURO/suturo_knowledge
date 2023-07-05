@@ -287,6 +287,7 @@ StackingBlocks;suturo:'StackingBlocks';http://www.ease-crc.org/ont/SUTURO.owl#;4
 StarkistTunaFishCan;suturo:'StarkistTunaFishCan';http://www.ease-crc.org/ont/SUTURO.owl#;;Starkist Tuna fish can refers to a metal container used to store and preserve Starkist brand tuna fish.
 Stove;soma:'Stove';http://www.ease-crc.org/ont/SOMA.owl#;;An appliance for cooking or heating.
 Strawberry;suturo:'Strawberry';http://www.ease-crc.org/ont/SUTURO.owl#;37;A strawberry is a small, red fruit with a juicy texture, sweet taste, and tiny seeds on the surface, commonly used in desserts or as a snack.
+StudyRoom;suturo:'StudyRoom';http://www.ease-crc.org/ont/SUTURO.owl#;;A room dedicated to studying and working, mostly by reading or writing.
 Substance;dul:'Substance';http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#;;"Any PhysicalBody that has not necessarily specified (designed) boundaries, e.g. a pile of trash, some sand, etc.  In this sense, an artistic object made of trash or a dose of medicine in the form of a pill would be a FunctionalSubstance, and a DesignedArtifact, since its boundaries are specified by a Design; aleatoric objects that are outcomes of an artistic process might be still considered DesignedArtifact(s), and Substance(s)."
 SugarBox;suturo:'SugarBox';http://www.ease-crc.org/ont/SUTURO.owl#;57;A box containing, or at least usually intended to contain, sugar.
 SugarDispenser;soma:'SugarDispenser';http://www.ease-crc.org/ont/SOMA.owl#;;A dispenser used to hold, or at least is intended to usually hold and serve, sugar.
