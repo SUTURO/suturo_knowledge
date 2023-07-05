@@ -83,13 +83,14 @@ init_furnitures :-
 % @param UrdfLink Urdf link
 %
 init_furniture(UrdfLink) :-
-    urdf_link_class(UrdfLink, ClassTerm),
+    urdf_link_class(UrdfLink, ClassTerm, RobocupName),
     rdf_global_id(ClassTerm, Class),
     furniture_pose(UrdfLink, Pose),
     furniture_shape(UrdfLink, ShapeTerm),
     create_object(Furniture, Class, Pose, [shape(ShapeTerm), data_source(semantic_map)]),
     ros_info("Created semantic map object for ~w", [UrdfLink]),
-    kb_project(has_urdf_name(Furniture, UrdfLink)),
+    kb_project((has_urdf_name(Furniture, UrdfLink),
+                has_robocup_name(Furniture, RobocupName))),
 	% backwards compatibility with table_front_edge_center for planning
 	(  atom_concat(Prefix, 'table_center', UrdfLink)
 	-> (atom_concat(Prefix, 'table_front_edge_center', ExtraLink),
@@ -157,11 +158,15 @@ collision_link(UrdfLink, CollisionLink) :-
 % @param UrdfLink Name of the urdf link as String
 % @param Class Class of the urdf link as owl term
 %
-urdf_link_class(UrdfLink, Class) :-
+urdf_link_class(UrdfLink, Class, KnowledgeRole) :-
     atomic_list_concat([_,KnowledgeRole,_], ':', UrdfLink),
     link_role_class(KnowledgeRole, Class),
     !.
-urdf_link_class(UrdfLink, Class) :-
+urdf_link_class(UrdfLink, Class, KnowledgeRole) :-
+    % ignore for handles and so on
+    (  atomic_list_concat([_,KnowledgeRole,_], ':', UrdfLink)
+    -> true
+    ;  KnowledgeRole = undefined),
     split_string(UrdfLink, ":", "", List),
     last_element(List, LinkName),
     link_name_class(LinkName, Class).

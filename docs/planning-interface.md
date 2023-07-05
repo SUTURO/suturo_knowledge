@@ -216,6 +216,22 @@ Name: cornflakes.
 ?- object_has_predefined_name(Object, snacks).
 Object: 'http://www.ease-crc.org/ont/SUTURO.owl#CerealBoxRoboCup_PCMOTGKZ'.
 ```
+### Robocup Names
+```prolog
+has_robocup_name(?Furniture, ?Name) is nondet.
+```
+
+Example:
+```prolog
+?- has_robocup_name(X,kitchen_table).
+X: 'http://www.ease-crc.org/ont/SUTURO.owl#KitchenTable_DJXSUEFR'.
+
+?- has_robocup_name('http://www.ease-crc.org/ont/SOMA.owl#Table_WZOPHBCM',Y).
+Y: bed.
+```
+
+Get the knowledge\_role assigned to a furniture in the semantic map.
+Make sure that the knowledge\_role in there matches the robocup name.
 
 ### Predefined object locations
 
