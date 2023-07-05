@@ -32,16 +32,19 @@
 init_serve_breakfast :-
     ros_info('Initializing info for "Serving Breakfast"...', []),
     activate_challenge(suturo:'ServeBreakfast'),
-    has_urdf_name(OriginLocation, 'pantry:shelf:shelf_floor_1'),
-    log_set(soma:'Bowl', suturo:hasOriginLocation, OriginLocation),
-    log_set(soma:'CerealBox', suturo:hasOriginLocation, OriginLocation),
-    log_set(soma:'Spoon', suturo:hasOriginLocation, OriginLocation),
-    log_set(soma:'MilkBottle', suturo:hasOriginLocation, OriginLocation),
-    has_urdf_name(DestinationLocation, 'kitchen_table:kitchen_table:table_center'),
-    log_set(soma:'Bowl', suturo:hasDestinationLocation, DestinationLocation),
-    log_set(soma:'CerealBox', suturo:hasDestinationLocation, DestinationLocation),
-    log_set(soma:'Spoon', suturo:hasDestinationLocation, DestinationLocation),
-    log_set(soma:'MilkBottle', suturo:hasDestinationLocation, DestinationLocation),
+    once((has_urdf_name(OriginLocation, 'pantry:shelf:shelf_floor_1'),
+           log_set(dul:'PhysicalObject', suturo:hasOriginLocation, OriginLocation))
+          ;
+         ((is_shelf(Shelf),
+          object_pose(Shelf,[map,[_,_,Z],_Rot]),
+          Z<0.8,
+          Z>0.6),
+          log_set(dul:'PhysicalObject', suturo:hasOriginLocation, Shelf))),
+    once((has_urdf_name(OriginLocation, 'cupboard:cupboard:table_center'),
+           log_set(dul:'PhysicalObject', suturo:hasOriginLocation, OriginLocation))
+          ;
+         (is_table(Table),
+          log_set(dul:'PhysicalObject', suturo:hasOriginLocation, Table))),
     ros_info('"Serving Breakfast" initialized.', []).
 
 %% init_storing_groceries is det.
