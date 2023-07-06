@@ -137,13 +137,20 @@ activate_challenge(Challenge, ActivatedChallenge) :-
       from_current_scope(Scope),
       kb_project(is_type(ActivatedChallenge, Challenge), Scope).
 
+%% init_locations_robocup_2023 is det.
+%
+% Initializes the predefined locations for RoboCup@Home 2023.
+%
+% This is a temporary solution until the challenge info can be loaded from an ontology.
+% This predicate should only be called once at the start of the challenge.
+%
 init_locations_robocup_2023 :-
     forall(
         (
-            is_bedroom(BedRoom),
-            is_inside_of(Furniture, BedRoom),
-            is_shelf(Furniture)
-          ),
+          is_bedroom(BedRoom),
+          is_inside_of(Furniture, BedRoom),
+          is_shelf(Furniture)
+        ),
         log_set(suturo:'RoboCupCleaningSupplies', suturo:hasOriginLocation, Furniture)),
     has_urdf_name(Cabinet, 'cabinet:cabinet:shelf_floor_1'),
     log_set(suturo:'RoboCupDrinks', suturo:hasOriginLocation, Cabinet),
@@ -170,9 +177,6 @@ init_locations_robocup_2023 :-
                log_set(suturo:'RoboCupDishes', suturo:hasOriginLocation, Table)
            )),
     ros_info('Set origin locations according to robocup 2023 data').
-
-
-
 
 
 %% init_predefined_names_robocup_2023 is det.
