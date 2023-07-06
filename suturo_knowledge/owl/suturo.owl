@@ -212,6 +212,7 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
     <!-- http://www.ease-crc.org/ont/SOMA.owl#CerealBox -->
 
     <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#CerealBox">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#RoboCupSnacks"/>
         <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">55</SUTURO:perceptionId>
     </rdf:Description>
     
