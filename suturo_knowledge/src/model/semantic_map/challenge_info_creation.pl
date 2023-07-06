@@ -41,10 +41,10 @@ init_serve_breakfast :-
           Z>0.6),
           log_set(dul:'PhysicalObject', suturo:hasOriginLocation, Shelf))),
     once((has_urdf_name(OriginLocation, 'cupboard:cupboard:table_center'),
-           log_set(dul:'PhysicalObject', suturo:hasOriginLocation, OriginLocation))
+           log_set(dul:'PhysicalObject', suturo:hasDestinationLocation, OriginLocation))
           ;
          (is_table(Table),
-          log_set(dul:'PhysicalObject', suturo:hasOriginLocation, Table))),
+          log_set(dul:'PhysicalObject', suturo:hasDestinationLocation, Table))),
     ros_info('"Serving Breakfast" initialized.', []).
 
 %% init_storing_groceries is det.
