@@ -88,10 +88,16 @@ init_storing_groceries :-
 init_clean_the_table :-
       ros_info('Initializing info for "Clean the Table"...', []),
       activate_challenge(suturo:'CleanTheTable'),
-      has_urdf_name(OriginLocation, 'kitchen_table:kitchen_table:table_center'),
-      log_set(dul:'PhysicalObject', suturo:hasOriginLocation, OriginLocation),
-      has_urdf_name(DestinationLocation, 'dishwasher:dishwasher:dishwasher_tray_bottom'),
-      log_set(dul:'PhysicalObject', suturo:hasDestinationLocation, DestinationLocation),
+      once((has_urdf_name(OriginLocation, 'kitchen_table:kitchen_table:table_center'),
+       log_set(dul:'PhysicalObject', suturo:hasOriginLocation, OriginLocation))
+      ;
+       (is_table(Table),
+        log_set(dul:'PhysicalObject', suturo:hasOriginLocation, Table))),
+      once((has_urdf_name(OriginLocation2, 'dishwasher:dishwasher:dishwasher_tray_bottom'),
+       log_set(dul:'PhysicalObject', suturo:hasOriginLocation, OriginLocation2))
+      ;
+       (is_shelf(DestinationLocation),
+        log_set(dul:'PhysicalObject', suturo:hasOriginLocation, DestinationLocation))),
       ros_info('"Clean the Table" initialized.', []).
 
 init_clean_the_table_no_dishwasher :-
