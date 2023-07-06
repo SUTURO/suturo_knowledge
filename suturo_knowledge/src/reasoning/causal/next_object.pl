@@ -195,7 +195,7 @@ object_cost(Object, Cost) :-
 % @param Objects The objects to calculate the bonus for
 % @param ObjectsBonus The boni for the given objects
 %
-objects_bonus(Objects, ObjectsBonus):-
+objects_bonus(Objects, ObjectsBonus) :-
     findall([Object, Bonus],
         (
             member(Object, Objects),
@@ -203,14 +203,14 @@ objects_bonus(Objects, ObjectsBonus):-
         ),
         ObjectsBonus).
 
-is_serve_breakfast_object(Object):-
+is_serve_breakfast_object(Object) :-
     has_type(Object, soma:'Bowl') ;
     has_type(Object, soma:'CerealBox') ;
     has_type(Object, soma:'MilkBottle') ;
     has_type(Object, soma:'MilkPack') ;
     has_type(Object, soma:'Cutlery').
 
-is_clean_the_table_object(Object):-
+is_clean_the_table_object(Object) :-
     has_type(Object, soma:'Cutlery') ;
     has_type(Object, soma:'Cup') ;
     has_type(Object, soma:'Bowl') ;
