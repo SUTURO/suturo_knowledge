@@ -98,32 +98,19 @@ next_object_serve_breakfast(NextObject) :-
 % @param NextObject The next best object to pick
 %
 find_next_object_serve_breakfast(NothandledObjects, NextObject) :-
-    (
-        % First try to objects relevant for serve breakfast challenge
-        setof([CbRatio, Object],
-            (
-                member(Object, NothandledObjects),
-                is_serve_breakfast_object(Object),
-                object_benefit(Object, Benefit),
-                object_cost(Object, Cost),
-                CbRatio is Benefit / Cost
-            ),
-            SortedPairs0)
-    ->
-        SortedPairs = SortedPairs0
-    ;
-        % If no serve breakfast objects exist, find any objects
-        setof([CbRatio, Object],
-            (
-                member(Object, NothandledObjects),
-                object_benefit(Object, Benefit),
-                object_cost(Object, Cost),
-                CbRatio is Benefit / Cost
-            ),
-            SortedPairs)
-    ),
-    % The last element of SortedPairs is the pair with the highest CbRatio
-    last(SortedPairs, [_BestCbRatio, NextObject]).
+    findall([CbRatio, Object],
+        (
+            member(Object, NothandledObjects),
+            is_serve_breakfast_object(Object),
+            object_benefit(Object, Benefit),
+            object_cost(Object, Cost),
+            CbRatio is Benefit / Cost
+        ),
+        Pairs),
+    sort(Pairs, SortedPairs),
+    (SortedPairs == [] ->
+        ros_warn('No ServeBreakfast objects found in unhandled objects!')
+    ; last(SortedPairs, [_BestCbRatio, NextObject])).
 
 %% next_object_clean_the_table(-NextObject) is nondet.
 %
