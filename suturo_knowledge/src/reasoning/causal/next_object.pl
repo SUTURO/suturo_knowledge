@@ -15,6 +15,9 @@
 :- use_module(library('reasoning/metric/size')).
 :- use_module(library('reasoning/spatial/distance')).
 
+:- rdf_meta(is_semihard_to_handle(r)).
+:- rdf_meta(is_hard_to_handle(r)).
+
 %% next_object(-Object) is nondet.
 %
 % Chooses the next best object to pick based on the current challenge
@@ -71,9 +74,11 @@ find_next_object_storing_groceries(NothandledObjects, NextObject) :-
         setof([CbRatio, Object],
             (
                 member(Object, NothandledObjects),
+                object_bonus(Object, Bonus),
                 object_benefit(Object, Benefit),
                 object_cost(Object, Cost),
-                CbRatio is Benefit / Cost
+                OverallCost is Cost + Bonus,
+                CbRatio is Benefit / OverallCost
             ),
             SortedPairs)
     ),
@@ -210,9 +215,43 @@ objects_bonus(Objects, ObjectsBonus):-
 % @param Bonus The bonus for the given object
 %
 object_bonus(Object, Bonus):-
-    is_tiny(Object)
-    -> Bonus = 500
-    ;  Bonus = 0.
+    is_hard_to_handle(Object) ->
+       Bonus = 500
+    ; is_semihard_to_handle(Object) ->
+       Bonus = 300
+    ; Bonus = 0.
+
+%% is_hard_to_handle(+Object) is semidet.
+%
+% Checks if the given object is hard to handle.
+% TODO: This is quick hardcoded fix for RoboCup 2023
+%
+% @param Object The object to check
+% @return true if the object is hard to handle, false otherwise
+%
+is_hard_to_handle(Object):-
+    has_type(Object, suturo:'Dice') ;
+    has_type(Object, suturo:'Strawberry') ;
+    has_type(Object, suturo:'TunaFishCan') ;
+    has_type(Object, soma:'Plate') ;
+    has_type(Object, suturo:'MiniSoccerBall') ;
+    has_type(Object, suturo:'Banana').
+
+%% is_semihard_to_handle(+Object) is semidet.
+%
+% Checks if the given object is semihard to handle.
+% TODO: This is quick hardcoded fix for RoboCup 2023
+%
+% @param Object The object to check
+% @return true if the object is semi hard to handle, false otherwise
+%
+is_semihard_to_handle(Object):-
+    has_type(Object, suturo:'JuicePack') ;
+    has_type(Object, suturo:'MustardBottle') ;
+    has_type(Object, soma:'Spoon') ;
+    has_type(Object, soma:'Fork') ;
+    has_type(Object, soma:'Bowl') ;
+    has_type(Object, soma:'Knife').
 
 %% distance_to_go(+Object, -Distance) is semidet.
 %
