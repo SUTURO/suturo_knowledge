@@ -31,9 +31,7 @@ next_object(Object) :-
 next_object(Object) :-
     has_type(_, suturo:'ServeBreakfast'),
     !,
-    next_object_storing_groceries(Object).
-    % TODO: Implement algorithm for ServeBreakfast
-    % next_object_serve_breakfast(Object).
+    next_object_serve_breakfast(Object).
 next_object(Object) :-
     has_type(_, suturo:'CleanTheTable'),
     !,
@@ -57,7 +55,7 @@ next_object_storing_groceries(NextObject) :-
 %
 find_next_object_storing_groceries(NothandledObjects, NextObject) :-
     (
-        % First try to find objects with a bonus of 0
+        % First try to find objects with a bonus/penalty of 0
         setof([CbRatio, Object],
             (
                 member(Object, NothandledObjects),
@@ -70,7 +68,7 @@ find_next_object_storing_groceries(NothandledObjects, NextObject) :-
     ->
         SortedPairs = SortedPairs0
     ;
-        % If no objects with a bonus of 0 exist, find objects with any bonus
+        % If no objects with a bonus of 0 exist, find objects with any bonus/penalty
         setof([CbRatio, Object],
             (
                 member(Object, NothandledObjects),
@@ -79,6 +77,48 @@ find_next_object_storing_groceries(NothandledObjects, NextObject) :-
                 object_cost(Object, Cost),
                 OverallCost is Cost + Bonus,
                 CbRatio is Benefit / OverallCost
+            ),
+            SortedPairs)
+    ),
+    % The last element of SortedPairs is the pair with the highest CbRatio
+    last(SortedPairs, [_BestCbRatio, NextObject]).
+
+next_object_serve_breakfast(NextObject) :-
+    objects_not_handled(NothandledObjects),
+    ros_info('Not handled objects: ~w', [NothandledObjects]),
+    find_next_object_serve_breakfast(NothandledObjects, NextObject),
+    set_object_handled(NextObject),
+    !.
+
+%% find_next_object_serve_breakfast(+Objects, -NextObject) is nondet.
+%
+% Chooses the next best object to pick for the ServeBreakfast challenge.
+%
+% @param Objects The objects to choose from
+% @param NextObject The next best object to pick
+%
+find_next_object_serve_breakfast(NothandledObjects, NextObject) :-
+    (
+        % First try to objects relevant for serve breakfast challenge
+        setof([CbRatio, Object],
+            (
+                member(Object, NothandledObjects),
+                is_serve_breakfast_object(Object),
+                object_benefit(Object, Benefit),
+                object_cost(Object, Cost),
+                CbRatio is Benefit / Cost
+            ),
+            SortedPairs0)
+    ->
+        SortedPairs = SortedPairs0
+    ;
+        % If no serve breakfast objects exist, find any objects
+        setof([CbRatio, Object],
+            (
+                member(Object, NothandledObjects),
+                object_benefit(Object, Benefit),
+                object_cost(Object, Cost),
+                CbRatio is Benefit / Cost
             ),
             SortedPairs)
     ),
@@ -206,6 +246,17 @@ objects_bonus(Objects, ObjectsBonus):-
             object_bonus(Object, Bonus)
         ),
         ObjectsBonus).
+
+is_serve_breakfast_object(Object):-
+    has_type(Object, suturo:'Bowl') ;
+    has_type(Object, suturo:'CerealBowl') ;
+    has_type(Object, suturo:'MetalBowl') ;
+    has_type(Object, soma:'CerealBox') ;
+    has_type(Object, suturo:'CerealBoxRoboCup') ;
+    has_type(Object, soma:'MilkBottle') ;
+    has_type(Object, soma:'MilkPack') ;
+    has_type(Object, soma:'Spoon') ;
+    has_type(Object, suturo:'Banana').
 
 %% object_bonus(+Object, -Bonus) is det.
 %
