@@ -57,9 +57,9 @@ is_semantic_map_object(Link) :-
     sub_string(Link,_,_,_,"shelf_floor_");
     sub_string(Link,_,_,_,"shelf_door_");
     sub_string(Link,_,_,_,"bucket_surface_center");
-    sub_string(Link,_,_,_,"dishwasher_tray_bottom");
-    sub_string(Link,_,_,_,"dishwasher_tray_2_bottom");
-    sub_string(Link,_,_,_,"handle")
+    sub_string(Link,_,_,_,"dishwasher:dishwasher_tray_bottom");
+    sub_string(Link,_,_,_,"dishwasher:dishwasher_tray_2_bottom");
+    sub_string(Link,_,_,_,"handle"), \+ sub_string(Link,_,_,_,"dishwasher")
     ),
     !.
 
@@ -95,27 +95,7 @@ init_furniture(UrdfLink) :-
 	(  atom_concat(Prefix, 'table_center', UrdfLink)
 	-> (atom_concat(Prefix, 'table_front_edge_center', ExtraLink),
 		kb_project(has_urdf_name(Furniture, ExtraLink)))
-	;  true),
-    (  atom_concat(Prefix, 'dishwasher_tray_bottom', UrdfLink)
-    -> (atom_concat(Prefix, 'dishwasher_tray_back_side', ExtraLink1),
-        kb_project(has_urdf_name(Furniture, ExtraLink1))),
-        (atom_concat(Prefix, 'dishwasher_tray_front_side', ExtraLink2),
-        kb_project(has_urdf_name(Furniture, ExtraLink2))),
-        (atom_concat(Prefix, 'dishwasher_tray_left_side', ExtraLink3),
-        kb_project(has_urdf_name(Furniture, ExtraLink3))),
-        (atom_concat(Prefix, 'dishwasher_tray_right_side', ExtraLink4),
-        kb_project(has_urdf_name(Furniture, ExtraLink4)))
-    ;  true),
-    (  atom_concat(Prefix, 'dishwasher_tray_2_bottom', UrdfLink)
-    -> (atom_concat(Prefix, 'dishwasher_tray_2_back_side', ExtraLink1),
-        kb_project(has_urdf_name(Furniture, ExtraLink1))),
-        (atom_concat(Prefix, 'dishwasher_tray_2_front_side', ExtraLink2),
-        kb_project(has_urdf_name(Furniture, ExtraLink2))),
-        (atom_concat(Prefix, 'dishwasher_tray_2_left_side', ExtraLink3),
-        kb_project(has_urdf_name(Furniture, ExtraLink3))),
-        (atom_concat(Prefix, 'dishwasher_tray_2_right_side', ExtraLink4),
-        kb_project(has_urdf_name(Furniture, ExtraLink4)))
-    ;  true).
+	;  true).
 
 furniture_pose(UrdfLink, [ObjectFrame, [0,0,0], [0,0,0,1]]) :-
     atom_concat('iai_kitchen/', UrdfLink, ObjectFrame).
@@ -189,6 +169,7 @@ link_name_class(LinkName, Class) :-
     !.
 link_name_class(LinkName, Class) :-
     sub_string(LinkName,_,_,_,"door"),
+    \+sub_string(LinkName,_,_,_,"handle"),
     Class = soma:'Door',
     !.
 link_name_class(LinkName, Class) :-
