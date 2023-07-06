@@ -145,25 +145,23 @@ init_locations_robocup_2023 :-
             is_shelf(Furniture)
           ),
         log_set(suturo:'RoboCupCleaningSupplies', suturo:hasOriginLocation, Furniture)),
-    has_urdf_name(Cabinet, 'cabinet:table:table_center'),
+    has_urdf_name(Cabinet, 'cabinet:cabinet:shelf_floor_1'),
     log_set(suturo:'RoboCupDrinks', suturo:hasOriginLocation, Cabinet),
-    forall(member(X,[0,1,2,3,4,5,6]),
-           (
-               atom_concat('pantry:shelf:shelf_floor_',X,FloorName),
-               has_urdf_name(Floor,FloorName),
-               log_set(suturo:'RoboCupFood', suturo:hasOriginLocation, Floor)
-           )),
-    has_urdf_name(Desk, 'desk:table:table_center'),
+    forall((has_robocup_name(PantryShelf, pantry),
+            is_shelf(PantryShelf)),
+               log_set(suturo:'RoboCupFood', suturo:hasOriginLocation, PantryShelf)
+           ),
+    has_urdf_name(Desk, 'desk:desk:table_center'),
     log_set(suturo:'RoboCupFruits', suturo:hasOriginLocation, Desk),
     forall(member(X,[0,1,2,3]),
            (
-               atom_concat('bookshelf:shelf:shelf_floor_',X,FloorName),
+               atom_concat('bookshelf:bookshelf:shelf_floor_',X,FloorName),
                has_urdf_name(Floor,FloorName),
                log_set(suturo:'RoboCupToys', suturo:hasOriginLocation, Floor)
            )),
     forall(member(X,[1,2]),
            (
-               atomic_list_concat(['side_table',X,':table:table_center'], TableName),
+               atomic_list_concat(['side_table',X,':side_table:table_center'], TableName),
                has_urdf_name(Table, TableName),
                log_set(suturo:'RoboCupSnacks', suturo:hasOriginLocation, Table)
            )),
