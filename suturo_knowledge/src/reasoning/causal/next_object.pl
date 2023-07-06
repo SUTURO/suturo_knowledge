@@ -107,43 +107,21 @@ find_next_object_serve_breakfast(_NothandledObjects, NextObject) :-
 %
 % Chooses the next best object to pick for the CleanTheTable challenge.
 % TODO: Implement optimized algorithm for CleanTheTable
-% This includes then handling of small cutlery like knife, spoons and forks and the DishwasherTab.
 %
 % @param NextObject The next best object to pick
 %
 next_object_clean_the_table(NextObject) :-
-    ignore(( has_type(Object, soma:'DishwasherTab'),
-	     set_object_handled(Object))),
     objects_not_handled(NothandledObjects),
-    findall([Object, CbRatio],
-        (
-            member(Object, NothandledObjects),
-            object_bonus(Object, 500),
-            object_benefit(Object, Benefit),
-            object_cost(Object, Cost),
-            CbRatio is Benefit / Cost
-        ),
-        ObjectsAndCbRatio0
-        ),
-        (
-            ObjectsAndCbRatio0 ==[]
-            ->
-            findall([Object,CbRatio],
-                (member(Object,NothandledObjects),
-                object_benefit(Object, Benefit),
-                object_cost(Object,Cost),
-                CbRatio is Benefit/Cost),
-                ObjectsAndCbRatio)
-            ;   ObjectsAndCbRatio0 = ObjectsAndCbRatio
-        ),
-        (ObjectsAndCbRatio == []
-            ->
-            has_type(NextObject, soma:'DishwasherTab')
-            ;
-            find_best_object(ObjectsAndCbRatio, NextObject),
-            set_object_handled(NextObject)
-        ),
-        !.
+    ros_info('Not handled objects: ~w', [NothandledObjects]),
+    find_next_object_clean_the_table(NothandledObjects, NextObject),
+    set_object_handled(NextObject),
+    !.
+
+find_next_object_clean_the_table(_NothandledObjects, NextObject) :-
+    is_clean_the_table_object(NextObject),
+    kb_call((triple(NextObject, suturo:'hasHandleState', HandleState),
+	         triple(HandleState, suturo:'handled', false))),
+    !.
 
 %% find_best_object(+Objects, -BestObject) is semidet.
 %
@@ -231,6 +209,12 @@ is_serve_breakfast_object(Object):-
     has_type(Object, soma:'MilkBottle') ;
     has_type(Object, soma:'MilkPack') ;
     has_type(Object, soma:'Cutlery').
+
+is_clean_the_table_object(Object):-
+    has_type(Object, soma:'Cutlery') ;
+    has_type(Object, soma:'Cup') ;
+    has_type(Object, soma:'Bowl') ;
+    has_type(Object, soma:'Plate').
 
 %% object_bonus(+Object, -Bonus) is det.
 %
