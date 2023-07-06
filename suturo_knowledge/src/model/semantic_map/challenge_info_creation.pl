@@ -90,7 +90,7 @@ init_clean_the_table :-
       activate_challenge(suturo:'CleanTheTable'),
       has_urdf_name(OriginLocation, 'kitchen_table:kitchen_table:table_center'),
       log_set(dul:'PhysicalObject', suturo:hasOriginLocation, OriginLocation),
-      has_urdf_name(DestinationLocation, 'dishwasher:table:table_center'),
+      has_urdf_name(DestinationLocation, 'dishwasher:dishwasher:dishwasher_tray_bottom'),
       log_set(dul:'PhysicalObject', suturo:hasDestinationLocation, DestinationLocation),
       ros_info('"Clean the Table" initialized.', []).
 
@@ -99,7 +99,7 @@ init_clean_the_table_no_dishwasher :-
       activate_challenge(suturo:'CleanTheTable'),
       has_urdf_name(OriginLocation, 'kitchen_table:kitchen_table:table_center'),
       log_set(dul:'PhysicalObject', suturo:hasOriginLocation, OriginLocation),
-      has_urdf_name(DestinationLocation, 'dishwasher:table:table_center'),
+      has_urdf_name(DestinationLocation, 'dishwasher:dishwasher:table_center'),
       log_set(dul:'PhysicalObject', suturo:hasDestinationLocation, DestinationLocation),
       ros_info('"Clean the Table" initialized.', []).
 
