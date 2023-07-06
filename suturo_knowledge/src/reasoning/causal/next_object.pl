@@ -242,8 +242,7 @@ is_serve_breakfast_object(Object):-
     has_type(Object, suturo:'CerealBoxRoboCup') ;
     has_type(Object, soma:'MilkBottle') ;
     has_type(Object, soma:'MilkPack') ;
-    has_type(Object, soma:'Spoon') ;
-    has_type(Object, suturo:'Banana').
+    has_type(Object, soma:'Spoon').
 
 %% object_bonus(+Object, -Bonus) is det.
 %
