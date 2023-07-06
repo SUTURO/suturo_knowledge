@@ -32,7 +32,7 @@
 init_serve_breakfast :-
     ros_info('Initializing info for "Serving Breakfast"...', []),
     activate_challenge(suturo:'ServeBreakfast'),
-    once((has_urdf_name(OriginLocation, 'pantry:shelf:shelf_floor_1'),
+    once((has_urdf_name(OriginLocation, 'pantry:shelf:shelf_floor_2'),
            log_set(dul:'PhysicalObject', suturo:hasOriginLocation, OriginLocation))
           ;
          ((is_shelf(Shelf),
