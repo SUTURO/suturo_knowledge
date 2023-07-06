@@ -84,8 +84,8 @@ find_next_object_storing_groceries(NothandledObjects, NextObject) :-
     last(SortedPairs, [_BestCbRatio, NextObject]).
 
 next_object_serve_breakfast(NextObject) :-
-    objects_not_handled(NothandledObjects),
-    ros_info('Not handled objects: ~w', [NothandledObjects]),
+    %% objects_not_handled(NothandledObjects),
+    %% ros_info('Not handled objects: ~w', [NothandledObjects]),
     find_next_object_serve_breakfast(NothandledObjects, NextObject),
     set_object_handled(NextObject),
     !.
@@ -97,20 +97,11 @@ next_object_serve_breakfast(NextObject) :-
 % @param Objects The objects to choose from
 % @param NextObject The next best object to pick
 %
-find_next_object_serve_breakfast(NothandledObjects, NextObject) :-
-    findall([CbRatio, Object],
-        (
-            member(Object, NothandledObjects),
-            is_serve_breakfast_object(Object),
-            object_benefit(Object, Benefit),
-            object_cost(Object, Cost),
-            CbRatio is Benefit / Cost
-        ),
-        Pairs),
-    sort(Pairs, SortedPairs),
-    (SortedPairs == [] ->
-        ros_warn('No ServeBreakfast objects found in unhandled objects!')
-    ; last(SortedPairs, [_BestCbRatio, NextObject])).
+find_next_object_serve_breakfast(_NothandledObjects, NextObject) :-
+    is_serve_breakfast_object(NextObject),
+    kb_call((triple(NextObject, suturo:'hasHandleState', HandleState),
+	         triple(HandleState, suturo:'handled', false))),
+    !.
 
 %% next_object_clean_the_table(-NextObject) is nondet.
 %
@@ -235,14 +226,11 @@ objects_bonus(Objects, ObjectsBonus):-
         ObjectsBonus).
 
 is_serve_breakfast_object(Object):-
-    has_type(Object, suturo:'Bowl') ;
-    has_type(Object, suturo:'CerealBowl') ;
-    has_type(Object, suturo:'MetalBowl') ;
+    has_type(Object, soma:'Bowl') ;
     has_type(Object, soma:'CerealBox') ;
-    has_type(Object, suturo:'CerealBoxRoboCup') ;
     has_type(Object, soma:'MilkBottle') ;
     has_type(Object, soma:'MilkPack') ;
-    has_type(Object, soma:'Spoon').
+    has_type(Object, soma:'Cutlery').
 
 %% object_bonus(+Object, -Bonus) is det.
 %
