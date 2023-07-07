@@ -4,7 +4,6 @@
             init_serve_breakfast/0,
             init_storing_groceries/0,
             init_clean_the_table/0,
-	        init_clean_the_table_no_dishwasher/0,
             init_gpsr/0,
             init_locations_robocup_2023/0,
             init_predefined_names_robocup_2023/0
