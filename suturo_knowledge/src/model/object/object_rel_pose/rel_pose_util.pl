@@ -23,6 +23,7 @@ dir_size('-x', box(Size,_,_), Size) :- !.
 dir_size('+x', box(Size,_,_), Size) :- !.
 dir_size('-y', box(_,Size,_), Size) :- !.
 dir_size('+y', box(_,Size,_), Size) :- !.
+dir_size(_, cylinder(Size,_), Size) :- !.
 
 %% rotate_dir(+DirIn, -DirOut) is semidet.
 %% rotate_dir(?DirIn, ?DirOut) is nondet.
