@@ -1,9 +1,15 @@
 $(document).ready(function () {
 
+    // Set the branch to use for the SUTURO objects source files
+    var branch = "master";
+    // Set the relative path to the owl2anything output folder
+    var relativeFolderPath = "owl2anything/output";
+    var repoFolderPath = `docs/objects/${relativeFolderPath}`;
+
     // Initialize SUTURO objects table (if present)
     if ($('#objects-csv-table').length) {
         $.ajax({
-            url: "owl2anything/output/suturo_objects.csv",
+            url: `${relativeFolderPath}/suturo_objects.csv`,
             dataType: "text",
             success: function (data) {
 
@@ -45,7 +51,7 @@ $(document).ready(function () {
     // Set the last update date of the SUTURO objects table (if present)
     if ($('#objects-last-update').length) {
         $.ajax({
-            url: 'https://api.github.com/repos/SUTURO/suturo_knowledge/commits?sha=robocup&path=docs/objects/owl2anything/output/',
+            url: `https://api.github.com/repos/SUTURO/suturo_knowledge/commits?sha=${branch}&path=${repoFolderPath}`,
             success: function (result) {
                 // Find the last commit that was made by the owl2anything workflow (Always starts with "Updated SUTURO Objects to", followed by the commit hash)
                 const commit = result.find(commit => commit.commit.message.match(/Updated SUTURO Objects to [a-f0-9]{7}/));
@@ -72,12 +78,9 @@ $(document).ready(function () {
         // Array of supported file formats for direct view in browser
         var supportetBrowserFormat = [".txt", ".json"];
 
-        var repoFolderPath = "docs/objects/owl2anything/output";
-        var relativeFolderPath = "owl2anything/output/";
-
         // Use GitHub API to fetch all files from the owl2anything output
         $.ajax({
-            url: `https://api.github.com/repos/SUTURO/suturo_knowledge/contents/${repoFolderPath}?ref=robocup`,
+            url: `https://api.github.com/repos/SUTURO/suturo_knowledge/contents/${repoFolderPath}?ref=${branch}`,
             success: function (data) {
 
                 // Filter and sort the files
