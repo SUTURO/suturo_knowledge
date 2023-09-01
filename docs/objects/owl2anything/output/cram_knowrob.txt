@@ -3,7 +3,7 @@
 	(:plasticknife
 	 "http://www.ease-crc.org/ont/SUTURO.owl#PlasticKnife")
 	(:designedchair
-	 "http://www.ease-crc.org/ont/SOMA-HOME.owl#DesignedChair")
+	 "http://www.ease-crc.org/ont/SOMA.owl#DesignedChair")
 	(:cupboard
 	 "http://www.ease-crc.org/ont/SOMA.owl#Cupboard")
 	(:foambrick
@@ -17,7 +17,7 @@
 	(:bleachcleanserbottle
 	 "http://www.ease-crc.org/ont/SUTURO.owl#BleachCleanserBottle")
 	(:kitchencabinet
-	 "http://www.ease-crc.org/ont/SOMA-HOME.owl#KitchenCabinet")
+	 "http://www.ease-crc.org/ont/SOMA.owl#KitchenCabinet")
 	(:crackerbox
 	 "http://www.ease-crc.org/ont/SUTURO.owl#CrackerBox")
 	(:minisoccerball
