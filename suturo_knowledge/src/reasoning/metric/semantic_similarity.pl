@@ -5,6 +5,8 @@
 :- module(semantic_similarity,
 	  [
         most_similar_object(r,+,-),
+        most_similar_object(r,+,-,-),
+        sort_by_similarity(r,t,-),
         wu_palmer_similarity(r,r,-),
         lcs(r,r,-),
         superclasses(r,-),
@@ -25,6 +27,8 @@
 		  ros_warn/2
 	      ]).
 
+:- use_module(library(pairs), [pairs_values/2]).
+
 %% most_similar_object(+Object, +InputObjects, -MostSimilarObject) is semidet.
 %
 % Finds the most similar object to the given object from a list of objects.
@@ -35,25 +39,71 @@
 % @param MostSimilarObject The object instance from the list that is most similar to the given object.
 %
 most_similar_object(Object, InputObjects, MostSimilarObject) :-
+    most_similar_object(Object, InputObjects, MostSimilarObject, _Similarity).
+
+%% most_similar_object(+Object, +InputObjects, -MostSimilarObject, -Similarity, -ThresholdReached) is semidet.
+%
+% Finds the most similar object to the given object from a list of objects.
+% The similarity is calculated using the Wu-Palmer similarity measure.
+%
+% @param Object The IRI or abbreviated name of the object instance.
+% @param InputObjects A list of object instances to compare the given object to.
+% @param MostSimilarObject The object instance from the list that is most similar to the given object.
+% @param Similarity The similarity between the given object and the most similar object.
+% @param ThresholdReached True if the similarity is above the threshold for Storing Groceries Challenge (>=0.8), false otherwise.
+%
+most_similar_object(Object, InputObjects, MostSimilarObject, Similarity) :-
+    has_type(Object, ClassA),
+    most_similar_object_helper(InputObjects, ClassA, 0-_, Similarity-MostSimilarObject).
+
+%% most_similar_object_helper(+InputObjects, +ClassA, +MaxSimilarity-MaxSimilarObject, -Result) is det.
+%
+% Helper predicate to find the most similar object to the given object from a list of objects.
+%
+% If the similarity is 1.0, it immediately returns the current object as the most similar one (early termination).
+% If the similarity of the current object (Similarity) is higher than the maximum similarity found so far (MaxSimilarity),
+% it updates the maximum similarity and the most similar object (MaxSimilarity-MaxSimilarObject).
+% Otherwise, it continues to the next object in the list without updating the maximum similarity and object.
+%
+% @param InputObjects A list of object instances to compare the given object to.
+% @param ClassA The class of the given object.
+% @param MaxSimilarity-MaxSimilarObject The maximum similarity and most similar object found so far.
+% @param Result The max similarity and object from the list.
+%
+most_similar_object_helper([], _, MaxSimilarObject, MaxSimilarObject).
+most_similar_object_helper([InputObject|Rest], ClassA, MaxSimilarity-MaxSimilarObject, Result) :-
+    has_type(InputObject, ClassB),
+    wu_palmer_similarity(ClassA, ClassB, Similarity),
+    (Similarity = 1.0 -> Result = 1.0-InputObject
+    ; Similarity > MaxSimilarity -> most_similar_object_helper(Rest, ClassA, Similarity-InputObject, Result)
+    ; most_similar_object_helper(Rest, ClassA, MaxSimilarity-MaxSimilarObject, Result)
+    ).
+
+%% sort_by_similarity(+Object,+InputObjects,-SortedInputObjects) is det.
+%
+% Like most_similar_object, but returns all inputs, sorted by similarity.
+% The most similar object will be the first element of the output list.
+% if an "object" in the list does not have a type, it is treated as similarity 0.
+sort_by_similarity(Object,InputObjects,SortedInputObjects) :-
     has_type(Object, ClassA),
     findall(
         Similarity-InputObject,
         (
             member(InputObject, InputObjects),
-            has_type(Object, ClassB),
-            wu_palmer_similarity(ClassA, ClassB, Similarity)
+            (  has_type(InputObject, ClassB)
+            -> wu_palmer_similarity(ClassA, ClassB, Similarity)
+            ;  Similarity = 0)
         ),
         SimilaritiesAndObjects
     ),
-    sort(SimilaritiesAndObjects, SortedSimilaritiesAndObjects),
-    reverse(SortedSimilaritiesAndObjects, DescendingSimilaritiesAndObjects),
-    DescendingSimilaritiesAndObjects = [_-MostSimilarObject|_].
+    sort(1, @>=, SimilaritiesAndObjects, DescendingSimilaritiesAndObjects),
+    pairs_values(DescendingSimilaritiesAndObjects,SortedInputObjects).
 
 %% wu_palmer_similarity(+ClassA, +ClassB, -Similarity) is semidet.
 %
 % Calculates the Wu-Palmer similarity between two classes.
 % The similarity can be 0 < similarity <= 1.
-% The similarity can never be zero because the depth of the LCS is never zero (the depth of the root of taxonomy is one). 
+% The similarity can never be zero because the depth of the LCS is never zero (the depth of the root of taxonomy is one).
 %
 % @param ClassA One of the two classes
 % @param ClassB Second of the two classes
@@ -67,7 +117,7 @@ wu_palmer_similarity(ClassA, ClassB, MaxSimilarity) :-
 %
 % Helper predicate to find all possible LCSs and calculate the similarity for each of them.
 %
-find_wu_palmer_similarity(ClassA, ClassA, 1) :- 
+find_wu_palmer_similarity(ClassA, ClassA, 1) :-
     !.
 find_wu_palmer_similarity(ClassA, ClassB, Similarity) :-
     % Get the least common subsumer (LCS)
@@ -129,20 +179,6 @@ find_superclass(Class, SuperClass) :-
     ;   find_superclass(DirectSuperClass, SuperClass)
     ).
 
-%% subclasses(+Class, -SubClasses) is det.
-%
-% Finds all direct and indirect subclasses of the given class.
-% Blank nodes are excluded from the results.
-%
-% @param Class The IRI or abbreviated name of the class.
-% @param SubClasses A list of all direct and indirect subclasses
-%
-subclasses(Class, SubClasses) :-
-    setof(SubClass, (
-        subclass_of(SubClass, Class),
-        \+ is_bnode(SubClass)
-    ), SubClasses).
-
 %% direct_superclasses(+Class, -DirectSuperClasses) is det.
 %
 % Finds all direct superclasses of the given class.
@@ -156,6 +192,20 @@ direct_superclasses(Class, DirectSuperClasses) :-
         subclass_of(Class, SuperClass),
         \+ is_bnode(SuperClass)
     ), DirectSuperClasses).
+
+%% subclasses(+Class, -SubClasses) is det.
+%
+% Finds all direct and indirect subclasses of the given class.
+% Blank nodes are excluded from the results.
+%
+% @param Class The IRI or abbreviated name of the class.
+% @param SubClasses A list of all direct and indirect subclasses
+%
+subclasses(Class, SubClasses) :-
+    setof(SubClass, (
+        subclass_of(SubClass, Class),
+        \+ is_bnode(SubClass)
+    ), SubClasses).
 
 %% direct_subclasses(+Class, -DirectSubClasses) is det.
 %
@@ -179,7 +229,7 @@ direct_subclasses(Class, DirectSubClasses) :-
 % The root of the ontology is a class that has no superclasses. This is usually dul:'Entity' with a depth of 1.
 %
 % @param Class The IRI or abbreviated name of the class.
-% @param Depths A list of all depth levels of the given class, each represented by an integer.
+% @param Depths A sorted list (ascending) of all depth levels of the given class, each represented by an integer.
 %
 class_depths(Class, Depths) :-
     setof(Depth, find_class_depth(Class, [], Depth), Depths).

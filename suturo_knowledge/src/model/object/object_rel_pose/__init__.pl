@@ -4,3 +4,4 @@
 :- ensure_loaded('object_perceive_pose').
 :- ensure_loaded('object_place_pose').
 :- ensure_loaded('object_rel_pose').
+:- ensure_loaded('object_destination_pose').

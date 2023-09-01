@@ -36,8 +36,8 @@
 	 "http://www.ease-crc.org/ont/SUTURO.owl#Napkin")
 	(:mustardbottle
 	 "http://www.ease-crc.org/ont/SUTURO.owl#MustardBottle")
-	(:puddingbox
-	 "http://www.ease-crc.org/ont/SUTURO.owl#PuddingBox")
+	(:jellochocolatepuddingbox
+	 "http://www.ease-crc.org/ont/SUTURO.owl#JellOChocolatePuddingBox")
 	(:door
 	 "http://www.ease-crc.org/ont/SOMA.owl#Door")
 	(:servingmat
@@ -148,3 +148,33 @@
 	 "http://www.ease-crc.org/ont/SUTURO.owl#TeaBagBox")
 	(:pastrybox
 	 "http://www.ease-crc.org/ont/SUTURO.owl#PastryBox")
+	(:pear
+	 "http://www.ease-crc.org/ont/SUTURO.owl#Pear")
+	(:lemon
+	 "http://www.ease-crc.org/ont/SUTURO.owl#Lemon")
+	(:banana
+	 "http://www.ease-crc.org/ont/SUTURO.owl#Banana")
+	(:pottedmeatcan
+	 "http://www.ease-crc.org/ont/SUTURO.owl#PottedMeatCan")
+	(:peach
+	 "http://www.ease-crc.org/ont/SUTURO.owl#Peach")
+	(:plum
+	 "http://www.ease-crc.org/ont/SUTURO.owl#Plum")
+	(:winebottle
+	 "http://www.ease-crc.org/ont/SOMA.owl#WineBottle")
+	(:juicepack
+	 "http://www.ease-crc.org/ont/SUTURO.owl#JuicePack")
+	(:colacan
+	 "http://www.ease-crc.org/ont/SUTURO.owl#ColaCan")
+	(:tropicaljuicebottle
+	 "http://www.ease-crc.org/ont/SUTURO.owl#TropicalJuiceBottle")
+	(:milkbottle
+	 "http://www.ease-crc.org/ont/SOMA.owl#MilkBottle")
+	(:iceteabottle
+	 "http://www.ease-crc.org/ont/SUTURO.owl#IceTeaBottle")
+	(:orangejuicebox
+	 "http://www.ease-crc.org/ont/SUTURO.owl#OrangeJuiceBox")
+	(:rubikscube
+	 "http://www.ease-crc.org/ont/SUTURO.owl#RubiksCube")
+	(:cerealboxrobocup
+	 "http://www.ease-crc.org/ont/SUTURO.owl#CerealBoxRoboCup")

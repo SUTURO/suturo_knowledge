@@ -24,9 +24,27 @@ object_perceive_pose(Object, Options, [Frame, Pos, Rotation]) :-
     !.
 
 perceive_distance(Object, PerceiveDistance) :-
-    kb_call(is_shelf(Object)),
+    ( kb_call(has_type(Object, soma:'Cupboard'))
+    ; kb_call(has_type(Object, soma:'Shelf'))),
+    has_type(_, suturo:'ServeBreakfast'),
+    !,
+    % in serve breakfast, the robot doesn't perceive the shelf,
+    % but just places stuff on top of it.
+    % to make placing faster, go nearer to it.
+    PerceiveDistance = 0.7.
+
+perceive_distance(Object, PerceiveDistance) :-
+    ( kb_call(has_type(Object, soma:'Cupboard'))
+    ; kb_call(has_type(Object, soma:'Shelf'))),
     !,
     % TODO don't hardcode these
-    PerceiveDistance = 1.06.
+    PerceiveDistance = 1.19.
+
+perceive_distance(Object, PerceiveDistance) :-
+    has_robocup_name(Object, storing_groceries_table),
+    !,
+    % TODO don't hardcode these
+    PerceiveDistance = 0.9.
+
 
 perceive_distance(_Object, 0.67).

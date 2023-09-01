@@ -25,9 +25,14 @@
 :- use_directory('model').
 :- use_directory('reasoning').
 
-:- ros_param_get_string("/suturo_room_viz/urdf_param", Param),
-   load_urdf_from_param(Param).
+:- once((  ros_param_get_string("/suturo_room_viz/urdf_param", Param),
+           load_urdf_from_param(Param)
+        ;  ros_warn('No semantic map loaded!'))).
 
 :- tf_logger_enable.
 
+% init the rooms before the furniture to make sure the furniture
+% is assigned its room.
+:- init_rooms.
+:- init_predefined_names_robocup_2023.
 :- init_semantic_map.

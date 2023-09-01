@@ -45,7 +45,7 @@ $(document).ready(function () {
     // Set the last update date of the SUTURO objects table (if present)
     if ($('#objects-last-update').length) {
         $.ajax({
-            url: 'https://api.github.com/repos/SUTURO/suturo_knowledge/commits?sha=master&path=docs/objects/owl2anything/output/',
+            url: 'https://api.github.com/repos/SUTURO/suturo_knowledge/commits?sha=robocup&path=docs/objects/owl2anything/output/',
             success: function (result) {
                 // Find the last commit that was made by the owl2anything workflow (Always starts with "Updated SUTURO Objects to", followed by the commit hash)
                 const commit = result.find(commit => commit.commit.message.match(/Updated SUTURO Objects to [a-f0-9]{7}/));
@@ -77,7 +77,7 @@ $(document).ready(function () {
 
         // Use GitHub API to fetch all files from the owl2anything output
         $.ajax({
-            url: `https://api.github.com/repos/SUTURO/suturo_knowledge/contents/${repoFolderPath}?ref=master`,
+            url: `https://api.github.com/repos/SUTURO/suturo_knowledge/contents/${repoFolderPath}?ref=robocup`,
             success: function (data) {
 
                 // Filter and sort the files

@@ -1,6 +1,8 @@
 %% This file contains all the types of recognized furniture
 :- module(furniture_types,
 	  [
+	      is_kitchen_table(r),
+	      is_dining_table(r),
 	      is_table(r),
 	      is_shelf(r),
 	      is_drawer(r)
@@ -21,6 +23,11 @@
 is_table(Table) ?+>
     is_type(Table, soma:'Table').
 
+is_kitchen_table(Table) ?+>
+    is_type(Table, suturo:'KitchenTable').
+is_dining_table(Table) ?+>
+    is_type(Table, suturo:'DiningTable').
+
 %% is_shelf(+Shelf) is det.
 %
 % Wrapper around is_type that also creates an iri on projection if Shelf is a variable.
@@ -28,7 +35,7 @@ is_table(Table) ?+>
 % @param Shelf The shelf to check.
 %
 is_shelf(Shelf) ?+>
-    is_type(Shelf, soma:'Shelf').
+    is_type(Shelf, suturo:'Shelf').
 
 %% is_drawer(+Drawer) is det.
 %

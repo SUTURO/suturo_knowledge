@@ -2,16 +2,26 @@
 	[
 		create_object(-,r,+),
 	    create_object(-,r,+,+),
-        assert_relative_position(r,+)
+        assert_relative_position(r,+),
+        update_relative_position(r,+)
 	]).
 
 :- rdf_meta(shape_class(+,r)).
+:- rdf_meta(create_new_object(-,r,+,+)).
 
-:- use_module(library('util/util'), 
+:- use_module(library('util/util'),
     [
         from_current_scope/1,
         default_value/2
     ]).
+
+:- use_module(library('model/rooms/room_relations'),
+              [ is_inside_of/2
+              ]).
+
+:- use_module(library('reasoning/spatial/room_spatial'),
+              [ check_inside_room/2
+              ]).
 
 %% create_object(-Object, +Type, +PoseStamped) is det.
 %
@@ -32,18 +42,25 @@ create_object(Object, Type, PoseStamped) :-
 % - shape(ShapeTerm)
 % - data_source(DataSource) (should be either perception or semantic_map, as described in [object_model.md](../../../object_model.md)
 % - confidence_value(ConfidenceValue) (Confidence is between 0 and 1)
-create_object(Object, Type, [Frame, [X,Y,Z], [RX,RY,RZ,RW]], Options) :-
+create_object(Object, Type, PoseStamped, Options) :-
+	(  %% if semantic map data triggers update, the startup hangs on has_type(_, soma:'Table').
+	   %% idk why, but it also makes sense to only try updating with perception data.
+	   option(data_source(perception), Options, perception),
+	   update_existing_object(Object, Type, PoseStamped)
+	-> true
+	;  create_new_object(Object, Type, PoseStamped, Options)).
+	%create_new_object(Object, Type, PoseStamped, Options).
+
+create_new_object(Object, Type, [Frame, [X,Y,Z], [RX,RY,RZ,RW]], Options) :-
     from_current_scope(Scope),
     kb_project(is_type(Object, Type), Scope),
     tf_set_pose(Object, [Frame, [X,Y,Z], [RX,RY,RZ,RW]], Scope),
     option(shape(Shape), Options, none),
     assert_shape(Object, Shape, Scope, SR),
     option(data_source(DataSource), Options, perception),
-    (  DataSource == perception
-       % ignore, because maybe object is not above any furniture
-    -> ignore(assert_relative_position(Object, Scope))
-    ;  true),
     kb_project(triple(Object, suturo:hasDataSource, DataSource), Scope),
+    % update_relative_position has to come after setting the data source.
+    update_relative_position(Object, Scope),
 	option(confidence_value(ConfidenceValue), Options, 1),
     kb_project(triple(Object, suturo:hasConfidenceValue, ConfidenceValue), Scope),
     kb_project((new_iri(HandleState),
@@ -52,6 +69,24 @@ create_object(Object, Type, [Frame, [X,Y,Z], [RX,RY,RZ,RW]], Options) :-
     % doesn't work currently, see https://github.com/knowrob/knowrob/issues/371 for more information.
     %assert_origin(SR, Scope),
     !.
+
+%% update_existing_object(-Object, +Type, +PoseStamped) is det.
+%
+% check if there is already an object of that type near that Pose (in 0.10 m distance)
+% if there is one, Object is unified with that iri, otherwise Object is not touched.
+update_existing_object(Object, Type, [Frame, Pos, Rot]) :-
+	has_type(Other, Type),
+	triple(Other, suturo:hasDataSource, _DataSource),
+	(  has_type(_,suturo:'ServeBreakfast')
+	-> true
+	;  (kb_call(is_at(Other,[Frame, Pos2, _])),
+		euclidean_distance(Pos, Pos2, Distance),
+		Distance < 0.05)
+	),
+	Object = Other,
+	from_current_scope(Scope),
+	% TODO: Merge other data
+	tf_set_pose(Object, [Frame, Pos, Rot], Scope).
 
 assert_shape(_Object, none, _Scope, _SR) :- !.
 assert_shape(Object, ShapeTerm, Scope, SR) :-
@@ -94,6 +129,16 @@ assert_shape_region(SR, sphere(Radius), Scope) :-
 	kb_project(triple(SR, soma:hasRadius, Radius), Scope),
 	!.
 
+update_relative_position(Object, Scope) :-
+    kb_unproject(triple(Object, soma:isOntopOf, _)),
+    %% kb_unproject doesn't work with the is_inside_of predicate
+    kb_unproject(triple(Object, soma:isInsideOf, _)),
+    (  triple(Object, suturo:hasDataSource, perception)
+       % ignore, because maybe object is not above any furniture
+    -> ignore(assert_relative_position(Object, Scope))
+    ;  true),
+    ignore(assert_inside_room(Object, Scope)).
+
 assert_relative_position(Object, Scope) :-
     findall([Furniture, Distance],
             % only objects of the semantic map can be stood on
@@ -103,7 +148,13 @@ assert_relative_position(Object, Scope) :-
     maplist(nth0(1), Furnitures, Distances),
     min_list(Distances, MinumumDistance),
     member([Furniture,MinumumDistance], Furnitures),
-    kb_project(triple(Object, soma:isOntopOf, Furniture), Scope).
+    kb_project(triple(Object, soma:isOntopOf, Furniture), Scope),
+    ros_info('~w is ontop of ~w', [Object, Furniture]).
+
+assert_inside_room(Object, Scope) :-
+    forall((is_room(Room),
+            check_inside_room(Object, Room)),
+           kb_project(is_inside_of(Object, Room),Scope)).
 
 suturo_is_ontop_of(Object, Furniture, Distance) :-
     object_shape_workaround(Furniture, Frame, ShapeTerm, [_, [XX, YY, ZZ], _], _),
@@ -116,11 +167,13 @@ suturo_is_ontop_of(Object, Furniture, Distance) :-
     % X and Y have to be above the area of the table.
     % so between center + diameter / 2 and center - diameter / 2.
     % center is at -offset
-    X =< -XX + DX/2,
-    X >= -XX - DX/2,
-    Y =< -YY + DY/2,
-    Y >= -YY - DY/2,
+    % since localization is a bit off, allow 10cm leeway
+    Extra = 0.10,
+    X =< -XX + DX/2 + Extra,
+    X >= -XX - DX/2 - Extra,
+    Y =< -YY + DY/2 + Extra,
+    Y >= -YY - DY/2 - Extra,
     % Z has to be above
     % this code assumes that the frame is at the top center of the furniture.
-    Z >= ZZ,
+    Z >= ZZ - Extra/2,
     Distance is Z + ZZ.

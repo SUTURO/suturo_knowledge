@@ -92,6 +92,25 @@ Object: http://www.ease-crc.org/ont/SOMA.owl#CerealBox_LTKIUPNG.
 Object: http://www.ease-crc.org/ont/SOMA.owl#CerealBox_BHVKCONR.
 ```
 
+### Query an object
+
+To get existing objects for a class/type.
+
+```prolog
+has_type(-Object, +Class) is nondet.
+```
+
+Example:
+```prolog
+has_type(Object, 'http://www.ease-crc.org/ont/SOMA.owl#CerealBox').
+Object: http://www.ease-crc.org/ont/SOMA.owl#CerealBox_LTKIUPNG.
+
+has_type(Object, 'http://www.ease-crc.org/ont/SUTURO.owl#Apple').
+Object: http://www.ease-crc.org/ont/SUTURO.owl#Apple_LTKIUPNG ;
+Object: http://www.ease-crc.org/ont/SUTURO.owl#Apple_KFJSNPNG ;
+Object: http://www.ease-crc.org/ont/SUTURO.owl#Apple_KLDJKPNG.
+```
+
 ### Pose and shape information
 
 To get or set the pose of an object, use the following predicate.  
@@ -131,6 +150,13 @@ ShapeTerm: {'term': ['box', 0.1, 0.1, 0.1]}.
 Note that this is not the format you will see in lisp, there the `term` stuff is probably translated to a lispier structure, like `(box 0.1 0.1 0.1)`.
 There might be a better predicate for this in the future, and the blanks in the pose might be a real position and rotation in the future. The `_` indicates that there is no value for this place.
 
+### Sorting objects by position
+```prolog
+sort_right_to_left(+RefereceFrame, +Objects, -SortedObjects) is det.
+```
+Sort a list of objects from right to left (on the y axis from - to +)
+relative to the reference frame.
+
 ### Poses for robot interaction
 
 Gets a position relative to the object based on the type of relation.
@@ -167,6 +193,46 @@ Pose: ['iai_kitchen/shelf:shelf:shelf_base_center', [0.0, -0.1, 0.51], [0.0, 0.0
 
 For more details, see [`src/model/object/object_rel_pose/README.md`](src/model/object/object_rel_pose/README.md).
 
+### Predefined object names
+
+To get the predefined RoboCup name of an object or class or the object class of a RoboCup name, use the following predicates.
+
+```prolog
+has_predefined_name(?Class, ?Name) is nondet.
+object_has_predefined_name(?Object, ?Name) is nondet.
+```
+
+Example:
+```prolog
+?- has_predefined_name(Class, 'tomato soup').
+Class: 'http://www.ease-crc.org/ont/SUTURO.owl#TomatoSoupCan'.
+
+?- has_predefined_name(soma:'WineBottle', Name).
+Name: red wine.
+
+?- object_has_predefined_name('http://www.ease-crc.org/ont/SUTURO.owl#CerealBoxRoboCup_PCMOTGKZ', Name).
+Name: cornflakes.
+
+?- object_has_predefined_name(Object, snacks).
+Object: 'http://www.ease-crc.org/ont/SUTURO.owl#CerealBoxRoboCup_PCMOTGKZ'.
+```
+### Robocup Names
+```prolog
+has_robocup_name(?Furniture, ?Name) is nondet.
+```
+
+Example:
+```prolog
+?- has_robocup_name(X,kitchen_table).
+X: 'http://www.ease-crc.org/ont/SUTURO.owl#KitchenTable_DJXSUEFR'.
+
+?- has_robocup_name('http://www.ease-crc.org/ont/SOMA.owl#Table_WZOPHBCM',Y).
+Y: bed.
+```
+
+Get the knowledge\_role assigned to a furniture in the semantic map.
+Make sure that the knowledge\_role in there matches the robocup name.
+
 ### Predefined object locations
 
 Get the predefined origin and destination location of object classes.
@@ -181,6 +247,7 @@ predefined_destination_location(+Class, -DestinationLocation) is nondet.
     For `Serving Breakfast` the predicate `init_serve_breakfast.` has to be called first to load/initialize the challenge specific predefined locations.
     For `Storing Groceries` the predicate `init_storing_groceries.`.
     For `Clean the Table` the predicate `init_clean_the_table.`.
+	For `GPSR` the predicate `init_gpsr.`.
 
 Example:
 ```prolog
@@ -216,6 +283,32 @@ Example:
 Object: 'http://www.ease-crc.org/ont/SUTURO.owl#Banana_WRQHESGO'.
 ```
 
+**Object handled state**
+
+To update the handled state of an object and remove or add it to the possible next objects, use the following predicates:
+
+Set objects to `handled=true`
+```prolog
+set_object_handled(+Object) is det.
+```
+
+Example:
+```prolog
+?- set_object_handled(http://www.ease-crc.org/ont/SUTURO.owl#Banana_WRQHESGO).
+true.
+```
+
+Set objects to `handled=false`
+```prolog
+set_object_not_handled(+Object) is det.
+```
+
+Example:
+```prolog
+?- set_object_not_handled(http://www.ease-crc.org/ont/SUTURO.owl#Banana_WRQHESGO).
+true.
+```
+
 ### Semantic similarity measure
 
 The semantic similarity measure is useful for sorting and grouping objects by similarity or category.
@@ -223,9 +316,11 @@ The semantic similarity measure is useful for sorting and grouping objects by si
 #### Most similar object
 
 Finds the most similar object to the given object from a list of input objects.
+May also find the similarity between the objects and if the similarity is above a given threshold for the `Storing Groceries` challenge.
 
 ```prolog	
 most_similar_object(+Object, +InputObjects, -MostSimilarObject) is semidet.
+most_similar_object(+Object, +InputObjects, -MostSimilarObject, -Similarity, -ThresholdReached) is semidet.
 ```
 
 Example:
@@ -233,6 +328,11 @@ Example:
 ?- most_similar_object('http://www.ease-crc.org/ont/SUTURO.owl#Strawberry_FDMTIOJK', ['http://www.ease-crc.org/ont/SOMA.owl#CerealBox_QHUCMGZP', 'http://www.ease-crc.org/ont/SUTURO.owl#Banana_WRQHESGO', 'http://www.ease-crc.org/ont/SOMA.owl#Knife_SZIFXLCO'], Object).
 
 Object: 'http://www.ease-crc.org/ont/SUTURO.owl#Banana_WRQHESGO'.
+
+?- most_similar_object('http://www.ease-crc.org/ont/SUTURO.owl#Strawberry_PQWNGBUF', ['http://www.ease-crc.org/ont/SOMA.owl#CerealBox_VKPYRUIM', 'http://www.ease-crc.org/ont/SUTURO.owl#Tuna_UGDMHTNP'], Object, Similarity, Threshold).
+Object: 'http://www.ease-crc.org/ont/SUTURO.owl#Tuna_UGDMHTNP',
+Similarity: 0.75,
+Threshold: False.
 ```
 
 #### Wu-Palmer similarity
@@ -249,7 +349,19 @@ Example:
 Similarity: 0.875.
 ```
 
+## Rooms
+
+See [the rooms readme](../suturo_knowledge/src/model/rooms/README.md).
+
 ## Utils
+
+### Resetting the data
+Delete all objects, what challenge was initiliazied, etc
+and initialize the semantic map furnitures again.
+
+```prolog
+reset_user_data
+```
 
 ### Getting the object for a link name
 This is useful for getting data about specific environment furniture, for example the tall table.

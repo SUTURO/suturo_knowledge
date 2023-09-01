@@ -10,7 +10,8 @@
         ros_warn(+,+),
         ros_error(+,+),
         ros_debug(+,+),
-        default_value(?,+)
+        default_value(?,+),
+        log_result(:,+,+)
 	  ]).
 
 :- use_module(library('semweb/rdf_db')).
@@ -47,13 +48,13 @@ default_value(Term, DefaultValue) :-
 
 
 % split_iri(+IRI, -Prefix, -ClassIdentifier)
-% 
+%
 % Splits an IRI of the form <OntologyURI>#<ClassIdentifier> into the prefix part and the class identifier.
-% 
+%
 % @param IRI The IRI to split
 % @param OntologyURI The prefix part of the IRI, usually the namespace/ontology uri
 % @param ClassIdentifier The class identifier part of the IRI
-% 
+%
 split_iri(IRI, OntologyURI, ClassIdentifier) :-
     sub_atom(IRI, Before, _, After, '#'),
     !,
@@ -79,7 +80,7 @@ is_bnode(IRI) :-
 % @param LastElement Last element of the list
 %
 last_element([X], X).
-last_element([_|T], X) :- 
+last_element([_|T], X) :-
     last_element(T, X).
 
 %% second_last_element(+List, -SecondLastElement) is det.
@@ -90,7 +91,7 @@ last_element([_|T], X) :-
 % @param SecondLastElement Second last element of the list
 %
 second_last_element([X,_], X).
-second_last_element([_|T], X) :- 
+second_last_element([_|T], X) :-
     second_last_element(T, X).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -140,3 +141,15 @@ ros_warn(Format, Arguments) :-
 ros_error(Format, Arguments) :-
     format(string(MSG), Format, Arguments),
     ros_error(MSG).
+
+:- meta_predicate log_result(0,+,+).
+
+%% log_result(:Goal, +Message, +Params) is det.
+%
+% execute goal once and log if it succeeded or failed.
+% succeding is logged to ros_info/2, failure to ros_warn/2
+log_result(Goal, Message, Params) :-
+    (  call(Goal)
+    -> ros_info(Message, Params)
+    ;  format(string(Tmp),Message, Params),
+       ros_warn('Failed: ~w', [Tmp])).

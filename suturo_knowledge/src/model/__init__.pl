@@ -4,4 +4,5 @@
 :- ensure_loaded('urdf').
 :- ensure_loaded('robot').
 :- use_directory('object').
+:- use_directory('rooms').
 :- use_directory('semantic_map').
