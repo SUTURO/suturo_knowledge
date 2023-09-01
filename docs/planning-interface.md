@@ -316,11 +316,11 @@ The semantic similarity measure is useful for sorting and grouping objects by si
 #### Most similar object
 
 Finds the most similar object to the given object from a list of input objects.
-May also find the similarity between the objects and if the similarity is above a given threshold for the `Storing Groceries` challenge.
+May also find the Wu-Palmer similarity between the objects.
 
 ```prolog	
 most_similar_object(+Object, +InputObjects, -MostSimilarObject) is semidet.
-most_similar_object(+Object, +InputObjects, -MostSimilarObject, -Similarity, -ThresholdReached) is semidet.
+most_similar_object(+Object, +InputObjects, -MostSimilarObject, -Similarity) is semidet.
 ```
 
 Example:
@@ -332,12 +332,11 @@ Object: 'http://www.ease-crc.org/ont/SUTURO.owl#Banana_WRQHESGO'.
 ?- most_similar_object('http://www.ease-crc.org/ont/SUTURO.owl#Strawberry_PQWNGBUF', ['http://www.ease-crc.org/ont/SOMA.owl#CerealBox_VKPYRUIM', 'http://www.ease-crc.org/ont/SUTURO.owl#Tuna_UGDMHTNP'], Object, Similarity, Threshold).
 Object: 'http://www.ease-crc.org/ont/SUTURO.owl#Tuna_UGDMHTNP',
 Similarity: 0.75,
-Threshold: False.
 ```
 
 #### Wu-Palmer similarity
 
-Calculates the Wu-Palmer similarity between two classes. The similarity can be 0 < similarity <= 1.  
+Calculates the [Wu-Palmer similarity](https://www.geeksforgeeks.org/nlp-wupalmer-wordnet-similarity/) between two classes. The similarity can be 0 < similarity <= 1.  
 
 ```prolog
 wu_palmer_similarity(+Class1, +Class2, -Similarity) is semidet.
