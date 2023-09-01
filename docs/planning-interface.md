@@ -350,7 +350,7 @@ Similarity: 0.875.
 
 ## Rooms
 
-See [the rooms readme](../suturo_knowledge/src/model/rooms/README.md).
+See [the rooms readme](https://github.com/SUTURO/suturo_knowledge/tree/master/suturo_knowledge/src/model/rooms).
 
 ## Utils
 
