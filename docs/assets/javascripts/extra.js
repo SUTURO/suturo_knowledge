@@ -94,7 +94,7 @@ $(document).ready(function () {
 
                     var fileName = file.name;
                     var fileExtension = fileName.substr(fileName.lastIndexOf(".")).toLowerCase();
-                    var filePath = relativeFolderPath + fileName;
+                    var filePath = relativeFolderPath + "/" + fileName;
 
                     // Create list item
                     var listItem = $("<li></li>");
