@@ -28,7 +28,7 @@ jobs:
 
       - name: Download owl2anything
         run: |
-          curl -L -o owl2anything.zip https://github.com/malte3d/Owl2Anything/releases/download/$OWL2ANYTHING_VERSION/owl2anything-$OWL2ANYTHING_VERSION.zip
+          curl -L -o owl2anything.zip https://github.com/SUTURO/Owl2Anything/releases/download/$OWL2ANYTHING_VERSION/owl2anything-$OWL2ANYTHING_VERSION.zip
           unzip owl2anything.zip
 
       - name: Run owl2anything
