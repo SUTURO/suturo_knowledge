@@ -3,11 +3,12 @@
 import rospy
 import rosprolog_client
 
+
 prolog = rosprolog_client.Prolog()
 
 
 #class Test:
-
+#
 #    def hope_this_works(self, input_string):
 #        return "Received:" + str(input_string)
 
@@ -36,19 +37,44 @@ class InterfacePersonAndFavDrink:
 
 class InterfaceDoWeKnowYou:
 
-    def do_we_known_u(self, Name):
+    def do_we_known_u(self, name):
+
+        # weil der übergebene param als name:"X" dargestellt wird, 
+        #   müssen wir erst nur X extrahieren 
+        colon_index = str(name).find(":")
+        if colon_index != -1:
+            ex_string = str(name)[colon_index +1:]
+            print("ex_string:" + ex_string)
+
+            de_string = ex_string.strip(' "')
+            print("de_string:" + de_string)
+
+
         rospy.loginfo("Second Interface is working")
-        query = "is_known(" + Name + ")."
+        
+        query = "is_customer("+ de_string +")."
+        
+        rospy.loginfo(str(query))
         solution = prolog.once(query)
-    
+        rospy.loginfo(solution)
+
         if solution:
-            rospy.loginfo("Your name is "+ Name +"! Welcome back !!!")
-            return solution
+            rospy.loginfo("Your name is " + de_string + "! Welcome back !!!")
+            return True
         else:
-            save = "save_me("+ Name + ")."
-            save_call = prolog.once(query)
-            rospy.loginfo("Now we know you!")
-            return solution
+            save = "save_me("+ de_string +")."
+            rospy.loginfo(save)
+            save_call = prolog.once(save)
+            rospy.loginfo(str(save_call))
+            rospy.loginfo("We saved you!")
+
+            test = "is_customer("+de_string+")."
+            rospy.loginfo(test)
+            test_call = prolog.once(test)
+            rospy.loginfo(str(test_call))
+            rospy.loginfo("But now we know you!")
+
+            return False
 
 ##################################################################
 # 3:
