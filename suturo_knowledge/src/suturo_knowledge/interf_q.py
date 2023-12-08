@@ -6,13 +6,6 @@ import rosprolog_client
 
 prolog = rosprolog_client.Prolog()
 
-
-#class Test:
-#
-#    def hope_this_works(self, input_string):
-#        return "Received:" + str(input_string)
-
-
 ##################################################################
 # 1: 
 # What's person X's favourite drink?
@@ -22,18 +15,12 @@ class InterfacePersonAndFavDrink:
 
     def what_is_your_fav_drink(self, Name):
         rospy.loginfo("First Interface is working")
-        c_index = str(Name).find(":")
-        if c_index != -1:
-            ex_string = str(Name)[c_index +1:]
-            print("ex_string:" + ex_string)
 
-            de_string = ex_string.strip(' "')
-            print("de_string:" + de_string)
-
-        rospy.loginfo("First Interface is working")
+        #crop the input string to an usefull string
+        crop_string = crop(Name)
 
         # query to ask Xs favourite drink
-        query = "fav_drink(" + de_string + "," + "X)."
+        query = "fav_drink(" + crop_string + "," + "X)."
         rospy.loginfo(query)
        
         solution = prolog.once(query)
@@ -47,37 +34,29 @@ class InterfacePersonAndFavDrink:
 class InterfaceDoWeKnowYou:
 
     def do_we_known_u(self, Name):
-
-        # weil der übergebene param als name:"X" dargestellt wird, 
-        #   müssen wir erst nur X extrahieren 
-        colon_index = str(Name).find(":")
-        if colon_index != -1:
-            ex_string = str(Name)[colon_index +1:]
-            print("ex_string:" + ex_string)
-
-            de_string = ex_string.strip(' "')
-            print("de_string:" + de_string)
-
-
         rospy.loginfo("Second Interface is working")
+
+        #crop the input string to an usefull string
+        crop_string = crop(Name)
         
-        query = "is_customer("+ de_string +")."
+        query = "is_customer("+ crop_string +")."
         
         rospy.loginfo(str(query))
         solution = prolog.once(query)
         rospy.loginfo(solution)
 
+        # if the Name is already known we dont want to save it again
         if solution:
-            rospy.loginfo("Your name is " + de_string + "! Welcome back !!!")
+            rospy.loginfo("Your name is " + crop_string + "! Welcome back !!!")
             return True
         else:
-            save = "save_me("+ de_string +")."
+            save = "save_me("+ crop_string +")."
             rospy.loginfo(save)
             save_call = prolog.once(save)
             rospy.loginfo(str(save_call))
             rospy.loginfo("We saved you!")
 
-            test = "is_customer("+de_string+")."
+            test = "is_customer("+crop_string+")."
             rospy.loginfo(test)
             test_call = prolog.once(test)
             rospy.loginfo(str(test_call))
@@ -89,7 +68,6 @@ class InterfaceDoWeKnowYou:
 # 3:
 # Save name X and favourite drink Y
 # save_server
-
 
 class InterfaceSavePersonAndDrink:
 
@@ -112,11 +90,33 @@ class InterfaceSavePersonAndDrink:
         print("Drink:", drink_part)
     
         rospy.loginfo("Third Interface is working")
+        if drink_part == "Coffee":
+            query = "save_me_and_coffee(" + name_part +")."
+            prolog.once(query)
 
+        elif drink_part == "RaspberryJuice":
+            query = "save_me_and_raspberryjuice(" + name_part +")."
+            prolog.once(query)
 
-        query = "save_me_and_drink(" + name_part + "," + drink_part + ")."
-        prolog.once(query)
+        elif drink_part == "Milk":
+            query = "save_me_and_milk(" + name_part +")."
+            prolog.once(query)
+
+        elif drink_part == "Tea":
+            query = "save_me_and_tea(" + name_part +")."
+            prolog.once(query)
+
         
-        # return confitmation
+        # return confirmation
         return "Your name is " + name_part + " and your favourite drink is " + drink_part + "." + " We saved your information!"
 
+#crop magic
+def crop(String):
+    colon_index = str(String).find(":")
+    if colon_index != -1:
+        ex_string = str(String)[colon_index +1:]
+        print("ex_string:" + ex_string)
+
+        de_string = ex_string.strip(' "')
+        print("de_string:" + de_string)
+        return de_string

@@ -7,7 +7,10 @@
         fav_drink(+, -),
 		is_customer(+),
 		save_me(+),
-		save_me_and_drink(+, +)
+		save_me_and_coffee(+),
+		save_me_and_raspberryjuice(+),
+		save_me_and_milk(+),
+		save_me_and_tea(+)
 	  ]).
 
 :- load_owl('package://suturo_knowledge/owl/suturo.owl', [namespace(suturo, 'http://www.ease-crc.org/ont/SUTURO.owl#')]).
@@ -26,7 +29,6 @@ fav_drink(Name, Drink) :-
 % (2) Query: Is person X already known to us?
 
 % has_type(Object, Type)
-% kb_project(is_type(Object, Type), Scope)
 
 %% is_customer(+Name)
 is_customer(Name) :-
@@ -40,26 +42,24 @@ save_me(Name) :-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % (3) Query: Save the name X and favourite drink Y
 
-% kb_project(triple(Object, suturo:hasConfidenceValue, ConfidenceValue), Scope)
-% kb_project(is_type(Object, Type), Scope)
 
-%% save_me_and_drink(+Name, +Drink)
-save_me_and_drink(Name, 'Coffee') :-
+%% save_me_and_drink(+Name)
+save_me_and_coffee(Name) :-
 	kb_project(is_type(Name, suturo:'Customer')),
 	kb_project(is_type(Drink, suturo:'Coffee')),
 	kb_project(triple(Name,suturo:hasFavouriteDrink, Drink)).
 
-save_me_and_drink(Name, 'RaspberryJuice') :-
+save_me_and_raspberryjuice(Name) :-
 	kb_project(is_type(Name, suturo:'Customer')),
 	kb_project(is_type(Drink, suturo:'RaspberryJuice')),
 	kb_project(triple(Name,suturo:hasFavouriteDrink, Drink)).
 
-save_me_and_drink(Name, 'Milk') :-
+save_me_and_milk(Name) :-
 	kb_project(is_type(Name, suturo:'Customer')),
 	kb_project(is_type(Drink, suturo:'Milk')),
 	kb_project(triple(Name,suturo:hasFavouriteDrink, Drink)).
 
-save_me_and_drink(Name, 'Tea') :-
+save_me_and_tea(Name) :-
 	kb_project(is_type(Name, suturo:'Customer')),
 	kb_project(is_type(Drink, suturo:'Tea')),
 	kb_project(triple(Name,suturo:hasFavouriteDrink, Drink)).

@@ -11,10 +11,10 @@ from suturo_knowledge.interf_q import InterfacePersonAndFavDrink
 # a string intent and a string entities, the function "what_is_your_fav_drink" of the
 # interface "InterfacePersonAndFavDrink" is called.
 # Output: returns all favourite drinks of the person.
-
-# we get 2 Strings
-# (1)'intent': FavouriteDrink
-# (2)'entities': {('NaturalPerson', 'X')}
+# Input is a String: 
+# "Bob"
+# Output is an object form the suturo.owl: 
+# info Bobs favourite drink
 
 def fav_drink_of_person_x(Name):
 

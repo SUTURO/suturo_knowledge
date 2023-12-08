@@ -10,10 +10,8 @@ from suturo_knowledge.interf_q import InterfaceSavePersonAndDrink
 # When the Service "SaveInfo" gets called and receives
 # a string name and a string drink, the function "save_person_and_drink" of the
 # interface "InterfaceSavePersonAndDrink" is called.
-# Input: 
-# (1)'intent': SaveMe
-# (2)'entities': {('NaturalPerson', 'X')}
-#
+# Input is a String with a Name and a Drink: 
+# "Name, Drink"
 # Output: 
 # info with the saved name and drink
 
