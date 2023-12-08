@@ -16,12 +16,12 @@ from suturo_knowledge.interf_q import InterfacePersonAndFavDrink
 # (1)'intent': FavouriteDrink
 # (2)'entities': {('NaturalPerson', 'X')}
 
-def fav_drink_of_person_x(input_string):
+def fav_drink_of_person_x(Name):
 
     rospy.loginfo("First interface is called :)")
     inter = InterfacePersonAndFavDrink()
 
-    result = inter.what_is_your_fav_drink(input_string)
+    result = inter.what_is_your_fav_drink(Name)
     rospy.loginfo(result)
     return str(result)
 

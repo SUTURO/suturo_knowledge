@@ -2550,6 +2550,16 @@ The challenges in the RoboCup@Home competition are designed to test a variety of
     
 
 
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#hasFavouriteDrink -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#hasFavouriteDrink">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Preference"/>
+        <rdfs:comment> A preferred drink by a customer </rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
     <!-- http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#BiologicalObject -->
 
     <rdf:Description rdf:about="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#BiologicalObject">

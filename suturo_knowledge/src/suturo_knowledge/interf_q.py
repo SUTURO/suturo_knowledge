@@ -22,13 +22,22 @@ class InterfacePersonAndFavDrink:
 
     def what_is_your_fav_drink(self, Name):
         rospy.loginfo("First Interface is working")
-        # query to ask Xs favourite drink
-        query = "fav_drink(" + str(Name) + "," + "X)."
-        # get all solutions
-        all = prolog.once(query)
-        # return all solutions (in a list enumerated)
-        return all
+        c_index = str(Name).find(":")
+        if c_index != -1:
+            ex_string = str(Name)[c_index +1:]
+            print("ex_string:" + ex_string)
 
+            de_string = ex_string.strip(' "')
+            print("de_string:" + de_string)
+
+        rospy.loginfo("First Interface is working")
+
+        # query to ask Xs favourite drink
+        query = "fav_drink(" + de_string + "," + "X)."
+        rospy.loginfo(query)
+       
+        solution = prolog.once(query)
+        return solution
 
 ##################################################################
 # 2:
@@ -37,13 +46,13 @@ class InterfacePersonAndFavDrink:
 
 class InterfaceDoWeKnowYou:
 
-    def do_we_known_u(self, name):
+    def do_we_known_u(self, Name):
 
         # weil der übergebene param als name:"X" dargestellt wird, 
         #   müssen wir erst nur X extrahieren 
-        colon_index = str(name).find(":")
+        colon_index = str(Name).find(":")
         if colon_index != -1:
-            ex_string = str(name)[colon_index +1:]
+            ex_string = str(Name)[colon_index +1:]
             print("ex_string:" + ex_string)
 
             de_string = ex_string.strip(' "')
@@ -81,32 +90,33 @@ class InterfaceDoWeKnowYou:
 # Save name X and favourite drink Y
 # save_server
 
+
 class InterfaceSavePersonAndDrink:
 
-    def save_person_and_drink(self, Name, Drink):
+    def save_person_and_drink(self, info):
+
+        rospy.loginfo(str(info))
+
+        # info is a string of the form name_drink: "name, drink"
+        # we want to extract the name
+        
+        # first split where the comma is
+        parts = str(info).split(", ")
+        
+        # remove unnecessary chars such as ":" and apostrophes
+        name_part = parts[0].split(": ")[1].strip(' "') if len(parts) > 0 else ""
+        drink_part = parts[1].strip(' "') if len(parts) > 1 else ""
+
+
+        print("Name:", name_part)
+        print("Drink:", drink_part)
+    
         rospy.loginfo("Third Interface is working")
-        query = "save_me_and_drink(" + Name + "," + Drink + ")."
-        save_call = prolog.once(query)
-        # return bestaetigung
-        return "Your name is " + str(Name) + " and your favourite drink is " + str(Drink) + "."
 
 
-##################################################################
-# 4:
-# (What's this persons name?)
+        query = "save_me_and_drink(" + name_part + "," + drink_part + ")."
+        prolog.once(query)
+        
+        # return confitmation
+        return "Your name is " + name_part + " and your favourite drink is " + drink_part + "." + " We saved your information!"
 
-class InterfaceWhatsYourName:
-
-    def what_is_your_name(self, String):
-        rospy.loginfo("Fourth Interface is working")
-
-        query = ";"
-        # get all solutions
-        all = prolog.all_solutions(query)
-        # return all solutions (in a list enumerated)
-        return all
-
-
-if __name__ == '__main__':
-    rospy.init_node('interfaces_for_NLP', anonymous=True)
-    rospy.loginfo("interf_q 4/4")

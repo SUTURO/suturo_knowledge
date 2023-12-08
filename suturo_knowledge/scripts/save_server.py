@@ -8,7 +8,7 @@ from suturo_knowledge.interf_q import InterfaceSavePersonAndDrink
 
 
 # When the Service "SaveInfo" gets called and receives
-# a string intent, string name and a string drink, the function "save_this" of the
+# a string name and a string drink, the function "save_person_and_drink" of the
 # interface "InterfaceSavePersonAndDrink" is called.
 # Input: 
 # (1)'intent': SaveMe
@@ -17,13 +17,14 @@ from suturo_knowledge.interf_q import InterfaceSavePersonAndDrink
 # Output: 
 # info with the saved name and drink
 
-def save_this(Name, Drink):
+def save_this(Info):
 
     rospy.loginfo("third method is called :)")
     inter = InterfaceSavePersonAndDrink()
 
-    result = inter.save_person_and_drink(Name, Drink)
+    result = inter.save_person_and_drink(Info)
     rospy.loginfo(result)
+
     return result
 
 
