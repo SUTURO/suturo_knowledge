@@ -9,6 +9,7 @@ from suturo_knowledge.interf_q import InterfaceDoWeKnowYou
 # When the Service "IsKnown" gets called and receives
 # a string intent and a string name, the function "known_person" of the
 # interface "InterfaceDoWeKnowYou" is called.
+
 # Input is a String:
 # "Bob"
 # Output is a Bool and an info: 

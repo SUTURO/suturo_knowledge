@@ -1,4 +1,4 @@
-%% The whereTo module reads the String of a location and gives back the pose.
+%% The fav_drink module enables to ask for a favourite drink, a name of a person or to save information name and drink.
 
 %:- use_module(library('rosprolog')).
 
@@ -20,47 +20,51 @@
 
 %% fav_drink(+Name, -Drink)
 fav_drink(Name, Drink) :-
- 	kb_call(
- 		holds(Name, suturo:hasFavouriteDrink, Drink)),
+ 	kb_call(holds(Name, suturo:hasFavouriteDrink, Drink)),
 	% if one exists, use only that
 	!.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % (2) Query: Is person X already known to us?
 
+% has_type(Object, Type)
+
 %% is_customer(+Name)
 is_customer(Name) :-
-	(has_type(Name, suturo:'Customer')).
-	
+	has_type(Name, suturo:'Customer').
 
+	
 %% save_me(+Name)
 save_me(Name) :-
 	kb_project(is_type(Name, suturo:'Customer')).
 
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % (3) Query: Save the name X and favourite drink Y
 
-
-%% save_me_and_drink(+Name)
+%% save_me_and_coffee(+Name)
 save_me_and_coffee(Name) :-
 	kb_project(is_type(Name, suturo:'Customer')),
 	kb_project(is_type(Drink, suturo:'Coffee')),
-	kb_project(triple(Name, suturo:hasFavouriteDrink, Drink)).
+	kb_project(triple(Name,suturo:hasFavouriteDrink, Drink)).
 
+%% save_me_and_raspberryjuice(+Name)
 save_me_and_raspberryjuice(Name) :-
 	kb_project(is_type(Name, suturo:'Customer')),
 	kb_project(is_type(Drink, suturo:'RaspberryJuice')),
-	kb_project(triple(Name, suturo:hasFavouriteDrink, Drink)).
+	kb_project(triple(Name,suturo:hasFavouriteDrink, Drink)).
 
+%% save_me_and_milk(+Name)
 save_me_and_milk(Name) :-
 	kb_project(is_type(Name, suturo:'Customer')),
 	kb_project(is_type(Drink, suturo:'Milk')),
-	kb_project(triple(Name, suturo:hasFavouriteDrink, Drink)).
+	kb_project(triple(Name,suturo:hasFavouriteDrink, Drink)).
 
+%% save_me_and_tea(+Name)
 save_me_and_tea(Name) :-
 	kb_project(is_type(Name, suturo:'Customer')),
 	kb_project(is_type(Drink, suturo:'Tea')),
-	kb_project(triple(Name, suturo:hasFavouriteDrink, Drink)).
+	kb_project(triple(Name,suturo:hasFavouriteDrink, Drink)).
 
 
 	
