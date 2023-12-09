@@ -16,7 +16,7 @@ class InterfacePersonAndFavDrink:
     def what_is_your_fav_drink(self, Name):
         rospy.loginfo("First Interface is working")
 
-        #crop the input string to an usefull string
+        #crop the input string to an useful string
         crop_string = crop(Name)
 
         # query to ask Xs favourite drink
@@ -33,33 +33,34 @@ class InterfacePersonAndFavDrink:
 
 class InterfaceDoWeKnowYou:
 
-    def do_we_known_u(self, Name):
+    def do_we_known_u(self, name):
         rospy.loginfo("Second Interface is working")
 
-        #crop the input string to an usefull string
-        crop_string = crop(Name)
+        #crop the input string to an useful string
+        crop_string = crop(name)
         
         query = "is_customer("+ crop_string +")."
         
-        rospy.loginfo(str(query))
+        rospy.loginfo(query)
         solution = prolog.once(query)
         rospy.loginfo(solution)
 
-        # if the Name is already known we dont want to save it again
-        if solution:
+
+        # if the Name is already known we don't want to save it again
+        if solution == dict():
             rospy.loginfo("Your name is " + crop_string + "! Welcome back !!!")
             return True
         else:
             save = "save_me("+ crop_string +")."
             rospy.loginfo(save)
             save_call = prolog.once(save)
-            rospy.loginfo(str(save_call))
+            rospy.loginfo(save_call)
             rospy.loginfo("We saved you!")
 
             test = "is_customer("+crop_string+")."
             rospy.loginfo(test)
             test_call = prolog.once(test)
-            rospy.loginfo(str(test_call))
+            rospy.loginfo(test_call)
             rospy.loginfo("But now we know you!")
 
             return False
@@ -82,7 +83,7 @@ class InterfaceSavePersonAndDrink:
         parts = str(info).split(", ")
         
         # remove unnecessary chars such as ":" and apostrophes
-        name_part = parts[0].split(": ")[1].strip(' "') if len(parts) > 0 else ""
+        name_part = parts[0].split(": ")[1].strip(' "').lower() if len(parts) > 0 else ""
         drink_part = parts[1].strip(' "') if len(parts) > 1 else ""
 
 
@@ -119,4 +120,4 @@ def crop(String):
 
         de_string = ex_string.strip(' "')
         print("de_string:" + de_string)
-        return de_string
+        return de_string.lower()
