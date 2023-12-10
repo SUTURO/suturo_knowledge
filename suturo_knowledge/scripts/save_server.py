@@ -19,7 +19,7 @@ from suturo_knowledge.interf_q import InterfaceSavePersonAndDrink
 
 def save_this(Info):
 
-    rospy.loginfo("third method is called :)")
+    rospy.loginfo("third method is called.")
     inter = InterfaceSavePersonAndDrink()
 
     result = inter.save_person_and_drink(Info)
@@ -31,5 +31,5 @@ def save_this(Info):
 if __name__ == '__main__':
     rospy.init_node('save_service_server')
     rospy.Service('save_server', SaveInfo, save_this)
-    rospy.loginfo("save_server 1/4")
+    rospy.loginfo("save_server 1/3")
     rospy.spin()

@@ -6,34 +6,51 @@ import rosprolog_client
 prolog = rosprolog_client.Prolog()
 
 #########################################################################
-# 1: 
-# What's person X's favourite drink?
-# used by: drink_server
+# 1:
+# Save name X and favourite drink Y
+# used by: save_server
 
-class InterfacePersonAndFavDrink:
+class InterfaceSavePersonAndDrink:
 
-    def what_is_your_fav_drink(self, name):
+    def save_person_and_drink(self, info):
         rospy.loginfo("First Interface is working.")
 
-        # crop the input string to a useful string
-        crop_string = crop(name)
-        rospy.loginfo("crop_string:" + crop_string)
+        # info: name_drink: "name, drink"
+          
+        parts = str(info).split(", ")
+        
+        # remove unnecessary chars such as ":" and apostrophes
+        name_part = parts[0].split(": ")[1].strip(' "').lower() if len(parts) > 0 else ""
+        drink_part = parts[1].strip(' "') if len(parts) > 1 else ""
 
-        query = "fav_drink(" + crop_string + "," + "X)."
-        rospy.loginfo(query)
-       
-        solution = prolog.once(query)
-        rospy.loginfo(solution)
+        print("Name:", name_part)
+        print("Drink:", drink_part)
+    
 
-        test = crop(solution)
-        rospy.loginfo(test)
+        if drink_part == "Coffee":
+            query = "save_me_and_coffee(" + name_part +")."
+            prolog.once(query)
 
-        give_type = "has_type(" + test + "," + "X)."
-        rospy.loginfo(give_type)
+        elif drink_part == "RaspberryJuice":
+            query = "save_me_and_raspberryjuice(" + name_part +")."
+            prolog.once(query)
 
-        ref = prolog.once(give_type)
-        rospy.loginfo(crop_plus(crop(ref)))
-        return ref
+        elif drink_part == "Milk":
+            query = "save_me_and_milk(" + name_part +")."
+            prolog.once(query)
+
+        elif drink_part == "Tea":
+            query = "save_me_and_tea(" + name_part +")."
+            prolog.once(query)
+
+        else: 
+            return ("sorry " +name_part.capitalize() + " but we don't know a drink named like "
+                    + drink_part) 
+
+        return ( "Your name is " + name_part.capitalize() 
+                + " and your favourite drink is " + drink_part 
+                + "." + " We saved your information!"
+        )
 
 #########################################################################
 # 2:
@@ -77,50 +94,34 @@ class InterfaceDoWeKnowYou:
             return False
 
 #########################################################################
-# 3:
-# Save name X and favourite drink Y
-# used by: save_server
+# 3: 
+# What's person X's favourite drink?
+# used by: drink_server
 
-class InterfaceSavePersonAndDrink:
+class InterfacePersonAndFavDrink:
 
-    def save_person_and_drink(self, info):
-
-        # info: name_drink: "name, drink"
-          
-        parts = str(info).split(", ")
-        
-        # remove unnecessary chars such as ":" and apostrophes
-        name_part = parts[0].split(": ")[1].strip(' "').lower() if len(parts) > 0 else ""
-        drink_part = parts[1].strip(' "') if len(parts) > 1 else ""
-
-        print("Name:", name_part)
-        print("Drink:", drink_part)
-    
+    def what_is_your_fav_drink(self, name):
         rospy.loginfo("Third Interface is working.")
-        if drink_part == "Coffee":
-            query = "save_me_and_coffee(" + name_part +")."
-            prolog.once(query)
 
-        elif drink_part == "RaspberryJuice":
-            query = "save_me_and_raspberryjuice(" + name_part +")."
-            prolog.once(query)
+        # crop the input string to a useful string
+        crop_string = crop(name)
+        rospy.loginfo("crop_string:" + crop_string)
 
-        elif drink_part == "Milk":
-            query = "save_me_and_milk(" + name_part +")."
-            prolog.once(query)
+        query = "fav_drink(" + crop_string + "," + "X)."
+        rospy.loginfo(query)
+       
+        solution = prolog.once(query)
+        rospy.loginfo(solution)
 
-        elif drink_part == "Tea":
-            query = "save_me_and_tea(" + name_part +")."
-            prolog.once(query)
+        test = crop(solution)
+        rospy.loginfo(test)
 
-        else: 
-            return ("sorry " +name_part.capitalize() + " but we don't know a drink named like "
-                    + drink_part) 
+        give_type = "has_type(" + test + "," + "X)."
+        rospy.loginfo(give_type)
 
-        return ( "Your name is " + name_part.capitalize() 
-                + " and your favourite drink is " + drink_part 
-                + "." + " We saved your information!"
-        )
+        ref = prolog.once(give_type)
+        rospy.loginfo(crop_plus(crop(ref)))
+        return ref
 
 #########################################################################
 # crop magic
