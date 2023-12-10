@@ -1,6 +1,5 @@
-%% The fav_drink module enables to ask for a favourite drink, a name of a person or to save information name and drink.
-
-%:- use_module(library('rosprolog')).
+%% The fav_drink module enables to ask for a favourite drink, 
+%	if a person is known to us or to save the information name and favourite drink.
 
 :- module(fav_drink,
 	  [
@@ -27,8 +26,6 @@ fav_drink(Name, Drink) :-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % (2) Query: Is person X already known to us?
 
-% has_type(Object, Type)
-
 %% is_customer(+Name)
 is_customer(Name) :-
 	has_type(Name, suturo:'Customer').
@@ -37,7 +34,6 @@ is_customer(Name) :-
 %% save_me(+Name)
 save_me(Name) :-
 	kb_project(is_type(Name, suturo:'Customer')).
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % (3) Query: Save the name X and favourite drink Y
@@ -65,6 +61,3 @@ save_me_and_tea(Name) :-
 	kb_project(is_type(Name, suturo:'Customer')),
 	kb_project(is_type(Drink, suturo:'Tea')),
 	kb_project(triple(Name,suturo:hasFavouriteDrink, Drink)).
-
-
-	

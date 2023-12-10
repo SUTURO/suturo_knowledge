@@ -8,13 +8,14 @@ from suturo_knowledge.interf_q import InterfaceSavePersonAndDrink
 
 
 # When the Service "SaveInfo" gets called and receives
-# a string name and a string drink, the function "save_person_and_drink" of the
-# interface "InterfaceSavePersonAndDrink" is called.
+# a string with a name and a string with a drink, the function 
+# "save_person_and_drink" of the interface "InterfaceSavePersonAndDrink" 
+# is called.
+# Output: returns a simple confirmation that the saving was complete.
 
-# Input is a String with a Name and a Drink: 
-# "Name, Drink"
-# Output: 
-# info with the saved name and drink
+# Input: name: "Lisa, Milk"
+# Output: confirm: "Your name is Lisa and your favourite drink is Milk.
+#                       We saved your Information!"
 
 def save_this(Info):
 

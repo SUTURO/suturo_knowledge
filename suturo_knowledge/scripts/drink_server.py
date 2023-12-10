@@ -8,14 +8,12 @@ from suturo_knowledge.interf_q import InterfacePersonAndFavDrink
 
 
 # When the Service "GiveMeFavDrink" gets called and receives
-# a string intent and a string entities, the function "what_is_your_fav_drink" of the
+# a string with a name, the function "what_is_your_fav_drink" of the
 # interface "InterfacePersonAndFavDrink" is called.
-# Output: returns all favourite drinks of the person.
+# Output: returns the (type of the) favourite drink of the person.
 
-# Input is a String: 
-# "Bob"
-# Output is an object from the suturo.owl: 
-# info Bobs favourite drink
+# Input: name: "Bob"
+# Output: fav_drink:'http://www.ease-crc.org/ont/SUTURO.owl#Milk'
 
 def fav_drink_of_person_x(Name):
 

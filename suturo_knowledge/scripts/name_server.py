@@ -7,13 +7,12 @@ from std_srvs.srv import IsKnown
 from suturo_knowledge.interf_q import InterfaceDoWeKnowYou
 
 # When the Service "IsKnown" gets called and receives
-# a string intent and a string name, the function "known_person" of the
+# a string with a name, the function "known_person" of the
 # interface "InterfaceDoWeKnowYou" is called.
+# Output: returns a bool: true if known, else false
 
-# Input is a String:
-# "Bob"
-# Output is a Bool and an info: 
-# True if Bob is already known else False
+# Input: name: "Bob"
+# Output: is_known: true
 
 def known_person(name):
     rospy.loginfo("second method is called :)")
