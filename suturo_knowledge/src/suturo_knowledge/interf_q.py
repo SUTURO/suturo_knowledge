@@ -73,7 +73,7 @@ class InterfaceDoWeKnowYou:
             test_call = prolog.once(test)
             rospy.loginfo(test_call)
 
-            # because person was previouly not known
+            # because person was previously not known
             return False
 
 #########################################################################
@@ -112,6 +112,10 @@ class InterfaceSavePersonAndDrink:
         elif drink_part == "Tea":
             query = "save_me_and_tea(" + name_part +")."
             prolog.once(query)
+
+        else: 
+            return ("sorry " +name_part.capitalize() + " but we don't know a drink named like "
+                    + drink_part) 
 
         return ( "Your name is " + name_part.capitalize() 
                 + " and your favourite drink is " + drink_part 
