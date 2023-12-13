@@ -83,7 +83,7 @@ class InterfaceDoWeKnowYou:
             save_call = prolog.once(save)
             rospy.loginfo(save_call)
             rospy.loginfo("We saved you!")
-            rospy.loginfo("Nice to meet you" + crop_string.capitalize() + "!")
+            rospy.loginfo("Nice to meet you " + crop_string.capitalize() + "!")
 
             test = "is_customer("+crop_string+")."
             rospy.loginfo(test)
