@@ -17,7 +17,7 @@ from suturo_knowledge.interf_q import InterfacePersonAndFavDrink
 
 def fav_drink_of_person_x(Name):
 
-    rospy.loginfo("First interface is called :)")
+    rospy.loginfo("First interface is called.")
     inter = InterfacePersonAndFavDrink()
 
     result = inter.what_is_your_fav_drink(Name)
@@ -28,5 +28,5 @@ def fav_drink_of_person_x(Name):
 if __name__ == '__main__':
     rospy.init_node('drink_service_server')
     rospy.Service('drink_server', GiveMeFavDrink, fav_drink_of_person_x)
-    rospy.loginfo("drink_server 3/4")
+    rospy.loginfo("drink_server 3/3")
     rospy.spin()

@@ -15,7 +15,7 @@ from suturo_knowledge.interf_q import InterfaceDoWeKnowYou
 # Output: is_known: true
 
 def known_person(name):
-    rospy.loginfo("second method is called :)")
+    rospy.loginfo("second method is called")
     inter = InterfaceDoWeKnowYou()
 
     bool = inter.do_we_known_u(name)
@@ -26,5 +26,5 @@ def known_person(name):
 if __name__ == '__main__':
     rospy.init_node('name_service_server')
     rospy.Service('name_server', IsKnown, known_person)
-    rospy.loginfo("name_server 2/4")
+    rospy.loginfo("name_server 2/3")
     rospy.spin()
