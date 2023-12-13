@@ -16,7 +16,7 @@ class InterfacePersonAndFavDrink:
         rospy.loginfo("First Interface is working.")
 
         # crop the input string to a useful string
-        crop_string = crop(name)
+        crop_string = crop(name).lower()
         rospy.loginfo("crop_string:" + crop_string)
 
         query = "fav_drink(" + crop_string + "," + "X)."
@@ -26,14 +26,14 @@ class InterfacePersonAndFavDrink:
         rospy.loginfo(solution)
 
         test = crop(solution)
-        rospy.loginfo(test)
+        rospy.loginfo("test:" + str(test))
 
-        give_type = "has_type(" + test + "," + "X)."
+        give_type = "has_type(" + str(test) + "," + "X)."
         rospy.loginfo(give_type)
 
         ref = prolog.once(give_type)
         rospy.loginfo(crop_plus(crop(ref)))
-        return ref
+        return solution
 
 #########################################################################
 # 2:
