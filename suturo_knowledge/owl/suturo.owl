@@ -200,6 +200,12 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#RoboCupDishes"/>
         <rdfs:subClassOf>
             <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#isDispositionOf"/>
+                <owl:allValuesFrom rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Fragility"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#hasPositionData"/>
                 <owl:hasValue>Text</owl:hasValue>
             </owl:Restriction>
@@ -222,6 +228,12 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
 
     <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Cup">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#RoboCupDishes"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#isDispositionOf"/>
+                <owl:allValuesFrom rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Fragility"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
         <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">53</SUTURO:perceptionId>
     </rdf:Description>
     
@@ -277,6 +289,20 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
     
 
 
+    <!-- http://www.ease-crc.org/ont/SOMA.owl#Glass -->
+
+    <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Glass">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#isDispositionOf"/>
+                <owl:allValuesFrom rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Fragility"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">30</SUTURO:perceptionId>
+    </rdf:Description>
+    
+
+
     <!-- http://www.ease-crc.org/ont/SOMA.owl#Knife -->
 
     <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Knife">
@@ -308,6 +334,12 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
 
     <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Plate">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#RoboCupDishes"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#isDispositionOf"/>
+                <owl:allValuesFrom rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Fragility"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
         <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">52</SUTURO:perceptionId>
     </rdf:Description>
     
@@ -476,14 +508,6 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#DesignedComponent"/>
         <rdfs:comment>A block is a solid piece of hard material, such as wood, stone or metal, that is used as a construction material, as a support or to hold other objects.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.ease-crc.org/ont/SUTURO.owl#Bob -->
-
-    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Bob">
-        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Customer"/>
     </owl:Class>
     
 
@@ -942,6 +966,14 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#DesignedTool"/>
         <rdfs:comment>Force-concentrating tools are hand tools designed to concentrate a force onto a small area to enable the user to exert a greater amount of force than would otherwise be possible.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#Fragility -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Fragility">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Disposition"/>
     </owl:Class>
     
 
@@ -1624,6 +1656,14 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
         <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">75</SUTURO:perceptionId>
         <rdfs:comment>A pear is a sweet, juicy fruit with a bulbous shape, a thin skin, and a core with seeds in the center.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#Perishable -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Perishable">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Disposition"/>
     </owl:Class>
     
 
@@ -2614,9 +2654,6 @@ The challenges in the RoboCup@Home competition are designed to test a variety of
     </rdf:Description>
     <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Door">
         <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">20</SUTURO:perceptionId>
-    </rdf:Description>
-    <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Glass">
-        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">30</SUTURO:perceptionId>
     </rdf:Description>
     <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Kitchen">
         <rdfs:comment>A kitchen is a dedicated space in a home or establishment used for cooking, food preparation, and sometimes dining. It typically contains appliances such as a stove, refrigerator, and sink, as well as storage for cookware, utensils, and ingredients.</rdfs:comment>
