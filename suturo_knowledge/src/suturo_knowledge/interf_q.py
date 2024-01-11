@@ -26,31 +26,39 @@ class InterfaceSavePersonAndDrink:
         print("Name:", name_part)
         print("Drink:", drink_part)
     
+        query_check = "fav_drink(" + name_part + ", X)."
+        check_for_drink = prolog.once(query_check)
 
-        if drink_part == "Coffee":
-            query = "save_me_and_coffee(" + name_part +")."
-            prolog.once(query)
+        rospy.loginfo(check_for_drink)
+        if check_for_drink == []:
+            if drink_part == "Coffee":
+                query = "save_me_and_coffee(" + name_part +")."
+                prolog.once(query)
 
-        elif drink_part == "RaspberryJuice":
-            query = "save_me_and_raspberryjuice(" + name_part +")."
-            prolog.once(query)
+            elif drink_part == "RaspberryJuice":
+                query = "save_me_and_raspberryjuice(" + name_part +")."
+                prolog.once(query)
 
-        elif drink_part == "Milk":
-            query = "save_me_and_milk(" + name_part +")."
-            prolog.once(query)
+            elif drink_part == "Milk":
+                query = "save_me_and_milk(" + name_part +")."
+                prolog.once(query)
 
-        elif drink_part == "Tea":
-            query = "save_me_and_tea(" + name_part +")."
-            prolog.once(query)
+            elif drink_part == "Tea":
+                query = "save_me_and_tea(" + name_part +")."
+                prolog.once(query)
 
-        else: 
-            return ("sorry " + name_part.capitalize() + " but we don't know a drink named like "
-                    + drink_part) 
+            else: 
+                return ("sorry " + name_part.capitalize() + " but we don't know a drink named like "
+                        + drink_part) 
 
-        return ( "Your name is " + name_part.capitalize() 
-                + " and your favourite drink is " + drink_part 
-                + "." + " We saved your information!"
-        )
+            return ("Your name is " + name_part.capitalize() 
+                    + " and your favourite drink is " + drink_part 
+                    + "." + " We saved your information!"
+            )
+        else : 
+            rospy.loginfo("We already registered your favourite drink")
+            return ("We already registered your favourite drink as " + crop_plus(str(check_for_drink)) + ".")
+        
 
 #########################################################################
 # 2:
