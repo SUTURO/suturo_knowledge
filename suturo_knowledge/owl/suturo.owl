@@ -200,7 +200,7 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#RoboCupDishes"/>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#isDispositionOf"/>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#hasDisposition"/>
                 <owl:allValuesFrom rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Fragility"/>
             </owl:Restriction>
         </rdfs:subClassOf>
@@ -230,7 +230,7 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#RoboCupDishes"/>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#isDispositionOf"/>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#hasDisposition"/>
                 <owl:allValuesFrom rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Fragility"/>
             </owl:Restriction>
         </rdfs:subClassOf>
@@ -294,7 +294,7 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
     <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Glass">
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#isDispositionOf"/>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#hasDisposition"/>
                 <owl:allValuesFrom rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Fragility"/>
             </owl:Restriction>
         </rdfs:subClassOf>
@@ -336,7 +336,7 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#RoboCupDishes"/>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#isDispositionOf"/>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#hasDisposition"/>
                 <owl:allValuesFrom rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Fragility"/>
             </owl:Restriction>
         </rdfs:subClassOf>
@@ -823,6 +823,16 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Customer">
         <rdfs:subClassOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#NaturalPerson"/>
         <rdfs:comment>A customer is a person, whose name we know.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#Customer_ID -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Customer_ID">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Customer"/>
+        <rdfs:comment>An id for every customer we meet.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     

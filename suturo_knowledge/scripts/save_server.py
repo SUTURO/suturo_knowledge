@@ -6,7 +6,6 @@ import rospy
 from std_srvs.srv import SaveInfo
 from suturo_knowledge.interf_q import InterfaceSavePersonAndDrink
 
-
 # When the Service "SaveInfo" gets called and receives
 # a string with a name and a string with a drink, the function 
 # "save_person_and_drink" of the interface "InterfaceSavePersonAndDrink" 
@@ -24,7 +23,6 @@ def save_this(Info):
 
     result = inter.save_person_and_drink(Info)
     rospy.loginfo(result)
-
     return result
 
 

@@ -25,26 +25,34 @@ class InterfaceSavePersonAndDrink:
 
         print("Name:", name_part)
         print("Drink:", drink_part)
-    
+
+        # check if a fav drink already exists
         query_check = "fav_drink(" + name_part + ", X)."
         check_for_drink = prolog.once(query_check)
 
         rospy.loginfo(check_for_drink)
         if check_for_drink == []:
+
+            id = "2.0"
+
             if drink_part == "Coffee":
-                query = "save_me_and_coffee(" + name_part +")."
+                query = "save_me_and_coffee(" + name_part + "," + "\'" + id + "\')."
+                rospy.loginfo(query)
                 prolog.once(query)
 
             elif drink_part == "RaspberryJuice":
-                query = "save_me_and_raspberryjuice(" + name_part +")."
+                query = "save_me_and_raspberryjuice(" + name_part  + "," + "\'" + id + "\')."
+                rospy.loginfo(query)
                 prolog.once(query)
 
             elif drink_part == "Milk":
-                query = "save_me_and_milk(" + name_part +")."
+                query = "save_me_and_milk(" + name_part  + "," + "\'" + id + "\')."
+                rospy.loginfo(query)
                 prolog.once(query)
 
             elif drink_part == "Tea":
-                query = "save_me_and_tea(" + name_part +")."
+                query = "save_me_and_tea(" + name_part  + "," + "\'" + id + "\')."
+                rospy.loginfo(query)
                 prolog.once(query)
 
             else: 
@@ -64,6 +72,8 @@ class InterfaceSavePersonAndDrink:
 # 2:
 # Is person X already known to us?
 # used by: name_server
+        
+# later: if yes:return ID (X = name) or name (X = ID)
 
 class InterfaceDoWeKnowYou:
 
@@ -72,35 +82,82 @@ class InterfaceDoWeKnowYou:
 
         # crop the input string to a useful string
         crop_string = crop(name).lower()
+        count = 1
 
         query = "is_customer("+ crop_string +")."
         rospy.loginfo(query)
-
         solution = prolog.once(query)
-        rospy.loginfo("Should be empty first:" + str(solution))
-
 
         # save only when name is not already known
         if solution == dict():
             rospy.loginfo("Welcome back " + crop_string.capitalize() + "!")
             return True
         else:
-            save = "save_me("+ crop_string +")."
+            count += 1
+            save = "save_me("+ crop_string + "," + str(count) + ")."
             rospy.loginfo(save)
 
             save_call = prolog.once(save)
-            rospy.loginfo(save_call)
+            
             rospy.loginfo("We saved you!")
             rospy.loginfo("Nice to meet you " + crop_string.capitalize() + "!")
 
+            # test if saving was successful
             test = "is_customer("+crop_string+")."
-            rospy.loginfo(test)
+            rospy.loginfo("Test:" + str(test))
             test_call = prolog.once(test)
-            rospy.loginfo(test_call)
+            if test_call != dict():
+                rospy.loginfo("test_call: not successful")
+            else: 
+                rospy.loginfo("test_call: successful")
 
-            # because person was previously not known
+            # because person was not known previously
             return False
 
+#########################################################################
+# 2.5: 
+# What's person X's ID? --> return ID
+# What is the name X of person with ID Y? --> return name
+# used by: name_server
+    
+class InterfaceGivePersonID:
+
+    def whats_your_id(self, name):
+        rospy.loginfo("whats your id - working")
+
+        crop_name = crop(name).lower()
+
+        query = "has_id(" + crop_name + ", X)."
+        rospy.loginfo(query)
+
+        sol = prolog.once(query)
+        rospy.loginfo(sol)
+
+
+        return sol
+    
+
+    def whats_your_name(self, guest_id):
+        rospy.loginfo("whats your name - called")
+
+        rospy.loginfo(guest_id)
+
+        gid = crop(guest_id)
+
+        name_q = "has_name(\'" + str(gid) + "\',X)."
+        rospy.loginfo(name_q)
+
+        name_ans = prolog.once(name_q)
+        rospy.loginfo(name_ans)
+
+        only_name = crop(name_ans)
+        rospy.loginfo(name_ans)
+
+        #the_name = str(only_name).replace("\'", "")
+        #rospy.loginfo(the_name)
+
+        return name_ans
+    
 #########################################################################
 # 3: 
 # What's person X's favourite drink?
@@ -112,7 +169,7 @@ class InterfacePersonAndFavDrink:
         rospy.loginfo("Third Interface is working.")
 
         # crop the input string to a useful string
-        crop_string = crop(name).lower()
+        crop_string = crop(str(name)).lower()
         rospy.loginfo("crop_string:" + crop_string)
 
         query = "fav_drink(" + crop_string + "," + "X)."
@@ -128,8 +185,10 @@ class InterfacePersonAndFavDrink:
         rospy.loginfo(give_type)
 
         ref = prolog.once(give_type)
-        rospy.loginfo(crop_plus(crop(ref)))
-        return solution
+        sol = crop_plus(crop(ref))
+        rospy.loginfo(sol)
+
+        return sol.replace("\'", "")
 
 #########################################################################
 # crop magic
