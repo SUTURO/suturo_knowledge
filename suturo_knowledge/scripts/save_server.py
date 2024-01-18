@@ -12,7 +12,7 @@ from suturo_knowledge.interf_q import InterfaceSavePersonAndDrink
 # is called.
 # Output: returns a simple confirmation that the saving was complete.
 
-# Input: name: "Lisa, Milk"
+# Input: name: "Lisa, Milk, 3.0"
 # Output: confirm: "Your name is Lisa and your favourite drink is Milk.
 #                       We saved your Information!"
 

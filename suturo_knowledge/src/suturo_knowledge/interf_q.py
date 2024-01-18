@@ -18,13 +18,17 @@ class InterfaceSavePersonAndDrink:
         # info: name_drink: "name, drink"
           
         parts = str(info).split(", ")
+
+        print(parts)
         
         # remove unnecessary chars such as ":" and apostrophes
         name_part = parts[0].split(": ")[1].strip(' "').lower() if len(parts) > 0 else ""
-        drink_part = parts[1].strip(' "') if len(parts) > 1 else ""
+        drink_part = parts[1]
+        id_part = parts[2].strip(' "')
 
         print("Name:", name_part)
         print("Drink:", drink_part)
+        print ("ID:", id_part)
 
         # check if a fav drink already exists
         query_check = "fav_drink(" + name_part + ", X)."
@@ -33,7 +37,7 @@ class InterfaceSavePersonAndDrink:
         rospy.loginfo(check_for_drink)
         if check_for_drink == []:
 
-            id = "2.0"
+            id = id_part
 
             if drink_part == "Coffee":
                 query = "save_me_and_coffee(" + name_part + "," + "\'" + id + "\')."
