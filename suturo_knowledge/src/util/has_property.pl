@@ -5,7 +5,8 @@
 	  [
 		create_bowl(+),
         has_property(+),
-		has_propertyCerealBowl(+)
+		has_propertyCerealBowl(+),
+		test(+,-)
 	  ]).
 
 :- load_owl('package://suturo_knowledge/owl/suturo.owl', [namespace(suturo, 'http://www.ease-crc.org/ont/SUTURO.owl#')]).
@@ -25,8 +26,13 @@ create_bowl(Name):-
 	kb_project(is_type(Name, suturo:'CerealBowl')).
 
 
+test(Name, C) :-
+	string_concat("das steht hier:", Name, C).
+
+%hardcoded CerealBowl
 has_propertyCerealBowl(Object) :-
 	subclass_of(suturo:'CerealBowl', X),
 	subclass_of(X, A),
 	triple(A, B, suturo:'Fragility').
+
 	
