@@ -4,7 +4,8 @@
 :- module(has_property,
 	  [
 		create_bowl(+),
-        has_property(+, -)
+        has_property(+),
+		has_propertyCerealBowl(+)
 	  ]).
 
 :- load_owl('package://suturo_knowledge/owl/suturo.owl', [namespace(suturo, 'http://www.ease-crc.org/ont/SUTURO.owl#')]).
@@ -12,16 +13,20 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% has_property(+Object, -Type)
-has_property(Name, Type):-
-	holds(Name, suturo:'Fragility', Type).
+has_property(Object) :-
+	subclass_of(Object, X),
+	subclass_of(X, A),
+	triple(A, B, suturo:'Fragility').
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % (1) Zum Testen: ein Bowl-Object erstellen
 %% create_bowl(+Name)
 create_bowl(Name):-
-	kb_project(is_type(Name, suturo:'Bowl')).
+	kb_project(is_type(Name, suturo:'CerealBowl')).
 
 
-
- 	
+has_propertyCerealBowl(Object) :-
+	subclass_of(suturo:'CerealBowl', X),
+	subclass_of(X, A),
+	triple(A, B, suturo:'Fragility').
 	
