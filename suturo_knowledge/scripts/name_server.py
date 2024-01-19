@@ -58,13 +58,13 @@ def person_info(guest_id):
         # return ["name", "drink"]
         the_name = (crop(str(gimme_name)).replace("\'", "")).capitalize()
         rospy.loginfo(the_name)
-      
-        rospy.loginfo('["' + str(the_name) + '",' + '"' + gimme_drink + '"]')
-        
-        return True
+    
+        rospy.loginfo(str(the_name) + ',' + gimme_drink)
+        return str(the_name) + ',' + gimme_drink
+    
     else:
-        rospy.loginfo("No name saved under this ID!")
-        return False
+        return "No name saved under this ID!"
+        
     
 # crop unnecessary chars and begin after the ':'
 def crop(String):
