@@ -24,14 +24,28 @@ def test_call(name):
     newname = crop(name)
     rospy.loginfo(newname)
 
-    query = "kb_call(holds(Name,suturo:hasPredefinedName,"+ "\'"+ newname.lower()+ "\'" + ")),is_fragile(Name)."
+    #query = "kb_call(holds(Name,suturo:hasPredefinedName,"+ "\'"+ newname.lower()+ "\'" + ")),is_fragile(Name)."
+    query = "what_object("+ "\'"+newname.lower()+ "\'" + ", Object)."
     rospy.loginfo(query)
     sol = prolog.once(query)
     rospy.loginfo(sol)
-    if len(sol) == 0 :
+    
+    if len(sol) == 0:
+        print("Sorry, object is not known to us!")
         return False
     else: 
-        return True
+        print(crop(sol).replace("}", ""))
+        de_obj = crop(sol).replace("}", "")
+        queryy = "is_fragile("+ de_obj +")."
+        print(queryy)
+
+        soll = prolog.once(queryy)
+        if soll == dict():
+            return True
+        else: 
+            print("Object: yes; not fragile")
+            return False
+    
 
 
 def crop(name):
