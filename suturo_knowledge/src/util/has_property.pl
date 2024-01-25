@@ -4,7 +4,7 @@
 :- module(has_property,
 	  [
         is_fragile(r),
-		gib_object(+,r)
+		what_object(+,r)
 	  ]).
 
 
