@@ -24,7 +24,7 @@ def test_call(name):
     newname = crop(name)
     rospy.loginfo(newname)
 
-    query = "kb_call(holds(Name,suturo:hasPredefinedName,"+newname+")),is_fragile(Name)."
+    query = "kb_call(holds(Name,suturo:hasPredefinedName,"+ "\'"+ newname.lower()+ "\'" + ")),is_fragile(Name)."
     rospy.loginfo(query)
     sol = prolog.once(query)
     rospy.loginfo(sol)
