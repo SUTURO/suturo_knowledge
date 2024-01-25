@@ -3,7 +3,7 @@
 # What is the favourite drink of person X?
 
 import rospy
-from std_srvs.srv import GiveMeFavDrink
+from knowledge_msgs.srv import GiveMeFavDrink
 from suturo_knowledge.interf_q import InterfacePersonAndFavDrink
 
 

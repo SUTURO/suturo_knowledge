@@ -5,7 +5,7 @@
 import rospy
 import rosprolog_client
 prolog = rosprolog_client.Prolog()
-from std_srvs.srv import IsFragile
+from knowledge_msgs.srv import IsFragile
 
 def known_person(name):
     rospy.loginfo("test_fragility is called")

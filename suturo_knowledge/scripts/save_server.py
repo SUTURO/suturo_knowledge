@@ -3,7 +3,7 @@
 # Save name X and favourite drink Y
 
 import rospy
-from std_srvs.srv import SaveInfo
+from knowledge_msgs.srv import SaveInfo
 from suturo_knowledge.interf_q import InterfaceSavePersonAndDrink
 
 # When the Service "SaveInfo" gets called and receives

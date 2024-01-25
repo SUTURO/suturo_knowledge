@@ -3,7 +3,7 @@
 # Is person X already known to us?
 
 import rospy
-from std_srvs.srv import IsKnown
+from knowledge_msgs.srv import IsKnown
 from suturo_knowledge.interf_q import InterfaceDoWeKnowYou
 from suturo_knowledge.interf_q import InterfaceGivePersonID
 from suturo_knowledge.interf_q import InterfacePersonAndFavDrink
