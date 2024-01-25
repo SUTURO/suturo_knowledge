@@ -7,7 +7,7 @@ import rosprolog_client
 prolog = rosprolog_client.Prolog()
 from knowledge_msgs.srv import IsFragile
 
-def known_person(name):
+def fragility(name):
     rospy.loginfo("test_fragility is called")
     newname = crop(name)
      
@@ -20,7 +20,7 @@ def known_person(name):
     else: 
         return False 
 
-def test_call(name):
+def fragility_check(name):
     newname = crop(name)
     rospy.loginfo(newname)
 
@@ -58,6 +58,6 @@ def crop(name):
 
 if __name__ == '__main__':
     rospy.init_node('fragility_service_server')
-    rospy.Service('fragility_server', IsFragile, test_call)
+    rospy.Service('fragility_server', IsFragile, fragility_check)
     rospy.loginfo("fragility_server")
     rospy.spin()
