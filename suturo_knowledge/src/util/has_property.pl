@@ -3,36 +3,18 @@
 
 :- module(has_property,
 	  [
-		create_bowl(+),
-        has_property(+),
-		has_propertyCerealBowl(+),
-		test(+,-)
+        is_fragile(r),
+		gib_object(+,r)
 	  ]).
 
-:- load_owl('package://suturo_knowledge/owl/suturo.owl', [namespace(suturo, 'http://www.ease-crc.org/ont/SUTURO.owl#')]).
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% has_property(+Object, -Type)
-has_property(Object) :-
-	subclass_of(Object, X),
-	subclass_of(X, A),
-	triple(A, B, suturo:'Fragility').
+% go up all superclasses of an object till you find a superclass with property 'Fragility' 
+%is_fragile(r Object)
+is_fragile(Object) :-
+	triple(Object, transitive(rdfs:'subClassOf'), X),
+	triple(X, B,suturo:'Fragility').
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% (1) Zum Testen: ein Bowl-Object erstellen
-%% create_bowl(+Name)
-create_bowl(Name):-
-	kb_project(is_type(Name, suturo:'CerealBowl')).
-
-
-test(Name, C) :-
-	string_concat("das steht hier:", Name, C).
-
-%hardcoded CerealBowl
-has_propertyCerealBowl(Object) :-
-	subclass_of(suturo:'CerealBowl', X),
-	subclass_of(X, A),
-	triple(A, B, suturo:'Fragility').
-
-	
+what_object(Name, Object) :-
+	kb_call(holds(Object, suturo:hasPredifinedName, Name)),
+	is_fragile(Name).

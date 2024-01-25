@@ -11,21 +11,27 @@ def known_person(name):
     rospy.loginfo("test_fragility is called")
     newname = crop(name)
      
-    query = "subclass_of(suturo:'"+newname+"', X), subclass_of(X, A),	triple(A, B, suturo:'Fragility')."
-    
-    #if newname == "CerealBowl":
-    #    query = "has_propertyCerealBowl(X)."
-    #elif newname == "MetalMug":
-    #    query = "has_propertyMetalMug(X)."
-    #query = "has_property(suturo:'"+newname+"')."
+    query = "is_fragile("+newname+")."
     rospy.loginfo(query)
     bool = prolog.once(query)
     rospy.loginfo(bool)
-    if bool:
+    if bool == dict():
         return True
     else: 
         return False 
 
+def test_call(name):
+    newname = crop(name)
+    rospy.loginfo(newname)
+
+    query = "kb_call(holds(Name,suturo:hasPredefinedName,"+newname+")),is_fragile(Name)."
+    rospy.loginfo(query)
+    sol = prolog.once(query)
+    rospy.loginfo(sol)
+    if len(sol) == 0 :
+        return False
+    else: 
+        return True
 
 
 def crop(name):
@@ -38,6 +44,6 @@ def crop(name):
 
 if __name__ == '__main__':
     rospy.init_node('fragility_service_server')
-    rospy.Service('fragility_server', IsFragile, known_person)
+    rospy.Service('fragility_server', IsFragile, test_call)
     rospy.loginfo("fragility_server")
     rospy.spin()
