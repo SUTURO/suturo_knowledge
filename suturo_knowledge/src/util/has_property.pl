@@ -16,5 +16,7 @@ is_fragile(Object) :-
 	triple(X, B,suturo:'Fragility').
 
 what_object(Name, Object) :-
-	kb_call(holds(Object, suturo:hasPredefinedName, Name)).
+	kb_call(holds(Object, suturo:hasPredefinedName, Name)),
+	% if one exists, use only that
+	!.
 	

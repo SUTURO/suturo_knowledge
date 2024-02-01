@@ -45,7 +45,18 @@ def fragility_check(name):
         else: 
             print("Object: yes; not fragile")
             return False
-    
+        
+def get_pose(name):
+
+    #de_obj = "'http://www.ease-crc.org/ont/SOMA.owl#Cup'"
+    #query = "object_pose("+ de_obj + ", PoseStamped)."
+    query = "object_pose(suturo:'Bowl', PoseStamped)."
+    print(query)
+
+    sol = prolog.once(query)
+    print(sol)
+
+    return True
 
 
 def crop(name):
@@ -59,5 +70,6 @@ def crop(name):
 if __name__ == '__main__':
     rospy.init_node('fragility_service_server')
     rospy.Service('fragility_server', IsFragile, fragility_check)
+    rospy.Service('fragility_serverr', IsFragile, get_pose)
     rospy.loginfo("fragility_server")
     rospy.spin()
