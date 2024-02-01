@@ -24,7 +24,6 @@ def fragility_check(name):
     newname = crop(name)
     rospy.loginfo(newname)
 
-    #query = "kb_call(holds(Name,suturo:hasPredefinedName,"+ "\'"+ newname.lower()+ "\'" + ")),is_fragile(Name)."
     query = "what_object("+ "\'"+newname.lower()+ "\'" + ", Object)."
     rospy.loginfo(query)
     sol = prolog.once(query)
@@ -34,9 +33,7 @@ def fragility_check(name):
         print("Sorry, object is not known to us!")
         return False
     else: 
-        print(crop(sol).replace("}", ""))
-        de_obj = crop(sol).replace("}", "")
-        queryy = "is_fragile("+ de_obj +")."
+        queryy = "fragility_new("+ "\'" + newname.lower() + "\')."
         print(queryy)
 
         soll = prolog.once(queryy)
@@ -45,6 +42,7 @@ def fragility_check(name):
         else: 
             print("Object: yes; not fragile")
             return False
+
         
 def get_pose(name):
 

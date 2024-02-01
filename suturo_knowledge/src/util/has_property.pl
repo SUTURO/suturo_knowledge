@@ -4,7 +4,8 @@
 :- module(has_property,
 	  [
         is_fragile(r),
-		what_object(+,r)
+		what_object(+,r),
+		fragility_new(+)
 	  ]).
 
 
@@ -15,8 +16,23 @@ is_fragile(Object) :-
 	triple(Object, transitive(rdfs:'subClassOf'), X),
 	triple(X, B,suturo:'Fragility').
 
-what_object(Name, Object) :-
-	kb_call(holds(Object, suturo:hasPredefinedName, Name)),
+what_object(ObjName, Object) :-
+	triple(Object,_,O), triple(O,_, suturo:hasPredefinedName), triple(O, owl:hasValue, ObjName),
 	% if one exists, use only that
 	!.
+
+% objName = 'metal bowl'
+fragility_new(ObjName) :-
+	triple(Object,_,O), triple(O,_, suturo:hasPredefinedName), triple(O, owl:hasValue, ObjName),
+	%triple(Object, transitive(rdfs:'subClassOf'), X),
+	%triple(X, B, suturo:'Fragility').
+
+	transitivee(Object).
+
+transitivee(Object) :- 
+	triple(Object, B, suturo:'Fragility').
+
+transitivee(Object) :-
+	subclass_of(Object, X),
+	transitivee(X).
 	
