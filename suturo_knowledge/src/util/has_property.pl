@@ -5,23 +5,27 @@
 	  [
         is_fragile(r),
 		what_object(+,r),
-		fragility_new(+)
+		fragility_new(+),
+		position_tableVRIKLDCZ(-)
 	  ]).
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % go up all superclasses of an object till you find a superclass with property 'Fragility' 
-%is_fragile(r Object)
+%% is_fragile(r Object)
 is_fragile(Object) :-
 	triple(Object, transitive(rdfs:'subClassOf'), X),
 	triple(X, B,suturo:'Fragility').
 
+%% what_object(+ ObjName, r Object)
 what_object(ObjName, Object) :-
 	triple(Object,_,O), triple(O,_, suturo:hasPredefinedName), triple(O, owl:hasValue, ObjName),
 	% if one exists, use only that
 	!.
 
+
 % objName = 'metal bowl'
+%% fragility_new(r ObjName)
 fragility_new(ObjName) :-
 	triple(Object,_,O), triple(O,_, suturo:hasPredefinedName), triple(O, owl:hasValue, ObjName),
 	%triple(Object, transitive(rdfs:'subClassOf'), X),
@@ -29,10 +33,20 @@ fragility_new(ObjName) :-
 
 	transitivee(Object).
 
+%transitivee(r Object)
 transitivee(Object) :- 
 	triple(Object, B, suturo:'Fragility').
 
+%transitivee(r Object)
 transitivee(Object) :-
 	subclass_of(Object, X),
 	transitivee(X).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Asking for the Positions of furniture
+
+%% position_tableVRIKLDCZ(-)
+position_tableVRIKLDCZ(Position):-
+	Position = '5.1399, 2.212, 0.735'.
+
 	

@@ -48,11 +48,18 @@ def get_pose(name):
 
     #de_obj = "'http://www.ease-crc.org/ont/SOMA.owl#Cup'"
     #query = "object_pose("+ de_obj + ", PoseStamped)."
-    query = "object_pose(suturo:'Bowl', PoseStamped)."
-    print(query)
+    #query = "object_pose(suturo:'Bowl', PoseStamped)."
 
-    sol = prolog.once(query)
-    print(sol)
+    dings = crop(name)
+    print(dings)
+
+    if str(dings) == "Table_VRIKLDCZ":
+
+        query = "position_tableVRIKLDCZ(X)."
+        print(query)
+
+        sol = prolog.once(query)
+        print(sol)
 
     return True
 
