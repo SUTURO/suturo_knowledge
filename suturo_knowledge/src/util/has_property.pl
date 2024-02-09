@@ -5,8 +5,7 @@
 	  [
         is_fragile(r),
 		what_object(+,r),
-		fragility_new(+),
-		position_tableVRIKLDCZ(-)
+		fragility_new(+)
 	  ]).
 
 
@@ -44,9 +43,3 @@ transitivee(Object) :-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Asking for the Positions of furniture
-
-%% position_tableVRIKLDCZ(-)
-position_tableVRIKLDCZ(Position):-
-	Position = '5.1399, 2.212, 0.735'.
-
-	
