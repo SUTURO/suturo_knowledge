@@ -1,17 +1,14 @@
 #!/usr/bin/env python3
 
 import rospy
-from geometry_msgs.msg import Pose
-
-import tf2_ros
-import tf2_geometry_msgs
-
-# Is this object fragile?
-
-import rospy
 import rosprolog_client
 prolog = rosprolog_client.Prolog()
 from knowledge_msgs.srv import IsFragile
+#from geometry_msgs.msg import PoseStamped
+from knowledge_msgs.srv import ObjectPose
+
+#######################################################################################################
+## Fragility
 
 def fragility(name):
     rospy.loginfo("test_fragility is called")
@@ -49,112 +46,92 @@ def fragility_check(name):
             print("Object: yes; not fragile")
             return False
 
+
+#################################################################################
+## Object pose
         
-def get_pose(name):
-
-    #de_obj = "'http://www.ease-crc.org/ont/SOMA.owl#Cup'"
-    #query = "object_pose("+ de_obj + ", PoseStamped)."
-    #query = "object_pose(suturo:'Bowl', PoseStamped)."
-
-    dings = crop(name)
-    print(dings)
-
-    if str(dings) == "Table_VRIKLDCZ":
-
-        query = "position_tableVRIKLDCZ(X)."
-        print(query)
-
-        sol = prolog.once(query)
-        print(sol)
-
-    return True
-
-
-def transform_pose(table_name):
-
-    
-
-    # welcher table + frame
-    #
-    #if table_name == "popcorn table":
-    #    com1 = "iai_kitchen/popcorn_table:table:table_center"
-
-    #elif table_name == "kitchen counter":
-    #    com2 = "iai_kitchen/table_kitchen_counter:table:table_center"
-
-    #elif table_name == "long table":
-    #    com3 = "iai_kitchen/long_table:table:table_center"
-
-    # welche tables gibt es?
-    query = "has_type(X, soma:'Table')."
+def get_pose(table_name):
+   
+    # all known tables
+    query = "has_type(X, soma:'Table')."#, object_pose(X, [F, A, B]), (F == )."
     sol = prolog.all_solutions(query)
     print(sol)
-    
-    # wenn es tables gibt, frage nach pose stamped
+    liste = list(sol)
+    print("liste:" + str(liste))
+    # for all tabels, ask for their poses
     if len(sol) != 0:
-        for table in sol:
-            print(table)
+        for table in list(sol):
+            print("tables:" + str(table))
             new_table = crop(table).replace('}', "")
             print(new_table)
             queryy = "object_pose("+ str(new_table) + ",X)."
             print(queryy)
-            tpos = prolog.once(queryy)
-            print(tpos)
+            tposs = prolog.once(queryy)
+            print(tposs)
 
             # vergleiche je, ob tisch name "table_name" und gesuchtes frame hat
             # true: transform
             # tpos = [old_frame, [0,0,0] [0,0,0,1]]
-            table_frame = str(list(tpos.items())[0][1][0])
-            print(table_name)
-            print(table_frame)
+            table_frame = str(list(tposs.items())[0][1][0])
+            print("1:" + str(table_name))
+            print("2:" + str(table_frame))
 
-            if table_name == "popcorn table" and table_frame == "iai_kitchen/popcorn_table:table:table_center":
-                new_pose = transform_frame(tpos, "map", 1)
-                return new_pose
+            tn = crop(table_name)
+            print("3:" + str(tn))
             
-            elif table_name == "kitchen counter" and table_frame == "iai_kitchen/table_kitchen_counter:table:table_center":
-                new_pose = transform_frame(tpos, "map", 1)
-                return new_pose
-            
-            elif table_name == "long table" and table_frame == "iai_kitchen/long_table:table:table_center":
-                new_pose = transform_frame(tpos, "map", 1)
-                return new_pose
-            
-            else: print("No right table")
-
-    else: print("No solution tables")
-    
-
-
-
-def transform_frame(tpos, map_frame, n):
-
-    tf_buffer = tf2_ros.Buffer()
-    listener = tf2_ros.TransformListener(tf_buffer)
-
-    try:
-        output_pose_stamped = tf_buffer.transform(tpos, map_frame, rospy.Duration(n))
-        return output_pose_stamped.pose
+            #return True weg machen !!!!!!
+            if tn == "popcorn table" and table_frame == "iai_kitchen/popcorn_table:table:table_center":
+                test = get_table_pose(new_table)
+                return test
                 
-    
-    except (tf2_ros.LookupException, tf2_ros.ConnectivityException, tf2_ros.ExtrapolationException):
-        raise
+            elif tn == "kitchen counter" and table_frame == "iai_kitchen/table_kitchen_counter:table:table_center":
+                get_table_pose(new_table)
+                return True
+                 
+            elif tn == "long table" and table_frame == "iai_kitchen/long_table:table:table_center":
+                get_table_pose(new_table)
+                return True
+            
+            else:
+                print("No right table")
+                return False
+
+    else: 
+        print("No solution tables")
+        return False
+
+def get_table_pose(new_table):
+    new_pose = "object_pose(" + str(new_table) + ", [map, X, Y])."
+    print(new_pose)
+    sol = prolog.once(new_pose)
+    print("4:" + str(sol))
+    return sol
 
 
+def test_loop(liste):
+    listee = crop(liste)
+    print(listee)
 
+    for table in listee:
+        for value in table:
+            print(value)
+   
+    return True
+
+#################################################################################
+# crop magic
 def crop(name):
     dpunkt_index = str(name).find(":")
     if dpunkt_index != -1:
         ex_string = str(name)[dpunkt_index +1:]
         de_string = ex_string.strip(' "')
-
-
         return de_string 
+    
+
 
 if __name__ == '__main__':
     rospy.init_node('fragility_service_server')
     rospy.Service('fragility_server', IsFragile, fragility_check)
-    rospy.Service('fragility_serverr', IsFragile, get_pose)
-    rospy.Service('test_tabel', IsFragile, transform_pose)
-    rospy.loginfo("fragility_server")
+    rospy.Service('test_table', ObjectPose, test_loop)
+    rospy.loginfo("fragility_server 4/4")
     rospy.spin()
