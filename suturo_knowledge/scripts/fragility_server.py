@@ -4,7 +4,7 @@ import rospy
 import rosprolog_client
 prolog = rosprolog_client.Prolog()
 from knowledge_msgs.srv import IsFragile
-#from geometry_msgs.msg import PoseStamped
+from geometry_msgs.msg import PoseStamped
 from knowledge_msgs.srv import ObjectPose
 
 #######################################################################################################
@@ -81,20 +81,17 @@ def get_pose(table_name):
             
             #return True weg machen !!!!!!
             if tn == "popcorn table" and table_frame == "iai_kitchen/popcorn_table:table:table_center":
-                test = get_table_pose(new_table)
-                return test
+                return get_table_pose(new_table)
                 
             elif tn == "kitchen counter" and table_frame == "iai_kitchen/table_kitchen_counter:table:table_center":
-                get_table_pose(new_table)
-                return True
+                return get_table_pose(new_table)
                  
             elif tn == "long table" and table_frame == "iai_kitchen/long_table:table:table_center":
-                get_table_pose(new_table)
-                return True
+                return get_table_pose(new_table)
             
             else:
                 print("No right table")
-                return False
+                
 
     else: 
         print("No solution tables")
@@ -105,7 +102,18 @@ def get_table_pose(new_table):
     print(new_pose)
     sol = prolog.once(new_pose)
     print("4:" + str(sol))
-    return sol
+    
+    pose_stamped = PoseStamped()
+    pose_stamped.header.frame_id = "map"
+    pose_stamped.pose.position.x = list(sol.items())[0][1][0]
+    pose_stamped.pose.position.y = list(sol.items())[0][1][1]
+    pose_stamped.pose.position.z = list(sol.items())[0][1][2]
+
+    pose_stamped.pose.orientation.x = list(sol.items())[1][1][0]
+    pose_stamped.pose.orientation.y = list(sol.items())[1][1][1]
+    pose_stamped.pose.orientation.z = list(sol.items())[1][1][2]
+    pose_stamped.pose.orientation.w = list(sol.items())[1][1][3]
+    return pose_stamped
 
 
 def test_loop(liste):
@@ -117,7 +125,6 @@ def test_loop(liste):
             print(value)
    
     return True
-
 #################################################################################
 # crop magic
 def crop(name):
@@ -132,6 +139,6 @@ def crop(name):
 if __name__ == '__main__':
     rospy.init_node('fragility_service_server')
     rospy.Service('fragility_server', IsFragile, fragility_check)
-    rospy.Service('test_table', ObjectPose, test_loop)
+    rospy.Service('test_table', ObjectPose, get_pose)
     rospy.loginfo("fragility_server 4/4")
     rospy.spin()

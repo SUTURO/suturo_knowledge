@@ -18,7 +18,7 @@ is_fragile(Object) :-
 
 %% what_object(+ ObjName, r Object)
 what_object(ObjName, Object) :-
-	triple(Object,_,O), triple(O,_, suturo:hasPredefinedName), triple(O, owl:hasValue, ObjName),
+	triple(O,_, suturo:hasPredefinedName), triple(O, owl:hasValue, ObjName), triple(Object,_,O), 
 	% if one exists, use only that
 	!.
 
@@ -26,7 +26,7 @@ what_object(ObjName, Object) :-
 % objName = 'metal bowl'
 %% fragility_new(r ObjName)
 fragility_new(ObjName) :-
-	triple(Object,_,O), triple(O,_, suturo:hasPredefinedName), triple(O, owl:hasValue, ObjName),
+	triple(O,_, suturo:hasPredefinedName), triple(O, owl:hasValue, ObjName), triple(Object,_,O),  
 	%triple(Object, transitive(rdfs:'subClassOf'), X),
 	%triple(X, B, suturo:'Fragility').
 
