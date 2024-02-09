@@ -53,12 +53,12 @@ def fragility_check(name):
 def get_pose(table_name):
    
     # all known tables
-    query = "has_type(X, soma:'Table')."#, object_pose(X, [F, A, B]), (F == )."
+    query = "has_type(X, soma:'Table')."#, object_pose(X, [F, A, B])."
     sol = prolog.all_solutions(query)
     print(sol)
     liste = list(sol)
     print("liste:" + str(liste))
-    # for all tabels, ask for their poses
+    # for all tables, ask for their poses
     if len(sol) != 0:
         for table in list(sol):
             print("tables:" + str(table))
@@ -69,9 +69,7 @@ def get_pose(table_name):
             tposs = prolog.once(queryy)
             print(tposs)
 
-            # vergleiche je, ob tisch name "table_name" und gesuchtes frame hat
-            # true: transform
-            # tpos = [old_frame, [0,0,0] [0,0,0,1]]
+            # compare whether there is table named "table_name" and has searched frame
             table_frame = str(list(tposs.items())[0][1][0])
             print("1:" + str(table_name))
             print("2:" + str(table_frame))
@@ -79,7 +77,6 @@ def get_pose(table_name):
             tn = crop(table_name)
             print("3:" + str(tn))
             
-            #return True weg machen !!!!!!
             if tn == "popcorn table" and table_frame == "iai_kitchen/popcorn_table:table:table_center":
                 return get_table_pose(new_table)
                 
@@ -92,11 +89,14 @@ def get_pose(table_name):
             else:
                 print("No right table")
                 
-
     else: 
         print("No solution tables")
         return False
 
+###########################################################################
+## get pose 
+## format
+    
 def get_table_pose(new_table):
     new_pose = "object_pose(" + str(new_table) + ", [map, X, Y])."
     print(new_pose)
@@ -113,18 +113,9 @@ def get_table_pose(new_table):
     pose_stamped.pose.orientation.y = list(sol.items())[1][1][1]
     pose_stamped.pose.orientation.z = list(sol.items())[1][1][2]
     pose_stamped.pose.orientation.w = list(sol.items())[1][1][3]
+
     return pose_stamped
 
-
-def test_loop(liste):
-    listee = crop(liste)
-    print(listee)
-
-    for table in listee:
-        for value in table:
-            print(value)
-   
-    return True
 #################################################################################
 # crop magic
 def crop(name):
