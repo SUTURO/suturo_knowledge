@@ -12,7 +12,8 @@
 		save_me_and_coffee(+, +),
 		save_me_and_raspberryjuice(+, +),
 		save_me_and_milk(+, +),
-		save_me_and_tea(+, +)
+		save_me_and_tea(+, +),
+		save_me_and_water(+, +)
 	  ]).
 
 :- load_owl('package://suturo_knowledge/owl/suturo.owl', [namespace(suturo, 'http://www.ease-crc.org/ont/SUTURO.owl#')]).
@@ -86,4 +87,11 @@ save_me_and_tea(Name, ID) :-
 	kb_project(is_type(Name, suturo:'Customer')),
 	kb_project(triple(Name, suturo:hasCustomerID, ID)),
 	kb_project(is_type(Drink, suturo:'Tea')),
+	kb_project(triple(Name,suturo:hasFavouriteDrink, Drink)).
+
+%% save_me_and_water(+Name, +ID)
+save_me_and_water(Name, ID) :-
+	kb_project(is_type(Name, suturo:'Customer')),
+	kb_project(triple(Name, suturo:hasCustomerID, ID)),
+	kb_project(is_type(Drink, suturo:'Water')),
 	kb_project(triple(Name,suturo:hasFavouriteDrink, Drink)).

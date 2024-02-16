@@ -59,6 +59,11 @@ class InterfaceSavePersonAndDrink:
                 rospy.loginfo(query)
                 prolog.once(query)
 
+            elif drink_part == "Water":
+                query = "save_me_and_water(" + name_part  + "," + "\'" + id + "\')."
+                rospy.loginfo(query)
+                prolog.once(query)
+
             else: 
                 return ("sorry " + name_part.capitalize() + " but we don't know a drink named like "
                         + drink_part) 
