@@ -5,7 +5,9 @@
 	  [
         %is_fragile(r),
 		what_object(+,r),
-		fragility_new(+)
+		fragility_new(+),
+		%get_obj_home(+),
+		is_perishable(+)
 	  ]).
 
 
@@ -40,3 +42,15 @@ transitivee(Object) :-
 transitivee(Object) :-
 	subclass_of(Object, X),
 	transitivee(X).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% is_perishable(+ObjName)
+
+is_perishable(ObjName):-
+	triple(O,_, suturo:hasPredefinedName), triple(O, owl:hasValue, ObjName), triple(Object,_,O),  
+	triple(Object, transitive(rdfs:'subClassOf'), X),
+	triple(X, B, suturo:'Perishable').
+
+
+
+

@@ -8,20 +8,6 @@ from knowledge_msgs.srv import IsFragile
 #######################################################################################################
 ## Fragility
 
-def fragility(name):
-    rospy.loginfo("test_fragility is called")
-    newname = crop(name)
-     
-    query = "is_fragile("+newname+")."
-    rospy.loginfo(query)
-    bool = prolog.once(query)
-    rospy.loginfo(bool)
-    if bool == dict():
-        return True
-    else: 
-        return False 
-
-
 def fragility_check(name):
     newname = crop(name)
     rospy.loginfo(newname)
@@ -34,6 +20,7 @@ def fragility_check(name):
     if len(sol) == 0:
         print("Sorry, object is not known to us!")
         return False
+    
     else: 
         queryy = "fragility_new("+ "\'" + newname.lower() + "\')."
         print(queryy)

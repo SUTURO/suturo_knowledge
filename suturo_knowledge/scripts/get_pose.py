@@ -10,7 +10,7 @@ from knowledge_msgs.srv import ObjectPose
 ## Object pose
         
 def get_pose(table_name):
-   
+    print(table_name)
     # all known tables
     query = "has_type(X, soma:'Table')."#, object_pose(X, [F, A, B])."
     sol = prolog.all_solutions(query)
@@ -76,6 +76,48 @@ def get_table_pose(new_table):
     return pose_stamped
 
 #################################################################################
+## get object pose that depends on certain object property
+
+
+def where_at(name):
+    obj_name = crop(name)
+    print(obj_name)
+
+    q1 = "what_object(" + "\'" + obj_name.lower() + "\'" + ", Object)."
+    print(q1)
+
+    sol = prolog.once(q1)
+    print(sol)
+
+    if len(sol) != 0:
+        q2 = "is_perishable("+ "\'" + obj_name + "\')."
+        print(q2)
+
+        soll = prolog.once(q2)
+        if soll == dict():
+            table = "popcorn table"
+            print("get_pose")
+            q3 = get_pose("furniture:" + table)           
+
+            return q3
+        else: 
+            print("Object: yes; not perishable")
+            return get_pose("furniture:kitchen counter")
+
+    else:
+        print("No object under this name!")
+        return get_pose("furniture:long table")
+
+
+
+
+
+#- zu string mit objectnamen <-- predefined name abfrage 
+#- unterscheide ob Object fragile oder perishable oder "Bist du Besteck?"
+#- zuvor lege fest, wo diese Kategorien an Objekten ihre location haben sollen (Relation)
+#- frage dies ab, erhalte posestamped des furniture, wo das Objekt sein sollte 
+
+#################################################################################
 # crop magic
 def crop(name):
     dpunkt_index = str(name).find(":")
@@ -87,5 +129,6 @@ def crop(name):
 if __name__ == '__main__':
     rospy.init_node('pose_server')
     rospy.Service('pose_server', ObjectPose, get_pose)
+    rospy.Service('pose_serverr', ObjectPose, where_at)
     rospy.loginfo("pose_server")
     rospy.spin()
