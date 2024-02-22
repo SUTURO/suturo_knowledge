@@ -3,7 +3,7 @@
 
 :- module(has_property,
 	  [
-        is_fragile(r),
+        %is_fragile(r),
 		what_object(+,r),
 		fragility_new(+)
 	  ]).
@@ -12,9 +12,9 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % go up all superclasses of an object till you find a superclass with property 'Fragility' 
 %% is_fragile(r Object)
-is_fragile(Object) :-
-	triple(Object, transitive(rdfs:'subClassOf'), X),
-	triple(X, B,suturo:'Fragility').
+%is_fragile(Object) :-
+%	triple(Object, transitive(rdfs:'subClassOf'), X),
+%	triple(X, B,suturo:'Fragility').
 
 %% what_object(+ ObjName, r Object)
 what_object(ObjName, Object) :-
@@ -40,6 +40,3 @@ transitivee(Object) :-
 transitivee(Object) :-
 	subclass_of(Object, X),
 	transitivee(X).
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Asking for the Positions of furniture

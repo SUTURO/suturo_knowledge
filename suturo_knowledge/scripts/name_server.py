@@ -55,7 +55,7 @@ def person_info(guest_id):
         rospy.loginfo(gimme_drink)
 
 
-        # return ["name", "drink"]
+        # return "name", "drink"
         the_name = (crop(str(gimme_name)).replace("\'", "")).capitalize()
         rospy.loginfo(the_name)
     

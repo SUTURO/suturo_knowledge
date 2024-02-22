@@ -359,6 +359,12 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
     <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Knife">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Cutlery"/>
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#RoboCupDishes"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
+                <owl:hasValue>knife</owl:hasValue>
+            </owl:Restriction>
+        </rdfs:subClassOf>
         <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">50</SUTURO:perceptionId>
     </rdf:Description>
     
