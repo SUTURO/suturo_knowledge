@@ -95,11 +95,10 @@ def where_at(name):
 
         soll = prolog.once(q2)
         if soll == dict():
-            table = "popcorn table"
-            print("get_pose")
-            q3 = get_pose("furniture:" + table)           
+            #table = "popcorn table"
+            print("get_pose")   
 
-            return q3
+            return (get_pose("furniture:popcorn table"))
         else: 
             print("Object: yes; not perishable")
             return get_pose("furniture:kitchen counter")
