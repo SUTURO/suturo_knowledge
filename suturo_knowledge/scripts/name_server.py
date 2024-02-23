@@ -4,60 +4,53 @@
 
 import rospy
 from knowledge_msgs.srv import IsKnown
-from suturo_knowledge.interf_q import InterfaceDoWeKnowYou
+#from suturo_knowledge.interf_q import InterfaceDoWeKnowYou
 from suturo_knowledge.interf_q import InterfaceGivePersonID
 from suturo_knowledge.interf_q import InterfacePersonAndFavDrink
 
+# When the Service "IsKnown" gets called and receives
+#   a string with an ID, in the method "person_id" the functions "whats_your_name" 
+#   and "whats_your_fav_drink" are called.
+# Output: returns "name, drink" or notice that there are no infos saved under this ID
+"""
 # When the Service "IsKnown" gets called and receives
 # a string with a name, the function "known_person" of the
 # interface "InterfaceDoWeKnowYou" is called.
 # Output: returns a bool: true if known, else false
 
-# Input: name: "Bob"
-# Output: is_known: true
+# Input: "Bob"
+# Output: True or False
 
-
-#Now: 
-# Input: Name
-# Output: ID 
+# ask if person is known and print if person has ID
+# return bool
 
 def known_person(name):
-    rospy.loginfo("second method is called")
     inter = InterfaceDoWeKnowYou()
     inter2 = InterfaceGivePersonID()
     
     bool = inter.do_we_known_u(name)
     rospy.loginfo("Bool:" + str(bool))
-    #return bool
 
-    # frage zu bekannter Person ihre ID
+    # which id does the known person have
     res = inter2.whats_your_id(name)
     rospy.loginfo(res)
-
     return bool
-
+"""
+# with the customer ID ask for information (favourite drink and name)
 def person_info(guest_id):
-    rospy.loginfo("person_info - called")
-
     inter2_5 = InterfaceGivePersonID()
     inter3 = InterfacePersonAndFavDrink()
 
-    # mit guest-ID frage: Was ist dein name?
+    # check for name saved under this ID
     gimme_name = inter2_5.whats_your_name(guest_id)
-    # bob
-    # wenn es keine Namen gibt, erhält man None
-    rospy.loginfo(gimme_name)
 
     if str(gimme_name) != "None" and gimme_name != []:
         
-        # mit namen, frage: Was ist fav drink?
+        # with name ask for favourite drink
         gimme_drink = inter3.what_is_your_fav_drink(str(gimme_name))
-        rospy.loginfo(gimme_drink)
-
 
         # return "name", "drink"
         the_name = (crop(str(gimme_name)).replace("\'", "")).capitalize()
-        rospy.loginfo(the_name)
     
         rospy.loginfo(str(the_name) + ',' + gimme_drink)
         return str(the_name) + ',' + gimme_drink
@@ -72,16 +65,14 @@ def crop(String):
     if dpunkt_index != -1:
         ex_string = str(String)[dpunkt_index +1:]
         print("ex_string:" + ex_string)
-
         de_string = ex_string.strip(' "').rstrip('}')
         print("de_string:" + de_string)
-
         return de_string
     
 
 if __name__ == '__main__':
     rospy.init_node('name_service_server')
     #rospy.Service('name_server', IsKnown, known_person)
-    rospy.Service('name_server', IsKnown, person_info)
-    rospy.loginfo("name_server 2/3")
+    rospy.Service('info_server', IsKnown, person_info)
+    rospy.loginfo("info_server")
     rospy.spin()

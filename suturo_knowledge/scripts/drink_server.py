@@ -28,5 +28,5 @@ def fav_drink_of_person_x(Name):
 if __name__ == '__main__':
     rospy.init_node('drink_service_server')
     rospy.Service('drink_server', GiveMeFavDrink, fav_drink_of_person_x)
-    rospy.loginfo("drink_server 3/3")
+    rospy.loginfo("drink_server")
     rospy.spin()

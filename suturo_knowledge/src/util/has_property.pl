@@ -6,7 +6,6 @@
         %is_fragile(r),
 		what_object(+,r),
 		fragility_new(+),
-		%get_obj_home(+),
 		is_perishable(+)
 	  ]).
 
@@ -18,14 +17,6 @@
 %	triple(Object, transitive(rdfs:'subClassOf'), X),
 %	triple(X, B,suturo:'Fragility').
 
-%% what_object(+ ObjName, r Object)
-what_object(ObjName, Object) :-
-	triple(O,_, suturo:hasPredefinedName), triple(O, owl:hasValue, ObjName), triple(Object,_,O), 
-	% if one exists, use only that
-	!.
-
-
-% objName = 'metal bowl'
 %% fragility_new(r ObjName)
 fragility_new(ObjName) :-
 	triple(O,_, suturo:hasPredefinedName), triple(O, owl:hasValue, ObjName), triple(Object,_,O),  
@@ -44,13 +35,18 @@ transitivee(Object) :-
 	transitivee(X).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ask if object is perishable 
 %% is_perishable(+ObjName)
-
 is_perishable(ObjName):-
 	triple(O,_, suturo:hasPredefinedName), triple(O, owl:hasValue, ObjName), triple(Object,_,O),  
 	triple(Object, transitive(rdfs:'subClassOf'), X),
 	triple(X, B, suturo:'Perishable').
 
 
-
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% get the Object that has the predefined name "ObjName"
+%% what_object(+ ObjName, r Object)
+what_object(ObjName, Object) :-
+	triple(O,_, suturo:hasPredefinedName), triple(O, owl:hasValue, ObjName), triple(Object,_,O), 
+	% if one exists, use only that
+	!.

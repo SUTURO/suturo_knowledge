@@ -29,5 +29,5 @@ def save_this(Info):
 if __name__ == '__main__':
     rospy.init_node('save_service_server')
     rospy.Service('save_server', SaveInfo, save_this)
-    rospy.loginfo("save_server 1/3")
+    rospy.loginfo("save_server")
     rospy.spin()

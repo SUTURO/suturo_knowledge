@@ -10,25 +10,19 @@ from knowledge_msgs.srv import ObjectPose
 ## Object pose
         
 def get_pose(table_name):
-    print(table_name)
-    # all known tables
-    query = "has_type(X, soma:'Table')."#, object_pose(X, [F, A, B])."
-    sol = prolog.all_solutions(query)
-    print(sol)
-    liste = list(sol)
-    print("liste:" + str(liste))
+    # get all known tables
+    q1 = "has_type(X, soma:'Table')."
+    sol = prolog.all_solutions(q1)
+    
     # for all tables, ask for their poses
     if len(sol) != 0:
         for table in list(sol):
             print("tables:" + str(table))
             new_table = crop(table).replace('}', "")
-            print(new_table)
-            queryy = "object_pose("+ str(new_table) + ",X)."
-            print(queryy)
-            tposs = prolog.once(queryy)
-            print(tposs)
+            q2 = "object_pose("+ str(new_table) + ",X)."
+            tposs = prolog.once(q2)
 
-            # compare whether there is table named "table_name" and has searched frame
+            # extract table name and table frame 
             table_frame = str(list(tposs.items())[0][1][0])
             print("1:" + str(table_name))
             print("2:" + str(table_frame))
@@ -36,6 +30,7 @@ def get_pose(table_name):
             tn = crop(table_name)
             print("3:" + str(tn))
             
+            # compare whether there is a table named "table_name" and has searched frame
             if tn == "popcorn table" and table_frame == "iai_kitchen/popcorn_table:table:table_center":
                 return get_table_pose(new_table)
                 
@@ -50,15 +45,13 @@ def get_pose(table_name):
                 
     else: 
         print("No solution tables")
-        return False
+        return None 
 
 ###########################################################################
-## get pose 
-## format
+## return information about table as PoseStamped
     
 def get_table_pose(new_table):
     new_pose = "object_pose(" + str(new_table) + ", [map, X, Y])."
-    print(new_pose)
     sol = prolog.once(new_pose)
     print("4:" + str(sol))
     
@@ -81,40 +74,25 @@ def get_table_pose(new_table):
 
 def where_at(name):
     obj_name = crop(name)
-    print(obj_name)
-
     q1 = "what_object(" + "\'" + obj_name.lower() + "\'" + ", Object)."
-    print(q1)
-
     sol = prolog.once(q1)
-    print(sol)
 
     if len(sol) != 0:
         q2 = "is_perishable("+ "\'" + obj_name + "\')."
-        print(q2)
-
         soll = prolog.once(q2)
+        
         if soll == dict():
-            #table = "popcorn table"
-            print("get_pose")   
-
-            return (get_pose("furniture:popcorn table"))
+            return get_pose("furniture:popcorn table")
+        
         else: 
-            print("Object: yes; not perishable")
+            print("Object exists but not perishable. You can find it on the kitchen counter!")
             return get_pose("furniture:kitchen counter")
 
     else:
-        print("No object under this name!")
-        return get_pose("furniture:long table")
+        print("No object found under this name!")
+        #return get_pose("furniture:long table")
+        return None
 
-
-
-
-
-#- zu string mit objectnamen <-- predefined name abfrage 
-#- unterscheide ob Object fragile oder perishable oder "Bist du Besteck?"
-#- zuvor lege fest, wo diese Kategorien an Objekten ihre location haben sollen (Relation)
-#- frage dies ab, erhalte posestamped des furniture, wo das Objekt sein sollte 
 
 #################################################################################
 # crop magic
@@ -128,6 +106,6 @@ def crop(name):
 if __name__ == '__main__':
     rospy.init_node('pose_server')
     rospy.Service('pose_server', ObjectPose, get_pose)
-    rospy.Service('pose_serverr', ObjectPose, where_at)
-    rospy.loginfo("pose_server")
+    rospy.Service('where_to_find_server', ObjectPose, where_at)
+    rospy.loginfo("pose_server, where_to_find_server")
     rospy.spin()

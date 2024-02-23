@@ -10,31 +10,28 @@ from knowledge_msgs.srv import IsFragile
 
 def fragility_check(name):
     newname = crop(name)
-    rospy.loginfo(newname)
-
-    query = "what_object("+ "\'"+newname.lower()+ "\'" + ", Object)."
-    rospy.loginfo(query)
-    sol = prolog.once(query)
-    rospy.loginfo(sol)
+    q1 = "what_object("+ "\'"+newname.lower()+ "\'" + ", Object)."
+    sol = prolog.once(q1)
     
     if len(sol) == 0:
         print("Sorry, object is not known to us!")
         return False
     
     else: 
-        queryy = "fragility_new("+ "\'" + newname.lower() + "\')."
-        print(queryy)
+        q2 = "fragility_new("+ "\'" + newname.lower() + "\')."
+        soll = prolog.once(q2)
 
-        soll = prolog.once(queryy)
         if soll == dict():
             return True
+        
         else: 
-            print("Object: yes; not fragile")
+            print("Object exists but not fragile!")
             return False
 
 
 #################################################################################
-# crop magic
+## crop magic
+        
 def crop(name):
     dpunkt_index = str(name).find(":")
     if dpunkt_index != -1:
