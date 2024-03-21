@@ -12,6 +12,7 @@ def fragility_check(name):
     newname = crop(name)
     q1 = "what_object("+ "\'"+newname.lower()+ "\'" + ", Object)."
     sol = prolog.once(q1)
+    print(sol)
     
     if len(sol) == 0:
         print("Sorry, object is not known to us!")
@@ -22,6 +23,7 @@ def fragility_check(name):
         soll = prolog.once(q2)
 
         if soll == dict():
+            print("Object is fragile!")
             return True
         
         else: 

@@ -19,7 +19,9 @@
 
 %% fragility_new(r ObjName)
 fragility_new(ObjName) :-
-	triple(O,_, suturo:hasPredefinedName), triple(O, owl:hasValue, ObjName), triple(Object,_,O),  
+	triple(O,_, suturo:hasPredefinedName), 
+	triple(O, owl:hasValue, ObjName), 
+	triple(Object,_,O),  
 	%triple(Object, transitive(rdfs:'subClassOf'), X),
 	%triple(X, B, suturo:'Fragility').
 
@@ -38,7 +40,9 @@ transitivee(Object) :-
 % ask if object is perishable 
 %% is_perishable(+ObjName)
 is_perishable(ObjName):-
-	triple(O,_, suturo:hasPredefinedName), triple(O, owl:hasValue, ObjName), triple(Object,_,O),  
+	triple(O,_, suturo:hasPredefinedName), 
+	triple(O, owl:hasValue, ObjName), 
+	triple(Object,_,O),  
 	triple(Object, transitive(rdfs:'subClassOf'), X),
 	triple(X, B, suturo:'Perishable').
 
@@ -47,6 +51,8 @@ is_perishable(ObjName):-
 % get the Object that has the predefined name "ObjName"
 %% what_object(+ ObjName, r Object)
 what_object(ObjName, Object) :-
-	triple(O,_, suturo:hasPredefinedName), triple(O, owl:hasValue, ObjName), triple(Object,_,O), 
+	triple(O,_, suturo:hasPredefinedName),
+	triple(O, owl:hasValue, ObjName), 
+	triple(Object,_,O), 
 	% if one exists, use only that
 	!.

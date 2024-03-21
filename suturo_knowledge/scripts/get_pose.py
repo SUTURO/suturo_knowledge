@@ -20,10 +20,10 @@ def get_pose(table_name):
             print("tables:" + str(table))
             new_table = crop(table).replace('}', "")
             q2 = "object_pose("+ str(new_table) + ",X)."
-            tposs = prolog.once(q2)
+            tpos = prolog.once(q2)
 
             # extract table name and table frame 
-            table_frame = str(list(tposs.items())[0][1][0])
+            table_frame = str(list(tpos.items())[0][1][0])
             print("1:" + str(table_name))
             print("2:" + str(table_frame))
 
@@ -42,7 +42,7 @@ def get_pose(table_name):
             
             else:
                 print("No right table")
-                
+
     else: 
         print("No solution tables")
         return None 
