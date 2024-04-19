@@ -110,7 +110,7 @@ shape_class(cylinder(_,_), soma:'CylinderShape'):- !.
 shape_class(mesh(_,[_,_,_]), soma:'MeshShape'):- !.
 shape_class(sphere(_), soma:'SphereShape'):- !.
 
-assert_shape_region(SR, mesh(File, [1,1,1]), Scope) :-
+assert_shape_region(SR, mesh(File, [1.0,1.0,1.0]), Scope) :-
     kb_project(triple(SR, soma:hasFilePath, File), Scope),
     !.
 

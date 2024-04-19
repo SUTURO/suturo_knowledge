@@ -29,15 +29,15 @@ def get_pose(table_name):
 
             tn = crop(table_name)
             print("3:" + str(tn))
-            
+            # verwende has_robocup_name in furniture_info.pl
             # compare whether there is a table named "table_name" and has searched frame
-            if tn == "popcorn table" and table_frame == "iai_kitchen/popcorn_table:table:table_center":
+            if tn == "popcorn table" and table_frame == "iai_kitchen/popcorn_table:p_table:table_center":
                 return get_table_pose(new_table)
                 
-            elif tn == "kitchen counter" and table_frame == "iai_kitchen/table_kitchen_counter:table:table_center":
+            elif tn == "kitchen counter" and table_frame == "iai_kitchen/table_kitchen_counter:kc_table:table_center":
                 return get_table_pose(new_table)
                  
-            elif tn == "long table" and table_frame == "iai_kitchen/long_table:table:table_center":
+            elif tn == "long table" and table_frame == "iai_kitchen/long_table:l_table:table_center":
                 return get_table_pose(new_table)
             
             else:
@@ -57,14 +57,14 @@ def get_table_pose(new_table):
     
     pose_stamped = PoseStamped()
     pose_stamped.header.frame_id = "map"
-    pose_stamped.pose.position.x = list(sol.items())[0][1][0]
-    pose_stamped.pose.position.y = list(sol.items())[0][1][1]
-    pose_stamped.pose.position.z = list(sol.items())[0][1][2]
+    pose_stamped.pose.position.x = sol['X'][0]
+    pose_stamped.pose.position.y = sol['X'][1]
+    pose_stamped.pose.position.z = sol['X'][2]
 
-    pose_stamped.pose.orientation.x = list(sol.items())[1][1][0]
-    pose_stamped.pose.orientation.y = list(sol.items())[1][1][1]
-    pose_stamped.pose.orientation.z = list(sol.items())[1][1][2]
-    pose_stamped.pose.orientation.w = list(sol.items())[1][1][3]
+    pose_stamped.pose.orientation.x = sol['Y'][0]
+    pose_stamped.pose.orientation.y = sol['Y'][1]
+    pose_stamped.pose.orientation.z = sol['Y'][2]
+    pose_stamped.pose.orientation.w = sol['Y'][3]
 
     return pose_stamped
 
