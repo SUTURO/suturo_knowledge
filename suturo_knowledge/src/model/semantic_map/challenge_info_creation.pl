@@ -181,7 +181,7 @@ init_locations_robocup_2023 :-
 %
 % This is a temporary solution until the challenge info can be loaded from an ontology.
 % This predicate should only be called once at the start of knowledge.
-/*
+
 init_predefined_names_robocup_2023 :-
     kb_project((holds(suturo:'RoboCupCleaningSupplies', suturo:hasPredefinedName, 'cleaning supplies'),
                 holds(suturo:'AbrasiveSponge', suturo:hasPredefinedName, 'sponge'),
@@ -230,4 +230,4 @@ init_predefined_names_robocup_2023 :-
                 holds(soma:'Bowl', suturo:hasPredefinedName, 'bowl'),
                 holds(soma:'Knife', suturo:hasPredefinedName, 'knife'))),
     ros_info('RoboCup 2023 predefined object names initialized').
-*/
+

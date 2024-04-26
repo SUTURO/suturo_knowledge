@@ -160,6 +160,10 @@ suturo_is_ontop_of(Object, Furniture, Distance) :-
     object_shape_workaround(Furniture, Frame, ShapeTerm, [_, [XX, YY, ZZ], _], _),
     kb_call(is_at(Object, [Frame, [X,Y,Z], _])),
     ShapeTerm = box(DX, DY, _DZ),
+% in case x or y value are not set (i.e. Designedhandle does not have x value so it is set to 0)
+    default_value(DX, 0),
+    default_value(DY, 0),
+
     default_value(XX, 0),
     default_value(YY, 0),
     default_value(ZZ, 0),

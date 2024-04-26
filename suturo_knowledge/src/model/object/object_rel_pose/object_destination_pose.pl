@@ -3,11 +3,14 @@
               object_destination_pose/3
           ]).
 
+:- rdf_meta(object_destination_pose(r,+,-)).
+
 % 10 cm space needed to both sides for the gripper to open completely
 robot_gripper_space(0.10).
 
 %% object_destination_pose(+Object, +Options, -PoseStamped) is semidet.
 %
+% firstly initialize a certain challenge i.e. init_storing_groceries
 object_destination_pose(Object, Options, [Frame, Pos, Rotation]) :-
     % warning, this is still a rough draft.
     (  once(find_place(Object, Options, [Frame, Pos, Rotation])),
