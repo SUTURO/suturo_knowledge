@@ -1,11 +1,11 @@
-% furniture informations
+% furniture information
 :- module(furniture_info,
 	[
 		furniture_rel_pose(r,+,-),
         has_robocup_name(r,?),
+		try_divide(+,-),
 		div_parts(+, -),
-		div_partss(+,-),
-		divide_next(+,+,-),
+		div_parts_helper(+,+,-),
 		opt_nav_poses(+, -)
 	]).
 
@@ -38,47 +38,45 @@ furniture_rel_pose_perceive(Furniture, PoseStamped) :-
 	% Get the PoseStamped of the Furniture
 	object_pose(Furniture, [Frame, [X,Y,Z], Rotation]),
 	XNew is X - 0.7,
-	opt_nav_poses(Furiniture, Middle),
+	opt_nav_poses(Furniture, Middle),
     PoseStamped = [Frame, [XNew,Y,Z], Rotation].
 
 % optional navigation poses when interacting with furniture items
 % Middle is the new x position
 %% opt_nav_poses
-opt_nav_poses(Furniture, Size):-
+opt_nav_poses(Furniture, Middle):-
 	object_shape_workaround(Furniture, _, ShapeTerm,_,_),
-	dir_size('-y', ShapeTerm, Size).
-	%try_divide(Size, Middle).
-		
-try_divide(Size, Middle) :-
-	(   div_parts(Size, Middle)
-	;   div_partss(Size, Middle)  
-	).
-		
-	div_parts(Size, Middle) :-
+	dir_size('-y', ShapeTerm, Size),
+	try_divide(Size, Middle).
+
+	try_divide(Size, Midpoints) :-
+		(   Size > 0.8 
+		->	div_parts_helper(Size, [0.4], Midpoints) % Start mit einem Mittelpunkt von 0.4
+		;   div_parts(Size, Midpoints) % Falls die Größe kleiner oder gleich 0.8 ist, halbiere sie einfach
+		).
+	
+	div_parts(Size, [Middle]) :-
 		Size > 0, 
 		Size =< 0.8,
-		Middle is Size / 2.0.
-		
-	div_partss(Size, Midpoints):-
-		Size > 0.8,
-		writeln("1."),
-		Middle is 0.4,
-		writeln("2."),
-		divide_next(Size, 0.8, [Middle]). % add 40 in list
-
-	divide_next(Size, Save, Midpoints):-
-		(	Size > Save,
-			writeln("3.")
-		->	NSave is Save + 0.7,
-			Middle is Save - (0.7/ 2.0),
-			divide_next(Size, NSave, Midpoints)
-		;	Midpoints = 0.7,
-			writeln("4. ~w", [Midpoints])
-		).
-
-
+		Middle is Size / 2.0,
+		writeln("Dividing using div_parts"),
+		writeln("Middle: " + Middle).
 	
-
+	div_parts_helper(Size, [Middle | Rest], [Middle | Midpoints]) :-
+		Middle < Size,
+		NextMiddle is Middle + 0.7,
+		writeln("Dividing using div_parts_helper"),
+		writeln("Middle: " + Middle),
+		div_parts_helper(Size, [NextMiddle | Rest], Midpoints).
+	
+	div_parts_helper(Size, [Middle | Rest], Midpoints) :-
+		Middle >= Size, % Die Rekursion endet, wenn der Mittelpunkt größer oder gleich der Größe ist		
+		writeln("Ending recursion"),
+		(   Rest = [] ->
+			Midpoints = [Size] % Wenn Rest leer ist, füge Size als letzten Wert hinzu
+		;   Midpoints = Rest % Andernfalls behalte Rest bei
+		).
+	
 % divides the longest side of the furniture into parts 
 % parts have size of the plane that the robots camera can perceive w/ head rotation
 %% divide(+Size, -Middle)
