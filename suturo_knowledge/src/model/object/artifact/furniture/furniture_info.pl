@@ -5,7 +5,8 @@
         has_robocup_name(r,?),
 		try_divide(+,-),
 		div_parts(+, -),
-		div_parts_helper(+,+,-)
+		div_parts_helper(+,+,-),
+		longest_side(r,-)
 	]).
 
 :- use_module(library('util/math'),
@@ -49,17 +50,15 @@ build_pose_stamped_list([YN | Rest], [Frame, [X,Y,Z], Rotation], [PoseStamped | 
 	YNew is Y + YN, 
 	PoseStamped = [Frame, [X,YNew,Z], Rotation],
 	build_pose_stamped_list(Rest, [Frame, [X,Y,Z], Rotation], RestPoses).
-	
 
-try_divide(Size, Midpoints) :-
-	(   Size > 0.8 
-	->	div_parts_helper(Size, [0.4], Midpoints) 
-	;   div_parts(Size, Midpoints) 
-	).
-	
+
+	try_divide(Size, Midpoints) :-
+		(   Size > 0.8 
+		->	div_parts_helper(Size, [0.4], Midpoints)
+		;   div_parts(Size, Midpoints)
+		).	
 	div_parts(Size, [Middle]) :-
 		Size > 0, 
-		Size =< 0.8,
 		Middle is Size / 2.0,
 		writeln("Dividing using div_parts"),
 		writeln("Middle: " + Middle).
@@ -72,15 +71,15 @@ try_divide(Size, Midpoints) :-
 		div_parts_helper(Size, [NextMiddle | Rest], Midpoints).
 	
 	div_parts_helper(Size, [Middle | Rest], Midpoints) :-
-		Middle >= Size, 		
+		Middle >= Size,		
 		writeln("Ending recursion"),
 		(   Rest = [] ->
-			Midpoints = [Size] 
+			Midpoints = [Size]
 		;   Midpoints = Rest 
 		).
 	
 
-	% deg_to_rad(70, CameraViewAngle)
+% deg_to_rad(70, CameraViewAngle)
 
 	% TODO: Calculate perceiving position relative to the Furniture
 	%
@@ -93,6 +92,20 @@ try_divide(Size, Midpoints) :-
     % ---A---
     % Furniture
 	% % B = A / tan(alpha)
+
+%% longest_side(r Furniture, - Size)
+%
+% returns the longest side of a non rectangular furniture item 
+% 	and in case of a rectangular also YSize  
+longest_side(Furniture, Size):-
+	object_shape_workaround(Furniture, _, ShapeTerm, _, _),
+	dir_size('-x', ShapeTerm, XSize),
+	dir_size('-y', ShapeTerm, YSize),
+	( XSize >= YSize 
+	-> Size is XSize
+	; Size is YSize
+	).
+
 
 furniture_rel_pose_interact(Furniture, PoseStamped) :-
 	% Get the PoseStamped of the Furniture
