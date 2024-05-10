@@ -155,6 +155,55 @@ class InterfacePersonAndFavDrink:
         soll = crop_plus(crop(ref))
 
         return soll.replace("\'", "")
+    
+
+#########################################################################
+# 4:
+# Where should this object be placed in the shelve?
+# 
+# class InterfaceObjectPlacePose:
+
+    def place_pose_object(self, object):
+        print(object)
+    
+        # Input: apple (soll platziert werden)
+        # knowledge erstellt random ein object apple
+        # dann wir place pose bestimmt
+        # Output: place pose vom apple
+        #
+        # ODER
+        #
+        # Input: pose vom apple ist bekannt (durch perception), so dass create_object aufgerufen wird
+        # mit dem erstellten object, dann object_destination_pose aufrufen 
+        # Output: place pose vom apple
+
+        # init_storing_groceries auslagern, soll nur einmal aufgerufen werden 
+        q0 = "init_storing_groceries"
+        prolog.once(q0)
+        print(q0)
+
+        already_exists = "create_object(Object, suturo:" + "\'" + "MetalBowl" + "\'" + ", ["+ "\'" + "iai_kitchen/shelf:shelf:shelf_floor_2" + "\'" + ", [0.049,0.02,0], [0,0,0,1.0]], [shape(box(0.5,0.5,0.5))])."
+        print(already_exists)
+        solq  = prolog.once(already_exists)
+        print(solq)
+
+        q3 = "what_object("+ "\'" + str(crop(object)) + "\'" + ",X)."
+        print(q3)
+        de_object = prolog.once(q3)
+        print(de_object)
+
+        place_it = "create_object(Object," + str(crop(de_object)) + ", ["+ "\'" + "map" + "\'" + ", [0.049,0.02,0], [0,0,0,1.0]], [shape(box(0.5,0.5,0.5))])."
+        solqq = prolog.once(place_it)
+      
+        print(solqq)
+
+        sol = crop(solqq)
+        print(sol)
+        print ("wait for a bit pls")
+        q1 = "object_destination_pose(" + str(sol) + ",[], X)."
+        solution = prolog.once(q1)
+        print(solution)
+
 
 #########################################################################
 # crop magic

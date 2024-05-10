@@ -37,9 +37,10 @@ transitivee(Object) :-
 	subclass_of(Object, X),
 	transitivee(X).
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% ask if object is perishable 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 %% is_perishable(+ObjName)
+% 
+% ask if object is perishable
 is_perishable(ObjName):-
 	triple(O,_, suturo:hasPredefinedName), 
 	triple(O, owl:hasValue, ObjName), 
@@ -49,8 +50,9 @@ is_perishable(ObjName):-
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% get the Object that has the predefined name "ObjName"
 %% what_object(+ ObjName, r Object)
+%
+% get the Object that has the predefined name "ObjName"
 what_object(ObjName, Object) :-
 	triple(O,_, suturo:hasPredefinedName),
 	triple(O, owl:hasValue, ObjName), 
@@ -58,7 +60,9 @@ what_object(ObjName, Object) :-
 	% if one exists, use only that
 	!.
 
-
+%% have_same_class(+, +)
+%
+% check, if two objects belong to the same class
 have_same_class(ObjName1, ObjName2) :-
 	what_object(ObjName1, X),
 	what_object(ObjName2, Y),
