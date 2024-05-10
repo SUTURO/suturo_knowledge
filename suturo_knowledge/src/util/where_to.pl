@@ -11,7 +11,7 @@
 
 % callback function for subscriber 
 %% whereTo(+String, -PoseStamped)
-where_to(String, PoseStamped) :-
+where_to(_String, PoseStamped) :-
 	PoseStamped = ['map', [2.94,3.80,0], [0.0,0.0,0.0,1.0]].
 
     %atom_concat('soma:', String, Type),
