@@ -725,6 +725,12 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Banana">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Fruit"/>
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#RoboCupFruits"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
+                <owl:hasValue>banana</owl:hasValue>
+            </owl:Restriction>
+        </rdfs:subClassOf>
         <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">77</SUTURO:perceptionId>
         <rdfs:comment>A banana is a long, curved fruit with a yellow skin that is easy to peel, a soft, sweet flesh, and small seeds inside.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
@@ -1629,6 +1635,12 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Lemon">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Fruit"/>
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#RoboCupFruits"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
+                <owl:hasValue>lemon</owl:hasValue>
+            </owl:Restriction>
+        </rdfs:subClassOf>
         <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">76</SUTURO:perceptionId>
         <rdfs:comment>A lemon is a yellow citrus fruit with a sour taste, acidic juice, and versatile use in cooking and beverages.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
@@ -1918,6 +1930,12 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Orange">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Fruit"/>
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#RoboCupFruits"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
+                <owl:hasValue>orange</owl:hasValue>
+            </owl:Restriction>
+        </rdfs:subClassOf>
         <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">27</SUTURO:perceptionId>
         <rdfs:comment>An orange is a round citrus fruit with a tough, bright orange skin, pulpy flesh with sections, and a juicy, tangy flavor.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
@@ -2015,6 +2033,12 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Peach">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Fruit"/>
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#RoboCupFruits"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
+                <owl:hasValue>peach</owl:hasValue>
+            </owl:Restriction>
+        </rdfs:subClassOf>
         <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">79</SUTURO:perceptionId>
         <rdfs:comment>A peach is a round fruit with a fuzzy skin, juicy flesh, a large pit in the center, and a sweet, delicate flavor.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
@@ -2037,6 +2061,12 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Pear">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Fruit"/>
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#RoboCupFruits"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
+                <owl:hasValue>pear</owl:hasValue>
+            </owl:Restriction>
+        </rdfs:subClassOf>
         <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">75</SUTURO:perceptionId>
         <rdfs:comment>A pear is a sweet, juicy fruit with a bulbous shape, a thin skin, and a core with seeds in the center.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
@@ -2116,6 +2146,12 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Plum">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Fruit"/>
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#RoboCupFruits"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
+                <owl:hasValue>plum</owl:hasValue>
+            </owl:Restriction>
+        </rdfs:subClassOf>
         <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">80</SUTURO:perceptionId>
         <rdfs:comment>A plum is a small, round or oval-shaped fruit with a smooth, edible skin, juicy, sweet or tart flesh, and a small pit in the center.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
@@ -2646,6 +2682,12 @@ The challenges in the RoboCup@Home competition are designed to test a variety of
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Strawberry">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Fruit"/>
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#RoboCupFruits"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
+                <owl:hasValue>strawberry</owl:hasValue>
+            </owl:Restriction>
+        </rdfs:subClassOf>
         <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">37</SUTURO:perceptionId>
         <rdfs:comment>A strawberry is a small, red fruit with a juicy texture, sweet taste, and tiny seeds on the surface, commonly used in desserts or as a snack.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
