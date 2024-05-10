@@ -313,6 +313,12 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
                 <owl:allValuesFrom rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Fragility"/>
             </owl:Restriction>
         </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
+                <owl:hasValue>cup</owl:hasValue>
+            </owl:Restriction>
+        </rdfs:subClassOf>
         <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">53</SUTURO:perceptionId>
     </owl:Class>
     
@@ -2305,7 +2311,7 @@ In the context of the RoboCup, objects are usually categorized into predefined c
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
-                <owl:hasValue>red metal mug</owl:hasValue>
+                <owl:hasValue>red metal cup</owl:hasValue>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
