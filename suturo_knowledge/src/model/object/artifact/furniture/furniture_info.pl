@@ -39,10 +39,12 @@ furniture_rel_pose_perceive(Furniture, PoseStampedList) :-
 	object_pose(Furniture, [Frame, [X,Y,Z], Rotation]),
 	object_shape_workaround(Furniture, _, ShapeTerm,_,_),
 	dir_size('-y', ShapeTerm, Size),
+	dir_size('-z', ShapeTerm, ZSize),
+	ZNew is Z - ZSize,
 	XNew is X - 0.7, 
 	YNew is Y - (Size / 2.0),
 	try_divide(Size, Middle),
-	build_pose_stamped_list(Middle, [Frame, [XNew,YNew,Z], Rotation], PoseStampedList).
+	build_pose_stamped_list(Middle, [Frame, [XNew,YNew,ZNew], Rotation], PoseStampedList).
 	
 build_pose_stamped_list([], _, []).
 build_pose_stamped_list([YN | Rest], [Frame, [X,Y,Z], Rotation], [PoseStamped | RestPoses]) :-
@@ -102,10 +104,9 @@ longest_side(Furniture, Size):-
 	dir_size('-x', ShapeTerm, XSize),
 	dir_size('-y', ShapeTerm, YSize),
 	( XSize >= YSize 
-	-> Size is XSize
-	; Size is YSize
+	-> Size = XSize
+	; Size = YSize
 	).
-
 
 furniture_rel_pose_interact(Furniture, PoseStamped) :-
 	% Get the PoseStamped of the Furniture
