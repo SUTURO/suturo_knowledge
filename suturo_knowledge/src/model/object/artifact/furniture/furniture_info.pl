@@ -5,8 +5,7 @@
         has_robocup_name(r,?),
 		try_divide(+,-),
 		div_parts(+, -),
-		div_parts_helper(+,+,-),
-		opt_nav_poses(+, -)
+		div_parts_helper(+,+,-)
 	]).
 
 :- use_module(library('util/math'),
@@ -34,26 +33,29 @@ furniture_rel_pose(Furniture, Type, PoseStamped) :-
 	  false
 	).
 
-furniture_rel_pose_perceive(Furniture, PoseStamped) :-
+furniture_rel_pose_perceive(Furniture, PoseStampedList) :-
 	% Get the PoseStamped of the Furniture
 	object_pose(Furniture, [Frame, [X,Y,Z], Rotation]),
-	XNew is X - 0.7,
-	opt_nav_poses(Furniture, Middle),
-    PoseStamped = [Frame, [XNew,Y,Z], Rotation].
-
-% optional navigation poses when interacting with furniture items
-% Middle is the new x position
-%% opt_nav_poses
-opt_nav_poses(Furniture, Middle):-
 	object_shape_workaround(Furniture, _, ShapeTerm,_,_),
 	dir_size('-y', ShapeTerm, Size),
-	try_divide(Size, Middle).
+	XNew is X - 0.7, 
+	YNew is Y - (Size / 2.0),
+	try_divide(Size, Middle),
+	build_pose_stamped_list(Middle, [Frame, [XNew,YNew,Z], Rotation], PoseStampedList).
+	
+build_pose_stamped_list([], _, []).
+build_pose_stamped_list([YN | Rest], [Frame, [X,Y,Z], Rotation], [PoseStamped | RestPoses]) :-
+	% Build PoseStamped with different Y positions
+	YNew is Y + YN, 
+	PoseStamped = [Frame, [X,YNew,Z], Rotation],
+	build_pose_stamped_list(Rest, [Frame, [X,Y,Z], Rotation], RestPoses).
+	
 
-	try_divide(Size, Midpoints) :-
-		(   Size > 0.8 
-		->	div_parts_helper(Size, [0.4], Midpoints) % Start mit einem Mittelpunkt von 0.4
-		;   div_parts(Size, Midpoints) % Falls die Größe kleiner oder gleich 0.8 ist, halbiere sie einfach
-		).
+try_divide(Size, Midpoints) :-
+	(   Size > 0.8 
+	->	div_parts_helper(Size, [0.4], Midpoints) 
+	;   div_parts(Size, Midpoints) 
+	).
 	
 	div_parts(Size, [Middle]) :-
 		Size > 0, 
@@ -70,16 +72,13 @@ opt_nav_poses(Furniture, Middle):-
 		div_parts_helper(Size, [NextMiddle | Rest], Midpoints).
 	
 	div_parts_helper(Size, [Middle | Rest], Midpoints) :-
-		Middle >= Size, % Die Rekursion endet, wenn der Mittelpunkt größer oder gleich der Größe ist		
+		Middle >= Size, 		
 		writeln("Ending recursion"),
 		(   Rest = [] ->
-			Midpoints = [Size] % Wenn Rest leer ist, füge Size als letzten Wert hinzu
-		;   Midpoints = Rest % Andernfalls behalte Rest bei
+			Midpoints = [Size] 
+		;   Midpoints = Rest 
 		).
 	
-% divides the longest side of the furniture into parts 
-% parts have size of the plane that the robots camera can perceive w/ head rotation
-%% divide(+Size, -Middle)
 
 	% deg_to_rad(70, CameraViewAngle)
 
