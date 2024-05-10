@@ -20,7 +20,8 @@ def fav_drink_of_person_x(Name):
     rospy.loginfo("First interface is called.")
     inter = InterfacePersonAndFavDrink()
 
-    result = inter.what_is_your_fav_drink(Name)
+    #result = inter.what_is_your_fav_drink(Name)
+    result = inter.place_pose_object(Name)
     rospy.loginfo(result)
     return str(result)
 
