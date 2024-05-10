@@ -48,6 +48,18 @@
     
 
 
+    <!-- http://www.ease-crc.org/ont/SOMA.owl#hasDisposition -->
+
+    <owl:ObjectProperty rdf:about="http://www.ease-crc.org/ont/SOMA.owl#hasDisposition"/>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SOMA.owl#hasPhysicalComponent -->
+
+    <owl:ObjectProperty rdf:about="http://www.ease-crc.org/ont/SOMA.owl#hasPhysicalComponent"/>
+    
+
+
     <!-- http://www.ease-crc.org/ont/SUTURO.owl#hasDestinationLocation -->
 
     <owl:ObjectProperty rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#hasDestinationLocation">
@@ -96,6 +108,18 @@
     
 
 
+    <!-- http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#associatedWith -->
+
+    <owl:ObjectProperty rdf:about="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#associatedWith"/>
+    
+
+
+    <!-- http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#hasLocation -->
+
+    <owl:ObjectProperty rdf:about="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#hasLocation"/>
+    
+
+
     <!-- 
     ///////////////////////////////////////////////////////////////////////////////////////
     //
@@ -104,6 +128,18 @@
     ///////////////////////////////////////////////////////////////////////////////////////
      -->
 
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SOMA.owl#hasNameString -->
+
+    <owl:DatatypeProperty rdf:about="http://www.ease-crc.org/ont/SOMA.owl#hasNameString"/>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SOMA.owl#hasPositionData -->
+
+    <owl:DatatypeProperty rdf:about="http://www.ease-crc.org/ont/SOMA.owl#hasPositionData"/>
     
 
 
@@ -169,6 +205,12 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
     
 
 
+    <!-- http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#hasDataValue -->
+
+    <owl:DatatypeProperty rdf:about="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#hasDataValue"/>
+    
+
+
     <!-- 
     ///////////////////////////////////////////////////////////////////////////////////////
     //
@@ -186,17 +228,29 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
     
 
 
+    <!-- http://www.ease-crc.org/ont/SOMA.owl#Appliance -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Appliance"/>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SOMA.owl#Blade -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Blade"/>
+    
+
+
     <!-- http://www.ease-crc.org/ont/SOMA.owl#Bottle -->
 
-    <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Bottle">
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Bottle">
         <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">42</SUTURO:perceptionId>
-    </rdf:Description>
+    </owl:Class>
     
 
 
     <!-- http://www.ease-crc.org/ont/SOMA.owl#Bowl -->
 
-    <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Bowl">
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Bowl">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#RoboCupDishes"/>
         <rdfs:subClassOf>
             <owl:Restriction>
@@ -217,35 +271,41 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
             </owl:Restriction>
         </rdfs:subClassOf>
         <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">29</SUTURO:perceptionId>
-    </rdf:Description>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SOMA.owl#Box -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Box"/>
     
 
 
     <!-- http://www.ease-crc.org/ont/SOMA.owl#BreakfastPlate -->
 
-    <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#BreakfastPlate">
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA.owl#BreakfastPlate">
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
                 <owl:hasValue>breakfast plate</owl:hasValue>
             </owl:Restriction>
         </rdfs:subClassOf>
-    </rdf:Description>
+    </owl:Class>
     
 
 
     <!-- http://www.ease-crc.org/ont/SOMA.owl#CerealBox -->
 
-    <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#CerealBox">
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA.owl#CerealBox">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#RoboCupSnacks"/>
         <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">55</SUTURO:perceptionId>
-    </rdf:Description>
+    </owl:Class>
     
 
 
     <!-- http://www.ease-crc.org/ont/SOMA.owl#Cup -->
 
-    <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Cup">
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Cup">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#RoboCupDishes"/>
         <rdfs:subClassOf>
             <owl:Restriction>
@@ -254,76 +314,112 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
             </owl:Restriction>
         </rdfs:subClassOf>
         <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">53</SUTURO:perceptionId>
-    </rdf:Description>
+    </owl:Class>
     
 
 
     <!-- http://www.ease-crc.org/ont/SOMA.owl#Cutlery -->
 
-    <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Cutlery">
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Cutlery">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#HouseholdHardware"/>
         <rdfs:comment>Cutlery refers to utensils used for eating or serving food such as forks, knives, spoons, and serving spoons.</rdfs:comment>
-    </rdf:Description>
+    </owl:Class>
     
 
 
     <!-- http://www.ease-crc.org/ont/SOMA.owl#CuttingTool -->
 
-    <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#CuttingTool">
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA.owl#CuttingTool">
         <rdfs:comment>A cutting tool is an instrument or machine used for cutting, shaping, or removing material.</rdfs:comment>
-    </rdf:Description>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SOMA.owl#DesignedComponent -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA.owl#DesignedComponent"/>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SOMA.owl#DesignedContainer -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA.owl#DesignedContainer"/>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SOMA.owl#DesignedFurniture -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA.owl#DesignedFurniture"/>
     
 
 
     <!-- http://www.ease-crc.org/ont/SOMA.owl#DesignedHandle -->
 
-    <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#DesignedHandle">
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA.owl#DesignedHandle">
         <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">15</SUTURO:perceptionId>
-    </rdf:Description>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SOMA.owl#DesignedTool -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA.owl#DesignedTool"/>
     
 
 
     <!-- http://www.ease-crc.org/ont/SOMA.owl#DinnerPlate -->
 
-    <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#DinnerPlate">
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA.owl#DinnerPlate">
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
                 <owl:hasValue>dinner plate</owl:hasValue>
             </owl:Restriction>
         </rdfs:subClassOf>
-    </rdf:Description>
+    </owl:Class>
     
 
 
     <!-- http://www.ease-crc.org/ont/SOMA.owl#Dish -->
 
-    <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Dish">
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Dish">
         <rdfs:comment>A dish is a prepared food item that is usually cooked and served on a plate, bowl, or platter.</rdfs:comment>
-    </rdf:Description>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SOMA.owl#Disposition -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Disposition"/>
     
 
 
     <!-- http://www.ease-crc.org/ont/SOMA.owl#Drawer -->
 
-    <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Drawer">
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Drawer">
         <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">60</SUTURO:perceptionId>
-    </rdf:Description>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SOMA.owl#Fluid -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Fluid"/>
     
 
 
     <!-- http://www.ease-crc.org/ont/SOMA.owl#Fork -->
 
-    <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Fork">
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Fork">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#RoboCupDishes"/>
         <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">5</SUTURO:perceptionId>
-    </rdf:Description>
+    </owl:Class>
     
 
 
     <!-- http://www.ease-crc.org/ont/SOMA.owl#Glass -->
 
-    <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Glass">
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Glass">
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#hasDisposition"/>
@@ -337,26 +433,32 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
             </owl:Restriction>
         </rdfs:subClassOf>
         <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">30</SUTURO:perceptionId>
-    </rdf:Description>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SOMA.owl#Intrinsic -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Intrinsic"/>
     
 
 
     <!-- http://www.ease-crc.org/ont/SOMA.owl#KitchenKnife -->
 
-    <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#KitchenKnife">
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA.owl#KitchenKnife">
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
                 <owl:hasValue>kitchen knife</owl:hasValue>
             </owl:Restriction>
         </rdfs:subClassOf>
-    </rdf:Description>
+    </owl:Class>
     
 
 
     <!-- http://www.ease-crc.org/ont/SOMA.owl#Knife -->
 
-    <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Knife">
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Knife">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Cutlery"/>
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#RoboCupDishes"/>
         <rdfs:subClassOf>
@@ -366,43 +468,67 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
             </owl:Restriction>
         </rdfs:subClassOf>
         <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">50</SUTURO:perceptionId>
-    </rdf:Description>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SOMA.owl#Lid -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Lid"/>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SOMA.owl#Location -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Location"/>
     
 
 
     <!-- http://www.ease-crc.org/ont/SOMA.owl#MilkBottle -->
 
-    <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#MilkBottle">
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA.owl#MilkBottle">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#RoboCupDrinks"/>
         <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">85</SUTURO:perceptionId>
-    </rdf:Description>
+    </owl:Class>
     
 
 
     <!-- http://www.ease-crc.org/ont/SOMA.owl#MilkPack -->
 
-    <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#MilkPack">
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA.owl#MilkPack">
         <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">63</SUTURO:perceptionId>
-    </rdf:Description>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SOMA.owl#Pack -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Pack"/>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SOMA.owl#Pan -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Pan"/>
     
 
 
     <!-- http://www.ease-crc.org/ont/SOMA.owl#PastaBowl -->
 
-    <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#PastaBowl">
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA.owl#PastaBowl">
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
                 <owl:hasValue>pasta bowl</owl:hasValue>
             </owl:Restriction>
         </rdfs:subClassOf>
-    </rdf:Description>
+    </owl:Class>
     
 
 
     <!-- http://www.ease-crc.org/ont/SOMA.owl#Plate -->
 
-    <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Plate">
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Plate">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#RoboCupDishes"/>
         <rdfs:subClassOf>
             <owl:Restriction>
@@ -411,57 +537,93 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
             </owl:Restriction>
         </rdfs:subClassOf>
         <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">52</SUTURO:perceptionId>
-    </rdf:Description>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SOMA.owl#Preference -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Preference"/>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SOMA.owl#Rack -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Rack"/>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SOMA.owl#Refrigerator -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Refrigerator"/>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SOMA.owl#Room -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Room"/>
     
 
 
     <!-- http://www.ease-crc.org/ont/SOMA.owl#SaladBowl -->
 
-    <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#SaladBowl">
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA.owl#SaladBowl">
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
                 <owl:hasValue>salad bowl</owl:hasValue>
             </owl:Restriction>
         </rdfs:subClassOf>
-    </rdf:Description>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SOMA.owl#Shaker -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Shaker"/>
     
 
 
     <!-- http://www.ease-crc.org/ont/SOMA.owl#Spoon -->
 
-    <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Spoon">
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Spoon">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#RoboCupDishes"/>
         <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">40</SUTURO:perceptionId>
-    </rdf:Description>
+    </owl:Class>
     
 
 
     <!-- http://www.ease-crc.org/ont/SOMA.owl#Table -->
 
-    <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Table">
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Table">
         <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">28</SUTURO:perceptionId>
         <rdfs:comment>A table is a data structure that organizes information into rows and columns, forming a grid. Tables are widely used in databases and spreadsheets, where each row represents a data record and each column represents a data attribute.</rdfs:comment>
-    </rdf:Description>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SOMA.owl#TrashContainer -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA.owl#TrashContainer"/>
     
 
 
     <!-- http://www.ease-crc.org/ont/SOMA.owl#WaterGlass -->
 
-    <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#WaterGlass">
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA.owl#WaterGlass">
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
                 <owl:hasValue>water glass</owl:hasValue>
             </owl:Restriction>
         </rdfs:subClassOf>
-    </rdf:Description>
+    </owl:Class>
     
 
 
     <!-- http://www.ease-crc.org/ont/SOMA.owl#WineBottle -->
 
-    <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#WineBottle">
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA.owl#WineBottle">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#RoboCupDrinks"/>
         <rdfs:subClassOf>
             <owl:Restriction>
@@ -470,13 +632,13 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
             </owl:Restriction>
         </rdfs:subClassOf>
         <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">81</SUTURO:perceptionId>
-    </rdf:Description>
+    </owl:Class>
     
 
 
     <!-- http://www.ease-crc.org/ont/SOMA.owl#WineGlass -->
 
-    <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#WineGlass">
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA.owl#WineGlass">
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
@@ -484,7 +646,7 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
             </owl:Restriction>
         </rdfs:subClassOf>
         <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">24</SUTURO:perceptionId>
-    </rdf:Description>
+    </owl:Class>
     
 
 
@@ -515,6 +677,12 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Apple">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Fruit"/>
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#RoboCupFruits"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
+                <owl:hasValue>apple</owl:hasValue>
+            </owl:Restriction>
+        </rdfs:subClassOf>
         <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">66</SUTURO:perceptionId>
         <rdfs:comment>An apple is a round or oval-shaped fruit with a red, green, or yellow skin, a crisp, juicy flesh, and a core with seeds in the center.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
@@ -2866,17 +3034,59 @@ The challenges in the RoboCup@Home competition are designed to test a variety of
 
     <!-- http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#BiologicalObject -->
 
-    <rdf:Description rdf:about="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#BiologicalObject">
+    <owl:Class rdf:about="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#BiologicalObject">
         <rdfs:comment>A biological object refers to any living entity, organism, or part thereof that is associated with biological systems or processes. It encompasses a wide range of living things, including plants, animals, microorganisms, cells, tissues, organs, and biological molecules, and is a fundamental concept in the field of biology.</rdfs:comment>
-    </rdf:Description>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#Collection -->
+
+    <owl:Class rdf:about="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#Collection"/>
+    
+
+
+    <!-- http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#DesignedArtifact -->
+
+    <owl:Class rdf:about="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#DesignedArtifact"/>
+    
+
+
+    <!-- http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#DesignedSubstance -->
+
+    <owl:Class rdf:about="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#DesignedSubstance"/>
+    
+
+
+    <!-- http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#Entity -->
+
+    <owl:Class rdf:about="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#Entity"/>
     
 
 
     <!-- http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#NaturalPerson -->
 
-    <rdf:Description rdf:about="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#NaturalPerson">
+    <owl:Class rdf:about="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#NaturalPerson">
         <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">23</SUTURO:perceptionId>
-    </rdf:Description>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#Plan -->
+
+    <owl:Class rdf:about="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#Plan"/>
+    
+
+
+    <!-- http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#SocialObject -->
+
+    <owl:Class rdf:about="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#SocialObject"/>
+    
+
+
+    <!-- http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#Substance -->
+
+    <owl:Class rdf:about="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#Substance"/>
     
 
 
