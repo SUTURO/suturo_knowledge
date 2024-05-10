@@ -6,7 +6,8 @@
         %is_fragile(r),
 		what_object(+,r),
 		fragility_new(+),
-		is_perishable(+)
+		is_perishable(+),
+		have_same_class(+,+)
 	  ]).
 
 
@@ -55,4 +56,12 @@ what_object(ObjName, Object) :-
 	triple(O, owl:hasValue, ObjName), 
 	triple(Object,_,O), 
 	% if one exists, use only that
+	!.
+
+
+have_same_class(ObjName1, ObjName2) :-
+	what_object(ObjName1, X),
+	what_object(ObjName2, Y),
+	subclass_of(X, Z),
+	subclass_of(Y, Z),
 	!.
