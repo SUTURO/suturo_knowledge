@@ -46,6 +46,41 @@ def get_pose(table_name):
     else: 
         print("No solution tables")
         return None 
+###########################################################################
+def get_pose_of_handle(handle_name):
+    q1 = "has_type(X, soma:'DesignedHandle')."
+    sol = prolog.all_solutions(q1)
+    
+    # for all handles, ask for their pose
+    if len(sol) != 0:
+        for handle in list(sol):
+            print("handles:" + str(handle))
+            new_handle = crop(handle).replace('}', "")
+            print("print new_handle:"+ new_handle)
+
+
+            q2 = "object_pose("+ str(new_handle) + ",X)."
+            print(q2)
+            tpos = prolog.once(q2)
+            handle_frame = str(list(tpos.items())[0][1][0])
+            print("1:" + str(handle_name))
+            print("2:" + str(handle_frame))
+
+            tn = crop(handle_name)
+            print("3:" + str(tn))
+            # verwende has_robocup_name in furniture_info.pl
+            # compare whether there is a table named "table_name" and has searched frame
+            if tn == "inside" and handle_frame == "iai_kitchen/iai_kitchen:arena:door_handle_inside":
+                return get_table_pose(new_handle)
+            elif tn == "outside" and handle_frame == "iai_kitchen/iai_kitchen:arena:door_handle_outside":
+                return get_table_pose(new_handle)
+            else:
+                print("No right handle")
+
+    else: 
+        print("No solution handles")
+        return None 
+
 
 ###########################################################################
 ## return information about table as PoseStamped
@@ -105,7 +140,8 @@ def crop(name):
 
 if __name__ == '__main__':
     rospy.init_node('pose_server')
-    rospy.Service('pose_server', ObjectPose, get_pose)
+    #rospy.Service('pose_server', ObjectPose, get_pose)
+    rospy.Service('pose_server', ObjectPose, get_pose_of_handle)
     rospy.Service('where_to_find_server', ObjectPose, where_at)
     rospy.loginfo("pose_server, where_to_find_server")
     rospy.spin()
