@@ -38,7 +38,8 @@ furniture_rel_pose_perceive(Furniture, PoseStampedList) :-
 	% Get the PoseStamped of the Furniture
 	object_pose(Furniture, [Frame, [X,Y,Z], Rotation]),
 	object_shape_workaround(Furniture, _, ShapeTerm,_,_),
-	dir_size('-y', ShapeTerm, Size),
+	longest_side(Furniture,Size),
+	%dir_size('-y', ShapeTerm, Size),
 	dir_size('-z', ShapeTerm, ZSize),
 	ZNew is Z - ZSize,
 	XNew is X - 0.7, 
