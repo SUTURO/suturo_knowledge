@@ -70,9 +70,15 @@ def get_pose_of_handle(handle_name):
             print("3:" + str(tn))
             # verwende has_robocup_name in furniture_info.pl
             # compare whether there is a table named "table_name" and has searched frame
-            if tn == "inside" and handle_frame == "iai_kitchen/iai_kitchen:arena:door_handle_inside":
+            if tn == "door_inside" and handle_frame == "iai_kitchen/iai_kitchen:arena:door_handle_inside":
                 return get_table_pose(new_handle)
-            elif tn == "outside" and handle_frame == "iai_kitchen/iai_kitchen:arena:door_handle_outside":
+            elif tn == "door_outside" and handle_frame == "iai_kitchen/iai_kitchen:arena:door_handle_outside":
+                return get_table_pose(new_handle)
+            elif tn == "dishwasher" and handle_frame == "iai_kitchen/sink_area_dish_washer_door_handle":
+                return get_table_pose(new_handle)
+            elif tn == "shelf_left" and handle_frame == "iai_kitchen/shelf:shelf:shelf_door_left:handle":
+                return get_table_pose(new_handle)
+            elif tn == "shelf_right" and handle_frame == "iai_kitchen/shelf:shelf:shelf_door_right:handle":
                 return get_table_pose(new_handle)
             else:
                 print("No right handle")
