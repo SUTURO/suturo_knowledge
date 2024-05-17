@@ -30,6 +30,22 @@ def fragility_check(name):
             print("Object exists but not fragile!")
             return False
 
+#################################################################################
+## predefined orgin location search 
+def preorlo(name):
+
+    q1 = "preorlo_check"+ "\'"+ name + "\'"+ ", X)."
+    sol = prolog.once(q1)
+    print(sol)
+
+    if len(sol) == 0:
+        print("No predefined or location")
+        return False
+
+    else: 
+        return True
+
+
 
 #################################################################################
 ## crop magic
@@ -46,5 +62,6 @@ def crop(name):
 if __name__ == '__main__':
     rospy.init_node('fragility_server')
     rospy.Service('fragility_server', IsFragile, fragility_check)
+    #rospy.Service('preorlo_server', IsFragile, preorlo)
     rospy.loginfo("fragility_server")
     rospy.spin()
