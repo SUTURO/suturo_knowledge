@@ -4,7 +4,7 @@
 
 import rospy
 from knowledge_msgs.srv import SaveInfo
-from suturo_knowledge.interf_q import InterfaceSavePersonAndDrink
+from suturo_knowledge.interf_q import InterfacePlanningKnowledge
 
 # When the Service "SaveInfo" gets called and receives
 # a string with a name and a string with a drink, the function 
@@ -19,7 +19,7 @@ from suturo_knowledge.interf_q import InterfaceSavePersonAndDrink
 def save_this(Info):
 
     rospy.loginfo("third method is called.")
-    inter = InterfaceSavePersonAndDrink()
+    inter = InterfacePlanningKnowledge()
 
     result = inter.save_person_and_drink(Info)
     rospy.loginfo(result)

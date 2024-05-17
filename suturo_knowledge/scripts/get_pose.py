@@ -8,7 +8,7 @@ from knowledge_msgs.srv import ObjectPose
 
 #################################################################################
 ## Object pose
-        
+"""       
 def get_pose(table_name):
     # get all known tables
     q1 = "has_type(X, soma:'Table')."
@@ -18,7 +18,7 @@ def get_pose(table_name):
     if len(sol) != 0:
         for table in list(sol):
             print("tables:" + str(table))
-            new_table = crop(table).replace('}', "")
+            new_table = crop2(table).replace('}', "")
             q2 = "object_pose("+ str(new_table) + ",X)."
             tpos = prolog.once(q2)
 
@@ -27,7 +27,7 @@ def get_pose(table_name):
             print("1:" + str(table_name))
             print("2:" + str(table_frame))
 
-            tn = crop(table_name)
+            tn = crop2(table_name)
             print("3:" + str(tn))
             # verwende has_robocup_name in furniture_info.pl
             # compare whether there is a table named "table_name" and has searched frame
@@ -55,7 +55,7 @@ def get_pose_of_handle(handle_name):
     if len(sol) != 0:
         for handle in list(sol):
             print("handles:" + str(handle))
-            new_handle = crop(handle).replace('}', "")
+            new_handle = crop2(handle).replace('}', "")
             print("print new_handle:"+ new_handle)
 
 
@@ -66,7 +66,7 @@ def get_pose_of_handle(handle_name):
             print("1:" + str(handle_name))
             print("2:" + str(handle_frame))
 
-            tn = crop(handle_name)
+            tn = crop2(handle_name)
             print("3:" + str(tn))
             # verwende has_robocup_name in furniture_info.pl
             # compare whether there is a table named "table_name" and has searched frame
@@ -114,7 +114,7 @@ def get_table_pose(new_table):
 
 
 def where_at(name):
-    obj_name = crop(name)
+    obj_name = crop2(name)
     q1 = "what_object(" + "\'" + obj_name.lower() + "\'" + ", Object)."
     sol = prolog.once(q1)
 
@@ -136,13 +136,7 @@ def where_at(name):
 
 
 #################################################################################
-# crop magic
-def crop(name):
-    dpunkt_index = str(name).find(":")
-    if dpunkt_index != -1:
-        ex_string = str(name)[dpunkt_index +1:]
-        de_string = ex_string.strip(' "')
-        return de_string
+
 
 if __name__ == '__main__':
     rospy.init_node('pose_server')
@@ -151,3 +145,5 @@ if __name__ == '__main__':
     rospy.Service('where_to_find_server', ObjectPose, where_at)
     rospy.loginfo("pose_server, where_to_find_server")
     rospy.spin()
+
+"""

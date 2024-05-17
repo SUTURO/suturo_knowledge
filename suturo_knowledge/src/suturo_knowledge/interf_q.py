@@ -2,15 +2,25 @@
 
 import rospy
 import rosprolog_client
+from geometry_msgs.msg import PoseStamped
 
 prolog = rosprolog_client.Prolog()
+
+class PrologInterface():
+
+    def __init__(self) -> None:
+        self.PlanningKnowledge = InterfacePlanningKnowledge()
+
+
+# prol = PrologInterface()
+
+# status = prol.PlanningKnowledge.save_person_and_drink(info)
 
 #########################################################################
 # 1:
 # Save name X and favourite drink Y
-# used by: save_server
 
-class InterfaceSavePersonAndDrink:
+class InterfacePlanningKnowledge:
 
     def save_person_and_drink(self, info):
 
@@ -18,13 +28,13 @@ class InterfaceSavePersonAndDrink:
         parts = str(info).split(", ")
         
         # remove unnecessary chars such as ":" and apostrophes
-        name_part = parts[0].split(": ")[1].strip(' "').lower() if len(parts) > 0 else ""
+        name_part = parts[0].lower()
         drink_part = parts[1]
-        id_part = parts[2].strip(' "')
+        #id_part = parts[2].strip(' "')
 
         print("1.Name:", name_part)
         print("2.Drink:", drink_part)
-        print("3.ID:", id_part)
+        #print("3.ID:", id_part)
 
         # check if a fav drink already exists
         query_check = "fav_drink(" + name_part + ", X)."
@@ -32,30 +42,40 @@ class InterfaceSavePersonAndDrink:
 
         if check_for_drink == []:
 
-            id = id_part
+            #id = id_part
 
             if drink_part == "Coffee":
-                query = "save_me_and_coffee(" + name_part + "," + "\'" + id + "\')."
+                #query = "save_me_and_coffee(" + name_part + "," + "\'" + id + "\')."
+                query = "save_me_and_coffee(" + name_part + ")."
+
                 rospy.loginfo(query)
                 prolog.once(query)
 
             elif drink_part == "RaspberryJuice":
-                query = "save_me_and_raspberryjuice(" + name_part  + "," + "\'" + id + "\')."
+                #query = "save_me_and_raspberryjuice(" + name_part  + "," + "\'" + id + "\')."
+                query = "save_me_and_raspberryjuice(" + name_part + ")."
+
                 rospy.loginfo(query)
                 prolog.once(query)
 
             elif drink_part == "Milk":
-                query = "save_me_and_milk(" + name_part  + "," + "\'" + id + "\')."
+                #query = "save_me_and_milk(" + name_part  + "," + "\'" + id + "\')."
+                query = "save_me_and_milk(" + name_part + ")."
+
                 rospy.loginfo(query)
                 prolog.once(query)
 
             elif drink_part == "Tea":
-                query = "save_me_and_tea(" + name_part  + "," + "\'" + id + "\')."
+                #query = "save_me_and_tea(" + name_part  + "," + "\'" + id + "\')."
+                query = "save_me_and_tea(" + name_part + ")."
+
                 rospy.loginfo(query)
                 prolog.once(query)
 
             elif drink_part == "Water":
-                query = "save_me_and_water(" + name_part  + "," + "\'" + id + "\')."
+                #query = "save_me_and_water(" + name_part  + "," + "\'" + id + "\')."
+                query = "save_me_and_water(" + name_part + ")."
+
                 rospy.loginfo(query)
                 prolog.once(query)
 
@@ -75,15 +95,11 @@ class InterfaceSavePersonAndDrink:
 #########################################################################
 # 2:
 # Is person X already known to us?
-# used by: name_server
 
-class InterfaceDoWeKnowYou:
-
-    def do_we_known_u(self, name):
-
+    def do_we_know_u(self, name):
         # crop the input string to a useful string
-        crop_string = crop(name).lower()
-        count = 1
+        crop_string = name.lower()
+        #count = 1
         query = "is_customer("+ crop_string +")."
         solution = prolog.once(query)
 
@@ -93,8 +109,10 @@ class InterfaceDoWeKnowYou:
             return True
         
         else:
-            count += 1
-            save = "save_me("+ crop_string + "," + str(count) + ")."
+            #count += 1
+            #save = "save_me("+ crop_string + "," + str(count) + ")."
+            save = "save_me("+ crop_string + ")."
+
             prolog.once(save)
             rospy.loginfo("We saved you!")
             rospy.loginfo("Nice to meet you " + crop_string.capitalize() + "!")
@@ -112,40 +130,14 @@ class InterfaceDoWeKnowYou:
 
             # because person was not known previously
             return False
-
-#########################################################################
-# 2.5: Get name under ID or ID to name
-# used by: name_server
-    
-class InterfaceGivePersonID:
-
-    # What's person X's ID? --> return ID
-    def whats_your_id(self, name):
-        crop_name = crop(name).lower()
-        query = "has_id(" + crop_name + ", X)."
-        sol = prolog.once(query)
-
-        return sol
-    
-    # What is the name X of person with ID Y? --> return name
-    def whats_your_name(self, guest_id):
-        gid = crop(guest_id)
-        name_q = "has_name(\'" + str(gid) + "\',X)."
-        name_ans = prolog.once(name_q)
-
-        return name_ans
     
 #########################################################################
 # 3: 
 # What's person X's favourite drink?
-# used by: drink_server
-
-class InterfacePersonAndFavDrink:
 
     def what_is_your_fav_drink(self, name):
-
         # crop the input string to a useful string
-        crop_string = crop(str(name)).lower()
+        crop_string = name.lower()
         query = "fav_drink(" + crop_string + "," + "X)."
         solution = prolog.once(query)
         sol = crop(solution)
@@ -153,15 +145,18 @@ class InterfacePersonAndFavDrink:
         give_type = "has_type(" + str(sol) + "," + "X)."
         ref = prolog.once(give_type)
         soll = crop_plus(crop(ref))
-
         return soll.replace("\'", "")
     
 
 #########################################################################
 # 4:
 # Where should this object be placed in the shelve?
-# 
-# class InterfaceObjectPlacePose:
+
+    def challenge_storing_groceries(self):
+        # init_storing_groceries auslagern, soll nur einmal aufgerufen werden 
+        q0 = "init_storing_groceries"
+        prolog.once(q0)
+        print(q0)
 
     def place_pose_object(self, object):
         print(object)
@@ -177,17 +172,12 @@ class InterfacePersonAndFavDrink:
         # mit dem erstellten object, dann object_destination_pose aufrufen 
         # Output: place pose vom apple
 
-        # init_storing_groceries auslagern, soll nur einmal aufgerufen werden 
-        q0 = "init_storing_groceries"
-        prolog.once(q0)
-        print(q0)
-
         already_exists = "create_object(Object, suturo:" + "\'" + "MetalBowl" + "\'" + ", ["+ "\'" + "iai_kitchen/shelf:shelf:shelf_floor_2" + "\'" + ", [0.049,0.02,0], [0,0,0,1.0]], [shape(box(0.5,0.5,0.5))])."
         print(already_exists)
         solq  = prolog.once(already_exists)
         print(solq)
 
-        q3 = "what_object("+ "\'" + str(crop(object)) + "\'" + ",X)."
+        q3 = "what_object("+ "\'" + str(object) + "\'" + ",X)."
         print(q3)
         de_object = prolog.once(q3)
         print(de_object)
@@ -204,6 +194,138 @@ class InterfacePersonAndFavDrink:
         solution = prolog.once(q1)
         print(solution)
 
+        return solution
+
+#########################################################################
+# 5:
+# Get the table pose  
+
+    def get_pose(self, table_name):
+        # get all known tables
+        print(table_name)
+        q1 = "has_type(X, soma:'Table')."
+        sol = prolog.all_solutions(q1)
+        
+        # for all tables, ask for their poses
+        if len(sol) != 0:
+            for table in list(sol):
+                print("tables:" + str(table))
+                new_table = crop2(table).replace('}', "")
+                q2 = "object_pose("+ str(new_table) + ",X)."
+                tpos = prolog.once(q2)
+
+                # extract table name and table frame 
+                table_frame = str(list(tpos.items())[0][1][0])
+                print("1:" + str(table_name))
+                print("2:" + str(table_frame))
+
+                # verwende has_robocup_name in furniture_info.pl
+                # compare whether there is a table named "table_name" and has searched frame
+                if table_name == "p_table" and table_frame == "iai_kitchen/popcorn_table:p_table:table_center":
+                    return build_posestamped(new_table)
+                    
+                elif table_name == "kitchen counter" and table_frame == "iai_kitchen/table_kitchen_counter:kc_table:table_center":
+                    return build_posestamped(new_table)
+                    
+                elif table_name == "l_table" and table_frame == "iai_kitchen/long_table:l_table:table_center":
+                    return build_posestamped(new_table)
+                
+                else:
+                    print("No right table")
+
+        else: 
+            print("No solution tables")
+            return None 
+    
+###########################################################################
+# 6:
+# Get the handle name and the pose
+
+    def get_pose_of_handle(self, handle_name):
+        q1 = "has_type(X, soma:'DesignedHandle')."
+        sol = prolog.all_solutions(q1)
+        
+        # for all handles, ask for their pose
+        if len(sol) != 0:
+            for handle in list(sol):
+                print("handles:" + str(handle))
+                new_handle = crop2(handle).replace('}', "")
+                print("print new_handle:"+ new_handle)
+
+
+                q2 = "object_pose("+ str(new_handle) + ",X)."
+                print(q2)
+                tpos = prolog.once(q2)
+                handle_frame = str(list(tpos.items())[0][1][0])
+                print("1:" + str(handle_name))
+                print("2:" + str(handle_frame))
+
+                # verwende has_robocup_name in furniture_info.pl
+                # compare whether there is a handle named "handle_name" and has searched frame
+                if handle_name == "door_inside" and handle_frame == "iai_kitchen/iai_kitchen:arena:door_handle_inside":
+                    return build_posestamped(new_handle)
+                elif handle_name == "door_outside" and handle_frame == "iai_kitchen/iai_kitchen:arena:door_handle_outside":
+                    return build_posestamped(new_handle)
+                elif handle_name == "dishwasher" and handle_frame == "iai_kitchen/sink_area_dish_washer_door_handle":
+                    return build_posestamped(new_handle)
+                elif handle_name == "shelf_left" and handle_frame == "iai_kitchen/shelf:shelf:shelf_door_left:handle":
+                    return build_posestamped(new_handle)
+                elif handle_name == "shelf_right" and handle_frame == "iai_kitchen/shelf:shelf:shelf_door_right:handle":
+                    return build_posestamped(new_handle)
+                else:
+                    print("No right handle")
+
+        else: 
+            print("No solution handles")
+            return None 
+
+#################################################################################
+# 7:
+## Get the object pose that depends on certain object property
+# just a draft
+"""
+    def where_at(name):
+        obj_name = crop2(name)
+        q1 = "what_object(" + "\'" + obj_name.lower() + "\'" + ", Object)."
+        sol = prolog.once(q1)
+
+        if len(sol) != 0:
+            q2 = "is_perishable("+ "\'" + obj_name + "\')."
+            soll = prolog.once(q2)
+            
+            if soll == dict():
+                return get_pose("furniture:popcorn table")
+            
+            else: 
+                print("Object exists but not perishable. You can find it on the kitchen counter!")
+                return get_pose("furniture:kitchen counter")
+
+        else:
+            print("No object found under this name!")
+            #return get_pose("furniture:long table")
+            return None
+"""
+###########################################################################
+## return information about object as PoseStamped
+# just for formating 
+
+def build_posestamped(new_table):
+    new_pose = "object_pose(" + str(new_table) + ", [map, X, Y])."
+    sol = prolog.once(new_pose)
+    print("4:" + str(sol))
+        
+    pose_stamped = PoseStamped()
+    pose_stamped.header.frame_id = "map"
+    pose_stamped.pose.position.x = sol['X'][0]
+    pose_stamped.pose.position.y = sol['X'][1]
+    pose_stamped.pose.position.z = sol['X'][2]
+
+    pose_stamped.pose.orientation.x = sol['Y'][0]
+    pose_stamped.pose.orientation.y = sol['Y'][1]
+    pose_stamped.pose.orientation.z = sol['Y'][2]
+    pose_stamped.pose.orientation.w = sol['Y'][3]
+
+    return pose_stamped
 
 #########################################################################
 # crop magic
@@ -213,10 +335,18 @@ def crop(string):
     dpunkt_index = str(string).find(":")
     if dpunkt_index != -1:
         ex_string = str(string)[dpunkt_index +1:]
-        print("ex_string:" + ex_string)
+        #print("ex_string:" + ex_string)
         de_string = ex_string.strip(' "').rstrip('}')
-        print("de_string:" + de_string)
+        #print("de_string:" + de_string)
 
+        return de_string
+    
+# crop magic
+def crop2(name):
+    dpunkt_index = str(name).find(":")
+    if dpunkt_index != -1:
+        ex_string = str(name)[dpunkt_index +1:]
+        de_string = ex_string.strip(' "')
         return de_string
 
 

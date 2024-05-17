@@ -4,7 +4,7 @@
 
 import rospy
 from knowledge_msgs.srv import GiveMeFavDrink
-from suturo_knowledge.interf_q import InterfacePersonAndFavDrink
+from suturo_knowledge.interf_q import InterfacePlanningKnowledge
 
 
 # When the Service "GiveMeFavDrink" gets called and receives
@@ -18,7 +18,7 @@ from suturo_knowledge.interf_q import InterfacePersonAndFavDrink
 def fav_drink_of_person_x(Name):
 
     rospy.loginfo("First interface is called.")
-    inter = InterfacePersonAndFavDrink()
+    inter = InterfacePlanningKnowledge()
 
     #result = inter.what_is_your_fav_drink(Name)
     result = inter.place_pose_object(Name)

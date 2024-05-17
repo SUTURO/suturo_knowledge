@@ -5,8 +5,7 @@
 import rospy
 from knowledge_msgs.srv import IsKnown
 #from suturo_knowledge.interf_q import InterfaceDoWeKnowYou
-from suturo_knowledge.interf_q import InterfaceGivePersonID
-from suturo_knowledge.interf_q import InterfacePersonAndFavDrink
+from suturo_knowledge.interf_q import InterfacePlanningKnowledge
 
 # When the Service "IsKnown" gets called and receives
 #   a string with an ID, in the method "person_id" the functions "whats_your_name" 
@@ -38,16 +37,15 @@ def known_person(name):
 """
 # with the customer ID ask for information (favourite drink and name)
 def person_info(guest_id):
-    inter2_5 = InterfaceGivePersonID()
-    inter3 = InterfacePersonAndFavDrink()
+    inter = InterfacePlanningKnowledge()
 
     # check for name saved under this ID
-    gimme_name = inter2_5.whats_your_name(guest_id)
+    gimme_name = inter.whats_your_name(guest_id)
 
     if str(gimme_name) != "None" and gimme_name != []:
         
         # with name ask for favourite drink
-        gimme_drink = inter3.what_is_your_fav_drink(str(gimme_name))
+        gimme_drink = inter.what_is_your_fav_drink(str(gimme_name))
 
         # return "name", "drink"
         the_name = (crop(str(gimme_name)).replace("\'", "")).capitalize()

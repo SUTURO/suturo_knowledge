@@ -5,15 +5,15 @@
 	  [
         fav_drink(+, -),
 		is_customer(+),
-		save_me(+, +),
+		save_me(+),
 		has_id(+, -),
 		has_name(+, -),
 		ask_both(?, ?),
-		save_me_and_coffee(+, +),
-		save_me_and_raspberryjuice(+, +),
-		save_me_and_milk(+, +),
-		save_me_and_tea(+, +),
-		save_me_and_water(+, +)
+		save_me_and_coffee(+),
+		save_me_and_raspberryjuice(+),
+		save_me_and_milk(+),
+		save_me_and_tea(+),
+		save_me_and_water(+)
 	  ]).
 
 :- load_owl('package://suturo_knowledge/owl/suturo.owl', [namespace(suturo, 'http://www.ease-crc.org/ont/SUTURO.owl#')]).
@@ -35,9 +35,9 @@ is_customer(Name):-
 	has_type(Name, suturo:'Customer').
 
 %% save_me(+Name,+ID)
-save_me(Name, ID):-
-	kb_project(is_type(Name, suturo:'Customer')),
-	kb_project(triple(Name, suturo:hasCustomerID, ID)).
+save_me(Name):-
+	kb_project(is_type(Name, suturo:'Customer')).
+	%kb_project(triple(Name, suturo:hasCustomerID, ID)).
 
 %% has_id(+Name,-ID)
 has_id(Name, ID):-
@@ -61,37 +61,37 @@ ask_both(Name, ID):-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % (3) Query: Save the name X and favourite drink Y
 
-%% save_me_and_coffee(+Name, +ID)
-save_me_and_coffee(Name, ID) :-
+%% save_me_and_coffee(+Name)
+save_me_and_coffee(Name) :-
 	kb_project(is_type(Name, suturo:'Customer')),
-	kb_project(triple(Name, suturo:hasCustomerID, ID)),
+	%kb_project(triple(Name, suturo:hasCustomerID, ID)),
 	kb_project(is_type(Drink, suturo:'Coffee')),
 	kb_project(triple(Name,suturo:hasFavouriteDrink, Drink)).
 
-%% save_me_and_raspberryjuice(+Name, +ID)
-save_me_and_raspberryjuice(Name, ID) :-
+%% save_me_and_raspberryjuice(+Name)
+save_me_and_raspberryjuice(Name) :-
 	kb_project(is_type(Name, suturo:'Customer')),
-	kb_project(triple(Name, suturo:hasCustomerID, ID)),
+	%kb_project(triple(Name, suturo:hasCustomerID, ID)),
 	kb_project(is_type(Drink, suturo:'RaspberryJuice')),
 	kb_project(triple(Name,suturo:hasFavouriteDrink, Drink)).
 
-%% save_me_and_milk(+Name, +ID)
-save_me_and_milk(Name, ID) :-
+%% save_me_and_milk(+Name)
+save_me_and_milk(Name) :-
 	kb_project(is_type(Name, suturo:'Customer')),
-	kb_project(triple(Name, suturo:hasCustomerID, ID)),
+	%kb_project(triple(Name, suturo:hasCustomerID, ID)),
 	kb_project(is_type(Drink, suturo:'Milk')),
 	kb_project(triple(Name,suturo:hasFavouriteDrink, Drink)).
 
-%% save_me_and_tea(+Name, +ID)
-save_me_and_tea(Name, ID) :-
+%% save_me_and_tea(+Name)
+save_me_and_tea(Name) :-
 	kb_project(is_type(Name, suturo:'Customer')),
-	kb_project(triple(Name, suturo:hasCustomerID, ID)),
+	%kb_project(triple(Name, suturo:hasCustomerID, ID)),
 	kb_project(is_type(Drink, suturo:'Tea')),
 	kb_project(triple(Name,suturo:hasFavouriteDrink, Drink)).
 
-%% save_me_and_water(+Name, +ID)
-save_me_and_water(Name, ID) :-
+%% save_me_and_water(+Name)
+save_me_and_water(Name) :-
 	kb_project(is_type(Name, suturo:'Customer')),
-	kb_project(triple(Name, suturo:hasCustomerID, ID)),
+	%kb_project(triple(Name, suturo:hasCustomerID, ID)),
 	kb_project(is_type(Drink, suturo:'Water')),
 	kb_project(triple(Name,suturo:hasFavouriteDrink, Drink)).
