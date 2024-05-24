@@ -22,18 +22,11 @@ class PrologInterface():
 
 class InterfacePlanningKnowledge:
 
-    def save_person_and_drink(self, info):
-
-        # info: name_drink: "name, drink"
-        parts = str(info).split(", ")
-        
-        # remove unnecessary chars such as ":" and apostrophes
-        name_part = parts[0].lower()
-        drink_part = parts[1]
-        #id_part = parts[2].strip(' "')
+    def save_person_and_drink(self, name, drink):
+        name_part = name.lower()
 
         print("1.Name:", name_part)
-        print("2.Drink:", drink_part)
+        print("2.Drink:", drink)
         #print("3.ID:", id_part)
 
         # check if a fav drink already exists
@@ -44,35 +37,35 @@ class InterfacePlanningKnowledge:
 
             #id = id_part
 
-            if drink_part == "Coffee":
+            if drink == "Coffee":
                 #query = "save_me_and_coffee(" + name_part + "," + "\'" + id + "\')."
                 query = "save_me_and_coffee(" + name_part + ")."
 
                 rospy.loginfo(query)
                 prolog.once(query)
 
-            elif drink_part == "RaspberryJuice":
+            elif drink == "RaspberryJuice":
                 #query = "save_me_and_raspberryjuice(" + name_part  + "," + "\'" + id + "\')."
                 query = "save_me_and_raspberryjuice(" + name_part + ")."
 
                 rospy.loginfo(query)
                 prolog.once(query)
 
-            elif drink_part == "Milk":
+            elif drink == "Milk":
                 #query = "save_me_and_milk(" + name_part  + "," + "\'" + id + "\')."
                 query = "save_me_and_milk(" + name_part + ")."
 
                 rospy.loginfo(query)
                 prolog.once(query)
 
-            elif drink_part == "Tea":
+            elif drink == "Tea":
                 #query = "save_me_and_tea(" + name_part  + "," + "\'" + id + "\')."
                 query = "save_me_and_tea(" + name_part + ")."
 
                 rospy.loginfo(query)
                 prolog.once(query)
 
-            elif drink_part == "Water":
+            elif drink == "Water":
                 #query = "save_me_and_water(" + name_part  + "," + "\'" + id + "\')."
                 query = "save_me_and_water(" + name_part + ")."
 
@@ -81,10 +74,10 @@ class InterfacePlanningKnowledge:
 
             else: 
                 return ("Sorry " + name_part.capitalize() + ", but we don't know a drink named: "
-                        + drink_part) 
+                        + drink) 
 
             return ("Your name is " + name_part.capitalize() 
-                    + " and your favourite drink is " + drink_part 
+                    + " and your favourite drink is " + drink 
                     + "." + " We saved your information!"
             )
         else : 
@@ -224,9 +217,6 @@ class InterfacePlanningKnowledge:
                 if table_name == "p_table" and table_frame == "iai_kitchen/popcorn_table:p_table:table_center":
                     return build_posestamped(new_table)
                     
-                elif table_name == "kitchen counter" and table_frame == "iai_kitchen/table_kitchen_counter:kc_table:table_center":
-                    return build_posestamped(new_table)
-                    
                 elif table_name == "l_table" and table_frame == "iai_kitchen/long_table:l_table:table_center":
                     return build_posestamped(new_table)
                 
@@ -239,7 +229,7 @@ class InterfacePlanningKnowledge:
     
 ###########################################################################
 # 6:
-# Get the handle name and the pose
+# Get the handle pose
 
     def get_pose_of_handle(self, handle_name):
         q1 = "has_type(X, soma:'DesignedHandle')."
@@ -280,7 +270,48 @@ class InterfacePlanningKnowledge:
             return None 
 
 #################################################################################
-# 7:
+# 7: 
+# Check if an object is fragile
+    def fragility_check(self, name):
+        q1 = "what_object("+ "\'"+name.lower()+ "\'" + ", Object)."
+        sol = prolog.once(q1)
+        
+        if len(sol) == 0:
+            print("Sorry, object is not known to us!")
+            return False
+        
+        else: 
+            q2 = "fragility_new("+ "\'" + name.lower() + "\')."
+            soll = prolog.once(q2)
+
+            if soll == dict():
+                print("Object is fragile!")
+                return True
+            
+            else: 
+                print("Object exists but not fragile!")
+                return False
+
+#################################################################################
+# 8:
+# Create an object
+    def create_object(self, objname, pose):
+        if len(pose) == 0:
+            pose = ['map', [0,0,0], [0,0,0,1]] 
+        q1 = "what_object("+ "\'"+ objname.lower()+ "\'" +  ", Object)."
+        sol = prolog.once(q1)
+        print(sol)
+        newname = crop(sol)
+        print(newname)
+        print(pose)
+
+        q2 = "create_object(X,"+ newname+", "+ str(pose) + "). "
+        sol2 = prolog.once(q2)
+        print(sol2)
+        return sol2
+
+#################################################################################
+
 ## Get the object pose that depends on certain object property
 # just a draft
 """
