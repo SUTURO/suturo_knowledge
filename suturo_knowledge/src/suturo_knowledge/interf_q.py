@@ -252,9 +252,13 @@ class InterfacePlanningKnowledge:
 
                 # verwende has_robocup_name in furniture_info.pl
                 # compare whether there is a handle named "handle_name" and has searched frame
-                if handle_name == "door_inside" and handle_frame == "iai_kitchen/iai_kitchen:arena:door_handle_inside":
+                if handle_name == "k_door_inside" and handle_frame == "iai_kitchen/iai_kitchen:arena:door_handle_inside":
                     return build_posestamped(new_handle)
-                elif handle_name == "door_outside" and handle_frame == "iai_kitchen/iai_kitchen:arena:door_handle_outside":
+                elif handle_name == "k_door_outside" and handle_frame == "iai_kitchen/iai_kitchen:arena:door_handle_outside":
+                    return build_posestamped(new_handle)
+                elif handle_name == "l_door_inside" and handle_frame == "iai_kitchen/living_room:arena:door_handle_inside":
+                    return build_posestamped(new_handle)
+                elif handle_name == "l_door_outside" and handle_frame == "iai_kitchen/living_room:arena:door_handle_outside":
                     return build_posestamped(new_handle)
                 elif handle_name == "dishwasher" and handle_frame == "iai_kitchen/sink_area_dish_washer_door_handle":
                     return build_posestamped(new_handle)
