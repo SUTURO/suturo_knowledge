@@ -7,7 +7,8 @@
 		what_object(+,r),
 		fragility_new(+),
 		is_perishable(+),
-		have_same_class(+,+)
+		have_same_class(+,+),
+		grasp_pose(+,-)
 	  ]).
 
 
@@ -69,3 +70,14 @@ have_same_class(ObjName1, ObjName2) :-
 	subclass_of(X, Z),
 	subclass_of(Y, Z),
 	!.
+
+grasp_pose(ObjName , Pose) :-
+	triple(O,_, suturo:hasPredefinedName), 
+	triple(O, owl:hasValue, ObjName), 
+	triple(Object,_,O),  
+	triple(Object, transitive(rdfs:'subClassOf'), X),
+	triple(X, _, suturo:hasGraspPose),
+	triple(X, owl:hasValue, Pose), 
+	% if one exists, use only that
+	!.
+

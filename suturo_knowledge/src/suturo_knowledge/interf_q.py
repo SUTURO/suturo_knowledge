@@ -230,6 +230,8 @@ class InterfacePlanningKnowledge:
 ###########################################################################
 # 6:
 # Get the handle pose
+# Wie verwendet das Planning? Was genau wollen die haben?
+# Posestamped zum Handlenamen | Frame zum Handlenamen 
 
     def get_pose_of_handle(self, handle_name):
         q1 = "has_type(X, soma:'DesignedHandle')."
@@ -313,6 +315,18 @@ class InterfacePlanningKnowledge:
         sol2 = prolog.once(q2)
         print(sol2)
         return sol2
+
+
+#################################################################################
+# 9:
+# get the pose from where an object shall be grabbed
+
+    def grasp_pose(self, objname):
+        q1 = "grasp_pose("+ "\'"+ objname.lower()+ "\'" + ", Pose)."
+        sol = prolog.once(q1)
+        newname = crop(sol)
+        print (newname)
+        return newname
 
 #################################################################################
 
