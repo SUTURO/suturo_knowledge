@@ -8,9 +8,6 @@
     <arg name="initial_goal" default="urdf_init" />
   </include>
   <!-- <node name="give_string" pkg="suturo_knowledge" type="get_object_info.py" output="screen"/> -->
-  <node name="save_server" pkg="suturo_knowledge" type="save_server.py" output="screen"/>
-  <node name="drink_server" pkg="suturo_knowledge" type="drink_server.py" output="screen"/>  
-  <node name="name_server" pkg="suturo_knowledge" type="name_server.py" output="screen"/>
   <node name="interf_q" pkg="suturo_knowledge" type="interf_q.py" output="screen"/>
   <node name="fragility_server" pkg="suturo_knowledge" type="fragility_server.py" output="screen"/>
   <node name="pose_server" pkg="suturo_knowledge" type="get_pose.py" output="screen"/>
