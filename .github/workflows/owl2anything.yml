@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
 
 env:
-  OWL2ANYTHING_VERSION: 1.1.0
+  OWL2ANYTHING_VERSION: 1.2.0
 
 jobs:
   owl2anything:
