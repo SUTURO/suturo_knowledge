@@ -10,7 +10,6 @@
 		have_same_class(+,+),
 		preorlo_check(r, -),
 		grasp_pose(+,-)
-		preorlo_check(r, -)
 	  ]).
 
 
