@@ -9,7 +9,8 @@
 		is_perishable(+),
 		have_same_class(+,+),
 		preorlo_check(r, -),
-		grasp_pose(+,-)
+		grasp_pose(+,-),
+		has_position(+,-)
 	  ]).
 
 
@@ -92,3 +93,21 @@ grasp_pose(ObjName , Pose) :-
 	% if one exists, use only that
 	!.
 
+has_position(ObjName, Pose):-
+	triple(O,_, suturo:hasPredefinedName), 
+	triple(O, owl:hasValue, ObjName), 
+	triple(Object,_,O),  
+	triple(Object, transitive(rdfs:'subClassOf'), X),
+	triple(Q, _, suturo:hasPosition),
+	triple(Q, owl:hasValue, Pose), 
+	what_object('plate', Plate),
+	object_pose(Plate, [Frame, [X,Y,Z] , Rotation]),
+	( Pose == 'right'
+	-> NewY is Y - 0.5
+	; Pose == 'left'
+	-> NewY is Y + 0.5
+	; Pose == 'top'
+	-> NewX is X + 0.2
+	)
+
+	
