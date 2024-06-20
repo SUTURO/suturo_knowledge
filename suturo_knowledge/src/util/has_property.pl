@@ -8,7 +8,9 @@
 		fragility_new(+),
 		is_perishable(+),
 		have_same_class(+,+),
+		preorlo_check(r, -),
 		grasp_pose(+,-)
+		preorlo_check(r, -)
 	  ]).
 
 
@@ -49,6 +51,16 @@ is_perishable(ObjName):-
 	triple(Object, transitive(rdfs:'subClassOf'), X),
 	triple(X, B, suturo:'Perishable').
 
+
+%% preorlo_check(r, -)
+preorlo_check(ObjName, Objectt):-
+	triple(O,_, suturo:hasPredefinedName),
+	triple(O, owl:hasValue, ObjName),
+	triple(Object,_,O),
+	triple(O,_, suturo:hasOriginLocation),
+	triple(Object, owl:onProperty, X), 
+	triple(Object,_,O),
+	!.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% what_object(+ ObjName, r Object)
