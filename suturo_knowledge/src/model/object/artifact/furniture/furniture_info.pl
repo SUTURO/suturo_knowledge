@@ -34,7 +34,7 @@ furniture_rel_pose(Furniture, Type, PoseStamped) :-
 	  false
 	).
 
-furniture_rel_pose_perceive(Furniture, PoseStampedList) :-
+furniture_rel_pose_perceive(Furniture, PoseStampedListe) :-
 	% Get the PoseStamped of the Furniture
 	object_pose(Furniture, [Frame, [X,Y,Z], Rotation]),
 	object_shape_workaround(Furniture, _, ShapeTerm,_,_),
@@ -45,8 +45,9 @@ furniture_rel_pose_perceive(Furniture, PoseStampedList) :-
 	XNew is X - 0.7, 
 	YNew is Y - (Size / 2.0),
 	try_divide(Size, Middle),
-	build_pose_stamped_list(Middle, [Frame, [XNew,YNew,ZNew], Rotation], PoseStampedList).
-	
+	build_pose_stamped_list(Middle, [Frame, [XNew,YNew,ZNew], Rotation], PoseStampedList),
+	%append(,PoseStampedList,PoseStampedListe).
+
 build_pose_stamped_list([], _, []).
 build_pose_stamped_list([YN | Rest], [Frame, [X,Y,Z], Rotation], [PoseStamped | RestPoses]) :-
 	% Build PoseStamped with different Y positions

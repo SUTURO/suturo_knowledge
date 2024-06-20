@@ -144,6 +144,7 @@ class InterfacePlanningKnowledge:
 #########################################################################
 # 4:
 # Where should this object be placed in the shelve?
+# Vielleicht noch das Object am Ende erstellen, wo das Object hingestellt werden soll.
 
     def challenge_storing_groceries(self):
         # init_storing_groceries auslagern, soll nur einmal aufgerufen werden 
@@ -328,6 +329,17 @@ class InterfacePlanningKnowledge:
         print (newname)
         return newname
 
+#################################################################################
+# 10:
+# get the pose where an object shall be placed 
+
+    def place_destination(self, objname, relObj):
+        q1 = "has_position("+ "\'"+ objname.lower()+ "\'" + ", Pose)." 
+        sol = prolog.once(q1)
+        newname = crop(sol)
+
+        q2 = ""
+        return None
 #################################################################################
 
 ## Get the object pose that depends on certain object property
