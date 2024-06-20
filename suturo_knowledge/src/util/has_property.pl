@@ -109,5 +109,4 @@ has_position(ObjName, Pose):-
 	; Pose == 'top'
 	-> NewX is X + 0.2
 	)
-
 	
