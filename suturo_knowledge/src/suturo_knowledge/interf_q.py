@@ -326,20 +326,19 @@ class InterfacePlanningKnowledge:
         q1 = "grasp_pose("+ "\'"+ objname.lower()+ "\'" + ", Pose)."
         sol = prolog.once(q1)
         newname = crop(sol)
-        print (newname)
+        print(newname)
         return newname
 
 #################################################################################
 # 10:
 # get the pose where an object shall be placed 
 
-    def place_destination(self, objname, relObj):
-        q1 = "has_position("+ "\'"+ objname.lower()+ "\'" + ", Pose)." 
+    def place_destination(self, objname):
+        q1 = "has_position("+ "\'"+ objname.lower()+ "\'" + ", Pose)."
+        print(q1)
         sol = prolog.once(q1)
-        newname = crop(sol)
-
-        q2 = ""
-        return None
+        print(sol)
+        return sol
 #################################################################################
 
 ## Get the object pose that depends on certain object property

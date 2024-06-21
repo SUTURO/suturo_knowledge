@@ -93,20 +93,23 @@ grasp_pose(ObjName , Pose) :-
 	% if one exists, use only that
 	!.
 
-has_position(ObjName, Pose):-
+has_position(ObjName, PoseStamped):-
 	triple(O,_, suturo:hasPredefinedName), 
 	triple(O, owl:hasValue, ObjName), 
 	triple(Object,_,O),  
-	triple(Object, transitive(rdfs:'subClassOf'), X),
+	triple(Object, transitive(rdfs:'subClassOf'), Q),
 	triple(Q, _, suturo:hasPosition),
 	triple(Q, owl:hasValue, Pose), 
-	what_object('plate', Plate),
+	has_type(Plate, soma:'Plate'),
 	object_pose(Plate, [Frame, [X,Y,Z] , Rotation]),
 	( Pose == 'right'
-	-> NewY is Y - 0.5
+	-> NewY is Y - 0.2, 
+		PoseStamped = [Frame, [X,NewY,Z] , Rotation]
 	; Pose == 'left'
-	-> NewY is Y + 0.5
-	; Pose == 'top'
-	-> NewX is X + 0.2
-	)
+	-> NewY is Y + 0.2, 
+		PoseStamped = [Frame, [X,NewY,Z] , Rotation]
+	; Pose == 'top_right'
+	-> NewX is X + 0.2,  NewY is Y - 0.2,
+		PoseStamped = [Frame, [NewX,NewY,Z] , Rotation]
+	).
 	
