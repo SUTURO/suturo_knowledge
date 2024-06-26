@@ -37,6 +37,14 @@
     
 
 
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#perceptionName -->
+
+    <owl:AnnotationProperty rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#perceptionName">
+        <rdfs:comment rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:AnnotationProperty>
+    
+
+
     <!-- 
     ///////////////////////////////////////////////////////////////////////////////////////
     //
@@ -1035,6 +1043,8 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
                 <owl:someValuesFrom rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#DesignedHandle"/>
             </owl:Restriction>
         </rdfs:subClassOf>
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">103</SUTURO:perceptionId>
+        <SUTURO:perceptionName>clamp</SUTURO:perceptionName>
         <rdfs:comment>A clamp is a mechanical device with two jaws that can be adjusted to hold an object in place, used for woodworking, metalworking, and other types of manual work.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
@@ -1242,6 +1252,17 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#CreditCard">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#DesignedTool"/>
         <rdfs:comment>A credit card is a standard-size rectangular piece of plastic. It is a payment card that allows the cardholder to borrow funds from a financial institution to make purchases and pay them back with interest over time.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#CupSmall -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#CupSmall">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Cup"/>
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">101</SUTURO:perceptionId>
+        <SUTURO:perceptionName>Cup_small</SUTURO:perceptionName>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
@@ -1534,6 +1555,8 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
                 <owl:someValuesFrom rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#DesignedHandle"/>
             </owl:Restriction>
         </rdfs:subClassOf>
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">104</SUTURO:perceptionId>
+        <SUTURO:perceptionName>hammer</SUTURO:perceptionName>
         <rdfs:comment>A hammer is a hand-held tool with a heavy metal head and a handle used for driving nails, breaking objects apart, or shaping metal.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
@@ -2765,6 +2788,8 @@ The challenges in the RoboCup@Home competition are designed to test a variety of
                 <owl:someValuesFrom rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#DesignedHandle"/>
             </owl:Restriction>
         </rdfs:subClassOf>
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">102</SUTURO:perceptionId>
+        <SUTURO:perceptionName>screwdriver</SUTURO:perceptionName>
         <rdfs:comment>A screwdriver is a hand tool consisting of a handle and a shaft with a shaped tip designed to fit into the corresponding slot or recess of a screw head. It is used for turning screws to fasten or loosen them in a wide range of applications, from construction and carpentry to electronics and household repairs.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
@@ -2957,6 +2982,17 @@ The challenges in the RoboCup@Home competition are designed to test a variety of
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Toy"/>
         <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">45</SUTURO:perceptionId>
         <rdfs:comment>Stacking blocks are a popular children&apos;s toy consisting of various sized and shaped blocks that can be stacked on top of each other to form towers or structures. They are often made of wood, plastic or foam, and are used to improve fine motor skills, hand-eye coordination, and problem-solving abilities in young children.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#StapelChips -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#StapelChips">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#ChipsCan"/>
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">93</SUTURO:perceptionId>
+        <SUTURO:perceptionName>stapel_Chips</SUTURO:perceptionName>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
@@ -3327,6 +3363,8 @@ The challenges in the RoboCup@Home competition are designed to test a variety of
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#WoodBlock">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Block"/>
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">105</SUTURO:perceptionId>
+        <SUTURO:perceptionName>wooden_block</SUTURO:perceptionName>
         <rdfs:comment>A wood block is a solid piece of wood cut into a rectangular or square shape, used for carving, chopping, or as a decorative item.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
@@ -3359,91 +3397,11 @@ The challenges in the RoboCup@Home competition are designed to test a variety of
     
 
 
-    <!-- http://www.ease-crc.org/ont/SUTURO.owl#clamp -->
-
-    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#clamp">
-        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#ForceConcentratingTool"/>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
-                <owl:hasValue>clamp</owl:hasValue>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">103</SUTURO:perceptionId>
-        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.ease-crc.org/ont/SUTURO.owl#hammer -->
-
-    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#hammer">
-        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#ForceConcentratingTool"/>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
-                <owl:hasValue>hammer</owl:hasValue>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">104</SUTURO:perceptionId>
-        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
-    </owl:Class>
-    
-
-
     <!-- http://www.ease-crc.org/ont/SUTURO.owl#hasFavouriteDrink -->
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#hasFavouriteDrink">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Preference"/>
         <rdfs:comment> A preferred drink by a customer </rdfs:comment>
-        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.ease-crc.org/ont/SUTURO.owl#screwdriver -->
-
-    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#screwdriver">
-        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#ForceConcentratingTool"/>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
-                <owl:hasValue>screwdriver</owl:hasValue>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">102</SUTURO:perceptionId>
-        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.ease-crc.org/ont/SUTURO.owl#stapel_Chips -->
-
-    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#stapel_Chips">
-        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#ChipsCan"/>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
-                <owl:hasValue>staple chips</owl:hasValue>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">93</SUTURO:perceptionId>
-        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.ease-crc.org/ont/SUTURO.owl#wooden_block -->
-
-    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#wooden_block">
-        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Block"/>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
-                <owl:hasValue>wooden block</owl:hasValue>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">105</SUTURO:perceptionId>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
