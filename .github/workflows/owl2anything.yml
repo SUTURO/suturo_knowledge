@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
 
 env:
-  OWL2ANYTHING_VERSION: 1.1.0
+  OWL2ANYTHING_VERSION: 1.2.0
 
 jobs:
   owl2anything:
@@ -65,7 +65,7 @@ jobs:
       - name: Commit and push owl2anything output artifacts
         run: |
           # Only commit if there are changes in the owl2anything output directory
-          if [[ $(git diff --name-only --diff-filter=ACMRTUXB HEAD -- docs/objects/owl2anything/output/) ]]; then
+          if [[ $(git status --porcelain -- docs/objects/owl2anything/output/) ]]; then
             git add docs/objects/owl2anything/output/*
             git commit -m "Updated SUTURO Objects to $(echo ${GITHUB_SHA} | cut -c1-7) (${{ github.workflow }}:${{ github.run_number }} :rocket:)"
             git push origin master
