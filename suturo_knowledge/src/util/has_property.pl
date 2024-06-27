@@ -102,7 +102,7 @@ has_position(ObjName, PoseStamped):-
 	-> NewY is Y + 0.2, 
 		PoseStamped = [Frame, [X,NewY,Z] , Rotation]
 	; Pose == 'top_right'
-	-> NewX is X + 0.2,  NewY is Y - 0.2,
+	-> NewX is X - 0.2,  NewY is Y + 0.2,
 		PoseStamped = [Frame, [NewX,NewY,Z] , Rotation]
 	).
 	
