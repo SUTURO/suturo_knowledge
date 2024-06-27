@@ -10,7 +10,8 @@
 		have_same_class(+,+),
 		preorlo_check(r, -),
 		grasp_pose(+,-),
-		has_position(+,-)
+		has_position(+,-),
+		has_value(+,r,-)
 	  ]).
 
 
@@ -45,18 +46,14 @@ transitivee(Object) :-
 % 
 % ask if object is perishable
 is_perishable(ObjName):-
-	triple(O,_, suturo:hasPredefinedName), 
-	triple(O, owl:hasValue, ObjName), 
-	triple(Object,_,O),  
+	what_object(ObjName, Object),
 	triple(Object, transitive(rdfs:'subClassOf'), X),
 	triple(X, B, suturo:'Perishable').
 
 
 %% preorlo_check(r, -)
 preorlo_check(ObjName, Objectt):-
-	triple(O,_, suturo:hasPredefinedName),
-	triple(O, owl:hasValue, ObjName),
-	triple(Object,_,O),
+	what_object(ObjName, Object),
 	triple(O,_, suturo:hasOriginLocation),
 	triple(Object, owl:onProperty, X), 
 	triple(Object,_,O),
@@ -84,9 +81,7 @@ have_same_class(ObjName1, ObjName2) :-
 	!.
 
 grasp_pose(ObjName , Pose) :-
-	triple(O,_, suturo:hasPredefinedName), 
-	triple(O, owl:hasValue, ObjName), 
-	triple(Object,_,O),  
+	what_object(ObjName, Object),
 	triple(Object, transitive(rdfs:'subClassOf'), X),
 	triple(X, _, suturo:hasGraspPose),
 	triple(X, owl:hasValue, Pose), 
@@ -94,9 +89,7 @@ grasp_pose(ObjName , Pose) :-
 	!.
 
 has_position(ObjName, PoseStamped):-
-	triple(O,_, suturo:hasPredefinedName), 
-	triple(O, owl:hasValue, ObjName), 
-	triple(Object,_,O),  
+	what_object(ObjName, Object), 
 	triple(Object, transitive(rdfs:'subClassOf'), Q),
 	triple(Q, _, suturo:hasPosition),
 	triple(Q, owl:hasValue, Pose), 
@@ -113,3 +106,14 @@ has_position(ObjName, PoseStamped):-
 		PoseStamped = [Frame, [NewX,NewY,Z] , Rotation]
 	).
 	
+has_value(ObjName, Property, Value) :-
+	what_object(ObjName, Object),
+	triple(Object, transitive(rdfs:'subClassOf'), X),
+	triple(X, _, Property),
+	triple(X, owl:hasValue, Value).
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% get_pose(+ ObjName, r Object)
+%
