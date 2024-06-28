@@ -11,7 +11,11 @@
 		preorlo_check(r, -),
 		grasp_pose(+,-),
 		has_position(+,-),
-		has_value(+,r,-)
+		has_value(+,r,-),
+		middle(+,-),
+		exit_pose(+,-),
+		entry_pose(+,-),
+		path(?,?)
 	  ]).
 
 
@@ -112,6 +116,27 @@ has_value(ObjName, Property, Value) :-
 	triple(X, _, Property),
 	triple(X, owl:hasValue, Value).
 
+
+connected_rooms(kitchen,living_room).
+connected_rooms(living_room, dining_room).
+
+path(X,Y):- connected_rooms(X,Y).
+path(X,Y):- connected_rooms(Y,X).
+path(X,Y):- connected_rooms(X,Z), path(Z,Y).
+path(X,Y):- connected_rooms(Z,X), path(Z,Y).
+
+
+middle(kitchen, [map, [2.87, -1.11, 0] , [0, 0, 0, 1.0]]).
+middle(living_room, [map, [2.94, 2.62, 0] , [0, 0, 0, 1.0]]).
+middle(dining_room, [map, [2.88, 4.9, 0] , [0, 0, 0, 1.0]]).
+
+entry_pose(kitchen, [map, [0.37, 0.01, 0] , [0, 0, 0, 1.0]]).
+entry_pose(living_room, [map, [2.34, 2.71, 0] , [0, 0, 0, 1.0]]).
+entry_pose(dining_room, [map, [0, 3.74, 0] , [0, 0, 0, 1.0]]).
+
+exit_pose(kitchen, [map, [1.2, -0.218, 0] , [0, 0, 0, 1.0]]).
+exit_pose(living_room, [map, [3.02, 2.53, 0] , [0, 0, 0, 1.0]]).
+exit_pose(dining_room, [map, [0.73, 3.77, 0] , [0, 0, 0, 1.0]]).
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
