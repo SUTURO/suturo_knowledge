@@ -1480,6 +1480,7 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
     <!-- http://www.ease-crc.org/ont/SUTURO.owl#Grapes -->
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Grapes">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Fruit"/>
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#RoboCupFruits"/>
         <rdfs:subClassOf>
             <owl:Restriction>
