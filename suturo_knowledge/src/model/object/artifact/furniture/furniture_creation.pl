@@ -73,7 +73,11 @@ init_furnitures :-
     forall((member(UrdfLink, Links),
 	        is_semantic_map_object(UrdfLink)
 	       ),
-        init_furniture(UrdfLink)),
+        ignore((
+            init_furniture(UrdfLink)
+            -> true
+            ;  ros_warn("UrdfLink can not be loaded! ~w", [UrdfLink])
+            ))),
     ros_info('Semantic map furniture initialized').
 
 %% init_furnitures(?UrdfLink) is semidet.

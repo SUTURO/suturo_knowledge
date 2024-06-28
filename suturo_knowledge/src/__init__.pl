@@ -4,7 +4,7 @@
 
 % Load the main SUTURO ontology
 :- load_owl('package://suturo_knowledge/owl/suturo.owl', [namespace(suturo, 'http://www.ease-crc.org/ont/SUTURO.owl#')]).
-
+:- load_owl('http://www.ease-crc.org/ont/SOMA-HOME.owl', [namespace(soma_home, 'http://www.ease-crc.org/ont/SOMA-HOME.owl#')]).
 % Imports to register additional namespaces
 :- use_module(library('semweb/rdf_db'),
 		[ rdf_register_prefix/3 ]).
@@ -34,5 +34,5 @@
 % init the rooms before the furniture to make sure the furniture
 % is assigned its room.
 :- init_rooms.
-:- init_predefined_names_robocup_2023.
+%:- init_predefined_names_robocup_2023.
 :- init_semantic_map.

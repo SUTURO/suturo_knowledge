@@ -7,5 +7,6 @@
     <arg name="initial_package" default="suturo_knowledge" />
     <arg name="initial_goal" default="urdf_init" />
   </include>
-  <node name="give_string" pkg="suturo_knowledge" type="getLocation.py" output="screen"/>
+  <!-- <node name="give_string" pkg="suturo_knowledge" type="get_object_info.py" output="screen"/> -->
+  <node name="interf_q" pkg="suturo_knowledge" type="interf_q.py" output="screen"/>
 </launch>
