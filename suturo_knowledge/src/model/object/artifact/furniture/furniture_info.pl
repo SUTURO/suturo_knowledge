@@ -111,14 +111,14 @@ longest_side(Furniture, Size):-
 	; Size = YSize
 	).
 
-	shortest_side(Furniture, Size):-
-		object_shape_workaround(Furniture, _, ShapeTerm, _, _),
-		dir_size('-x', ShapeTerm, XSize),
-		dir_size('-y', ShapeTerm, YSize),
-		( XSize < YSize 
-		-> Size = XSize
-		; Size = YSize
-		).
+shortest_side(Furniture, Size):-
+	object_shape_workaround(Furniture, _, ShapeTerm, _, _),
+	dir_size('-x', ShapeTerm, XSize),
+	dir_size('-y', ShapeTerm, YSize),
+	( XSize < YSize 
+	-> Size = XSize
+	; Size = YSize
+	).
 
 furniture_rel_pose_interact(Furniture, PoseStamped) :-
 	% Get the PoseStamped of the Furniture
