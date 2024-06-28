@@ -6,7 +6,8 @@
 		try_divide(+,-),
 		div_parts(+, -),
 		div_parts_helper(+,+,-),
-		longest_side(r,-)
+		longest_side(r,-),
+		shortest_side(r,-)
 	]).
 
 :- use_module(library('util/math'),
@@ -106,6 +107,15 @@ longest_side(Furniture, Size):-
 	dir_size('-x', ShapeTerm, XSize),
 	dir_size('-y', ShapeTerm, YSize),
 	( XSize >= YSize 
+	-> Size = XSize
+	; Size = YSize
+	).
+
+shortest_side(Furniture, Size):-
+	object_shape_workaround(Furniture, _, ShapeTerm, _, _),
+	dir_size('-x', ShapeTerm, XSize),
+	dir_size('-y', ShapeTerm, YSize),
+	( XSize < YSize 
 	-> Size = XSize
 	; Size = YSize
 	).

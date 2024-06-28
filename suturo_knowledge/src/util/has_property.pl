@@ -10,8 +10,9 @@
 		have_same_class(+,+),
 		preorlo_check(r, -),
 		grasp_pose(+,-),
-		has_position(+,-),
-		has_value(+,r,-)
+		has_position(+,r,-),
+		has_value(+,r,-),
+		place_plate(r,-)
 	  ]).
 
 
@@ -88,13 +89,12 @@ grasp_pose(ObjName , Pose) :-
 	% if one exists, use only that
 	!.
 
-has_position(ObjName, PoseStamped):-
+has_position(ObjName, Table, PoseStamped):-
 	what_object(ObjName, Object), 
 	triple(Object, transitive(rdfs:'subClassOf'), Q),
 	triple(Q, _, suturo:hasPosition),
 	triple(Q, owl:hasValue, Pose), 
-	has_type(Plate, soma:'Plate'),
-	object_pose(Plate, [Frame, [X,Y,Z] , Rotation]),
+	place_plate(Table, [Frame, [X,Y,Z] , Rotation]),
 	( Pose == 'right'
 	-> NewY is Y - 0.2, 
 		PoseStamped = [Frame, [X,NewY,Z] , Rotation]
@@ -102,7 +102,7 @@ has_position(ObjName, PoseStamped):-
 	-> NewY is Y + 0.2, 
 		PoseStamped = [Frame, [X,NewY,Z] , Rotation]
 	; Pose == 'top_right'
-	-> NewX is X - 0.2,  NewY is Y + 0.2,
+	-> NewX is X + 0.2,  NewY is Y - 0.2,
 		PoseStamped = [Frame, [NewX,NewY,Z] , Rotation]
 	).
 	
@@ -112,8 +112,15 @@ has_value(ObjName, Property, Value) :-
 	triple(X, _, Property),
 	triple(X, owl:hasValue, Value).
 
+% table muss hier als soma:Table_XYZ stehen 
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% get_pose(+ ObjName, r Object)
-%
+place_plate(Table, TPose):-
+	object_pose(Table, [Frame, [X,Y,Z], Rotation]),
+    longest_side(Table, YSize),
+	writeln(YSize),
+	YNew is (Y + (YSize / 2.0)) - 0.3,
+	shortest_side(Table, XSize),
+	XNew is (X - XSize/ 2.0) + 0.2,
+	writeln(YNew),
+	TPose = [Frame, [XNew,YNew,Z], [0,0,0,1.0]].
