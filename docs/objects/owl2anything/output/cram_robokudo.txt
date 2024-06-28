@@ -178,3 +178,37 @@
 	 :rubikscube)
 	(:cerealboxrobocup
 	 :cerealboxrobocup)
+	(:nesquickcerealbox
+	 :nesquickcerealbox)
+	(:milkpackja
+	 :milkpackja)
+	(:mueslibox
+	 :mueslibox)
+	(:stapelchips
+	 :stapelchips)
+	(:cupblue
+	 :cupblue)
+	(:cupgreen
+	 :cupgreen)
+	(:largemarker
+	 :largemarker)
+	(:masterchefcan
+	 :masterchefcan)
+	(:scissors
+	 :scissors)
+	(:scrubcleaner
+	 :scrubcleaner)
+	(:grapes
+	 :grapes)
+	(:cupsmall
+	 :cupsmall)
+	(:screwdriver
+	 :screwdriver)
+	(:clamp
+	 :clamp)
+	(:hammer
+	 :hammer)
+	(:woodblock
+	 :woodblock)
+	(:cornybox
+	 :cornybox)

@@ -178,3 +178,37 @@
 	 "http://www.ease-crc.org/ont/SUTURO.owl#RubiksCube")
 	(:cerealboxrobocup
 	 "http://www.ease-crc.org/ont/SUTURO.owl#CerealBoxRoboCup")
+	(:nesquickcerealbox
+	 "http://www.ease-crc.org/ont/SUTURO.owl#NesquickCerealBox")
+	(:milkpackja
+	 "http://www.ease-crc.org/ont/SUTURO.owl#MilkPackJa")
+	(:mueslibox
+	 "http://www.ease-crc.org/ont/SUTURO.owl#MuesliBox")
+	(:stapelchips
+	 "http://www.ease-crc.org/ont/SUTURO.owl#StapelChips")
+	(:cupblue
+	 "http://www.ease-crc.org/ont/SUTURO.owl#CupBlue")
+	(:cupgreen
+	 "http://www.ease-crc.org/ont/SUTURO.owl#CupGreen")
+	(:largemarker
+	 "http://www.ease-crc.org/ont/SUTURO.owl#LargeMarker")
+	(:masterchefcan
+	 "http://www.ease-crc.org/ont/SUTURO.owl#MasterChefCan")
+	(:scissors
+	 "http://www.ease-crc.org/ont/SUTURO.owl#Scissors")
+	(:scrubcleaner
+	 "http://www.ease-crc.org/ont/SUTURO.owl#ScrubCleaner")
+	(:grapes
+	 "http://www.ease-crc.org/ont/SUTURO.owl#Grapes")
+	(:cupsmall
+	 "http://www.ease-crc.org/ont/SUTURO.owl#CupSmall")
+	(:screwdriver
+	 "http://www.ease-crc.org/ont/SUTURO.owl#ScrewDriver")
+	(:clamp
+	 "http://www.ease-crc.org/ont/SUTURO.owl#Clamp")
+	(:hammer
+	 "http://www.ease-crc.org/ont/SUTURO.owl#Hammer")
+	(:woodblock
+	 "http://www.ease-crc.org/ont/SUTURO.owl#WoodBlock")
+	(:cornybox
+	 "http://www.ease-crc.org/ont/SUTURO.owl#CornyBox")
