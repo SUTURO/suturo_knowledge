@@ -7,7 +7,7 @@
 		div_parts(+, -),
 		div_parts_helper(+,+,-),
 		longest_side(r,-), 
-		shortest_sid(r,-)
+		shortest_side(r,-)
 	]).
 
 :- use_module(library('util/math'),
@@ -119,7 +119,7 @@ longest_side(Furniture, Size):-
 		-> Size = XSize
 		; Size = YSize
 		).
-	
+
 furniture_rel_pose_interact(Furniture, PoseStamped) :-
 	% Get the PoseStamped of the Furniture
 	object_pose(Furniture, [Frame, [X,Y,Z], Rotation]),
