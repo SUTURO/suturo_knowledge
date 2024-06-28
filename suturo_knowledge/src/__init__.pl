@@ -31,8 +31,14 @@
 
 :- tf_logger_enable.
 
-% init the rooms before the furniture to make sure the furniture
-% is assigned its room.
-:- init_rooms.
-%:- init_predefined_names_robocup_2023.
-:- init_semantic_map.
+%% moved to initial_goal in launchfile because of https://github.com/knowrob/knowrob/issues/310
+%% % init the rooms before the furniture to make sure the furniture
+%% % is assigned its room.
+%% :- init_rooms.
+%% %:- init_predefined_names_robocup_2023.
+%% :- init_semantic_map.
+
+init_suturo_knowledge :-
+    urdf_init,
+    init_rooms,
+    init_semantic_map.
