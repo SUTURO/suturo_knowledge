@@ -6,8 +6,7 @@
 		try_divide(+,-),
 		div_parts(+, -),
 		div_parts_helper(+,+,-),
-		longest_side(r,-), 
-		shortest_side(r,-)
+		longest_side(r,-)
 	]).
 
 :- use_module(library('util/math'),
@@ -35,7 +34,7 @@ furniture_rel_pose(Furniture, Type, PoseStamped) :-
 	  false
 	).
 
-furniture_rel_pose_perceive(Furniture, PoseStampedListe) :-
+furniture_rel_pose_perceive(Furniture, PoseStampedList) :-
 	% Get the PoseStamped of the Furniture
 	object_pose(Furniture, [Frame, [X,Y,Z], Rotation]),
 	object_shape_workaround(Furniture, _, ShapeTerm,_,_),
@@ -46,7 +45,7 @@ furniture_rel_pose_perceive(Furniture, PoseStampedListe) :-
 	XNew is X - 0.7, 
 	YNew is Y - (Size / 2.0),
 	try_divide(Size, Middle),
-	build_pose_stamped_list(Middle, [Frame, [XNew,YNew,ZNew], Rotation], PoseStampedList),
+	build_pose_stamped_list(Middle, [Frame, [XNew,YNew,ZNew], Rotation], PoseStampedList).
 	%append(,PoseStampedList,PoseStampedListe).
 
 build_pose_stamped_list([], _, []).
@@ -107,15 +106,6 @@ longest_side(Furniture, Size):-
 	dir_size('-x', ShapeTerm, XSize),
 	dir_size('-y', ShapeTerm, YSize),
 	( XSize >= YSize 
-	-> Size = XSize
-	; Size = YSize
-	).
-
-shortest_side(Furniture, Size):-
-	object_shape_workaround(Furniture, _, ShapeTerm, _, _),
-	dir_size('-x', ShapeTerm, XSize),
-	dir_size('-y', ShapeTerm, YSize),
-	( XSize < YSize 
 	-> Size = XSize
 	; Size = YSize
 	).
