@@ -116,6 +116,14 @@
     
 
 
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#isInRoom -->
+
+    <owl:ObjectProperty rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#isInRoom">
+        <rdfs:subPropertyOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedLocation"/>
+    </owl:ObjectProperty>
+    
+
+
     <!-- http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#associatedWith -->
 
     <owl:ObjectProperty rdf:about="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#associatedWith"/>
@@ -351,6 +359,12 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#HouseholdHardware"/>
         <rdfs:subClassOf>
             <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#isInRoom"/>
+                <owl:allValuesFrom rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Kitchen"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasGraspPose"/>
                 <owl:hasValue>above</owl:hasValue>
             </owl:Restriction>
@@ -473,6 +487,14 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
     <!-- http://www.ease-crc.org/ont/SOMA.owl#Intrinsic -->
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Intrinsic"/>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SOMA.owl#Kitchen -->
+
+    <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Kitchen">
+        <rdfs:comment>A kitchen is a dedicated space in a home or establishment used for cooking, food preparation, and sometimes dining. It typically contains appliances such as a stove, refrigerator, and sink, as well as storage for cookware, utensils, and ingredients.</rdfs:comment>
+    </rdf:Description>
     
 
 
@@ -1449,6 +1471,12 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Fruit">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Food"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#isInRoom"/>
+                <owl:allValuesFrom rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Kitchen"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
         <rdfs:comment>Fruit is the sweet and fleshy product of a tree or other plant that contains seed and can be eaten as food.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
@@ -3434,9 +3462,6 @@ The challenges in the RoboCup@Home competition are designed to test a variety of
     </rdf:Description>
     <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Door">
         <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">20</SUTURO:perceptionId>
-    </rdf:Description>
-    <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Kitchen">
-        <rdfs:comment>A kitchen is a dedicated space in a home or establishment used for cooking, food preparation, and sometimes dining. It typically contains appliances such as a stove, refrigerator, and sink, as well as storage for cookware, utensils, and ingredients.</rdfs:comment>
     </rdf:Description>
     <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#KitchenCabinet">
         <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">9</SUTURO:perceptionId>
