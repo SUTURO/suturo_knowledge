@@ -48,8 +48,8 @@
 	 :naturalperson)
 	(:wineglass
 	 :wineglass)
-	(:shelf
-	 :shelf)
+	(:shelflayer
+	 :shelflayer)
 	(:tray
 	 :tray)
 	(:orange

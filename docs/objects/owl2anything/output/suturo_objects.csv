@@ -2,6 +2,7 @@ Name;IRI ShortForm;IRI Namespace;Perception Id;Description
 AbrasiveSponge;suturo:'AbrasiveSponge';http://www.ease-crc.org/ont/SUTURO.owl#;46;An abrasive sponge is a cleaning tool designed to scrub away tough dirt and grime from surfaces using its rough, abrasive surface. It is typically made from materials such as nylon, polyester, or natural fibers, and is commonly used in the kitchen and bathroom for cleaning dishes, pots, pans, and other surfaces.
 AdjustableWrench;suturo:'AdjustableWrench';http://www.ease-crc.org/ont/SUTURO.owl#;;An adjustable wrench is a hand-held tool with a movable jaw that can be adjusted to fit nuts, bolts, and other objects of different sizes, used for turning or tightening them.
 Apple;suturo:'Apple';http://www.ease-crc.org/ont/SUTURO.owl#;66;An apple is a round or oval-shaped fruit with a red, green, or yellow skin, a crisp, juicy flesh, and a core with seeds in the center.
+AppleJuice;suturo:'AppleJuice';http://www.ease-crc.org/ont/SUTURO.owl#;;Apple juice is a beverage made by pressing or extracting the natural liquid from apples, a sweet and crunchy fruit. It is often consumed as a refreshing drink.
 Appliance;soma:'Appliance';http://www.ease-crc.org/ont/SOMA.owl#;;A device designed to perform a specific task, and that can be operated in some way.
 Arena;suturo:'Arena';http://www.ease-crc.org/ont/SUTURO.owl#;;The whole arena where the robot is normally allowed to move.
 Arm;soma:'Arm';http://www.ease-crc.org/ont/SOMA.owl#;;A limb used to reach for objects.
@@ -9,12 +10,16 @@ Armchair;soma:'Armchair';http://www.ease-crc.org/ont/SOMA.owl#;;A more comfortab
 ArtificialAgent;soma:'ArtificialAgent';http://www.ease-crc.org/ont/SOMA.owl#;;A physical object with artificial characteristics, which can perform actions to achieve desired goals, and typically has sensors and/or actuators. There can be non-physical artificial agents such as software programs but they are not considered here in the scope of artificial agent.
 Bag;suturo:'Bag';http://www.ease-crc.org/ont/SUTURO.owl#;69;A bag is a container made of flexible or rigid materials, such as cloth, paper, or plastic, used to store or transport objects. It often has an opening at the top and can be closed with a zipper, button, or other fastening mechanism. Bags come in a variety of shapes and sizes and are used for a wide range of purposes, from carrying groceries and books to holding personal belongings when traveling.
 BakedGood;soma:'BakedGood';http://www.ease-crc.org/ont/SOMA.owl#;;Baked goods are food items made by cooking or baking ingredients such as flour, sugar, eggs, and butter, resulting in a wide variety of products like bread, pastries, cakes, and cookies. They are typically characterized by their fluffy or crispy texture, and they are enjoyed as snacks or desserts.
+Balcony;suturo:'Balcony';http://www.ease-crc.org/ont/SUTURO.owl#;;Balcony
 Ball;suturo:'Ball';http://www.ease-crc.org/ont/SUTURO.owl#;;A ball is a spherical object typically used in sports, games, or as a toy, made from various materials and usually bounced, thrown, or kicked.
 Banana;suturo:'Banana';http://www.ease-crc.org/ont/SUTURO.owl#;77;A banana is a long, curved fruit with a yellow skin that is easy to peel, a soft, sweet flesh, and small seeds inside.
 Baseball;suturo:'Baseball';http://www.ease-crc.org/ont/SUTURO.owl#;12;A baseball is a ball used in the sport of baseball, made of cork or rubber, and covered with leather or synthetic materials, and is roughly the size of an adult's fist.
+Bathroom;suturo:'Bathroom';http://www.ease-crc.org/ont/SUTURO.owl#;;Bathroom
 Bed;suturo:'Bed';http://www.ease-crc.org/ont/SUTURO.owl#;;A bed is a piece of furniture for sleeping or resting on that typically includes a mattress and a frame.
 Bedroom;suturo:'Bedroom';http://www.ease-crc.org/ont/SUTURO.owl#;;A bedroom is a private space within a dwelling primarily used for sleeping and relaxation. It typically contains a bed, storage for personal belongings, and may include additional furniture such as a dresser or nightstand.
 BedsideTable;soma:'BedsideTable';http://www.ease-crc.org/ont/SOMA.owl#;;A small table typically located next to a bed.
+Beer;suturo:'Beer';http://www.ease-crc.org/ont/SUTURO.owl#;;Beer
+Bib;suturo:'Bib';http://www.ease-crc.org/ont/SUTURO.owl#;;Bib
 BiologicalObject;dul:'BiologicalObject';http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#;;A biological object refers to any living entity, organism, or part thereof that is associated with biological systems or processes. It encompasses a wide range of living things, including plants, animals, microorganisms, cells, tissues, organs, and biological molecules, and is a fundamental concept in the field of biology.
 Blade;soma:'Blade';http://www.ease-crc.org/ont/SOMA.owl#;;A flat cutting edge of an object used to cut through other objects, such as the blade of a ventilator cutting through the air.
 BlankCreditCard;suturo:'BlankCreditCard';http://www.ease-crc.org/ont/SUTURO.owl#;;A blank credit card is a standard-size rectangular piece of plastic with no personal or financial information embossed or encoded on it, used as a blank template for creating customized credit, debit, or ID cards.
@@ -42,6 +47,9 @@ CerealBoxRoboCup;suturo:'CerealBoxRoboCup';http://www.ease-crc.org/ont/SUTURO.ow
 Chain;suturo:'Chain';http://www.ease-crc.org/ont/SUTURO.owl#;;A chain is a series of metal links or rings, typically made of steel or other metals, connected together to form a flexible, strong, and durable tool for lifting, towing, securing, or transmitting power.
 CheezItCrackerBox;suturo:'CheezItCrackerBox';http://www.ease-crc.org/ont/SUTURO.owl#;;A box containing, or at least intended to contain, Cheeze-It brand crackers. A cracker is a flat, dry-baked pastry, usually made from flour.
 ChemicalObject;dul:'ChemicalObject';http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#;;ChemicalObject
+Chili;suturo:'Chili';http://www.ease-crc.org/ont/SUTURO.owl#;;Chili
+ChiliConCarne;suturo:'ChiliConCarne';http://www.ease-crc.org/ont/SUTURO.owl#;;ChiliConCarne
+ChiliSinCarne;suturo:'ChiliSinCarne';http://www.ease-crc.org/ont/SUTURO.owl#;;ChiliSinCarne
 ChipsCan;suturo:'ChipsCan';http://www.ease-crc.org/ont/SUTURO.owl#;;Chips can refers to a cylindrical container that holds potato chips.
 Clamp;suturo:'Clamp';http://www.ease-crc.org/ont/SUTURO.owl#;103;A clamp is a mechanical device with two jaws that can be adjusted to hold an object in place, used for woodworking, metalworking, and other types of manual work.
 CleaningTool;suturo:'CleaningTool';http://www.ease-crc.org/ont/SUTURO.owl#;;A cleaning tool is an instrument used for cleaning or scrubbing surfaces.
@@ -55,6 +63,7 @@ CoffeeCarafe;soma:'CoffeeCarafe';http://www.ease-crc.org/ont/SOMA.owl#;;A carafe
 CoffeePack;suturo:'CoffeePack';http://www.ease-crc.org/ont/SUTURO.owl#;31;A coffee pack typically refers to a package containing ground coffee or coffee beans used for making coffee, usually in a drip coffee maker, espresso machine, or French press. The packaging is designed to keep the coffee fresh and flavorful, and often includes information on the type of roast, flavor profile, and origin of the coffee.
 CoffeeTable;soma:'CoffeeTable';http://www.ease-crc.org/ont/SOMA.owl#;;A small and low table which is typically used as a shelf for small items such as cups, and located in front of a sofa.
 CoilCooktop;soma:'CoilCooktop';http://www.ease-crc.org/ont/SOMA.owl#;;A cooktop that uses heated metal coils.
+Cola;suturo:'Cola';http://www.ease-crc.org/ont/SUTURO.owl#;;Cola
 ColaCan;suturo:'ColaCan';http://www.ease-crc.org/ont/SUTURO.owl#;83;A cola can is a small, cylindrical container, often made of aluminum, used for holding and distributing carbonated soft drinks, particularly cola. It features a pull-tab or stay-on-tab at the top for easy opening and consumption, and is popular for its portability and recyclability.
 ColoredWoodBlock;suturo:'ColoredWoodBlock';http://www.ease-crc.org/ont/SUTURO.owl#;;Colored wood blocks are toys that consist of various sized wooden blocks that are painted in different colors and shapes for children to play with.
 Compartment;soma:'Compartment';http://www.ease-crc.org/ont/SOMA.owl#;;A compartment is a distinct, enclosed space within a larger structure or system, often used to separate or organize different components or elements. It helps to compartmentalize and manage complex systems by providing a segregated environment for specific functions or entities.
@@ -78,6 +87,7 @@ Cupboard;soma:'Cupboard';http://www.ease-crc.org/ont/SOMA.owl#;3;A cupboard is a
 Customer;suturo:'Customer';http://www.ease-crc.org/ont/SUTURO.owl#;;A customer is a person, whose name we know.
 Customer_ID;suturo:'Customer_ID';http://www.ease-crc.org/ont/SUTURO.owl#;;An id for every customer we meet.
 Cutlery;soma:'Cutlery';http://www.ease-crc.org/ont/SOMA.owl#;;Cutlery refers to utensils used for eating or serving food such as forks, knives, spoons, and serving spoons.
+CuttingBoard;suturo:'CuttingBoard';http://www.ease-crc.org/ont/SUTURO.owl#;;CuttingBoard
 CuttingTool;soma:'CuttingTool';http://www.ease-crc.org/ont/SOMA.owl#;;A cutting tool is an instrument or machine used for cutting, shaping, or removing material.
 DesignedArtifact;dul:'DesignedArtifact';http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#;;A PhysicalArtifact that is also described by a Design. This excludes simple recycling or refunctionalization of natural objects. Most common sense 'artifacts' can be included in this class: cars, lamps, houses, chips, etc.
 DesignedChair;soma:'DesignedChair';http://www.ease-crc.org/ont/SOMA.owl#;2;A piece of furniture designed for one person to sit on.
@@ -91,6 +101,7 @@ DesignedSubstance;dul:'DesignedSubstance';http://www.ontologydesignpatterns.org/
 DesignedTool;soma:'DesignedTool';http://www.ease-crc.org/ont/SOMA.owl#;;An item designed to enable some action, in which it will play an instrumental role.
 DessertFork;soma:'DessertFork';http://www.ease-crc.org/ont/SOMA.owl#;;A smallar fork for eating desserts e.g. cake.
 Dice;suturo:'Dice';http://www.ease-crc.org/ont/SUTURO.owl#;54;Dice are small, cube-shaped objects with markings on each face, typically used in games of chance and gambling, to generate random numbers, or for other recreational purposes.
+DiningRoom;suturo:'DiningRoom';http://www.ease-crc.org/ont/SUTURO.owl#;;DiningRoom
 DiningTable;suturo:'DiningTable';http://www.ease-crc.org/ont/SUTURO.owl#;;A table mainly used for dining. Often placed inside of a living room.
 DinnerPlate;soma:'DinnerPlate';http://www.ease-crc.org/ont/SOMA.owl#;;A regular size plate for eating a main meals.
 Dish;soma:'Dish';http://www.ease-crc.org/ont/SOMA.owl#;;A dish is a prepared food item that is usually cooked and served on a plate, bowl, or platter.
@@ -124,6 +135,8 @@ Fruit;suturo:'Fruit';http://www.ease-crc.org/ont/SUTURO.owl#;;Fruit is the sweet
 FunctionalPart;soma:'FunctionalPart';http://www.ease-crc.org/ont/SOMA.owl#;;Parts of an agent or an artifact are considered as functional parts.
 FunctionalSubstance;dul:'FunctionalSubstance';http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#;;FunctionalSubstance
 GasCooktop;soma:'GasCooktop';http://www.ease-crc.org/ont/SOMA.owl#;;A cooktop that uses burning gas for heating.
+GinTonic;suturo:'GinTonic';http://www.ease-crc.org/ont/SUTURO.owl#;;GinTonic
+GingerAle;suturo:'GingerAle';http://www.ease-crc.org/ont/SUTURO.owl#;;GingerAle
 Glass;soma:'Glass';http://www.ease-crc.org/ont/SOMA.owl#;30;A container made usually from glass or transparent plastic which is used to hold, typically cold, beverages.
 GlassCleanerSprayBottle;suturo:'GlassCleanerSprayBottle';http://www.ease-crc.org/ont/SUTURO.owl#;38;A glass cleaner spray bottle is a container designed to hold a cleaning solution specifically formulated for cleaning glass surfaces. It typically has a spray nozzle that dispenses the solution in a fine mist for easy application onto the surface.
 GolfBall;suturo:'GolfBall';http://www.ease-crc.org/ont/SUTURO.owl#;32;A golf ball is a small, round ball used in the sport of golf, typically made of rubber and synthetic materials, with dimples on its surface to increase lift and reduce drag.
@@ -141,6 +154,7 @@ HygieneProduct;suturo:'HygieneProduct';http://www.ease-crc.org/ont/SUTURO.owl#;;
 IceTea;suturo:'IceTea';http://www.ease-crc.org/ont/SUTURO.owl#;;Iced tea is a beverage made by steeping tea leaves in hot water, then chilling the tea and serving it over ice. It can be sweetened and flavored with lemon, peach, or other fruits, and is a popular refreshment, especially during hot weather.
 IceTeaBottle;suturo:'IceTeaBottle';http://www.ease-crc.org/ont/SUTURO.owl#;86;An iced tea bottle is a container, commonly made of plastic or glass, designed specifically for storing and dispensing iced tea. It typically features a screw-top or snap cap for resealability, allowing the beverage to stay fresh and chilled, and is favored for its portability and convenience.
 IceTeaBox;suturo:'IceTeaBox';http://www.ease-crc.org/ont/SUTURO.owl#;;An ice tea box refers to the container or packaging used to store and sell iced tea, usually in a ready-to-drink form. The box may contain individual servings or larger quantities, and can be made of various materials such as cardboard, plastic, or glass.
+IcedCoffee;suturo:'IcedCoffee';http://www.ease-crc.org/ont/SUTURO.owl#;;IcedCoffee
 InductionCooktop;soma:'InductionCooktop';http://www.ease-crc.org/ont/SOMA.owl#;;A type of cooktop where heat is induced in the cookware. Only special induction cookware can be used with this type of cooktop.
 JaFettarmeHMilchMilkPack;suturo:'JaFettarmeHMilchMilkPack';http://www.ease-crc.org/ont/SUTURO.owl#;;JaFettarmeHMilchMilkPack
 JamJar;soma:'JamJar';http://www.ease-crc.org/ont/SOMA.owl#;;A jar which holds, or at least is intended to usually hold, jam.
@@ -151,6 +165,7 @@ Jello;suturo:'Jello';http://www.ease-crc.org/ont/SUTURO.owl#;;Jello, also known 
 JelloBox;suturo:'JelloBox';http://www.ease-crc.org/ont/SUTURO.owl#;48;A box containing, or at least normally intended to contain, jello.
 Joint;urdf:'Joint';http://knowrob.org/kb/urdf.owl#;;An object that is used to articulate links in a kinematic structure.
 Joint;soma:'Joint';http://www.ease-crc.org/ont/SOMA.owl#;;An object that is used to articulate links in a kinematic structure.
+Jug;suturo:'Jug';http://www.ease-crc.org/ont/SUTURO.owl#;;Jug
 Juice;suturo:'Juice';http://www.ease-crc.org/ont/SUTURO.owl#;;Juice is a beverage made from the extraction or pressing of the natural liquid contained in fruits and vegetables. It can be consumed as a refreshing drink, and is often marketed as a source of vitamins and other nutrients.
 JuiceBottle;suturo:'JuiceBottle';http://www.ease-crc.org/ont/SUTURO.owl#;;A juice bottle is a container, typically made from plastic or glass, that's specifically designed for storing and dispensing juice. It often features a screw-top or snap cap to maintain freshness and ease of use, and its portability makes it a popular choice for consumption at home or on the go.
 JuiceBox;suturo:'JuiceBox';http://www.ease-crc.org/ont/SUTURO.owl#;70;A juice box is a container made of paperboard, with a small attached plastic straw, used for packaging and drinking juice. They are typically single-serving and convenient for on-the-go consumption.
@@ -172,15 +187,18 @@ Leg;soma:'Leg';http://www.ease-crc.org/ont/SOMA.owl#;;A limb on which an agent w
 Lego;suturo:'Lego';http://www.ease-crc.org/ont/SUTURO.owl#;;LEGO is a popular construction toy consisting of colorful interlocking plastic bricks and other components that can be assembled and reconfigured into various shapes and structures.
 LegoDuplo;suturo:'LegoDuplo';http://www.ease-crc.org/ont/SUTURO.owl#;;Lego Duplo is a line of Lego building toys designed for children aged 1.5 to 5 years old.
 Lemon;suturo:'Lemon';http://www.ease-crc.org/ont/SUTURO.owl#;76;A lemon is a yellow citrus fruit with a sour taste, acidic juice, and versatile use in cooking and beverages.
+Lemonade;suturo:'Lemonade';http://www.ease-crc.org/ont/SUTURO.owl#;;Lemonade
 Lid;soma:'Lid';http://www.ease-crc.org/ont/SOMA.owl#;;A removable or hinged cover for the top of a container.
 Limb;soma:'Limb';http://www.ease-crc.org/ont/SOMA.owl#;;An arm or leg of an embodied agent.
 Link;urdf:'Link';http://knowrob.org/kb/urdf.owl#;;Link
 Liquid;suturo:'Liquid';http://www.ease-crc.org/ont/SUTURO.owl#;;Liquid food is a type of food that is in a liquid state and can be consumed without chewing.
 LivingRoom;suturo:'LivingRoom';http://www.ease-crc.org/ont/SUTURO.owl#;;A living room is a common area in a home designed for socializing, entertainment, and relaxation. It usually features comfortable seating, such as sofas and chairs, and may include a television, coffee table, and other furniture for gathering and conversation.
+Lobby;suturo:'Lobby';http://www.ease-crc.org/ont/SUTURO.owl#;;Lobby
 LowFatLongLastingMilk;suturo:'LowFatLongLastingMilk';http://www.ease-crc.org/ont/SUTURO.owl#;;Low-fat long-lasting milk is a type of milk that has been processed to remove some of the fat and extend its shelf life. This milk is typically heated to a high temperature, which kills off bacteria and enzymes that can cause spoilage, and then packaged in airtight containers.
 Magazine;suturo:'Magazine';http://www.ease-crc.org/ont/SUTURO.owl#;;A magazine is a publication containing articles and illustrations, often on a particular subject or aimed at a particular audience.
 Marble;suturo:'Marble';http://www.ease-crc.org/ont/SUTURO.owl#;41;A marble is a small, spherical toy made of glass, stone, or other materials, used in games, competitions, or for decoration.
 MasterChefCan;suturo:'MasterChefCan';http://www.ease-crc.org/ont/SUTURO.owl#;97;MasterChefCan
+Meat;suturo:'Meat';http://www.ease-crc.org/ont/SUTURO.owl#;;Meat
 MetalBowl;suturo:'MetalBowl';http://www.ease-crc.org/ont/SUTURO.owl#;56;A metal bowl is a container made from metal material, typically stainless steel or aluminum, and used for various purposes such as mixing ingredients, serving food, or as a decorative object. It is durable, easy to clean, and can withstand high temperatures, making it ideal for use in the kitchen.
 MetalHardware;suturo:'MetalHardware';http://www.ease-crc.org/ont/SUTURO.owl#;;Metal hardware refers to various metal components, such as nuts, bolts, screws, washers, and hinges, used in manufacturing and construction to join or secure different objects or materials together.
 MetalMug;suturo:'MetalMug';http://www.ease-crc.org/ont/SUTURO.owl#;43;A metal mug is a drinking vessel made from metal material, typically stainless steel or copper, and designed to hold hot or cold beverages. It is sturdy, reusable, and often used for camping, outdoor activities, or as a travel mug.
@@ -188,9 +206,13 @@ MetalPlate;suturo:'MetalPlate';http://www.ease-crc.org/ont/SUTURO.owl#;35;A meta
 Microwave;suturo:'Microwave';http://www.ease-crc.org/ont/SUTURO.owl#;;A microwave is an appliance that cooks or heats up food by using microwave radiation to excite the molecules in the food.
 Milk;suturo:'Milk';http://www.ease-crc.org/ont/SUTURO.owl#;;Milk is a nutrient-rich liquid that comes from cows or other mammals and is commonly consumed by humans.
 MilkBottle;soma:'MilkBottle';http://www.ease-crc.org/ont/SOMA.owl#;85;A bottle which holds, or at least is intended to usually hold, milk.
+MilkCoffee;suturo:'MilkCoffee';http://www.ease-crc.org/ont/SUTURO.owl#;;MilkCoffee
+MilkGlass;suturo:'MilkGlass';http://www.ease-crc.org/ont/SUTURO.owl#;;A glass which holds, or at least is intended to usually hold, water. Also affords drinking from it.
+MilkJug;suturo:'MilkJug';http://www.ease-crc.org/ont/SUTURO.owl#;;MilkJug
 MilkPack;soma:'MilkPack';http://www.ease-crc.org/ont/SOMA.owl#;63;A pack which holds, or at least is intended to usually hold, milk.
 MilkPackJa;suturo:'MilkPackJa';http://www.ease-crc.org/ont/SUTURO.owl#;91;MilkPackJa
 Mineral;suturo:'Mineral';http://www.ease-crc.org/ont/SUTURO.owl#;;A mineral is a naturally occurring inorganic substance that has a specific chemical composition and a crystalline structure. They are found in rocks and the Earth's crust and have many practical uses, such as being used as building materials, in electronics, and in the production of jewelry.
+MineralWater;suturo:'MineralWater';http://www.ease-crc.org/ont/SUTURO.owl#;;MineralWater
 MiniSoccerBall;suturo:'MiniSoccerBall';http://www.ease-crc.org/ont/SUTURO.owl#;11;A mini soccer ball is a smaller version of a regulation soccer ball, often used for training, indoor or recreational play, or for promotional or decorative purposes.
 MovableJoint;soma:'MovableJoint';http://www.ease-crc.org/ont/SOMA.owl#;;A joint where the two connected links can move relative to each other in some dimension.
 MovableJoint;urdf:'MovableJoint';http://knowrob.org/kb/urdf.owl#;;A joint where the two connected links can move relative to each other in some dimension.
@@ -206,6 +228,7 @@ NesquickCerealBox;suturo:'NesquickCerealBox';http://www.ease-crc.org/ont/SUTURO.
 NinePegHoleTest;suturo:'NinePegHoleTest';http://www.ease-crc.org/ont/SUTURO.owl#;;A pegboard with nine holes used for cognitive and psychomotor testing.
 Nut;suturo:'Nut';http://www.ease-crc.org/ont/SUTURO.owl#;;A nut is a small, usually hexagonal-shaped metal or plastic fastener with a threaded hole used for securing a bolt or screw in place.
 NutellaJar;soma:'NutellaJar';http://www.ease-crc.org/ont/SOMA.owl#;;A jar which holds, or at least is intended to usually hold, Nutella.
+Office;suturo:'Office';http://www.ease-crc.org/ont/SUTURO.owl#;;Office
 Orange;suturo:'Orange';http://www.ease-crc.org/ont/SUTURO.owl#;27;An orange is a round citrus fruit with a tough, bright orange skin, pulpy flesh with sections, and a juicy, tangy flavor.
 OrangeJuiceBox;suturo:'OrangeJuiceBox';http://www.ease-crc.org/ont/SUTURO.owl#;87;An OrangeJuiceBox is a portable, typically single-serving container made of paperboard or other lightweight materials, designed to hold and dispense orange juice. It is commonly equipped with a straw or a pull-tab for easy consumption, and is popular for its convenience and use in packed lunches or on-the-go situations.
 Oregano;suturo:'Oregano';http://www.ease-crc.org/ont/SUTURO.owl#;;Oregano is a fragrant herb commonly used in Mediterranean and Mexican cuisine. It has a strong, slightly bitter flavor and is often used dried to add depth to tomato-based sauces, meats, and vegetables.
@@ -219,6 +242,7 @@ Pan;soma:'Pan';http://www.ease-crc.org/ont/SOMA.owl#;;A container used for cooki
 Pancake;soma:'Pancake';http://www.ease-crc.org/ont/SOMA.owl#;;Pancakes are a type of flat, round, and fluffy breakfast food made from a batter of flour, eggs, milk, and a leavening agent, typically baking powder or baking soda. They are cooked on a griddle or frying pan and are often served with toppings such as syrup, fruit, or whipped cream, making them a popular choice for a delicious morning meal.
 PancakeMix;soma:'PancakeMix';http://www.ease-crc.org/ont/SOMA.owl#;;Pancake mix is a pre-made dry mixture of flour, baking powder, salt, and other ingredients that is used to make pancakes quickly and easily. It typically requires the addition of liquid ingredients such as milk, eggs, and oil, and can be customized with various flavors and additions such as chocolate chips or blueberries.
 PancakeMixBottle;suturo:'PancakeMixBottle';http://www.ease-crc.org/ont/SUTURO.owl#;71;A pancake mix bottle is a container that holds pre-made pancake batter, ready to be cooked. These bottles usually come with a nozzle for easy pouring and can be found in different sizes and shapes.
+Pantry;suturo:'Pantry';http://www.ease-crc.org/ont/SUTURO.owl#;;Pantry
 PaperBag;suturo:'PaperBag';http://www.ease-crc.org/ont/SUTURO.owl#;;A paper bag is a type of bag made from paper materials, such as kraft paper or recycled paper. It is commonly used for carrying groceries, snacks, and other lightweight items, and is often considered a more environmentally-friendly option compared to plastic bags. Paper bags can be recycled and are biodegradable, making them a sustainable choice for packaging and transporting goods.
 PastaBowl;soma:'PastaBowl';http://www.ease-crc.org/ont/SOMA.owl#;;A bowl which holds, or at least is intended to usually hold, pasta.
 PastryBox;suturo:'PastryBox';http://www.ease-crc.org/ont/SUTURO.owl#;74;A pastry box is a container used to transport and store pastries such as cakes, pies, and tarts. It is typically made of cardboard or plastic and designed to keep the pastries fresh and protected during transport, with features such as secure lids and inserts to prevent movement and damage.
@@ -232,6 +256,8 @@ PhysicalArtifact;dul:'PhysicalArtifact';http://www.ontologydesignpatterns.org/on
 PhysicalBody;dul:'PhysicalBody';http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#;;Physical bodies are PhysicalObject(s), for which we tend to neutralize any possible artifactual character. They can have several granularity levels: geological, chemical, physical, biological, etc.
 PhysicalEffector;soma:'PhysicalEffector';http://www.ease-crc.org/ont/SOMA.owl#;;A functional part belonging to an Agent and which allows that Agent to act upon its surroundings.
 PhysicalPlace;dul:'PhysicalPlace';http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#;;"A physical object that is inherently located; for example, a water area."
+PicklesJar;suturo:'PicklesJar';http://www.ease-crc.org/ont/SUTURO.owl#;;PicklesJar
+PillBox;suturo:'PillBox';http://www.ease-crc.org/ont/SUTURO.owl#;;PillBox
 Pitcher;suturo:'Pitcher';http://www.ease-crc.org/ont/SUTURO.owl#;7;A pitcher is a container, usually made of glass or ceramic, with a handle and spout used for holding and pouring beverages such as water, juice, or tea.
 PitcherLid;suturo:'PitcherLid';http://www.ease-crc.org/ont/SUTURO.owl#;;A pitcher lid is a cover used to close the opening of a pitcher and prevent the contents from spilling or becoming contaminated.
 PlanarJoint;soma:'PlanarJoint';http://www.ease-crc.org/ont/SOMA.owl#;;A joint that allows motion in a plane perpendicular to an axis.
@@ -269,6 +295,7 @@ RubiksCube;suturo:'RubiksCube';http://www.ease-crc.org/ont/SUTURO.owl#;88;A Rubi
 SaladBowl;soma:'SaladBowl';http://www.ease-crc.org/ont/SOMA.owl#;;A bowl which holds, or at least is intended to usually hold, salad.
 Salt;suturo:'Salt';http://www.ease-crc.org/ont/SUTURO.owl#;;Salt is a mineral substance that is composed of sodium and chloride ions and is commonly used as a seasoning and preservative in food. It is an essential nutrient for the human body and is found in many natural sources such as seawater and rock formations.
 SaltShaker;soma:'SaltShaker';http://www.ease-crc.org/ont/SOMA.owl#;34;A shaker which holds, or at least is intended to usually hold, salt.
+Sandwich;suturo:'Sandwich';http://www.ease-crc.org/ont/SUTURO.owl#;;Sandwich
 Scissors;suturo:'Scissors';http://www.ease-crc.org/ont/SUTURO.owl#;98;Scissors are a cutting tool consisting of two blades joined together by a pivot, used for cutting paper, fabric, hair, or other materials.
 ScotchBriteDobieSponge;suturo:'ScotchBriteDobieSponge';http://www.ease-crc.org/ont/SUTURO.owl#;;A Scotch Brite Dobie sponge is a small, rectangular sponge with a scrubbing surface on one side, designed for cleaning dishes and surfaces.
 Screw;suturo:'Screw';http://www.ease-crc.org/ont/SUTURO.owl#;;A screw is a threaded metal or wood fastener with a pointed tip used for attaching two objects together or for securing an object in place.
@@ -276,13 +303,15 @@ ScrewDriver;suturo:'ScrewDriver';http://www.ease-crc.org/ont/SUTURO.owl#;102;A s
 ScrubCleaner;suturo:'ScrubCleaner';http://www.ease-crc.org/ont/SUTURO.owl#;99;ScrubCleaner
 ServingMat;suturo:'ServingMat';http://www.ease-crc.org/ont/SUTURO.owl#;21;A serving mat is a type of table mat used to protect surfaces from spills and stains while serving food or drinks. They are typically made from materials such as fabric, plastic, or silicone and come in various shapes, sizes, and designs to suit different occasions and styles.
 Shaker;soma:'Shaker';http://www.ease-crc.org/ont/SOMA.owl#;;A container used for storing fine grained substances such as salt or paper.
-Shelf;suturo:'Shelf';http://www.ease-crc.org/ont/SUTURO.owl#;25;A shelf board is a flat piece of wood, metal, or glass which is attached to a wall or to the sides of a cupboard. Shelves are used for keeping things on.
+Shampoo;suturo:'Shampoo';http://www.ease-crc.org/ont/SUTURO.owl#;;Shampoo
+ShelfLayer;suturo:'ShelfLayer';http://www.ease-crc.org/ont/SUTURO.owl#;25;A shelf board is a flat piece of wood, metal, or glass which is attached to a wall or to the sides of a cupboard. Shelves are used for keeping things on.
 ShelfUnit;suturo:'ShelfUnit';http://www.ease-crc.org/ont/SUTURO.owl#;;A shelf unit is a piece of furniture consisting of several shelves, designed to hold books, decor, and other items and is typically made of wood or metal.
 Sink;soma:'Sink';http://www.ease-crc.org/ont/SOMA.owl#;;A large bowl used to direct the flow of liquid into a drain, typically has a tap used to fill the sink with water, and a plug used to block the drain.
 Sink;suturo:'Sink';http://www.ease-crc.org/ont/SUTURO.owl#;;A sink is a bowl-shaped fixture used for washing hands, dishes, and other small objects, typically located in a kitchen or bathroom.
 Skillet;suturo:'Skillet';http://www.ease-crc.org/ont/SUTURO.owl#;58;A skillet is a flat-bottomed pan with slanted sides and a long handle, used for frying, sautéing, or searing foods.
 SkilletLid;suturo:'SkilletLid';http://www.ease-crc.org/ont/SUTURO.owl#;;A skillet lid is a cover made of metal or glass that fits onto a skillet and is used to prevent splatters and retain heat while cooking.
 SmallMarker;suturo:'SmallMarker';http://www.ease-crc.org/ont/SUTURO.owl#;;A small marker is a pen-like writing tool with a narrow, pointed tip used for writing or drawing with precision, often used for labeling, highlighting, or coloring.
+Soap;suturo:'Soap';http://www.ease-crc.org/ont/SUTURO.owl#;;Soap
 Sofa;soma:'Sofa';http://www.ease-crc.org/ont/SOMA.owl#;;A comfortable seat for two or more people to sit on.
 SoftBall;suturo:'SoftBall';http://www.ease-crc.org/ont/SUTURO.owl#;33;A soft ball is a ball made of a softer, lighter material than a regulation baseball, often used in recreational or amateur leagues, or in games played by children.
 SoftScrubBleachCleanserBottle;suturo:'SoftScrubBleachCleanserBottle';http://www.ease-crc.org/ont/SUTURO.owl#;;A Soft Scrub Cleanser bottle is a container, typically made of plastic, glass, or metal, used to hold a cleaning solution that is designed to scrub and clean surfaces such as sinks, tubs, and toilets.
@@ -295,9 +324,11 @@ Spice;suturo:'Spice';http://www.ease-crc.org/ont/SUTURO.owl#;;Spices are a group
 Sponge;suturo:'Sponge';http://www.ease-crc.org/ont/SUTURO.owl#;;A sponge is a porous material that is typically used for cleaning surfaces or absorbing liquid.
 Spoon;soma:'Spoon';http://www.ease-crc.org/ont/SOMA.owl#;40;An eating or cooking implement consisting of a small shallow bowl with a relatively long handle.
 SprayBottle;suturo:'SprayBottle';http://www.ease-crc.org/ont/SUTURO.owl#;;A spray bottle is a type of container that holds liquid and has a nozzle that can spray the liquid in a fine mist or stream.
+Sprite;suturo:'Sprite';http://www.ease-crc.org/ont/SUTURO.owl#;;Sprite
 StackingBlocks;suturo:'StackingBlocks';http://www.ease-crc.org/ont/SUTURO.owl#;45;Stacking blocks are a popular children's toy consisting of various sized and shaped blocks that can be stacked on top of each other to form towers or structures. They are often made of wood, plastic or foam, and are used to improve fine motor skills, hand-eye coordination, and problem-solving abilities in young children.
 StapelChips;suturo:'StapelChips';http://www.ease-crc.org/ont/SUTURO.owl#;93;StapelChips
 StarkistTunaFishCan;suturo:'StarkistTunaFishCan';http://www.ease-crc.org/ont/SUTURO.owl#;;Starkist Tuna fish can refers to a metal container used to store and preserve Starkist brand tuna fish.
+Steak;suturo:'Steak';http://www.ease-crc.org/ont/SUTURO.owl#;;Steak
 Stove;soma:'Stove';http://www.ease-crc.org/ont/SOMA.owl#;;An appliance for cooking or heating.
 Strawberry;suturo:'Strawberry';http://www.ease-crc.org/ont/SUTURO.owl#;37;A strawberry is a small, red fruit with a juicy texture, sweet taste, and tiny seeds on the surface, commonly used in desserts or as a snack.
 StudyRoom;suturo:'StudyRoom';http://www.ease-crc.org/ont/SUTURO.owl#;;A room dedicated to studying and working, mostly by reading or writing.
@@ -320,11 +351,13 @@ Television;suturo:'Television';http://www.ease-crc.org/ont/SUTURO.owl#;;A device
 TennisBall;suturo:'TennisBall';http://www.ease-crc.org/ont/SUTURO.owl#;39;A tennis ball is a small, round ball made of rubber with a fuzzy, felt-like outer layer, used in the sport of tennis, as well as in other games, such as fetch for dogs.
 TigerCup;suturo:'TigerCup';http://www.ease-crc.org/ont/SUTURO.owl#;;TigerCup
 Timer;suturo:'Timer';http://www.ease-crc.org/ont/SUTURO.owl#;;A timer is a device used to measure and indicate the passing of a set amount of time.
+Toast;suturo:'Toast';http://www.ease-crc.org/ont/SUTURO.owl#;;Toast
 Tomato;suturo:'Tomato';http://www.ease-crc.org/ont/SUTURO.owl#;;A tomato is a fruit that is commonly used as a culinary vegetable and is known for its juicy flesh, bright color, and versatile flavor.
 TomatoSoup;suturo:'TomatoSoup';http://www.ease-crc.org/ont/SUTURO.owl#;;Tomato soup is a type of soup made from tomatoes, typically with additional ingredients such as broth, cream, and spices. It is a popular comfort food that is enjoyed around the world and can be served hot or cold.
 TomatoSoupCan;suturo:'TomatoSoupCan';http://www.ease-crc.org/ont/SUTURO.owl#;67;Tomato soup can refers to a cylindrical metal container that holds condensed or ready-to-eat tomato soup.
 Toothpaste;suturo:'Toothpaste';http://www.ease-crc.org/ont/SUTURO.owl#;64;Toothpaste is a gel or paste used for cleaning teeth and maintaining oral hygiene. It typically contains abrasives, fluoride, and other active ingredients that help remove plaque, prevent tooth decay, and freshen breath.
 ToothpasteTube;suturo:'ToothpasteTube';http://www.ease-crc.org/ont/SUTURO.owl#;;A toothpaste tube is a soft plastic or aluminum container that holds toothpaste for brushing teeth. The tube is typically sealed with a screw-on cap or flip-top lid and is squeezed to dispense the toothpaste.
+Towel;suturo:'Towel';http://www.ease-crc.org/ont/SUTURO.owl#;;Towel
 Toy;suturo:'Toy';http://www.ease-crc.org/ont/SUTURO.owl#;;A toy is an object designed for children or adults to play with, often for amusement or education, and can range from simple objects to complex electronic devices.
 ToyAirplane;suturo:'ToyAirplane';http://www.ease-crc.org/ont/SUTURO.owl#;;A toy airplane is a miniature version of an airplane designed for children to play with.
 ToyotaHSR;suturo:'ToyotaHSR';http://www.ease-crc.org/ont/SUTURO.owl#;61;Toyota's HSR is a compact mobile cobot (collaborative robot) platform that can move around and fetch objects using a multi-DOF arm while avoiding obstacles. Operable by voice command or by tablet PC, HSR has a highly maneuverable, compact, and lightweight cylindrical body with a folding arm that enables it to pick up objects off the floor, suction up thin objects, retrieve objects from high locations, open curtains, and perform other household tasks.

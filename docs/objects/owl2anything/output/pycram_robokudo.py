@@ -82,7 +82,7 @@ mapping = {
   "Screwdriver": "http://www.ease-crc.org/ont/SUTURO.owl#ScrewDriver",
   "Scrubcleaner": "http://www.ease-crc.org/ont/SUTURO.owl#ScrubCleaner",
   "Servingmat": "http://www.ease-crc.org/ont/SUTURO.owl#ServingMat",
-  "Shelf": "http://www.ease-crc.org/ont/SUTURO.owl#Shelf",
+  "Shelflayer": "http://www.ease-crc.org/ont/SUTURO.owl#ShelfLayer",
   "Skillet": "http://www.ease-crc.org/ont/SUTURO.owl#Skillet",
   "Softball": "http://www.ease-crc.org/ont/SUTURO.owl#SoftBall",
   "Spatula": "http://www.ease-crc.org/ont/SOMA.owl#Spatula",

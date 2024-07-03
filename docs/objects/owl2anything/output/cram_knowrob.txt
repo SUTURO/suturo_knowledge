@@ -48,8 +48,8 @@
 	 "http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#NaturalPerson")
 	(:wineglass
 	 "http://www.ease-crc.org/ont/SOMA.owl#WineGlass")
-	(:shelf
-	 "http://www.ease-crc.org/ont/SUTURO.owl#Shelf")
+	(:shelflayer
+	 "http://www.ease-crc.org/ont/SUTURO.owl#ShelfLayer")
 	(:tray
 	 "http://www.ease-crc.org/ont/SUTURO.owl#Tray")
 	(:orange
