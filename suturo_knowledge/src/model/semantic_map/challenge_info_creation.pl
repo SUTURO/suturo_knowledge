@@ -31,7 +31,7 @@
 init_serve_breakfast :-
     ros_info('Initializing info for "Serving Breakfast"...', []),
     activate_challenge(suturo:'ServeBreakfast'),
-    once((has_urdf_name(OriginLocation, 'pantry:shelf:shelf_floor_1'),
+    once((has_urdf_name(OriginLocation, 'pantry:shelf:shelf_floor_1'), %TODO should be layer but then also in semantic map
            log_set(dul:'PhysicalObject', suturo:hasOriginLocation, OriginLocation))
           ;
          ((is_shelf(Shelf),
@@ -148,7 +148,7 @@ init_locations_robocup_2023 :-
           is_shelf(Furniture)
         ),
         log_set(suturo:'RoboCupCleaningSupplies', suturo:hasOriginLocation, Furniture)),
-    has_urdf_name(Cabinet, 'cabinet:cabinet:shelf_floor_1'),
+    has_urdf_name(Cabinet, 'cabinet:cabinet:shelf_floor_1'), %TODO: should be layer
     log_set(suturo:'RoboCupDrinks', suturo:hasOriginLocation, Cabinet),
     forall((has_robocup_name(PantryShelf, pantry),
             is_shelf(PantryShelf)),
@@ -158,9 +158,9 @@ init_locations_robocup_2023 :-
     log_set(suturo:'RoboCupFruits', suturo:hasOriginLocation, Desk),
     forall(member(X,[0,1,2,3]),
            (
-               atom_concat('bookshelf:bookshelf:shelf_floor_',X,FloorName),
-               has_urdf_name(Floor,FloorName),
-               log_set(suturo:'RoboCupToys', suturo:hasOriginLocation, Floor)
+               atom_concat('bookshelf:bookshelf:shelf_floor_',X,LayerName),
+               has_urdf_name(Layer,LayerName),
+               log_set(suturo:'RoboCupToys', suturo:hasOriginLocation, Layer)
            )),
     forall(member(X,[1,2]),
            (

@@ -55,6 +55,7 @@ is_semantic_map_object(Link) :-
     sub_string(Link,_,_,_,"drawer_bottom");
     sub_string(Link,_,_,_,"door_center");
     sub_string(Link,_,_,_,"shelf_floor_");
+    sub_string(Link,_,_,_,"shelf_layer_");
     sub_string(Link,_,_,_,"shelf_door_");
     sub_string(Link,_,_,_,"bucket_surface_center");
     sub_string(Link,_,_,_,"dishwasher:dishwasher_tray_bottom");
@@ -123,6 +124,7 @@ collision_link(CollisionLink, CollisionLink) :-
     atom_concat(_, 'dishwasher_tray_2_bottom', CollisionLink);
     atom_concat(_, 'drawer_bottom', CollisionLink);
     sub_string(CollisionLink,_,_,_,"handle");
+    sub_string(CollisionLink,_,_,_,"shelf_layer_");
     sub_string(CollisionLink,_,_,_,"shelf_floor_");
     sub_string(CollisionLink,_,_,_,"shelf_door_").
 collision_link(UrdfLink, CollisionLink) :-
@@ -181,8 +183,12 @@ link_name_class(LinkName, Class) :-
     Class = soma:'Drawer',
     !.
 link_name_class(LinkName, Class) :-
+    sub_string(LinkName,_,_,_,"shelf_layer"), % TODO: Fix this inconsistency in the urdf
+    Class = suturo:'ShelfLayer',
+    !.
+link_name_class(LinkName, Class) :-
     sub_string(LinkName,_,_,_,"shelf_floor"), % TODO: Fix this inconsistency in the urdf
-    Class = suturo:'Shelf',
+    Class = suturo:'ShelfLayer',
     !.
 link_name_class(LinkName, Class) :-
     sub_string(LinkName,_,_,_,"shelf_base"), % TODO: Fix this inconsistency in the urdf
