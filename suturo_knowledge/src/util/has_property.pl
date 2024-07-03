@@ -70,9 +70,7 @@ preorlo_check(ObjName, Objectt):-
 what_object(ObjName, Object) :-
 	triple(O,_, suturo:hasPredefinedName),
 	triple(O, owl:hasValue, ObjName), 
-	triple(Object,_,O), 
-	% if one exists, use only that
-	!.
+	triple(Object,_,O).
 
 %% have_same_class(+, +)
 %
@@ -88,9 +86,7 @@ grasp_pose(ObjName , Pose) :-
 	what_object(ObjName, Object),
 	triple(Object, transitive(rdfs:'subClassOf'), X),
 	triple(X, _, suturo:hasGraspPose),
-	triple(X, owl:hasValue, Pose), 
-	% if one exists, use only that
-	!.
+	triple(X, owl:hasValue, Pose).
 
 has_position(ObjName, PoseStamped):-
 	what_object(ObjName, Object), 

@@ -6,8 +6,8 @@
 		try_divide(+,-),
 		div_parts(+, -),
 		div_parts_helper(+,+,-),
-		longest_side(r,-), 
-		shortest_sid(r,-)
+		longest_side(r,-),
+		shortest_side(r,-)
 	]).
 
 :- use_module(library('util/math'),
@@ -35,22 +35,23 @@ furniture_rel_pose(Furniture, Type, PoseStamped) :-
 	  false
 	).
 
-furniture_rel_pose_perceive(Furniture, PoseStampedListe) :-
+furniture_rel_pose_perceive(Furniture, PoseStampedList) :-
 	% Get the PoseStamped of the Furniture
 	object_pose(Furniture, [Frame, [X,Y,Z], Rotation]),
 	object_shape_workaround(Furniture, _, ShapeTerm,_,_),
-	longest_side(Furniture,Size),
+	longest_side(Furniture, LSize),
+	shortest_side(Furniture, SSize),
 	%dir_size('-y', ShapeTerm, Size),
 	dir_size('-z', ShapeTerm, ZSize),
 	ZNew is Z - ZSize,
-	XNew is X - 0.7, 
-	YNew is Y - (Size / 2.0),
-	try_divide(Size, Middle),
-	build_pose_stamped_list(Middle, [Frame, [XNew,YNew,ZNew], Rotation], PoseStampedList),
+	XNew is X - (SSize / 2.0) - 0.7, 
+	YNew is Y - (LSize / 2.0),
+	try_divide(LSize, Middle),
+	build_pose_stamped_list(Middle, [Frame, [XNew,YNew,ZNew], Rotation], PoseStampedList).
 	%append(,PoseStampedList,PoseStampedListe).
 
-build_pose_stamped_list([], _, []).
-build_pose_stamped_list([YN | Rest], [Frame, [X,Y,Z], Rotation], [PoseStamped | RestPoses]) :-
+	build_pose_stamped_list([], _, []).
+	build_pose_stamped_list([YN | Rest], [Frame, [X,Y,Z], Rotation], [PoseStamped | RestPoses]) :-
 	% Build PoseStamped with different Y positions
 	YNew is Y + YN, 
 	PoseStamped = [Frame, [X,YNew,Z], Rotation],
@@ -111,15 +112,15 @@ longest_side(Furniture, Size):-
 	; Size = YSize
 	).
 
-	shortest_side(Furniture, Size):-
-		object_shape_workaround(Furniture, _, ShapeTerm, _, _),
-		dir_size('-x', ShapeTerm, XSize),
-		dir_size('-y', ShapeTerm, YSize),
-		( XSize < YSize 
-		-> Size = XSize
-		; Size = YSize
-		).
-	
+shortest_side(Furniture, Size):-
+	object_shape_workaround(Furniture, _, ShapeTerm, _, _),
+	dir_size('-x', ShapeTerm, XSize),
+	dir_size('-y', ShapeTerm, YSize),
+	( XSize < YSize 
+	-> Size = XSize
+	; Size = YSize
+	).
+
 furniture_rel_pose_interact(Furniture, PoseStamped) :-
 	% Get the PoseStamped of the Furniture
 	object_pose(Furniture, [Frame, [X,Y,Z], Rotation]),

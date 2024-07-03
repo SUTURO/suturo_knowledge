@@ -5,7 +5,8 @@
 	      is_dining_table(r),
 	      is_table(r),
 	      is_shelf(r),
-	      is_drawer(r)
+	      is_drawer(r),
+	      is_shelf_layer(r)
 	  ]).
 
 :- use_module(library('model/object/types'),
@@ -37,6 +38,7 @@ is_dining_table(Table) ?+>
 is_shelf(Shelf) ?+>
     is_type(Shelf, suturo:'Shelf').
 
+
 %% is_drawer(+Drawer) is det.
 %
 % Wrapper around is_type that also creates an iri on projection if Drawer is a variable.
@@ -45,3 +47,12 @@ is_shelf(Shelf) ?+>
 %
 is_drawer(Drawer) ?+>
     is_type(Drawer, soma:'Drawer').
+    
+%% is_shelf_layer(+Shelf) is det.
+%
+% Wrapper around is_type that also creates an iri on projection if Shelf is a variable.
+%
+% @param Shelf The shelf to check.
+%
+is_shelf_layer(ShelfLayer) ?+>
+    is_type(ShelfLayer, suturo:'ShelfLayer').

@@ -19,7 +19,10 @@ object_shape_workaround(Obj, Frame, ShapeTerm, Pose, Material) :-
     % as soon as this succeeds once, don't try again.
     once((member(_Try, [1,2,3]), % try up to three times
 	  (
-	      kb_call(object_shape(Obj, Frame, ShapeTerm, Pose, Material))
+	      catch(kb_call(object_shape(Obj, Frame, ShapeTerm, Pose, Material)),
+                % ignore curser errors in here
+                mng_error(cursor_error(_)),
+                ShapeTerm = invalid)
 	  ->  true
 	  % if the call fails, cut and don't try again
 	  ;   !, false
