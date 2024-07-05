@@ -3,7 +3,7 @@ name: owl2anything
 on:
   push:
     branches:
-      - master
+      - robocup
     paths:
       - "suturo_knowledge/owl/suturo.owl"
       - ".github/workflows/owl2anything.yml"
@@ -68,7 +68,7 @@ jobs:
           if [[ $(git status --porcelain -- docs/objects/owl2anything/output/) ]]; then
             git add docs/objects/owl2anything/output/*
             git commit -m "Updated SUTURO Objects to $(echo ${GITHUB_SHA} | cut -c1-7) (${{ github.workflow }}:${{ github.run_number }} :rocket:)"
-            git push origin master
+            git push origin robocup
 
             # Trigger the mkdocs workflow to build and deploy the website with the new artifacts
             curl -L \
@@ -76,7 +76,7 @@ jobs:
               -H "Accept: application/vnd.github+json" \
               -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}"\
               https://api.github.com/repos/suturo/suturo_knowledge/actions/workflows/mkdocs.yml/dispatches \
-              -d '{"ref": "master"}'
+              -d '{"ref": "robocup"}'
           else
             echo "No changes detected in owl2anything output directory. Skipping commit and push to website."
           fi
