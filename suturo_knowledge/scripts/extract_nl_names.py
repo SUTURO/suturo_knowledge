@@ -49,7 +49,7 @@ def main():
         sys.exit(1)
 
     owl_file_path = sys.argv[1]  # Path to the OWL file from command-line argument
-    yaml_file_path = 'output_entities.yml'  # Specify the output YAML file path
+    yaml_file_path = 'nlp_entities.yml'  # Specify the output YAML file path
     data_property = 'http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName'  # Specify the data property to look for
 
     superclass_uris = {
