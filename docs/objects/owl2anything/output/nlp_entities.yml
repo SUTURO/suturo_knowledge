@@ -1,116 +1,279 @@
 Drink:
   entities:
-  - iced coffee
-  - cola
-  - gin tonic
-  - ice tea
-  - tea
-  - milk coffee
-  - lemonade
-  - low fat long lasting milk
+  - mineral water
+  - beer
   - juice
+  - milk coffee
   - coffee
   - milk
-  - apple juice
-  - mineral water
-  - sprite
-  - beer
-  - ginger ale
-  - mulled wine tea
+  - low fat long lasting milk
   - raspberry juice
-  - mineral water
+  - cola
+  - drink
+  - ginger ale
+  - lemonade
+  - tea
+  - apple juice
+  - ice tea
+  - iced coffee
+  - mulled wine tea
+  - sprite
+  - gin tonic
 Food:
   entities:
+  - apple
+  - mineral water
   - chili sin carne
-  - iced coffee
-  - mueslibox
+  - beer
+  - fish
+  - fruit
+  - kiwi
+  - lemon
+  - juice
+  - milk coffee
   - sandwich
-  - cola
+  - vegetable
+  - peach
+  - coffee
+  - sweets
+  - strawberry
+  - steak
+  - milk
   - soup
-  - gin tonic
-  - ice tea
+  - mueslibox
+  - plum
+  - low fat long lasting milk
+  - mustard
+  - pear
+  - raspberry juice
+  - cola
+  - grapes
+  - drink
+  - cookie
+  - chili
+  - cookie mix
+  - liquid
+  - ginger ale
+  - koelln knusper schokokeks
+  - lemonade
+  - tea
+  - apple juice
+  - salt
   - tomato soup
+  - processed food
   - banana
   - chili con carne
-  - tea
-  - milk coffee
-  - lemonade
-  - low fat long lasting milk
+  - kellogs corn flakes
+  - spice
+  - ice tea
+  - iced coffee
   - meat
-  - strawberry
-  - juice
-  - coffee
-  - milk
-  - pear
-  - apple juice
-  - mineral water
-  - sprite
-  - beer
-  - orange
-  - grapes
-  - ginger ale
-  - plum
+  - oregano
+  - tuna
+  - gin tonic
   - mulled wine tea
-  - peach
-  - steak
-  - raspberry juice
-  - mineral water
-  - apple
-  - chili
-  - lemon
+  - cereal
+  - ketchup
+  - tomato
+  - orange
+  - sprite
+  - condiment
 NaturalPerson:
-  entities: []
+  entities:
+  - natural person
 PhysicalArtifact:
   entities:
-  - chili sin carne
-  - mueslibox
-  - soup
-  - cup green
-  - glass
-  - milk jug
-  - spoon
   - red bowl
-  - scissors
-  - metal bowl
-  - soap
-  - knife
-  - towel
-  - breakfast plate
-  - water glass
-  - sandwich
-  - spatula
-  - chili con carne
-  - cutting board
-  - toast
+  - soft scrub bleach cleanser bottle
   - cola can
-  - cup blue
-  - pill box
-  - cup small
-  - milkpack ja
+  - potted meat can
   - ice tea bottle
-  - metal mug
-  - wine glass
-  - jug
-  - bib
-  - plate
-  - dinner plate
-  - metal plate
-  - mug
-  - pickles jar
-  - master chef can
-  - cereal bowl
-  - tiger cup
-  - plastic knife
+  - colored wood block
+  - dish
+  - nut
+  - breakfast plate
   - pasta bowl
-  - milk glass
-  - tomato soup
-  - salad bowl
-  - kitchen knife
-  - red metal cup
-  - scrub cleaner
-  - wine bottle
+  - racquet ball
+  - bed
+  - book case
+  - pudding box
+  - bottle
   - bowl
+  - milk bottle
+  - metal hardware
+  - mueslibox
+  - spoon
+  - master chef can
+  - cookie
+  - sugar box
+  - corny box
+  - cup green
+  - metal mug
+  - red metal cup
+  - can
+  - coffee can
+  - sofa
+  - tennis ball
+  - cleanser bottle
+  - juice box
+  - toast
+  - wine glass
+  - pitcher
+  - screw
+  - chili con carne
+  - pancake
+  - serving mat
+  - tshirt
+  - large marker
+  - blank credit card
+  - bread
+  - stapel chips
+  - knife
+  - plastic knife
+  - frenchs yellow mustard bottle
+  - mini soccer ball
+  - dining table
+  - table
+  - pancake mix bottle
+  - condiment
+  - cereal box robocup
+  - bolt
+  - coat rack
+  - milk jug
+  - designed chair
+  - scotch brite dobie sponge
+  - abrasive sponge
+  - foam brick
+  - cupboard
+  - fork
+  - nine peg hole test
+  - tuna fish can
+  - mug
+  - bleach cleanser bottle
+  - clamp
+  - golf ball
+  - cracker box
+  - bib
+  - wood block
+  - fastener
+  - scrub cleaner
+  - tropical juice bottle
+  - mustard
+  - peach ice tea box
+  - nesquick cereal box
+  - dinner plate
+  - glass
+  - glass cleaner spray bottle
+  - koelln knusper schokokeks
+  - chips can
+  - cheez it cracker box
+  - nail
+  - mustard bottle
+  - baseball
+  - gelatine box
+  - juice bottle
+  - paper bag
+  - door
+  - marble
   - shampoo
+  - dishwasher
+  - padlock and keys
+  - pot
+  - baked good
+  - toy airplane
+  - cereal box
+  - rack
+  - hammer
+  - oregano shaker
+  - chili sin carne
+  - cup blue
+  - sandwich
+  - kitchen table
+  - plate
+  - raspberry juice box
+  - spray bottle
+  - jello box
+  - rubiks cube
+  - table cloth
+  - soft ball
+  - scissors
+  - clear box
+  - bag
+  - soup can
+  - pringles chips can
+  - tray
+  - jellO strawberry box
+  - microwave
+  - cup
+  - napkin
+  - tomato soup
+  - orange juice box
+  - kellogs corn flakes
+  - kitchen knife
+  - tomato soup can
+  - dishwasher
+  - credit card
+  - writing tool
+  - salad bowl
+  - cereal
+  - ketchup
+  - trash bin
+  - skillet
+  - lego duplo
+  - wine bottle
+  - small marker
+  - toothpaste
+  - pickles jar
+  - tiger cup
+  - dice
+  - towel
+  - timer
+  - kitchen cabinet
+  - starkist tuna fish can
+  - metal bowl
+  - cutlery
+  - cutting board
+  - tableware
+  - juice pack
+  - screwdriver
+  - sweets
+  - spatula
+  - windex glass cleaner spray bottle
+  - sponge
+  - domino sugar box
+  - lego
+  - plastic chain
+  - soup
+  - coffee can
+  - cocoa box
+  - cereal bowl
+  - cup small
+  - milk pack
+  - spam potted meat can
   - chili
+  - tea bag box
+  - cookie mix
+  - drawer
+  - milkpack ja
+  - soap
+  - water glass
+  - milk glass
+  - washer
+  - designed handle
+  - jug
+  - jellO chocolate pudding box
+  - processed food
+  - dishwasher tray
+  - table
+  - rope
+  - shelf unit
+  - pastry box
+  - pill box
+  - cookie box
+  - coffee pack
+  - metal plate
+  - dishwasher tab
+  - stacking blocks
+  - salt shaker
 PhysicalPlace:
   entities: []
