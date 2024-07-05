@@ -1,116 +1,116 @@
 Drink:
   entities:
-  - mineral water
-  - beer
-  - coffee
-  - ice tea
-  - sprite
-  - mineral water
-  - raspberry juice
-  - milk
-  - low fat long lasting milk
-  - ginger ale
-  - apple juice
-  - cola
   - milk coffee
-  - iced coffee
-  - gin tonic
+  - cola
+  - mineral water
   - tea
+  - coffee
+  - low fat long lasting milk
+  - ice tea
+  - iced coffee
   - juice
-  - mulled wine tea
+  - raspberry juice
+  - apple juice
+  - beer
   - lemonade
+  - mulled wine tea
+  - ginger ale
+  - gin tonic
+  - milk
+  - mineral water
+  - sprite
 Food:
   entities:
-  - chili con carne
-  - mineral water
-  - chili sin carne
-  - beer
-  - coffee
-  - grapes
-  - ice tea
-  - sprite
-  - sandwich
-  - lemon
-  - mineral water
-  - strawberry
-  - raspberry juice
-  - peach
-  - milk
-  - low fat long lasting milk
-  - plum
-  - apple
-  - ginger ale
-  - tomato soup
-  - apple juice
-  - cola
-  - banana
   - milk coffee
+  - cola
+  - mineral water
+  - sandwich
+  - soup
+  - tea
+  - peach
+  - steak
+  - coffee
+  - apple
+  - low fat long lasting milk
+  - ice tea
+  - banana
+  - iced coffee
+  - juice
+  - lemon
+  - raspberry juice
+  - apple juice
+  - tomato soup
+  - beer
+  - chili
   - lemonade
+  - mulled wine tea
+  - orange
+  - plum
+  - ginger ale
   - mueslibox
   - meat
-  - pear
-  - iced coffee
+  - grapes
+  - chili con carne
   - gin tonic
-  - tea
-  - soup
-  - juice
-  - chili
-  - mulled wine tea
-  - steak
-  - orange
+  - milk
+  - pear
+  - strawberry
+  - mineral water
+  - chili sin carne
+  - sprite
 NaturalPerson:
   entities: []
 PhysicalArtifact:
   entities:
-  - chili sin carne
-  - breakfast plate
-  - pill box
-  - metal bowl
-  - jug
-  - knife
-  - plastic knife
-  - spatula
-  - cup small
-  - milk jug
-  - master chef can
-  - toast
-  - water glass
-  - shampoo
-  - scrub cleaner
-  - cup blue
-  - scissors
-  - chili con carne
-  - towel
-  - pasta bowl
-  - mug
-  - cutting board
-  - bowl
-  - ice tea bottle
-  - soup
-  - soap
-  - bib
-  - cereal bowl
-  - salad bowl
-  - red metal cup
-  - wine glass
-  - tiger cup
-  - wine bottle
-  - mueslibox
-  - glass
-  - chili
-  - sandwich
-  - metal plate
-  - kitchen knife
-  - tomato soup
-  - milkpack ja
-  - cup green
-  - plate
-  - pickles jar
   - cola can
-  - red bowl
+  - ice tea bottle
   - milk glass
-  - dinner plate
-  - spoon
+  - chili
+  - wine bottle
+  - knife
+  - pill box
   - metal mug
+  - wine glass
+  - plastic knife
+  - mueslibox
+  - mug
+  - chili con carne
+  - spoon
+  - kitchen knife
+  - bib
+  - master chef can
+  - scrub cleaner
+  - red metal cup
+  - dinner plate
+  - pasta bowl
+  - cup blue
+  - cup green
+  - breakfast plate
+  - salad bowl
+  - chili sin carne
+  - metal bowl
+  - pickles jar
+  - soup
+  - water glass
+  - metal plate
+  - milk jug
+  - jug
+  - tiger cup
+  - cereal bowl
+  - spatula
+  - sandwich
+  - toast
+  - cup small
+  - shampoo
+  - soap
+  - red bowl
+  - tomato soup
+  - plate
+  - milkpack ja
+  - cutting board
+  - towel
+  - scissors
+  - bowl
+  - glass
 PhysicalPlace:
   entities: []
