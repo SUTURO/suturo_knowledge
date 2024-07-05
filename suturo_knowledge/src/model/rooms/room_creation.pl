@@ -77,6 +77,12 @@ room_map_type(living_room, suturo:'LivingRoom') :- !.
 room_map_type(bedroom, suturo:'Bedroom') :- !.
 room_map_type(study, suturo:'StudyRoom') :- !.
 room_map_type(arena, suturo:'Arena') :- !.
+room_map_type(dining_room, suturo:'DiningRoom') :- !.
+room_map_type(balcony, suturo:'Balcony') :- !.
+room_map_type(bathroom, suturo:'Bathroom') :- !.
+room_map_type(lobby, suturo:'Lobby') :- !.
+room_map_type(office, suturo:'Office') :- !.
+room_map_type(pantry, suturo:'Pantry') :- !.
 %% TODO: add dynamic room type support
 
 init_connections(URDF,UrdfLink,Room) :-
