@@ -1,279 +1,254 @@
+Clothing:
+  entities:
+  - tshirt
+Container:
+  entities:
+  - cocoa box
+  - spray bottle
+  - microwave
+  - soup can
+  - cola can
+  - bag
+  - cereal box
+  - wine glass
+  - jellO chocolate pudding box
+  - coffee can
+  - tuna fish can
+  - peach ice tea box
+  - dinner plate
+  - jellO strawberry box
+  - bottle
+  - jug
+  - dishwasher
+  - metal bowl
+  - metal mug
+  - soft scrub bleach cleanser bottle
+  - breakfast plate
+  - coffee pack
+  - bowl
+  - cupboard
+  - paper bag
+  - windex glass cleaner spray bottle
+  - milk bottle
+  - juice bottle
+  - corny box
+  - can
+  - coffee can
+  - pitcher
+  - stapel chips
+  - starkist tuna fish can
+  - trash bin
+  - cup blue
+  - jello box
+  - pudding box
+  - milk jug
+  - mustard bottle
+  - cracker box
+  - cup green
+  - tea bag box
+  - raspberry juice box
+  - skillet
+  - plate
+  - tomato soup can
+  - wine bottle
+  - pickles jar
+  - pill box
+  - red metal cup
+  - chips can
+  - cup
+  - juice box
+  - oregano shaker
+  - dishwasher tray
+  - cereal bowl
+  - kitchen cabinet
+  - pringles chips can
+  - tiger cup
+  - cup small
+  - pastry box
+  - salad bowl
+  - clear box
+  - potted meat can
+  - red bowl
+  - drawer
+  - milkpack ja
+  - milk pack
+  - master chef can
+  - bleach cleanser bottle
+  - metal plate
+  - milk glass
+  - ice tea bottle
+  - cleanser bottle
+  - tropical juice bottle
+  - spam potted meat can
+  - glass cleaner spray bottle
+  - frenchs yellow mustard bottle
+  - scrub cleaner
+  - pancake mix bottle
+  - juice pack
+  - sugar box
+  - pasta bowl
+  - cookie box
+  - domino sugar box
+  - nesquick cereal box
+  - pot
+  - orange juice box
+  - salt shaker
+  - mug
+  - cheez it cracker box
+  - cereal box robocup
+  - gelatine box
+  - water glass
+  - glass
 Drink:
   entities:
-  - mineral water
-  - beer
-  - juice
-  - milk coffee
   - coffee
-  - milk
-  - low fat long lasting milk
-  - raspberry juice
-  - cola
-  - drink
-  - ginger ale
   - lemonade
-  - tea
-  - apple juice
   - ice tea
-  - iced coffee
-  - mulled wine tea
+  - beer
+  - tea
   - sprite
+  - ginger ale
+  - drink
+  - low fat long lasting milk
+  - milk coffee
+  - raspberry juice
+  - milk
+  - iced coffee
   - gin tonic
+  - cola
+  - juice
+  - mulled wine tea
+  - apple juice
+  - mineral water
 Food:
   entities:
-  - apple
-  - mineral water
+  - kellogs corn flakes
   - chili sin carne
-  - beer
-  - fish
+  - processed food
   - fruit
   - kiwi
-  - lemon
-  - juice
-  - milk coffee
-  - sandwich
-  - vegetable
-  - peach
-  - coffee
-  - sweets
-  - strawberry
-  - steak
-  - milk
-  - soup
-  - mueslibox
-  - plum
-  - low fat long lasting milk
-  - mustard
-  - pear
-  - raspberry juice
-  - cola
-  - grapes
-  - drink
-  - cookie
   - chili
-  - cookie mix
-  - liquid
-  - ginger ale
   - koelln knusper schokokeks
-  - lemonade
-  - tea
-  - apple juice
-  - salt
-  - tomato soup
-  - processed food
-  - banana
-  - chili con carne
-  - kellogs corn flakes
-  - spice
-  - ice tea
-  - iced coffee
   - meat
-  - oregano
-  - tuna
-  - gin tonic
-  - mulled wine tea
-  - cereal
-  - ketchup
-  - tomato
-  - orange
-  - sprite
+  - plum
+  - strawberry
   - condiment
+  - lemon
+  - fish
+  - grapes
+  - apple
+  - soup
+  - cookie mix
+  - orange
+  - chili con carne
+  - toast
+  - mustard
+  - bread
+  - banana
+  - tuna
+  - sandwich
+  - dish
+  - peach
+  - cookie
+  - mueslibox
+  - pancake
+  - steak
+  - baked good
+  - tomato soup
+  - sweets
+  - cereal
+  - pear
+  - ketchup
+Furniture:
+  entities:
+  - shelf unit
+  - cupboard
+  - kitchen cabinet
+  - coat rack
+  - book case
+  - designed chair
+  - rack
+  - kitchen table
+  - bed
+  - table
+  - sofa
+  - table
+  - dining table
 NaturalPerson:
   entities:
   - natural person
-PhysicalArtifact:
-  entities:
-  - red bowl
-  - soft scrub bleach cleanser bottle
-  - cola can
-  - potted meat can
-  - ice tea bottle
-  - colored wood block
-  - dish
-  - nut
-  - breakfast plate
-  - pasta bowl
-  - racquet ball
-  - bed
-  - book case
-  - pudding box
-  - bottle
-  - bowl
-  - milk bottle
-  - metal hardware
-  - mueslibox
-  - spoon
-  - master chef can
-  - cookie
-  - sugar box
-  - corny box
-  - cup green
-  - metal mug
-  - red metal cup
-  - can
-  - coffee can
-  - sofa
-  - tennis ball
-  - cleanser bottle
-  - juice box
-  - toast
-  - wine glass
-  - pitcher
-  - screw
-  - chili con carne
-  - pancake
-  - serving mat
-  - tshirt
-  - large marker
-  - blank credit card
-  - bread
-  - stapel chips
-  - knife
-  - plastic knife
-  - frenchs yellow mustard bottle
-  - mini soccer ball
-  - dining table
-  - table
-  - pancake mix bottle
-  - condiment
-  - cereal box robocup
-  - bolt
-  - coat rack
-  - milk jug
-  - designed chair
-  - scotch brite dobie sponge
-  - abrasive sponge
-  - foam brick
-  - cupboard
-  - fork
-  - nine peg hole test
-  - tuna fish can
-  - mug
-  - bleach cleanser bottle
-  - clamp
-  - golf ball
-  - cracker box
-  - bib
-  - wood block
-  - fastener
-  - scrub cleaner
-  - tropical juice bottle
-  - mustard
-  - peach ice tea box
-  - nesquick cereal box
-  - dinner plate
-  - glass
-  - glass cleaner spray bottle
-  - koelln knusper schokokeks
-  - chips can
-  - cheez it cracker box
-  - nail
-  - mustard bottle
-  - baseball
-  - gelatine box
-  - juice bottle
-  - paper bag
-  - door
-  - marble
-  - shampoo
-  - dishwasher
-  - padlock and keys
-  - pot
-  - baked good
-  - toy airplane
-  - cereal box
-  - rack
-  - hammer
-  - oregano shaker
-  - chili sin carne
-  - cup blue
-  - sandwich
-  - kitchen table
-  - plate
-  - raspberry juice box
-  - spray bottle
-  - jello box
-  - rubiks cube
-  - table cloth
-  - soft ball
-  - scissors
-  - clear box
-  - bag
-  - soup can
-  - pringles chips can
-  - tray
-  - jellO strawberry box
-  - microwave
-  - cup
-  - napkin
-  - tomato soup
-  - orange juice box
-  - kellogs corn flakes
-  - kitchen knife
-  - tomato soup can
-  - dishwasher
-  - credit card
-  - writing tool
-  - salad bowl
-  - cereal
-  - ketchup
-  - trash bin
-  - skillet
-  - lego duplo
-  - wine bottle
-  - small marker
-  - toothpaste
-  - pickles jar
-  - tiger cup
-  - dice
-  - towel
-  - timer
-  - kitchen cabinet
-  - starkist tuna fish can
-  - metal bowl
-  - cutlery
-  - cutting board
-  - tableware
-  - juice pack
-  - screwdriver
-  - sweets
-  - spatula
-  - windex glass cleaner spray bottle
-  - sponge
-  - domino sugar box
-  - lego
-  - plastic chain
-  - soup
-  - coffee can
-  - cocoa box
-  - cereal bowl
-  - cup small
-  - milk pack
-  - spam potted meat can
-  - chili
-  - tea bag box
-  - cookie mix
-  - drawer
-  - milkpack ja
-  - soap
-  - water glass
-  - milk glass
-  - washer
-  - designed handle
-  - jug
-  - jellO chocolate pudding box
-  - processed food
-  - dishwasher tray
-  - table
-  - rope
-  - shelf unit
-  - pastry box
-  - pill box
-  - cookie box
-  - coffee pack
-  - metal plate
-  - dishwasher tab
-  - stacking blocks
-  - salt shaker
-PhysicalPlace:
+Room:
   entities: []
+Tool:
+  entities:
+  - water glass
+  - timer
+  - stacking blocks
+  - abrasive sponge
+  - soft ball
+  - washer
+  - scotch brite dobie sponge
+  - spoon
+  - nut
+  - blank credit card
+  - plastic knife
+  - wine glass
+  - writing tool
+  - dinner plate
+  - spatula
+  - nine peg hole test
+  - nail
+  - lego
+  - lego duplo
+  - metal bowl
+  - metal mug
+  - plastic chain
+  - breakfast plate
+  - bowl
+  - metal hardware
+  - padlock and keys
+  - dice
+  - tray
+  - rope
+  - small marker
+  - credit card
+  - cup blue
+  - screwdriver
+  - sponge
+  - mini soccer ball
+  - clamp
+  - bolt
+  - cup green
+  - knife
+  - baseball
+  - skillet
+  - scissors
+  - plate
+  - golf ball
+  - screw
+  - cutlery
+  - fork
+  - red metal cup
+  - marble
+  - cup
+  - toy airplane
+  - rubiks cube
+  - tennis ball
+  - cereal bowl
+  - cutting board
+  - tiger cup
+  - cup small
+  - hammer
+  - salad bowl
+  - large marker
+  - tableware
+  - red bowl
+  - metal plate
+  - milk glass
+  - fastener
+  - racquet ball
+  - kitchen knife
+  - pasta bowl
+  - pot
+  - mug
+  - glass
