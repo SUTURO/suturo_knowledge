@@ -647,6 +647,12 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
     <!-- http://www.ease-crc.org/ont/SOMA.owl#Kitchen -->
 
     <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Kitchen">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
+                <owl:hasValue>kitchen</owl:hasValue>
+            </owl:Restriction>
+        </rdfs:subClassOf>
         <rdfs:comment>A kitchen is a dedicated space in a home or establishment used for cooking, food preparation, and sometimes dining. It typically contains appliances such as a stove, refrigerator, and sink, as well as storage for cookware, utensils, and ingredients.</rdfs:comment>
     </rdf:Description>
     
@@ -843,7 +849,14 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
 
     <!-- http://www.ease-crc.org/ont/SOMA.owl#Room -->
 
-    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Room"/>
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Room">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
+                <owl:hasValue>there</owl:hasValue>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
     
 
 
@@ -1078,6 +1091,12 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Arena">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Room"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
+                <owl:hasValue>arena</owl:hasValue>
+            </owl:Restriction>
+        </rdfs:subClassOf>
         <rdfs:comment>The whole arena where the robot is normally allowed to move.</rdfs:comment>
     </owl:Class>
     
@@ -1104,6 +1123,12 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Balcony">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Room"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
+                <owl:hasValue>balcony</owl:hasValue>
+            </owl:Restriction>
+        </rdfs:subClassOf>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
@@ -1159,6 +1184,12 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Bathroom">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Room"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
+                <owl:hasValue>bathroom</owl:hasValue>
+            </owl:Restriction>
+        </rdfs:subClassOf>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
@@ -1184,6 +1215,12 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Bedroom">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Room"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
+                <owl:hasValue>bedroom</owl:hasValue>
+            </owl:Restriction>
+        </rdfs:subClassOf>
         <rdfs:comment>A bedroom is a private space within a dwelling primarily used for sleeping and relaxation. It typically contains a bed, storage for personal belongings, and may include additional furniture such as a dresser or nightstand.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
@@ -1922,6 +1959,12 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#DiningRoom">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Room"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
+                <owl:hasValue>dining room</owl:hasValue>
+            </owl:Restriction>
+        </rdfs:subClassOf>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
@@ -2707,6 +2750,12 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#LivingRoom">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Room"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
+                <owl:hasValue>living room</owl:hasValue>
+            </owl:Restriction>
+        </rdfs:subClassOf>
         <rdfs:comment>A living room is a common area in a home designed for socializing, entertainment, and relaxation. It usually features comfortable seating, such as sofas and chairs, and may include a television, coffee table, and other furniture for gathering and conversation.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
@@ -2717,6 +2766,12 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Lobby">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Room"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
+                <owl:hasValue>lobby</owl:hasValue>
+            </owl:Restriction>
+        </rdfs:subClassOf>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
@@ -3176,6 +3231,12 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Office">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Room"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
+                <owl:hasValue>office</owl:hasValue>
+            </owl:Restriction>
+        </rdfs:subClassOf>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
@@ -3297,6 +3358,12 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Pantry">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Room"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
+                <owl:hasValue>pantry</owl:hasValue>
+            </owl:Restriction>
+        </rdfs:subClassOf>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
@@ -4343,6 +4410,12 @@ The challenges in the RoboCup@Home competition are designed to test a variety of
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#StudyRoom">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Room"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
+                <owl:hasValue>study room</owl:hasValue>
+            </owl:Restriction>
+        </rdfs:subClassOf>
         <rdfs:comment>A room dedicated to studying and working, mostly by reading or writing.</rdfs:comment>
     </owl:Class>
     
@@ -5135,6 +5208,12 @@ The challenges in the RoboCup@Home competition are designed to test a variety of
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
+                <owl:hasValue>me</owl:hasValue>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
                 <owl:hasValue>natural person</owl:hasValue>
             </owl:Restriction>
         </rdfs:subClassOf>
@@ -5144,8 +5223,27 @@ The challenges in the RoboCup@Home competition are designed to test a variety of
                 <owl:hasValue>them</owl:hasValue>
             </owl:Restriction>
         </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
+                <owl:hasValue>they</owl:hasValue>
+            </owl:Restriction>
+        </rdfs:subClassOf>
         <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">23</SUTURO:perceptionId>
     </owl:Class>
+    
+
+
+    <!-- http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#PhysicalArtifact -->
+
+    <rdf:Description rdf:about="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#PhysicalArtifact">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
+                <owl:hasValue>it</owl:hasValue>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </rdf:Description>
     
 
 
@@ -5191,5 +5289,5 @@ The challenges in the RoboCup@Home competition are designed to test a variety of
 
 
 
-<!-- Generated by the OWL API (version 4.5.25.2023-02-15T19:15:49Z) https://github.com/owlcs/owlapi -->
+<!-- Generated by the OWL API (version 4.5.12.2019-05-06T20:49:08Z) https://github.com/owlcs/owlapi -->
 
