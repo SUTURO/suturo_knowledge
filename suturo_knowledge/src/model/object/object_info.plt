@@ -55,7 +55,7 @@ test(is_misplaced_false, [
     create_object(Obj,soma:'CerealBox', [map, [+2,0,0.6], [0,0,0,1]]),
     assert_false(is_misplaced_object(Obj)).
 
-test(class_bfs, [
+test(class_bfs_one, [
          setup(test_setup),
          cleanup(test_cleanup)
      ]) :-
@@ -63,5 +63,36 @@ test(class_bfs, [
                 triple(test:class,rdfs:subClassOf,test:superclass)
                )),
     assert_true(object_info:class_bfs(test:class,test:pred,val)).
+
+:- trace(object_info:class_bfs).
+
+test(class_bfs_transitive_one, [
+         setup(test_setup),
+         cleanup(test_cleanup)
+     ]) :-
+    kb_project((triple(test:superclass,test:pred,val),
+                triple(test:class,rdfs:subClassOf,test:superclass),
+                triple(test:subclass,rdfs:subClassOf,test:class)
+               )),
+    assert_true(object_info:class_bfs(test:subclass,test:pred,val)).
+
+test(class_bfs_transitive_two, [
+         setup(test_setup),
+         cleanup(test_cleanup)
+     ]) :-
+    kb_project((triple(test:superclass,test:pred,val),
+                triple(test:class,rdfs:subClassOf,test:superclass),
+                triple(test:subclass,rdfs:subClassOf,test:class),
+                triple(test:subsubclass,rdfs:subClassOf,test:subclass)
+               )),
+    assert_true(object_info:class_bfs(test:subsubclass,test:pred,val)).
+
+test(class_bfs_reflexive, [
+         setup(test_setup),
+         cleanup(test_cleanup)
+     ]) :-
+    kb_project(triple(test:class,test:pred,val)),
+    assert_true(object_info:class_bfs(test:class,test:pred,val)).
+
 
 :- end_rdf_tests('object_info').
