@@ -163,9 +163,11 @@ class_bfs(Subject, Predicate, Object) :-
     ros_warn('class_bfs with var subject, falling back to normal triple ask'),
     triple(Subject, Predicate, Object).
 class_bfs(Subject, Predicate, Object) :-
-    class_bfs(Subject, Predicate, Object, _RealSubject).
-class_bfs(Subject, Predicate, Object, RealSubject) :-
-    class_bfs(Predicate, [Subject], [Subject], RealSubject, Object).
+	kb_call((triple(Subject,reflexive(transitive(rdfs:subClassOf)),Class), triple(Class,Predicate,Object))).
+%% class_bfs(Subject, Predicate, Object) :-
+%%     class_bfs(Subject, Predicate, Object, _RealSubject).
+%% class_bfs(Subject, Predicate, Object, RealSubject) :-
+%%     class_bfs(Predicate, [Subject], [Subject], RealSubject, Object).
 
 %% class_bfs(?Predicate, +ClassQueue, +Seen, ?ResultClass, ?Result) is nondet.
 %
