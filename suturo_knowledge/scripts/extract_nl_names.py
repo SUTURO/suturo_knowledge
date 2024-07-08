@@ -91,10 +91,20 @@ def main():
 
     # Dict of category in NLP to classes (and their subclasses)
     superclass_uris = {
-        'Drink': [
-            'http://www.ease-crc.org/ont/SUTURO.owl#Drink'
+        'Clothing': [
+            'http://www.ease-crc.org/ont/SUTURO.owl#Clothing'
         ],
-        'Food': [
+        'NaturalPerson': [
+            'http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#NaturalPerson'
+        ],
+        'DesignedFurniture': [
+            'http://www.ease-crc.org/ont/SOMA.owl#DesignedFurniture',
+            'http://www.ease-crc.org/ont/SOMA.owl#Door'
+        ],
+        'Room': [
+            'http://www.ease-crc.org/ont/SOMA.owl#Room',
+        ],
+        'Transportable': [
             'http://www.ease-crc.org/ont/SOMA.owl#Dish',
             'http://www.ease-crc.org/ont/SUTURO.owl#Fish',
             'http://www.ease-crc.org/ont/SUTURO.owl#Fruit',
@@ -104,18 +114,8 @@ def main():
             'http://www.ease-crc.org/ont/SUTURO.owl#Vegetable'
             'http://www.ease-crc.org/ont/SUTURO.owl#Spice',
             'http://www.ease-crc.org/ont/SUTURO.owl#Drink',
-        ],
-        'NaturalPerson': [
-            'http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#NaturalPerson'
-        ],
-        'PhysicalArtifact': [
             'http://www.ease-crc.org/ont/SOMA.owl#DesignedTool',
-            'http://www.ease-crc.org/ont/SOMA.owl#DesignedFurniture',
-            'http://www.ease-crc.org/ont/SOMA.owl#DesignedContainer',
-            'http://www.ease-crc.org/ont/SOMA.owl#Door'
-        ],
-        'PhysicalPlace': [
-            'http://www.ease-crc.org/ont/SOMA.owl#Room'
+            'http://www.ease-crc.org/ont/SOMA.owl#DesignedContainer'
         ]
     }
 
@@ -129,7 +129,7 @@ def main():
     # Get the rest of the physical artifacts, and save them as Transportable
     missing_physical_artifacts = [str(name) for name in check_missing_names('http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#Entity', owl_file_path, entities, data_property)]
     # add missing physical artifacts to transportable
-    entities["PhysicalArtifact"]["entities"].extend(missing_physical_artifacts)
+    entities["Transportable"]["entities"].extend(missing_physical_artifacts)
 
     # Save the yaml file
     save_to_yaml(entities, yaml_file_path)
