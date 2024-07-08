@@ -131,6 +131,11 @@ def main():
     # add missing physical artifacts to transportable
     entities["Transportable"]["entities"].extend(missing_physical_artifacts)
 
+    # hardcoded pronouns
+    entities["Transportable"]["entities"].extend(["it"])
+    entities["DesignedFurniture"]["entities"].extend(["there"])
+    entities["NaturalPerson"]["entities"].extend(["them", "they", "him", "her", "me"])
+
     # Save the yaml file
     save_to_yaml(entities, yaml_file_path)
     print(f"Entities saved to {yaml_file_path}")
