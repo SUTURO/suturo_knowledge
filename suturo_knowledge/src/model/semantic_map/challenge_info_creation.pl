@@ -5,7 +5,8 @@
             init_storing_groceries/0,
             init_clean_the_table/0,
             init_gpsr/0,
-            init_locations_robocup_2023/0
+            init_locations_robocup_2023/0,
+			init_gpsr_2024/0
             %init_predefined_names_robocup_2023/0
 	  ]).
 
@@ -20,6 +21,8 @@
 
 :- use_module(library('model/object/artifact/furniture/furniture_info'),
               [ has_robocup_name/2 ]).
+
+:- use_module(library('model/urdf'), [ has_urdf_name/2 ]).
 
 %% init_serve_breakfast is det.
 %
@@ -231,3 +234,23 @@ init_predefined_names_robocup_2023 :-
                 holds(soma:'Knife', suturo:hasPredefinedName, 'knife'))),
     ros_info('RoboCup 2023 predefined object names initialized').
 
+init_gpsr_2024 :-
+	ros_info('Initializing origin and destination locations for gpsr 2024'),
+	% geschirr wie plate, cup, cutlery auf popcorn table
+	has_urdf_name(PopcornTable, 'popcorn_table:p_table:table_center'),
+	log_set(suturo:'RoboCupDishes', suturo:hasOriginLocation, PopcornTable),
+	log_set(suturo:'RoboCupDishes', suturo:hasDestinationLocation, PopcornTable),
+
+	% mueslibox, crackerbox, milch im regal
+	forall(is_shelf_layer(ShelfLayer),
+		   (
+			   log_set(suturo:'RoboCupSnacks', suturo:hasOriginLocation, ShelfLayer),
+			   log_set(suturo:'RoboCupSnacks', suturo:hasDestinationLocation, ShelfLayer)
+		   )),
+
+	% banane, apfel, früchte auf couch tisch predefined_origin_location
+	has_urdf_name(CouchTable, 'couch_table:couch_table:table_center'),
+	log_set(suturo:'RoboCupFruits', suturo:hasOriginLocation, CouchTable),
+	log_set(suturo:'RoboCupFruits', suturo:hasDestinationLocation, CouchTable),
+
+	ros_info('Finished initializing origin and destination locations for gpsr 2024').
