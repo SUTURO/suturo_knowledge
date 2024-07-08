@@ -1,108 +1,82 @@
-Clothing:
+Drink:
   entities:
-  - tshirt
-Container:
+  - low fat long lasting milk
+  - gin tonic
+  - mulled wine tea
+  - milk coffee
+  - ginger ale
+  - apple juice
+  - sprite
+  - drink
+  - coffee
+  - raspberry juice
+  - lemonade
+  - tea
+  - mineral water
+  - juice
+  - ice tea
+  - milk
+  - iced coffee
+  - cola
+  - beer
+Food:
   entities:
-  - cup green
-  - drawer
-  - cola can
-  - chips can
-  - wine glass
-  - pot
-  - microwave
-  - pickles jar
-  - pringles chips can
-  - master chef can
-  - skillet
-  - starkist tuna fish can
-  - milk bottle
-  - tuna fish can
-  - cocoa box
-  - stapel chips
-  - domino sugar box
-  - cracker box
-  - coffee can
-  - can
-  - coffee can
-  - tomato soup can
-  - coffee pack
-  - clear box
-  - dishwasher tray
-  - glass
-  - cheez it cracker box
-  - pill box
-  - juice pack
-  - windex glass cleaner spray bottle
-  - cookie box
-  - milk jug
-  - salt shaker
-  - jug
-  - pastry box
-  - paper bag
-  - bottle
-  - cereal box robocup
-  - sink
-  - mug
-  - corny box
-  - soft scrub bleach cleanser bottle
-  - trash bin
-  - nesquick cereal box
-  - cereal box
-  - kitchen cabinet
-  - oregano shaker
-  - raspberry juice box
-  - jellO chocolate pudding box
-  - juice bottle
-  - tea bag box
-  - pasta bowl
-  - dinner plate
-  - milkpack ja
-  - red metal cup
-  - cup blue
-  - tropical juice bottle
-  - spray bottle
-  - milk glass
-  - red bowl
-  - soup can
-  - bowl
-  - metal plate
-  - jellO strawberry box
-  - dishwasher
-  - pitcher
-  - plate
-  - frenchs yellow mustard bottle
-  - cereal bowl
-  - mustard bottle
-  - breakfast plate
-  - gelatine box
-  - tiger cup
-  - bag
-  - cup small
-  - bleach cleanser bottle
-  - salad bowl
-  - wine bottle
-  - water glass
-  - potted meat can
-  - cleanser bottle
-  - spam potted meat can
-  - pancake mix bottle
-  - pudding box
-  - milk pack
-  - cupboard
-  - glass cleaner spray bottle
-  - ice tea bottle
-  - orange juice box
-  - cup
-  - juice box
-  - sugar box
-  - metal bowl
-  - metal mug
-  - peach ice tea box
-  - jello box
-  - scrub cleaner
-Door:
-  entities:
-  - door
+  - low fat long lasting milk
+  - orange
+  - gin tonic
+  - sweets
+  - steak
+  - mulled wine tea
+  - chili con carne
+  - chili
+  - apple
+  - bread
+  - sandwich
+  - mueslibox
+  - milk coffee
+  - ginger ale
+  - apple juice
+  - tuna
+  - processed food
+  - cookie mix
+  - mustard
+  - cookie
+  - grapes
+  - ketchup
+  - tomato soup
+  - fruit
+  - lemon
+  - sprite
+  - koelln knusper schokokeks
+  - pear
+  - meat
+  - drink
+  - kiwi
+  - kellogs corn flakes
+  - coffee
+  - raspberry juice
+  - cereal
+  - banana
+  - lemonade
+  - tea
+  - mineral water
+  - toast
+  - peach
+  - juice
+  - plum
+  - pancake
+  - condiment
+  - soup
+  - chili sin carne
+  - dish
+  - ice tea
+  - milk
+  - iced coffee
+  - baked good
+  - strawberry
+  - cola
+  - beer
+  - fish
 NaturalPerson:
   entities:
   - Adel
@@ -144,180 +118,197 @@ NaturalPerson:
   - natural person
   - them
   - they
-TransportGoal:
+PhysicalArtifact:
   entities:
-  - sofa
-  - kitchen table
-  - table
-  - study room
+  - cleanser bottle
   - dining table
-  - living room
-  - bathroom
-  - coat rack
-  - lobby
-  - bedroom
-  - cupboard
-  - arena
-  - book case
-  - shelf unit
-  - kitchen cabinet
-  - bed
-  - there
-  - balcony
-  - table
-  - designed chair
-  - kitchen
-  - rack
-  - pantry
-  - office
-  - dining room
-Transportable:
-  entities:
-  - cup green
-  - bolt
-  - tennis ball
-  - metal hardware
-  - soup
-  - wine glass
-  - pot
-  - clamp
-  - mini soccer ball
-  - cutlery
-  - knife
-  - lego
-  - spoon
-  - timer
-  - lego duplo
-  - sprite
-  - blank credit card
-  - washer
-  - spatula
-  - banana
-  - skillet
-  - sandwich
-  - plastic chain
-  - large marker
-  - cookie
-  - screw
-  - bread
-  - chili
-  - lemon
-  - golf ball
-  - glass
-  - sweets
-  - ginger ale
-  - condiment
-  - dish
-  - fish
-  - rubiks cube
-  - mineral water
-  - mustard
-  - orange
-  - cutting board
-  - mulled wine tea
-  - peach
-  - chili sin carne
-  - padlock and keys
-  - scissors
-  - mug
-  - kellogs corn flakes
-  - strawberry
-  - hammer
-  - fruit
-  - marble
-  - writing tool
-  - pasta bowl
-  - milk coffee
-  - tuna
-  - processed food
-  - dinner plate
-  - red metal cup
-  - gin tonic
-  - cup blue
-  - milk glass
-  - red bowl
-  - ice tea
-  - racquet ball
-  - credit card
-  - baked good
-  - bowl
-  - metal plate
-  - tomato soup
-  - beer
-  - nine peg hole test
-  - nut
-  - plate
-  - cereal bowl
-  - toy airplane
-  - scotch brite dobie sponge
-  - breakfast plate
-  - nail
-  - abrasive sponge
-  - cereal
-  - kitchen knife
-  - mueslibox
-  - apple
-  - tray
-  - tea
-  - tiger cup
-  - fastener
-  - small marker
-  - pear
-  - koelln knusper schokokeks
-  - plum
-  - cup small
-  - pancake
-  - drink
-  - salad bowl
-  - kiwi
-  - milk
-  - low fat long lasting milk
   - fork
-  - meat
-  - water glass
-  - raspberry juice
-  - plastic knife
-  - stacking blocks
-  - toast
-  - lemonade
-  - chili con carne
-  - grapes
-  - cup
-  - juice
-  - tableware
-  - metal bowl
-  - iced coffee
-  - ketchup
-  - apple juice
-  - metal mug
-  - steak
-  - dice
+  - rubiks cube
+  - soup can
+  - milk glass
+  - nut
+  - orange juice box
+  - door
+  - spatula
+  - nesquick cereal box
+  - cutting board
+  - mini soccer ball
+  - cereal bowl
+  - breakfast plate
+  - pot
   - soft ball
-  - cola
-  - cookie mix
-  - coffee
+  - cup small
+  - tropical juice bottle
+  - cracker box
+  - book case
+  - frenchs yellow mustard bottle
+  - scrub cleaner
+  - scissors
+  - pitcher
+  - timer
+  - shelf unit
+  - metal hardware
+  - peach ice tea box
+  - lego duplo
+  - jellO chocolate pudding box
+  - tray
+  - jello box
+  - washer
+  - soft scrub bleach cleanser bottle
+  - scotch brite dobie sponge
+  - cocoa box
+  - lego
+  - designed chair
+  - raspberry juice box
+  - abrasive sponge
+  - cupboard
+  - starkist tuna fish can
+  - tiger cup
+  - domino sugar box
+  - stacking blocks
+  - kitchen knife
+  - plate
+  - cup blue
+  - glass
+  - metal mug
+  - dishwasher tray
+  - coat rack
+  - water glass
+  - screw
+  - dinner plate
+  - cup green
   - screwdriver
-  - sponge
+  - bed
+  - tomato soup can
+  - coffee pack
+  - blank credit card
+  - skillet
+  - nail
+  - pastry box
   - baseball
+  - metal plate
+  - hammer
+  - bowl
+  - mug
+  - wine glass
+  - cookie box
+  - juice box
+  - writing tool
+  - clear box
+  - oregano shaker
+  - salt shaker
+  - tableware
+  - juice bottle
+  - pasta bowl
+  - kitchen cabinet
+  - glass cleaner spray bottle
+  - sofa
+  - bleach cleanser bottle
+  - padlock and keys
+  - drawer
+  - spam potted meat can
+  - gelatine box
+  - large marker
+  - red bowl
+  - can
+  - coffee can
+  - cereal box
+  - sink
+  - windex glass cleaner spray bottle
+  - wine bottle
+  - small marker
+  - dishwasher
+  - cheez it cracker box
+  - potted meat can
+  - pudding box
+  - red metal cup
+  - ice tea bottle
+  - bottle
+  - table
+  - corny box
+  - tea bag box
+  - microwave
+  - paper bag
+  - stapel chips
+  - dice
+  - master chef can
+  - golf ball
+  - credit card
+  - sponge
+  - knife
+  - jug
+  - kitchen table
+  - chips can
+  - sugar box
+  - table
+  - metal bowl
   - rope
-  - dishwasher tab
-  - vegetable
-  - table cloth
-  - foam brick
-  - salt
+  - trash bin
+  - nine peg hole test
+  - racquet ball
+  - plastic chain
+  - pill box
+  - tuna fish can
+  - juice pack
+  - cereal box robocup
+  - pringles chips can
+  - bolt
+  - milk bottle
+  - cola can
+  - milk pack
+  - toy airplane
+  - spray bottle
+  - bag
+  - spoon
+  - salad bowl
+  - rack
+  - milkpack ja
+  - cup
+  - pancake mix bottle
+  - marble
+  - cutlery
+  - coffee can
+  - plastic knife
+  - mustard bottle
+  - clamp
+  - pickles jar
+  - fastener
+  - milk jug
+  - jellO strawberry box
+  - tennis ball
   - it
+  - table cloth
+  - tshirt
+  - tomato
+  - vegetable
+  - dishwasher tab
+  - spice
   - towel
+  - liquid
+  - soap
   - serving mat
+  - designed handle
+  - napkin
+  - bib
+  - wood block
+  - shampoo
+  - salt
+  - colored wood block
+  - foam brick
+  - toothpaste
   - television
   - oregano
-  - colored wood block
-  - soap
-  - bib
-  - tomato
-  - shampoo
-  - toothpaste
-  - napkin
-  - wood block
-  - spice
-  - designed handle
-  - liquid
+PhysicalPlace:
+  entities:
+  - study room
+  - there
+  - dining room
+  - living room
+  - pantry
+  - bathroom
+  - office
+  - lobby
+  - balcony
+  - arena
+  - bedroom
+  - kitchen
