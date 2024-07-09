@@ -3,16 +3,18 @@ import os
 import yaml
 from rdflib import Graph, URIRef, Namespace, RDF, RDFS
 
-def get_transitive_subclasses(g, superclasses):
+def get_transitive_subclasses(g, superclasses, exclusions):
     subclasses = set()
     for superclass in superclasses:
         for subclass in g.transitive_subjects(RDFS.subClassOf, superclass):
-            subclasses.add(subclass)
+            if(subclass not in exclusions):
+                subclasses.add(subclass)
         # We also want to get the names from superclass if it exists
-        subclasses.add(superclass)
+        if(subclass not in exclusions):
+            subclasses.add(superclass)
     return subclasses
 
-def extract_has_value_restrictions(owl_file_path, data_property, superclass_uris):
+def extract_has_value_restrictions(owl_file_path, data_property, superclass_uris, exclusion_uris):
     # Load the ontology
     g = Graph()
     g.parse(owl_file_path)
@@ -29,8 +31,12 @@ def extract_has_value_restrictions(owl_file_path, data_property, superclass_uris
     results = {}
     for superclass_label, superclass_uris in superclass_uris.items():
         superclass_uris = [URIRef(uri) for uri in superclass_uris]
-        subclasses = get_transitive_subclasses(g, superclass_uris)
-        
+        exclusions_with_subclasses = []
+        if (superclass_label in exclusion_uris):
+            exclusion_uris = [URIRef(uri) for uri in exclusion_uris[superclass_label]]
+            exclusions_with_subclasses = get_transitive_subclasses(g, exclusion_uris, [])
+        subclasses = get_transitive_subclasses(g, superclass_uris, exclusions_with_subclasses)
+
         results[superclass_label] = {'entities': []}
 
         for cls in subclasses:
@@ -50,7 +56,7 @@ def check_missing_names(entity, owl_file_path, results, data_property):
     g.parse("http://www.ease-crc.org/ont/SOMA.owl")
     g.parse("http://www.ease-crc.org/ont/DUL.owl")
     ENTITY = URIRef(entity)
-    subclasses = get_transitive_subclasses(g, [ENTITY])
+    subclasses = get_transitive_subclasses(g, [ENTITY], [])
     missing = []
 
     # Define namespaces
@@ -99,7 +105,8 @@ def main():
         ],
         'DesignedFurniture': [
             'http://www.ease-crc.org/ont/SOMA.owl#DesignedFurniture',
-            'http://www.ease-crc.org/ont/SOMA.owl#Door'
+            'http://www.ease-crc.org/ont/SOMA.owl#Door',
+            'http://www.ease-crc.org/ont/SOMA.owl#Appliance'
         ],
         'Room': [
             'http://www.ease-crc.org/ont/SOMA.owl#Room',
@@ -119,13 +126,19 @@ def main():
         ]
     }
 
+    exclusion_uris = {
+        'Transportable': [
+            'http://www.ease-crc.org/ont/SOMA.owl#Appliance'
+        ]
+    }
+
     # Check if the file exists
     if not os.path.isfile(owl_file_path):
         print(f"File not found: {owl_file_path}")
         sys.exit(1)
 
     # extract the predefinedName relations according to the given dict
-    entities = extract_has_value_restrictions(owl_file_path, data_property, superclass_uris)
+    entities = extract_has_value_restrictions(owl_file_path, data_property, superclass_uris, exclusion_uris)
     # Get the rest of the physical artifacts, and save them as Transportable
     missing_physical_artifacts = [str(name) for name in check_missing_names('http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#Entity', owl_file_path, entities, data_property)]
     # add missing physical artifacts to transportable
