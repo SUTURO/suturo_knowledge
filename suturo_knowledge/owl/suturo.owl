@@ -1928,7 +1928,7 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
                 <owl:hasValue>corny box</owl:hasValue>
             </owl:Restriction>
         </rdfs:subClassOf>
-        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">102</SUTURO:perceptionId>
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">35</SUTURO:perceptionId>
         <rdfs:comment>A box that contains cereal bars named &quot;corny&quot;</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SOMA-HOME.owl"/>
     </owl:Class>
