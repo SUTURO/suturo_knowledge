@@ -36,6 +36,15 @@ The documentation is also deployed to the [SUTURO Knowledge Website](https://sut
 - **Visual Studio Code**  
   Install the [`VSC-Prolog`](https://marketplace.visualstudio.com/items?itemName=arthurwang.vsc-prolog) extension to get syntax highlighting and code completion for Prolog in VS Code.
 
+## Testing
+
+To run the (incomplete) unit tests defined in the varoius `.plt` files, use
+```
+rosrun knowrob knowrob-test.sh suturo_knowledge
+```
+
+Instead of suturo_knowledge you can also use the absolute path to the file. For this `$(pwd)` is helpful: `rosrun knowrob knowrob-test.sh "$(pwd)"/shape_workaround.plt`.
+
 ---
 
 <p align="center">
