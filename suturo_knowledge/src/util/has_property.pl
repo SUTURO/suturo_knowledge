@@ -5,6 +5,7 @@
 	  [
         %is_fragile(r),
 		what_object(+,r),
+		what_object_transitive(?,r),
 		fragility_new(+),
 		is_perishable(+),
 		have_same_class(+,+),
@@ -71,6 +72,39 @@ what_object(ObjName, Object) :-
 	triple(O,_, suturo:hasPredefinedName),
 	triple(O, owl:hasValue, ObjName), 
 	triple(Object,_,O).
+
+%% what_object_transitive(?ObjName, ?Class) is nondet.
+%
+% Get the Class that has the predefined name "ObjName",
+% and all subclasses of that class
+what_object_transitive(ObjName, Class) :-
+	atom(ObjName),
+	var(Class),
+	!,
+	kb_call((
+		triple(O, owl:hasValue, ObjName),
+		triple(O, owl:onProperty, suturo:hasPredefinedName),
+		% O already has a value, so rdfs:subClassOf is transitive here.
+		triple(Class, rdfs:subClassOf, O)
+	)).
+
+what_object_transitive(ObjName, Class) :-
+	var(ObjName),
+	atom(Class),
+	!,
+	kb_call((
+		triple(Class, transitive(rdfs:subClassOf), O),
+		triple(O, owl:hasValue, ObjName),
+		triple(O, owl:onProperty, suturo:hasPredefinedName)
+	)).
+
+what_object_transitive(ObjName, Class) :-
+	kb_call((
+		triple(O, owl:onProperty, suturo:hasPredefinedName),
+		triple(O, owl:hasValue, ObjName),
+		% O already has a value, so rdfs:subClassOf is transitive here.
+		triple(Class, rdfs:subClassOf, O)
+	)).
 
 %% have_same_class(+, +)
 %
