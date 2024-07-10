@@ -106,7 +106,8 @@ def main():
         'DesignedFurniture': [
             'http://www.ease-crc.org/ont/SOMA.owl#DesignedFurniture',
             'http://www.ease-crc.org/ont/SOMA.owl#Door',
-            'http://www.ease-crc.org/ont/SOMA.owl#Appliance'
+            'http://www.ease-crc.org/ont/SOMA.owl#Appliance',
+            'http://www.ease-crc.org/ont/SOMA.owl#Drawer'
         ],
         'Room': [
             'http://www.ease-crc.org/ont/SOMA.owl#Room',
@@ -128,7 +129,10 @@ def main():
 
     exclusion_uris = {
         'Transportable': [
-            'http://www.ease-crc.org/ont/SOMA.owl#Appliance'
+            'http://www.ease-crc.org/ont/SOMA.owl#Appliance',
+            'http://www.ease-crc.org/ont/SOMA.owl#Drawer',
+            'http://www.ease-crc.org/ont/SOMA.owl#Cupboard',
+            'http://www.ease-crc.org/ont/SOMA.owl#DesignedHandle'
         ]
     }
 
