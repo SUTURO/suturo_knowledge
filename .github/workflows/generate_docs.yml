@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 env:
-  OWL2ANYTHING_VERSION: 1.3.0
+  OWL2ANYTHING_VERSION: 1.4.0
 
 jobs:
 
