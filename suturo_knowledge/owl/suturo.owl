@@ -1383,12 +1383,6 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
                 <owl:hasValue>can</owl:hasValue>
             </owl:Restriction>
         </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
-                <owl:hasValue>coffee can</owl:hasValue>
-            </owl:Restriction>
-        </rdfs:subClassOf>
         <rdfs:comment>A can is a cylindrical container usually made of metal or aluminum, used for storing food, beverages, or other products.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
