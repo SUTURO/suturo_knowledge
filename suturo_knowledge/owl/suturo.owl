@@ -2768,14 +2768,14 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
     
 
 
-    <!-- http://www.ease-crc.org/ont/SUTURO.owl#KellogsCornFlakes -->
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#KelloggsCornFlakes -->
 
-    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#KellogsCornFlakes">
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#KelloggsCornFlakes">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Cereal"/>
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
-                <owl:hasValue>kellogs corn flakes</owl:hasValue>
+                <owl:hasValue>kelloggs corn flakes</owl:hasValue>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:comment>Kellogg&apos;s Corn Flakes are a popular brand of breakfast cereal made from milled corn and malt flavoring. They were first created in the late 19th century by John Harvey Kellogg and his brother Will Keith Kellogg, and are known for their crunchy texture and mild, slightly sweet flavor.</rdfs:comment>
@@ -2784,9 +2784,9 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
     
 
 
-    <!-- http://www.ease-crc.org/ont/SUTURO.owl#KellogsCornFlakesBox -->
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#KelloggsCornFlakesBox -->
 
-    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#KellogsCornFlakesBox">
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#KelloggsCornFlakesBox">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#CerealBox"/>
         <rdfs:comment>A Kellogg&apos;s Corn Flakes box is a cardboard packaging that contains corn flakes, a popular breakfast cereal made from toasted corn.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
