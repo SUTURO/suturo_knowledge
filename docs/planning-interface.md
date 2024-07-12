@@ -150,6 +150,60 @@ ShapeTerm: {'term': ['box', 0.1, 0.1, 0.1]}.
 Note that this is not the format you will see in lisp, there the `term` stuff is probably translated to a lispier structure, like `(box 0.1 0.1 0.1)`.
 There might be a better predicate for this in the future, and the blanks in the pose might be a real position and rotation in the future. The `_` indicates that there is no value for this place.
 
+### Relative poses
+
+#### Inside of rooms
+
+For all objects the room they are inside of is computed during creation (`create_object`, is also called during semantic map initialisation) and position updating (`object_pose` with a given pose).
+The result of this computation can be retrieved using the following predicate:
+
+```prolog
+is_inside_of(?Obj, ?Room)
+```
+
+Examples:
+```prolog
+?- is_inside_of(Obj, Room).
+Obj: 'http://www.ease-crc.org/ont/SOMA.owl#Table_NDCBRWEY',
+Room: 'http://www.ease-crc.org/ont/SUTURO.owl#Arena_BQHSDXOM' ;
+
+Obj: 'http://www.ease-crc.org/ont/SOMA.owl#Table_NDCBRWEY',
+Room: 'http://www.ease-crc.org/ont/SUTURO.owl#LivingRoom_DKPLJIOG';
+...
+?- is_inside_of(soma:'Table_NDCBRWEY',Room).
+Room: 'http://www.ease-crc.org/ont/SUTURO.owl#Arena_BQHSDXOM' ;
+
+Room: 'http://www.ease-crc.org/ont/SUTURO.owl#LivingRoom_DKPLJIOG'.
+
+?- is_inside_of(Obj, suturo:'LivingRoom_DKPLJIOG').
+Obj: 'http://www.ease-crc.org/ont/SOMA.owl#Table_NDCBRWEY' ;
+
+Obj: 'http://www.ease-crc.org/ont/SOMA.owl#Table_OKRVGFLP' ;
+
+Obj: 'http://www.ease-crc.org/ont/SOMA.owl#Door_EYVRJCHL' ;
+
+Obj: 'http://www.ease-crc.org/ont/SOMA.owl#Table_CWYUNSDX'.
+```
+
+#### On top of Furniture
+
+For all objects, which are not from the semantic map, the furniture (object from the semantic map) they are ontop of is computed during creation (`create_object`) and position updating (`object_pose` with a given pose).
+The result of this computation can be retrieved using triples:
+
+```prolog
+triple(Object, soma:isOntopOf, Furniture).
+```
+
+Example:
+```prolog
+?- triple(Object, soma:isOntopOf, Furniture)
+Furniture: 'http://www.ease-crc.org/ont/SOMA.owl#Table_NCPFJOBW',
+Object: 'http://www.ease-crc.org/ont/SOMA.owl#CerealBox_GZPBESQD'.
+
+?- triple(Object, soma:isOntopOf, 'http://www.ease-crc.org/ont/SOMA.owl#Table_NCPFJOBW')
+Object: 'http://www.ease-crc.org/ont/SOMA.owl#CerealBox_GZPBESQD'.
+```
+
 ### Sorting objects by position
 ```prolog
 sort_right_to_left(+RefereceFrame, +Objects, -SortedObjects) is det.
