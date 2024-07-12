@@ -15,7 +15,7 @@ check_inside_room(Object,Room) :-
     ShapeTerm = box(DX,DY,_),
     (waited(time)
     -> true
-    ; sleep(0.2), assert(waited(time))
+    ; sleep(1), assert(waited(time))
     ),
     (kb_call(is_at(Object, [Frame, [X,Y,_], _]))
     -> true
