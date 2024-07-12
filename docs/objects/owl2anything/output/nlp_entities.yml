@@ -1,45 +1,45 @@
 Clothing:
   entities:
-  - shoes
-  - tshirt
-  - pants
-  - coat
-  - blue jeans
-  - vest
-  - leggings
-  - dress
-  - sweater
   - hoodie
-  - trousers
-  - jacket
   - blouse
+  - pullover
   - shirt
-  - hat
+  - shoes
+  - leggings
   - socks
+  - trousers
+  - tshirt
   - tie
   - dress
-  - pullover
+  - coat
+  - dress
+  - blue jeans
+  - pants
+  - hat
+  - sweater
+  - vest
+  - jacket
 DesignedFurniture:
   entities:
-  - couch
+  - shelf unit
+  - sink
+  - sofa
+  - microwave
+  - dishwasher tray
+  - kitchen cabinet
+  - coat rack
   - table
   - bed
-  - kitchen cabinet
-  - chair
-  - kitchen table
-  - dishwasher tray
-  - microwave
-  - book case
-  - shelf unit
-  - cupboard
-  - dining table
-  - dishwasher
-  - door
-  - sink
   - drawer
+  - door
   - rack
-  - coat rack
-  - sofa
+  - book case
+  - dishwasher
+  - dining table
+  - couch
+  - kitchen table
+  - chair
+  - cupboard
   - there
 NaturalPerson:
   entities:
@@ -102,238 +102,238 @@ NaturalPerson:
   - me
 Room:
   entities:
-  - study room
-  - bathroom
-  - office
-  - lobby
-  - balcony
   - pantry
-  - kitchen
+  - office
   - arena
-  - dining room
   - bedroom
+  - dining room
+  - lobby
+  - kitchen
+  - study room
   - living room
+  - balcony
+  - bathroom
 Transportable:
   entities:
-  - pringles
-  - spoon
-  - padlock and keys
-  - bottle
-  - orange juice box
-  - chili
-  - pancake mix bottle
-  - sugar box
-  - peach ice tea box
-  - metal mug
-  - salad bowl
-  - bleach cleanser bottle
-  - cookie box
-  - bowl
-  - dice
-  - glass
-  - fruit
-  - hot chocolate
-  - soft scrub bleach cleanser bottle
-  - cheezIt cracker box
-  - fastener
-  - bolt
-  - glass cleaner spray bottle
-  - mustard bottle
-  - milk glass
-  - metal bowl
-  - clear box
-  - knife
-  - pill box
-  - mulled wine tea
+  - milk jug
+  - tuna
   - raspberry juice
-  - wine glass
-  - orange
-  - soup
-  - pancake
-  - soup can
-  - nail
-  - trash bin
-  - wine bottle
-  - tray
-  - bread
-  - hammer
-  - ketchup
-  - raspberry juice box
-  - abrasive sponge
-  - ice tea bottle
-  - juice pack
-  - apple
-  - blank credit card
-  - toast
-  - plum
-  - timer
-  - grapes
-  - marble
-  - toy airplane
-  - domino sugar box
-  - racquet ball
-  - pickles jar
-  - tennis ball
-  - juice box
-  - plastic knife
-  - cracker box
-  - skillet
-  - steak
-  - metal cup
-  - cocoa box
-  - tropical juice bottle
-  - scissors
-  - chili con carne
-  - red wine
-  - kitchen knife
-  - chips can
-  - lego duplo
-  - juice
-  - coffee pack
-  - mini soccer ball
-  - mustard
-  - cereal box
-  - peach
-  - coffee can
-  - kiwi
-  - milk
-  - small marker
-  - juice bottle
-  - milkpack ja
-  - sandwich
-  - gin tonic
-  - jug
   - low fat long lasting milk
-  - tiger cup
-  - fork
-  - pot
-  - sprite
+  - sponge
+  - milkpack
+  - banana
+  - plastic knife
+  - jello box
+  - pill box
+  - cola can
   - orange juice
+  - cornflakes
+  - stapel chips
+  - iced coffee
+  - pancake
+  - domino sugar box
+  - koelln knusper schokokeks
+  - cereal
+  - pringles
+  - cheezIt cracker box
+  - abrasive sponge
+  - hot chocolate
+  - tableware
+  - soccer ball
+  - coffee
+  - small marker
+  - lemonade
+  - writing tool
+  - sprite
+  - sugar box
+  - tomato soup can
+  - spam potted meat can
+  - processed food
+  - racquet ball
+  - peach ice tea box
+  - mustard bottle
+  - raspberry juice box
+  - water glass
+  - soup
+  - bowl
+  - frenchs yellow mustard bottle
+  - nesquick cereal box
+  - tuna fish can
+  - wine bottle
+  - sweets
+  - meat
+  - marble
+  - pringles chips can
+  - rubiks cube
+  - cookie mix
+  - grapes
+  - cutlery
+  - glass
+  - chili con carne
+  - skillet
+  - screw
+  - sandwich
+  - scotch brite dobie sponge
+  - jug
+  - pitcher
+  - orange juice box
+  - padlock and keys
+  - mineral water
+  - ice tea bottle
+  - steak
+  - trash bin
+  - fastener
+  - glass cleaner spray bottle
+  - strawberry
+  - cutting board
+  - chili sin carne
+  - drink
+  - fruit
+  - hammer
+  - jello strawberry box
+  - credit card
+  - soup can
+  - spoon
+  - salad bowl
+  - cheezIt
+  - pickles jar
   - plate
+  - wine glass
+  - clear box
+  - tea bag box
+  - chips can
+  - mug
+  - metal knife
+  - salt shaker
+  - nail
+  - orange
+  - breakfast plate
+  - spam
+  - potted meat can
+  - dish
+  - tropical juice
+  - timer
+  - mulled wine tea
+  - ketchup
+  - lego
+  - tennis ball
+  - fork
+  - soft ball
+  - bolt
+  - fish
+  - nine peg hole test
+  - tray
+  - paper bag
+  - peach
+  - milk coffee
   - baked good
+  - bottle
+  - pancake mix bottle
+  - baseball
+  - coffee pack
+  - toast
+  - cereal box
+  - dice
+  - toy airplane
+  - iced tea
+  - cup
+  - dinner plate
+  - oregano shaker
+  - pear
+  - mueslibox
+  - corny box
+  - juice bottle
+  - spatula
+  - screwdriver
+  - bag
+  - tea
+  - mustard
+  - plastic chain
+  - cocoa box
+  - windex glass cleaner spray bottle
+  - pasta bowl
+  - pastry box
+  - tiger cup
+  - condiment
+  - kitchen knife
+  - milk glass
+  - beer
+  - chili
+  - rope
+  - milk bottle
+  - lego duplo
+  - cookie
+  - blank credit card
+  - clamp
+  - stacking blocks
+  - starkist tuna fish can
+  - muesli
+  - cereal box robocup
+  - pot
+  - lemon
+  - cereal bowl
+  - cleanser bottle
+  - mini soccer ball
+  - cola
+  - juice
+  - jello chocolate pudding box
+  - metal bowl
+  - golf ball
+  - juice pack
+  - metal hardware
+  - ginger ale
+  - tomato soup
+  - tropical juice bottle
+  - cookie box
+  - metal cup
+  - plum
+  - coffee can
+  - nut
   - can
   - coffee can
-  - processed food
-  - stapel chips
-  - tuna
-  - paper bag
-  - pringles chips can
-  - credit card
-  - cereal
-  - milk coffee
-  - spatula
-  - milk jug
-  - meat
-  - plastic chain
-  - rubiks cube
-  - pastry box
-  - jello box
-  - cleanser bottle
-  - jello strawberry box
-  - cookie mix
-  - coffee
-  - mineral water
-  - oregano shaker
-  - tropical juice
-  - dish
-  - fish
-  - baseball
-  - sweets
-  - starkist tuna fish can
-  - clamp
-  - condiment
-  - screw
-  - nine peg hole test
-  - tea
-  - pitcher
-  - mueslibox
-  - tea bag box
-  - mug
-  - jello chocolate pudding box
-  - golf ball
-  - rope
-  - cola can
-  - drink
-  - cola
-  - pear
-  - writing tool
-  - tableware
-  - scotch brite dobie sponge
-  - pudding box
-  - iced tea
-  - metal hardware
-  - cup
-  - nesquick cereal box
-  - chili sin carne
-  - banana
-  - soft ball
-  - frenchs yellow mustard bottle
-  - milk bottle
-  - cereal bowl
-  - lego
-  - strawberry
-  - metal knife
-  - nut
-  - tuna fish can
-  - cornflakes
-  - lemon
-  - tomato soup
-  - koelln knusper schokokeks
-  - windex glass cleaner spray bottle
-  - ginger ale
-  - cheezIt
-  - spam potted meat can
   - washer
-  - stacking blocks
-  - gelatine box
-  - breakfast plate
-  - iced coffee
-  - cutlery
-  - sponge
-  - cookie
-  - salt shaker
-  - pasta bowl
-  - corny box
-  - screwdriver
-  - lemonade
-  - dinner plate
-  - potted meat can
-  - muesli
-  - kellogs corn flakes
-  - bag
-  - milkpack
-  - beer
-  - water glass
-  - soccer ball
-  - spam
-  - large marker
+  - soft scrub bleach cleanser bottle
+  - scissors
+  - apple
+  - juice box
   - spray bottle
-  - tomato soup can
+  - red wine
+  - kellogs corn flakes
+  - gin tonic
+  - milkpack ja
+  - kiwi
+  - large marker
+  - bleach cleanser bottle
+  - pudding box
+  - milk
+  - bread
+  - cracker box
+  - metal mug
   - apple juice
-  - cereal box robocup
-  - cutting board
-  - bib
-  - sugar
-  - shampoo
-  - towel
-  - cleanser
-  - serving mat
-  - wood block
-  - scrub cleaner
-  - table cloth
-  - soap
+  - gelatine box
+  - knife
   - toothpaste
-  - coffee ground
-  - spice
-  - strawberry jello
-  - oregano
-  - colored wood block
-  - napkin
-  - foam brick
   - liquid
-  - tomato
-  - chocolate jello
-  - salt
+  - bib
+  - soap
+  - cleanser
+  - wood block
+  - napkin
+  - scrub cleaner
+  - spice
+  - colored wood block
   - dishwasher tab
+  - salt
+  - tomato
+  - serving mat
+  - strawberry jello
+  - towel
+  - foam brick
+  - table cloth
+  - chocolate jello
+  - shampoo
   - vegetable
+  - sugar
+  - coffee ground
+  - oregano
   - it
