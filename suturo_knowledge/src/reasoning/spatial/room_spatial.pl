@@ -5,13 +5,23 @@
 
 :- use_module(library('utility/algebra'), [transform_multiply/3]).
 
+:- dynamic waited/1.
+
 %% check_inside_room(+Object, +Room) is semidet.
 %
 % checks if an object is inside of a room.
 check_inside_room(Object,Room) :-
     object_shape_workaround(Room, Frame, ShapeTerm, _, _),
     ShapeTerm = box(DX,DY,_),
-    kb_call(is_at(Object, [Frame, [X,Y,_], _])),
+    (waited(time)
+    -> true
+    ; sleep(0.2), assert(waited(time))
+    ),
+    (kb_call(is_at(Object, [Frame, [X,Y,_], _]))
+    -> true
+    ;  ros_error('[check_inside_room] is_at failed. Increase the wait delay before the first call to hotfix this!'),
+       fail
+    ),
     % Assuming z is up direction,
     % X and Y have to be inside the area.
     % so between center + diameter / 2 and center - diameter / 2.
