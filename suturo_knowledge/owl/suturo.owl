@@ -1355,7 +1355,7 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
     <!-- http://www.ease-crc.org/ont/SUTURO.owl#Bookcase -->
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Bookcase">
-        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#ShelfUnit"/>
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Shelf"/>
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
@@ -1408,7 +1408,7 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Candle">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#DesignedComponent"/>
-        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Decorations"/>
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#RoboCupDecorations"/>
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
@@ -2163,14 +2163,6 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.ease-crc.org/ont/SUTURO.owl#Decorations -->
-
-    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Decorations">
-        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#RoboCup2023Categories"/>
     </owl:Class>
     
 
@@ -4404,6 +4396,14 @@ The challenges in the RoboCup@Home competition are designed to test a variety of
     
 
 
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#RoboCupDecorations -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#RoboCupDecorations">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#RoboCup2023Categories"/>
+    </owl:Class>
+    
+
+
     <!-- http://www.ease-crc.org/ont/SUTURO.owl#RoboCupDishes -->
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#RoboCupDishes">
@@ -4689,22 +4689,16 @@ The challenges in the RoboCup@Home competition are designed to test a variety of
     
 
 
-    <!-- http://www.ease-crc.org/ont/SUTURO.owl#ShelfLayer -->
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#Shelf -->
 
-    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#ShelfLayer">
-        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#DesignedComponent"/>
-        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">25</SUTURO:perceptionId>
-        <rdfs:comment>A shelf board is a flat piece of wood, metal, or glass which is attached to a wall or to the sides of a cupboard. Shelves are used for keeping things on.</rdfs:comment>
-        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
-        <rdfs:label>ShelfLayer</rdfs:label>
-    </owl:Class>
-    
-
-
-    <!-- http://www.ease-crc.org/ont/SUTURO.owl#ShelfUnit -->
-
-    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#ShelfUnit">
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Shelf">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Rack"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
+                <owl:hasValue>shelf</owl:hasValue>
+            </owl:Restriction>
+        </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
@@ -4713,7 +4707,19 @@ The challenges in the RoboCup@Home competition are designed to test a variety of
         </rdfs:subClassOf>
         <rdfs:comment>A shelf unit is a piece of furniture consisting of several shelves, designed to hold books, decor, and other items and is typically made of wood or metal.</rdfs:comment>
         <rdfs:isDefinedBy>http://www.ease-crc.org/ont/SUTURO.owl</rdfs:isDefinedBy>
-        <rdfs:label>ShelfUnit</rdfs:label>
+        <rdfs:label>Shelf</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#ShelfLayer -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#ShelfLayer">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#DesignedComponent"/>
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">25</SUTURO:perceptionId>
+        <rdfs:comment>A shelf board is a flat piece of wood, metal, or glass which is attached to a wall or to the sides of a cupboard. Shelves are used for keeping things on.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+        <rdfs:label>ShelfLayer</rdfs:label>
     </owl:Class>
     
 
