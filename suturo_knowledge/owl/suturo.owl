@@ -4366,8 +4366,8 @@ The challenges in the RoboCup@Home competition are designed to test a variety of
     <!-- http://www.ease-crc.org/ont/SUTURO.owl#RoboCupDrinks -->
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#RoboCupDrinks">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Drink"/>
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#RoboCup2023Categories"/>
-        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#RoboCupDrinks"/>
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasGraspPose"/>
