@@ -2847,7 +2847,6 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
                 <owl:hasValue>jello strawberry box</owl:hasValue>
             </owl:Restriction>
         </rdfs:subClassOf>
-        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">72</SUTURO:perceptionId>
         <rdfs:comment>A box containing, or at least normally intended to contain, Jell-O brand strawberry flavored gelatin.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
