@@ -2601,6 +2601,21 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
     
 
 
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#Hallway -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Hallway">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Room"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
+                <owl:hasValue>hallway</owl:hasValue>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:comment rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
     <!-- http://www.ease-crc.org/ont/SUTURO.owl#Hammer -->
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Hammer">
