@@ -68,8 +68,8 @@
 	 :softball)
 	(:saltshaker
 	 :saltshaker)
-	(:cornybox
-	 :cornybox)
+	(:metalplate
+	 :metalplate)
 	(:pringleschipscan
 	 :pringleschipscan)
 	(:strawberry
@@ -142,8 +142,8 @@
 	 :juicebox)
 	(:pancakemixbottle
 	 :pancakemixbottle)
-	(:jellostrawberrybox
-	 :jellostrawberrybox)
+	(:gelatinebox
+	 :gelatinebox)
 	(:teabagbox
 	 :teabagbox)
 	(:pastrybox
@@ -186,14 +186,22 @@
 	 :mueslibox)
 	(:stapelchips
 	 :stapelchips)
+	(:cupblue
+	 :cupblue)
+	(:cupgreen
+	 :cupgreen)
 	(:largemarker
 	 :largemarker)
+	(:masterchefcan
+	 :masterchefcan)
 	(:scissors
 	 :scissors)
 	(:scrubcleaner
 	 :scrubcleaner)
 	(:grapes
 	 :grapes)
+	(:cupsmall
+	 :cupsmall)
 	(:screwdriver
 	 :screwdriver)
 	(:clamp
@@ -202,3 +210,49 @@
 	 :hammer)
 	(:woodblock
 	 :woodblock)
+	(:cornybox
+	 :cornybox)
+	(:sponge
+	 :sponge)
+	(:washcloth
+	 :washcloth)
+	(:soap
+	 :soap)
+	(:fantacan
+	 :fantacan)
+	(:iceteacan
+	 :iceteacan)
+	(:dubbelfris
+	 :dubbelfris)
+	(:waterbottle
+	 :waterbottle)
+	(:colabottle
+	 :colabottle)
+	(:peasoupcan
+	 :peasoupcan)
+	(:cornflakes
+	 :cornflakes)
+	(:curry
+	 :curry)
+	(:mayonaise
+	 :mayonaise)
+	(:hagelslag
+	 :hagelslag)
+	(:sausages
+	 :sausages)
+	(:pancakemix
+	 :pancakemix)
+	(:crispsbag
+	 :crispsbag)
+	(:candy
+	 :candy)
+	(:stroopwafels
+	 :stroopwafels)
+	(:liquorice
+	 :liquorice)
+	(:tictac
+	 :tictac)
+	(:candle
+	 :candle)
+	(:grocerybag
+	 :grocerybag)
