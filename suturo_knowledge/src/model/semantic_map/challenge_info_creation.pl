@@ -236,21 +236,80 @@ init_predefined_names_robocup_2023 :-
 
 init_gpsr_2024 :-
 	ros_info('Initializing origin and destination locations for gpsr 2024'),
-	% geschirr wie plate, cup, cutlery auf popcorn table
-	has_urdf_name(PopcornTable, 'popcorn_table:p_table:table_center'),
-	log_set(suturo:'RoboCupDishes', suturo:hasOriginLocation, PopcornTable),
-	log_set(suturo:'RoboCupDishes', suturo:hasDestinationLocation, PopcornTable),
 
-	% mueslibox, crackerbox, milch im regal
-	forall(is_shelf_layer(ShelfLayer),
-		   (
-			   log_set(suturo:'RoboCupSnacks', suturo:hasOriginLocation, ShelfLayer),
-			   log_set(suturo:'RoboCupSnacks', suturo:hasDestinationLocation, ShelfLayer)
-		   )),
+    has_type(Office, 'http://www.ease-crc.org/ont/SUTURO.owl#Office'),
 
-	% banane, apfel, früchte auf couch tisch predefined_origin_location
-	has_urdf_name(CouchTable, 'couch_table:couch_table:table_center'),
-	log_set(suturo:'RoboCupFruits', suturo:hasOriginLocation, CouchTable),
-	log_set(suturo:'RoboCupFruits', suturo:hasDestinationLocation, CouchTable),
+    % decorations
+    ros_warn('TODO: Use decorations class'),
+    is_inside_of(Desk, Office),
+    is_table(Desk),
+    log_set_both('http://www.ease-crc.org/ont/SUTURO.owl#RoboCupDecorations', Desk),
 
-	ros_info('Finished initializing origin and destination locations for gpsr 2024').
+    % cleaning supplies are on the shelf in the Office
+    forall((
+                  is_inside_of(ShelfLayer, Office),
+                  is_shelf_layer(ShelfLayer)
+           ),
+           log_set_both('http://www.ease-crc.org/ont/SUTURO.owl#RoboCupCleaningSupplies', ShelfLayer)
+          ),
+
+    % toys on tv table in living room
+    has_robocup_name(TvTable, tv_table),
+    log_set_both('http://www.ease-crc.org/ont/SUTURO.owl#RoboCupToys', TvTable),
+
+    % fruits on the coffe table (round table in living room)
+    has_robocup_name(CoffeTable, coffee_table),
+    log_set_both('http://www.ease-crc.org/ont/SUTURO.owl#RoboCupFruits', CoffeTable),
+
+    % drinks in kitchen cabinet in kitchen
+    is_kitchen(Kitchen),
+    forall((
+                  is_inside_of(ShelfLayer, Kitchen),
+                  is_shelf_layer(ShelfLayer)
+           ),
+           log_set_both('http://www.ease-crc.org/ont/SUTURO.owl#RoboCupCleaningSupplies', ShelfLayer)
+          ),
+
+    % snacks on dinner table in kitchen
+    has_robocup_name(DiningTable, dinner_table),
+    log_set_both('http://www.ease-crc.org/ont/SUTURO.owl#RoboCupSnacks', DiningTable),
+
+    % dishes in dishwasher in kitchen
+    ros_warn('TODO: Check if dishwasher is loaded into knowledge database'),
+    %% has_type(DishwasherTray, suturo:'DishwasherTray'),
+    %% log_set_both('http://www.ease-crc.org/ont/SUTURO.owl#RoboCupDishes', DishwasherTray),
+    has_robocup_name(DishwasherTable, d_table),
+    log_set_both('http://www.ease-crc.org/ont/SUTURO.owl#RoboCupDishes', DishwasherTable),
+
+    % food on kitchen counter in kitchen
+    has_robocup_name(KitchenCounter, kitchen_counter),
+    log_set_both('http://www.ease-crc.org/ont/SUTURO.owl#RoboCupFood', KitchenCounter),
+
+
+    %% Altes zeug
+	%% % geschirr wie plate, cup, cutlery auf popcorn table
+	%% has_urdf_name(PopcornTable, 'popcorn_table:p_table:table_center'),
+	%% log_set(suturo:'RoboCupDishes', suturo:hasOriginLocation, PopcornTable),
+	%% log_set(suturo:'RoboCupDishes', suturo:hasDestinationLocation, PopcornTable),
+
+	%% % mueslibox, crackerbox, milch im regal
+	%% forall(is_shelf_layer(ShelfLayer),
+	%% 	   (
+	%% 		   log_set(suturo:'RoboCupSnacks', suturo:hasOriginLocation, ShelfLayer),
+	%% 		   log_set(suturo:'RoboCupSnacks', suturo:hasDestinationLocation, ShelfLayer)
+	%% 	   )),
+
+	%% % banane, apfel, früchte auf couch tisch predefined_origin_location
+	%% has_urdf_name(CouchTable, 'couch_table:couch_table:table_center'),
+	%% log_set(suturo:'RoboCupFruits', suturo:hasOriginLocation, CouchTable),
+	%% log_set(suturo:'RoboCupFruits', suturo:hasDestinationLocation, CouchTable),
+
+	ros_info('Finished initializing origin and destination locations for gpsr 2024'),
+    !.
+init_gpsr_2024 :-
+    ros_error('something in init_gpsr_2024 failed, please check what').
+
+
+log_set_both(Class, Furniture) :-
+    log_set(Class, suturo:hasOriginLocation, Furniture),
+    log_set(Class, suturo:hasDestinationLocation, Furniture).
