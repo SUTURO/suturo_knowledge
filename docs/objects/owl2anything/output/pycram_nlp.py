@@ -92,6 +92,7 @@ mapping = {
   "chili sin carne": "http://www.ease-crc.org/ont/SUTURO.owl#ChiliSinCarne",
   "chips can": "http://www.ease-crc.org/ont/SUTURO.owl#ChipsCan",
   "chocolate jello": "http://www.ease-crc.org/ont/SUTURO.owl#ChocolateJello",
+  "chocolate sprinkles": "http://www.ease-crc.org/ont/SUTURO.owl#Hagelslag",
   "clamp": "http://www.ease-crc.org/ont/SUTURO.owl#Clamp",
   "cleanser": "http://www.ease-crc.org/ont/SUTURO.owl#Cleanser",
   "cleanser bottle": "http://www.ease-crc.org/ont/SUTURO.owl#CleanserBottle",
