@@ -1859,6 +1859,12 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
                 <owl:hasValue>big coke</owl:hasValue>
             </owl:Restriction>
         </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
+                <owl:hasValue>cola bottle</owl:hasValue>
+            </owl:Restriction>
+        </rdfs:subClassOf>
         <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">114</SUTURO:perceptionId>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
@@ -5683,6 +5689,12 @@ The challenges in the RoboCup@Home competition are designed to test a variety of
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
                 <owl:hasValue>water</owl:hasValue>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
+                <owl:hasValue>water bottle</owl:hasValue>
             </owl:Restriction>
         </rdfs:subClassOf>
         <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">113</SUTURO:perceptionId>
