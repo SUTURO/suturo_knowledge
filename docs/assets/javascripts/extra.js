@@ -1,7 +1,7 @@
 $(document).ready(function () {
 
     // Set the branch to use for the SUTURO objects source files
-    var branch = "master";
+    var branch = "robocup";
     // Set the relative path to the owl2anything output folder
     var relativeFolderPath = "owl2anything/output";
     var repoFolderPath = `docs/objects/${relativeFolderPath}`;
