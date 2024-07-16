@@ -50,6 +50,8 @@ load_urdf_from_param(Param):-
 is_semantic_map_object(Link) :-
     (
     sub_string(Link,_,_,_,"table_center");
+    sub_string(Link,_,_,_,"trashcan_center");
+    sub_string(Link,_,_,_,"coathanger_center");
     sub_string(Link,_,_,_,"shelf_base_center");
     sub_string(Link,_,_,_,"drawer_front_top");
     sub_string(Link,_,_,_,"drawer_bottom");
@@ -119,6 +121,8 @@ furniture_shape(UrdfLink, ShapeTerm) :-
 %
 collision_link(CollisionLink, CollisionLink) :-
     atom_concat(_, 'table_center', CollisionLink);
+    atom_concat(_, 'coathanger_center', CollisionLink);
+    atom_concat(_, 'trashcan_center', CollisionLink);
     atom_concat(_, 'door_center', CollisionLink);
     atom_concat(_, 'dishwasher_tray_bottom', CollisionLink);
     atom_concat(_, 'dishwasher_tray_2_bottom', CollisionLink);
@@ -158,9 +162,17 @@ urdf_link_class(UrdfLink, Class, KnowledgeRole) :-
     link_name_class(LinkName, Class).
 
 :- rdf_meta(link_role_class(+,r)).
+
 %% link_role_class(+KnowledgeRole, -Class) is semidet.
 link_role_class(kitchen_table,suturo:'KitchenTable') :- !.
+link_role_class(hallway_cabinet,suturo:'HallwayCabinet') :- !.
 link_role_class(dining_table,suturo:'DiningTable') :- !.
+link_role_class(dinner_table,suturo:'DinnerTable') :- !.
+link_role_class(suturo_couch,suturo:'Couch') :- !.
+link_role_class(desk,suturo:'Desk') :- !.
+link_role_class(coffee_table,suturo:'CoffeeTable') :- !.
+link_role_class(kitchen_counter,suturo:'KitchenCounter') :- !.
+link_role_class(tv_table,suturo:'TvTable') :- !.
 
 %% link_name_class(+LinkName, -Class) is semidet.
 %
@@ -183,6 +195,10 @@ link_name_class(LinkName, Class) :-
     Class = soma:'Drawer',
     !.
 link_name_class(LinkName, Class) :-
+    sub_string(LinkName,_,_,_,"coathanger"),
+    Class = suturo:'CoatHanger',
+    !.
+link_name_class(LinkName, Class) :-
     sub_string(LinkName,_,_,_,"shelf_layer"), % TODO: Fix this inconsistency in the urdf
     Class = suturo:'ShelfLayer',
     !.
@@ -198,9 +214,18 @@ link_name_class(LinkName, Class) :-
     sub_string(LinkName,_,_,_,"table"),
     Class = soma:'Table',
     !.
+
+link_name_class(LinkName, Class) :-
+    sub_string(LinkName,_,_,_,"couch"),
+    Class = suturo:'Couch',
+    !.
 link_name_class(LinkName, Class) :-
     sub_string(LinkName,_,_,_,"bucket"), % TODO: Fix this inconsistency in the urdf
     Class = suturo:'TrashBin',
+    !.
+link_name_class(LinkName, Class) :-
+    sub_string(LinkName,_,_,_,"trashcan"), % TODO: Fix this inconsistency in the urdf
+    Class = suturo:'TrashCan',
     !.
 link_name_class(LinkName, Class) :-
     sub_string(LinkName,_,_,_,"dishwasher_tray"), % TODO: Fix this inconsistency in the urdf
@@ -214,3 +239,4 @@ link_name_class(LinkName, Class) :-
     ros_warn("Unknown link name type: ~w! Using default class soma:DesignedFurniture", [LinkName]),
     Class = soma:'DesignedFurniture',
     !.
+

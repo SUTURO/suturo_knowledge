@@ -156,9 +156,10 @@ path(X,Y):- connected_rooms(X,Z), path(Z,Y).
 path(X,Y):- connected_rooms(Z,X), path(Z,Y).
 
 
-middle(kitchen, [map, [2.87, -1.11, 0] , [0, 0, 0, 1.0]]).
-middle(living_room, [map, [2.94, 2.62, 0] , [0, 0, 0, 1.0]]).
-middle(dining_room, [map, [2.88, 4.9, 0] , [0, 0, 0, 1.0]]).
+middle(kitchen, [map, [6.86, 2.9, 0] , [0, 0, 0, 1.0]]).
+middle(living_room, [map, [7.89, -0.11, 0] , [0, 0, 0, 1.0]]).
+middle(hallway, [map, [3.61, -0.45, 0] , [0, 0, 0, 1.0]]).
+middle(office, [map, [3.51, 4.48, 0] , [0, 0, 0, 1.0]]).
 
 entry_pose(kitchen, [map, [0.37, 0.01, 0] , [0, 0, 0, 1.0]]).
 entry_pose(living_room, [map, [2.34, 2.71, 0] , [0, 0, 0, 1.0]]).
