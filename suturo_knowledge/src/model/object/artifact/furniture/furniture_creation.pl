@@ -50,7 +50,7 @@ load_urdf_from_param(Param):-
 is_semantic_map_object(Link) :-
     (
     sub_string(Link,_,_,_,"table_center");
-    sub_string(Link,_,_,_,"d_table_origin");
+    %sub_string(Link,_,_,_,"d_table_origin");
     sub_string(Link,_,_,_,"trashcan_center");
     sub_string(Link,_,_,_,"coathanger_center");
     sub_string(Link,_,_,_,"place_one");
@@ -129,7 +129,6 @@ furniture_shape(UrdfLink, ShapeTerm) :-
 %
 collision_link(CollisionLink, CollisionLink) :-
     atom_concat(_, 'table_center', CollisionLink);
-    atom_concat(_, 'd_table_origin', CollisionLink);    
     atom_concat(_, 'coathanger_center', CollisionLink);
     atom_concat(_, 'lamp_center', CollisionLink);
     atom_concat(_, 'place_one', CollisionLink);
@@ -183,7 +182,10 @@ link_role_class(desk,suturo:'Desk') :- !.
 link_role_class(coffee_table,suturo:'CoffeeTable') :- !.
 link_role_class(kitchen_counter,suturo:'KitchenCounter') :- !.
 link_role_class(tv_table,suturo:'TvTable') :- !.
+link_role_class(lounge_chair,suturo:'LoungeChair') :- !.
+
 link_role_class(dishwasher_robocup,suturo:'Dishwasher') :- !.
+
 
 %% link_name_class(+LinkName, -Class) is semidet.
 %
@@ -197,7 +199,7 @@ link_name_class(LinkName, Class) :-
     Class = soma:'DesignedContainer',
     !.
 link_name_class(LinkName, Class) :-
-    sub_string(LinkName,_,_,_,"d_table_origin"),
+    sub_string(LinkName,_,_,_,"table_center"),
     Class = soma:'Dishwasher',
     !.
 link_name_class(LinkName, Class) :-
@@ -256,6 +258,14 @@ link_name_class(LinkName, Class) :-
 link_name_class(LinkName, Class) :-
     sub_string(LinkName,_,_,_,"lamp_center"),
     Class = suturo:'Lamp',
+    !.
+link_name_class(LinkName, Class) :-
+    sub_string(LinkName,_,_,_,"chair_center"),
+    Class = suturo:'Chair',
+    !.
+link_name_class(LinkName, Class) :-
+    sub_string(LinkName,_,_,_,"dishwasher_main"),
+    Class = soma:'Dishwasher',
     !.
 link_name_class(LinkName, Class) :-
     ros_warn("Unknown link name type: ~w! Using default class soma:DesignedFurniture", [LinkName]),
