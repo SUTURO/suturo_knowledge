@@ -10,7 +10,12 @@
 		  is_trash_can(r),
 		  is_coathanger(r),
 		  is_dinner_table(r),
-		  is_couch(r)
+		  is_hallway_cabinet(r),
+		  is_tv_table(r),
+		  is_kitchen_counter(r),
+		  is_coffee_table(r),
+		  is_couch(r),
+		  is_desk(r)
 	  ]).
 
 :- use_module(library('model/object/types'),
