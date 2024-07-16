@@ -285,6 +285,10 @@ init_gpsr_2024 :-
     has_robocup_name(KitchenCounter, kitchen_counter),
     log_set_both('http://www.ease-crc.org/ont/SUTURO.owl#RoboCupFood', KitchenCounter),
 
+     % drinks on kitchen cabinet
+    has_robocup_name(KitchenCabinet, kitchen_cabinet),
+    log_set_both('http://www.ease-crc.org/ont/SUTURO.owl#RoboCupDrinks', KitchenCabinet),
+
 
     %% Altes zeug
 	%% % geschirr wie plate, cup, cutlery auf popcorn table
