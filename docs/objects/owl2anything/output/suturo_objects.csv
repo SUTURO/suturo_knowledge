@@ -171,7 +171,7 @@ GolfBall;suturo:'GolfBall';http://www.ease-crc.org/ont/SUTURO.owl#;32;golf ball;
 Grapes;suturo:'Grapes';http://www.ease-crc.org/ont/SUTURO.owl#;100;grapes;Grapes are small round fruits that can be green or dark purple and can have seeds inside them.
 Gripper;soma:'Gripper';http://www.ease-crc.org/ont/SOMA.owl#;;;A mechanical device that grasps and holds things.
 GroceryBag;suturo:'GroceryBag';http://www.ease-crc.org/ont/SUTURO.owl#;128;grocery bag;GroceryBag
-Hagelslag;suturo:'Hagelslag';http://www.ease-crc.org/ont/SUTURO.owl#;119;hagelslag,chocolate sprinkles;Hagelslag
+Hagelslag;suturo:'Hagelslag';http://www.ease-crc.org/ont/SUTURO.owl#;119;chocolate sprinkles,hagelslag;Hagelslag
 Hallway;suturo:'Hallway';http://www.ease-crc.org/ont/SUTURO.owl#;;hallway;Hallway
 Hammer;suturo:'Hammer';http://www.ease-crc.org/ont/SUTURO.owl#;104;hammer;A hammer is a hand-held tool with a heavy metal head and a handle used for driving nails, breaking objects apart, or shaping metal.
 Hand;soma:'Hand';http://www.ease-crc.org/ont/SOMA.owl#;;;A prehensile effector including palm, fingers, and thumb.
@@ -185,7 +185,7 @@ HotChocolate;suturo:'HotChocolate';http://www.ease-crc.org/ont/SUTURO.owl#;;hot 
 Hotplate;soma:'Hotplate';http://www.ease-crc.org/ont/SOMA.owl#;;;A flat heated surface used for cooking food or keeping it hot.
 HouseholdHardware;suturo:'HouseholdHardware';http://www.ease-crc.org/ont/SUTURO.owl#;;;Household hardware (or simply, hardware) is equipment that can be touched or held by hand such as keys, locks, nuts, screws, washers, hinges, latches, handles, wire, chains, belts, plumbing supplies, electrical supplies, tools, utensils, cutlery and machine parts.
 HygieneProduct;suturo:'HygieneProduct';http://www.ease-crc.org/ont/SUTURO.owl#;;;Hygiene products are items that are used to promote cleanliness and personal hygiene. This can include products such as soap, shampoo, toothpaste, deodorant, and feminine hygiene products.
-IceTea;suturo:'IceTea';http://www.ease-crc.org/ont/SUTURO.owl#;;iced tea,ice tea;Iced tea is a beverage made by steeping tea leaves in hot water, then chilling the tea and serving it over ice. It can be sweetened and flavored with lemon, peach, or other fruits, and is a popular refreshment, especially during hot weather.
+IceTea;suturo:'IceTea';http://www.ease-crc.org/ont/SUTURO.owl#;;ice tea,iced tea;Iced tea is a beverage made by steeping tea leaves in hot water, then chilling the tea and serving it over ice. It can be sweetened and flavored with lemon, peach, or other fruits, and is a popular refreshment, especially during hot weather.
 IceTeaBottle;suturo:'IceTeaBottle';http://www.ease-crc.org/ont/SUTURO.owl#;86;ice tea bottle;An iced tea bottle is a container, commonly made of plastic or glass, designed specifically for storing and dispensing iced tea. It typically features a screw-top or snap cap for resealability, allowing the beverage to stay fresh and chilled, and is favored for its portability and convenience.
 IceTeaBox;suturo:'IceTeaBox';http://www.ease-crc.org/ont/SUTURO.owl#;;;An ice tea box refers to the container or packaging used to store and sell iced tea, usually in a ready-to-drink form. The box may contain individual servings or larger quantities, and can be made of various materials such as cardboard, plastic, or glass.
 IceTeaCan;suturo:'IceTeaCan';http://www.ease-crc.org/ont/SUTURO.owl#;111;ice tea;IceTeaCan
@@ -266,7 +266,7 @@ Mustard;suturo:'Mustard';http://www.ease-crc.org/ont/SUTURO.owl#;;mustard;Mustar
 MustardBottle;suturo:'MustardBottle';http://www.ease-crc.org/ont/SUTURO.owl#;18;mustard bottle;Mustard bottle refers to a squeezable container that dispenses mustard.
 Nail;suturo:'Nail';http://www.ease-crc.org/ont/SUTURO.owl#;;nail;A nail is a thin, pointed metal or wood fastener with a flat head used for attaching or joining two objects together, or for securing an object to a surface.
 Napkin;suturo:'Napkin';http://www.ease-crc.org/ont/SUTURO.owl#;17;napkin;A square piece of cloth or paper used at a meal to wipe the fingers or lips and to protect garments
-NaturalPerson;dul:'NaturalPerson';http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#;23;Daniel,Bob,Jules,John,madam,Matthew,person,Michael,lady,Laura,Jesse,child,guy,mrs,Peter,boy,Sophie,man,Jane,Ashley,Noah,James,Brittany,Simone,Alice,Jessica,Joshua,Axel,David,miss,Lucas,William,woman,Andrew,Adel,Kevin,Harrie,Amanda,Justin,Susan,Gabrielle,fellow,gentleman,damsel,Morgan,Elizabeth,Samantha,Robin,Sarah,Jennifer,Lauren,Angel,Paris,Liam,dame,Hayley,mr,Joseph,Christopher,Charlie,mister,Stephanie,Emma,missus,girl,Sara,Julia,lord,Fleur;A person in the physical commonsense intuition: 'have you seen that person walking down the street?'
+NaturalPerson;dul:'NaturalPerson';http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#;23;Brittany,boy,Samantha,Sara,Alice,damsel,Noah,Laura,madam,Susan,lord,Harrie,Liam,Joshua,Jane,mister,Morgan,Justin,mr,Hayley,person,John,man,Matthew,Simone,Jesse,Gabrielle,Michael,Peter,Bob,Ashley,fellow,James,Adel,miss,Andrew,William,Daniel,Jessica,Stephanie,Jules,guy,missus,mrs,Sophie,Julia,dame,Angel,Lauren,lady,David,Jennifer,Paris,Kevin,gentleman,Charlie,Elizabeth,Sarah,Robin,Fleur,girl,woman,Emma,Christopher,Amanda,Joseph,Lucas,Axel,child;A person in the physical commonsense intuition: 'have you seen that person walking down the street?'
 NesquickCerealBox;suturo:'NesquickCerealBox';http://www.ease-crc.org/ont/SUTURO.owl#;90;nesquick cereal box;NesquickCerealBox
 NinePegHoleTest;suturo:'NinePegHoleTest';http://www.ease-crc.org/ont/SUTURO.owl#;;nine peg hole test;A pegboard with nine holes used for cognitive and psychomotor testing.
 Nut;suturo:'Nut';http://www.ease-crc.org/ont/SUTURO.owl#;;nut;A nut is a small, usually hexagonal-shaped metal or plastic fastener with a threaded hole used for securing a bolt or screw in place.
@@ -354,7 +354,7 @@ ScrubCleaner;suturo:'ScrubCleaner';http://www.ease-crc.org/ont/SUTURO.owl#;99;sc
 ServingMat;suturo:'ServingMat';http://www.ease-crc.org/ont/SUTURO.owl#;21;serving mat;A serving mat is a type of table mat used to protect surfaces from spills and stains while serving food or drinks. They are typically made from materials such as fabric, plastic, or silicone and come in various shapes, sizes, and designs to suit different occasions and styles.
 Shaker;soma:'Shaker';http://www.ease-crc.org/ont/SOMA.owl#;;;A container used for storing fine grained substances such as salt or paper.
 Shampoo;suturo:'Shampoo';http://www.ease-crc.org/ont/SUTURO.owl#;;shampoo;Shampoo
-Shelf;suturo:'Shelf';http://www.ease-crc.org/ont/SUTURO.owl#;;shelf,shelf unit;A shelf unit is a piece of furniture consisting of several shelves, designed to hold books, decor, and other items and is typically made of wood or metal.
+Shelf;suturo:'Shelf';http://www.ease-crc.org/ont/SUTURO.owl#;;shelf unit,shelf;A shelf unit is a piece of furniture consisting of several shelves, designed to hold books, decor, and other items and is typically made of wood or metal.
 ShelfLayer;suturo:'ShelfLayer';http://www.ease-crc.org/ont/SUTURO.owl#;25;;A shelf board is a flat piece of wood, metal, or glass which is attached to a wall or to the sides of a cupboard. Shelves are used for keeping things on.
 Shirt;suturo:'Shirt';http://www.ease-crc.org/ont/SUTURO.owl#;;shirt;Shirt
 Shoes;suturo:'Shoes';http://www.ease-crc.org/ont/SUTURO.owl#;;shoes;Shoes
@@ -438,7 +438,7 @@ Wardrobe;soma:'Wardrobe';http://www.ease-crc.org/ont/SOMA.owl#;;;A cupboard whic
 WashCloth;suturo:'WashCloth';http://www.ease-crc.org/ont/SUTURO.owl#;108;washcloth;WashCloth
 Washer;suturo:'Washer';http://www.ease-crc.org/ont/SUTURO.owl#;14;washer;A washer is a thin, flat ring-shaped object, typically made of metal, rubber, or plastic, used to distribute the load of a threaded fastener such as a screw or bolt, or as a spacer, seal, or locking device.
 Water;suturo:'Water';http://www.ease-crc.org/ont/SUTURO.owl#;;;Water
-WaterBottle;suturo:'WaterBottle';http://www.ease-crc.org/ont/SUTURO.owl#;113;water,water bottle;WaterBottle
+WaterBottle;suturo:'WaterBottle';http://www.ease-crc.org/ont/SUTURO.owl#;113;water bottle,water;WaterBottle
 WaterBottle;soma:'WaterBottle';http://www.ease-crc.org/ont/SOMA.owl#;;;A bottle which holds, or at least is intended to usually hold, water.
 WaterGlass;soma:'WaterGlass';http://www.ease-crc.org/ont/SOMA.owl#;;water glass;A glass which holds, or at least is intended to usually hold, water. Also affords drinking from it.
 WineBottle;soma:'WineBottle';http://www.ease-crc.org/ont/SOMA.owl#;81;wine bottle;A bottle which holds, or at least is intended to usually hold, wine.
