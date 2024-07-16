@@ -655,6 +655,7 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
     <!-- http://www.ease-crc.org/ont/SOMA.owl#KitchenCabinet -->
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA.owl#KitchenCabinet">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Cabinet"/>
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
@@ -1386,6 +1387,14 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
     
 
 
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#Cabinet -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Cabinet">
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
     <!-- http://www.ease-crc.org/ont/SUTURO.owl#Can -->
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Can">
@@ -1405,7 +1414,7 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
     <!-- http://www.ease-crc.org/ont/SUTURO.owl#Candle -->
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Candle">
-        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#DesignedComponent"/>
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#RobocupDecorations"/>
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
@@ -1729,6 +1738,21 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
     
 
 
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#CoatHanger -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#CoatHanger">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Rack"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
+                <owl:hasValue>coat hanger</owl:hasValue>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
     <!-- http://www.ease-crc.org/ont/SUTURO.owl#CoatRack -->
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#CoatRack">
@@ -1823,6 +1847,21 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
         </rdfs:subClassOf>
         <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">31</SUTURO:perceptionId>
         <rdfs:comment>A coffee pack typically refers to a package containing ground coffee or coffee beans used for making coffee, usually in a drip coffee maker, espresso machine, or French press. The packaging is designed to keep the coffee fresh and flavorful, and often includes information on the type of roast, flavor profile, and origin of the coffee.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#CoffeeTable -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#CoffeeTable">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Table"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
+                <owl:hasValue>coffee table</owl:hasValue>
+            </owl:Restriction>
+        </rdfs:subClassOf>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
@@ -2168,6 +2207,21 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
     
 
 
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#Desk -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Desk">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Table"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
+                <owl:hasValue>desk</owl:hasValue>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
     <!-- http://www.ease-crc.org/ont/SUTURO.owl#Dice -->
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Dice">
@@ -2211,6 +2265,21 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:comment>A table mainly used for dining. Often placed inside of a living room.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#DinnerTable -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#DinnerTable">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Table"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
+                <owl:hasValue>dinner table</owl:hasValue>
+            </owl:Restriction>
+        </rdfs:subClassOf>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
@@ -2616,6 +2685,21 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
     
 
 
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#HallwayCabinet -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#HallwayCabinet">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Cabinet"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
+                <owl:hasValue>hallway cabinet</owl:hasValue>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
     <!-- http://www.ease-crc.org/ont/SUTURO.owl#Hammer -->
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Hammer">
@@ -3004,6 +3088,21 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
     
 
 
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#KitchenCounter -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#KitchenCounter">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Table"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
+                <owl:hasValue>kitchen counter</owl:hasValue>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
     <!-- http://www.ease-crc.org/ont/SUTURO.owl#KitchenTable -->
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#KitchenTable">
@@ -3208,6 +3307,21 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
                 <owl:hasValue>lobby</owl:hasValue>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#LoungeChair -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#LoungeChair">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#DesignedChair"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
+                <owl:hasValue>lounge chair</owl:hasValue>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
@@ -4425,6 +4539,14 @@ The challenges in the RoboCup@Home competition are designed to test a variety of
     
 
 
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#RobocupDecorations -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#RobocupDecorations">
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
     <!-- http://www.ease-crc.org/ont/SUTURO.owl#Rope -->
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Rope">
@@ -5412,6 +5534,21 @@ The challenges in the RoboCup@Home competition are designed to test a variety of
     
 
 
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#TrashCan -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#TrashCan">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#TrashContainer"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
+                <owl:hasValue>trashcan</owl:hasValue>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
     <!-- http://www.ease-crc.org/ont/SUTURO.owl#Tray -->
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Tray">
@@ -5531,6 +5668,21 @@ The challenges in the RoboCup@Home competition are designed to test a variety of
         </rdfs:subClassOf>
         <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">68</SUTURO:perceptionId>
         <rdfs:comment>Tuna fish can refers to a metal container used to store and preserve tuna fish.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#TvTable -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#TvTable">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Table"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
+                <owl:hasValue>tv table</owl:hasValue>
+            </owl:Restriction>
+        </rdfs:subClassOf>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
