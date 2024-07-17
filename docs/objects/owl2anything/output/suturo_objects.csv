@@ -38,6 +38,7 @@ Bread;soma:'Bread';http://www.ease-crc.org/ont/SOMA.owl#;;bread;Bread is a stapl
 BreadKnife;soma:'BreadKnife';http://www.ease-crc.org/ont/SOMA.owl#;;;A knife to cut bread.
 BreakfastPlate;soma:'BreakfastPlate';http://www.ease-crc.org/ont/SOMA.owl#;;breakfast plate;A smaller plate used for serving bread at the dining table with the main meal or to serve breakfast.
 Building;soma:'Building';http://www.ease-crc.org/ont/SOMA.owl#;;;A structure with a roof and walls.
+Cabinet;suturo:'Cabinet';http://www.ease-crc.org/ont/SUTURO.owl#;;;Cabinet
 Can;suturo:'Can';http://www.ease-crc.org/ont/SUTURO.owl#;;can;A can is a cylindrical container usually made of metal or aluminum, used for storing food, beverages, or other products.
 Candle;suturo:'Candle';http://www.ease-crc.org/ont/SUTURO.owl#;127;candle;Candle
 Candy;suturo:'Candy';http://www.ease-crc.org/ont/SUTURO.owl#;123;candy;Candy
@@ -78,7 +79,7 @@ CoffeeTable;suturo:'CoffeeTable';http://www.ease-crc.org/ont/SUTURO.owl#;;coffee
 CoffeeTable;soma:'CoffeeTable';http://www.ease-crc.org/ont/SOMA.owl#;;;A small and low table which is typically used as a shelf for small items such as cups, and located in front of a sofa.
 CoilCooktop;soma:'CoilCooktop';http://www.ease-crc.org/ont/SOMA.owl#;;;A cooktop that uses heated metal coils.
 Cola;suturo:'Cola';http://www.ease-crc.org/ont/SUTURO.owl#;;cola;Cola
-ColaBottle;suturo:'ColaBottle';http://www.ease-crc.org/ont/SUTURO.owl#;114;big coke,cola bottle;ColaBottle
+ColaBottle;suturo:'ColaBottle';http://www.ease-crc.org/ont/SUTURO.owl#;114;cola bottle,big coke;ColaBottle
 ColaCan;suturo:'ColaCan';http://www.ease-crc.org/ont/SUTURO.owl#;83;coke,cola can;A cola can is a small, cylindrical container, often made of aluminum, used for holding and distributing carbonated soft drinks, particularly cola. It features a pull-tab or stay-on-tab at the top for easy opening and consumption, and is popular for its portability and recyclability.
 ColoredWoodBlock;suturo:'ColoredWoodBlock';http://www.ease-crc.org/ont/SUTURO.owl#;;colored wood block;Colored wood blocks are toys that consist of various sized wooden blocks that are painted in different colors and shapes for children to play with.
 Compartment;soma:'Compartment';http://www.ease-crc.org/ont/SOMA.owl#;;;A compartment is a distinct, enclosed space within a larger structure or system, often used to separate or organize different components or elements. It helps to compartmentalize and manage complex systems by providing a segregated environment for specific functions or entities.
@@ -171,8 +172,9 @@ GolfBall;suturo:'GolfBall';http://www.ease-crc.org/ont/SUTURO.owl#;32;golf ball;
 Grapes;suturo:'Grapes';http://www.ease-crc.org/ont/SUTURO.owl#;100;grapes;Grapes are small round fruits that can be green or dark purple and can have seeds inside them.
 Gripper;soma:'Gripper';http://www.ease-crc.org/ont/SOMA.owl#;;;A mechanical device that grasps and holds things.
 GroceryBag;suturo:'GroceryBag';http://www.ease-crc.org/ont/SUTURO.owl#;128;grocery bag;GroceryBag
-Hagelslag;suturo:'Hagelslag';http://www.ease-crc.org/ont/SUTURO.owl#;119;chocolate sprinkles,hagelslag;Hagelslag
+Hagelslag;suturo:'Hagelslag';http://www.ease-crc.org/ont/SUTURO.owl#;119;hagelslag,chocolate sprinkles;Hagelslag
 Hallway;suturo:'Hallway';http://www.ease-crc.org/ont/SUTURO.owl#;;hallway;Hallway
+HallwayCabinet;suturo:'HallwayCabinet';http://www.ease-crc.org/ont/SUTURO.owl#;;hallway cabinet;HallwayCabinet
 Hammer;suturo:'Hammer';http://www.ease-crc.org/ont/SUTURO.owl#;104;hammer;A hammer is a hand-held tool with a heavy metal head and a handle used for driving nails, breaking objects apart, or shaping metal.
 Hand;soma:'Hand';http://www.ease-crc.org/ont/SOMA.owl#;;;A prehensile effector including palm, fingers, and thumb.
 HansanoWeidemilchMilkPack;suturo:'HansanoWeidemilchMilkPack';http://www.ease-crc.org/ont/SUTURO.owl#;;;HansanoWeidemilchMilkPack
@@ -218,6 +220,7 @@ KitchenUnit;soma:'KitchenUnit';http://www.ease-crc.org/ont/SOMA.owl#;;;A piece o
 Kiwi;suturo:'Kiwi';http://www.ease-crc.org/ont/SUTURO.owl#;59;kiwi;Kiwi is a small, oval-shaped fruit with brown fuzzy skin and bright green flesh inside, packed with nutrients such as vitamin C, vitamin K, and potassium. It has a tangy, sweet flavor and is often eaten raw, added to salads or smoothies, or used as a garnish.
 Knife;soma:'Knife';http://www.ease-crc.org/ont/SOMA.owl#;50;knife;An instrument composed of a blade fixed into a handle, used for cutting or as a weapon.
 KoellnKnusperSchokoKeksBox;suturo:'KoellnKnusperSchokoKeksBox';http://www.ease-crc.org/ont/SUTURO.owl#;;;The Kölln Knusper Schoko & Keks box contains crunchy chocolate and cookie flakes that can be enjoyed as a breakfast cereal or snack.
+Lamp;suturo:'Lamp';http://www.ease-crc.org/ont/SUTURO.owl#;;lamp;Lamp
 LargeMarker;suturo:'LargeMarker';http://www.ease-crc.org/ont/SUTURO.owl#;96;large marker;A large marker is a pen-like writing tool with a wide, felt tip used for creating bold, colorful marks or lettering on posters, signs, or other large surfaces.
 Leg;soma:'Leg';http://www.ease-crc.org/ont/SOMA.owl#;;;A limb on which an agent walks or stands.
 Leggings;suturo:'Leggings';http://www.ease-crc.org/ont/SUTURO.owl#;;leggings;Leggings
@@ -266,7 +269,7 @@ Mustard;suturo:'Mustard';http://www.ease-crc.org/ont/SUTURO.owl#;;mustard;Mustar
 MustardBottle;suturo:'MustardBottle';http://www.ease-crc.org/ont/SUTURO.owl#;18;mustard bottle;Mustard bottle refers to a squeezable container that dispenses mustard.
 Nail;suturo:'Nail';http://www.ease-crc.org/ont/SUTURO.owl#;;nail;A nail is a thin, pointed metal or wood fastener with a flat head used for attaching or joining two objects together, or for securing an object to a surface.
 Napkin;suturo:'Napkin';http://www.ease-crc.org/ont/SUTURO.owl#;17;napkin;A square piece of cloth or paper used at a meal to wipe the fingers or lips and to protect garments
-NaturalPerson;dul:'NaturalPerson';http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#;23;Brittany,boy,Samantha,Sara,Alice,damsel,Noah,Laura,madam,Susan,lord,Harrie,Liam,Joshua,Jane,mister,Morgan,Justin,mr,Hayley,person,John,man,Matthew,Simone,Jesse,Gabrielle,Michael,Peter,Bob,Ashley,fellow,James,Adel,miss,Andrew,William,Daniel,Jessica,Stephanie,Jules,guy,missus,mrs,Sophie,Julia,dame,Angel,Lauren,lady,David,Jennifer,Paris,Kevin,gentleman,Charlie,Elizabeth,Sarah,Robin,Fleur,girl,woman,Emma,Christopher,Amanda,Joseph,Lucas,Axel,child;A person in the physical commonsense intuition: 'have you seen that person walking down the street?'
+NaturalPerson;dul:'NaturalPerson';http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#;23;Daniel,Axel,Julia,Morgan,damsel,Kevin,Susan,missus,Bob,Robin,Jennifer,Andrew,guy,Sara,Joshua,Lucas,child,James,dame,Emma,Stephanie,mr,girl,Amanda,person,Alice,Brittany,Lauren,Christopher,man,Adel,mister,Harrie,Jules,Hayley,lord,Liam,Sophie,Jessica,Justin,Peter,Michael,David,boy,Joseph,Charlie,woman,Angel,lady,Sarah,Matthew,Paris,Simone,miss,Laura,Fleur,madam,Noah,John,Jane,Elizabeth,Ashley,Gabrielle,William,fellow,gentleman,Samantha,Jesse,mrs;A person in the physical commonsense intuition: 'have you seen that person walking down the street?'
 NesquickCerealBox;suturo:'NesquickCerealBox';http://www.ease-crc.org/ont/SUTURO.owl#;90;nesquick cereal box;NesquickCerealBox
 NinePegHoleTest;suturo:'NinePegHoleTest';http://www.ease-crc.org/ont/SUTURO.owl#;;nine peg hole test;A pegboard with nine holes used for cognitive and psychomotor testing.
 Nut;suturo:'Nut';http://www.ease-crc.org/ont/SUTURO.owl#;;nut;A nut is a small, usually hexagonal-shaped metal or plastic fastener with a threaded hole used for securing a bolt or screw in place.
