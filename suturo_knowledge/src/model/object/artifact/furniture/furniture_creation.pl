@@ -49,23 +49,29 @@ load_urdf_from_param(Param):-
 %
 is_semantic_map_object(Link) :-
     (
-    sub_string(Link,_,_,_,"table_center");
+    %sub_string(Link,_,_,_,"table_center");
     %sub_string(Link,_,_,_,"d_table_origin");
-    sub_string(Link,_,_,_,"trashcan_center");
-    sub_string(Link,_,_,_,"coathanger_center");
-    sub_string(Link,_,_,_,"place_one");
-    sub_string(Link,_,_,_,"lamp_center");
-    sub_string(Link,_,_,_,"shelf_base_center");
-    sub_string(Link,_,_,_,"drawer_front_top");
-    sub_string(Link,_,_,_,"drawer_bottom");
-    sub_string(Link,_,_,_,"door_center");
-    sub_string(Link,_,_,_,"shelf_floor_");
-    sub_string(Link,_,_,_,"shelf_layer_");
-    sub_string(Link,_,_,_,"shelf_door_");
-    sub_string(Link,_,_,_,"bucket_surface_center");
-    sub_string(Link,_,_,_,"dishwasher:dishwasher_tray_bottom");
-    sub_string(Link,_,_,_,"dishwasher:dishwasher_tray_2_bottom");
-    sub_string(Link,_,_,_,"handle"), \+ sub_string(Link,_,_,_,"dishwasher")
+    %sub_string(Link,_,_,_,"trashcan_center");
+    %sub_string(Link,_,_,_,"coathanger_center");
+    %sub_string(Link,_,_,_,"place_one");
+    %sub_string(Link,_,_,_,"lamp_center");
+    %sub_string(Link,_,_,_,"shelf_base_center");
+    %sub_string(Link,_,_,_,"drawer_front_top");
+    %sub_string(Link,_,_,_,"drawer_bottom");
+    %sub_string(Link,_,_,_,"door_center");
+    %sub_string(Link,_,_,_,"shelf_floor_");
+    %sub_string(Link,_,_,_,"shelf_layer_");
+    %sub_string(Link,_,_,_,"shelf_door_");
+    %sub_string(Link,_,_,_,"bucket_surface_center");
+    %sub_string(Link,_,_,_,"dishwasher:dishwasher_tray_bottom");
+    %sub_string(Link,_,_,_,"dishwasher:dishwasher_tray_2_bottom");
+    %sub_string(Link,_,_,_,"handle"), \+ sub_string(Link,_,_,_,"dishwasher")
+    % --- FallSchool ---
+    sub_string(Link,_,_,_,"cabinet3");
+    sub_string(Link,_,_,_,"cabinet3_door_top_left");
+    sub_string(Link,_,_,_,"cabinet3_door_top_out_fancy");
+    sub_string(Link,_,_,_,"fridge");
+    sub_string(Link,_,_,_,"handle_cab3_door_top")
     ),
     !.
 
@@ -185,6 +191,11 @@ link_role_class(tv_table,suturo:'TvTable') :- !.
 link_role_class(lounge_chair,suturo:'LoungeChair') :- !.
 
 link_role_class(dishwasher_robocup,suturo:'Dishwasher') :- !.
+% --- FALLSCHOOL ---
+link_role_class(refrigerator,soma:'Refrigerator') :- !.
+% quality of life...
+link_role_class(fridge,soma:'Refrigerator') :- !.
+% --- END FALLSCHOOL ---
 
 
 %% link_name_class(+LinkName, -Class) is semidet.
@@ -194,6 +205,16 @@ link_role_class(dishwasher_robocup,suturo:'Dishwasher') :- !.
 % @param LinkName Last part of of the urdf link as String
 % @param Class Class of the urdf link type as owl term
 %
+% --- FALLSCHOOL ---
+link_name_class(LinkName, Class) :-
+    sub_string(LinkName,_,_,_,"fridge"),
+    Class = soma:'DesignedContainer',
+    !.
+link_name_class(LinkName, Class) :-
+    sub_string(LinkName,_,_,_,"fridge"),
+    Class = soma:'Refridgerator',
+    !.
+% --- END_FALLSCHOOL ---
 link_name_class(LinkName, Class) :-
     sub_string(LinkName,_,_,_,"container"),
     Class = soma:'DesignedContainer',

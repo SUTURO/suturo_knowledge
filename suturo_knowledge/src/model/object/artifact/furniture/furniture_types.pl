@@ -15,7 +15,9 @@
 		  is_kitchen_counter(r),
 		  is_coffee_table(r),
 		  is_couch(r),
-		  is_desk(r)
+		  is_desk(r),
+		  is_fridge(r),
+		  is_refrigerator(r)
 	  ]).
 
 :- use_module(library('model/object/types'),
@@ -92,3 +94,10 @@ is_desk(Desk) ?+>
 
 is_couch(Couch) ?+>
 	is_type(Couch, suturo:'Couch').
+
+% --- FALLSCHOOL ---
+is_fridge(Fridge) ?+>
+	is_type(Fridge, soma:'Refrigerator').
+
+is_refrigerator(Fridge) ?+>
+	is_type(Fridge, soma:'Refrigerator').

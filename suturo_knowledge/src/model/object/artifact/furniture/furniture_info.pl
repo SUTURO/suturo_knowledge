@@ -7,7 +7,9 @@
 		div_parts(+, -),
 		div_parts_helper(+,+,-),
 		longest_side(r,-),
-		shortest_side(r,-)
+		shortest_side(r,-),
+		get_name_handle(r, -),
+		write("--- loading furniture info ---")
 	]).
 
 :- use_module(library('util/math'),
@@ -134,3 +136,12 @@ furniture_rel_pose_interact(Furniture, PoseStamped) :-
 % make sure that the knowledge_role in there matches the robocup name.
 has_robocup_name(Furniture,Name) ?+>
     holds(Furniture,suturo:hasRobocupName,Name).
+
+% --- FallSchool --- define some facts
+% furniture_handle(FurnitureObject, Handle).
+furniture_handle(soma:Refrigerator, 'handle_cab3_door_top').
+furniture_handle('Refrigerator', 'handle_cab3_door_top').
+furniture_handle('Fridge', 'handle_cab3_door_top').
+
+get_name_handle(Furniture, HandleLinkName):-
+	furniture_handle(Furniture, HandleLinkName).

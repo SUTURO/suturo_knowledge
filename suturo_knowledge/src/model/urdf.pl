@@ -67,4 +67,4 @@ has_tf_name(URDFName, TFName) :-
     % using a not here so the cut 3 lines above is a green cut.
     not(sub_string(URDFName, _, _, _, "#")),
     % TODO don't hardcode iai_kitchen
-    atom_concat('iai_kitchen/', URDFName, TFName).
+    atom_concat('pycram/apartment/', URDFName, TFName).
