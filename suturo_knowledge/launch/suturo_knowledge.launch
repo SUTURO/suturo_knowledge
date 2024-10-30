@@ -1,12 +1,44 @@
+<?xml version="1.0"?>
 <launch>
-  <!-- Configure settings file. -->
-  <arg name="knowrob_settings" default="$(find knowrob)/settings/default.pl" />
-  <env name="KNOWROB_SETTINGS" value="$(arg knowrob_settings)" />
+	<!-- launch semantic map -->
+  	<arg name="model" default="$(find suturo_resources)/urdf/suturo_environment.urdf.xacro"/>
+  	<arg name="world_urdf_yaml" default="rw_appartment_lab_2023.yaml"/>
+
+  	<arg name="loc_of_urdf_1" default="iai_kitchen"/>
+  	<arg name="loc_of_urdf_2" default="kitchen_description"/>
+  	<arg name="tf_prefix" default="iai_kitchen"/>
+  	<arg name="joint_states_prefix" default="iai_kitchen"/>
+    
+
+  	<param name="$(arg loc_of_urdf_1)" command="$(find xacro)/xacro $(arg model) yaml_file:=$(find suturo_resources)/urdf/yaml/$(arg world_urdf_yaml)" />  
   
-  <include file="$(find rosprolog)/launch/rosprolog.launch">
-    <arg name="initial_package" default="suturo_knowledge" />
-    <arg name="initial_goal" default="init_suturo_knowledge" />
-  </include>
-  <!-- <node name="give_string" pkg="suturo_knowledge" type="get_object_info.py" output="screen"/> -->
-  <node name="interf_q" pkg="suturo_knowledge" type="interf_q.py" output="screen"/>
+  	<param name="$(arg loc_of_urdf_2)" command="$(find xacro)/xacro $(arg model) yaml_file:=$(find suturo_resources)/urdf/yaml/$(arg world_urdf_yaml)" />
+
+
+  	<node pkg="tf" type="static_transform_publisher" name="environment_link_broadcaster"
+    	args="0 0 0 0 0 0 /map /$(arg tf_prefix)/urdf_main 25">
+  	</node>
+
+  	<node pkg="robot_state_publisher" type="robot_state_publisher"
+    	name="environment_state_publisher" output="screen">
+    	<param name="tf_prefix" value="/$(arg tf_prefix)"/>
+    	<param name="publish_frequency" value="2"/>
+    	<remap from="robot_description" to="$(arg loc_of_urdf_1)" />
+    	<remap from="/joint_states" to="/$(arg joint_states_prefix)/joint_states" />
+  	</node>
+
+	<!-- Configure settings file. and launch rosprolog-->
+	<arg name="knowrob_settings" default="$(find knowrob)/settings/default.pl" />
+	<env name="KNOWROB_SETTINGS" value="$(arg knowrob_settings)" />
+  
+	<include file="$(find rosprolog)/launch/rosprolog.launch">
+    	<arg name="initial_package" default="suturo_knowledge" />
+    	<arg name="initial_goal" default="init_suturo_knowledge" />
+	</include>
+  
+	<node name="interf_q" pkg="suturo_knowledge" type="interf_q.py" output="screen"/>
+  
+  
+  
+
 </launch>
