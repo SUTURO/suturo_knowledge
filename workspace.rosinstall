@@ -13,7 +13,7 @@
 - git:
     local-name: knowrob
     uri: https://github.com/SUTURO/knowrob.git
-    version: master
+    version: fallschool
 - git:
     local-name: genowl
     uri: https://github.com/knowrob/genowl.git
@@ -29,4 +29,4 @@
 - git:
     local-name: suturo_knowledge
     uri: https://github.com/SUTURO/suturo_knowledge.git
-    version: master
+    version: fallschool
