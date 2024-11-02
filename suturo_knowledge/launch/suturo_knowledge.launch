@@ -37,6 +37,9 @@
 	</include>
   
 	<node name="interf_q" pkg="suturo_knowledge" type="interf_q.py" output="screen"/>
+	
+	<!-- launch the knowrob designator service -->
+	<include file="$(find knowrob_designator)/launch/knowrob_designator_service.launch"/>
   
   
   
