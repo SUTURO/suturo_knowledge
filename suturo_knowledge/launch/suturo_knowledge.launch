@@ -5,9 +5,9 @@
   	<arg name="world_urdf_yaml" default="rw_appartment_lab_2023.yaml"/>
 
   	<arg name="loc_of_urdf_1" default="iai_kitchen"/>
-  	<arg name="loc_of_urdf_2" default="kitchen_description"/>
-  	<arg name="tf_prefix" default="iai_kitchen"/>
-  	<arg name="joint_states_prefix" default="iai_kitchen"/>
+  	<arg name="loc_of_urdf_2" default="apartment_description"/>
+  	<arg name="tf_prefix" default="apartment"/>
+  	<arg name="joint_states_prefix" default="apartment"/>
     
 
   	<param name="$(arg loc_of_urdf_1)" command="$(find xacro)/xacro $(arg model) yaml_file:=$(find suturo_resources)/urdf/yaml/$(arg world_urdf_yaml)" />  
@@ -35,8 +35,8 @@
     	<arg name="initial_package" default="suturo_knowledge" />
     	<arg name="initial_goal" default="init_suturo_knowledge" />
 	</include>
-  
-	<node name="interf_q" pkg="suturo_knowledge" type="interf_q.py" output="screen"/>
+  	<!-- this was the old ms0 interface which is no longer used -->
+	<!--node name="interf_q" pkg="suturo_knowledge" type="interf_q.py" output="screen"/-->
 	
 	<!-- launch the knowrob designator service -->
 	<include file="$(find knowrob_designator)/launch/knowrob_designator_service.launch"/>

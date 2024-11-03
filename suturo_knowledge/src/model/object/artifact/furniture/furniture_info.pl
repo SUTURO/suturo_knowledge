@@ -139,9 +139,38 @@ has_robocup_name(Furniture,Name) ?+>
 
 % --- FallSchool --- define some facts
 % furniture_handle(FurnitureObject, Handle).
-furniture_handle(soma:Refrigerator, 'handle_cab3_door_top').
+furniture_handle(soma:'Refrigerator', 'handle_cab3_door_top').
 furniture_handle('Refrigerator', 'handle_cab3_door_top').
 furniture_handle('Fridge', 'handle_cab3_door_top').
 
 get_name_handle(Furniture, HandleLinkName):-
 	furniture_handle(Furniture, HandleLinkName).
+
+% where is the Milk Located?
+
+fridge_properties(Fridge, Property):-
+	has_type(soma:'Refrigerator', Fridge),
+	triple(Fridge, soma:'has_part', soma:'DesignedHandle'),
+	has_urdf_name()
+
+
+% all fridges are containers
+
+has_type(Entity, soma:'DesignedContainer') :-
+    has_type(Entity, soma:'Refrigerator').
+
+% all fridges have doors [and handles? or maybe all doors have handles]
+
+has_handle(Entity) :-
+    has_type(Entity, soma:'Door').
+
+has_handle(Entity) :-
+    has_type(Entity, soma:'Cup').
+
+which_handle(Object, Handle) :-
+    has_handle(Object),
+	triple(Object, dul:'hasPart', Handle),
+	has_type(Handle, soma:'DesignedHandle').
+
+% all fridges are containers for perishable items
+% is a fridge currently opened or closed?

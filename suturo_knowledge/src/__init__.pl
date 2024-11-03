@@ -27,7 +27,7 @@
 :- use_directory('model').
 :- use_directory('reasoning').
 
-:- once((  ros_param_get_string("/suturo_room_viz/urdf_param", Param),
+:- once((  ros_param_get_string("apartment", Param), % was:/suturo_room_viz/urdf_param
            load_urdf_from_param(Param)
         ;  ros_warn('No semantic map loaded!'))).
 

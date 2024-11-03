@@ -208,11 +208,7 @@ link_role_class(fridge,soma:'Refrigerator') :- !.
 % --- FALLSCHOOL ---
 link_name_class(LinkName, Class) :-
     sub_string(LinkName,_,_,_,"fridge"),
-    Class = soma:'DesignedContainer',
-    !.
-link_name_class(LinkName, Class) :-
-    sub_string(LinkName,_,_,_,"fridge"),
-    Class = soma:'Refridgerator',
+    Class = soma:'Refrigerator',
     !.
 % --- END_FALLSCHOOL ---
 link_name_class(LinkName, Class) :-
