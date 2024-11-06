@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <launch>
 	<!-- launch semantic map -->
-  	<arg name="model" default="$(find suturo_resources)/urdf/suturo_environment.urdf.xacro"/>
+  	<arg name="model" default="$(find suturo_resources)/urdf/apartment.urdf"/>
   	<arg name="world_urdf_yaml" default="rw_appartment_lab_2023.yaml"/>
 
-  	<arg name="loc_of_urdf_1" default="iai_kitchen"/>
+  	<arg name="loc_of_urdf_1" default="apartment"/>
   	<arg name="loc_of_urdf_2" default="apartment_description"/>
   	<arg name="tf_prefix" default="apartment"/>
   	<arg name="joint_states_prefix" default="apartment"/>
@@ -16,7 +16,7 @@
 
 
   	<node pkg="tf" type="static_transform_publisher" name="environment_link_broadcaster"
-    	args="0 0 0 0 0 0 /map /$(arg tf_prefix)/urdf_main 25">
+    	args="0 0 0 0 0 0 /map /$(arg tf_prefix)/apartment_root 25"> <!-- was urdf_main /-->
   	</node>
 
   	<node pkg="robot_state_publisher" type="robot_state_publisher"

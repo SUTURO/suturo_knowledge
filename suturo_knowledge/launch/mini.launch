@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<launch>
+
+  <arg name="tf_prefix" default="apartment"/>
+  <!-- Load the URDF to the parameter server -->
+  <param name="apartment_description" command="$(find xacro)/xacro $(find suturo_resources)/urdf/apartment.urdf" />
+
+  <!-- Start the robot_state_publisher node -->
+  <node name="apartment_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" output="screen">
+    <param name="publish_frequency" value="2" />
+    <param name="tf_prefix" value="$(arg tf_prefix)"/>
+    <param name="robot_description" value="apartment_description" />
+    <remap from="robot_description" to="apartment_description" />
+  </node>
+
+  <!-- Start the joint_state_publisher node (only needed if your robot has joint states) -->
+  <node name="apartment_joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" output="screen" >
+  	<remap from="robot_description" to="apartment_description" />
+  </node>
+  <!-- Publish transform from map to apartment_root -->
+  <node name="apartment_link_broadcaster" pkg="tf" type="static_transform_publisher" 
+    	args="0 0 0 0 0 0 /map $(arg tf_prefix)/apartment_root 25">
+  </node>
+</launch>
