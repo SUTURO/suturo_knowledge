@@ -1,7 +1,7 @@
 %% This module loads and creates objects from the semantic map in the database.
 :- module(furniture_creation,
 	  [
-	      load_urdf_from_param(+),
+	      urdf_from_param(+),
 	      init_furnitures/0
 	  ]).
 
@@ -71,6 +71,7 @@ is_semantic_map_object(Link) :-
     sub_string(Link,_,_,_,"cabinet3_door_top_left");
     sub_string(Link,_,_,_,"cabinet3_door_top_out_fancy");
     sub_string(Link,_,_,_,"fridge");
+    sub_string(Link,_,_,_,"refrigerator");
     sub_string(Link,_,_,_,"handle_cab3_door_top")
     ),
     !.
@@ -119,7 +120,7 @@ init_furniture(UrdfLink) :-
 	;  true).
 
 furniture_pose(UrdfLink, [ObjectFrame, [0,0,0], [0,0,0,1]]) :-
-    atom_concat('iai_kitchen/', UrdfLink, ObjectFrame).
+    atom_concat('apartment/', UrdfLink, ObjectFrame).
 
 furniture_shape(UrdfLink, ShapeTerm) :-
     get_urdf_id(URDF),
@@ -206,6 +207,10 @@ link_role_class(fridge,soma:'Refrigerator') :- !.
 % @param Class Class of the urdf link type as owl term
 %
 % --- FALLSCHOOL ---
+link_name_class(LinkName, Class) :-
+    sub_string(LinkName,_,_,_,"fridge"),
+    Class = soma:'DesignedContainer',
+    !.
 link_name_class(LinkName, Class) :-
     sub_string(LinkName,_,_,_,"fridge"),
     Class = soma:'Refrigerator',

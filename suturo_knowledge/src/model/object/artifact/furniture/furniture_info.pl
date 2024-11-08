@@ -9,7 +9,11 @@
 		longest_side(r,-),
 		shortest_side(r,-),
 		get_name_handle(r, -),
-		write("--- loading furniture info ---")
+		which_handle(r,-),
+		fridge_properties(r,-),
+		has_handle(r),
+		recommended_storage(r,r),
+		contains(r,r)
 	]).
 
 :- use_module(library('util/math'),
@@ -151,13 +155,26 @@ get_name_handle(Furniture, HandleLinkName):-
 fridge_properties(Fridge, Property):-
 	has_type(soma:'Refrigerator', Fridge),
 	triple(Fridge, soma:'has_part', soma:'DesignedHandle'),
-	has_urdf_name()
+	has_urdf_name(Fridge, URDFName).
 
 
 % all fridges are containers
 
 has_type(Entity, soma:'DesignedContainer') :-
     has_type(Entity, soma:'Refrigerator').
+
+% Milk is a perishable item
+class(suturo:'Milk', soma:'Perishable').
+
+
+% fridges are containers for perishable items
+contains(soma:'Refrigerator', soma:'Perishable').	
+
+% Rule for suggesting storage location based on perishability
+recommended_storage(Object, soma:'Refrigerator') :-
+    class(Object, soma:'Perishable'),
+    contains(soma:'Refrigerator', soma:'Perishable').
+
 
 % all fridges have doors [and handles? or maybe all doors have handles]
 
@@ -174,3 +191,5 @@ which_handle(Object, Handle) :-
 
 % all fridges are containers for perishable items
 % is a fridge currently opened or closed?
+
+

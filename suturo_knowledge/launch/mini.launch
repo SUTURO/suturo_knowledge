@@ -14,11 +14,23 @@
   </node>
 
   <!-- Start the joint_state_publisher node (only needed if your robot has joint states) -->
-  <node name="apartment_joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" output="screen" >
+  <!--node name="apartment_joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" output="screen" >
   	<remap from="robot_description" to="apartment_description" />
-  </node>
+  </node-->
   <!-- Publish transform from map to apartment_root -->
   <node name="apartment_link_broadcaster" pkg="tf" type="static_transform_publisher" 
     	args="0 0 0 0 0 0 /map $(arg tf_prefix)/apartment_root 25">
   </node>
+  
+	<!-- Configure settings file. and launch rosprolog-->
+  <arg name="knowrob_settings" default="$(find knowrob)/settings/default.pl" />
+  <env name="KNOWROB_SETTINGS" value="$(arg knowrob_settings)" />
+  
+  <include file="$(find rosprolog)/launch/rosprolog.launch">
+   	<arg name="initial_package" default="suturo_knowledge" />
+   	<arg name="initial_goal" default="init_suturo_knowledge" />
+  </include>
+
+  <!-- launch the knowrob designator service -->
+  <include file="$(find knowrob_designator)/launch/knowrob_designator_service.launch"/>
 </launch>

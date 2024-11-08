@@ -1,6 +1,8 @@
 % You can register other knowrob packages here.
 :- register_ros_package(knowrob).
 :- register_ros_package(suturo_knowledge).
+:- register_ros_package(suturo_resources).
+
 
 % Load the main SUTURO ontology
 :- load_owl('package://suturo_knowledge/owl/suturo.owl', [namespace(suturo, 'http://www.ease-crc.org/ont/SUTURO.owl#')]).
@@ -27,8 +29,14 @@
 :- use_directory('model').
 :- use_directory('reasoning').
 
-:- once((  ros_param_get_string("apartment", Param), % was:/suturo_room_viz/urdf_param
-           load_urdf_from_param(Param)
+%  %ros_param_get_string("apartment_description", Param), % was:/suturo_room_viz/urdf_param
+           %load_urdf_from_param("apartment_description")
+:- use_module('URDF').
+
+:- once((ros_package_path('suturo_resources', X),
+         atom_concat(X, '/urdf/apartment.urdf', FileURL),
+         kb_project(urdf:'Apartment', Apartment),
+         rdf_urdf_load(Apartment, FileURL)
         ;  ros_warn('No semantic map loaded!'))).
 
 :- tf_logger_enable.
