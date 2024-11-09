@@ -9,11 +9,11 @@
 		longest_side(r,-),
 		shortest_side(r,-),
 		get_name_handle(r, -),
-		which_handle(r,-),
-		fridge_properties(r,-),
+		which_handle(r, -),
+		has_door(r),
 		has_handle(r),
-		recommended_storage(r,r),
-		contains(r,r)
+		storable_at(r, -),
+		open(r)
 	]).
 
 :- use_module(library('util/math'),
@@ -152,31 +152,25 @@ get_name_handle(Furniture, HandleLinkName):-
 
 % where is the Milk Located?
 
-fridge_properties(Fridge, Property):-
-	has_type(soma:'Refrigerator', Fridge),
-	triple(Fridge, soma:'has_part', soma:'DesignedHandle'),
-	has_urdf_name(Fridge, URDFName).
 
+% milk is perishable
+
+has_quality(Entity, suturo:'Perishable') :-
+    has_type(Entity, suturo:'Milk').
 
 % all fridges are containers
 
 has_type(Entity, soma:'DesignedContainer') :-
     has_type(Entity, soma:'Refrigerator').
 
-% Milk is a perishable item
-class(suturo:'Milk', soma:'Perishable').
+% where to store something?
 
+% all fridges are containers for perishable items
+storable_at(Item, Location) :-
+    has_quality(Item, suturo:'Perishable'),
+	has_type(Location, soma:'Refrigerator').
 
-% fridges are containers for perishable items
-contains(soma:'Refrigerator', soma:'Perishable').	
-
-% Rule for suggesting storage location based on perishability
-recommended_storage(Object, soma:'Refrigerator') :-
-    class(Object, soma:'Perishable'),
-    contains(soma:'Refrigerator', soma:'Perishable').
-
-
-% all fridges have doors [and handles? or maybe all doors have handles]
+% doors and cups have handles
 
 has_handle(Entity) :-
     has_type(Entity, soma:'Door').
@@ -184,12 +178,60 @@ has_handle(Entity) :-
 has_handle(Entity) :-
     has_type(Entity, soma:'Cup').
 
+% which link is the handle of something?
+
 which_handle(Object, Handle) :-
     has_handle(Object),
-	triple(Object, dul:'hasPart', Handle),
+	has_parent_link(Joint, Object),
+	has_child_link(Joint, Handle),
 	has_type(Handle, soma:'DesignedHandle').
 
-% all fridges are containers for perishable items
+% all fridges have doors
+
+has_door(Entity) :-
+    has_type(Entity, soma:'Refrigerator').
+
+% which link is the door of something?
+
+which_door(Object, Door) :-
+    has_door(Object),
+	has_parent_link(Joint, Object),
+	has_child_link(Joint, Door),
+	has_type(Door, soma:'Door').
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 % is a fridge currently opened or closed?
 
+%oint_angle('door joint', 0).
+%has_type('alice', soma:'Refrigerator').
+%has_open_angle('alice', 50).
 
+open(Container) :-
+    \+ has_door(Container).
+
+open(Container) :-
+    has_door(Container),
+	which_door(Container, Door),
+	joint_angle(Door, X),
+	has_open_angle(Container, Y),
+	X > Y.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%has_type('alice', soma:'Refrigerator').
+%has_type('bob', soma:'Car').
+
+%%    has_type(Entity, soma:'Refrigerator').
+
+
+%>> has_type(X, soma:'Car')?
+%(X . 'bob'))
+
+%>> has_type('alice', Y)?
+%((Y. soma:'Refrigerator'), ( Y . soma:'DesignedContainer'))
+
+%>> has_type(X, soma:'DesignedContainer')
+%((X . 'alice'))

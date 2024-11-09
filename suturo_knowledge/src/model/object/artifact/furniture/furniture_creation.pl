@@ -1,7 +1,7 @@
 %% This module loads and creates objects from the semantic map in the database.
 :- module(furniture_creation,
 	  [
-	      urdf_from_param(+),
+	      load_urdf_from_param(+),
 	      init_furnitures/0
 	  ]).
 
@@ -68,11 +68,12 @@ is_semantic_map_object(Link) :-
     %sub_string(Link,_,_,_,"handle"), \+ sub_string(Link,_,_,_,"dishwasher")
     % --- FallSchool ---
     sub_string(Link,_,_,_,"cabinet3");
-    sub_string(Link,_,_,_,"cabinet3_door_top_left");
-    sub_string(Link,_,_,_,"cabinet3_door_top_out_fancy");
+    sub_string(Link,_,_,_,"refrigerator_door_top_out_fancy");
+    sub_string(Link,_,_,_,"refrigerator_door_top_left");
     sub_string(Link,_,_,_,"fridge");
     sub_string(Link,_,_,_,"refrigerator");
-    sub_string(Link,_,_,_,"handle_cab3_door_top")
+    sub_string(Link,_,_,_,"refrigerator_door_bottom_left");
+    sub_string(Link,_,_,_,"refrigerator_door_bottom_out_fancy")
     ),
     !.
 
@@ -84,13 +85,12 @@ init_furnitures :-
     get_urdf_id(URDF),
     urdf_link_names(URDF, Links),
     forall((member(UrdfLink, Links),
-	        is_semantic_map_object(UrdfLink)
-	       ),
-        ignore((
-            init_furniture(UrdfLink)
-            -> true
-            ;  ros_warn("UrdfLink can not be loaded! ~w", [UrdfLink])
-            ))),
+	        is_semantic_map_object(UrdfLink)),
+            ignore((
+                init_furniture(UrdfLink)
+                -> true
+                ;  ros_warn("UrdfLink can not be loaded! ~w", [UrdfLink])
+                    ))),
     ros_info('Semantic map furniture initialized').
 
 %% init_furnitures(?UrdfLink) is semidet.
@@ -100,19 +100,26 @@ init_furnitures :-
 % @param UrdfLink Urdf link
 %
 init_furniture(UrdfLink) :-
-    ros_info("der UrdfLink: ~w", [UrdfLink]),
+    ros_info("UrdfLink: ~w", [UrdfLink]),
     urdf_link_class(UrdfLink, ClassTerm, RobocupName),
-    ros_info("der ClassTerm: ~w", [ClassTerm]),
+    
+    ros_info("ClassTerm: ~w", [ClassTerm]),
     rdf_global_id(ClassTerm, Class),
-    ros_info("de Class: ~w", [Class]),
+    
+    ros_info("Class: ~w", [Class]),
     furniture_pose(UrdfLink, Pose),
-    ros_info("de Pose: ~w", [Pose]),
-    furniture_shape(UrdfLink, ShapeTerm),
-    ros_info("de shape: ~w", [ShapeTerm]),
+    ros_info("Pose: ~w", [Pose]),
+    
+    %furniture_shape(UrdfLink, ShapeTerm), % commented out since it might cause problems
+    %ros_info("Shape: ~w", [ShapeTerm]),
+    
     create_object(Furniture, Class, Pose, [shape(ShapeTerm), data_source(semantic_map)]),
-    ros_info("Created semantic map object for ~w", [UrdfLink]),
+    ros_info("created semantic map object for ~w", [UrdfLink]),
+
     kb_project((has_urdf_name(Furniture, UrdfLink),
                 has_robocup_name(Furniture, RobocupName))),
+
+    ros_info("------------------------------------------------------------"),
 	% backwards compatibility with table_front_edge_center for planning
 	(  atom_concat(Prefix, 'table_center', UrdfLink)
 	-> (atom_concat(Prefix, 'table_front_edge_center', ExtraLink),
@@ -195,27 +202,19 @@ link_role_class(dishwasher_robocup,suturo:'Dishwasher') :- !.
 % --- FALLSCHOOL ---
 link_role_class(refrigerator,soma:'Refrigerator') :- !.
 % quality of life...
-link_role_class(fridge,soma:'Refrigerator') :- !.
+% link_role_class(fridge,soma:'Refrigerator') :- !.
 % --- END FALLSCHOOL ---
 
 
 %% link_name_class(+LinkName, -Class) is semidet.
 %
 % Helper predicate to get the owl class of the last part of the urdf link name used in the semantic map files.
+% The order of classes is important!
 %
 % @param LinkName Last part of of the urdf link as String
 % @param Class Class of the urdf link type as owl term
 %
-% --- FALLSCHOOL ---
-link_name_class(LinkName, Class) :-
-    sub_string(LinkName,_,_,_,"fridge"),
-    Class = soma:'DesignedContainer',
-    !.
-link_name_class(LinkName, Class) :-
-    sub_string(LinkName,_,_,_,"fridge"),
-    Class = soma:'Refrigerator',
-    !.
-% --- END_FALLSCHOOL ---
+
 link_name_class(LinkName, Class) :-
     sub_string(LinkName,_,_,_,"container"),
     Class = soma:'DesignedContainer',
@@ -289,6 +288,20 @@ link_name_class(LinkName, Class) :-
     sub_string(LinkName,_,_,_,"dishwasher_main"),
     Class = soma:'Dishwasher',
     !.
+% --- FALLSCHOOL ---
+link_name_class(LinkName, Class) :-
+    sub_string(LinkName,_,_,_,"fridge"),
+    Class = soma:'DesignedContainer',
+    !.
+link_name_class(LinkName, Class) :-
+    sub_string(LinkName,_,_,_,"fridge"),
+    Class = soma:'Refrigerator',
+    !.
+link_name_class(LinkName, Class) :-
+    sub_string(LinkName,_,_,_,"refrigerator"),
+    Class = soma:'Refrigerator',
+    !.
+% --- END_FALLSCHOOL ---
 link_name_class(LinkName, Class) :-
     ros_warn("Unknown link name type: ~w! Using default class soma:DesignedFurniture", [LinkName]),
     Class = soma:'DesignedFurniture',

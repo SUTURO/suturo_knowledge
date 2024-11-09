@@ -9,7 +9,7 @@
   <node name="apartment_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" output="screen">
     <param name="publish_frequency" value="2" />
     <param name="tf_prefix" value="$(arg tf_prefix)"/>
-    <param name="robot_description" value="apartment_description" />
+    <!--param name="robot_description" value="apartment_description" /-->
     <remap from="robot_description" to="apartment_description" />
   </node>
 
