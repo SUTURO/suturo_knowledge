@@ -48,5 +48,6 @@
 
 init_suturo_knowledge :-
     init_semantic_map,
-    init_rooms.
-    urdf_init.
+    init_rooms,
+    urdf_init,
+    add_milk(Milk).
