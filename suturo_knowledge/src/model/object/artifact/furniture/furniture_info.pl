@@ -10,11 +10,16 @@
 		shortest_side(r,-),
 		get_name_handle(r, -),
 		which_handle(r, -),
-		has_door(r),
+		has_door(?),
+		which_door(?, ?),
 		has_handle(r),
 		storable_at(r, -),
-		open(r)
+		open(?,r),
+		find_triple(r, -),
+		add_milk(?)
 	]).
+
+:- ros_warn("SHOULD HAVE DOOR").
 
 :- use_module(library('util/math'),
 	[
@@ -143,12 +148,12 @@ has_robocup_name(Furniture,Name) ?+>
 
 % --- FallSchool --- define some facts
 % furniture_handle(FurnitureObject, Handle).
-furniture_handle(soma:'Refrigerator', 'handle_cab3_door_top').
-furniture_handle('Refrigerator', 'handle_cab3_door_top').
-furniture_handle('Fridge', 'handle_cab3_door_top').
+%furniture_handle(soma:'Refrigerator', 'handle_cab3_door_top').
+%furniture_handle('Refrigerator', 'handle_cab3_door_top').
+%furniture_handle('Fridge', 'handle_cab3_door_top').
 
-get_name_handle(Furniture, HandleLinkName):-
-	furniture_handle(Furniture, HandleLinkName).
+%get_name_handle(Furniture, HandleLinkName):-
+%	furniture_handle(Furniture, HandleLinkName).
 
 % where is the Milk Located?
 
@@ -156,7 +161,7 @@ get_name_handle(Furniture, HandleLinkName):-
 % milk is perishable
 
 has_quality(Entity, suturo:'Perishable') :-
-    has_type(Entity, suturo:'Milk').
+	instance_of(Entity,suturo:'Milk').
 
 % all fridges are containers
 
@@ -168,36 +173,62 @@ has_type(Entity, soma:'DesignedContainer') :-
 % all fridges are containers for perishable items
 storable_at(Item, Location) :-
     has_quality(Item, suturo:'Perishable'),
-	has_type(Location, soma:'Refrigerator').
+	instance_of(Location, soma:'Refrigerator').
 
 % doors and cups have handles
 
 has_handle(Entity) :-
-    has_type(Entity, soma:'Door').
+    instance_of(Entity, soma:'Door').
 
 has_handle(Entity) :-
-    has_type(Entity, soma:'Cup').
+    instance_of(Entity, soma:'Cup').
+
+% Descendant link
+
+has_descendant(Ancestor, Descendant) :-
+    urdf_link_child_joints(arena, Ancestor, Children),
+	member(Joint, Children),
+	urdf_joint_child_link(arena, Joint, Descendant).
+
+has_descendant(Ancestor, Descendant) :-
+    urdf_link_child_joints(arena, Ancestor, Children),
+	member(Joint, Children),
+	urdf_joint_child_link(arena, Joint, Child),
+	has_descendant(Child, Descendant).
 
 % which link is the handle of something?
 
 which_handle(Object, Handle) :-
     has_handle(Object),
-	has_parent_link(Joint, Object),
-	has_child_link(Joint, Handle),
-	has_type(Handle, soma:'DesignedHandle').
+	has_urdf_name(Object, URDFName),
+	has_descendant(URDFName, URDFHandle),
+	has_urdf_name(Handle, URDFHandle),
+	instance_of(Handle, soma:'DesignedHandle').
 
 % all fridges have doors
 
 has_door(Entity) :-
-    has_type(Entity, soma:'Refrigerator').
+    ros_info("STUFF IS GOING DOWN"),
+    ros_info("HasDoor entity: ~w", [Entity]),
+    instance_of(Entity, soma:'Refrigerator'),
+    ros_info("STUFF KEEPS GOING DOWN").
 
 % which link is the door of something?
 
 which_door(Object, Door) :-
     has_door(Object),
-	has_parent_link(Joint, Object),
-	has_child_link(Joint, Door),
-	has_type(Door, soma:'Door').
+	has_urdf_name(Object, URDFName),
+	%%urdf_link_child_joints(arena, URDFName, Children),
+	%%member(Joint, Children),
+	%%urdf_joint_child_link(arena, Joint, URDFDoor),
+	has_descendant(URDFName, URDFDoor),
+	has_urdf_name(Door, URDFDoor),
+	instance_of(Door, soma:'Door'),
+    urdf_link_child_joints(arena, URDFDoor, Children),
+	member(Joint, Children),
+	urdf_joint_child_link(arena, Joint, URDFHandle),
+	has_urdf_name(Handle, URDFHandle),
+	instance_of(Handle, soma:'DesignedHandle').
 
 
 
@@ -205,19 +236,24 @@ which_door(Object, Door) :-
 
 % is a fridge currently opened or closed?
 
-%oint_angle('door joint', 0).
+%joint_angle('door joint', 0).
 %has_type('alice', soma:'Refrigerator').
 %has_open_angle('alice', 50).
 
-open(Container) :-
-    \+ has_door(Container).
+open(Door, Angle) :-
+    has_urdf_name(Door, URDFDoor),
+	urdf_link_parent_joint(arena, URDFDoor, Joint),
+	urdf_joint_hard_limits(arena, Joint, [_, Max], _, _),
+	Dif is Angle - Max,
+	Dif > -0.2 .
 
-open(Container) :-
-    has_door(Container),
-	which_door(Container, Door),
-	joint_angle(Door, X),
-	has_open_angle(Container, Y),
-	X > Y.
+% Add Milk
+add_milk(Milk):-
+	 kb_project([
+                new_iri(Milk, suturo:'Milk'), 
+				is_individual(Milk),
+				instance_of(Milk, suturo:'Milk')]).
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -235,3 +271,15 @@ open(Container) :-
 
 %>> has_type(X, soma:'DesignedContainer')
 %((X . 'alice'))
+find_triple(Q, T) :- 
+	(atom(Q) -> atom_string(Q, Qstr) ; Qstr is Q), string_lower(Qstr, Qlwr), % attempt to bring the query to a canonical form: lowercase string
+  	triple(S, P, O), % for all triples in the knowledge base
+  	(atom(S) -> atom_string(S, Sstr) ; Sstr is S), string_lower(Sstr, Slwr), % attempt to bring the triple elements into a canonical form: lowercase string
+  	(atom(P) -> atom_string(P, Pstr) ; Pstr is P), string_lower(Pstr, Plwr),
+  	(atom(O) -> atom_string(O, Ostr) ; Ostr is O), string_lower(Ostr, Olwr),
+  	(                                                                        % attempt to find the query in some triple element
+    	sub_string(Slwr, _, _, _, Qlwr);
+    	sub_string(Plwr, _, _, _, Qlwr);
+    	sub_string(Olwr, _, _, _, Qlwr)
+  	),
+  	=(T, [S, P, O]).

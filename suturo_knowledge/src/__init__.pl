@@ -47,6 +47,6 @@
 %% :- init_semantic_map.
 
 init_suturo_knowledge :-
-    urdf_init,
-    init_rooms,
-    init_semantic_map.
+    init_semantic_map,
+    init_rooms.
+    urdf_init.

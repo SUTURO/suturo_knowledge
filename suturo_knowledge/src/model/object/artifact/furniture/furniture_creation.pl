@@ -202,7 +202,8 @@ link_role_class(dishwasher_robocup,suturo:'Dishwasher') :- !.
 % --- FALLSCHOOL ---
 link_role_class(refrigerator,soma:'Refrigerator') :- !.
 % quality of life...
-% link_role_class(fridge,soma:'Refrigerator') :- !.
+link_role_class(door,soma:'Door') :- !.
+link_role_class(handle,soma:'DesignedHandle') :- !.
 % --- END FALLSCHOOL ---
 
 
