@@ -211,7 +211,8 @@ which_handle(Object, Handle) :-
 has_door(Entity) :-
     ros_info("STUFF IS GOING DOWN"),
     ros_info("HasDoor entity: ~w", [Entity]),
-    instance_of(Entity, soma:'Refrigerator'),
+    (instance_of(Entity, soma:'Refrigerator');
+	instance_of(Entity, soma:'FreezerCompartment')),
     ros_info("STUFF KEEPS GOING DOWN").
 
 % which link is the door of something?

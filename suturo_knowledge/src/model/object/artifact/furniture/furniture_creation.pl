@@ -200,6 +200,7 @@ link_role_class(lounge_chair,suturo:'LoungeChair') :- !.
 
 link_role_class(dishwasher_robocup,suturo:'Dishwasher') :- !.
 % --- FALLSCHOOL ---
+link_role_class(refrigerator_door_bottom,soma:'FreezerCompartment') :- !.
 link_role_class(refrigerator,soma:'Refrigerator') :- !.
 % quality of life...
 link_role_class(door,soma:'Door') :- !.
@@ -224,6 +225,12 @@ link_name_class(LinkName, Class) :-
     sub_string(LinkName,_,_,_,"table_center"),
     Class = soma:'Dishwasher',
     !.
+% --- Fall school special case
+link_name_class(LinkName, Class) :-
+    sub_string(LinkName,_,_,_,"refrigerator_door_bottom"),
+    Class = soma:'FreezerCompartment',
+    !.
+% ---
 link_name_class(LinkName, Class) :-
     sub_string(LinkName,_,_,_,"door"),
     \+sub_string(LinkName,_,_,_,"handle"),
