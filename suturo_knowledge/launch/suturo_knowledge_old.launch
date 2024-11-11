@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<launch>
+	<!-- launch semantic map -->
+  	<arg name="model" default="$(find suturo_resources)/urdf/apartment.urdf"/>
+  	<arg name="world_urdf_yaml" default="rw_appartment_lab_2023.yaml"/>
+
+  	<arg name="loc_of_urdf_1" default="apartment"/>
+  	<arg name="loc_of_urdf_2" default="apartment_description"/>
+  	<arg name="tf_prefix" default="apartment"/>
+  	<arg name="joint_states_prefix" default="apartment"/>
+    
+
+  	<param name="$(arg loc_of_urdf_1)" command="$(find xacro)/xacro $(arg model) yaml_file:=$(find suturo_resources)/urdf/yaml/$(arg world_urdf_yaml)" />  
+  
+  	<param name="$(arg loc_of_urdf_2)" command="$(find xacro)/xacro $(arg model) yaml_file:=$(find suturo_resources)/urdf/yaml/$(arg world_urdf_yaml)" />
+
+
+  	<node pkg="tf" type="static_transform_publisher" name="environment_link_broadcaster"
+    	args="0 0 0 0 0 0 /map /$(arg tf_prefix)/apartment_root 25"> <!-- was urdf_main /-->
+  	</node>
+
+  	<node pkg="robot_state_publisher" type="robot_state_publisher"
+    	name="environment_state_publisher" output="screen">
+    	<param name="tf_prefix" value="/$(arg tf_prefix)"/>
+    	<param name="publish_frequency" value="2"/>
+    	<remap from="robot_description" to="$(arg loc_of_urdf_1)" />
+    	<remap from="/joint_states" to="/$(arg joint_states_prefix)/joint_states" />
+  	</node>
+
+	<!-- Configure settings file. and launch rosprolog-->
+	<arg name="knowrob_settings" default="$(find knowrob)/settings/default.pl" />
+	<env name="KNOWROB_SETTINGS" value="$(arg knowrob_settings)" />
+  
+	<include file="$(find rosprolog)/launch/rosprolog.launch">
+    	<arg name="initial_package" default="suturo_knowledge" />
+    	<arg name="initial_goal" default="init_suturo_knowledge" />
+	</include>
+  	<!-- this was the old ms0 interface which is no longer used -->
+	<!--node name="interf_q" pkg="suturo_knowledge" type="interf_q.py" output="screen"/-->
+	
+	<!-- launch the knowrob designator service -->
+	<include file="$(find knowrob_designator)/launch/knowrob_designator_service.launch"/>
+  
+  
+  
+
+</launch>

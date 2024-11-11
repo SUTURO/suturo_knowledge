@@ -8,15 +8,16 @@
 		div_parts_helper(+,+,-),
 		longest_side(r,-),
 		shortest_side(r,-),
-		get_name_handle(r, -),
+		%get_name_handle(r, -),
 		which_handle(r, -),
-		has_door(?),
-		which_door(?, ?),
+		has_door(r),
+		which_door(r, r),
 		has_handle(r),
 		storable_at(r, -),
-		open(?,r),
+		open(r,r),
 		find_triple(r, -),
-		add_milk(?)
+		add_milk(r),
+		has_quality(r, r)
 	]).
 
 :- ros_warn("SHOULD HAVE DOOR").
