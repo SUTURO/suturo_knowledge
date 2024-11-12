@@ -6,12 +6,12 @@
   <param name="apartment_description" command="$(find xacro)/xacro $(find suturo_resources)/urdf/apartment-small.urdf" />
 
   <!-- Start the robot_state_publisher node -->
-  <node name="apartment_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" output="screen">
+  <!--node name="apartment_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" output="screen">
     <param name="publish_frequency" value="2" />
-    <param name="tf_prefix" value="$(arg tf_prefix)"/>
-    <!--param name="robot_description" value="$(param apartment_description)" /-->
-    <remap from="robot_description" to="apartment_description" />
-  </node>
+    <param name="tf_prefix" value="$(arg tf_prefix)"/-->
+    <!-- param name="robot_description" value="$(param apartment_description)" /-->
+    <!--remap from="robot_description" to="apartment_description" />
+  </node-->
 
   <!-- Start the joint_state_publisher node (only needed if your robot has joint states) -->
   <!--node name="apartment_joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" output="screen" >
