@@ -3,7 +3,7 @@
 
   <arg name="tf_prefix" default="apartment"/>
   <!-- Load the URDF to the parameter server -->
-  <param name="apartment_description" command="$(find xacro)/xacro $(find suturo_resources)/urdf/apartment.urdf" />
+  <param name="apartment_description" command="$(find xacro)/xacro $(find suturo_resources)/urdf/apartment-small.urdf" />
 
   <!-- Start the robot_state_publisher node -->
   <node name="apartment_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" output="screen">
