@@ -17,7 +17,8 @@
 		open(r,r),
 		find_triple(r, -),
 		add_milk(r),
-		has_quality(r, r)
+		has_quality(r, r),
+		perform_action(r,r,r)
 	]).
 
 :- ros_warn("SHOULD HAVE DOOR").
@@ -247,7 +248,21 @@ open(Door, Angle) :-
 	urdf_link_parent_joint(arena, URDFDoor, Joint),
 	urdf_joint_hard_limits(arena, Joint, [_, Max], _, _),
 	Dif is Angle - Max,
-	Dif > -0.2 .
+	Dif > -0.2.
+
+%%%%%% ------
+% check if one needs to perform an action in order to open/close door
+% Predicate to determine if action is needed to open or close the door
+:- rdf_meta(perform_action(r,r,r)).
+perform_action(Door, Angle, Action) :-
+    ( open(Door, Angle) ->
+        Action = 'CloseAction'
+    ; 
+        Action = 'OpenAction'
+    ).
+
+
+%%%%%% -------
 
 % Add Milk
 add_milk(Milk):-
@@ -256,6 +271,11 @@ add_milk(Milk):-
 				is_individual(Milk),
 				instance_of(Milk, suturo:'Milk')]).
 
+
+	
+
+
+%which_action(Condition, Action) :-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
