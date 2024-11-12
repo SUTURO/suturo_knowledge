@@ -67,7 +67,7 @@ is_semantic_map_object(Link) :-
     %sub_string(Link,_,_,_,"dishwasher:dishwasher_tray_2_bottom");
     %sub_string(Link,_,_,_,"handle"), \+ sub_string(Link,_,_,_,"dishwasher")
     % --- FallSchool ---
-    sub_string(Link,_,_,_,"cabinet3");
+    sub_string(Link,_,_,_,"cabinet");
     sub_string(Link,_,_,_,"refrigerator_door_top_out_fancy");
     sub_string(Link,_,_,_,"refrigerator_door_top_left");
     sub_string(Link,_,_,_,"fridge");
@@ -205,6 +205,7 @@ link_role_class(refrigerator,soma:'Refrigerator') :- !.
 % quality of life...
 link_role_class(door,soma:'Door') :- !.
 link_role_class(handle,soma:'DesignedHandle') :- !.
+link_role_class(cabinet, soma:'DesignedContainer') :- !.
 % --- END FALLSCHOOL ---
 
 
@@ -216,7 +217,10 @@ link_role_class(handle,soma:'DesignedHandle') :- !.
 % @param LinkName Last part of of the urdf link as String
 % @param Class Class of the urdf link type as owl term
 %
-
+link_name_class(LinkName, Class) :-
+    sub_string(LinkName,_,_,_,"handle"),
+    Class = soma:'DesignedHandle',
+    !.
 link_name_class(LinkName, Class) :-
     sub_string(LinkName,_,_,_,"container"),
     Class = soma:'DesignedContainer',
@@ -277,10 +281,6 @@ link_name_class(LinkName, Class) :-
     Class = suturo:'DishwasherTray',
     !.
 link_name_class(LinkName, Class) :-
-    sub_string(LinkName,_,_,_,"handle"),
-    Class = soma:'DesignedHandle',
-    !.
-link_name_class(LinkName, Class) :-
     sub_string(LinkName,_,_,_,"couch"),
     Class = suturo:'Couch',
     !.
@@ -308,6 +308,10 @@ link_name_class(LinkName, Class) :-
 link_name_class(LinkName, Class) :-
     sub_string(LinkName,_,_,_,"refrigerator"),
     Class = soma:'Refrigerator',
+    !.
+link_name_class(LinkName, Class) :-
+    sub_string(LinkName,_,_,_,"cabinet"),
+    Class = suturo:'Cabinet',
     !.
 % --- END_FALLSCHOOL ---
 link_name_class(LinkName, Class) :-
