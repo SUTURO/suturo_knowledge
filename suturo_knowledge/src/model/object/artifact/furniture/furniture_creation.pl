@@ -199,7 +199,7 @@ link_name_class(LinkName, Class) :-
     Class = soma:'DesignedContainer',
     !.
 link_name_class(LinkName, Class) :-
-    sub_string(LinkName,_,_,_,"table_center"),
+    sub_string(LinkName,_,_,_,"dishwasher_tray_bottom"),
     Class = soma:'Dishwasher',
     !.
 link_name_class(LinkName, Class) :-
