@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import json
 import rospy
 import rosprolog_client
 from geometry_msgs.msg import PoseStamped
@@ -299,7 +300,7 @@ class InterfacePlanningKnowledge:
                 print("Object exists but not fragile!")
                 return False
 
-#################################################################################
+#####################################################################################
 # 8:
 # Create an object
     def create_object(self, objname, pose):
@@ -318,7 +319,7 @@ class InterfacePlanningKnowledge:
         return sol2
 
 
-#################################################################################
+######################################################################################
 # 9:
 # get the pose from where an object shall be grabbed
 
@@ -329,7 +330,7 @@ class InterfacePlanningKnowledge:
         print(newname)
         return newname
 
-#################################################################################
+#######################################################################################
 # 10:
 # get the pose where an object shall be placed 
 
@@ -339,7 +340,45 @@ class InterfacePlanningKnowledge:
         sol = prolog.once(q1)
         print(sol)
         return sol
-#################################################################################
+
+#######################################################################################
+# 11: 
+# get following infos about an object: type, color, heavy, fragile
+# is_heavy ist noch nicht implemeniert
+
+    def obj_characteristics(self, objname):
+        name = crop(objname).lower()
+        name1 = crop(objname)
+        print(name)
+
+        # type 
+        q1 = "what_object(" + name + ", X), once(subclass_of(X, Y))."
+        obj_type = prolog.once(q1)
+        print(obj_type)
+
+        # fragility
+        obj_fragile = self.fragility_check(name)
+        print(obj_fragile)
+        
+        # heavy
+        #q3 = "is_heavy(" + name + ", X)."
+        #obj_heavy = prolog.once(q3)
+        obj_heavy = True
+        print(obj_heavy)
+
+        #color 
+        #q4 = "what_color(" + name + ", X)."
+        #obj_color = prolog.once(q4)
+        obj_color = "Yellow"
+        print(obj_color)
+
+        json = create_json(name1, crop_plus(obj_type['Y']), obj_color, obj_heavy, obj_fragile)
+        #print(json)
+
+        return json
+
+
+#######################################################################################
 
 ## Get the object pose that depends on certain object property
 # just a draft
@@ -419,3 +458,22 @@ def crop_plus(string):
         return new_str
     else:
         print("No '#'")
+
+#########################################################
+# change or add characteristics if needed
+def create_json(input,type, color, heavy, fragile):
+    # format
+    data = {
+        input: {
+            "type": type,
+            "color": color,
+            "heavy": heavy,
+            "fragile": fragile
+        }
+    }
+
+    json_string = json.dumps(data, indent=4)
+    print("Here, take this json file!")
+
+    return json_string
+
