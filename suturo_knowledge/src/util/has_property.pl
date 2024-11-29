@@ -32,10 +32,10 @@ fragility_new(ObjName) :-
 	triple(O,_, suturo:hasPredefinedName), 
 	triple(O, owl:hasValue, ObjName), 
 	triple(Object,_,O),  
-	%triple(Object, transitive(rdfs:'subClassOf'), X),
-	%triple(X, B, suturo:'Fragility').
+	triple(Object, transitive(rdfs:'subClassOf'), X),
+	triple(X, B, suturo:'Fragility').
 
-	transitivee(Object).
+	%transitivee(Object).
 
 %transitivee(r Object)
 transitivee(Object) :- 

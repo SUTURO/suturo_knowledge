@@ -158,7 +158,7 @@ class InterfacePlanningKnowledge:
     
         # Input: apple (soll platziert werden)
         # knowledge erstellt random ein object apple
-        # dann wir place pose bestimmt
+        # dann wird place pose bestimmt
         # Output: place pose vom apple
         #
         # ODER
@@ -282,7 +282,9 @@ class InterfacePlanningKnowledge:
 # Check if an object is fragile
     def fragility_check(self, name):
         q1 = "what_object("+ "\'"+name.lower()+ "\'" + ", Object)."
+        #print (q1)
         sol = prolog.once(q1)
+        #print(sol)
         
         if len(sol) == 0:
             print("Sorry, object is not known to us!")
@@ -290,6 +292,7 @@ class InterfacePlanningKnowledge:
         
         else: 
             q2 = "fragility_new("+ "\'" + name.lower() + "\')."
+            #print (q2)
             soll = prolog.once(q2)
 
             if soll == dict():
@@ -300,9 +303,36 @@ class InterfacePlanningKnowledge:
                 print("Object exists but not fragile!")
                 return False
 
+#################################################################################
+# 8: 
+# Check if an object is perishable
+    def is_perishable(self, name):
+        q1 = "what_object("+ "\'"+ name.lower()+ "\'" + ", Object)."
+        print (q1)
+        sol = prolog.once(q1)
+        print(sol)
+        
+        if len(sol) == 0:
+            print("Sorry, object is not known to us!")
+            return False
+        
+        else: 
+            q2 = "is_perishable("+ "\'" + name.lower() + "\')."
+            print (q2)
+            soll = prolog.once(q2)
+
+            if soll == dict():
+                print("Object is perishable!")
+                return True
+            
+            else: 
+                print("Object exists but not perishable!")
+                return False
+
 #####################################################################################
-# 8:
+# 9:
 # Create an object
+
     def create_object(self, objname, pose):
         if len(pose) == 0:
             pose = ['map', [0,0,0], [0,0,0,1]] 
@@ -320,18 +350,22 @@ class InterfacePlanningKnowledge:
 
 
 ######################################################################################
-# 9:
+# 10:
 # get the pose from where an object shall be grabbed
 
     def grasp_pose(self, objname):
         q1 = "grasp_pose("+ "\'"+ objname.lower()+ "\'" + ", Pose)."
         sol = prolog.once(q1)
         newname = crop(sol)
-        print(newname)
-        return newname
+        print("newname:" + newname)
+
+        if len(newname) == 0:
+            return None
+        else:
+            return newname
 
 #######################################################################################
-# 10:
+# 11:
 # get the pose where an object shall be placed 
 
     def place_destination(self, objname):
@@ -341,10 +375,9 @@ class InterfacePlanningKnowledge:
         print(sol)
         return sol
 
-#######################################################################################
-# 11: 
-# get following infos about an object: type, color, heavy, fragile
-# is_heavy ist noch nicht implemeniert
+############################################################################################
+# 12: 
+# get following infos about an object: type, color, fragile, perishable, grasp_pose
 
     def obj_characteristics(self, objname):
         name = crop(objname).lower()
@@ -360,25 +393,37 @@ class InterfacePlanningKnowledge:
         obj_fragile = self.fragility_check(name)
         print(obj_fragile)
         
-        # heavy
-        #q3 = "is_heavy(" + name + ", X)."
-        #obj_heavy = prolog.once(q3)
-        obj_heavy = True
-        print(obj_heavy)
-
         #color 
-        #q4 = "what_color(" + name + ", X)."
-        #obj_color = prolog.once(q4)
-        obj_color = "Yellow"
+        q2 = "has_value(" + name + ", suturo:hasColor, X)."
+        obj_color = prolog.once(q2)
         print(obj_color)
 
-        json = create_json(name1, crop_plus(obj_type['Y']), obj_color, obj_heavy, obj_fragile)
-        #print(json)
+        if obj_color == []:
+            obj_color = None
+        else: 
+            obj_color = obj_color['X']
+
+        # perishable
+        obj_perish = self.is_perishable(name)
+        print(obj_perish)
+
+        # grasp pose
+        q4 = "grasp_pose(" + name + ", X)."
+        obj_grasp = prolog.once(q4)
+        print(obj_grasp)
+
+        if obj_grasp == []:
+            obj_grasp = None
+        else: 
+            obj_grasp = obj_grasp['X']
+       
+
+        json = create_json(name1, crop_plus(obj_type['Y']), obj_color,obj_fragile, obj_perish, obj_grasp)
 
         return json
 
 
-#######################################################################################
+############################################################################################
 
 ## Get the object pose that depends on certain object property
 # just a draft
@@ -436,7 +481,7 @@ def crop(string):
         ex_string = str(string)[dpunkt_index +1:]
         #print("ex_string:" + ex_string)
         de_string = ex_string.strip(' "').rstrip('}')
-        #print("de_string:" + de_string)
+        print("de_string:" + de_string)
 
         return de_string
     
@@ -459,21 +504,32 @@ def crop_plus(string):
     else:
         print("No '#'")
 
+# crop the ' from "'word'" = "word"
+def crop3(string):
+    dpunkt_index = str(string).find(":")
+    print(dpunkt_index)
+    if dpunkt_index != -1:
+        ex_string = str(string)[dpunkt_index +1:]
+        #print("ex:" + ex_string)
+        de_string = ex_string.strip(" '").rstrip("'}")
+        #print("de:" + de_string)    
+        return de_string
+
 #########################################################
 # change or add characteristics if needed
-def create_json(input,type, color, heavy, fragile):
+def create_json(input,type, color, fragile, perishable, grasp_pose):
     # format
     data = {
         input: {
             "type": type,
             "color": color,
-            "heavy": heavy,
-            "fragile": fragile
+            "fragile": fragile,
+            "perishable": perishable,
+            "grasp_pose": grasp_pose
         }
     }
 
     json_string = json.dumps(data, indent=4)
-    print("Here, take this json file!")
 
     return json_string
 

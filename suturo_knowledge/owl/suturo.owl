@@ -169,6 +169,14 @@
     
 
 
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#hasColor -->
+
+    <owl:DatatypeProperty rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#hasColor">
+        <rdfs:subPropertyOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#hasDataValue"/>
+    </owl:DatatypeProperty>
+    
+
+
     <!-- http://www.ease-crc.org/ont/SUTURO.owl#hasConfidenceValue -->
 
     <owl:DatatypeProperty rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#hasConfidenceValue">
@@ -317,6 +325,12 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#hasPositionData"/>
                 <owl:hasValue>Text</owl:hasValue>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasColor"/>
+                <owl:hasValue>red</owl:hasValue>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
@@ -614,6 +628,12 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#hasDisposition"/>
                 <owl:allValuesFrom rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Fragility"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasColor"/>
+                <owl:hasValue>transparent</owl:hasValue>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
@@ -3585,6 +3605,12 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasOriginLocation"/>
                 <owl:allValuesFrom rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Refrigerator"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasColor"/>
+                <owl:hasValue>white</owl:hasValue>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>

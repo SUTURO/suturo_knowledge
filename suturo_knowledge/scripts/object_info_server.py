@@ -28,7 +28,7 @@ from suturo_knowledge.interf_q import InterfacePlanningKnowledge
 
 ###############################################################################
 # Input: object name: milk
-# Output: obj info: (Milk, type: Drink, fragile: No, Heavy: No, ...)
+# Output: obj info: (Milk, type: Drink, color: "Yellow", fragile: No, Heavy: No, ...)
 def get_obj_info(Object):
     inter = InterfacePlanningKnowledge()
     rospy.loginfo("Interface is called successfully")
