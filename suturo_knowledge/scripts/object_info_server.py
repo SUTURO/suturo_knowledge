@@ -33,9 +33,9 @@ def get_obj_info(Object):
     inter = InterfacePlanningKnowledge()
     rospy.loginfo("Interface is called successfully")
 
-    result = inter.obj_characteristics(Object)
+    return inter.obj_characteristics(Object)
     print(result)
-    return str(result)
+    #return str(result)
   
 if __name__ == '__main__':
     rospy.init_node('obj_info_server')

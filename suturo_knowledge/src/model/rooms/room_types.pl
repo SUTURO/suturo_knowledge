@@ -3,7 +3,9 @@
             is_living_room(r),
             is_bedroom(r),
             is_room(r),
+            is_room_2(r),
             is_study_room(r),
+            is_dining_room(r),
             new_room_type(r)]).
 
 is_kitchen(Room) ?+>
@@ -23,6 +25,13 @@ is_study_room(Room) ?+>
 
 is_room(Room) ?>
     has_type(Room, soma:'Room').
+
+is_room_2(Room) ?>
+    has_type(Room, soma:'Room'),
+    \+ has_type(Room, 'http://www.ease-crc.org/ont/SUTURO.owl#Arena').
+    
+is_dining_room(Room) ?>
+    has_type(Room, suturo:'DiningRoom').
 
 %% new_room_type(+Type) is semidet.
 %

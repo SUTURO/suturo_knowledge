@@ -66,13 +66,13 @@ init_storing_groceries :-
            log_set(dul:'PhysicalObject', suturo:hasOriginLocation, Table))),
       (  has_robocup_name(_,pantry)
       -> forall((has_robocup_name(DestinationLocation,pantry),
-                 is_shelf(DestinationLocation),
+                 is_shelf_layer(DestinationLocation),
                  object_pose(DestinationLocation,[map,[_,_,Z],_]),
                  Z<1.1),
                 log_set(dul:'PhysicalObject',
                         suturo:'hasDestinationLocation',
                         DestinationLocation))
-      ;  forall((is_shelf(DestinationLocation),
+      ;  forall((is_shelf_layer(DestinationLocation),
                  object_pose(DestinationLocation,[map,[_,_,Z],_]),
                  Z<1.1),
                 log_set(dul:'PhysicalObject',
