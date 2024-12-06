@@ -47,8 +47,8 @@ room_start_position(Room, AvgX,AvgY) :-
     average(Ys, AvgY).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% baue liste aus Xs und Ys, dann erst average 
-% if in einem Objekt, weil 3 Tisch ein einer Reihe
+% baue Liste aus Xs und Ys, dann erst average 
+% if in einem Objekt, weil 3 Tische in einer Reihe
 
 average(List, Average):- 
     sumlist(List, Sum),
@@ -68,7 +68,7 @@ rsp(Room, D) :-
         object_pose(Object, [map, [X,Y,_], _])
     ), 
     XYs),
-    abstand(X,Y,D).
+    best_place(XYs,D).
 
 abstand((X1, Y1), (X2, Y2), D) :-
     writeln(X1),
@@ -90,6 +90,63 @@ optimale_position(P, Punkte, BesteAbweichung) :-
     zwischen(-100, 100, Y),
     P = (X, Y),
     abweichung(P, Punkte, BesteAbweichung).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+best_place(Objects, BestPoint) :-
+    generate_grid_from_objects(Objects, 0.5, Grid), % Erstelle Gitterpunkte basierend auf den Objektkoordinaten
+    exclude(occupied_point(Objects), Grid, FreePoints), % Entferne belegte Punkte
+    find_best_point(FreePoints, Objects, BestPoint).
+
+
+generate_grid_from_objects(Objects, Step, Grid) :-
+    % determine min and max Ausdehnung based on object coordinates
+    findall(X, member((X, _), Objects), Xs),
+    findall(Y, member((_, Y), Objects), Ys),
+    min_list(Xs, MinX), max_list(Xs, MaxX),
+    min_list(Ys, MinY), max_list(Ys, MaxY),
+    % grid with Grenzen 
+    findall((X, Y),
+            (   my_between(0, ceil((MaxX - MinX) / Step), IX),
+                my_between(0, ceil((MaxY - MinY) / Step), IY),
+                X is MinX + IX * Step,
+                Y is MinY + IY * Step
+            ),
+            Grid).
+
+% check, whether there is something on this point
+occupied_point(Objects, (X, Y)) :-
+    member((ObjX, ObjY), Objects),
+    distance((ObjX, ObjY), (X, Y), Dist),
+    Dist < 0.5. % keep distance of 50 cm to objects
+
+% find the best point to declare as starting point in a room
+find_best_point([Point], Objects, Point) :- !.
+find_best_point([Point | Rest], Objects, BestPoint) :-
+    max_distance_to_objects(Point, Objects, MaxDist),
+    find_best_point(Rest, Objects, OtherBestPoint),
+    max_distance_to_objects(OtherBestPoint, Objects, OtherMaxDist),
+    (   MaxDist < OtherMaxDist -> BestPoint = Point ; BestPoint = OtherBestPoint ).
+
+% find the max distance to all objects in the room
+max_distance_to_objects(Point, Objects, MaxDist) :-
+    findall(Dist, (member(Obj, Objects), distance(Point, Obj, Dist)), Distances),
+    max_list(Distances, MaxDist).
+
+% calculate euclidean distance 
+distance((X1, Y1), (X2, Y2), Dist) :-
+    DX is X1 - X2,
+    DY is Y1 - Y2,
+    Dist is sqrt(DX * DX + DY * DY).
+
+% like "between": generate values within a certain value range
+% for trying to find a suitable value 
+my_between(Lower, Upper, Lower) :-
+    Lower =< Upper.
+my_between(Lower, Upper, X) :-
+    Lower < Upper,
+    Next is Lower + 1,
+    my_between(Next, Upper, X).
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

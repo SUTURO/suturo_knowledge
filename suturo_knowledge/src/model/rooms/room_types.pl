@@ -6,6 +6,7 @@
             is_room_2(r),
             is_study_room(r),
             is_dining_room(r),
+            is_pantry(r),
             new_room_type(r)]).
 
 is_kitchen(Room) ?+>
@@ -32,6 +33,9 @@ is_room_2(Room) ?>
     
 is_dining_room(Room) ?>
     has_type(Room, suturo:'DiningRoom').
+
+is_pantry(Room) ?>
+    has_type(Room, suturo:'Pantry').
 
 %% new_room_type(+Type) is semidet.
 %
