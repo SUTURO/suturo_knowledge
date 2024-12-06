@@ -10,7 +10,8 @@
             abweichung(+,+,-),
             rsp(r,-),
             optimale_position(+,+,-),
-            are_neighbours(-),
+            are_neighbours(-,-,-),
+            shortest_path_d(r,r,-,-,-),
             are_neighbours2(-)
           ]).
 
@@ -93,23 +94,44 @@ optimale_position(P, Punkte, BesteAbweichung) :-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % determine neighbouring rooms using entry and exit points
-% der output ist nun eine Liste der Form [Room, Boom,E]
+
+% der output ist nun eine Liste der Form [Room, Boom, E]
 % nun muss man diese Räume als Nachbarn festlegen, Kante ist dabei je E
 % Baue Baum und dann Breitensuche implementieren
-
-are_neighbours(Neighbours) :-
+% setof könnte verwendet werden, um distinct zu machen 
+are_neighbours(Room, Boom, E) :-
     is_room_2(Room),
     is_room_2(Boom),
     is_exit_from(E, Room),
     check_inside_room(E, Boom).
 
-are_neighbours2(Neighbours) :-
+are_neighbours2(Results) :-
     findall([Room, Boom, E], (
         is_room_2(Room), 
         is_room_2(Boom), 
         is_exit_from(E, Room), 
         check_inside_room(E, Boom)
         ), Results).
+
+% shortest path with dijkstra
+shortest_path_d(Start, Goal, Path, Exits, Cost) :-
+    dijkstra([node(Start, [], [], 0)], [], Goal, Path, Exits, Cost).
+
+
+dijkstra([node(Goal, Path, Exits, Cost)|_], _, Goal, FinalPath, FinalExits, Cost) :-
+    reverse([Goal|Path], FinalPath), % Ziel erreicht, Pfad ausgeben
+    reverse(Exits, FinalExits). 
+
+dijkstra([node(Current, Path, Exits, Cost)|Queue], Visited, Goal, FinalPath, FinalExits, FinalCost) :-
+    findall(node(Next, [Current|Path], [Exit|Exits], NewCost),
+        ( are_neighbours(Current, Next, Exit), % Nachbarn finden
+            \+ memberchk(node(Next, _, _,_), Visited), % Noch nicht besucht
+            NewCost is Cost + 1 % Kosten um 1 erhöhen
+        ),
+        Neighbors),
+    append(Queue, Neighbors, NewQ),
+    sort(3, @=<, NewQ, SortedQ), % Nach Kosten sortieren
+    dijkstra(SortedQ, [node(Current, Path, Exit, Cost)|Visited], Goal, FinalPath, FinalExits, FinalCost).
 
 
     %is_room_2(Rooms),is_dining_room(D), is_kitchen(K),is_exit_from(E,D),check_inside_room(E,Rooms).
