@@ -46,6 +46,7 @@ room_start_position(Room, AvgX,AvgY) :-
     average(Xs, AvgX),
     average(Ys, AvgY).
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % baue liste aus Xs und Ys, dann erst average 
 % if in einem Objekt, weil 3 Tisch ein einer Reihe
 
@@ -69,7 +70,6 @@ rsp(Room, D) :-
     XYs),
     abstand(X,Y,D).
 
-
 abstand((X1, Y1), (X2, Y2), D) :-
     writeln(X1),
     writeln(Y1),
@@ -92,19 +92,19 @@ optimale_position(P, Punkte, BesteAbweichung) :-
     abweichung(P, Punkte, BesteAbweichung).
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % determine neighbouring rooms using entry and exit points
+% setof könnte verwendet werden, um distinct zu machen, je nachdem, ob gerichtete Kanten oder not
+% Cost ggf noch anpassen, aktuell: Anzahl an Exits die nacheinander angesteuert werden müssen
 
-% der output ist nun eine Liste der Form [Room, Boom, E]
-% nun muss man diese Räume als Nachbarn festlegen, Kante ist dabei je E
-% Baue Baum und dann Breitensuche implementieren
-% setof könnte verwendet werden, um distinct zu machen 
+% are_neighbours(-,-,-)
 are_neighbours(Room, Boom, E) :-
     is_room_2(Room),
     is_room_2(Boom),
     is_exit_from(E, Room),
     check_inside_room(E, Boom).
 
+% are_neighbours(-,)
 are_neighbours2(Results) :-
     findall([Room, Boom, E], (
         is_room_2(Room), 
@@ -114,24 +114,23 @@ are_neighbours2(Results) :-
         ), Results).
 
 % shortest path with dijkstra
+% shortest_path_d(r,r,-,-,-)
+% example: is_kitchen(K), is_dining_room(D), shortest_path_d(K,D,P,E,C)
 shortest_path_d(Start, Goal, Path, Exits, Cost) :-
     dijkstra([node(Start, [], [], 0)], [], Goal, Path, Exits, Cost).
 
-
+% dijkstra algorithm for determining shortest path
 dijkstra([node(Goal, Path, Exits, Cost)|_], _, Goal, FinalPath, FinalExits, Cost) :-
-    reverse([Goal|Path], FinalPath), % Ziel erreicht, Pfad ausgeben
+    reverse([Goal|Path], FinalPath), % Abbruchbedingung
     reverse(Exits, FinalExits). 
 
 dijkstra([node(Current, Path, Exits, Cost)|Queue], Visited, Goal, FinalPath, FinalExits, FinalCost) :-
     findall(node(Next, [Current|Path], [Exit|Exits], NewCost),
-        ( are_neighbours(Current, Next, Exit), % Nachbarn finden
-            \+ memberchk(node(Next, _, _,_), Visited), % Noch nicht besucht
-            NewCost is Cost + 1 % Kosten um 1 erhöhen
+        ( are_neighbours(Current, Next, Exit), % neighbours 
+            \+ memberchk(node(Next, _, _,_), Visited), % not visited nodes
+            NewCost is Cost + 1 % cost+1
         ),
         Neighbors),
     append(Queue, Neighbors, NewQ),
-    sort(3, @=<, NewQ, SortedQ), % Nach Kosten sortieren
+    sort(4, @=<, NewQ, SortedQ), % sort by cost
     dijkstra(SortedQ, [node(Current, Path, Exit, Cost)|Visited], Goal, FinalPath, FinalExits, FinalCost).
-
-
-    %is_room_2(Rooms),is_dining_room(D), is_kitchen(K),is_exit_from(E,D),check_inside_room(E,Rooms).
