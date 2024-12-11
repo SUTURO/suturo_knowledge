@@ -152,15 +152,18 @@ shortest_path_d(Start, Goal, Path, Exits, Cost) :-
     dijkstra([node(Current, Path, Exits, Cost)|Queue], Visited, Goal, FinalPath, FinalExits, FinalCost) :-
         findall(node(Next, [Current|Path], [Exit|Exits], NewCost),
             ( are_neighbours(Current, Next, Exit, Distance),
-              \+ memberchk(node(Next, _, _, _), Visited),
+              \+ memberchk(Next, Path),
+              %\+ memberchk(node(Next, _, _, _), Visited),
               NewCost is Cost + Distance
             ),
             Neighbors),
+            writeln(['Neighbors:', Neighbors]),
         ( Neighbors = [] ->
             writeln(['No neighbors for:', Current]),
-            fail
-        ; true ),
+            dijkstra(Queue, Visited, Goal, FinalPath, FinalExits, FinalCost)
+        ; true),
         append(Queue, Neighbors, NewQueue),
+        writeln(['NewQueue:', NewQueue]),
         sort(4, @=<, NewQueue, SortedQueue),
         dijkstra(SortedQueue, [node(Current, Path, Exits, Cost)|Visited], Goal, FinalPath, FinalExits, FinalCost).
     
