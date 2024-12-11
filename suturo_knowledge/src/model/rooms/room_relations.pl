@@ -4,12 +4,7 @@
             room_entry(r,-),
             room_exit(r,-),
             is_inside_of(r,r),
-            room_start_position(r,-,-),
-            average(+,-),
-            abstand(+,+,-),
-            abweichung(+,+,-),
             rsp(r,-),
-            optimale_position(+,+,-),
             are_neighbours(-,-,-),
             shortest_path_d(r,r,-,-,-),
             are_neighbours2(-)
@@ -34,33 +29,10 @@ room_exit(Room, Pose) ?>
 is_inside_of(Object, Room) ?+>
     triple(Object, soma:isInsideOf, Room).
 
-% get a starting pose in a room without collision
-room_start_position(Room, AvgX,AvgY) :-
-    findall([X,Y], 
-    (   
-        is_inside_of(Object, Room),
-        object_pose(Object, [map, [X,Y,_], _])
-    ), 
-    XYs),
-    transpose(XYs, [Xs, Ys]),
-    average(Xs, AvgX),
-    average(Ys, AvgY).
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% baue Liste aus Xs und Ys, dann erst average 
-% if in einem Objekt, weil 3 Tische in einer Reihe
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-average(List, Average):- 
-    sumlist(List, Sum),
-    length(List, Length),
-    Length > 0, 
-    Average is Sum / Length.
-
-
-% Eine andere Möglichkeit ist die Suche nach einem Punkt,
-%  bei dem die maximale Abweichung der Abstände zu allen 
-%   anderen Punkten minimiert wird. 
-
+% find a starting point that does not collide with any objects in the room
 rsp(Room, D) :-
     findall((X,Y), 
     (   
@@ -70,42 +42,20 @@ rsp(Room, D) :-
     XYs),
     best_place(XYs,D).
 
-abstand((X1, Y1), (X2, Y2), D) :-
-    writeln(X1),
-    writeln(Y1),
-    A is (X2 - X1) * (X2 - X1),
-    B is (Y2 - Y1) * (Y2 - Y1),
-    I is A + B,
-    D is sqrt(I).
-
-abweichung(P, Punkte, Abweichung) :-
-    findall(D, (member(Pi, Punkte), 
-    abstand(P, Pi, D)), Distanzen), 
-    min_list(Distanzen, MinD),
-    max_list(Distanzen, MaxD),
-    Abweichung is MaxD - MinD.
-
-optimale_position(P, Punkte, BesteAbweichung) :-
-    zwischen(-100, 100, X),  % Grenzen definieren
-    zwischen(-100, 100, Y),
-    P = (X, Y),
-    abweichung(P, Punkte, BesteAbweichung).
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
+% create grid points based on object coordinates
+% delete occupied points
 best_place(Objects, BestPoint) :-
-    generate_grid_from_objects(Objects, 0.5, Grid), % Erstelle Gitterpunkte basierend auf den Objektkoordinaten
-    exclude(occupied_point(Objects), Grid, FreePoints), % Entferne belegte Punkte
+    generate_grid_from_objects(Objects, 0.5, Grid), 
+    exclude(occupied_point(Objects), Grid, FreePoints),
     find_best_point(FreePoints, Objects, BestPoint).
 
-
+% determine min and max expansion based on object coordinates
 generate_grid_from_objects(Objects, Step, Grid) :-
-    % determine min and max Ausdehnung based on object coordinates
     findall(X, member((X, _), Objects), Xs),
     findall(Y, member((_, Y), Objects), Ys),
     min_list(Xs, MinX), max_list(Xs, MaxX),
     min_list(Ys, MinY), max_list(Ys, MaxY),
-    % grid with Grenzen 
+    % grid with boundaries 
     findall((X, Y),
             (   my_between(0, ceil((MaxX - MinX) / Step), IX),
                 my_between(0, ceil((MaxY - MinY) / Step), IY),
@@ -115,10 +65,11 @@ generate_grid_from_objects(Objects, Step, Grid) :-
             Grid).
 
 % check, whether there is something on this point
+% and keep a distance of 50 cm to objects
 occupied_point(Objects, (X, Y)) :-
     member((ObjX, ObjY), Objects),
     distance((ObjX, ObjY), (X, Y), Dist),
-    Dist < 0.5. % keep distance of 50 cm to objects
+    Dist < 0.5. 
 
 % find the best point to declare as starting point in a room
 find_best_point([Point], Objects, Point) :- !.
@@ -126,11 +77,17 @@ find_best_point([Point | Rest], Objects, BestPoint) :-
     max_distance_to_objects(Point, Objects, MaxDist),
     find_best_point(Rest, Objects, OtherBestPoint),
     max_distance_to_objects(OtherBestPoint, Objects, OtherMaxDist),
-    (   MaxDist < OtherMaxDist -> BestPoint = Point ; BestPoint = OtherBestPoint ).
+    (   MaxDist < OtherMaxDist -> 
+        BestPoint = Point ; 
+        BestPoint = OtherBestPoint 
+    ).
 
 % find the max distance to all objects in the room
 max_distance_to_objects(Point, Objects, MaxDist) :-
-    findall(Dist, (member(Obj, Objects), distance(Point, Obj, Dist)), Distances),
+    findall(Dist, 
+                (member(Obj, Objects),
+                distance(Point, Obj, Dist)
+                ), Distances),
     max_list(Distances, MaxDist).
 
 % calculate euclidean distance 
@@ -161,7 +118,7 @@ are_neighbours(Room, Boom, E) :-
     is_exit_from(E, Room),
     check_inside_room(E, Boom).
 
-% are_neighbours(-,)
+% are_neighbours2(-)
 are_neighbours2(Results) :-
     findall([Room, Boom, E], (
         is_room_2(Room), 
@@ -176,18 +133,17 @@ are_neighbours2(Results) :-
 shortest_path_d(Start, Goal, Path, Exits, Cost) :-
     dijkstra([node(Start, [], [], 0)], [], Goal, Path, Exits, Cost).
 
-% dijkstra algorithm for determining shortest path
 dijkstra([node(Goal, Path, Exits, Cost)|_], _, Goal, FinalPath, FinalExits, Cost) :-
-    reverse([Goal|Path], FinalPath), % Abbruchbedingung
+    reverse([Goal|Path], FinalPath), 
     reverse(Exits, FinalExits). 
 
 dijkstra([node(Current, Path, Exits, Cost)|Queue], Visited, Goal, FinalPath, FinalExits, FinalCost) :-
     findall(node(Next, [Current|Path], [Exit|Exits], NewCost),
-        ( are_neighbours(Current, Next, Exit), % neighbours 
+        ( are_neighbours(Current, Next, Exit),
             \+ memberchk(node(Next, _, _,_), Visited), % not visited nodes
-            NewCost is Cost + 1 % cost+1
+            NewCost is Cost + 1 
         ),
         Neighbors),
     append(Queue, Neighbors, NewQ),
-    sort(4, @=<, NewQ, SortedQ), % sort by cost
+    sort(4, @=<, NewQ, SortedQ), % sort by cost = 4. argument
     dijkstra(SortedQ, [node(Current, Path, Exit, Cost)|Visited], Goal, FinalPath, FinalExits, FinalCost).
