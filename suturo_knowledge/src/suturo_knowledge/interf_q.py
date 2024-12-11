@@ -288,7 +288,7 @@ class InterfacePlanningKnowledge:
         
         if len(sol) == 0:
             print("Sorry, object is not known to us!")
-            return False
+            return None
         
         else: 
             q2 = "fragility_new("+ "\'" + name.lower() + "\')."
@@ -314,7 +314,7 @@ class InterfacePlanningKnowledge:
         
         if len(sol) == 0:
             print("Sorry, object is not known to us!")
-            return False
+            return None
         
         else: 
             q2 = "is_perishable("+ "\'" + name.lower() + "\')."
@@ -385,40 +385,29 @@ class InterfacePlanningKnowledge:
         print(name)
 
         # type 
-        q1 = "what_object(" + name + ", X), once(subclass_of(X, Y))."
-        obj_type = prolog.once(q1)
+        q1 = "what_object(" + name + ", Y), once(subclass_of(Y, X))."
+        obj_type = check_result(prolog.once(q1))
         print(obj_type)
 
         # fragility
-        obj_fragile = self.fragility_check(name)
+        obj_fragile = check_resultt(self.fragility_check(name))
         print(obj_fragile)
         
         #color 
         q2 = "has_value(" + name + ", suturo:hasColor, X)."
-        obj_color = prolog.once(q2)
+        obj_color = check_result(prolog.once(q2))
         print(obj_color)
 
-        if obj_color == []:
-            obj_color = None
-        else: 
-            obj_color = obj_color['X']
-
         # perishable
-        obj_perish = self.is_perishable(name)
+        obj_perish = check_resultt(self.is_perishable(name))
         print(obj_perish)
 
         # grasp pose
         q4 = "grasp_pose(" + name + ", X)."
-        obj_grasp = prolog.once(q4)
+        obj_grasp = check_result(prolog.once(q4))
         print(obj_grasp)
 
-        if obj_grasp == []:
-            obj_grasp = None
-        else: 
-            obj_grasp = obj_grasp['X']
-       
-
-        json = create_json(name1, crop_plus(obj_type['Y']), obj_color,obj_fragile, obj_perish, obj_grasp)
+        json = create_json(name1, crop_plus(obj_type), obj_color,obj_fragile, obj_perish, obj_grasp)
 
         return json
 
@@ -515,6 +504,23 @@ def crop3(string):
         #print("de:" + de_string)    
         return de_string
 
+
+#########################################################
+# check whether the result is None 
+def check_result(q_result):
+    if q_result == []:
+        return None
+    else: 
+        return q_result['X']
+
+# check whether the result is None 
+def check_resultt(q_result):
+    if q_result == []:
+        return None
+    else: 
+        return q_result
+
+
 #########################################################
 # change or add characteristics if needed
 def create_json(input,type, color, fragile, perishable, grasp_pose):
@@ -530,6 +536,7 @@ def create_json(input,type, color, fragile, perishable, grasp_pose):
     }
 
     json_string = json.dumps(data, indent=4)
-
+    print(json_string)
     return json_string
+    
 
