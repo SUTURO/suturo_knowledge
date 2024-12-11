@@ -140,7 +140,7 @@ are_neighbours2(Results) :-
 % shortest_path_d(r,r,-,-,-)
 % example: is_kitchen(K), is_dining_room(D), shortest_path_d(K,D,P,E,C)
 shortest_path_d(Start, Goal, Path, Exits, Cost) :-
-    dijkstra([node(Start, [], [], 0)], [], Goal, Path, Exits, Cost).
+    dijkstra([node(Start, [], [], 0)], [], Goal, Path, Exits, Cost), !.
 
     dijkstra([], _, _, _, _, _) :- 
         writeln('No path found'), fail.
@@ -163,16 +163,13 @@ shortest_path_d(Start, Goal, Path, Exits, Cost) :-
             dijkstra(Queue, Visited, Goal, FinalPath, FinalExits, FinalCost)
         ; true),
         append(Queue, Neighbors, NewQueue),
-        writeln(['NewQueue:', NewQueue]),
+        %writeln(['NewQueue:', NewQueue]),
         sort(4, @=<, NewQueue, SortedQueue),
         dijkstra(SortedQueue, [node(Current, Path, Exits, Cost)|Visited], Goal, FinalPath, FinalExits, FinalCost).
     
-
+% determine euclidean distance between starting points of 2 rooms 
 distance_between_rooms(Room1, Room2, Distance) :-
-    % Bestimme die beste Position in beiden Räumen
     rsp(Room1, ['map', [X1, Y1, _], _]),
     rsp(Room2, ['map', [X2, Y2, _], _]),
-    % Berechne die Distanz zwischen den Positionen
     distance((X1, Y1), (X2, Y2), Distance).
         
-    
