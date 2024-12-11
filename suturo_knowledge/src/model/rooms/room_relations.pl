@@ -5,9 +5,11 @@
             room_exit(r,-),
             is_inside_of(r,r),
             rsp(r,-),
-            are_neighbours(-,-,-),
+            are_neighbours(-,-,-,-),
             shortest_path_d(r,r,-,-,-),
-            are_neighbours2(-)
+            are_neighbours2(-),
+            format_pose(+,-),
+            distance_between_rooms(+,+,-)
           ]).
 
 :- use_module(library(clpfd)).
@@ -33,14 +35,15 @@ is_inside_of(Object, Room) ?+>
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % find a starting point that does not collide with any objects in the room
-rsp(Room, D) :-
+rsp(Room, Pose) :-
     findall((X,Y), 
     (   
         is_inside_of(Object, Room),
         object_pose(Object, [map, [X,Y,_], _])
     ), 
     XYs),
-    best_place(XYs,D).
+    best_place(XYs,D),
+    format_pose(D,Pose).
 
 % create grid points based on object coordinates
 % delete occupied points
@@ -106,17 +109,23 @@ my_between(Lower, Upper, X) :-
     my_between(Next, Upper, X).
 
 
+% format a pose where you only get x and y coordinates
+format_pose((X, Y), ['map', [X, Y, 0], [0, 0, 0, 1]]).
+
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % determine neighbouring rooms using entry and exit points
 % setof könnte verwendet werden, um distinct zu machen, je nachdem, ob gerichtete Kanten oder not
 % Cost ggf noch anpassen, aktuell: Anzahl an Exits die nacheinander angesteuert werden müssen
 
-% are_neighbours(-,-,-)
-are_neighbours(Room, Boom, E) :-
+% are_neighbours(-,-,-,-)
+are_neighbours(Room, Boom, E, Distance) :-
     is_room_2(Room),
     is_room_2(Boom),
     is_exit_from(E, Room),
-    check_inside_room(E, Boom).
+    check_inside_room(E, Boom),
+    distance_between_rooms(Room, Boom, Distance).
 
 % are_neighbours2(-)
 are_neighbours2(Results) :-
@@ -133,17 +142,34 @@ are_neighbours2(Results) :-
 shortest_path_d(Start, Goal, Path, Exits, Cost) :-
     dijkstra([node(Start, [], [], 0)], [], Goal, Path, Exits, Cost).
 
-dijkstra([node(Goal, Path, Exits, Cost)|_], _, Goal, FinalPath, FinalExits, Cost) :-
-    reverse([Goal|Path], FinalPath), 
-    reverse(Exits, FinalExits). 
+    dijkstra([], _, _, _, _, _) :- 
+        writeln('No path found'), fail.
+    
+    dijkstra([node(Goal, Path, Exits, Cost)|_], _, Goal, FinalPath, FinalExits, Cost) :-
+        reverse([Goal|Path], FinalPath), 
+        reverse(Exits, FinalExits).
+    
+    dijkstra([node(Current, Path, Exits, Cost)|Queue], Visited, Goal, FinalPath, FinalExits, FinalCost) :-
+        findall(node(Next, [Current|Path], [Exit|Exits], NewCost),
+            ( are_neighbours(Current, Next, Exit, Distance),
+              \+ memberchk(node(Next, _, _, _), Visited),
+              NewCost is Cost + Distance
+            ),
+            Neighbors),
+        ( Neighbors = [] ->
+            writeln(['No neighbors for:', Current]),
+            fail
+        ; true ),
+        append(Queue, Neighbors, NewQueue),
+        sort(4, @=<, NewQueue, SortedQueue),
+        dijkstra(SortedQueue, [node(Current, Path, Exits, Cost)|Visited], Goal, FinalPath, FinalExits, FinalCost).
+    
 
-dijkstra([node(Current, Path, Exits, Cost)|Queue], Visited, Goal, FinalPath, FinalExits, FinalCost) :-
-    findall(node(Next, [Current|Path], [Exit|Exits], NewCost),
-        ( are_neighbours(Current, Next, Exit),
-            \+ memberchk(node(Next, _, _,_), Visited), % not visited nodes
-            NewCost is Cost + 1 
-        ),
-        Neighbors),
-    append(Queue, Neighbors, NewQ),
-    sort(4, @=<, NewQ, SortedQ), % sort by cost = 4. argument
-    dijkstra(SortedQ, [node(Current, Path, Exit, Cost)|Visited], Goal, FinalPath, FinalExits, FinalCost).
+distance_between_rooms(Room1, Room2, Distance) :-
+    % Bestimme die beste Position in beiden Räumen
+    rsp(Room1, ['map', [X1, Y1, _], _]),
+    rsp(Room2, ['map', [X2, Y2, _], _]),
+    % Berechne die Distanz zwischen den Positionen
+    distance((X1, Y1), (X2, Y2), Distance).
+        
+    
