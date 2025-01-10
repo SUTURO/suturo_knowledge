@@ -14,6 +14,8 @@
 		has_position(+,-),
 		has_value(+,r,-),
 		middle(+,-),
+		save_person_data(+,+,+,+,+),
+		call_person_data(?,?,?,?,?),
 		exit_pose(+,-),
 		entry_pose(+,-),
 		path(?,?)
@@ -169,6 +171,21 @@ exit_pose(kitchen, [map, [1.2, -0.218, 0] , [0, 0, 0, 1.0]]).
 exit_pose(living_room, [map, [3.02, 2.53, 0] , [0, 0, 0, 1.0]]).
 exit_pose(dining_room, [map, [0.73, 3.77, 0] , [0, 0, 0, 1.0]]).
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% call_person_data(+ID, ?Name, ?Drink, ?Interest, ?Profession)
+call_person_data(ID, Name, Drink, Interest, Profession):-
+	kb_call(holds(ID, suturo:hasCustomerName, Name)), % ID + Name 
+	kb_call(holds(ID, suturo:hasFavouriteDrink, Drink)), % Drink
+	kb_call(holds(ID, suturo:hasInterest, Interest)), % Interest
+	kb_call(holds(ID, suturo:hasProfession, Profession)). % Profession
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% save_person_data(+ID, +Name, +Drink, +Interest, +Profession)
+save_person_data(ID, Name, Drink, Interest, Profession):-
+	kb_project(triple(ID, suturo:hasCustomerName, Name)), % ID + Name 
+ 	kb_project(triple(ID, suturo:hasFavouriteDrink, Drink)), % Drink
+	kb_project(triple(ID, suturo:hasInterest, Interest)), % Interest
+	kb_project(triple(ID, suturo:hasProfession, Profession)). % Profession
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% get_pose(+ ObjName, r Object)
