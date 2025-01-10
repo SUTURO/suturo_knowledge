@@ -33,8 +33,10 @@ def get_obj_info(Object):
     inter = InterfacePlanningKnowledge()
     rospy.loginfo("Interface is called successfully")
 
-    return inter.obj_characteristics(Object)
-    print(result)
+    return inter.test_knowrob_client(Object)
+    #inter.obj_characteristics(Object)
+
+    #print(result)
     #return str(result)
   
 if __name__ == '__main__':
