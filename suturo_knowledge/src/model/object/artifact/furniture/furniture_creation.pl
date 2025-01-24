@@ -93,15 +93,10 @@ init_furnitures :-
 % @param UrdfLink Urdf link
 %
 init_furniture(UrdfLink) :-
-    ros_info("der UrdfLink: ~w", [UrdfLink]),
     urdf_link_class(UrdfLink, ClassTerm, RobocupName),
-    ros_info("der ClassTerm: ~w", [ClassTerm]),
     rdf_global_id(ClassTerm, Class),
-    ros_info("de Class: ~w", [Class]),
     furniture_pose(UrdfLink, Pose),
-    ros_info("de Pose: ~w", [Pose]),
     furniture_shape(UrdfLink, ShapeTerm),
-    ros_info("de shape: ~w", [ShapeTerm]),
     create_object(Furniture, Class, Pose, [shape(ShapeTerm), data_source(semantic_map)]),
     ros_info("Created semantic map object for ~w", [UrdfLink]),
     kb_project((has_urdf_name(Furniture, UrdfLink),

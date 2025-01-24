@@ -8,8 +8,16 @@
             are_neighbours(-,-,-,-),
             shortest_path_d(r,r,-,-,-),
             are_neighbours2(-),
+            are_neighbours3(-,-,-),
             format_pose(+,-),
-            distance_between_rooms(+,+,-)
+            distance_between_rooms(+,+,-),
+            distance_between_rooms_1(+,+,+,-),
+            distance2(+,+,-),
+            door_penalty(+,+,+,-),
+            astar(+,+,-,-),
+            heuristic(+,+,+,-),
+            calculate_fn(+,-),
+            neighbors_from(+,-)
           ]).
 
 :- use_module(library(clpfd)).
@@ -30,6 +38,9 @@ room_exit(Room, Pose) ?>
 
 is_inside_of(Object, Room) ?+>
     triple(Object, soma:isInsideOf, Room).
+
+is_room_middle(Room, Pose) ?>
+    is_at(Room, Pose).
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -71,7 +82,7 @@ generate_grid_from_objects(Objects, Step, Grid) :-
 % and keep a distance of 50 cm to objects
 occupied_point(Objects, (X, Y)) :-
     member((ObjX, ObjY), Objects),
-    distance((ObjX, ObjY), (X, Y), Dist),
+    distance2((ObjX, ObjY), (X, Y), Dist),
     Dist < 0.5. 
 
 % find the best point to declare as starting point in a room
@@ -89,15 +100,23 @@ find_best_point([Point | Rest], Objects, BestPoint) :-
 max_distance_to_objects(Point, Objects, MaxDist) :-
     findall(Dist, 
                 (member(Obj, Objects),
-                distance(Point, Obj, Dist)
+                distance2(Point, Obj, Dist)
                 ), Distances),
     max_list(Distances, MaxDist).
 
 % calculate euclidean distance 
-distance((X1, Y1), (X2, Y2), Dist) :-
+distance2((X1, Y1), (X2, Y2), Dist) :-
     DX is X1 - X2,
     DY is Y1 - Y2,
     Dist is sqrt(DX * DX + DY * DY).
+
+% calculate euclidean distance with 3 coordinates
+distance3((X1, Y1), (X2, Y2), (X3, Y3), Dist) :-
+    DX1 is X1 - X2,
+    DX2 is X2 - X3,
+    DY1 is Y1 - Y2,
+    DY2 is Y2 - Y3,
+    Dist is sqrt(DX1 * DX1 + DY1 * DY1 + DX2 * DX2 + DY2 * DY2).
 
 % like "between": generate values within a certain value range
 % for trying to find a suitable value 
@@ -113,7 +132,6 @@ my_between(Lower, Upper, X) :-
 format_pose((X, Y), ['map', [X, Y, 0], [0, 0, 0, 1]]).
 
 
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % determine neighbouring rooms using entry and exit points
 % setof könnte verwendet werden, um distinct zu machen, je nachdem, ob gerichtete Kanten oder not
@@ -125,7 +143,15 @@ are_neighbours(Room, Boom, E, Distance) :-
     is_room_2(Boom),
     is_exit_from(E, Room),
     check_inside_room(E, Boom),
-    distance_between_rooms(Room, Boom, Distance).
+    %distance_between_rooms(Room, Boom, Distance).
+    distance_between_rooms_1(Room, Boom, E, Distance).
+
+% are_neighbours(-,-,-,-)
+are_neighbours3(Room, Boom, E) :-
+    is_room_2(Room),
+    is_room_2(Boom),
+    is_exit_from(E, Room),
+    check_inside_room(E, Boom).
 
 % are_neighbours2(-)
 are_neighbours2(Results) :-
@@ -135,6 +161,17 @@ are_neighbours2(Results) :-
         is_exit_from(E, Room), 
         check_inside_room(E, Boom)
         ), Results).
+
+neighbors_from(StartRoom, List) :-
+    findall([Exit, Neighbors],  
+        (is_exit_from(Exit, StartRoom),
+        object_pose(Exit, ['map', [X1, Y1, _], _]),
+        is_entry_to(Entry, Neighbors),
+        object_pose(Entry, ['map', [X2, Y2, _], _]),
+        X1 =:= X2, 
+        Y1 =:= Y2),
+    List).
+
 
 % shortest path with dijkstra
 % shortest_path_d(r,r,-,-,-)
@@ -153,7 +190,7 @@ shortest_path_d(Start, Goal, Path, Exits, Cost) :-
         findall(node(Next, [Current|Path], [Exit|Exits], NewCost),
             ( are_neighbours(Current, Next, Exit, Distance),
               \+ memberchk(Next, Path),
-              %\+ memberchk(node(Next, _, _, _), Visited),
+              \+ memberchk(node(Next, _, _, _), Visited),
               NewCost is Cost + Distance
             ),
             Neighbors),
@@ -167,9 +204,121 @@ shortest_path_d(Start, Goal, Path, Exits, Cost) :-
         sort(4, @=<, NewQueue, SortedQueue),
         dijkstra(SortedQueue, [node(Current, Path, Exits, Cost)|Visited], Goal, FinalPath, FinalExits, FinalCost).
     
-% determine euclidean distance between starting points of 2 rooms 
+% determine euclidean distance between starting points of 2 rooms
+% distance_between_rooms(+,+,-)
 distance_between_rooms(Room1, Room2, Distance) :-
     rsp(Room1, ['map', [X1, Y1, _], _]),
     rsp(Room2, ['map', [X2, Y2, _], _]),
-    distance((X1, Y1), (X2, Y2), Distance).
+    distance2((X1, Y1), (X2, Y2), Distance).
         
+% determine distance from door to door as sum of distance from door1 to room middle and room middle to door2
+% distance_between_rooms_1(+,+,+,-)
+distance_between_rooms_1(StartRoom, GoalRoom, Exit, Distance) :-
+    object_pose(StartRoom, ['map', [X1, Y1, _], _]),
+    object_pose(Exit, ['map', [X2, Y2, _], _]),
+    object_pose(GoalRoom, ['map', [X3, Y3, _], _]),
+    distance3((X1, Y1), (X2, Y2), (X3, Y3),  Distance).
+
+% gives a penalty for narrow passages between rooms
+% door_penalty(+,+,+,-)
+door_penalty(StartRoom, GoalRoom, StartExit, Penalty) :-
+    (StartRoom = GoalRoom -> 
+        Penalty is 0
+    ;
+    is_entry_to(EntryStart, StartRoom),
+    is_exit_from(ExitGoal, GoalRoom),
+    object_pose(EntryStart, ['map', [X1, Y1, _], _]),
+    object_pose(ExitGoal, ['map', [X2, Y2, _], _]),
+    X1 =:= X2, 
+    Y1 =:= Y2,
+    is_entry_to(EntryGoal, GoalRoom),
+    object_pose(EntryGoal, ['map', [X3, Y3, _], _]),
+    object_pose(StartExit, ['map', [X4, Y4, _], _]),
+    X3 =:= X4,
+    Y3 =:= Y4,
+    distance2((X1,Y1), (X3,Y3), Distance),
+    calculate_penalty(Distance, Penalty)).
+
+% calculates a penalty score depending on width of passage 
+% calculate_penalty(+,-)
+calculate_penalty(Distance, Penalty) :-
+    Reference is 0.84,
+    ( Distance < Reference ->
+        Penalty is Reference / Distance % Für Distance < 0.84: Penalty wächst
+    ;
+        Penalty is Distance / Reference % Für Distance >= 0.84: Penalty sinkt
+    ).
+        
+% einzeln ausprobieren, wo nicht lüppt
+% dann noch hinzufügen, dass der Abstand berechnet wird und ein Faktor, wie viel Penalty welcher Abstand gibt(0.5 = 1m penalty)
+% A* einfügen die heuristic ist der spööd, die distance_between_rooms_1 + door_penalty
+% 43 cm ist toya fett
+% dist ist die Breite des Durchgangs für Durchgänge < 84 cm 
+% 84 cm = door 
+
+
+% A* Algorithmus
+% astar(+,+,-,-)
+astar(Start, Goal, Path, Cost) :-
+    astar_search([node(Start, [], 0, 100)], [], Goal, Path, Cost),
+    writeln("zwei").
+
+astar_search([node(Goal, Path, _, _)|_], _, Goal, FinalPath, Cost) :-
+    writeln("hier"),
+    reverse([Goal|Path], FinalPath), !.
+
+astar_search([node(Current, Path, Cost, Heuristic)|Queue], Visited, Goal, FinalPath, FinalCost) :-
+    (   writeln(['Current:', Current]),
+        Current == Goal -> 
+            writeln("Ziel erreicht!"), 
+            reverse([Goal|Path], FinalPath), ! 
+    ; 
+        true
+    ),
+    findall(node(Next, [Current|Path], NewCost, NextHeuristic),
+        ( writeln("los"),
+          neighbors_from(Current, [[Exit, Next]]), 
+          writeln("drei"),
+          \+ memberchk(Next, Path),
+          writeln("vier"),
+          \+ memberchk(node(Next, _, _, _, _), Visited),
+          writeln("fuenf"),
+          distance_between_rooms_1(Current, Next, Exit, Distance),
+          writeln("sechs"),
+          NewCost is Cost + Distance,
+          writeln(['Next:', Next]),
+          writeln(['Goal:', Goal]),
+          writeln(['Exit:', Exit]),
+          heuristic(Next, Goal, Exit, NextHeuristic)
+        ),
+        Neighbors),
+    % Calculate f(n) for each neighbor
+    writeln("sieben"),
+    maplist(calculate_fn, Neighbors, NeighborsWithFn),
+    writeln(['NeigWFN:', NeighborsWithFn]),
+    writeln("acht"),
+    sort(5, @=<, NeighborsWithFn, SortedNeighbors), % Sort by f(n)
+    writeln(['SortNeig:', SortedNeighbors]),
+    writeln("neun"),
+    append(Queue, SortedNeighbors, NewQueue),
+    writeln("zehn"),
+    writeln(['NewQueue:', NewQueue]),
+    writeln(['Goal:', Goal]),
+    writeln(['FinalPath:', FinalPath]),
+    writeln(['FinalCost:', FinalCost]),
+    astar_search(NewQueue, [node(Current, Path, Cost, Heuristic)|Visited], Goal, FinalPath, FinalCost).
+
+% calculate_fn(+,-)
+calculate_fn(node(Current, Path, Cost, Heuristic), node(Current, Path, Cost, Heuristic, F)) :-
+    F is Cost + Heuristic.
+
+
+% heuristic: combination of door_penalty and distance_between_rooms_1
+% heuristics(+,+,+,-)
+heuristic(CurrentRoom, GoalRoom, Exit, Heuristic) :-
+    writeln("hier auch"),
+    door_penalty(CurrentRoom, GoalRoom, Exit, Penalty),
+    writeln("zwei"), 
+    distance_between_rooms_1(CurrentRoom, GoalRoom, Exit, Distance),
+    writeln("drei"),
+    Heuristic is Penalty + Distance.
