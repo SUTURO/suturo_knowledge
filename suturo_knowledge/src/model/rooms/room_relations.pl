@@ -165,12 +165,17 @@ are_neighbours2(Results) :-
 neighbors_from(StartRoom, List) :-
     findall([Exit, Neighbors],  
         (is_exit_from(Exit, StartRoom),
+        writeln(['is_exit_from:', Exit]),
         object_pose(Exit, ['map', [X1, Y1, _], _]),
         is_entry_to(Entry, Neighbors),
+        writeln(['is_entry_from:', Entry]),
         object_pose(Entry, ['map', [X2, Y2, _], _]),
-        X1 =:= X2, 
-        Y1 =:= Y2),
-    List).
+        X1 =:= X2,
+        writeln(['Werte X :', X1 =:= X2]),
+        Y1 =:= Y2,
+        writeln(['Werte Y :', Y1 =:= Y2])),
+    List),
+    writeln(['Generierte Liste:' , List]).
 
 
 % shortest path with dijkstra
@@ -225,6 +230,8 @@ door_penalty(StartRoom, GoalRoom, StartExit, Penalty) :-
     (StartRoom = GoalRoom -> 
         Penalty is 0
     ;
+    writeln(['StartRoom:', StartRoom]),
+    is_exit_from(StartExit, StartRoom),
     is_entry_to(EntryStart, StartRoom),
     is_exit_from(ExitGoal, GoalRoom),
     object_pose(EntryStart, ['map', [X1, Y1, _], _]),
@@ -249,76 +256,47 @@ calculate_penalty(Distance, Penalty) :-
         Penalty is Distance / Reference % Für Distance >= 0.84: Penalty sinkt
     ).
         
-% einzeln ausprobieren, wo nicht lüppt
-% dann noch hinzufügen, dass der Abstand berechnet wird und ein Faktor, wie viel Penalty welcher Abstand gibt(0.5 = 1m penalty)
-% A* einfügen die heuristic ist der spööd, die distance_between_rooms_1 + door_penalty
-% 43 cm ist toya fett
-% dist ist die Breite des Durchgangs für Durchgänge < 84 cm 
-% 84 cm = door 
-
 
 % A* Algorithmus
-% astar(+,+,-,-)
 astar(Start, Goal, Path, Cost) :-
-    astar_search([node(Start, [], 0, 100)], [], Goal, Path, Cost),
-    writeln("zwei").
+    astar_search([node(Start, [], 0, 100)], [], Goal, Path, Cost).
 
-astar_search([node(Goal, Path, _, _)|_], _, Goal, FinalPath, Cost) :-
-    writeln("hier"),
-    reverse([Goal|Path], FinalPath), !.
+astar_search([node(Current, Path, G, H)|_], _, Current, FinalPath, G) :-
+    reverse([Current|Path], FinalPath).
 
-astar_search([node(Current, Path, Cost, Heuristic)|Queue], Visited, Goal, FinalPath, FinalCost) :-
-    (   writeln(['Current:', Current]),
-        Current == Goal -> 
-            writeln("Ziel erreicht!"), 
-            reverse([Goal|Path], FinalPath), ! 
-    ; 
-        true
-    ),
-    findall(node(Next, [Current|Path], NewCost, NextHeuristic),
-        ( writeln("los"),
-          neighbors_from(Current, [[Exit, Next]]), 
-          writeln("drei"),
-          \+ memberchk(Next, Path),
-          writeln("vier"),
-          \+ memberchk(node(Next, _, _, _, _), Visited),
-          writeln("fuenf"),
-          distance_between_rooms_1(Current, Next, Exit, Distance),
-          writeln("sechs"),
-          NewCost is Cost + Distance,
-          writeln(['Next:', Next]),
-          writeln(['Goal:', Goal]),
-          writeln(['Exit:', Exit]),
-          heuristic(Next, Goal, Exit, NextHeuristic)
+astar_search([node(Current, Path, G, H)|Queue], Visited, Goal, FinalPath, FinalCost) :-
+    % find neighbors
+    findall(node(Next, [Current|Path], NewG, NewH),
+        (
+            are_neighbours3(Current, Next, Exit),
+            \+ memberchk(Next, Path),
+            \+ memberchk(node(Next, _, _, _), Visited),
+            distance_between_rooms_1(Current, Next, Exit, Distance),
+            NewG is G + Distance,
+            heuristic(Current, Next, Exit, NewH),
         ),
         Neighbors),
-    % Calculate f(n) for each neighbor
-    writeln("sieben"),
+    
+    % calculate (f(n)) and sort by it
     maplist(calculate_fn, Neighbors, NeighborsWithFn),
-    writeln(['NeigWFN:', NeighborsWithFn]),
-    writeln("acht"),
-    sort(5, @=<, NeighborsWithFn, SortedNeighbors), % Sort by f(n)
-    writeln(['SortNeig:', SortedNeighbors]),
-    writeln("neun"),
-    append(Queue, SortedNeighbors, NewQueue),
-    writeln("zehn"),
-    writeln(['NewQueue:', NewQueue]),
-    writeln(['Goal:', Goal]),
-    writeln(['FinalPath:', FinalPath]),
-    writeln(['FinalCost:', FinalCost]),
-    astar_search(NewQueue, [node(Current, Path, Cost, Heuristic)|Visited], Goal, FinalPath, FinalCost).
+    sort(5, @=<, NeighborsWithFn, SortedNeighbors),
+    maplist(remove_fn, SortedNeighbors, NeighborsWithoutFn),
 
-% calculate_fn(+,-)
-calculate_fn(node(Current, Path, Cost, Heuristic), node(Current, Path, Cost, Heuristic, F)) :-
-    F is Cost + Heuristic.
+    append(Queue, NeighborsWithoutFn, NewQueue),    
+    astar_search(NewQueue, [node(Current, Path, G, H)|Visited], Goal, FinalPath, FinalCost).
+
+%calculate_fn(+,-)
+calculate_fn(node(Current, Path, G, H), node(Current, Path, G, H, F)) :-
+    F is G + H.
+
+%remove the new node param to make it fit with the astar
+%remove_fn(+,-)
+remove_fn(node(Current, Path, G, H, _F), node(Current, Path, G, H)).
 
 
 % heuristic: combination of door_penalty and distance_between_rooms_1
 % heuristics(+,+,+,-)
 heuristic(CurrentRoom, GoalRoom, Exit, Heuristic) :-
-    writeln("hier auch"),
     door_penalty(CurrentRoom, GoalRoom, Exit, Penalty),
-    writeln("zwei"), 
     distance_between_rooms_1(CurrentRoom, GoalRoom, Exit, Distance),
-    writeln("drei"),
     Heuristic is Penalty + Distance.
