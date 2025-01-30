@@ -16,6 +16,7 @@
 		middle(+,-),
 		save_person_data(+,+,+,+,+),
 		call_person_data(?,?,?,?,?),
+		call_person_data_with_options(?,?,?,-,?,?),
 		exit_pose(+,-),
 		entry_pose(+,-),
 		path(?,?)
@@ -183,10 +184,15 @@ call_person_data(ID, Name, Drink, Interest, Profession):-
 %% save_person_data(+ID, +Name, +Drink, +Interest, +Profession)
 save_person_data(ID, Name, Drink, Interest, Profession):-
 	kb_project(triple(ID, suturo:hasCustomerName, Name)), % ID + Name 
- 	kb_project(triple(ID, suturo:hasFavouriteDrink, Drink)), % Drink
+	what_object(Drink, OwlDrink),
+ 	kb_project(triple(ID, suturo:hasFavouriteDrink, OwlDrink)), % Drink
 	kb_project(triple(ID, suturo:hasInterest, Interest)), % Interest
 	kb_project(triple(ID, suturo:hasProfession, Profession)). % Profession
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% get_pose(+ ObjName, r Object)
-%
+call_person_data_with_options(ID, Name, Drink, Option, Interest, Profession) :-
+	kb_call(holds(ID, suturo:hasCustomerName, Name)), % ID + Name 
+	kb_call(holds(ID, suturo:hasFavouriteDrink, Drink)), % Drink
+	kb_call(holds(ID, suturo:hasInterest, Interest)), % Interest
+	kb_call(holds(ID, suturo:hasProfession, Profession)), % Profession
+	findall(Options, (subclass_of(Options, Drink)), Option).
