@@ -267,13 +267,12 @@ astar_search([node(Current, Path, G, H)|_], _, Current, FinalPath, G) :-
 astar_search([node(Current, Path, G, H)|Queue], Visited, Goal, FinalPath, FinalCost) :-
     % find neighbors
     findall(node(Next, [Current|Path], NewG, NewH),
-        (
-            are_neighbours3(Current, Next, Exit),
+        (   are_neighbours3(Current, Next, Exit),
             \+ memberchk(Next, Path),
             \+ memberchk(node(Next, _, _, _), Visited),
             distance_between_rooms_1(Current, Next, Exit, Distance),
             NewG is G + Distance,
-            heuristic(Current, Next, Exit, NewH),
+            heuristic(Current, Next, Exit, NewH)
         ),
         Neighbors),
     
