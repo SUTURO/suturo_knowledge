@@ -5,6 +5,7 @@
 	  [
         %is_fragile(r),
 		what_object(+,r),
+		what_object_transitive(?,r),
 		fragility_new(+),
 		is_perishable(+),
 		have_same_class(+,+),
@@ -72,6 +73,39 @@ what_object(ObjName, Object) :-
 	triple(O, owl:hasValue, ObjName), 
 	triple(Object,_,O).
 
+%% what_object_transitive(?ObjName, ?Class) is nondet.
+%
+% Get the Class that has the predefined name "ObjName",
+% and all subclasses of that class
+what_object_transitive(ObjName, Class) :-
+	atom(ObjName),
+	var(Class),
+	!,
+	kb_call((
+		triple(O, owl:hasValue, ObjName),
+		triple(O, owl:onProperty, suturo:hasPredefinedName),
+		% O already has a value, so rdfs:subClassOf is transitive here.
+		triple(Class, rdfs:subClassOf, O)
+	)).
+
+what_object_transitive(ObjName, Class) :-
+	var(ObjName),
+	atom(Class),
+	!,
+	kb_call((
+		triple(Class, transitive(rdfs:subClassOf), O),
+		triple(O, owl:hasValue, ObjName),
+		triple(O, owl:onProperty, suturo:hasPredefinedName)
+	)).
+
+what_object_transitive(ObjName, Class) :-
+	kb_call((
+		triple(O, owl:onProperty, suturo:hasPredefinedName),
+		triple(O, owl:hasValue, ObjName),
+		% O already has a value, so rdfs:subClassOf is transitive here.
+		triple(Class, rdfs:subClassOf, O)
+	)).
+
 %% have_same_class(+, +)
 %
 % check, if two objects belong to the same class
@@ -122,9 +156,10 @@ path(X,Y):- connected_rooms(X,Z), path(Z,Y).
 path(X,Y):- connected_rooms(Z,X), path(Z,Y).
 
 
-middle(kitchen, [map, [2.87, -1.11, 0] , [0, 0, 0, 1.0]]).
-middle(living_room, [map, [2.94, 2.62, 0] , [0, 0, 0, 1.0]]).
-middle(dining_room, [map, [2.88, 4.9, 0] , [0, 0, 0, 1.0]]).
+middle(kitchen, [map, [6.86, 2.9, 0] , [0, 0, 0, 1.0]]).
+middle(living_room, [map, [7.89, -0.11, 0] , [0, 0, 0, 1.0]]).
+middle(hallway, [map, [3.61, -0.45, 0] , [0, 0, 0, 1.0]]).
+middle(office, [map, [3.51, 4.48, 0] , [0, 0, 0, 1.0]]).
 
 entry_pose(kitchen, [map, [0.37, 0.01, 0] , [0, 0, 0, 1.0]]).
 entry_pose(living_room, [map, [2.34, 2.71, 0] , [0, 0, 0, 1.0]]).

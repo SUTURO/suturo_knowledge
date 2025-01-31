@@ -142,8 +142,8 @@
 	 :juicebox)
 	(:pancakemixbottle
 	 :pancakemixbottle)
-	(:jellostrawberrybox
-	 :jellostrawberrybox)
+	(:gelatinebox
+	 :gelatinebox)
 	(:teabagbox
 	 :teabagbox)
 	(:pastrybox
@@ -212,3 +212,47 @@
 	 :woodblock)
 	(:cornybox
 	 :cornybox)
+	(:sponge
+	 :sponge)
+	(:washcloth
+	 :washcloth)
+	(:soap
+	 :soap)
+	(:fantacan
+	 :fantacan)
+	(:iceteacan
+	 :iceteacan)
+	(:dubbelfris
+	 :dubbelfris)
+	(:waterbottle
+	 :waterbottle)
+	(:colabottle
+	 :colabottle)
+	(:peasoupcan
+	 :peasoupcan)
+	(:cornflakes
+	 :cornflakes)
+	(:curry
+	 :curry)
+	(:mayonaise
+	 :mayonaise)
+	(:hagelslag
+	 :hagelslag)
+	(:sausages
+	 :sausages)
+	(:pancakemix
+	 :pancakemix)
+	(:crispsbag
+	 :crispsbag)
+	(:candy
+	 :candy)
+	(:stroopwafels
+	 :stroopwafels)
+	(:liquorice
+	 :liquorice)
+	(:tictac
+	 :tictac)
+	(:candle
+	 :candle)
+	(:grocerybag
+	 :grocerybag)

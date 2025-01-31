@@ -3,19 +3,22 @@ import os
 import yaml
 from rdflib import Graph, URIRef, Namespace, RDF, RDFS
 
-def get_transitive_subclasses(g, superclasses):
+def get_transitive_subclasses(g, superclasses, exclusions):
     subclasses = set()
     for superclass in superclasses:
         for subclass in g.transitive_subjects(RDFS.subClassOf, superclass):
-            subclasses.add(subclass)
+            if(subclass not in exclusions):
+                subclasses.add(subclass)
         # We also want to get the names from superclass if it exists
-        subclasses.add(superclass)
+        if(subclass not in exclusions):
+            subclasses.add(superclass)
     return subclasses
 
-def extract_has_value_restrictions(owl_file_path, data_property, superclass_uris):
+def extract_has_value_restrictions(owl_file_path, data_property, superclass_uris, exclusion_uris):
     # Load the ontology
     g = Graph()
     g.parse(owl_file_path)
+    # We hardcode the loading of the imported ontologies for now
     g.parse("http://www.ease-crc.org/ont/SOMA-HOME.owl")
     g.parse("http://www.ease-crc.org/ont/SOMA.owl")
     g.parse("http://www.ease-crc.org/ont/DUL.owl")
@@ -24,11 +27,16 @@ def extract_has_value_restrictions(owl_file_path, data_property, superclass_uris
     OWL = Namespace("http://www.w3.org/2002/07/owl#")
     DATA_PROPERTY = URIRef(data_property)  # Create a URIRef for the data property
 
+    # Create the resulting map
     results = {}
     for superclass_label, superclass_uris in superclass_uris.items():
         superclass_uris = [URIRef(uri) for uri in superclass_uris]
-        subclasses = get_transitive_subclasses(g, superclass_uris)
-        
+        exclusions_with_subclasses = []
+        if (superclass_label in exclusion_uris):
+            exclusion_uris = [URIRef(uri) for uri in exclusion_uris[superclass_label]]
+            exclusions_with_subclasses = get_transitive_subclasses(g, exclusion_uris, [])
+        subclasses = get_transitive_subclasses(g, superclass_uris, exclusions_with_subclasses)
+
         results[superclass_label] = {'entities': []}
 
         for cls in subclasses:
@@ -40,15 +48,15 @@ def extract_has_value_restrictions(owl_file_path, data_property, superclass_uris
 
     return results
 
-def check_missing_names(owl_file_path, results, data_property):
+def check_missing_names(entity, owl_file_path, results, data_property):
 
     g = Graph()
     g.parse(owl_file_path)
     g.parse("http://www.ease-crc.org/ont/SOMA-HOME.owl")
     g.parse("http://www.ease-crc.org/ont/SOMA.owl")
     g.parse("http://www.ease-crc.org/ont/DUL.owl")
-    ENTITY = URIRef('http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#Entity')
-    subclasses = get_transitive_subclasses(g, [ENTITY])
+    ENTITY = URIRef(entity)
+    subclasses = get_transitive_subclasses(g, [ENTITY], [])
     missing = []
 
     # Define namespaces
@@ -87,8 +95,24 @@ def main():
     yaml_file_path = 'nlp_entities.yml'  # Specify the output YAML file path
     data_property = 'http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName'  # Specify the data property to look for
 
+    # Dict of category in NLP to classes (and their subclasses)
     superclass_uris = {
-        'Food': [
+        'Clothing': [
+            'http://www.ease-crc.org/ont/SUTURO.owl#Clothing'
+        ],
+        'NaturalPerson': [
+            'http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#NaturalPerson'
+        ],
+        'DesignedFurniture': [
+            'http://www.ease-crc.org/ont/SOMA.owl#DesignedFurniture',
+            'http://www.ease-crc.org/ont/SOMA.owl#Door',
+            'http://www.ease-crc.org/ont/SOMA.owl#Appliance',
+            'http://www.ease-crc.org/ont/SOMA.owl#Drawer'
+        ],
+        'Room': [
+            'http://www.ease-crc.org/ont/SOMA.owl#Room',
+        ],
+        'Transportable': [
             'http://www.ease-crc.org/ont/SOMA.owl#Dish',
             'http://www.ease-crc.org/ont/SUTURO.owl#Fish',
             'http://www.ease-crc.org/ont/SUTURO.owl#Fruit',
@@ -97,28 +121,18 @@ def main():
             'http://www.ease-crc.org/ont/SUTURO.owl#ProcessedFood',
             'http://www.ease-crc.org/ont/SUTURO.owl#Vegetable'
             'http://www.ease-crc.org/ont/SUTURO.owl#Spice',
-
-        ],
-        'Drink': [
-            'http://www.ease-crc.org/ont/SUTURO.owl#Drink'
-        ],
-        'NaturalPerson': [
-            'http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#NaturalPerson'
-        ],
-        'Room': [
-            'http://www.ease-crc.org/ont/SOMA.owl#Room'
-        ],
-        'Furniture': [
-            'http://www.ease-crc.org/ont/SOMA.owl#DesignedFurniture'
-        ],
-        'Tool': [
-            'http://www.ease-crc.org/ont/SOMA.owl#DesignedTool'
-        ],
-        'Container': [
+            'http://www.ease-crc.org/ont/SUTURO.owl#Drink',
+            'http://www.ease-crc.org/ont/SOMA.owl#DesignedTool',
             'http://www.ease-crc.org/ont/SOMA.owl#DesignedContainer'
-        ],
-        'Clothing': [
-            'http://www.ease-crc.org/ont/SUTURO.owl#Clothing'
+        ]
+    }
+
+    exclusion_uris = {
+        'Transportable': [
+            'http://www.ease-crc.org/ont/SOMA.owl#Appliance',
+            'http://www.ease-crc.org/ont/SOMA.owl#Drawer',
+            'http://www.ease-crc.org/ont/SOMA.owl#Cupboard',
+            'http://www.ease-crc.org/ont/SOMA.owl#DesignedHandle'
         ]
     }
 
@@ -127,11 +141,25 @@ def main():
         print(f"File not found: {owl_file_path}")
         sys.exit(1)
 
-    entities = extract_has_value_restrictions(owl_file_path, data_property, superclass_uris)
+    # extract the predefinedName relations according to the given dict
+    entities = extract_has_value_restrictions(owl_file_path, data_property, superclass_uris, exclusion_uris)
+    # Get the rest of the physical artifacts, and save them as Transportable
+    missing_physical_artifacts = [str(name) for name in check_missing_names('http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#Entity', owl_file_path, entities, data_property)]
+    # add missing physical artifacts to transportable
+    entities["Transportable"]["entities"].extend(missing_physical_artifacts)
+
+    # hardcoded pronouns
+    entities["Transportable"]["entities"].extend(["it"])
+    entities["DesignedFurniture"]["entities"].extend(["there"])
+    entities["NaturalPerson"]["entities"].extend(["them", "they", "him", "her", "me"])
+
+    # Save the yaml file
     save_to_yaml(entities, yaml_file_path)
     print(f"Entities saved to {yaml_file_path}")
 
-    missing_names = check_missing_names(owl_file_path,entities, data_property)
+    # This prints out all subclasses of Entity with predefinedName
+    # to check if something is missing 
+    missing_names = check_missing_names('http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#Entity', owl_file_path,entities, data_property)
     if missing_names:
         print("Missing classes with hasPredefinedName property:")
         for artifact in missing_names:

@@ -6,7 +6,16 @@
 	      is_table(r),
 	      is_shelf(r),
 	      is_drawer(r),
-	      is_shelf_layer(r)
+	      is_shelf_layer(r),
+		  is_trash_can(r),
+		  is_coathanger(r),
+		  is_dinner_table(r),
+		  is_hallway_cabinet(r),
+		  is_tv_table(r),
+		  is_kitchen_counter(r),
+		  is_coffee_table(r),
+		  is_couch(r),
+		  is_desk(r)
 	  ]).
 
 :- use_module(library('model/object/types'),
@@ -56,3 +65,30 @@ is_drawer(Drawer) ?+>
 %
 is_shelf_layer(ShelfLayer) ?+>
     is_type(ShelfLayer, suturo:'ShelfLayer').
+
+is_trash_can(TrashCan) ?+>
+    is_type(TrashCan, suturo:'TrashCan').
+
+is_coathanger(CoatHanger) ?+>
+    is_type(CoatHanger, suturo:'CoatHanger').
+
+is_dinner_table(DinnerTable) ?+>
+    is_type(DinnerTable, suturo:'DinnerTable').
+
+is_hallway_cabinet(HallwayCabinet) ?+>
+    is_type(HallwayCabinet, suturo:'HallwayCabinet').
+
+is_tv_table(TvTable) ?+>
+    is_type(TvTable, suturo:'TvTable').
+
+is_kitchen_counter(KitchenCounter) ?+>
+    is_type(KitchenCounter, suturo:'KitchenCounter').
+
+is_coffee_table(CoffeeTable) ?+>
+    is_type(CoffeeTable, suturo:'CoffeeTable').
+
+is_desk(Desk) ?+>
+    is_type(Desk, suturo:'Desk').
+
+is_couch(Couch) ?+>
+	is_type(Couch, suturo:'Couch').
