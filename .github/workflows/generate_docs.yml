@@ -35,7 +35,7 @@ jobs:
       - name: Upload owl2anything output artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: output
+          name: owl2anything-output
           path: |
             owl2anything/output/*
 
@@ -63,7 +63,7 @@ jobs:
       - name: Upload extraction output
         uses: actions/upload-artifact@v4
         with:
-          name: output
+          name: nlp_entities-output
           path: nlp_entities.yml
 
   publish:
@@ -82,7 +82,7 @@ jobs:
       - name: Download extraction output artifacts
         uses: actions/download-artifact@v4
         with:
-          name: output
+          name: owl2anything-output
           path: docs/objects/owl2anything/output/
 
       - name: Commit and push extraction output artifacts
