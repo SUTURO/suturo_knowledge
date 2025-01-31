@@ -259,38 +259,23 @@ calculate_penalty(Distance, Penalty) :-
 
 % A* Algorithmus
 astar(Start, Goal, Path, Cost) :-
-    astar_search([node(Start, [], 0, 100)], [], Goal, Path, Cost).
+    astar_search([node(Start, [], 0)], [], Goal, Path, Cost).
 
-astar_search([node(Current, Path, G, H)|_], _, Current, FinalPath, G) :-
+astar_search([node(Current, Path, Cost)|_], _, Current, FinalPath, Cost) :-
     reverse([Current|Path], FinalPath).
 
-astar_search([node(Current, Path, G, H)|Queue], Visited, Goal, FinalPath, FinalCost) :-
+astar_search([node(Current, Path, Cost)|Queue], Visited, Goal, FinalPath, FinalCost) :-
     % find neighbors
-    findall(node(Next, [Current|Path], NewG, NewH),
+    findall(node(Next, [Current|Path], NewCost),
         (   are_neighbours3(Current, Next, Exit),
             \+ memberchk(Next, Path),
             \+ memberchk(node(Next, _, _, _), Visited),
-            distance_between_rooms_1(Current, Next, Exit, Distance),
-            NewG is G + Distance,
-            heuristic(Current, Next, Exit, NewH)
+            heuristic(Current, Next, Exit, NewCost)
         ),
         Neighbors),
-    
-    % calculate (f(n)) and sort by it
-    maplist(calculate_fn, Neighbors, NeighborsWithFn),
-    sort(5, @=<, NeighborsWithFn, SortedNeighbors),
-    maplist(remove_fn, SortedNeighbors, NeighborsWithoutFn),
 
-    append(Queue, NeighborsWithoutFn, NewQueue),    
-    astar_search(NewQueue, [node(Current, Path, G, H)|Visited], Goal, FinalPath, FinalCost).
-
-%calculate_fn(+,-)
-calculate_fn(node(Current, Path, G, H), node(Current, Path, G, H, F)) :-
-    F is G + H.
-
-%remove the new node param to make it fit with the astar
-%remove_fn(+,-)
-remove_fn(node(Current, Path, G, H, _F), node(Current, Path, G, H)).
+    sort(3, @=<, Neighbors, NewQueue),
+    astar_search(NewQueue, [node(Current, Path, Cost)|Visited], Goal, FinalPath, FinalCost).
 
 
 % heuristic: combination of door_penalty and distance_between_rooms_1
