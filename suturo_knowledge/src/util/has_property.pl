@@ -3,7 +3,6 @@
 
 :- module(has_property,
 	  [
-        %is_fragile(r),
 		what_object(+,r),
 		what_object_transitive(?,r),
 		fragility_new(+),
@@ -13,13 +12,9 @@
 		grasp_pose(+,-),
 		has_position(+,-),
 		has_value(+,r,-),
-		middle(+,-),
 		save_person_data(+,+,+,+,+),
 		call_person_data(?,?,?,?,?),
-		call_person_data_with_options(?,?,?,-,?,?),
-		exit_pose(+,-),
-		entry_pose(+,-),
-		path(?,?)
+		call_person_data_with_options(?,?,?,-,?,?)
 	  ]).
 
 
@@ -71,6 +66,7 @@ preorlo_check(ObjName, Objectt):-
 %% what_object(+ ObjName, r Object)
 %
 % get the Object that has the predefined name "ObjName"
+%what_object(+,-)
 what_object(ObjName, Object) :-
 	triple(O,_, suturo:hasPredefinedName),
 	triple(O, owl:hasValue, ObjName), 
@@ -80,6 +76,7 @@ what_object(ObjName, Object) :-
 %
 % Get the Class that has the predefined name "ObjName",
 % and all subclasses of that class
+%what_object_transitive(+,-)
 what_object_transitive(ObjName, Class) :-
 	atom(ObjName),
 	var(Class),
@@ -112,6 +109,7 @@ what_object_transitive(ObjName, Class) :-
 %% have_same_class(+, +)
 %
 % check, if two objects belong to the same class
+%have_same_class(+,+)
 have_same_class(ObjName1, ObjName2) :-
 	what_object(ObjName1, X),
 	what_object(ObjName2, Y),
@@ -119,12 +117,15 @@ have_same_class(ObjName1, ObjName2) :-
 	subclass_of(Y, Z),
 	!.
 
+% returns the grasping pose for toya to grasp a certain object
+%grasp_pose(+,-)
 grasp_pose(ObjName , Pose) :-
 	what_object(ObjName, Object),
 	triple(Object, transitive(rdfs:'subClassOf'), X),
 	triple(X, _, suturo:hasGraspPose),
 	triple(X, owl:hasValue, Pose).
 
+%has_position(+,-)
 has_position(ObjName, PoseStamped):-
 	what_object(ObjName, Object), 
 	triple(Object, transitive(rdfs:'subClassOf'), Q),
@@ -143,6 +144,7 @@ has_position(ObjName, PoseStamped):-
 		PoseStamped = [Frame, [NewX,NewY,Z] , Rotation]
 	).
 	
+%has_value(+,+,-)	
 has_value(ObjName, Property, Value) :-
 	what_object(ObjName, Object),
 	triple(Object, transitive(rdfs:'subClassOf'), X),
@@ -150,30 +152,8 @@ has_value(ObjName, Property, Value) :-
 	triple(X, owl:hasValue, Value).
 
 
-connected_rooms(kitchen,living_room).
-connected_rooms(living_room, dining_room).
-
-path(X,Y):- connected_rooms(X,Y).
-path(X,Y):- connected_rooms(Y,X).
-path(X,Y):- connected_rooms(X,Z), path(Z,Y).
-path(X,Y):- connected_rooms(Z,X), path(Z,Y).
-
-
-middle(kitchen, [map, [6.86, 2.9, 0] , [0, 0, 0, 1.0]]).
-middle(living_room, [map, [7.89, -0.11, 0] , [0, 0, 0, 1.0]]).
-middle(hallway, [map, [3.61, -0.45, 0] , [0, 0, 0, 1.0]]).
-middle(office, [map, [3.51, 4.48, 0] , [0, 0, 0, 1.0]]).
-
-entry_pose(kitchen, [map, [0.37, 0.01, 0] , [0, 0, 0, 1.0]]).
-entry_pose(living_room, [map, [2.34, 2.71, 0] , [0, 0, 0, 1.0]]).
-entry_pose(dining_room, [map, [0, 3.74, 0] , [0, 0, 0, 1.0]]).
-
-exit_pose(kitchen, [map, [1.2, -0.218, 0] , [0, 0, 0, 1.0]]).
-exit_pose(living_room, [map, [3.02, 2.53, 0] , [0, 0, 0, 1.0]]).
-exit_pose(dining_room, [map, [0.73, 3.77, 0] , [0, 0, 0, 1.0]]).
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% call_person_data(+ID, ?Name, ?Drink, ?Interest, ?Profession)
+%% call_person_data(?ID, ?Name, ?Drink, ?Interest, ?Profession)
 call_person_data(ID, Name, Drink, Interest, Profession):-
 	kb_call(holds(ID, suturo:hasCustomerName, Name)), % ID + Name 
 	kb_call(holds(ID, suturo:hasFavouriteDrink, Drink)), % Drink
@@ -190,6 +170,7 @@ save_person_data(ID, Name, Drink, Interest, Profession):-
 	kb_project(triple(ID, suturo:hasProfession, Profession)). % Profession
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% call_person_data_with_options(?ID, ?Name, ?Drink, -Option, ?Interest, ?Profession)
 call_person_data_with_options(ID, Name, Drink, Option, Interest, Profession) :-
 	kb_call(holds(ID, suturo:hasCustomerName, Name)), % ID + Name 
 	kb_call(holds(ID, suturo:hasFavouriteDrink, Drink)), % Drink
