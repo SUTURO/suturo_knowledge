@@ -413,7 +413,7 @@ class InterfacePlanningKnowledge:
 
         return json
 
-#########################################################################
+################################################################################################
     def test_knowrob_client(self,obj_name):
         print("helo, I client!"),
         q = "what_object("+ "\'"+ crop(obj_name).lower() + "\'" +  ", Object)."
@@ -421,6 +421,17 @@ class InterfacePlanningKnowledge:
         res = knowrob_client.once(q)
         return crop3(res)
 
+##############################################################################################################
+    def save_person_data(self, id, name, drink, interest, profession):
+        q1 = "save_person_data(" + id + ", " + name + ", " + drink + ", " + interest + "," + profession + ")."
+        print(q1)
+        return knowrob_client.once(q1)
+
+##############################################################################################################
+    def call_person_data(self, id, name, drink, interest, profession):
+        q1 = "call_person_data(" + id + ", " + name + ", " + drink + ", " + interest + "," + profession + ")."
+        print(q1)
+        return knowrob_client.once(q1)
 
 ############################################################################################
 
