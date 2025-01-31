@@ -1,4 +1,4 @@
-name: Generate docson
+name: Generate docs
 
 on:
   push:
