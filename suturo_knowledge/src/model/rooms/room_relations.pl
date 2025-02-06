@@ -16,7 +16,6 @@
             door_penalty(+,+,+,-),
             astar(+,+,-,-),
             heuristic(+,+,+,-),
-            calculate_fn(+,-),
             neighbors_from(+,-)
           ]).
 

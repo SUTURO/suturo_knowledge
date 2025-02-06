@@ -3,11 +3,9 @@
 import json
 import rospy
 import rosprolog_client
-import rosprolog_client_1
 from geometry_msgs.msg import PoseStamped
 
-prolog = rosprolog_client.Prolog()
-knowrob_client = rosprolog_client_1.Prolog()
+knowrob_client = rosprolog_client.Prolog()
 
 class PrologInterface():
 
@@ -52,7 +50,7 @@ class InterfacePlanningKnowledge:
                 query = "save_me_and_raspberryjuice(" + name_part + ")."
 
                 rospy.loginfo(query)
-                proknowrob_clientlog.once(query)
+                knowrob_client.once(query)
 
             elif drink == "Milk":
                 #query = "save_me_and_milk(" + name_part  + "," + "\'" + id + "\')."
@@ -109,7 +107,7 @@ class InterfacePlanningKnowledge:
             #save = "save_me("+ crop_string + "," + str(count) + ")."
             save = "save_me("+ crop_string + ")."
 
-            prolog.once(save)
+            knowrob_client.once(save)
             rospy.loginfo("We saved you!")
             rospy.loginfo("Nice to meet you " + crop_string.capitalize() + "!")
 
@@ -152,7 +150,7 @@ class InterfacePlanningKnowledge:
     def challenge_storing_groceries(self):
         # init_storing_groceries auslagern, soll nur einmal aufgerufen werden 
         q0 = "init_storing_groceries"
-        prolog.once(q0)
+        knowrob_client.once(q0)
         print(q0)
 
     def place_pose_object(self, object):
@@ -441,11 +439,11 @@ class InterfacePlanningKnowledge:
     def where_at(name):
         obj_name = crop2(name)
         q1 = "what_object(" + "\'" + obj_name.lower() + "\'" + ", Object)."
-        sol = prolog.once(q1)
+        sol = knowrob_client.once(q1)
 
         if len(sol) != 0:
             q2 = "is_perishable("+ "\'" + obj_name + "\')."
-            soll = prolog.once(q2)
+            soll = knowrob_client.once(q2)
             
             if soll == dict():
                 return get_pose("furniture:popcorn table")
