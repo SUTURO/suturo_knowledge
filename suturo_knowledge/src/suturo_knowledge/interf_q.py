@@ -3,19 +3,15 @@
 import json
 import rospy
 import rosprolog_client
+#import rosprolog_client_1
 from geometry_msgs.msg import PoseStamped
 
-knowrob_client = rosprolog_client.Prolog()
+prolog = rosprolog_client.Prolog()
 
 class PrologInterface():
 
     def __init__(self) -> None:
         self.PlanningKnowledge = InterfacePlanningKnowledge()
-
-
-# prol = PrologInterface()
-
-# status = prol.PlanningKnowledge.save_person_and_drink(info)
 
 ##############################################################################
 # 1:
@@ -32,7 +28,7 @@ class InterfacePlanningKnowledge:
 
         # check if a fav drink already exists
         query_check = "fav_drink(" + name_part + ", X)."
-        check_for_drink = knowrob_client.once(query_check)
+        check_for_drink = prolog.once(query_check)
 
         if check_for_drink == []:
 
@@ -43,35 +39,35 @@ class InterfacePlanningKnowledge:
                 query = "save_me_and_coffee(" + name_part + ")."
 
                 rospy.loginfo(query)
-                knowrob_client.once(query)
+                prolog.once(query)
 
             elif drink == "RaspberryJuice":
                 #query = "save_me_and_raspberryjuice(" + name_part  + "," + "\'" + id + "\')."
                 query = "save_me_and_raspberryjuice(" + name_part + ")."
 
                 rospy.loginfo(query)
-                knowrob_client.once(query)
+                prolog.once(query)
 
             elif drink == "Milk":
                 #query = "save_me_and_milk(" + name_part  + "," + "\'" + id + "\')."
                 query = "save_me_and_milk(" + name_part + ")."
 
                 rospy.loginfo(query)
-                knowrob_client.once(query)
+                prolog.once(query)
 
             elif drink == "Tea":
                 #query = "save_me_and_tea(" + name_part  + "," + "\'" + id + "\')."
                 query = "save_me_and_tea(" + name_part + ")."
 
                 rospy.loginfo(query)
-                knowrob_client.once(query)
+                prolog.once(query)
 
             elif drink == "Water":
                 #query = "save_me_and_water(" + name_part  + "," + "\'" + id + "\')."
                 query = "save_me_and_water(" + name_part + ")."
 
                 rospy.loginfo(query)
-                knowrob_client.once(query)
+                prolog.once(query)
 
             else: 
                 return ("Sorry " + name_part.capitalize() + ", but we don't know a drink named: "
@@ -91,11 +87,9 @@ class InterfacePlanningKnowledge:
 # Is person X already known to us?
 
     def do_we_know_u(self, name):
-        # crop the input string to a useful string
         crop_string = name.lower()
-        #count = 1
         query = "is_customer("+ crop_string +")."
-        solution = knowrob_client.once(query)
+        solution = prolog.once(query)
 
         # save only when name is not already known
         if solution == dict():
@@ -103,18 +97,15 @@ class InterfacePlanningKnowledge:
             return True
         
         else:
-            #count += 1
-            #save = "save_me("+ crop_string + "," + str(count) + ")."
             save = "save_me("+ crop_string + ")."
-
-            knowrob_client.once(save)
+            prolog.once(save)
             rospy.loginfo("We saved you!")
             rospy.loginfo("Nice to meet you " + crop_string.capitalize() + "!")
 
             # test if saving was successful
             test = "is_customer("+crop_string+")."
             rospy.loginfo("Test:" + str(test))
-            test_call = knowrob_client.once(test)
+            test_call = prolog.once(test)
 
             if test_call != dict():
                 rospy.loginfo("test_call: not successful")
@@ -133,16 +124,16 @@ class InterfacePlanningKnowledge:
         # crop the input string to a useful string
         crop_string = name.lower()
         query = "fav_drink(" + crop_string + "," + "X)."
-        solution = knowrob_client.once(query)
+        solution = prolog.once(query)
         sol = crop(solution)
 
         give_type = "has_type(" + str(sol) + "," + "X)."
-        ref = knowrob_client.once(give_type)
+        ref = prolog.once(give_type)
         soll = crop_plus(crop(ref))
         return soll.replace("\'", "")
     
 
-#########################################################################
+#######################################################################################
 # 4:
 # Where should this object be placed in the shelve?
 # Vielleicht noch das Object am Ende erstellen, wo das Object hingestellt werden soll.
@@ -150,7 +141,7 @@ class InterfacePlanningKnowledge:
     def challenge_storing_groceries(self):
         # init_storing_groceries auslagern, soll nur einmal aufgerufen werden 
         q0 = "init_storing_groceries"
-        knowrob_client.once(q0)
+        prolog.once(q0)
         print(q0)
 
     def place_pose_object(self, object):
@@ -167,31 +158,28 @@ class InterfacePlanningKnowledge:
         # mit dem erstellten object, dann object_destination_pose aufrufen 
         # Output: place pose vom apple
 
-        already_exists = "create_object(Object, suturo:" + "\'" + "MetalBowl" + "\'" + ", ["+ "\'" + "iai_kitchen/shelf:shelf:shelf_floor_2" + "\'" + ", [0.049,0.02,0], [0,0,0,1.0]], [shape(box(0.5,0.5,0.5))])."
-        print(already_exists)
-        solq  = knowrob_client.once(already_exists)
-        print(solq)
+        #already_exists = "create_object(Object, suturo:" + "\'" + "MetalBowl" + "\'" + ", ["+ "\'" + "iai_kitchen/shelf:shelf:shelf_floor_2" + "\'" + ", [0.049,0.02,0], [0,0,0,1.0]], [shape(box(0.5,0.5,0.5))])."
+        #print(already_exists)
+        #solq  = prolog.once(already_exists)
+        #print(solq)
 
         q3 = "what_object("+ "\'" + str(object) + "\'" + ",X)."
         print(q3)
-        de_object = knowrob_client.once(q3)
+        de_object = prolog.once(q3)
         print(de_object)
 
         place_it = "create_object(Object," + str(crop(de_object)) + ", ["+ "\'" + "map" + "\'" + ", [0.049,0.02,0], [0,0,0,1.0]], [shape(box(0.5,0.5,0.5))])."
-        solqq = knowrob_client.once(place_it)
-      
-        print(solqq)
+        solqq = prolog.once(place_it)
 
         sol = crop(solqq)
         print(sol)
-        print ("wait for a bit pls")
         q1 = "object_destination_pose(" + str(sol) + ",[], X)."
-        solution = knowrob_client.once(q1)
+        solution = prolog.once(q1)
         print(solution)
 
         return solution
 
-#########################################################################
+##########################################################################################
 # 5:
 # Get the table pose  
 
@@ -199,7 +187,7 @@ class InterfacePlanningKnowledge:
         # get all known tables
         print(table_name)
         q1 = "has_type(X, soma:'Table')."
-        sol = knowrob_client.all_solutions(q1)
+        sol = prolog.all_solutions(q1)
         
         # for all tables, ask for their poses
         if len(sol) != 0:
@@ -207,7 +195,7 @@ class InterfacePlanningKnowledge:
                 print("tables:" + str(table))
                 new_table = crop2(table).replace('}', "")
                 q2 = "object_pose("+ str(new_table) + ",X)."
-                tpos = knowrob_client.once(q2)
+                tpos = prolog.once(q2)
 
                 # extract table name and table frame 
                 table_frame = str(list(tpos.items())[0][1][0])
@@ -237,7 +225,7 @@ class InterfacePlanningKnowledge:
 
     def get_pose_of_handle(self, handle_name):
         q1 = "has_type(X, soma:'DesignedHandle')."
-        sol = knowrob_client.all_solutions(q1)
+        sol = prolog.all_solutions(q1)
         
         # for all handles, ask for their pose
         if len(sol) != 0:
@@ -249,7 +237,7 @@ class InterfacePlanningKnowledge:
 
                 q2 = "object_pose("+ str(new_handle) + ",X)."
                 print(q2)
-                tpos = knowrob_client.once(q2)
+                tpos = prolog.once(q2)
                 handle_frame = str(list(tpos.items())[0][1][0])
                 print("1:" + str(handle_name))
                 print("2:" + str(handle_frame))
@@ -283,7 +271,7 @@ class InterfacePlanningKnowledge:
     def fragility_check(self, name):
         q1 = "what_object("+ "\'"+name.lower()+ "\'" + ", Object)."
         #print (q1)
-        sol = knowrob_client.once(q1)
+        sol = prolog.once(q1)
         #print(sol)
         
         if len(sol) == 0:
@@ -293,7 +281,7 @@ class InterfacePlanningKnowledge:
         else: 
             q2 = "fragility_new("+ "\'" + name.lower() + "\')."
             #print (q2)
-            soll = knowrob_client.once(q2)
+            soll = prolog.once(q2)
 
             if soll == dict():
                 print("Object is fragile!")
@@ -309,7 +297,7 @@ class InterfacePlanningKnowledge:
     def is_perishable(self, name):
         q1 = "what_object("+ "\'"+ name.lower()+ "\'" + ", Object)."
         print (q1)
-        sol = knowrob_client.once(q1)
+        sol = prolog.once(q1)
         print(sol)
         
         if len(sol) == 0:
@@ -319,7 +307,7 @@ class InterfacePlanningKnowledge:
         else: 
             q2 = "is_perishable("+ "\'" + name.lower() + "\')."
             print (q2)
-            soll = knowrob_client.once(q2)
+            soll = prolog.once(q2)
 
             if soll == dict():
                 print("Object is perishable!")
@@ -337,14 +325,14 @@ class InterfacePlanningKnowledge:
         if len(pose) == 0:
             pose = ['map', [0,0,0], [0,0,0,1]] 
         q1 = "what_object("+ "\'"+ objname.lower()+ "\'" +  ", Object)."
-        sol = knowrob_client.once(q1)
+        sol = prolog.once(q1)
         print(sol)
         newname = crop(sol)
         print(newname)
         print(pose)
 
         q2 = "create_object(X,"+ newname+", "+ str(pose) + "). "
-        sol2 = knowrob_client.once(q2)
+        sol2 = prolog.once(q2)
         print(sol2)
         return sol2
 
@@ -355,7 +343,7 @@ class InterfacePlanningKnowledge:
 
     def grasp_pose(self, objname):
         q1 = "grasp_pose("+ "\'"+ objname.lower()+ "\'" + ", Pose)."
-        sol = knowrob_client.once(q1)
+        sol = prolog.once(q1)
         newname = crop(sol)
         print("newname:" + newname)
 
@@ -371,7 +359,7 @@ class InterfacePlanningKnowledge:
     def place_destination(self, objname):
         q1 = "has_position("+ "\'"+ objname.lower()+ "\'" + ", Pose)."
         print(q1)
-        sol = knowrob_client.once(q1)
+        sol = prolog.once(q1)
         print(sol)
         return sol
 
@@ -386,7 +374,7 @@ class InterfacePlanningKnowledge:
 
         # type 
         q1 = "what_object(" + name + ", Y), once(subclass_of(Y, X))."
-        obj_type = check_result(knowrob_client.once(q1))
+        obj_type = check_result(prolog.once(q1))
         print(obj_type)
 
         # fragility
@@ -395,7 +383,7 @@ class InterfacePlanningKnowledge:
         
         #color 
         q2 = "has_value(" + name + ", suturo:hasColor, X)."
-        obj_color = check_result(knowrob_client.once(q2))
+        obj_color = check_result(prolog.once(q2))
         print(obj_color)
 
         # perishable
@@ -404,34 +392,39 @@ class InterfacePlanningKnowledge:
 
         # grasp pose
         q4 = "grasp_pose(" + name + ", X)."
-        obj_grasp = check_result(knowrob_client.once(q4))
+        obj_grasp = check_result(prolog.once(q4))
         print(obj_grasp)
 
         json = create_json(name1, crop_plus(obj_type), obj_color,obj_fragile, obj_perish, obj_grasp)
 
         return json
 
-################################################################################################
-    def test_knowrob_client(self,obj_name):
-        print("helo, I client!"),
-        q = "what_object("+ "\'"+ crop(obj_name).lower() + "\'" +  ", Object)."
-        print(q)
-        res = knowrob_client.once(q)
-        return crop3(res)
 
 ##############################################################################################################
+# 13: 
+# save following infos about a person: id, name, fav drink, interest, profession
+
     def save_person_data(self, id, name, drink, interest, profession):
         q1 = "save_person_data(" + id + ", " + name + ", " + drink + ", " + interest + "," + profession + ")."
         print(q1)
-        return knowrob_client.once(q1)
+        return prolog.once(q1)
 
-##############################################################################################################
+# 14: 
+# call following infos about a person: id, name, fav drink, interest, profession
+
     def call_person_data(self, id, name, drink, interest, profession):
         q1 = "call_person_data(" + id + ", " + name + ", " + drink + ", " + interest + "," + profession + ")."
         print(q1)
-        return knowrob_client.once(q1)
+        return prolog.once(q1)
 
-############################################################################################
+################################################################################################################
+def object_perceive_pose(self, objname):
+    q1 = "object_perceive_pose(" + crop(objname).lower() + "X, [Frame, Pos, Rotation])."
+    print(q1)
+    return prolog.once(q1)
+
+
+################################################################################################################
 
 ## Get the object pose that depends on certain object property
 # just a draft
@@ -439,11 +432,11 @@ class InterfacePlanningKnowledge:
     def where_at(name):
         obj_name = crop2(name)
         q1 = "what_object(" + "\'" + obj_name.lower() + "\'" + ", Object)."
-        sol = knowrob_client.once(q1)
+        sol = prolog.once(q1)
 
         if len(sol) != 0:
             q2 = "is_perishable("+ "\'" + obj_name + "\')."
-            soll = knowrob_client.once(q2)
+            soll = prolog.once(q2)
             
             if soll == dict():
                 return get_pose("furniture:popcorn table")
@@ -463,7 +456,7 @@ class InterfacePlanningKnowledge:
 
 def build_posestamped(new_table):
     new_pose = "object_pose(" + str(new_table) + ", [map, X, Y])."
-    sol = knowrob_client.once(new_pose)
+    sol = prolog.once(new_pose)
     print("4:" + str(sol))
         
     pose_stamped = PoseStamped()
