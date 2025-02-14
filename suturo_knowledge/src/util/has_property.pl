@@ -13,6 +13,7 @@
 		has_position(+,-),
 		has_value(+,r,-),
 		save_person_data(+,+,+,+,+),
+		save_field(+, r, +),
 		call_person_data(?,?,?,?,?),
 		call_person_data_with_options(?,?,?,-,?,?)
 	  ]).
@@ -152,6 +153,43 @@ has_value(ObjName, Property, Value) :-
 	triple(X, owl:hasValue, Value).
 
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Saves the data with an ID 
+% If the string is empty and there was already an information for this ID it just updates the changes.
+%% save_person_data(+ID, +Name, +Drink, +Interest, +Profession)
+save_person_data(ID, Name, Drink, Interest, Profession):-
+    save_field(ID, suturo:hasCustomerName, Name),
+    save_drink(ID, Drink),
+    save_field(ID, suturo:hasInterest, Interest),
+    save_field(ID, suturo:hasProfession, Profession).
+
+%save_field(+,r,+)
+save_field(ID, Predicate, Value) :-
+    (Value \= '' ->  
+        kb_unproject(triple(ID, Predicate, _)), 
+        kb_project(triple(ID, Predicate, Value)) 
+    ; 
+        \+ kb_call(holds(ID, Predicate, _)) -> 
+        kb_project(triple(ID, Predicate, Value))
+    ; 
+        true).
+
+% save_drink(+,+)
+save_drink(ID, Drink) :-
+    (Drink \= '' ->  
+        what_object(Drink, OwlDrink),
+        kb_unproject(triple(ID, suturo:hasFavouriteDrink, _)), 
+        kb_project(triple(ID, suturo:hasFavouriteDrink, OwlDrink)) 
+    ; 
+        \+ kb_call(holds(ID, suturo:hasFavouriteDrink, _)) -> 
+        kb_project(triple(ID, suturo:hasFavouriteDrink, Drink))  % If empty the original string is saved
+    ; 
+        true).
+
+
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% call_person_data(?ID, ?Name, ?Drink, ?Interest, ?Profession)
 call_person_data(ID, Name, Drink, Interest, Profession):-
@@ -160,14 +198,6 @@ call_person_data(ID, Name, Drink, Interest, Profession):-
 	kb_call(holds(ID, suturo:hasInterest, Interest)), % Interest
 	kb_call(holds(ID, suturo:hasProfession, Profession)). % Profession
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% save_person_data(+ID, +Name, +Drink, +Interest, +Profession)
-save_person_data(ID, Name, Drink, Interest, Profession):-
-	kb_project(triple(ID, suturo:hasCustomerName, Name)), % ID + Name 
-	what_object(Drink, OwlDrink),
- 	kb_project(triple(ID, suturo:hasFavouriteDrink, OwlDrink)), % Drink
-	kb_project(triple(ID, suturo:hasInterest, Interest)), % Interest
-	kb_project(triple(ID, suturo:hasProfession, Profession)). % Profession
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% call_person_data_with_options(?ID, ?Name, ?Drink, -Option, ?Interest, ?Profession)
