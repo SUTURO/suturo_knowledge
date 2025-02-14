@@ -1,29 +1,21 @@
 #!/usr/bin/env python3
-
-# Save name X and favourite drink Y
-
 import rospy
 from knowledge_msgs.srv import SaveInfo
 from suturo_knowledge.interf_q import InterfacePlanningKnowledge
 
 # When the Service "SaveInfo" gets called and receives
-# a string with a name and a string with a drink, the function 
-# "save_person_and_drink" of the interface "InterfaceSavePersonAndDrink" 
+# an input, the function "save_person_data" of the interface "InterfacePlanningKnowledge" 
 # is called.
-# Output: returns a simple confirmation that the saving was complete.
+# Input: "{id: '2.0', name: 'toni', drink: 'cola', interest: 'tennis', profession: 'doctor'}" 
+# Output: returns a simple confirmation that the saving was complete
 
-# Input: name: "Lisa, Milk, 3.0"
-# Output: confirm: "Your name is Lisa and your favourite drink is Milk.
-#                       We saved your Information!"
-
-def save_this(Info):
+def save_this(info):
 
     rospy.loginfo("third method is called.")
     inter = InterfacePlanningKnowledge()
 
-    result = inter.save_person_and_drink(Info)
+    result = inter.save_person_data(info.id, info.name, info.drink, info.interest, info.profession)
     rospy.loginfo(result)
-    return result
 
 
 if __name__ == '__main__':
