@@ -12,6 +12,7 @@
 		grasp_pose(+,-),
 		has_position(+,-),
 		has_value(+,r,-),
+		is_light_or_heavy(r,-),
 		save_person_data(+,+,+,+,+),
 		save_field(+, r, +),
 		call_person_data(?,?,?,?,?),
@@ -44,6 +45,17 @@ transitivee(Object) :-
 transitivee(Object) :-
 	subclass_of(Object, X),
 	transitivee(X).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%% is_light_or_heavy(r Object)
+%
+% is an object heavy or light
+is_light_or_heavy(ObjName, Weight):-
+	what_object(ObjName, Object),
+	triple(Object, transitive(rdfs:'subClassOf'), X),
+	triple(X, _, suturo:hasWeight),
+	triple(X, owl:hasValue, Weight).
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 %% is_perishable(+ObjName)
@@ -145,7 +157,7 @@ has_position(ObjName, PoseStamped):-
 		PoseStamped = [Frame, [NewX,NewY,Z] , Rotation]
 	).
 	
-%has_value(+,+,-)	
+%has_value(+,r,-)	
 has_value(ObjName, Property, Value) :-
 	what_object(ObjName, Object),
 	triple(Object, transitive(rdfs:'subClassOf'), X),
