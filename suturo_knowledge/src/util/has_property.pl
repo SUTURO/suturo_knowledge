@@ -14,7 +14,7 @@
 		has_value(+,r,-),
 		is_light_or_heavy(r,-),
 		save_person_data(+,+,+,+,+),
-		save_field(+, r, +),
+		save_field(+,r,+),
 		call_person_data(?,?,?,?,?),
 		call_person_data_with_options(?,?,?,-,?,?)
 	  ]).
@@ -33,13 +33,13 @@ fragility_new(ObjName) :-
 	triple(O, owl:hasValue, ObjName), 
 	triple(Object,_,O),  
 	triple(Object, transitive(rdfs:'subClassOf'), X),
-	triple(X, B, suturo:'Fragility').
+	triple(X, _, suturo:'Fragility').
 
 	%transitivee(Object).
 
 %transitivee(r Object)
 transitivee(Object) :- 
-	triple(Object, B, suturo:'Fragility').
+	triple(Object, _, suturo:'Fragility').
 
 %transitivee(r Object)
 transitivee(Object) :-
@@ -47,7 +47,7 @@ transitivee(Object) :-
 	transitivee(X).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
-%% is_light_or_heavy(r Object)
+%% is_light_or_heavy(r Object, - weight)
 %
 % is an object heavy or light
 is_light_or_heavy(ObjName, Weight):-
@@ -64,14 +64,14 @@ is_light_or_heavy(ObjName, Weight):-
 is_perishable(ObjName):-
 	what_object(ObjName, Object),
 	triple(Object, transitive(rdfs:'subClassOf'), X),
-	triple(X, B, suturo:'Perishable').
+	triple(X, _, suturo:'Perishable').
 
 
 %% preorlo_check(r, -)
-preorlo_check(ObjName, Objectt):-
+preorlo_check(ObjName, Object):-
 	what_object(ObjName, Object),
 	triple(O,_, suturo:hasOriginLocation),
-	triple(Object, owl:onProperty, X), 
+	triple(Object, owl:onProperty, _), 
 	triple(Object,_,O),
 	!.
 
