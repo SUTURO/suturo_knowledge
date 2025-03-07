@@ -255,15 +255,28 @@ check_shelf_layers_for_frame([S | Next], ShelfLayer) :-
 % 
 has_likely_location_in_room(Object, Room, Location, Pose) :-
 	(has_likely_location(Object, LLocation, LocObj, LPose) -> 
-		check_position_inside_room(LPose, Room),
-		Pose = LPose,
-		Location = LLocation
+		writeln(LPose),
+		(check_position_inside_room(LPose, Room) ->
+			Pose = LPose,
+			writeln(Pose),
+			Location = LLocation
+		; 
+			(has_type(Room, RoomType),
+			RoomType = 'http://www.ease-crc.org/ont/SOMA.owl#Kitchen' ->
+            	Pose = [map,[3.4, -2.01, 0.0], [0.0,0.0,1.0,0.0]],
+            	Location = 'Alternative'
 
-	; 
-		Pose = LPose,
-	  	Location = LLocation
+			;
+				(has_type(Room, RoomType),
+				RoomType = 'http://www.ease-crc.org/ont/SUTURO.owl#LivingRoom' ->
+					Pose = [map,[4.36, 1.47, 0.0], [0.0,0.0,1.0,0.0]],
+					Location = 'Alternative')
+				)
+		)
 	).
-	
+     
+
+
 
 % has_predefined_location(+Object, -Location)
 has_predefined_location(Object, Location) :-
