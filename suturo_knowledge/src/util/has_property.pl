@@ -12,11 +12,16 @@
 		grasp_pose(+,-),
 		has_position(+,-),
 		has_value(+,r,-),
-		is_light_or_heavy(r,-),
+		is_light_or_heavy(r,?),
 		save_person_data(+,+,+,+,+),
 		save_field(+,r,+),
 		call_person_data(?,?,?,?,?),
-		call_person_data_with_options(?,?,?,-,?,?)
+		call_person_data_with_options(?,?,?,-,?,?),
+		has_predefined_location(+, -),
+		has_likely_location(+,-,-,-),
+		has_likely_location_in_room(+,+,-,-),
+		check_shelf_layers_for_frame(+,-),
+		check_tables_for_frame(+, -)
 	  ]).
 
 
@@ -47,7 +52,7 @@ transitivee(Object) :-
 	transitivee(X).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
-%% is_light_or_heavy(r Object, - weight)
+%% is_light_or_heavy(r Object, ?Weight)
 %
 % is an object heavy or light
 is_light_or_heavy(ObjName, Weight):-
@@ -200,7 +205,72 @@ save_drink(ID, Drink) :-
         true).
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% has_likely_location(+Object, -Location, -Pose)
+% likly robocup locations for objects:
+%   fruits --> billy shelf
+% 	cutlery --> on the dishwasher  
+has_likely_location(Object, Location, LocObj, Pose) :-
+	(has_predefined_location(Object, Loc),
+	 Loc = 'http://www.ease-crc.org/ont/SOMA.owl#Dishwasher' ->
+		findall(T, is_table(T), Tables),
+		check_tables_for_frame(Tables, Table),
+		object_pose(Table, [map,X,Y]),
+		Pose = [map,X,Y],
+		Location = 'Dishwasher',
+		LocObj = Table
+	;
+	(has_predefined_location(Object, Loc),
+	 Loc = 'http://www.ease-crc.org/ont/SUTURO.owl#Shelf'  ->
+		findall(S, is_shelf_layer(S), ShelfLayer),
+		check_shelf_layers_for_frame(ShelfLayer, SLayer),
+		object_pose(SLayer, [map,X,Y]),
+		Pose = [map,X,Y],
+		Location = 'Billy Shelf',
+		LocObj = SLayer
+	)
+	;
+	 true
+	).
 
+check_tables_for_frame([], Table) :- fail.  
+check_tables_for_frame([T | Next], Table) :-
+	object_pose(T, [Frame, _, _]),
+	(Frame = 'iai_kitchen/dishwasher_table:d_table:table_center'->
+		Table = T
+	;   
+		check_tables_for_frame(Next, Table)
+	).
+
+check_shelf_layers_for_frame([], ShelfLayer) :- fail.  
+check_shelf_layers_for_frame([S | Next], ShelfLayer) :-
+	object_pose(S, [Frame, _, _]),
+	(Frame = 'iai_kitchen/shelf_billy:shelf_billy:shelf_floor_0'->
+		ShelfLayer = S
+	;   
+		check_shelf_layers_for_frame(Next, ShelfLayer)
+	).
+
+% has_likely_location_in_room(+Object, +Room, -Location, -Pose)
+% 
+has_likely_location_in_room(Object, Room, Location, Pose) :-
+	(has_likely_location(Object, LLocation, LocObj, LPose) -> 
+		check_position_inside_room(LPose, Room),
+		Pose = LPose,
+		Location = LLocation
+
+	; 
+		Pose = LPose,
+	  	Location = LLocation
+	).
+	
+
+% has_predefined_location(+Object, -Location)
+has_predefined_location(Object, Location) :-
+	what_object(Object, Obj),
+	triple(Obj, transitive(rdfs:'subClassOf'), Type),
+	triple(Type, _, suturo:hasPredefinedLocation),
+	triple(Type, owl:allValuesFrom, Location).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% call_person_data(?ID, ?Name, ?Drink, ?Interest, ?Profession)

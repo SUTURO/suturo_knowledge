@@ -116,14 +116,6 @@
     
 
 
-    <!-- http://www.ease-crc.org/ont/SUTURO.owl#isInRoom -->
-
-    <owl:ObjectProperty rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#isInRoom">
-        <rdfs:subPropertyOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedLocation"/>
-    </owl:ObjectProperty>
-    
-
-
     <!-- http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#associatedWith -->
 
     <owl:ObjectProperty rdf:about="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#associatedWith"/>
@@ -448,8 +440,8 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#HouseholdHardware"/>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#isInRoom"/>
-                <owl:allValuesFrom rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Kitchen"/>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedLocation"/>
+                <owl:allValuesFrom rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Dishwasher"/>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
@@ -2697,6 +2689,12 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Food">
         <rdfs:subClassOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#BiologicalObject"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedLocation"/>
+                <owl:allValuesFrom rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Shelf"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
         <rdfs:comment>Food refers to any substance consumed by living organisms that provide nutritional support for the body&apos;s growth, development, and maintenance.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
@@ -2767,12 +2765,6 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Fruit">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Food"/>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#isInRoom"/>
-                <owl:allValuesFrom rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Kitchen"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
