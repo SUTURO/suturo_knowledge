@@ -124,6 +124,9 @@ def main():
             'http://www.ease-crc.org/ont/SUTURO.owl#Drink',
             'http://www.ease-crc.org/ont/SOMA.owl#DesignedTool',
             'http://www.ease-crc.org/ont/SOMA.owl#DesignedContainer'
+        ],
+        'Interest': [
+            'http://www.ease-crc.org/ont/SUTURO.owl#Interest'
         ]
     }
 

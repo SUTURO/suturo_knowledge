@@ -68,8 +68,8 @@
 	 "http://www.ease-crc.org/ont/SUTURO.owl#SoftBall")
 	(:saltshaker
 	 "http://www.ease-crc.org/ont/SOMA.owl#SaltShaker")
-	(:cornybox
-	 "http://www.ease-crc.org/ont/SUTURO.owl#CornyBox")
+	(:metalplate
+	 "http://www.ease-crc.org/ont/SUTURO.owl#MetalPlate")
 	(:pringleschipscan
 	 "http://www.ease-crc.org/ont/SUTURO.owl#PringlesChipsCan")
 	(:strawberry
@@ -142,8 +142,8 @@
 	 "http://www.ease-crc.org/ont/SUTURO.owl#JuiceBox")
 	(:pancakemixbottle
 	 "http://www.ease-crc.org/ont/SUTURO.owl#PancakeMixBottle")
-	(:jellostrawberrybox
-	 "http://www.ease-crc.org/ont/SUTURO.owl#JellOStrawberryBox")
+	(:gelatinebox
+	 "http://www.ease-crc.org/ont/SUTURO.owl#GelatineBox")
 	(:teabagbox
 	 "http://www.ease-crc.org/ont/SUTURO.owl#TeaBagBox")
 	(:pastrybox
@@ -186,14 +186,22 @@
 	 "http://www.ease-crc.org/ont/SUTURO.owl#MuesliBox")
 	(:stapelchips
 	 "http://www.ease-crc.org/ont/SUTURO.owl#StapelChips")
+	(:cupblue
+	 "http://www.ease-crc.org/ont/SUTURO.owl#CupBlue")
+	(:cupgreen
+	 "http://www.ease-crc.org/ont/SUTURO.owl#CupGreen")
 	(:largemarker
 	 "http://www.ease-crc.org/ont/SUTURO.owl#LargeMarker")
+	(:masterchefcan
+	 "http://www.ease-crc.org/ont/SUTURO.owl#MasterchefCan")
 	(:scissors
 	 "http://www.ease-crc.org/ont/SUTURO.owl#Scissors")
 	(:scrubcleaner
 	 "http://www.ease-crc.org/ont/SUTURO.owl#ScrubCleaner")
 	(:grapes
 	 "http://www.ease-crc.org/ont/SUTURO.owl#Grapes")
+	(:cupsmall
+	 "http://www.ease-crc.org/ont/SUTURO.owl#CupSmall")
 	(:screwdriver
 	 "http://www.ease-crc.org/ont/SUTURO.owl#ScrewDriver")
 	(:clamp
@@ -202,3 +210,49 @@
 	 "http://www.ease-crc.org/ont/SUTURO.owl#Hammer")
 	(:woodblock
 	 "http://www.ease-crc.org/ont/SUTURO.owl#WoodBlock")
+	(:cornybox
+	 "http://www.ease-crc.org/ont/SUTURO.owl#CornyBox")
+	(:sponge
+	 "http://www.ease-crc.org/ont/SUTURO.owl#Sponge")
+	(:washcloth
+	 "http://www.ease-crc.org/ont/SUTURO.owl#WashCloth")
+	(:soap
+	 "http://www.ease-crc.org/ont/SUTURO.owl#Soap")
+	(:fantacan
+	 "http://www.ease-crc.org/ont/SUTURO.owl#FantaCan")
+	(:iceteacan
+	 "http://www.ease-crc.org/ont/SUTURO.owl#IceTeaCan")
+	(:dubbelfris
+	 "http://www.ease-crc.org/ont/SUTURO.owl#DubbelFris")
+	(:waterbottle
+	 "http://www.ease-crc.org/ont/SUTURO.owl#WaterBottle")
+	(:colabottle
+	 "http://www.ease-crc.org/ont/SUTURO.owl#ColaBottle")
+	(:peasoupcan
+	 "http://www.ease-crc.org/ont/SUTURO.owl#PeaSoupCan")
+	(:cornflakes
+	 "http://www.ease-crc.org/ont/SUTURO.owl#Cornflakes")
+	(:curry
+	 "http://www.ease-crc.org/ont/SUTURO.owl#Curry")
+	(:mayonaise
+	 "http://www.ease-crc.org/ont/SUTURO.owl#Mayonaise")
+	(:hagelslag
+	 "http://www.ease-crc.org/ont/SUTURO.owl#Hagelslag")
+	(:sausages
+	 "http://www.ease-crc.org/ont/SUTURO.owl#Sausages")
+	(:pancakemix
+	 "http://www.ease-crc.org/ont/SUTURO.owl#PancakeMix")
+	(:crispsbag
+	 "http://www.ease-crc.org/ont/SUTURO.owl#CrispsBag")
+	(:candy
+	 "http://www.ease-crc.org/ont/SUTURO.owl#Candy")
+	(:stroopwafels
+	 "http://www.ease-crc.org/ont/SUTURO.owl#Stroopwafels")
+	(:liquorice
+	 "http://www.ease-crc.org/ont/SUTURO.owl#Liquorice")
+	(:tictac
+	 "http://www.ease-crc.org/ont/SUTURO.owl#TicTac")
+	(:candle
+	 "http://www.ease-crc.org/ont/SUTURO.owl#Candle")
+	(:grocerybag
+	 "http://www.ease-crc.org/ont/SUTURO.owl#GroceryBag")

@@ -194,7 +194,7 @@ include_directories(
 catkin_install_python(PROGRAMS
         scripts/name_server.py
         scripts/save_server.py
-        scripts/drink_server.py
+        scripts/object_info_server.py
 DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 
 #############
