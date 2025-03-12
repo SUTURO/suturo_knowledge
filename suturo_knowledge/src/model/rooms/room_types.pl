@@ -9,6 +9,7 @@
             is_pantry(r),
             is_office(r),
             is_corridor(r),
+            is_hallway(r),
             new_room_type(r)]).
 
 is_kitchen(Room) ?+>
