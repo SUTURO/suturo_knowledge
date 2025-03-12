@@ -17,8 +17,8 @@
             astar(+,+,-,-),
             heuristic(+,+,+,-),
             neighbors_from(+,-),
-            entry_pose(r,-),
-            exit_pose(r,-)
+            entry_pose(-, r),
+            exit_pose(-, r)
           ]).
 
 :- use_module(library(clpfd)).
@@ -43,11 +43,11 @@ is_inside_of(Object, Room) ?+>
 is_room_middle(Room, Pose) ?>
     is_at(Room, Pose).
 
-entry_pose([map, X,Y], Room):-
+entry_pose(Room, [map, X,Y]):-
     triple(Location, suturo:isEntryTo, Room),
     object_pose(Location, [map, X,Y]).
 
-exit_pose([map,X,Y], Room):-
+exit_pose(Room, [map,X,Y]):-
     triple(Location, suturo:isExitFrom, Room),
     object_pose(Location, [map, X,Y]).
 
