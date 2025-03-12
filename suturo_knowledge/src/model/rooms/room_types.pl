@@ -46,7 +46,7 @@ is_office(Room) ?>
 is_corridor(Room) ?>
     has_type(Room, suturo:'Corridor').
 
-is_hallyway(Room) ?>
+is_hallway(Room) ?>
     has_type(Room, suturo:'Hallway').
 
 %% new_room_type(+Type) is semidet.
