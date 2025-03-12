@@ -245,11 +245,12 @@ check_tables_for_frame([T | Next], Table) :-
 check_shelf_layers_for_frame([], ShelfLayer) :- fail.  
 check_shelf_layers_for_frame([S | Next], ShelfLayer) :-
 	object_pose(S, [Frame, _, _]),
-	(Frame = 'iai_kitchen/shelf_billy:shelf_billy:shelf_floor_0'->
+	(Frame = 'iai_kitchen/shelf_billy_corridor:cabinet:shelf_floor_0'->
 		ShelfLayer = S
 	;   
 		check_shelf_layers_for_frame(Next, ShelfLayer)
 	).
+
 
 % has_likely_location_in_room(+Object, +Room, -Location, -Pose)
 % 
