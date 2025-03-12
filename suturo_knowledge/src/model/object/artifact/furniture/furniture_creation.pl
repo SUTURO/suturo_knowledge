@@ -126,6 +126,7 @@ collision_link(CollisionLink, CollisionLink) :-
     atom_concat(_, 'table_center', CollisionLink);
     atom_concat(_, 'coathanger_center', CollisionLink);
     atom_concat(_, 'lamp_center', CollisionLink);
+    atom_concat(_, 'bed_front_edge_center', CollisionLink);
     atom_concat(_, 'place_one', CollisionLink);
     atom_concat(_, 'trashcan_center', CollisionLink);
     atom_concat(_, 'door_center', CollisionLink);
@@ -175,10 +176,17 @@ link_role_class(dining_table,suturo:'DiningTable') :- !.
 link_role_class(dinner_table,suturo:'DinnerTable') :- !.
 link_role_class(desk,suturo:'Desk') :- !.
 link_role_class(coffee_table,suturo:'CoffeeTable') :- !.
+link_role_class(couch_table, suturo:'CouchTable') :-!.
 link_role_class(kitchen_counter,suturo:'KitchenCounter') :- !.
+link_role_class(tv_sideboard, suturo:'TvSideboard') :-!.
 link_role_class(tv_table,suturo:'TvTable') :- !.
 link_role_class(lounge_chair,suturo:'LoungeChair') :- !.
-
+link_role_class(bookshelf, suturo:'BookShelf') :-!.
+link_role_class(cabinet, suturo:'Cabinet') :-!.
+link_role_class(bar, suturo:'Bar') :-!.
+link_role_class(side_table, suturo:'SideTable') :-!.
+link_role_class(dresser, suturo:'Dresser') :-!.
+link_role_class(bed, suturo:'Bed') :-!.
 link_role_class(dishwasher_robocup,suturo:'Dishwasher') :- !.
 
 
@@ -208,7 +216,7 @@ link_name_class(LinkName, Class) :-
     !.
 link_name_class(LinkName, Class) :-
     sub_string(LinkName,_,_,_,"coathanger_center"),
-    Class = suturo:'CoatHanger',
+    Class = suturo:'CoatRack',
     !.
 link_name_class(LinkName, Class) :-
     sub_string(LinkName,_,_,_,"shelf_layer"), % TODO: Fix this inconsistency in the urdf
@@ -238,6 +246,11 @@ link_name_class(LinkName, Class) :-
     sub_string(LinkName,_,_,_,"trashcan_center"), % TODO: Fix this inconsistency in the urdf
     Class = suturo:'TrashCan',
     !.
+link_name_class(LinkName, Class) :-
+    sub_string(LinkName,_,_,_,"bed_front_edge_center"),
+    Class = suturo:'Bed',
+    !.
+
 link_name_class(LinkName, Class) :-
     sub_string(LinkName,_,_,_,"dishwasher_tray"), % TODO: Fix this inconsistency in the urdf
     Class = suturo:'DishwasherTray',
