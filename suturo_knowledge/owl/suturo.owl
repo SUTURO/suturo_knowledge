@@ -1134,6 +1134,7 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
                 <owl:hasValue>apple juice</owl:hasValue>
             </owl:Restriction>
         </rdfs:subClassOf>
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">138</SUTURO:perceptionId>
         <rdfs:comment>Apple juice is a beverage made by pressing or extracting the natural liquid from apples, a sweet and crunchy fruit. It is often consumed as a refreshing drink.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
@@ -1225,6 +1226,21 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
         </rdfs:subClassOf>
         <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">77</SUTURO:perceptionId>
         <rdfs:comment>A banana is a long, curved fruit with a yellow skin that is easy to peel, a soft, sweet flesh, and small seeds inside.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#Bar -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Bar">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#DesignedFurniture"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
+                <owl:hasValue>bar</owl:hasValue>
+            </owl:Restriction>
+        </rdfs:subClassOf>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
@@ -1462,6 +1478,21 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
     
 
 
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#BookShelf -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#BookShelf">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Shelf"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
+                <owl:hasValue>book shelf</owl:hasValue>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
     <!-- http://www.ease-crc.org/ont/SUTURO.owl#Bookcase -->
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Bookcase">
@@ -1517,6 +1548,12 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Cabinet">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#DesignedFurniture"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
+                <owl:hasValue>cabinet</owl:hasValue>
+            </owl:Restriction>
+        </rdfs:subClassOf>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
@@ -1617,6 +1654,54 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
         </rdfs:subClassOf>
         <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">89</SUTURO:perceptionId>
         <rdfs:comment>The cereal box(es) used at RoboCup 2023 Bordeaux</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#CerealboxSmallCiniMinis -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#CerealboxSmallCiniMinis">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#CerealBox"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
+                <owl:hasValue>cerealbox small ciniminis</owl:hasValue>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">147</SUTURO:perceptionId>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#CerealboxSmallLion -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#CerealboxSmallLion">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#CerealBox"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
+                <owl:hasValue>cerealbox small lion</owl:hasValue>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">148</SUTURO:perceptionId>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#CerealboxSmallNesquik -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#CerealboxSmallNesquik">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#CerealBox"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
+                <owl:hasValue>cerealbox small nesquik</owl:hasValue>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">146</SUTURO:perceptionId>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
@@ -1816,10 +1901,32 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
     
 
 
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#CleaningRag -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#CleaningRag">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#CleaningTool"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
+                <owl:hasValue>cleaning rag</owl:hasValue>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">135</SUTURO:perceptionId>
+        <rdfs:comment rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
     <!-- http://www.ease-crc.org/ont/SUTURO.owl#CleaningTool -->
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#CleaningTool">
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#DesignedTool"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
+                <owl:hasValue>dust cloth</owl:hasValue>
+            </owl:Restriction>
+        </rdfs:subClassOf>
         <rdfs:comment>A cleaning tool is an instrument used for cleaning or scrubbing surfaces.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
@@ -1920,6 +2027,21 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
                 <owl:hasValue>coat hanger</owl:hasValue>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#CoatRack -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#CoatRack">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Rack"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
+                <owl:hasValue>coat rack</owl:hasValue>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
@@ -2223,6 +2345,37 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
     
 
 
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#Corridor -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Corridor">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Room"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
+                <owl:hasValue>corridor</owl:hasValue>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#CottonPadsElkos -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#CottonPadsElkos">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#HygieneProduct"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
+                <owl:hasValue>cotton pads elkos</owl:hasValue>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">158</SUTURO:perceptionId>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
     <!-- http://www.ease-crc.org/ont/SUTURO.owl#Couch -->
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Couch">
@@ -2231,6 +2384,21 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
                 <owl:hasValue>couch</owl:hasValue>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#CouchTable -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#CouchTable">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Table"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
+                <owl:hasValue>couch table</owl:hasValue>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
@@ -2251,6 +2419,38 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
         </rdfs:subClassOf>
         <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">10</SUTURO:perceptionId>
         <rdfs:comment>A box containing, or at least intended to contain, crackers. A cracker is a flat, dry-baked pastry, usually made from flour.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#CrackerTuc -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#CrackerTuc">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#ProcessedFood"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
+                <owl:hasValue>cracker tuc</owl:hasValue>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">157</SUTURO:perceptionId>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#CreamerBaerenmarke -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#CreamerBaerenmarke">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#RoboCupDrinks"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
+                <owl:hasValue>creamer baerenmarke</owl:hasValue>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">150</SUTURO:perceptionId>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
@@ -2284,6 +2484,22 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
             </owl:Restriction>
         </rdfs:subClassOf>
         <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">122</SUTURO:perceptionId>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#CrispsGuG -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#CrispsGuG">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#ProcessedFood"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
+                <owl:hasValue>crisps gug</owl:hasValue>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">154</SUTURO:perceptionId>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
@@ -2537,6 +2753,21 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
     
 
 
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#Dresser -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Dresser">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Table"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
+                <owl:hasValue>dresser</owl:hasValue>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
     <!-- http://www.ease-crc.org/ont/SUTURO.owl#Drink -->
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Drink">
@@ -2565,6 +2796,16 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
             </owl:Restriction>
         </rdfs:subClassOf>
         <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">112</SUTURO:perceptionId>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#DustCloth -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#DustCloth">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#CleaningTool"/>
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">137</SUTURO:perceptionId>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
@@ -2951,6 +3192,22 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
     
 
 
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#Gum -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Gum">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#ProcessedFood"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
+                <owl:hasValue>gum</owl:hasValue>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">155</SUTURO:perceptionId>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
     <!-- http://www.ease-crc.org/ont/SUTURO.owl#Hagelslag -->
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Hagelslag">
@@ -3207,6 +3464,22 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
     
 
 
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#IceTeaFuze -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#IceTeaFuze">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#IceTea"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
+                <owl:hasValue>Ice tea fuze</owl:hasValue>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">142</SUTURO:perceptionId>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
     <!-- http://www.ease-crc.org/ont/SUTURO.owl#IcedCoffee -->
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#IcedCoffee">
@@ -3217,6 +3490,22 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
                 <owl:hasValue>iced coffee</owl:hasValue>
             </owl:Restriction>
         </rdfs:subClassOf>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#InstantNoodlesMingChu -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#InstantNoodlesMingChu">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#ProcessedFood"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
+                <owl:hasValue>instant noodles ming chu</owl:hasValue>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">152</SUTURO:perceptionId>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
@@ -3463,6 +3752,22 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:comment>Ketchup is a sweet and tangy condiment made from tomatoes, vinegar, sugar, and spices. It is commonly used as a topping for burgers, fries, and hot dogs, and is a popular ingredient in many sauces and dressings.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#KitchenCleaner -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#KitchenCleaner">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#CleaningTool"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
+                <owl:hasValue>kitchen cleaner</owl:hasValue>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">136</SUTURO:perceptionId>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
@@ -3947,6 +4252,22 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
     
 
 
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#MezzoMixBottle -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#MezzoMixBottle">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#RoboCupDrinks"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
+                <owl:hasValue>mezzo mix bottle</owl:hasValue>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <SUTURO:perceptionId rdf:resource="140"/>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
     <!-- http://www.ease-crc.org/ont/SUTURO.owl#Microwave -->
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Microwave">
@@ -4034,6 +4355,22 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
                 <owl:hasValue>milk jug</owl:hasValue>
             </owl:Restriction>
         </rdfs:subClassOf>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#MilkPackBerch -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#MilkPackBerch">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#MilkPack"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
+                <owl:hasValue>milk pack berch</owl:hasValue>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">141</SUTURO:perceptionId>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
@@ -4340,6 +4677,22 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
     
 
 
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#OatMilk -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#OatMilk">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Milk"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
+                <owl:hasValue>oat milk</owl:hasValue>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">139</SUTURO:perceptionId>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
     <!-- http://www.ease-crc.org/ont/SUTURO.owl#Office -->
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Office">
@@ -4591,6 +4944,22 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
     
 
 
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#PastaEdeka -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#PastaEdeka">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#ProcessedFood"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
+                <owl:hasValue>pasta edeka</owl:hasValue>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">145</SUTURO:perceptionId>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
     <!-- http://www.ease-crc.org/ont/SUTURO.owl#PastryBox -->
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#PastryBox">
@@ -4654,6 +5023,22 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:comment>Peach ice tea box refers to the container or packaging used to store and sell peach-flavored iced tea, usually in a ready-to-drink form. The box may contain individual servings or larger quantities, and can be made of various materials such as cardboard, plastic, or glass.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#PeanutsChocolateTreets -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#PeanutsChocolateTreets">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#ProcessedFood"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
+                <owl:hasValue>peanuts chocolate treets</owl:hasValue>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">156</SUTURO:perceptionId>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
@@ -5004,6 +5389,22 @@ In the context of the RoboCup, objects are usually categorized into predefined c
     
 
 
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#QTips -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#QTips">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#HygieneProduct"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
+                <owl:hasValue>qtips</owl:hasValue>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">160</SUTURO:perceptionId>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
     <!-- http://www.ease-crc.org/ont/SUTURO.owl#Rack -->
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Rack">
@@ -5079,6 +5480,22 @@ In the context of the RoboCup, objects are usually categorized into predefined c
                 <owl:hasValue>reading</owl:hasValue>
             </owl:Restriction>
         </rdfs:subClassOf>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#RedCabbageGuG -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#RedCabbageGuG">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Vegetable"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
+                <owl:hasValue>red cabbage gug</owl:hasValue>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">153</SUTURO:perceptionId>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
@@ -5550,6 +5967,21 @@ The challenges in the RoboCup@Home competition are designed to test a variety of
     
 
 
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#SideTable -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#SideTable">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Table"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
+                <owl:hasValue>side table</owl:hasValue>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
     <!-- http://www.ease-crc.org/ont/SUTURO.owl#Sink -->
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Sink">
@@ -5832,6 +6264,22 @@ The challenges in the RoboCup@Home competition are designed to test a variety of
     
 
 
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#SpriteCan -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#SpriteCan">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Sprite"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
+                <owl:hasValue>sprite can</owl:hasValue>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">143</SUTURO:perceptionId>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
     <!-- http://www.ease-crc.org/ont/SUTURO.owl#StackingBlocks -->
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#StackingBlocks">
@@ -6023,6 +6471,22 @@ The challenges in the RoboCup@Home competition are designed to test a variety of
     
 
 
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#SweetenerGuG -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#SweetenerGuG">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Spice"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
+                <owl:hasValue>sweetener gug</owl:hasValue>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">149</SUTURO:perceptionId>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
     <!-- http://www.ease-crc.org/ont/SUTURO.owl#Sweets -->
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Sweets">
@@ -6114,6 +6578,22 @@ The challenges in the RoboCup@Home competition are designed to test a variety of
         </rdfs:subClassOf>
         <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">73</SUTURO:perceptionId>
         <rdfs:comment>A tea bag box is a container used for storing and organizing tea bags, typically made of cardboard or other durable materials and featuring separate compartments for different types or flavors of tea. These boxes are commonly used in households, offices, and restaurants to keep tea bags readily available for brewing.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#TeaBagBoxBad -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#TeaBagBoxBad">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#TeaBagBox"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
+                <owl:hasValue>tea bag box bad</owl:hasValue>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">144</SUTURO:perceptionId>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
@@ -6215,6 +6695,22 @@ The challenges in the RoboCup@Home competition are designed to test a variety of
     
 
 
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#TissueTempo -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#TissueTempo">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#HygieneProduct"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
+                <owl:hasValue>tissue tempo</owl:hasValue>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">159</SUTURO:perceptionId>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
     <!-- http://www.ease-crc.org/ont/SUTURO.owl#Toast -->
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Toast">
@@ -6280,6 +6776,16 @@ The challenges in the RoboCup@Home competition are designed to test a variety of
     
 
 
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#TomatoSoupHeisseTasse -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#TomatoSoupHeisseTasse">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Soup"/>
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">151</SUTURO:perceptionId>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
     <!-- http://www.ease-crc.org/ont/SUTURO.owl#Toothpaste -->
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Toothpaste">
@@ -6292,6 +6798,22 @@ The challenges in the RoboCup@Home competition are designed to test a variety of
         </rdfs:subClassOf>
         <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">64</SUTURO:perceptionId>
         <rdfs:comment>Toothpaste is a gel or paste used for cleaning teeth and maintaining oral hygiene. It typically contains abrasives, fluoride, and other active ingredients that help remove plaque, prevent tooth decay, and freshen breath.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#ToothpasteColgate -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#ToothpasteColgate">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Toothpaste"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
+                <owl:hasValue>toothpaste colgate</owl:hasValue>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">161</SUTURO:perceptionId>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
@@ -6385,6 +6907,7 @@ The challenges in the RoboCup@Home competition are designed to test a variety of
                 <owl:hasValue>trash can</owl:hasValue>
             </owl:Restriction>
         </rdfs:subClassOf>
+        <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">162</SUTURO:perceptionId>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
@@ -6510,6 +7033,21 @@ The challenges in the RoboCup@Home competition are designed to test a variety of
         </rdfs:subClassOf>
         <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">68</SUTURO:perceptionId>
         <rdfs:comment>Tuna fish can refers to a metal container used to store and preserve tuna fish.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#TvSideboard -->
+
+    <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#TvSideboard">
+        <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Table"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
+                <owl:hasValue>tv sideboard</owl:hasValue>
+            </owl:Restriction>
+        </rdfs:subClassOf>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
