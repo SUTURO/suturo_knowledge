@@ -19,7 +19,8 @@
             neighbors_from(+,-),
             entry_pose(-, r),
             exit_pose(-, r),
-            nav_pose_in_room(+, r,-)
+            nav_pose_in_room(+, r,-),
+            perceive_pose_in_room(+,r,-)
           ]).
 
 :- use_module(library(clpfd)).
@@ -66,6 +67,14 @@ nav_pose_in_room(Object, Room, Poses) :-
         Poses
     ).
 
+perceive_pose_in_room(Object, Room, [Frame, [NewX,Y,Z], Rotation]) :-
+    what_object(Object, Obj),
+    has_type(RoomInst, Room),
+    has_type(ObjectInst, Obj),
+    is_inside_of(ObjectInst, RoomInst),
+    object_pose(ObjectInst, [Frame, [X,Y,Z], Rotation]),
+    longest_side(ObjectInst, LSize),
+    NewX is X - ((LSize/2) + 0.8).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
