@@ -195,6 +195,8 @@ link_role_class(bed, suturo:'Bed') :-!.
 link_role_class(dishwasher_robocup, suturo:'Dishwasher') :- !.
 link_role_class(chair, suturo:'Chair') :- !.
 link_role_class(armchair, suturo:'Armchair') :- !.
+link_role_class(fridge, suturo:'Fridge') :- !.
+link_role_class(sink, soma:'Sink') :- !.
 
 
 %% link_name_class(+LinkName, -Class) is semidet.
