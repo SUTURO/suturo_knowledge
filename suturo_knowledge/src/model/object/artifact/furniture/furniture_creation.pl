@@ -53,9 +53,12 @@ is_semantic_map_object(Link) :-
     %sub_string(Link,_,_,_,"d_table_origin");
     sub_string(Link,_,_,_,"trashcan_center");
     sub_string(Link,_,_,_,"coathanger_center");
+    sub_string(Link,_,_,_,"bed_center");
+    sub_string(Link,_,_,_,"armchair_center");
     sub_string(Link,_,_,_,"place_one");
     sub_string(Link,_,_,_,"lamp_center");
     sub_string(Link,_,_,_,"shelf_base_center");
+    sub_string(Link,_,_,_,"chair_center");
     sub_string(Link,_,_,_,"drawer_front_top");
     sub_string(Link,_,_,_,"drawer_bottom");
     sub_string(Link,_,_,_,"door_center");
@@ -126,8 +129,10 @@ collision_link(CollisionLink, CollisionLink) :-
     atom_concat(_, 'table_center', CollisionLink);
     atom_concat(_, 'coathanger_center', CollisionLink);
     atom_concat(_, 'lamp_center', CollisionLink);
-    atom_concat(_, 'bed_front_edge_center', CollisionLink);
+    atom_concat(_, 'chair_center', CollisionLink);
+    atom_concat(_, 'bed_center', CollisionLink);
     atom_concat(_, 'place_one', CollisionLink);
+    atom_concat(_, 'armchair_center', CollisionLink);
     atom_concat(_, 'trashcan_center', CollisionLink);
     atom_concat(_, 'door_center', CollisionLink);
     atom_concat(_, 'dishwasher_tray_bottom', CollisionLink);
@@ -175,11 +180,11 @@ link_role_class(hallway_cabinet,suturo:'HallwayCabinet') :- !.
 link_role_class(dining_table,suturo:'DiningTable') :- !.
 link_role_class(dinner_table,suturo:'DinnerTable') :- !.
 link_role_class(desk,suturo:'Desk') :- !.
-link_role_class(coffee_table,suturo:'CoffeeTable') :- !.
+link_role_class(coffee_table, suturo:'CoffeeTable') :- !.
 link_role_class(couch_table, suturo:'CouchTable') :-!.
 link_role_class(kitchen_counter,suturo:'KitchenCounter') :- !.
 link_role_class(tv_sideboard, suturo:'TvSideboard') :-!.
-link_role_class(tv_table,suturo:'TvTable') :- !.
+link_role_class(tv_table, suturo:'TvTable') :- !.
 link_role_class(lounge_chair,suturo:'LoungeChair') :- !.
 link_role_class(bookshelf, suturo:'BookShelf') :-!.
 link_role_class(cabinet, suturo:'Cabinet') :-!.
@@ -187,7 +192,9 @@ link_role_class(bar, suturo:'Bar') :-!.
 link_role_class(side_table, suturo:'SideTable') :-!.
 link_role_class(dresser, suturo:'Dresser') :-!.
 link_role_class(bed, suturo:'Bed') :-!.
-link_role_class(dishwasher_robocup,suturo:'Dishwasher') :- !.
+link_role_class(dishwasher_robocup, suturo:'Dishwasher') :- !.
+link_role_class(chair, suturo:'Chair') :- !.
+link_role_class(armchair, suturo:'Armchair') :- !.
 
 
 %% link_name_class(+LinkName, -Class) is semidet.
@@ -247,7 +254,7 @@ link_name_class(LinkName, Class) :-
     Class = suturo:'TrashCan',
     !.
 link_name_class(LinkName, Class) :-
-    sub_string(LinkName,_,_,_,"bed_front_edge_center"),
+    sub_string(LinkName,_,_,_,"bed_center"),
     Class = suturo:'Bed',
     !.
 
@@ -270,6 +277,10 @@ link_name_class(LinkName, Class) :-
 link_name_class(LinkName, Class) :-
     sub_string(LinkName,_,_,_,"chair_center"),
     Class = suturo:'Chair',
+    !.
+link_name_class(LinkName, Class) :-
+    sub_string(LinkName,_,_,_, "armchair_center"),
+    Class = suturo:'ArmChair',
     !.
 link_name_class(LinkName, Class) :-
     sub_string(LinkName,_,_,_,"dishwasher_main"),

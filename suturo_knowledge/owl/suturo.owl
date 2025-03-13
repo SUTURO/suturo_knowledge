@@ -277,6 +277,19 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
     
 
 
+    <!-- http://www.ease-crc.org/ont/SOMA.owl#Armchair -->
+
+    <rdf:Description rdf:about="http://www.ease-crc.org/ont/SOMA.owl#Armchair">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
+                <owl:hasValue>armchair</owl:hasValue>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </rdf:Description>
+    
+
+
     <!-- http://www.ease-crc.org/ont/SOMA.owl#BakedGood -->
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SOMA.owl#BakedGood">
