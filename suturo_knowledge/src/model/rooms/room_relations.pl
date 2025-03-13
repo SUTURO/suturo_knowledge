@@ -18,7 +18,8 @@
             heuristic(+,+,+,-),
             neighbors_from(+,-),
             entry_pose(-, r),
-            exit_pose(-, r)
+            exit_pose(-, r),
+            nav_pose_in_room(+, r,-)
           ]).
 
 :- use_module(library(clpfd)).
@@ -50,6 +51,21 @@ entry_pose(Room, [map, X,Y]):-
 exit_pose(Room, [map,X,Y]):-
     triple(Location, suturo:isExitFrom, Room),
     object_pose(Location, [map, X,Y]).
+
+% Object = 'table'
+nav_pose_in_room(Object, Room, Poses) :-
+    what_object(Object, Obj),
+    findall(F, has_type(F, Obj), Objects),  % Alle Instanzen des Objekttyps sammeln
+    has_type(RoomInst, Room),               % Room muss eine Instanz eines Raums sein
+    findall(Pose,
+        (
+            member(F, Objects),             % Iteration über alle Instanzen
+            is_inside_of(F, RoomInst),      % Prüfen, ob das Objekt im Raum ist
+            furniture_rel_pose(F, 'perceive', Pose)  % Pose des Objekts abrufen
+        ),
+        Poses
+    ).
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
