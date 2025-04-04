@@ -19,7 +19,7 @@ def fragility_check(name):
         return False
     
     else: 
-        q2 = "fragility_new("+ "\'" + newname.lower() + "\')."
+        q2 = "is_fragile("+ "\'" + newname.lower() + "\')."
         soll = prolog.once(q2)
 
         if soll == dict():

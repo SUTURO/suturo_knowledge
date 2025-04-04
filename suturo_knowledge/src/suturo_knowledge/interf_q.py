@@ -268,7 +268,7 @@ class InterfacePlanningKnowledge:
 #################################################################################
 # 7: 
 # Check if an object is fragile
-    def fragility_check(self, name):
+    def is_fragile(self, name):
         q1 = "what_object("+ "\'"+name.lower()+ "\'" + ", Object)."
         #print (q1)
         sol = prolog.once(q1)
@@ -378,7 +378,7 @@ class InterfacePlanningKnowledge:
         print(obj_type)
 
         # fragility
-        obj_fragile = check_resultt(self.fragility_check(name))
+        obj_fragile = check_resultt(self.is_fragile(name))
         print(obj_fragile)
         
         #color 
