@@ -5,7 +5,7 @@
 	  [
 		what_object(+,r),
 		what_object_transitive(?,r),
-		fragility_new(+),
+		is_fragile(+),
 		is_perishable(+),
 		have_same_class(+,+),
 		preorlo_check(r, -),
@@ -27,13 +27,8 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % go up all superclasses of an object till you find a superclass with property 'Fragility' 
-%% is_fragile(r Object)
-%is_fragile(Object) :-
-%	triple(Object, transitive(rdfs:'subClassOf'), X),
-%	triple(X, B,suturo:'Fragility').
-
-%% fragility_new(r ObjName)
-fragility_new(ObjName) :-
+%% is_fragile(r ObjName)
+is_fragile(ObjName) :-
 	triple(O,_, suturo:hasPredefinedName), 
 	triple(O, owl:hasValue, ObjName), 
 	triple(Object,_,O),  
