@@ -194,7 +194,7 @@
 
     <owl:DatatypeProperty rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#hasGraspPose">
         <rdfs:subPropertyOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#hasDataValue"/>
-        <rdfs:comment>The pose an object shall be grabbed from such as &quot;above&quot; or &quot;side&quot;.</rdfs:comment>
+        <rdfs:comment>The pose an object shall be grabbed from such as &quot;top&quot; or &quot;side&quot;.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:DatatypeProperty>
     
@@ -349,7 +349,7 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasGraspPose"/>
-                <owl:hasValue>above</owl:hasValue>
+                <owl:hasValue>top</owl:hasValue>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
@@ -460,7 +460,7 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasGraspPose"/>
-                <owl:hasValue>above</owl:hasValue>
+                <owl:hasValue>top</owl:hasValue>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
@@ -976,12 +976,6 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#RoboCupDishes"/>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasGraspPose"/>
-                <owl:hasValue>above</owl:hasValue>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
                 <owl:hasValue>spoon</owl:hasValue>
             </owl:Restriction>
@@ -1379,7 +1373,7 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
                 <owl:hasValue>big cola bottle</owl:hasValue>
             </owl:Restriction>
         </rdfs:subClassOf>
-        <SUTURO:perceptionId rdf:resource="114"/>
+        <SUTURO:perceptionId rdf:resource="http://www.ease-crc.org/ont/114"/>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
@@ -4337,7 +4331,7 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
                 <owl:hasValue>mezzo mix bottle</owl:hasValue>
             </owl:Restriction>
         </rdfs:subClassOf>
-        <SUTURO:perceptionId rdf:resource="140"/>
+        <SUTURO:perceptionId rdf:resource="http://www.ease-crc.org/ont/140"/>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>
     </owl:Class>
     
