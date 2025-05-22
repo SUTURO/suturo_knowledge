@@ -21,7 +21,8 @@
 		has_likely_location(+,-,-,-),
 		has_likely_location_in_room(+,+,-,-),
 		check_shelf_layers_for_frame(+,-),
-		check_tables_for_frame(+, -)
+		check_tables_for_frame(+, -),
+		navigability(+, -),
 	  ]).
 
 
@@ -271,7 +272,11 @@ has_likely_location_in_room(Object, Room, Location, Pose) :-
 		)
 	).
      
-
+navigability(Room, Navigability) :-
+	has_type(Room, RoomType),
+	triple(RoomType, transitive(rdfs:'subClassOf'), Type),
+	triple(Type, _, suturo:hasNavigability),
+	triple(Type, owl:hasValue, Navigability).
 
 
 % has_predefined_location(+Object, -Location)

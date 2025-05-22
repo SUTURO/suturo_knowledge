@@ -11,11 +11,11 @@
             are_neighbours3(-,-,-),
             format_pose(+,-),
             distance_between_rooms(+,+,-),
-            distance_between_rooms_1(+,+,+,-),
+            distance_between_rooms_1(+,+,-),
             distance2(+,+,-),
             door_penalty(+,+,+,-),
             astar(+,+,-,-),
-            heuristic(+,+,+,-),
+            heuristic(+,+,-),
             neighbors_from(+,-),
             entry_pose(-, r),
             exit_pose(-, r),
@@ -179,12 +179,14 @@ are_neighbours(Room, Boom, E, Distance) :-
     %distance_between_rooms(Room, Boom, Distance).
     distance_between_rooms_1(Room, Boom, E, Distance).
 
-% are_neighbours(-,-,-,-)
+% are_neighbours(?,?,-)
 are_neighbours3(Room, Boom, E) :-
     is_room_2(Room),
     is_room_2(Boom),
     is_exit_from(E, Room),
     check_inside_room(E, Boom).
+
+
 
 % are_neighbours2(-)
 are_neighbours2(Results) :-
@@ -250,70 +252,118 @@ distance_between_rooms(Room1, Room2, Distance) :-
     distance2((X1, Y1), (X2, Y2), Distance).
         
 % determine distance from door to door as sum of distance from door1 to room middle and room middle to door2
-% distance_between_rooms_1(+,+,+,-)
-distance_between_rooms_1(StartRoom, GoalRoom, Exit, Distance) :-
+% distance_between_rooms_1(+,+,-)
+distance_between_rooms_1(StartRoom, GoalRoom, Distance) :-
     object_pose(StartRoom, ['map', [X1, Y1, _], _]),
-    object_pose(Exit, ['map', [X2, Y2, _], _]),
     object_pose(GoalRoom, ['map', [X3, Y3, _], _]),
-    distance3((X1, Y1), (X2, Y2), (X3, Y3),  Distance).
+    distance2((X1, Y1), (X3, Y3),  Distance).
 
 % gives a penalty for narrow passages between rooms
-% door_penalty(+,+,+,-)
-door_penalty(StartRoom, GoalRoom, StartExit, Penalty) :-
-    (StartRoom = GoalRoom -> 
+% door_penalty(+StartRoom, +GoalRoom, -Penalty)
+door_penalty(StartRoom, GoalRoom, ExitStart, Penalty) :-
+    (StartRoom = GoalRoom ->
+        writeln('Rooms are the same — penalty = 0'),
         Penalty is 0
     ;
-    writeln(['StartRoom:', StartRoom]),
-    is_exit_from(StartExit, StartRoom),
-    is_entry_to(EntryStart, StartRoom),
-    is_exit_from(ExitGoal, GoalRoom),
-    object_pose(EntryStart, ['map', [X1, Y1, _], _]),
-    object_pose(ExitGoal, ['map', [X2, Y2, _], _]),
-    X1 =:= X2, 
-    Y1 =:= Y2,
-    is_entry_to(EntryGoal, GoalRoom),
-    object_pose(EntryGoal, ['map', [X3, Y3, _], _]),
-    object_pose(StartExit, ['map', [X4, Y4, _], _]),
-    X3 =:= X4,
-    Y3 =:= Y4,
-    distance2((X1,Y1), (X3,Y3), Distance),
-    calculate_penalty(Distance, Penalty)).
+        writeln(['Calculating door_penalty from', StartRoom, 'to', GoalRoom]),
+        
+        is_exit_from(ExitStart, StartRoom),
+        writeln(['ExitStart:', ExitStart]),
+        
+        is_entry_to(EntryGoal, GoalRoom),
+        writeln(['EntryGoal:', EntryGoal]),
+        
+        object_pose(ExitStart, ['map', [X1, Y1, _], _]),
+        writeln(['ExitStart position:', X1, Y1]),
+        
+        object_pose(EntryGoal, ['map', [X2, Y2, _], _]),
+        writeln(['EntryGoal position:', X2, Y2]),
+        
+        same_position([X1, Y1], [X2, Y2]),
+        writeln('EntryGoal and ExitStart positions match (X1=:=X2, Y1=:=Y2)'),
+        
+        is_exit_from(ExitGoal, GoalRoom),
+        writeln(['ExitGoal:', ExitGoal]),
+
+        is_entry_to(EntryStart, StartRoom),
+        writeln(['EntryStart:', EntryStart]),
+
+        object_pose(ExitGoal, ['map', [X3, Y3, _], _]),
+        writeln(['ExitGoal position:', X3, Y3]),
+        
+        object_pose(EntryStart, ['map', [X4, Y4, _], _]),
+        writeln(['EntryStart position:', X4, Y4]),
+
+        same_position([X3, Y3], [X4, Y4]),
+        writeln('EntryStart and ExitGoal positions match (X3=:=X4, Y3=:=Y4)'),
+
+        distance2((X1, Y1), (X3, Y3), Distance),
+        writeln(['Distance for penalty calculation:', Distance]),
+        
+        calculate_penalty(Distance, Penalty),
+        writeln(['Final Penalty:', Penalty])
+    ).
+
+
+same_position([X1, Y1], [X2, Y2]) :-
+    abs(X1 - X2) < 0.01,
+    abs(Y1 - Y2) < 0.01.
+
+% safe_door_penalty(+StartRoom, +GoalRoom, -Penalty)
+safe_door_penalty(StartRoom, GoalRoom, Penalty) :-
+(   are_neighbours3(StartRoom, GoalRoom, Exit)
+->  door_penalty(StartRoom, GoalRoom, Exit, Penalty)
+;   % no direct connection -> Standartpenalty
+    Penalty = 1.5
+).
 
 % calculates a penalty score depending on width of passage 
 % calculate_penalty(+,-)
 calculate_penalty(Distance, Penalty) :-
     Reference is 0.84,
     ( Distance < Reference ->
-        Penalty is Reference / Distance % Für Distance < 0.84: Penalty wächst
+        Penalty is Reference / Distance % for Distance < 0.84: Penalty is increasing
     ;
-        Penalty is Distance / Reference % Für Distance >= 0.84: Penalty sinkt
+        Penalty is Distance / Reference % for Distance >= 0.84: Penalty is decreasing
     ).
         
 
-% A* Algorithmus
+% astar(+StartRoom, +GoalRoom, -Path, -Cost)
 astar(Start, Goal, Path, Cost) :-
-    astar_search([node(Start, [], 0)], [], Goal, Path, Cost).
+    heuristic(Start, Goal, H),
+    astar_search([node(Start, [], 0, H)], Goal, RevPath, Cost),
+    reverse(RevPath, Path).
 
-astar_search([node(Current, Path, Cost)|_], _, Current, FinalPath, Cost) :-
-    reverse([Current|Path], FinalPath).
-
-astar_search([node(Current, Path, Cost)|Queue], Visited, Goal, FinalPath, FinalCost) :-
-    % find neighbors
-    findall(node(Next, [Current|Path], NewCost),
-        (   are_neighbours3(Current, Next, Exit),
-            \+ memberchk(Next, Path),
-            \+ memberchk(node(Next, _, _, _), Visited),
-            heuristic(Current, Next, Exit, NewCost)
+% astar_search(+OpenSet, +Goal, -Path, -Cost)
+astar_search([node(Goal, PathSoFar, G, _)|_], Goal, [Goal|PathSoFar], G).
+astar_search([node(Current, PathSoFar, G, _)|RestOpen], Goal, Path, Cost) :-
+    findall(
+        node(Neighbor, [Current|PathSoFar], G1, F1),
+        (
+            are_neighbours3(Current, Neighbor, Exit),
+            \+ member(Neighbor, PathSoFar),
+            safe_door_penalty(Current, Neighbor, Penalty),
+            distance_between_rooms_1(Current, Neighbor, Dist),
+            navigability(Neighbor, N),
+            G1 is G + Dist + Penalty + N,
+            heuristic(Neighbor, Goal, H),
+            F1 is G1 + H + N
         ),
-        Neighbors),
+        Neighbors
+    ),
+    append(RestOpen, Neighbors, NewOpen),
+    sort_open_list(NewOpen, SortedOpen),
+    astar_search(SortedOpen, Goal, Path, Cost).
 
-    sort(3, @=<, Neighbors, NewQueue),
-    astar_search(NewQueue, [node(Current, Path, Cost)|Visited], Goal, FinalPath, FinalCost).
+% sort_open_list(+OpenList, -Sorted)
+sort_open_list(OpenList, Sorted) :-
+    predsort(compare_nodes, OpenList, Sorted).
 
+compare_nodes(<, node(_,_,_,F1), node(_,_,_,F2)) :- F1 < F2.
+compare_nodes(>, node(_,_,_,F1), node(_,_,_,F2)) :- F1 >= F2.
 
-% heuristic: combination of door_penalty and distance_between_rooms_1
-% heuristics(+,+,+,-)
-heuristic(CurrentRoom, GoalRoom, Exit, Heuristic) :-
-    door_penalty(CurrentRoom, GoalRoom, Exit, Penalty),
-    distance_between_rooms_1(CurrentRoom, GoalRoom, Exit, Distance),
-    Heuristic is Penalty + Distance.
+% heuristic(+CurrentRoom, +GoalRoom, -Heuristic)
+heuristic(Current, Goal, Heuristic) :-
+    object_pose(Current, ['map', [X1, Y1, _], _]),
+    object_pose(Goal, ['map', [X2, Y2, _], _]),
+    distance2((X1, Y1), (X2, Y2), Heuristic).
