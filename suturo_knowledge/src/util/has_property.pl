@@ -172,10 +172,10 @@ has_value(ObjName, Property, Value) :-
 % If the string is empty and there was already an information for this ID it just updates the changes.
 %% save_person_data(+ID, +Name, +Drink, +Interest, +Profession)
 save_person_data(ID, Name, Drink, Interest, Profession):-
-    save_field(ID, suturo:hasCustomerName, Name),
+    save_field(ID, 'http://www.ease-crc.org/ont/SUTURO.owl#hasCustomerName', Name),
     save_drink(ID, Drink),
-    save_field(ID, suturo:hasInterest, Interest),
-    save_field(ID, suturo:hasProfession, Profession).
+    save_field(ID, 'http://www.ease-crc.org/ont/SUTURO.owl#hasInterest', Interest),
+    save_field(ID, 'http://www.ease-crc.org/ont/SUTURO.owl#hasProfession', Profession).
 
 %save_field(+,r,+)
 save_field(ID, Predicate, Value) :-
