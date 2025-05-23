@@ -6498,6 +6498,12 @@ The challenges in the RoboCup@Home competition are designed to test a variety of
                 <owl:hasValue>strawberry</owl:hasValue>
             </owl:Restriction>
         </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasWeight"/>
+                <owl:hasValue>light</owl:hasValue>
+            </owl:Restriction>
+        </rdfs:subClassOf>
         <SUTURO:perceptionId rdf:datatype="http://www.w3.org/2001/XMLSchema#int">37</SUTURO:perceptionId>
         <rdfs:comment>A strawberry is a small, red fruit with a juicy texture, sweet taste, and tiny seeds on the surface, commonly used in desserts or as a snack.</rdfs:comment>
         <rdfs:isDefinedBy rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl"/>

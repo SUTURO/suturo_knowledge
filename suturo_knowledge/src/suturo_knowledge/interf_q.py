@@ -22,9 +22,9 @@ class InterfacePlanningKnowledge:
     def save_person_and_drink(self, name, drink):
         name_part = name.lower()
 
-        print("1.Name:", name_part)
-        print("2.Drink:", drink)
-        #print("3.ID:", id_part)
+        print("1.Name:", [name_part])
+        print("2.Drink:", [drink])
+        #print("3.ID:", [id_part])
 
         # check if a fav drink already exists
         query_check = "fav_drink(" + name_part + ", X)."
@@ -116,7 +116,7 @@ class InterfacePlanningKnowledge:
             # because person was not known previously
             return False
     
-#########################################################################
+######################################################################################
 # 3: 
 # What's person X's favourite drink?
 
@@ -270,17 +270,17 @@ class InterfacePlanningKnowledge:
 # Check if an object is fragile
     def is_fragile(self, name):
         q1 = "what_object("+ "\'"+name.lower()+ "\'" + ", Object)."
-        #print (q1)
+        print (q1)
         sol = prolog.once(q1)
-        #print(sol)
+        print(sol)
         
         if len(sol) == 0:
             print("Sorry, object is not known to us!")
             return None
         
         else: 
-            q2 = "fragility_new("+ "\'" + name.lower() + "\')."
-            #print (q2)
+            q2 = "is_fragile("+ "\'" + name.lower() + "\')."
+            print (q2)
             soll = prolog.once(q2)
 
             if soll == dict():
@@ -405,17 +405,37 @@ class InterfacePlanningKnowledge:
 # save following infos about a person: id, name, fav drink, interest, profession
 
     def save_person_data(self, id, name, drink, interest, profession):
-        q1 = "save_person_data(" + id + ", " + name + ", " + drink + ", " + interest + "," + profession + ")."
+        print(id)
+        print(name)
+        print(drink)
+        print(interest)
+        print(profession)
+        q1 = "save_person_data(" + "\'" +str(id)+ "\'" + ", " + "\'"+name+ "\'"+ ", " +drink+ ", " + "\'" +interest+"\'" + "," + "\'" +profession+"\'" + ")."
         print(q1)
-        return prolog.once(q1)
+        sol = prolog.once(q1)
+        if sol == dict(): return True; return False
 
 # 14: 
 # call following infos about a person: id, name, fav drink, interest, profession
 
     def call_person_data(self, id, name, drink, interest, profession):
-        q1 = "call_person_data(" + id + ", " + name + ", " + drink + ", " + interest + "," + profession + ")."
+        q1 = "call_person_data(" + str(id) + ", " + name + ", " + drink + ", " + interest + "," + profession + "), L = [Name, Drink, Interest, Profession]."
         print(q1)
-        return prolog.once(q1)
+        sol = prolog.once(q1)
+        print(sol)
+        return sol
+
+
+################################################################################################################
+# 15:
+# get the information about whether an object is light or heavy
+
+    def is_light_or_heavy(self, object):
+        q1 = f"is_light_or_heavy('{object}' , Weight)."
+        print(q1)
+        sol =  prolog.once(q1)
+        return sol
+        #return sol == dict()
 
 ################################################################################################################
 def object_perceive_pose(self, objname):

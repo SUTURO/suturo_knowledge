@@ -22,7 +22,7 @@
 		has_likely_location_in_room(+,+,-,-),
 		check_shelf_layers_for_frame(+,-),
 		check_tables_for_frame(+, -),
-		navigability(+, -),
+		navigability(+, -)
 	  ]).
 
 
@@ -202,7 +202,7 @@ save_drink(ID, Drink) :-
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% has_likely_location(+Object, -Location, -Pose)
+% has_likely_location(+Object, -Location, -LocObject, -Pose)
 % likly robocup locations for objects:
 %   fruits --> billy shelf
 % 	cutlery --> on the dishwasher  
