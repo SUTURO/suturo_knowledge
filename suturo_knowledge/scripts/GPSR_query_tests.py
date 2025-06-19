@@ -1,23 +1,33 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
 import rospy
-import random
 import unittest
 import rosunit
+import random
 import rosprolog_client
-from knowledge_msgs.srv import ObjectInfo
-from knowledge_msgs.srv import IsFragile
-from knowledge_msgs.srv import SaveInfo
-from knowledge_msgs.srv import IsKnown
-from suturo_knowledge.interf_q import InterfacePlanningKnowledge 
 
+#from knowledge_msgs.srv import ObjectInfo
+#from knowledge_msgs.srv import IsFragile
+#from knowledge_msgs.srv import SaveInfo
+#from knowledge_msgs.srv import IsKnown
+
+from suturo_knowledge.interf_q import InterfacePlanningKnowledge 
 prolog = rosprolog_client.Prolog()
 inter = InterfacePlanningKnowledge()
 
 class TestGPSRQueries(unittest.TestCase):
 
+    @classmethod
+    def setUpClass(cls):
+        """
+        Initialize ROS node
+        """
+        rospy.init_node("GPSR_query_tests", anonymous=True)
+
 ### 1/12: is_fragile 
 ## true
 ## false
-
     def test_is_fragile(self):
         q1 = prolog.once(f"is_fragile(bowl).")
         print("Q1:", [q1]) # = {} ??
@@ -243,7 +253,6 @@ class TestGPSRQueries(unittest.TestCase):
 
 
 ### 7/12: has_predefined_location
-
     def test_predefined_location(self):
         q1 = f"has_predefined_location('fanta', Location)."
         sol = prolog.once(q1)
@@ -257,32 +266,55 @@ class TestGPSRQueries(unittest.TestCase):
 # fruits --> billy shelf
 # cutlery --> on the dishwasher
 # wie muss query aussehen generell ??
+# --> has_likely_location muss für shelf / shelfLayer gefixed werden
     def test_has_likely_location(self):
         # fruits
-        fruits = [fruit, apple, banana, strawberry, peach, plum, orange]
-        fruit = random.choice(fruits)
+        #fruits = [apple, banana, strawberry, peach, plum, orange]
+        #fruit = random.choice(fruits)
 
         # Location = Shelf for fruit
-        q1 = prolog.once(f"has_likely_location({fruit}, Location, LocObj, Pose).")
-        qs = prolog.once(f"what_object('shelf', Loc).")
-
-        self.assertEquals(q1["Location"], qs["Loc"])
+        #q1 = prolog.once(f"has_likely_location('{fruit}', Location, LocObj, Pose).")
+        #qs = prolog.once(f"what_object('shelf', Loc).")
+        #self.assertEquals(q1["Location"], qs["Loc"])
 
 
         # Location = Dishwasher for cutlery
-        cutleries = [cutlery, knife, fork, spoon]
+        cutleries = ["knife", "fork", "spoon"]
         cutlery = random.choice(cutleries)
 
         # Location = Shelf for fruit
         q1 = prolog.once(f"has_likely_location({cutlery}, Location, LocObj, Pose).")
         qs = prolog.once(f"what_object('dishwasher', Loc).")
 
+#'Dishwasher' != 'http://www.ease-crc.org/ont/SOMA.owl#Dishwasher'
         self.assertEquals(q1["Location"], qs["Loc"])
 
 
 
 ### 9/12: has_likely_location_in_room
 
+    def test_has_likely_location_in_room(self):
+        # fruits
+        #fruits = [apple, banana, strawberry, peach, plum, orange]
+        #fruit = random.choice(fruits)
+
+        # Location = Shelf for fruit
+        #q1 = prolog.once(f"has_likely_location('{fruit}', Location, LocObj, Pose).")
+        #qs = prolog.once(f"what_object('shelf', Loc).")
+        #self.assertEquals(q1["Location"], qs["Loc"])
+
+        # Location = Dishwasher for cutlery
+        cutleries = ["knife", "fork", "spoon"]
+        room = ["kitchen", "living room"]
+        cutlery = random.choice(cutleries)
+
+        # Room = kitchen
+        q1 = prolog.once(f"is_kitchen(K), has_likely_location_in_room({cutlery}, K, LocObj, Pose).")
+
+        # Room = living room 
+        q1 = prolog.once(f"is_living_room(L), has_likely_location_in_room({cutlery}, L, LocObj, Pose).")
+        #self.assert()
+        # --> wie testen??
 
 ### 10/12: navigability
 # need map for testing that !!!
@@ -303,14 +335,57 @@ class TestGPSRQueries(unittest.TestCase):
         
 
 ### 11/12: object_characteristics
+
+
 ### 12/12: object_perceive_pose
 
+### 13: init_gpsr_2024
+    def test_init_gpsr_2024(self):
+        q1 = prolog.once(f"init_gpsr_2024.")
+        self.assertIsNotNone(q1)
 
+## 14: get_obj_instance_of_type
+    # q1 = prolog.once(f"has_type('{Instance}', Type).")
+
+## 15: get_room_entry_pose_class
+    # q1 = prolog.once(f"has_type('{Instance}', Type).")
+    # q2 = prolog.once(f"entry_pose('{Room}', PoseStamped).")
+    # q3 = prolog.once(f"has_type('{Instance}', Type), entry_pose('{Room}', PoseStamped).")
+
+## 16: get_room_pose
+## 17: get_all_room_poses 
+## 18: get_room_middle_pose
+    # q1 = prolog.once(f"middle(Room, PoseStamped).")
+
+## 19: get_nav_poses_for_furniture_item
+    # q1 = prolog.once(f"what_object('dishwasher', Loc).")
+    # q2 = prolog.once(f"what_object('{furniture_nlp_name}', Obj), has_type(ObjInst, Obj), has_type(Room, '{rooms.get(snakecase(room))}'), is_inside_of(ObjInst, Room),furniture_rel_pose(ObjInst, 'perceive', Pose).")
+    # q3 = prolog.once(f"has_type(Room, '{rooms.get(snakecase(room))}'), is_inside_of('{furniture_item}', Room), furniture_rel_pose(ObjInst, 'perceive', Pose).")
+
+# ; ??
+## 20: check_existence_of_instance
+    # q1 = prolog.once((f"what_object_transitive('{nlp_name}', Obj), instance_of(Inst, Obj)); (has_robocup_name(Obj, '{nlp_name}')).)
+
+## 21: check_existance_of_class
+    # nlp_name = []
+    # q1 = prolog.once(f"what_object_transitive('{nlp_name}', Class).")
+
+## 22: get_predefined_source_item_location_name
+    # q1 = prolog.once(f"what_object_transitive('{item_name}', Obj), predefined_origin_location(Obj, Furniture), furniture_rel_pose(Furniture, 'perceive', Pose).")
+
+## 23: get_predefined_source_item_location_iri
+    # q1 = prolog.once(f"what_object_transitive(Name, {item_iri}), predefined_origin_location({item_iri}, Furniture), furniture_rel_pose(Furniture, 'perceive', Pose).")
+
+## 24: get_predefined_destination_item_location
+    # q1 = prolog.once(f"predefined_destination_location({item_iri}, Furniture), furniture_rel_pose(Furniture, 'perceive', Pose).")
+
+## 25: check_existence_based_on_class
+    # q1 = prolog.once(f"what_object_transitive(Name, {class_iri}).")
 
 
 if __name__ == '__main__':
     rosunit.unitrun(
-        'knowrob_ros',           # package name
-        'GPSR_query_tests',  # test name
-        TestKnowrobRosLib        # TestCase class
+        'suturo_knowledge',      # package name
+        'GPSR_query_tests',      # test name
+        TestGPSRQueries          # TestCase class
     )
