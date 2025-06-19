@@ -22,7 +22,11 @@
 		has_likely_location_in_room(+,+,-,-),
 		check_shelf_layers_for_frame(+,-),
 		check_tables_for_frame(+, -),
-		navigability(+, -)
+		has_likely_room_location(+, -),
+		path_to_room(+,+,+,-),
+		navigability(+, -),
+		first_valid_path(+,+,-,-),
+		path_through_all_object_rooms(+,+,-,-)
 	  ]).
 
 
@@ -206,6 +210,8 @@ save_drink(ID, Drink) :-
 % likly robocup locations for objects:
 %   fruits --> billy shelf
 % 	cutlery --> on the dishwasher  
+% no shelf layers -> must be fixed
+
 has_likely_location(Object, Location, LocObj, Pose) :-
 	(has_predefined_location(Object, Loc),
 	 Loc = 'http://www.ease-crc.org/ont/SOMA.owl#Dishwasher' ->
@@ -286,6 +292,22 @@ has_predefined_location(Object, Location) :-
 	triple(Type, _, suturo:hasPredefinedLocation),
 	triple(Type, owl:allValuesFrom, Location).
 
+
+% has_likely_room_location(+Object, -Room)
+has_likely_room_location(Object, RoomType) :-
+	what_object(Object, Obj),
+	triple(Obj, transitive(rdfs:'subClassOf'), Type),
+	triple(Type, _, suturo:hasLikelyLocation),
+	triple(Type, owl:allValuesFrom, Room),
+	has_type(RoomType, Room).
+
+% path_to_room(+,+,+,-) 
+% move from StartRoom to Room while path through a Room where the Object could be
+path_to_room(StartRoom, Room, Object, Path) :-
+	has_likely_room_location(Object, LikelyRoom),
+	astar(StartRoom, Room, Path, Cost),
+	memberchk(LikelyRoom, Path).
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% call_person_data(?ID, ?Name, ?Drink, ?Interest, ?Profession)
 call_person_data(ID, Name, Drink, Interest, Profession):-
@@ -303,3 +325,47 @@ call_person_data_with_options(ID, Name, Drink, Option, Interest, Profession) :-
 	kb_call(holds(ID, suturo:hasInterest, Interest)), % Interest
 	kb_call(holds(ID, suturo:hasProfession, Profession)), % Profession
 	findall(Options, (subclass_of(Options, Drink)), Option).
+
+
+% path_through_all_object_rooms(+StartRoom, +ObjectList, -BestPath, -TotalCost)
+path_through_all_object_rooms(StartRoom, ObjectList, BestPath, TotalCost) :-
+    findall(Room,
+        (member(Obj, ObjectList), has_likely_room_location(Obj, Room)),
+        RawRooms),
+    sort(RawRooms, TargetRooms),
+    findall((Cost, FullPath),
+        (
+            permutation(TargetRooms, VisitOrder),
+            build_path_sequence(StartRoom, VisitOrder, FullPath, Cost)
+        ),
+        PathsWithCosts),
+    sort(PathsWithCosts, [(TotalCost, BestPath)|_]).
+
+
+first_valid_path(StartRoom, ObjectList, BestPath, BestCost) :-
+    findall(Room,
+        (member(Obj, ObjectList), has_likely_room_location(Obj, Room)),
+        RawRooms),
+    sort(RawRooms, TargetRooms),
+    permutation(TargetRooms, VisitOrder),
+    build_path_sequence(StartRoom, VisitOrder, BestPath, BestCost),
+    !.
+
+
+% build_path_sequence(+Start, +RoomsToVisit, -FullPath, -TotalCost)
+build_path_sequence(Start, [], [Start], 0).
+build_path_sequence(Start, [Next|Rest], FullPath, TotalCost) :-
+    astar(Start, Next, PathToNext, CostToNext),
+    last(PathToNext, ActualStart),
+    build_path_sequence(Next, Rest, RestPath, RestCost),
+    append(PathToNext, RestPath, Combined),
+    remove_consecutive_duplicates(Combined, FullPath),
+    TotalCost is CostToNext + RestCost.
+
+remove_consecutive_duplicates([], []).
+remove_consecutive_duplicates([X], [X]).
+remove_consecutive_duplicates([X,X|Rest], Result) :-
+    remove_consecutive_duplicates([X|Rest], Result).
+remove_consecutive_duplicates([X,Y|Rest], [X|Result]) :-
+    X \= Y,
+    remove_consecutive_duplicates([Y|Rest], Result).

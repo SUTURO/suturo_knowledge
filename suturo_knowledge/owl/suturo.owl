@@ -76,6 +76,14 @@
     
 
 
+    <!-- http://www.ease-crc.org/ont/SUTURO.owl#hasLikelyLocation -->
+
+    <owl:ObjectProperty rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#hasLikelyLocation">
+        <rdfs:subPropertyOf rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedLocation"/>
+    </owl:ObjectProperty>
+    
+
+
     <!-- http://www.ease-crc.org/ont/SUTURO.owl#hasOriginLocation -->
 
     <owl:ObjectProperty rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#hasOriginLocation">
@@ -1334,6 +1342,12 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#DesignedFurniture"/>
         <rdfs:subClassOf>
             <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasLikelyLocation"/>
+                <owl:allValuesFrom rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#Bedroom"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
                 <owl:hasValue>bed</owl:hasValue>
             </owl:Restriction>
@@ -2476,6 +2490,12 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
         <rdfs:subClassOf rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#DesignedFurniture"/>
         <rdfs:subClassOf>
             <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasLikelyLocation"/>
+                <owl:allValuesFrom rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#LivingRoom"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedName"/>
                 <owl:hasValue>couch</owl:hasValue>
             </owl:Restriction>
@@ -3030,6 +3050,12 @@ TODO: make this more descriptive and generalized.</rdfs:comment>
 
     <owl:Class rdf:about="http://www.ease-crc.org/ont/SUTURO.owl#Food">
         <rdfs:subClassOf rdf:resource="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#BiologicalObject"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasLikelyLocation"/>
+                <owl:allValuesFrom rdf:resource="http://www.ease-crc.org/ont/SOMA.owl#Kitchen"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.ease-crc.org/ont/SUTURO.owl#hasPredefinedLocation"/>
