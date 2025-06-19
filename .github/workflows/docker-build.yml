@@ -1,0 +1,30 @@
+name: Test Docker Build
+
+on:
+  push:
+    branches: [ robocup-dev ]
+  pull_request:
+    branches: [ robocup-dev ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Build Docker image
+        run: |
+          docker build -t tests .
+
+      - name: Run ROS unit tests
+        run: |
+          docker run --rm \
+            --entrypoint "" \
+            -v "${{ github.workspace }}:/catkin_ws/src/suturo_knowledge:ro" \
+            -w /catkin_ws \
+            tests bash -lc "\
+              source /opt/ros/noetic/setup.bash && \
+              source /opt/ros/overlay_ws/devel/setup.bash && \
+              rostest suturo_knowledge test_gpsr_queries.test \
+            "
