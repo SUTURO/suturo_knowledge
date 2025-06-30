@@ -5,6 +5,7 @@ import rospy
 import unittest
 import rosunit
 import random
+import time
 import rosprolog_client
 
 #from knowledge_msgs.srv import ObjectInfo
@@ -25,9 +26,9 @@ class TestGPSRQueries(unittest.TestCase):
         """
         rospy.init_node("GPSR_query_tests", anonymous=True)
 
+###################################################################################################
 ### 1/12: is_fragile 
-## true
-## false
+
     def test_is_fragile(self):
         q1 = prolog.once(f"is_fragile(bowl).")
         print("Q1:", [q1]) # = {} ??
@@ -41,26 +42,27 @@ class TestGPSRQueries(unittest.TestCase):
         sol = self.assertFalse(inter.is_fragile('bed'))
         soll = self.assertTrue(inter.is_fragile('bowl'))
 
-
+#- assertFalse und True mal gucken 
+###################################################################################################
 ### 2/12: is_perishable
-## true
-## false
+
     def test_is_perishable(self):
         q1 = prolog.once(f"is_perishable(milk).")
         self.assertIsNotNone(q1)
         #self.assertTrue(q1)
 
         q2 = prolog.once(f"is_perishable(chair).")
+        #self.assertIsNone(q2)
+        #self.assertEquals(q2, {})
         #self.assertFalse(q2)
 
 ## function
         self.assertTrue(inter.is_perishable('cola'))
         self.assertFalse(inter.is_perishable('chair'))
 
-
+#- assertFalse und True mal gucken 
+###################################################################################################
 ### 3/12: grasp_pose
-## top
-## side
 
     def test_grasp_pose(self):
         sol = prolog.once(f"grasp_pose(spoon, Pose).")
@@ -70,44 +72,45 @@ class TestGPSRQueries(unittest.TestCase):
 ## function 
         q1 = inter.grasp_pose('bowl')
         self.assertIsNotNone(q1)
-        print("QQQQ1:", [q1])
-        # strip did not work ???
         self.assertEquals(q1.strip(' "') , "'top'")
 
         q2 = inter.grasp_pose('knife')
+        self.assertIsNotNone(q2)
         self.assertNotEquals(q2, 'side')
 
-
+###################################################################################################
 ### 4/12: is_light_or_heavy
-## light
-## heavy
-## x is light --> true
 
     def test_is_light_or_heavy(self):
 
+        ## heavy
         q1 = prolog.once(f"is_light_or_heavy(bowl, Weight).")
         self.assertEquals(q1["Weight"], "heavy")
 
+        ## light
         q2 = prolog.once(f"is_light_or_heavy(strawberry, Weight).")
         self.assertEquals(q2["Weight"], "light")
 
+        ## x is light --> true
         q3 = prolog.once(f"is_light_or_heavy(bowl, heavy).")
-        #self.assertTrue(q3)
+        self.assertIsNotNone(q3)
+        self.assertEquals(q3, {})
 
-##function
+## function 
+        q4 = inter.is_light_or_heavy('bowl', 'heavy')
+        print(q4)
+        self.assertIsNotNone(q4)
+        self.assertTrue(q4)
+
+        q5 = inter.is_light_or_heavy('strawberry', 'heavy')
+        print(q5)
+        self.assertFalse(q5)
+
+#- assertTrue 
 # Ausgabe der Funktion tricky: bool vs. light/heavy
-# funktion erlaubt gerade nur Eingabe einer var
-        #self.assertTrue(inter.is_light_or_heavy('bowl', 'heavy'))
-        #self.assertFalse(inter.is_light_or_heavy('bowl', 'light'))
-
-        q4 = inter.is_light_or_heavy('dishwasher tab')
-        print("5Q4:", [q4])
-        self.assertEquals(q4["Weight"], "light")
-
-
+# --> nur für Frage, ob Annahme true oder false
+###################################################################################################
 ### 5.1/12: save_person_data
-## true, dass es funktioniert -> es kommt aber {} raus
-# true kommt bei funktion raus
 
     def test_save_person_data(self):
         names = ["Anna", "Berta", "Connie", "Elena", "Felix", "Gabriel", "Hannes"]
@@ -129,21 +132,18 @@ class TestGPSRQueries(unittest.TestCase):
         print(q2)
         self.assertTrue(q2)
 
-
+## true, dass es funktioniert -> es kommt aber {} raus
+###################################################################################################
 ###5.2: save_info_server
 # noch unsicher, in welcher form die infos gegeben werden - einzeln, gebuendelt als string, dict? 
     #def test_save_info_server(self, info):
 
 # ...
 
+###################################################################################################
 ### 6/12: call_person_info
-## !! call_person_data('1.0', 'A', milk, Hobby, Profession). = false = drink nicht var 
-# ==> eingabe als 'milk', dann strip() zu milk, damit what_object 
 
-# sollen dann die Funktionen dazu aus interf_q weg? oder auch einfach testen --> testen
-
-
-# 1. calling data directly after saving
+# 6.1 calling info directly after saving
     def test_call_person_data_1(self):
         names = ["Anna", "Bert", "Connie", "Elena", "Felix", "Gabriel", "Hannes"]
         drinks = ["coffee", "tea", "water", "juice"]
@@ -156,29 +156,21 @@ class TestGPSRQueries(unittest.TestCase):
         profession = random.choice(professions)
 
         # save 
-        q1 = f"save_person_data(1.0, '{name}', {drink}, '{interest}', '{profession}')."
-        sol = prolog.once(q1)
-        print("sol:", [sol])
-
-        self.assertIsNotNone(sol)
-        self.assertEquals(sol, {})
+        q1 = prolog.once(f"save_person_data(1.0, '{name}', {drink}, '{interest}', '{profession}').")
+        self.assertIsNotNone(q1)
+        self.assertEquals(q1, {})
 
         # call
-        q2 = f"call_person_data(1.0, Name, Drink, Interest, Profession)."
-        soll = prolog.once(q2)
-        print("SOLL:", [soll])
-        qd = f"what_object('{drink}',Object)."
-        print(qd)
-        fdrink = prolog.once(qd)
-        print(fdrink)
+        q2 = prolog.once(f"call_person_data(1.0, Name, Drink, Interest, Profession).")
+        qdrink = prolog.once(f"what_object('{drink}',Object).")
 
-        self.assertIsNotNone(soll)
-        self.assertEquals(soll["Name"], f"{name}")
-        self.assertEquals(soll["Drink"], fdrink["Object"])
-        self.assertEquals(soll["Interest"], f"{interest}")
-        self.assertEquals(soll["Profession"], f"{profession}")
+        self.assertIsNotNone(q2)
+        self.assertEquals(q2["Name"], f"{name}")
+        self.assertEquals(q2["Drink"], qdrink["Object"])
+        self.assertEquals(q2["Interest"], f"{interest}")
+        self.assertEquals(q2["Profession"], f"{profession}")
 
-# 2. calling info after making changes
+# 6.2 calling info after making changes
     def test_call_person_data_2(self):
         names = ["Anna", "Bert", "Connie", "Elena", "Felix", "Gabriel", "Hannes"]
         drinks = ["coffee", "tea", "water", "juice"]
@@ -193,25 +185,21 @@ class TestGPSRQueries(unittest.TestCase):
         profession2 = random.choice(profession)
 
         ## save data
-        q1 = f"save_person_data(2.0, '{name}', {drink}, '{interest}', '{profession}')."
-        sol = prolog.once(q1)
-        self.assertIsNotNone(sol)
+        q1 = prolog.once(f"save_person_data(2.0, '{name}', {drink}, '{interest}', '{profession}').")
+        self.assertIsNotNone(q1)
 
         ## change some data
-        q2 = f"save_person_data(2.0, '{name}', {drink}, '{interest2}', '{profession2}')."
-        soll = prolog.once(q2)
-        self.assertIsNotNone(sol)
+        q2 = prolog.once(f"save_person_data(2.0, '{name}', {drink}, '{interest2}', '{profession2}').")
+        self.assertIsNotNone(q2)
         
         ## call for new data
-        q3 = f"call_person_data(2.0, Name, Drink, Interest, Profession)."
-        qsol = prolog.once(q3)
-
-        self.assertEquals(qsol["Interest"], f"{interest2}")
-        self.assertEquals(qsol["Profession"], f"{profession2}")
+        q3 = prolog.once(f"call_person_data(2.0, Name, Drink, Interest, Profession).")
+        self.assertEquals(q3["Interest"], f"{interest2}")
+        self.assertEquals(q3["Profession"], f"{profession2}")
 
 # 3. calling data with only one key
     def test_call_person_data_3(self):
-        names = ["Anna", "Bert", "Connie", "Elena", "Felix", "Gabriel", "Hannes"]
+        names = ["Anna", "Bert", "Connie", "Elena", "Felix", "Gabriela", "Hannes"]
         drinks = ["coffee", "tea", "water", "juice"]
         interests = ["reading", "cycling", "chess", "gaming"]
         professions = ["engineer", "teacher", "doctor", "artist"]
@@ -225,162 +213,231 @@ class TestGPSRQueries(unittest.TestCase):
         profession2 = random.choice(profession)
 
         ## person 1
-        q1 = f"save_person_data(1.0, '{name}', {drink}, '{interest}', '{profession}')."
-        sol = prolog.once(q1)
-        self.assertIsNotNone(sol)
+        q1 = prolog.once(f"save_person_data(3.0, '{name}', {drink}, '{interest}', '{profession}').")
+        self.assertIsNotNone(q1)
 
         ## person 2
-        q2 = f"save_person_data(2.0, '{name2}', {drink2}, '{interest2}', '{profession2}')."
-        sol = prolog.once(q2)
-        self.assertIsNotNone(sol)
+        q2 = prolog.once(f"save_person_data(4.0, '{name2}', {drink2}, '{interest2}', '{profession2}').")
+        self.assertIsNotNone(q2)
 
-        qs1 = f"call_person_data(ID, '{name2}', Drink, Interest, Profession)."
-        qsol1 = prolog.once(qs1)
-        print("QSOL1:", [qsol1])
-        self.assertEquals(qsol1["ID"], 2.0)
-
-        self.assertEquals(qsol1["Interest"], f"{interest2}")
-        self.assertEquals(qsol1["Profession"], f"{profession2}")
+        ## person 2 by id 
+        q3 = prolog.once(f"call_person_data(4.0, Name, Drink, Interest, Profession).")
+        self.assertEquals(q3["Name"], f"{name2}")
+        self.assertEquals(q3["Interest"], f"{interest2}")
+        self.assertEquals(q3["Profession"], f"{profession2}")
 
 
-## function
+## function ?
 #--> entnehme Elemente für die Abfrage, da gerade true mit variablen verglichen wird
 
-        q1 = inter.call_person_data(1.0, name, drink, interest, profession)
-        print("Q1:", [q1])
+        #q1 = inter.call_person_data(1.0, name, drink, interest, profession)
         #self.assertTrue(q1)
 
 
-
+###################################################################################################
 ### 7/12: has_predefined_location
     def test_predefined_location(self):
-        q1 = f"has_predefined_location('fanta', Location)."
-        sol = prolog.once(q1)
-        print("SOLL:", [sol])
-        q2 = f"what_object('shelf', Loc)."
-        qs = prolog.once(q2)
-        self.assertEquals(sol["Location"], qs["Loc"])
+        # drink => shelf
+        q1 = prolog.once(f"has_predefined_location('fanta', Location).")
+        q2 = prolog.once(f"what_object('shelf', Loc).")
+        self.assertEquals(q1["Location"], q2["Loc"])
 
+        # cutlery => dishwasher 
+        q3 = prolog.once(f"has_predefined_location('fork', Location).")
+        q4 = prolog.once(f"what_object('dishwasher', Loc).")
+        self.assertEquals(q3["Location"], q4["Loc"])
 
+###################################################################################################
 ### 8/12: has_likely_location
 # fruits --> billy shelf
 # cutlery --> on the dishwasher
-# wie muss query aussehen generell ??
-# --> has_likely_location muss für shelf / shelfLayer gefixed werden
-    def test_has_likely_location(self):
-        # fruits
-        #fruits = [apple, banana, strawberry, peach, plum, orange]
-        #fruit = random.choice(fruits)
+# tested on GermanOpen map 
 
+    def test_has_likely_location(self):
         # Location = Shelf for fruit
-        #q1 = prolog.once(f"has_likely_location('{fruit}', Location, LocObj, Pose).")
-        #qs = prolog.once(f"what_object('shelf', Loc).")
-        #self.assertEquals(q1["Location"], qs["Loc"])
+        fruits = ["apple", "banana", "strawberry", "peach", "plum", "orange"]
+        fruit = random.choice(fruits)
+
+        q1 = prolog.once(f"has_likely_location({fruit}, Location, LocObj, Pose).")
+        qs = prolog.once(f"what_object('shelf', Loc).")
+        self.assertEquals(q1["Location"], 'Billy Shelf')
 
 
         # Location = Dishwasher for cutlery
         cutleries = ["knife", "fork", "spoon"]
         cutlery = random.choice(cutleries)
 
-        # Location = Shelf for fruit
         q1 = prolog.once(f"has_likely_location({cutlery}, Location, LocObj, Pose).")
         qs = prolog.once(f"what_object('dishwasher', Loc).")
-
-#'Dishwasher' != 'http://www.ease-crc.org/ont/SOMA.owl#Dishwasher'
         self.assertEquals(q1["Location"], qs["Loc"])
 
-
-
+###################################################################################################
 ### 9/12: has_likely_location_in_room
+# tested on GermanOpen map
 
     def test_has_likely_location_in_room(self):
         # fruits
-        #fruits = [apple, banana, strawberry, peach, plum, orange]
-        #fruit = random.choice(fruits)
-
-        # Location = Shelf for fruit
-        #q1 = prolog.once(f"has_likely_location('{fruit}', Location, LocObj, Pose).")
-        #qs = prolog.once(f"what_object('shelf', Loc).")
-        #self.assertEquals(q1["Location"], qs["Loc"])
-
-        # Location = Dishwasher for cutlery
+        fruits = ["apple", "banana", "strawberry", "peach", "plum", "orange"]
         cutleries = ["knife", "fork", "spoon"]
         room = ["kitchen", "living room"]
+
+        fruit = random.choice(fruits)
         cutlery = random.choice(cutleries)
 
         # Room = kitchen
         q1 = prolog.once(f"is_kitchen(K), has_likely_location_in_room({cutlery}, K, LocObj, Pose).")
+        #self.assertEqual()
 
         # Room = living room 
         q1 = prolog.once(f"is_living_room(L), has_likely_location_in_room({cutlery}, L, LocObj, Pose).")
         #self.assert()
-        # --> wie testen??
 
+###################################################################################################
 ### 10/12: navigability
-# need map for testing that !!!
+# tested on GermanOpen map
+
     def test_navigability(self):
+        room = ["kitchen", "living_room", "bedroom", "hallway", "office"]
 
-        q1 = prolog.once(f"is_kitchen(K),"
-                         f"navigability(K, Nav).")
-        #self.assertEquals(q1["Nav"], Nav)
+        q1 = prolog.once(f"is_kitchen(K), navigability(K, Nav).")
+        self.assertEquals(q1["Nav"], 1)
 
-        q2 = prolog.once(f"is_bedroom(B),"
-                         f"navigability(B, Nav).")
-        #self.assertEquals(q2["Nav"], Nav)
+        q2 = prolog.once(f"is_living_room(L), navigability(L, Nav).")
+        self.assertEquals(q2["Nav"], 2)
 
+        q3 = prolog.once(f"is_hallway(H), navigability(H, Nav).")
+        self.assertEquals(q3["Nav"], 0)
 
-##function - gibts noch nicht
-        #q3 = inter.navigability()
-        #print("Q3:", [q4])
-        
+# output is a number
+###################################################################################################
+### 11/12: obj_characteristics
 
-### 11/12: object_characteristics
-
-
+###################################################################################################
 ### 12/12: object_perceive_pose
+# tested on GermanOpen map
 
+    def test_object_perceive_pose(self):
+
+        q1 = prolog.once(f"is_table(T), object_perceive_pose(T, _, PoseStamped).")
+        checkPose = ['iai_kitchen/couch_table:couch_table:table_center', [0.845, 0.0, 0.0], [0, 0, 1, 0]]
+        self.assertEquals(q1["PoseStamped"], checkPose)
+
+###################################################################################################
 ### 13: init_gpsr_2024
     def test_init_gpsr_2024(self):
         q1 = prolog.once(f"init_gpsr_2024.")
         self.assertIsNotNone(q1)
 
+#--> gibt ne Fehlermeldung im anderen Terminal
+###################################################################################################
 ## 14: get_obj_instance_of_type
-    # q1 = prolog.once(f"has_type('{Instance}', Type).")
+    def test_get_obj_instance_of_type(self):
+        q1 = prolog.once(f"is_kitchen(K), has_type(K, Type).")
+        q2 = prolog.once(f"what_object('kitchen', Obj).")
+        self.assertEquals(q1["Type"], q2["Obj"])
 
+###################################################################################################
 ## 15: get_room_entry_pose_class
-    # q1 = prolog.once(f"has_type('{Instance}', Type).")
-    # q2 = prolog.once(f"entry_pose('{Room}', PoseStamped).")
-    # q3 = prolog.once(f"has_type('{Instance}', Type), entry_pose('{Room}', PoseStamped).")
+# von #Kitchen zu Kitchen_YXZ zu entry_point
+    def test_get_room_entry_pose_class(self):
+        q1 = prolog.once(f"findall(Room, is_room(Room), Rooms), map_entry_pose_on_rooms(Rooms).")
+        self.assertIsNotNone(q1)
 
+        q2 = prolog.once(f"is_kitchen(K), entry_pose(K, PoseStamped).")
+        self.assertIsNotNone(q2)
+
+###################################################################################################
 ## 16: get_room_pose
+# tested on GermanOpen map 
+
+    def test_get_room_pose(self):
+        # entry
+        q1 = prolog.once(f"is_kitchen(K), entry_pose(K, PoseStamped).")
+        checkPose1 = ['map', [7.71, 1.35, -0.05], [0.0, 0.0, 0.0, 1.0]]
+        self.assertEquals(q1["PoseStamped"], checkPose1)
+
+        #exit 
+        q3 = prolog.once(f"is_kitchen(K), exit_pose(K, PoseStamped).")
+        checkPose2 = ['map', [7.66, 2.5, -0.05], [0.0, 0.0, 0.0, 1.0]]
+        print(checkPose2)
+        self.assertEquals(q3["PoseStamped"], checkPose2)
+
+
+#- man soll wählen können, ob entry oder exit 
+#- prolog.all_solutions ? 
+###################################################################################################
 ## 17: get_all_room_poses 
+# tested on GeranOpen map 
+    def test_get_all_room_poses(self):
+        # entries
+        q1 = prolog.all_solutions(f"is_kitchen(K), entry_pose(K, PoseStamped).")
+        self.assertIsNotNone(q1)
+
+        # exits
+        q2 = prolog.all_solutions(f"is_kitchen(K), exit_pose(K, PoseStamped).")
+        self.assertIsNotNone(q2)
+###################################################################################################
 ## 18: get_room_middle_pose
     # q1 = prolog.once(f"middle(Room, PoseStamped).")
 
+###################################################################################################
 ## 19: get_nav_poses_for_furniture_item
-    # q1 = prolog.once(f"what_object('dishwasher', Loc).")
-    # q2 = prolog.once(f"what_object('{furniture_nlp_name}', Obj), has_type(ObjInst, Obj), has_type(Room, '{rooms.get(snakecase(room))}'), is_inside_of(ObjInst, Room),furniture_rel_pose(ObjInst, 'perceive', Pose).")
-    # q3 = prolog.once(f"has_type(Room, '{rooms.get(snakecase(room))}'), is_inside_of('{furniture_item}', Room), furniture_rel_pose(ObjInst, 'perceive', Pose).")
+# tested on GermanOpen map
+    def test_nav_poses_for_furniture_item(self):
 
+        q1 = prolog.once(f"what_object('couch table', Obj), has_type(ObjInst, Obj), what_object('living room', Room),  has_type(RoomInst, Room), is_inside_of(ObjInst, RoomInst), furniture_rel_pose(ObjInst, 'perceive', Pose).")
+        checkPose = [['iai_kitchen/couch_table:couch_table:table_center', [-0.875, 0.0, -0.35], [0.0, 0.0, 0.0, 1.0]]]
+        self.assertEquals(q1["Pose"], checkPose)
+
+###################################################################################################
 # ; ??
 ## 20: check_existence_of_instance
-    # q1 = prolog.once((f"what_object_transitive('{nlp_name}', Obj), instance_of(Inst, Obj)); (has_robocup_name(Obj, '{nlp_name}')).)
 
-## 21: check_existance_of_class
-    # nlp_name = []
-    # q1 = prolog.once(f"what_object_transitive('{nlp_name}', Class).")
+    def test_check_existence_of_instance(self):
+        nlp_name = 'table'
+        q1 = prolog.once(f"(what_object_transitive('table', Obj), instance_of(Inst, Obj)); ((has_robocup_name(Obj, 'table')).")
+        # just check first solution
+        q2 = prolog.once(f"what_object('couch table', Obj).")
+        self.assertEquals(q1["Obj"], q2["Obj"])
 
+# nlp name variabel machen
+# es kann Inst oder Obj rauskommen 
+###################################################################################################
+## 21: check_existence_of_class
+
+    def test_check_existence_of_class(self):
+
+        q1 = prolog.once(f"what_object_transitive('table', Class).")
+        self.assertIsNotNone(q1["Class"])
+ 
+# nlp name variabel machen
+###################################################################################################
 ## 22: get_predefined_source_item_location_name
-    # q1 = prolog.once(f"what_object_transitive('{item_name}', Obj), predefined_origin_location(Obj, Furniture), furniture_rel_pose(Furniture, 'perceive', Pose).")
 
+    #def test_get_predefined_source_item_location_name(self):
+
+        #q1 = prolog.once(f"what_object_transitive('cola bottle', Obj), predefined_origin_location(Obj, Furniture), furniture_rel_pose(Furniture, 'perceive', Pose).")
+
+# predefined_origin_location ??
+###################################################################################################
 ## 23: get_predefined_source_item_location_iri
-    # q1 = prolog.once(f"what_object_transitive(Name, {item_iri}), predefined_origin_location({item_iri}, Furniture), furniture_rel_pose(Furniture, 'perceive', Pose).")
 
+    #def test_get_predefined_source_item_iri(self):
+
+     # q1 = prolog.once(f"what_object_transitive(Name, {item_iri}), predefined_origin_location({item_iri}, Furniture), furniture_rel_pose(Furniture, 'perceive', Pose).")
+
+# predefined_origin_location ??
+###################################################################################################
 ## 24: get_predefined_destination_item_location
     # q1 = prolog.once(f"predefined_destination_location({item_iri}, Furniture), furniture_rel_pose(Furniture, 'perceive', Pose).")
 
+# predefined_destination_location ??
+###################################################################################################
 ## 25: check_existence_based_on_class
     # q1 = prolog.once(f"what_object_transitive(Name, {class_iri}).")
+
+# 
+###################################################################################################
 
 
 if __name__ == '__main__':
