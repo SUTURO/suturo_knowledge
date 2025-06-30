@@ -26,6 +26,7 @@
 		path_to_room(+,+,+,-),
 		navigability(+, -),
 		first_valid_path(+,+,-,-),
+		map_entry_pose_on_rooms(+),
 		path_through_all_object_rooms(+,+,-,-)
 	  ]).
 
@@ -219,18 +220,18 @@ has_likely_location(Object, Location, LocObj, Pose) :-
 		check_tables_for_frame(Tables, Table),
 		object_pose(Table, [map,X,Y]),
 		Pose = [map,X,Y],
-		Location = 'Dishwasher',
+		Location = 'http://www.ease-crc.org/ont/SOMA.owl#Dishwasher',
 		LocObj = Table
 	;
 	(has_predefined_location(Object, Loc),
 	 Loc = 'http://www.ease-crc.org/ont/SUTURO.owl#Shelf'  ->
-		findall(S, is_shelf_layer(S), ShelfLayer),
-		check_shelf_layers_for_frame(ShelfLayer, SLayer),
+		findall(S, is_shelf(S), Shelf),
+		check_shelf_layers_for_frame(Shelf, SLayer),
 		object_pose(SLayer, [map,X,Y]),
 		Pose = [map,X,Y],
 		Location = 'Billy Shelf',
 		LocObj = SLayer
-	)
+	)	
 	;
 	 true
 	).
@@ -247,7 +248,7 @@ check_tables_for_frame([T | Next], Table) :-
 check_shelf_layers_for_frame([], ShelfLayer) :- fail.  
 check_shelf_layers_for_frame([S | Next], ShelfLayer) :-
 	object_pose(S, [Frame, _, _]),
-	(Frame = 'iai_kitchen/shelf_billy_corridor:cabinet:shelf_floor_0'->
+	(Frame = 'iai_kitchen/shelf_billy_kitchen:bookshelf:shelf_floor_2'->
 		ShelfLayer = S
 	;   
 		check_shelf_layers_for_frame(Next, ShelfLayer)
@@ -326,7 +327,17 @@ call_person_data_with_options(ID, Name, Drink, Option, Interest, Profession) :-
 	kb_call(holds(ID, suturo:hasProfession, Profession)), % Profession
 	findall(Options, (subclass_of(Options, Drink)), Option).
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% map_entry_pose_on_rooms(+RoomList) 
+map_entry_pose_on_rooms([]).
+map_entry_pose_on_rooms([Room|Rest]) :-
+    ( entry_pose(Room, Pose)
+    -> format('Room: ~w has entry point ~w~n', [Room, Pose])
+    ;  format('Room: ~w has NO entry point!~n', [Room])
+    ),
+    map_entry_pose_on_rooms(Rest).
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % path_through_all_object_rooms(+StartRoom, +ObjectList, -BestPath, -TotalCost)
 path_through_all_object_rooms(StartRoom, ObjectList, BestPath, TotalCost) :-
     findall(Room,

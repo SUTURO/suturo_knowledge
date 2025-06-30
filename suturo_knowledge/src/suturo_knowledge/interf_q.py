@@ -420,7 +420,6 @@ class InterfacePlanningKnowledge:
 
     def call_person_data(self, id, name, drink, interest, profession):
         q1 = "call_person_data(" + str(id) + ", " + name + ", " + drink + ", " + interest + "," + profession + "), L = [Name, Drink, Interest, Profession]."
-        print(q1)
         sol = prolog.once(q1)
         print(sol)
         return sol
@@ -428,14 +427,13 @@ class InterfacePlanningKnowledge:
 
 ################################################################################################################
 # 15:
-# get the information about whether an object is light or heavy
+# get the information about whether it is correct if an object is light or heavy
 
-    def is_light_or_heavy(self, object):
-        q1 = f"is_light_or_heavy('{object}' , Weight)."
+    def is_light_or_heavy(self, object, weight):
+        q1 = f"is_light_or_heavy('{object}' , '{weight}')."
         print(q1)
         sol =  prolog.once(q1)
-        return sol
-        #return sol == dict()
+        return sol == dict()
 
 ################################################################################################################
 def object_perceive_pose(self, objname):
