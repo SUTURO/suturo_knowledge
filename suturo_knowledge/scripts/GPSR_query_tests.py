@@ -236,6 +236,7 @@ class TestGPSRQueries(unittest.TestCase):
 
 ###################################################################################################
 ### 7/12: has_predefined_location
+
     def test_predefined_location(self):
         # drink => shelf
         q1 = prolog.once(f"has_predefined_location('fanta', Location).")
@@ -324,6 +325,7 @@ class TestGPSRQueries(unittest.TestCase):
 
 ###################################################################################################
 ### 13: init_gpsr_2024
+
     def test_init_gpsr_2024(self):
         q1 = prolog.once(f"init_gpsr_2024.")
         self.assertIsNotNone(q1)
@@ -331,6 +333,7 @@ class TestGPSRQueries(unittest.TestCase):
 #--> gibt ne Fehlermeldung im anderen Terminal
 ###################################################################################################
 ## 14: get_obj_instance_of_type
+
     def test_get_obj_instance_of_type(self):
         q1 = prolog.once(f"is_kitchen(K), has_type(K, Type).")
         q2 = prolog.once(f"what_object('kitchen', Obj).")
@@ -338,7 +341,7 @@ class TestGPSRQueries(unittest.TestCase):
 
 ###################################################################################################
 ## 15: get_room_entry_pose_class
-# von #Kitchen zu Kitchen_YXZ zu entry_point
+
     def test_get_room_entry_pose_class(self):
         q1 = prolog.once(f"findall(Room, is_room(Room), Rooms), map_entry_pose_on_rooms(Rooms).")
         self.assertIsNotNone(q1)
@@ -368,6 +371,7 @@ class TestGPSRQueries(unittest.TestCase):
 ###################################################################################################
 ## 17: get_all_room_poses 
 # tested on GeranOpen map 
+
     def test_get_all_room_poses(self):
         # entries
         q1 = prolog.all_solutions(f"is_kitchen(K), entry_pose(K, PoseStamped).")
@@ -376,26 +380,27 @@ class TestGPSRQueries(unittest.TestCase):
         # exits
         q2 = prolog.all_solutions(f"is_kitchen(K), exit_pose(K, PoseStamped).")
         self.assertIsNotNone(q2)
+
 ###################################################################################################
 ## 18: get_room_middle_pose
     # q1 = prolog.once(f"middle(Room, PoseStamped).")
 
 ###################################################################################################
 ## 19: get_nav_poses_for_furniture_item
-# tested on GermanOpen map
-    def test_nav_poses_for_furniture_item(self):
+# tested on GermanOpen_bringup map
+
+    def test_get_nav_poses_for_furniture_item(self):
 
         q1 = prolog.once(f"what_object('couch table', Obj), has_type(ObjInst, Obj), what_object('living room', Room),  has_type(RoomInst, Room), is_inside_of(ObjInst, RoomInst), furniture_rel_pose(ObjInst, 'perceive', Pose).")
         checkPose = [['iai_kitchen/couch_table:couch_table:table_center', [-0.875, 0.0, -0.35], [0.0, 0.0, 0.0, 1.0]]]
         self.assertEquals(q1["Pose"], checkPose)
 
 ###################################################################################################
-# ; ??
 ## 20: check_existence_of_instance
 
     def test_check_existence_of_instance(self):
-        nlp_name = 'table'
-        q1 = prolog.once(f"(what_object_transitive('table', Obj), instance_of(Inst, Obj)); ((has_robocup_name(Obj, 'table')).")
+        nlp_name = 'couch table'
+        q1 = prolog.once(f"(what_object_transitive('couch table', Obj), instance_of(Inst, Obj)); (has_robocup_name(Obj, 'couch table')).")
         # just check first solution
         q2 = prolog.once(f"what_object('couch table', Obj).")
         self.assertEquals(q1["Obj"], q2["Obj"])
@@ -406,37 +411,58 @@ class TestGPSRQueries(unittest.TestCase):
 ## 21: check_existence_of_class
 
     def test_check_existence_of_class(self):
-
         q1 = prolog.once(f"what_object_transitive('table', Class).")
         self.assertIsNotNone(q1["Class"])
  
 # nlp name variabel machen
 ###################################################################################################
 ## 22: get_predefined_source_item_location_name
+# tested on GermanOpen map
 
-    #def test_get_predefined_source_item_location_name(self):
+    def test_get_predefined_source_item_location_name(self):
+        #q0 = prolog.once(f"init_gpsr_2024.")
+        q1 = prolog.once(f"init_gpsr_2024, what_object_transitive('cornflakes', Obj), predefined_origin_location(Obj, Furniture), furniture_rel_pose(Furniture, 'perceive', Pose).")
+        checkPose = [['iai_kitchen/kitchen_island_block:kitchen_counter:table_center', [-1.2, 0.0, -1.0], [0.0, 0.0, 0.0, 1.0]]]
+        self.assertEquals(q1["Pose"], checkPose)
 
-        #q1 = prolog.once(f"what_object_transitive('cola bottle', Obj), predefined_origin_location(Obj, Furniture), furniture_rel_pose(Furniture, 'perceive', Pose).")
-
-# predefined_origin_location ??
+# predefined_origin_location geht nur für gewisse dinge 
+# predefined_origin_location(Obj, Furniture).
+# subclass_of(X, 'http://www.ease-crc.org/ont/SUTURO.owl#RoboCupFood').
 ###################################################################################################
 ## 23: get_predefined_source_item_location_iri
+# tested on GermanOpen map
 
-    #def test_get_predefined_source_item_iri(self):
+    def test_get_predefined_source_item_location_iri(self):
+        #q0 = prolog.once(f"init_gpsr_2024.")
+        q1 = prolog.once(f"init_gpsr_2024, create_object(Object, suturo:'Strawberry', ['map', [1,1,1], [0,0,0,1]]), has_type(Object, Type), predefined_origin_location(Type, Furniture), furniture_rel_pose(Furniture, 'perceive', Pose).")
+        checkPose = [['iai_kitchen/couch_table:couch_table:table_center', [-0.875, 0.0, -0.35], [0.0, 0.0, 0.0, 1.0]]]
+        self.assertEquals(q1['Pose'], checkPose)
 
-     # q1 = prolog.once(f"what_object_transitive(Name, {item_iri}), predefined_origin_location({item_iri}, Furniture), furniture_rel_pose(Furniture, 'perceive', Pose).")
-
-# predefined_origin_location ??
+# predefined_origin_location geht nur für gewisse Dinge 
+# predefined_origin_location(Obj, Furniture).
+# subclass_of(X, 'http://www.ease-crc.org/ont/SUTURO.owl#RoboCupFood').
+# scheinbar gibt es Probleme mit is in furniture_rel_pose wenn table = dishwasher table
 ###################################################################################################
 ## 24: get_predefined_destination_item_location
-    # q1 = prolog.once(f"predefined_destination_location({item_iri}, Furniture), furniture_rel_pose(Furniture, 'perceive', Pose).")
+# tested on GermanOpen map
 
-# predefined_destination_location ??
+    def test_get_predefined_destination_item_location(self):
+        #q0 = prolog.once(f"init_gpsr_2024.")
+        q1 = prolog.once(f"init_gpsr_2024,create_object(Object, suturo:'Apple', ['map', [1,0,1], [0,0,0,1]]), has_type(Object, Type), predefined_destination_location(Type, Furniture), furniture_rel_pose(Furniture, 'perceive', Pose).")
+        checkPose =[['iai_kitchen/couch_table:couch_table:table_center', [-0.875, 0.0, -0.35], [0.0, 0.0, 0.0, 1.0]]]
+        self.assertEquals(q1['Pose'], checkPose)
+
+# predefined_origin_location geht nur für gewisse dinge 
+# predefined_origin_location(Obj, Furniture).
+# subclass_of(X, 'http://www.ease-crc.org/ont/SUTURO.owl#RoboCupFood').
+# habe noch has_type ergänzt, ansonsten sind die queries falsch
+# falsch = what_object_transitive(Obj_XYZ, Name)
+# richtig = what_object_transitive('juice', Name)
 ###################################################################################################
 ## 25: check_existence_based_on_class
     # q1 = prolog.once(f"what_object_transitive(Name, {class_iri}).")
 
-# 
+
 ###################################################################################################
 
 

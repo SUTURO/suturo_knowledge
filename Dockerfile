@@ -59,6 +59,23 @@ RUN apt-get update && apt-get install -y \
 RUN mkdir /catkin_ws
 RUN mkdir /catkin_ws/src
 
+# Install MongoDB Community Edition
+# Source: https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-ubuntu/#std-label-install-mdb-community-ubuntu
+ARG MONGODEB_VERSION=4.4
+RUN curl -fsSL https://www.mongodb.org/static/pgp/server-${MONGODEB_VERSION}.asc | \
+    gpg -o /usr/share/keyrings/mongodb-server-${MONGODEB_VERSION}.gpg --dearmor
+RUN echo "deb [ arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-${MONGODEB_VERSION}.gpg ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/${MONGODEB_VERSION} multiverse" | \
+    tee /etc/apt/sources.list.d/mongodb-org-${MONGODEB_VERSION}.list
+RUN apt update
+RUN apt-get update \
+ && apt-get install -y \
+      mongodb-org-server \
+      mongodb-org-shell \
+      mongodb-org-mongos \
+ && rm -rf /var/lib/apt/lists/*
+RUN mkdir -p /data/db && \
+    chown -R ${NB_USER}:users /data/db
+
 # Build workspace with knowrob
 WORKDIR /catkin_ws/src
 RUN git clone https://github.com/SUTURO/knowrob.git
