@@ -243,41 +243,50 @@ init_gpsr_2024 :-
     ros_warn('TODO: Use decorations class'),
     is_inside_of(Desk, Office),
     is_table(Desk),
+    ros_info('here is fine'),
     log_set_both('http://www.ease-crc.org/ont/SUTURO.owl#RoboCupDecorations', Desk),
 
     % cleaning supplies are on the shelf in the Office
     forall((
-                  is_inside_of(ShelfLayer, Office),
-                  is_shelf_layer(ShelfLayer)
+                  is_inside_of(Shelf, Office),
+                  is_shelf(Shelf)
            ),
-           log_set_both('http://www.ease-crc.org/ont/SUTURO.owl#RoboCupCleaningSupplies', ShelfLayer)
+           log_set_both('http://www.ease-crc.org/ont/SUTURO.owl#RoboCupCleaningSupplies', Shelf)
           ),
-
+    
     % toys on tv table in living room
     has_robocup_name(TvTable, tv_table),
     log_set_both('http://www.ease-crc.org/ont/SUTURO.owl#RoboCupToys', TvTable),
 
     % fruits on the coffe table (round table in living room)
-    has_robocup_name(CoffeTable, coffee_table),
-    log_set_both('http://www.ease-crc.org/ont/SUTURO.owl#RoboCupFruits', CoffeTable),
+    %has_robocup_name(CoffeTable, coffee_table),
+    %log_set_both('http://www.ease-crc.org/ont/SUTURO.owl#RoboCupFruits', CoffeeTable),
+
+    has_robocup_name(CouchTable, couch_table),
+    log_set_both('http://www.ease-crc.org/ont/SUTURO.owl#RoboCupFruits', CouchTable),
 
     % drinks in kitchen cabinet in kitchen
     is_kitchen(Kitchen),
     forall((
-                  is_inside_of(ShelfLayer, Kitchen),
-                  is_shelf_layer(ShelfLayer)
+                  is_inside_of(Shelf, Kitchen),
+                  is_shelf(Shelf)
            ),
-           log_set_both('http://www.ease-crc.org/ont/SUTURO.owl#RoboCupCleaningSupplies', ShelfLayer)
+           log_set_both('http://www.ease-crc.org/ont/SUTURO.owl#RoboCupCleaningSupplies', Shelf)
           ),
 
     % snacks on dinner table in kitchen
-    has_robocup_name(DiningTable, dinner_table),
-    log_set_both('http://www.ease-crc.org/ont/SUTURO.owl#RoboCupSnacks', DiningTable),
+    %has_robocup_name(DiningTable, dinner_table),
+    %log_set_both('http://www.ease-crc.org/ont/SUTURO.owl#RoboCupSnacks', DiningTable),
+
+    % snacks on dinner table in kitchen
+    has_robocup_name(KitchenTable, kitchen_table),
+    log_set_both('http://www.ease-crc.org/ont/SUTURO.owl#RoboCupSnacks', KitchenTable),
 
     % dishes in dishwasher in kitchen
     ros_warn('TODO: Check if dishwasher is loaded into knowledge database'),
     %% has_type(DishwasherTray, suturo:'DishwasherTray'),
     %% log_set_both('http://www.ease-crc.org/ont/SUTURO.owl#RoboCupDishes', DishwasherTray),
+
     has_robocup_name(DishwasherTable, d_table),
     log_set_both('http://www.ease-crc.org/ont/SUTURO.owl#RoboCupDishes', DishwasherTable),
 
