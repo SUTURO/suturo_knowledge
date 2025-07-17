@@ -27,7 +27,10 @@
 		navigability(+, -),
 		first_valid_path(+,+,-,-),
 		map_entry_pose_on_rooms(+),
-		path_through_all_object_rooms(+,+,-,-)
+		path_through_all_object_rooms(+,+,-,-),
+		greedy_nn_path(+,+,-,-),
+		two_opt_path_for_objects(+,+,-,-),
+		simulated_annealing_path_for_objects(+,+,-,-)
 	  ]).
 
 
@@ -208,7 +211,7 @@ save_drink(ID, Drink) :-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % has_likely_location(+Object, -Location, -LocObject, -Pose)
-% likly robocup locations for objects:
+% likely robocup locations for objects:
 %   fruits --> billy shelf
 % 	cutlery --> on the dishwasher  
 % no shelf layers -> must be fixed
@@ -294,21 +297,6 @@ has_predefined_location(Object, Location) :-
 	triple(Type, owl:allValuesFrom, Location).
 
 
-% has_likely_room_location(+Object, -Room)
-has_likely_room_location(Object, RoomType) :-
-	what_object(Object, Obj),
-	triple(Obj, transitive(rdfs:'subClassOf'), Type),
-	triple(Type, _, suturo:hasLikelyLocation),
-	triple(Type, owl:allValuesFrom, Room),
-	has_type(RoomType, Room).
-
-% path_to_room(+,+,+,-) 
-% move from StartRoom to Room while path through a Room where the Object could be
-path_to_room(StartRoom, Room, Object, Path) :-
-	has_likely_room_location(Object, LikelyRoom),
-	astar(StartRoom, Room, Path, Cost),
-	memberchk(LikelyRoom, Path).
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% call_person_data(?ID, ?Name, ?Drink, ?Interest, ?Profession)
 call_person_data(ID, Name, Drink, Interest, Profession):-
@@ -327,6 +315,7 @@ call_person_data_with_options(ID, Name, Drink, Option, Interest, Profession) :-
 	kb_call(holds(ID, suturo:hasProfession, Profession)), % Profession
 	findall(Options, (subclass_of(Options, Drink)), Option).
 
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% map_entry_pose_on_rooms(+RoomList) 
 map_entry_pose_on_rooms([]).
@@ -336,6 +325,22 @@ map_entry_pose_on_rooms([Room|Rest]) :-
     ;  format('Room: ~w has NO entry point!~n', [Room])
     ),
     map_entry_pose_on_rooms(Rest).
+
+% has_likely_room_location(+Object, -Room)
+has_likely_room_location(Object, RoomType) :-
+	what_object(Object, Obj),
+	triple(Obj, transitive(rdfs:'subClassOf'), Type),
+	triple(Type, _, suturo:hasLikelyLocation),
+	triple(Type, owl:allValuesFrom, Room),
+	has_type(RoomType, Room).
+
+% path_to_room(+,+,+,-) 
+% move from StartRoom to Room while path through a Room where the Object could be
+path_to_room(StartRoom, Room, Object, Path) :-
+	has_likely_room_location(Object, LikelyRoom),
+	astar(StartRoom, Room, Path, Cost),
+	memberchk(LikelyRoom, Path).
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % path_through_all_object_rooms(+StartRoom, +ObjectList, -BestPath, -TotalCost)
@@ -380,3 +385,112 @@ remove_consecutive_duplicates([X,X|Rest], Result) :-
 remove_consecutive_duplicates([X,Y|Rest], [X|Result]) :-
     X \= Y,
     remove_consecutive_duplicates([Y|Rest], Result).
+
+
+%%%%%%% 1. %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% greedy_nn_path(+StartRoom, +ObjectList, -Path, -Cost)
+greedy_nn_path(Start, Objects, Path, TotalCost) :-
+    findall(Room,
+        (member(Obj, Objects), has_likely_room_location(Obj, Room)),
+        RawRooms),
+    sort(RawRooms, TargetRooms),
+    greedy_nearest_neighbor(Start, TargetRooms, VisitOrder),
+    build_path_sequence(Start, VisitOrder, Path, TotalCost).
+
+
+% greedy_nearest_neighbor(+Current, +RoomsLeft, -Order)
+greedy_nearest_neighbor(_, [], []).
+greedy_nearest_neighbor(Current, Rooms, [Next|Rest]) :-
+    select_closest_room(Current, Rooms, Next),
+    delete(Rooms, Next, Remaining),
+    greedy_nearest_neighbor(Next, Remaining, Rest).
+
+% select_closest_room(+From, +Rooms, -Closest)
+select_closest_room(From, Rooms, Closest) :-
+    findall((Dist, R),
+        (member(R, Rooms), heuristic(From, R, Dist)),
+        DistPairs),
+    sort(DistPairs, [(_, Closest)|_]).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%% 2. %%%%%%%%%%%%%%%%%%%%%%
+% two_opt_path_for_objects(+StartRoom, +ObjectList, -BestPath, -BestCost)
+two_opt_path_for_objects(StartRoom, ObjectList, BestPath, BestCost) :-
+    findall(Room,
+        (member(Obj, ObjectList), has_likely_room_location(Obj, Room)),
+        RawRooms),
+    sort(RawRooms, TargetRooms),
+    two_opt_improvement(StartRoom, TargetRooms, BestPath, BestCost).
+
+% two_opt_improvement(+Start, +Rooms, -BestOrder, -BestCost)
+two_opt_improvement(Start, Rooms, BestOrder, BestCost) :-
+    build_path_sequence(Start, Rooms, InitPath, InitCost),
+    two_opt_loop(Start, Rooms, InitPath, InitCost, BestOrder, BestCost).
+
+% loop until no improvement
+two_opt_loop(Start, CurrentOrder, _, OldCost, FinalOrder, FinalCost) :-
+    two_opt_once(Start, CurrentOrder, NewOrder, NewCost),
+    NewCost < OldCost,
+    !,
+    two_opt_loop(Start, NewOrder, _, NewCost, FinalOrder, FinalCost).
+two_opt_loop(_, Order, _, Cost, Order, Cost).
+
+% one iteration of 2-opt
+two_opt_once(Start, Order, BestNew, BestCost) :-
+    findall((Cost, NewOrder),
+        (two_opt_swap(Order, NewOrder),
+         build_path_sequence(Start, NewOrder, _, Cost)),
+        AllOrders),
+    sort(AllOrders, [(BestCost, BestNew)|_]).
+
+% two_opt_swap(+List, -Swapped)
+two_opt_swap(List, Swapped) :-
+    length(List, Len),
+    Len >= 4,
+    between(2, Len, I),
+    between(I+1, Len, J),
+    prefix(P, List, I),
+    slice(List, I, J, Middle),
+    suffix(S, List, J),
+    reverse(Middle, RevMiddle),
+    append(P, RevMiddle, Tmp),
+    append(Tmp, S, Swapped).
+
+% slice helpers
+prefix(P, L, N) :- length(P, N), append(P, _, L).
+suffix(S, L, N) :- length(P, N), append(P, S, L).
+slice(L, I, J, S) :- suffix(Suf, L, I), prefix(S, Suf, J-I).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 3. %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% simulated_annealing_path_for_objects(+StartRoom, +ObjectList, -BestPath, -BestCost)
+simulated_annealing_path_for_objects(StartRoom, ObjectList, BestPath, BestCost) :-
+    findall(Room,
+        (member(Obj, ObjectList), has_likely_room_location(Obj, Room)),
+        RawRooms),
+    sort(RawRooms, TargetRooms),
+    simulated_annealing_path(StartRoom, TargetRooms, BestPath, BestCost).
+
+% simulated_annealing_path(+Start, +Rooms, -BestOrder, -BestCost)
+simulated_annealing_path(Start, Rooms, BestOrder, BestCost) :-
+    InitialTemp = 10.0,
+    MinTemp = 0.1,
+    Cooling = 0.9,
+    build_path_sequence(Start, Rooms, _, InitCost),
+    anneal(Start, Rooms, InitCost, Rooms, InitCost, InitialTemp, MinTemp, Cooling, BestOrder, BestCost).
+
+% annealing loop
+anneal(_, Current, BestCost, Best, _, Temp, MinTemp, _, Best, BestCost) :-
+    Temp < MinTemp, !.
+anneal(Start, Current, BestCost, Best, CurrCost, Temp, MinTemp, Cooling, FinalBest, FinalCost) :-
+    random_permutation(Current, NewOrder),
+    build_path_sequence(Start, NewOrder, _, NewCost),
+    Delta is NewCost - CurrCost,
+    (   Delta < 0
+    ->  Accept = true
+    ;   TProb is exp(-Delta / Temp),
+        random(X), X < TProb -> Accept = true
+    ;   Accept = false),
+    (   Accept
+    ->  (NewCost < BestCost -> NewBest = NewOrder, NewBestCost = NewCost ; NewBest = Best, NewBestCost = BestCost),
+        anneal(Start, NewOrder, NewBestCost, NewBest, NewCost, Temp * Cooling, MinTemp, Cooling, FinalBest, FinalCost)
+    ;   anneal(Start, Current, BestCost, Best, CurrCost, Temp * Cooling, MinTemp, Cooling, FinalBest, FinalCost)
+    ).
