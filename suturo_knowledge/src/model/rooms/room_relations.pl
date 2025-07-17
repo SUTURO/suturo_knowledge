@@ -268,32 +268,16 @@ door_penalty(StartRoom, GoalRoom, ExitStart, Penalty) :-
         writeln(['Calculating door_penalty from', StartRoom, 'to', GoalRoom]),
         
         is_exit_from(ExitStart, StartRoom),
-        writeln(['ExitStart:', ExitStart]),
-        
         is_entry_to(EntryGoal, GoalRoom),
-        writeln(['EntryGoal:', EntryGoal]),
-        
         object_pose(ExitStart, ['map', [X1, Y1, _], _]),
-        writeln(['ExitStart position:', X1, Y1]),
-        
         object_pose(EntryGoal, ['map', [X2, Y2, _], _]),
-        writeln(['EntryGoal position:', X2, Y2]),
-        
         same_position([X1, Y1], [X2, Y2]),
         writeln('EntryGoal and ExitStart positions match (X1=:=X2, Y1=:=Y2)'),
         
         is_exit_from(ExitGoal, GoalRoom),
-        writeln(['ExitGoal:', ExitGoal]),
-
         is_entry_to(EntryStart, StartRoom),
-        writeln(['EntryStart:', EntryStart]),
-
         object_pose(ExitGoal, ['map', [X3, Y3, _], _]),
-        writeln(['ExitGoal position:', X3, Y3]),
-        
         object_pose(EntryStart, ['map', [X4, Y4, _], _]),
-        writeln(['EntryStart position:', X4, Y4]),
-
         same_position([X3, Y3], [X4, Y4]),
         writeln('EntryStart and ExitGoal positions match (X3=:=X4, Y3=:=Y4)'),
 
