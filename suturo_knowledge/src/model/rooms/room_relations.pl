@@ -294,6 +294,7 @@ same_position([X1, Y1], [X2, Y2]) :-
     abs(Y1 - Y2) < 0.01.
 
 % safe_door_penalty(+StartRoom, +GoalRoom, -Penalty)
+% needed because there is no other way to calculate a penalty for rooms wich are not connected
 safe_door_penalty(StartRoom, GoalRoom, Penalty) :-
 (   are_neighbours3(StartRoom, GoalRoom, Exit)
 ->  door_penalty(StartRoom, GoalRoom, Exit, Penalty)
