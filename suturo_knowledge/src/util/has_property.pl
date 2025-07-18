@@ -34,56 +34,6 @@
 	  ]).
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% go up all superclasses of an object till you find a superclass with property 'Fragility' 
-%% is_fragile(r ObjName)
-is_fragile(ObjName) :-
-	triple(O,_, suturo:hasPredefinedName), 
-	triple(O, owl:hasValue, ObjName), 
-	triple(Object,_,O),  
-	triple(Object, transitive(rdfs:'subClassOf'), X),
-	triple(X, _, suturo:'Fragility').
-
-	%transitivee(Object).
-
-%transitivee(r Object)
-transitivee(Object) :- 
-	triple(Object, _, suturo:'Fragility').
-
-%transitivee(r Object)
-transitivee(Object) :-
-	subclass_of(Object, X),
-	transitivee(X).
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
-%% is_light_or_heavy(r Object, ?Weight)
-%
-% is an object heavy or light
-is_light_or_heavy(ObjName, Weight):-
-	what_object(ObjName, Object),
-	triple(Object, transitive(rdfs:'subClassOf'), X),
-	triple(X, _, suturo:hasWeight),
-	triple(X, owl:hasValue, Weight).
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
-%% is_perishable(+ObjName)
-% 
-% ask if object is perishable
-is_perishable(ObjName):-
-	what_object(ObjName, Object),
-	triple(Object, transitive(rdfs:'subClassOf'), X),
-	triple(X, _, suturo:'Perishable').
-
-
-%% preorlo_check(r, -)
-preorlo_check(ObjName, Object):-
-	what_object(ObjName, Object),
-	triple(O,_, suturo:hasOriginLocation),
-	triple(Object, owl:onProperty, _), 
-	triple(Object,_,O),
-	!.
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% what_object(+ ObjName, r Object)
 %
@@ -139,6 +89,65 @@ have_same_class(ObjName1, ObjName2) :-
 	subclass_of(Y, Z),
 	!.
 
+%has_value(+,r,-)	
+has_value(ObjName, Property, Value) :-
+	what_object(ObjName, Object),
+	triple(Object, transitive(rdfs:'subClassOf'), X),
+	triple(X, _, Property),
+	triple(X, owl:hasValue, Value).
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% go up all superclasses of an object till you find a superclass with property 'Fragility' 
+%% is_fragile(r ObjName)
+is_fragile(ObjName) :-
+	triple(O,_, suturo:hasPredefinedName), 
+	triple(O, owl:hasValue, ObjName), 
+	triple(Object,_,O),  
+	triple(Object, transitive(rdfs:'subClassOf'), X),
+	triple(X, _, suturo:'Fragility').
+
+	%transitivee(Object).
+
+%transitivee(r Object)
+transitivee(Object) :- 
+	triple(Object, _, suturo:'Fragility').
+
+%transitivee(r Object)
+transitivee(Object) :-
+	subclass_of(Object, X),
+	transitivee(X).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%% is_light_or_heavy(r Object, ?Weight)
+%
+% is an object heavy or light
+is_light_or_heavy(ObjName, Weight):-
+	what_object(ObjName, Object),
+	triple(Object, transitive(rdfs:'subClassOf'), X),
+	triple(X, _, suturo:hasWeight),
+	triple(X, owl:hasValue, Weight).
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%% is_perishable(+ObjName)
+% 
+% ask if object is perishable
+is_perishable(ObjName):-
+	what_object(ObjName, Object),
+	triple(Object, transitive(rdfs:'subClassOf'), X),
+	triple(X, _, suturo:'Perishable').
+
+
+%% preorlo_check(r, -)
+preorlo_check(ObjName, Object):-
+	what_object(ObjName, Object),
+	triple(O,_, suturo:hasOriginLocation),
+	triple(Object, owl:onProperty, _), 
+	triple(Object,_,O),
+	!.
+
+
 % returns the grasping pose for toya to grasp a certain object
 %grasp_pose(+,-)
 grasp_pose(ObjName , Pose) :-
@@ -166,12 +175,6 @@ has_position(ObjName, PoseStamped):-
 		PoseStamped = [Frame, [NewX,NewY,Z] , Rotation]
 	).
 	
-%has_value(+,r,-)	
-has_value(ObjName, Property, Value) :-
-	what_object(ObjName, Object),
-	triple(Object, transitive(rdfs:'subClassOf'), X),
-	triple(X, _, Property),
-	triple(X, owl:hasValue, Value).
 
 
 
@@ -207,6 +210,26 @@ save_drink(ID, Drink) :-
         kb_project(triple(ID, suturo:hasFavouriteDrink, Drink))  % If empty the original string is saved
     ; 
         true).
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% call_person_data(?ID, ?Name, ?Drink, ?Interest, ?Profession)
+call_person_data(ID, Name, Drink, Interest, Profession):-
+	kb_call(holds(ID, suturo:hasCustomerName, Name)), % ID + Name 
+	kb_call(holds(ID, suturo:hasFavouriteDrink, Drink)), % Drink
+	kb_call(holds(ID, suturo:hasInterest, Interest)), % Interest
+	kb_call(holds(ID, suturo:hasProfession, Profession)). % Profession
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% call_person_data_with_options(?ID, ?Name, ?Drink, -Option, ?Interest, ?Profession)
+call_person_data_with_options(ID, Name, Drink, Option, Interest, Profession) :-
+	kb_call(holds(ID, suturo:hasCustomerName, Name)), % ID + Name 
+	kb_call(holds(ID, suturo:hasFavouriteDrink, Drink)), % Drink
+	kb_call(holds(ID, suturo:hasInterest, Interest)), % Interest
+	kb_call(holds(ID, suturo:hasProfession, Profession)), % Profession
+	findall(Options, (subclass_of(Options, Drink)), Option).
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -281,12 +304,7 @@ has_likely_location_in_room(Object, Room, Location, Pose) :-
 				)
 		)
 	).
-     
-navigability(Room, Navigability) :-
-	has_type(Room, RoomType),
-	triple(RoomType, transitive(rdfs:'subClassOf'), Type),
-	triple(Type, _, suturo:hasNavigability),
-	triple(Type, owl:hasValue, Navigability).
+    
 
 
 % has_predefined_location(+Object, -Location)
@@ -296,24 +314,6 @@ has_predefined_location(Object, Location) :-
 	triple(Type, _, suturo:hasPredefinedLocation),
 	triple(Type, owl:allValuesFrom, Location).
 
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% call_person_data(?ID, ?Name, ?Drink, ?Interest, ?Profession)
-call_person_data(ID, Name, Drink, Interest, Profession):-
-	kb_call(holds(ID, suturo:hasCustomerName, Name)), % ID + Name 
-	kb_call(holds(ID, suturo:hasFavouriteDrink, Drink)), % Drink
-	kb_call(holds(ID, suturo:hasInterest, Interest)), % Interest
-	kb_call(holds(ID, suturo:hasProfession, Profession)). % Profession
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% call_person_data_with_options(?ID, ?Name, ?Drink, -Option, ?Interest, ?Profession)
-call_person_data_with_options(ID, Name, Drink, Option, Interest, Profession) :-
-	kb_call(holds(ID, suturo:hasCustomerName, Name)), % ID + Name 
-	kb_call(holds(ID, suturo:hasFavouriteDrink, Drink)), % Drink
-	kb_call(holds(ID, suturo:hasInterest, Interest)), % Interest
-	kb_call(holds(ID, suturo:hasProfession, Profession)), % Profession
-	findall(Options, (subclass_of(Options, Drink)), Option).
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -327,12 +327,23 @@ map_entry_pose_on_rooms([Room|Rest]) :-
     map_entry_pose_on_rooms(Rest).
 
 % has_likely_room_location(+Object, -Room)
+% Room is a predefined RoomType where an object should be it is defined by the suturo.owl
 has_likely_room_location(Object, RoomType) :-
 	what_object(Object, Obj),
 	triple(Obj, transitive(rdfs:'subClassOf'), Type),
 	triple(Type, _, suturo:hasLikelyLocation),
 	triple(Type, owl:allValuesFrom, Room),
 	has_type(RoomType, Room).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% navigability(+Room, -Navigability)
+% Navigability is a number. Lower is better. Defined by suturo.owl	 
+navigability(Room, Navigability) :-
+	has_type(Room, RoomType),
+	triple(RoomType, transitive(rdfs:'subClassOf'), Type),
+	triple(Type, _, suturo:hasNavigability),
+	triple(Type, owl:hasValue, Navigability).
+
 
 % path_to_room(+,+,+,-) 
 % move from StartRoom to Room while path through a Room where the Object could be
@@ -342,7 +353,12 @@ path_to_room(StartRoom, Room, Object, Path) :-
 	memberchk(LikelyRoom, Path).
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Some attempts to implement a function which should build a path and run through rooms where different objects should be found 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
 % path_through_all_object_rooms(+StartRoom, +ObjectList, -BestPath, -TotalCost)
 path_through_all_object_rooms(StartRoom, ObjectList, BestPath, TotalCost) :-
     findall(Room,
