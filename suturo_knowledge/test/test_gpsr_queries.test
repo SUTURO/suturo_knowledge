@@ -1,9 +1,10 @@
 <launch>
-  <!-- Include the main KnowRob backend -->
-  <!--<include file="$(find knowrob)/launch/knowrob.launch" />-->
-
+  
   <!-- Start suturo_knowledge -->
-  <include file="$(find suturo_knowledge)/launch/suturo_knowledge.launch" />
+  <!--<include file="$(find suturo_knowledge)/launch/suturo_knowledge.launch" />-->
+  
+  <!-- Start GermanOpen_bringup map and then suturo_knowledge -->
+  <include file="$(find suturo_knowledge)/launch/suturo_knowledge_with_map.launch" />
   
   <!-- Delay (optional, for stability) -->
   <param name="/use_sim_time" value="false"/>
@@ -11,5 +12,6 @@
   <!-- Run the unit test via rostest (note type is still the .py file) -->
   <test test-name="GPSR_query_tests" 
   	pkg="suturo_knowledge" 
-  	type="GPSR_query_tests.py" />
+  	type="GPSR_query_tests.py"
+    time-limit="3000" />
 </launch>
