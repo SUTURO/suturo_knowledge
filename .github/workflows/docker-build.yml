@@ -25,6 +25,6 @@ jobs:
             -w /catkin_ws \
             tests bash -lc "\
               source /opt/ros/noetic/setup.bash && \
-              source /opt/ros/overlay_ws/devel/setup.bash && \
+              source /opt/ros/catkin_ws/devel/setup.bash && \
               rostest suturo_knowledge test_gpsr_queries.test \
             "
