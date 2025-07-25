@@ -1,12 +1,16 @@
 <launch>
-  <!-- Configure settings file. -->
+  <!-- Configure settings file -->
   <arg name="knowrob_settings" default="$(find knowrob)/settings/default.pl" />
   <env name="KNOWROB_SETTINGS" value="$(arg knowrob_settings)" />
   
+  <!-- Start the map -->
   <include file="$(find suturo_bringup)/launch/GermanOpen_bringup.launch"> </include>
+
+  <!-- Warten, bis ein wichtiger Node verfügbar ist (z. B. /pose_integrator) -->
+  <node pkg="roslaunch" type="roslaunch-check" name="wait_for_pose_integrator" args="/pose_integrator" />
 
   <include file="$(find rosprolog)/launch/rosprolog.launch">
     <arg name="initial_package" default="suturo_knowledge" />
-    <arg name="initial_goal" default="init_suturo_knowledge" />
+    <arg name="initial_goal" default="init_suturo_knowledge" /> 
   </include>
 </launch>
