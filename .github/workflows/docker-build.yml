@@ -24,7 +24,8 @@ jobs:
             -v "${{ github.workspace }}:/catkin_ws/src/suturo_knowledge:ro" \
             -w /catkin_ws \
             tests bash -lc "\
-              source /opt/ros/noetic/setup.bash && \
-              source /opt/ros/catkin_ws/devel/setup.bash && \
+              source /catkin_ws/devel/setup.bash && \
+              mongod --config /etc/mongod.conf --fork && \
+              cd /catkin_ws/src/suturo_knowledge/suturo_knowledge && \
               rostest suturo_knowledge test_gpsr_queries.test \
             "
