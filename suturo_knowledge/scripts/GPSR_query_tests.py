@@ -27,7 +27,7 @@ class TestGPSRQueries(unittest.TestCase):
         rospy.init_node("GPSR_query_tests", anonymous=True)
 
 ###################################################################################################
-### 1/12: is_fragile 
+### 1: is_fragile 
 
     def test_is_fragile(self):
         q1 = prolog.once(f"is_fragile(bowl).")
@@ -44,7 +44,7 @@ class TestGPSRQueries(unittest.TestCase):
 
 #- assertFalse und True mal gucken 
 ###################################################################################################
-### 2/12: is_perishable
+### 2: is_perishable
 
     def test_is_perishable(self):
         q1 = prolog.once(f"is_perishable(milk).")
@@ -62,7 +62,7 @@ class TestGPSRQueries(unittest.TestCase):
 
 #- assertFalse und True mal gucken 
 ###################################################################################################
-### 3/12: grasp_pose
+### 3: grasp_pose
 
     def test_grasp_pose(self):
         sol = prolog.once(f"grasp_pose(spoon, Pose).")
@@ -79,7 +79,7 @@ class TestGPSRQueries(unittest.TestCase):
         self.assertNotEquals(q2, 'side')
 
 ###################################################################################################
-### 4/12: is_light_or_heavy
+### 4: is_light_or_heavy
 
     def test_is_light_or_heavy(self):
 
@@ -106,11 +106,10 @@ class TestGPSRQueries(unittest.TestCase):
         print(q5)
         self.assertFalse(q5)
 
-#- assertTrue 
-# Ausgabe der Funktion tricky: bool vs. light/heavy
+# Ausgabe der Funktion tricky: bool 
 # --> nur für Frage, ob Annahme true oder false
 ###################################################################################################
-### 5.1/12: save_person_data
+### 5: save_person_data
 
     def test_save_person_data(self):
         names = ["Anna", "Berta", "Connie", "Elena", "Felix", "Gabriel", "Hannes"]
@@ -134,16 +133,9 @@ class TestGPSRQueries(unittest.TestCase):
 
 ## true, dass es funktioniert -> es kommt aber {} raus
 ###################################################################################################
-###5.2: save_info_server
-# noch unsicher, in welcher form die infos gegeben werden - einzeln, gebuendelt als string, dict? 
-    #def test_save_info_server(self, info):
+### 6: call_person_info
+# 6.1: calling info directly after saving
 
-# ...
-
-###################################################################################################
-### 6/12: call_person_info
-
-# 6.1 calling info directly after saving
     def test_call_person_data_1(self):
         names = ["Anna", "Bert", "Connie", "Elena", "Felix", "Gabriel", "Hannes"]
         drinks = ["coffee", "tea", "water", "juice"]
@@ -170,7 +162,8 @@ class TestGPSRQueries(unittest.TestCase):
         self.assertEquals(q2["Interest"], f"{interest}")
         self.assertEquals(q2["Profession"], f"{profession}")
 
-# 6.2 calling info after making changes
+# 6.2: calling info after making changes
+
     def test_call_person_data_2(self):
         names = ["Anna", "Bert", "Connie", "Elena", "Felix", "Gabriel", "Hannes"]
         drinks = ["coffee", "tea", "water", "juice"]
@@ -197,7 +190,8 @@ class TestGPSRQueries(unittest.TestCase):
         self.assertEquals(q3["Interest"], f"{interest2}")
         self.assertEquals(q3["Profession"], f"{profession2}")
 
-# 3. calling data with only one key
+# 6.3: calling data with only one key
+
     def test_call_person_data_3(self):
         names = ["Anna", "Bert", "Connie", "Elena", "Felix", "Gabriela", "Hannes"]
         drinks = ["coffee", "tea", "water", "juice"]
@@ -226,16 +220,8 @@ class TestGPSRQueries(unittest.TestCase):
         self.assertEquals(q3["Interest"], f"{interest2}")
         self.assertEquals(q3["Profession"], f"{profession2}")
 
-
-## function ?
-#--> entnehme Elemente für die Abfrage, da gerade true mit variablen verglichen wird
-
-        #q1 = inter.call_person_data(1.0, name, drink, interest, profession)
-        #self.assertTrue(q1)
-
-
 ###################################################################################################
-### 7/12: has_predefined_location
+### 7: has_predefined_location
 
     def test_predefined_location(self):
         # drink => shelf
@@ -249,10 +235,10 @@ class TestGPSRQueries(unittest.TestCase):
         self.assertEquals(q3["Location"], q4["Loc"])
 
 ###################################################################################################
-### 8/12: has_likely_location
+### 8: has_likely_location
+# tested on GermanOpen map 
 # fruits --> billy shelf
 # cutlery --> on the dishwasher
-# tested on GermanOpen map 
 
     # def test_has_likely_location(self):
     #     # Location = Shelf for fruit
@@ -273,7 +259,7 @@ class TestGPSRQueries(unittest.TestCase):
     #     self.assertEquals(q1["Location"], qs["Loc"])
 
 ###################################################################################################
-### 9/12: has_likely_location_in_room
+### 9: has_likely_location_in_room
 # tested on GermanOpen map
 
     # def test_has_likely_location_in_room(self):
@@ -294,7 +280,7 @@ class TestGPSRQueries(unittest.TestCase):
     #     #self.assert()
 
 ###################################################################################################
-### 10/12: navigability
+### 10: navigability
 # tested on GermanOpen map
 
     # def test_navigability(self):
@@ -311,10 +297,10 @@ class TestGPSRQueries(unittest.TestCase):
 
 # output is a number
 ###################################################################################################
-### 11/12: obj_characteristics
+### 11: obj_characteristics
 
 ###################################################################################################
-### 12/12: object_perceive_pose
+### 12: object_perceive_pose
 # tested on GermanOpen map
 
     # def test_object_perceive_pose(self):
@@ -330,9 +316,9 @@ class TestGPSRQueries(unittest.TestCase):
     #     q1 = prolog.once(f"init_gpsr_2024.")
     #     self.assertIsNotNone(q1)
 
-#--> gibt ne Fehlermeldung im anderen Terminal
-###################################################################################################
-## 14: get_obj_instance_of_type
+#--> gibt ne Fehlermeldung im anderen Terminal; weil map gebraucht??
+####################################################################################################
+### 14: get_obj_instance_of_type
 # tested on GermanOpen map
 
     # def test_get_obj_instance_of_type(self):
@@ -341,7 +327,7 @@ class TestGPSRQueries(unittest.TestCase):
     #     self.assertEquals(q1["Type"], q2["Obj"])
 
 ###################################################################################################
-## 15: get_room_entry_pose_class
+### 15: get_room_entry_pose_class
 
     def test_get_room_entry_pose_class(self):
         q1 = prolog.once(f"findall(Room, is_room(Room), Rooms), map_entry_pose_on_rooms(Rooms).")
@@ -351,7 +337,7 @@ class TestGPSRQueries(unittest.TestCase):
         self.assertIsNotNone(q2)
 
 ###################################################################################################
-## 16: get_room_pose
+### 16: get_room_pose
 # tested on GermanOpen map 
 
     # def test_get_room_pose(self):
@@ -370,7 +356,7 @@ class TestGPSRQueries(unittest.TestCase):
 #- man soll wählen können, ob entry oder exit 
 #- prolog.all_solutions ? 
 ###################################################################################################
-## 17: get_all_room_poses 
+### 17: get_all_room_poses 
 # tested on GeranOpen map 
 
     # def test_get_all_room_poses(self):
@@ -383,11 +369,11 @@ class TestGPSRQueries(unittest.TestCase):
     #     self.assertIsNotNone(q2)
 
 ###################################################################################################
-## 18: get_room_middle_pose
+### 18: get_room_middle_pose
     # q1 = prolog.once(f"middle(Room, PoseStamped).")
 
 ###################################################################################################
-## 19: get_nav_poses_for_furniture_item
+### 19: get_nav_poses_for_furniture_item
 # tested on GermanOpen_bringup map
 
     # def test_get_nav_poses_for_furniture_item(self):
@@ -397,7 +383,7 @@ class TestGPSRQueries(unittest.TestCase):
     #     self.assertEquals(q1["Pose"], checkPose)
 
 ###################################################################################################
-## 20: check_existence_of_instance
+### 20: check_existence_of_instance
 
     def test_check_existence_of_instance(self):
         nlp_name = 'couch table'
@@ -409,7 +395,7 @@ class TestGPSRQueries(unittest.TestCase):
 # nlp name variabel machen
 # kann sein, dass failed, denn es kann Inst oder Obj rauskommen 
 ###################################################################################################
-## 21: check_existence_of_class
+### 21: check_existence_of_class
 
     def test_check_existence_of_class(self):
         q1 = prolog.once(f"what_object_transitive('table', Class).")
@@ -417,7 +403,7 @@ class TestGPSRQueries(unittest.TestCase):
  
 # nlp name variabel machen
 ###################################################################################################
-## 22: get_predefined_source_item_location_name
+### 22: get_predefined_source_item_location_name
 # tested on GermanOpen map
 
     # def test_get_predefined_source_item_location_name(self):
@@ -430,7 +416,7 @@ class TestGPSRQueries(unittest.TestCase):
 # predefined_origin_location(Obj, Furniture).
 # subclass_of(X, 'http://www.ease-crc.org/ont/SUTURO.owl#RoboCupFood').
 ###################################################################################################
-## 23: get_predefined_source_item_location_iri
+### 23: get_predefined_source_item_location_iri
 # tested on GermanOpen map
 
     # def test_get_predefined_source_item_location_iri(self):
@@ -439,12 +425,9 @@ class TestGPSRQueries(unittest.TestCase):
     #     checkPose = [['iai_kitchen/couch_table:couch_table:table_center', [-0.875, 0.0, -0.35], [0.0, 0.0, 0.0, 1.0]]]
     #     self.assertEquals(q1['Pose'], checkPose)
 
-# predefined_origin_location geht nur für gewisse Dinge 
-# predefined_origin_location(Obj, Furniture).
-# subclass_of(X, 'http://www.ease-crc.org/ont/SUTURO.owl#RoboCupFood').
-# scheinbar gibt es Probleme mit is in furniture_rel_pose wenn table = dishwasher table
+# scheinbar gibt es Probleme mit "is" in furniture_rel_pose wenn table = dishwasher table
 ###################################################################################################
-## 24: get_predefined_destination_item_location
+### 24: get_predefined_destination_item_location
 # tested on GermanOpen map
 
     # def test_get_predefined_destination_item_location(self):
@@ -453,17 +436,15 @@ class TestGPSRQueries(unittest.TestCase):
     #     checkPose =[['iai_kitchen/couch_table:couch_table:table_center', [-0.875, 0.0, -0.35], [0.0, 0.0, 0.0, 1.0]]]
     #     self.assertEquals(q1['Pose'], checkPose)
 
-# predefined_origin_location geht nur für gewisse dinge 
-# predefined_origin_location(Obj, Furniture).
-# subclass_of(X, 'http://www.ease-crc.org/ont/SUTURO.owl#RoboCupFood').
-# habe noch has_type ergänzt, ansonsten sind die queries falsch
+
+# habe noch has_type ergänzt, ansonsten funkt queries nicht
 # falsch = what_object_transitive(Obj_XYZ, Name)
 # richtig = what_object_transitive('juice', Name)
 ###################################################################################################
 ## 25: check_existence_based_on_class
     # q1 = prolog.once(f"what_object_transitive(Name, {class_iri}).")
 
-
+# 
 ###################################################################################################
 
 
