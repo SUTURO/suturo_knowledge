@@ -3,6 +3,7 @@
   <arg name="knowrob_settings" default="$(find knowrob)/settings/default.pl" />
   <env name="KNOWROB_SETTINGS" value="$(arg knowrob_settings)" />
   
+  
   <!-- Start the map -->
   <include file="$(find suturo_bringup)/launch/GermanOpen_bringup.launch"> </include>
 
