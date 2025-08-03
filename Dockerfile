@@ -170,7 +170,9 @@ RUN git clone https://github.com/SUTURO/rosprolog.git
 RUN git clone https://github.com/code-iai/iai_common_msgs.git
 RUN git clone https://github.com/SUTURO/hsr_description.git
 RUN git clone https://github.com/hsr-project/hsrb_rosnav.git
-RUN git clone --branch robocup https://github.com/SUTURO/suturo_resources.git
+RUN git clone --branch robocup https://github.com/KonschinAlina/suturo_resources.git
+#ADD suturo_resources /catkin_ws/src/suturo_resources
+#RUN git clone --branch robocup https://github.com/SUTURO/suturo_resources.git
 
 WORKDIR /catkin_ws
 RUN /usr/bin/catkin init
@@ -181,6 +183,7 @@ WORKDIR /catkin_ws/src
 ADD . /catkin_ws/src/suturo_knowledge
 WORKDIR /catkin_ws
 RUN . /opt/ros/noetic/setup.sh && /usr/bin/catkin build
+
 
 
 COPY run_knowrob_local.sh /run_knowrob_local.sh
