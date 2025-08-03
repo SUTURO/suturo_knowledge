@@ -3,6 +3,7 @@
   <!-- Start suturo_knowledge -->
   <!--<include file="$(find suturo_knowledge)/launch/suturo_knowledge.launch" />-->
   
+  <env name="QT_QPA_PLATFORM" value="offscreen"/>
   <!-- Start GermanOpen_bringup map and then suturo_knowledge -->
   <include file="$(find suturo_knowledge)/launch/suturo_knowledge_with_map.launch" />
   
