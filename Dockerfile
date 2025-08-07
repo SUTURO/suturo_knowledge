@@ -174,6 +174,7 @@ RUN git clone --branch robocup https://github.com/KonschinAlina/suturo_resources
 #ADD suturo_resources /catkin_ws/src/suturo_resources
 #RUN git clone --branch robocup https://github.com/SUTURO/suturo_resources.git
 
+RUN echo "tests"
 WORKDIR /catkin_ws
 RUN /usr/bin/catkin init
 RUN . /opt/ros/noetic/setup.sh && /usr/bin/catkin build
