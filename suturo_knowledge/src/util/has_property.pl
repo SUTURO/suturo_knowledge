@@ -262,7 +262,7 @@ has_likely_location(Object, Location, LocObj, Pose) :-
 	 true
 	).
 
-check_tables_for_frame([], Table) :- fail.  
+check_tables_for_frame([], _Table) :- fail.  
 check_tables_for_frame([T | Next], Table) :-
 	object_pose(T, [Frame, _, _]),
 	(Frame = 'iai_kitchen/dishwasher_table:d_table:table_center'->
@@ -271,7 +271,7 @@ check_tables_for_frame([T | Next], Table) :-
 		check_tables_for_frame(Next, Table)
 	).
 
-check_shelf_layers_for_frame([], ShelfLayer) :- fail.  
+check_shelf_layers_for_frame([], _ShelfLayer) :- fail.  
 check_shelf_layers_for_frame([S | Next], ShelfLayer) :-
 	object_pose(S, [Frame, _, _]),
 	(Frame = 'iai_kitchen/shelf_billy_kitchen:bookshelf:shelf_floor_2'->
@@ -284,7 +284,7 @@ check_shelf_layers_for_frame([S | Next], ShelfLayer) :-
 % has_likely_location_in_room(+Object, +Room, -Location, -Pose)
 % 
 has_likely_location_in_room(Object, Room, Location, Pose) :-
-	(has_likely_location(Object, LLocation, LocObj, LPose) -> 
+	(has_likely_location(Object, LLocation, _LocObj, LPose) -> 
 		writeln(LPose),
 		(check_position_inside_room(LPose, Room) ->
 			Pose = LPose,
@@ -349,7 +349,7 @@ navigability(Room, Navigability) :-
 % move from StartRoom to Room while path through a Room where the Object could be
 path_to_room(StartRoom, Room, Object, Path) :-
 	has_likely_room_location(Object, LikelyRoom),
-	astar(StartRoom, Room, Path, Cost),
+	astar(StartRoom, Room, Path, _Cost),
 	memberchk(LikelyRoom, Path).
 
 
@@ -388,7 +388,7 @@ first_valid_path(StartRoom, ObjectList, BestPath, BestCost) :-
 build_path_sequence(Start, [], [Start], 0).
 build_path_sequence(Start, [Next|Rest], FullPath, TotalCost) :-
     astar(Start, Next, PathToNext, CostToNext),
-    last(PathToNext, ActualStart),
+    last(PathToNext, _ActualStart),
     build_path_sequence(Next, Rest, RestPath, RestCost),
     append(PathToNext, RestPath, Combined),
     remove_consecutive_duplicates(Combined, FullPath),
@@ -494,7 +494,7 @@ simulated_annealing_path(Start, Rooms, BestOrder, BestCost) :-
     anneal(Start, Rooms, InitCost, Rooms, InitCost, InitialTemp, MinTemp, Cooling, BestOrder, BestCost).
 
 % annealing loop
-anneal(_, Current, BestCost, Best, _, Temp, MinTemp, _, Best, BestCost) :-
+anneal(_, _Current, BestCost, Best, _, Temp, MinTemp, _, Best, BestCost) :-
     Temp < MinTemp, !.
 anneal(Start, Current, BestCost, Best, CurrCost, Temp, MinTemp, Cooling, FinalBest, FinalCost) :-
     random_permutation(Current, NewOrder),

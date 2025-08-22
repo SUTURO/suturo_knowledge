@@ -56,7 +56,7 @@ create_new_object(Object, Type, [Frame, [X,Y,Z], [RX,RY,RZ,RW]], Options) :-
     kb_project(is_type(Object, Type), Scope),
     tf_set_pose(Object, [Frame, [X,Y,Z], [RX,RY,RZ,RW]], Scope),
     option(shape(Shape), Options, none),
-    assert_shape(Object, Shape, Scope, SR),
+    assert_shape(Object, Shape, Scope, _SR),
     option(data_source(DataSource), Options, perception),
     kb_project(triple(Object, suturo:hasDataSource, DataSource), Scope),
     % update_relative_position has to come after setting the data source.

@@ -86,7 +86,7 @@ find_next_object_storing_groceries(NothandledObjects, NextObject) :-
 next_object_serve_breakfast(NextObject) :-
     %% objects_not_handled(NothandledObjects),
     %% ros_info('Not handled objects: ~w', [NothandledObjects]),
-    find_next_object_serve_breakfast(NothandledObjects, NextObject),
+    find_next_object_serve_breakfast(_NothandledObjects, NextObject),
     set_object_handled(NextObject),
     !.
 

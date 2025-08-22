@@ -119,7 +119,7 @@ occupied_point(Objects, (X, Y)) :-
     Dist < 0.5. 
 
 % find the best point to declare as starting point in a room
-find_best_point([Point], Objects, Point) :- !.
+find_best_point([Point], _Objects, Point) :- !.
 find_best_point([Point | Rest], Objects, BestPoint) :-
     max_distance_to_objects(Point, Objects, MaxDist),
     find_best_point(Rest, Objects, OtherBestPoint),
@@ -325,7 +325,7 @@ astar_search([node(Current, PathSoFar, G, _)|RestOpen], Goal, Path, Cost) :-
     findall(
         node(Neighbor, [Current|PathSoFar], G1, F1),
         (
-            are_neighbours3(Current, Neighbor, Exit),
+            are_neighbours3(Current, Neighbor, _Exit),
             \+ member(Neighbor, PathSoFar),
             safe_door_penalty(Current, Neighbor, Penalty),
             distance_between_rooms_1(Current, Neighbor, Dist),
