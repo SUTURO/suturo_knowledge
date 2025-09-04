@@ -371,10 +371,11 @@ class TestGPSRQueries(unittest.TestCase):
 # tested on GermanOpen_bringup map
 
     def test_get_nav_poses_for_furniture_item(self):
-
-        q1 = prolog.once(f"what_object('couch table', Obj), has_type(ObjInst, Obj), what_object('living room', Room),  has_type(RoomInst, Room), is_inside_of(ObjInst, RoomInst), furniture_rel_pose(ObjInst, 'perceive', Pose).")
+        q0 = prolog.once(f"what_object('couch table', Obj), has_type(ObjInst, Obj), what_object('living room', Room).")
+        q1 = prolog.once(f"what_object('couch table', Obj), has_type(ObjInst, Obj), what_object('living room', Room), has_type(RoomInst, Room), is_inside_of(ObjInst, RoomInst).")
+        q2 = prolog.once(f"what_object('couch table', Obj), has_type(ObjInst, Obj), what_object('living room', Room), has_type(RoomInst, Room), is_inside_of(ObjInst, RoomInst), furniture_rel_pose(ObjInst, 'perceive', Pose).")
         checkPose = [['iai_kitchen/couch_table:couch_table:table_center', [-0.875, 0.0, -0.35], [0.0, 0.0, 0.0, 1.0]]]
-        self.assertEquals(q1["Pose"], checkPose)
+        self.assertEquals(q2["Pose"], checkPose)
 
 ###################################################################################################
 ### 20: check_existence_of_instance
@@ -404,12 +405,12 @@ class TestGPSRQueries(unittest.TestCase):
         #q0 = prolog.once(f"init_gpsr_2024.")
         q1 = prolog.once(f"init_gpsr_2024, what_object_transitive('cornflakes', Obj), predefined_origin_location(Obj, Furniture), furniture_rel_pose(Furniture, 'perceive', Pose).")
         checkPose = [['iai_kitchen/kitchen_island_block:kitchen_counter:table_center', [-1.2, -0.09999999999999998, -1.0], [0.0, 0.0, 0.0, 1.0]], ['iai_kitchen/kitchen_island_block:kitchen_counter:table_center', [-1.2, 0.5, -1.0], [0.0, 0.0, 0.0, 1.0]]]
-        #[['iai_kitchen/kitchen_island_block:kitchen_counter:table_center', [-1.2, 0.5, -1.0], [0.0, 0.0, 0.0, 1.0]]]
         self.assertEquals(q1["Pose"], checkPose)
 
 # predefined_origin_location geht nur für gewisse dinge 
 # predefined_origin_location(Obj, Furniture).
 # subclass_of(X, 'http://www.ease-crc.org/ont/SUTURO.owl#RoboCupFood').
+#[['iai_kitchen/kitchen_island_block:kitchen_counter:table_center', [-1.2, 0.5, -1.0], [0.0, 0.0, 0.0, 1.0]]]
 ###################################################################################################
 ### 23: get_predefined_source_item_location_iri
 # tested on GermanOpen map
