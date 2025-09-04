@@ -371,11 +371,9 @@ class TestGPSRQueries(unittest.TestCase):
 # tested on GermanOpen_bringup map
 
     def test_get_nav_poses_for_furniture_item(self):
-        q0 = prolog.once(f"what_object('couch table', Obj), has_type(ObjInst, Obj), what_object('living room', Room).")
-        q1 = prolog.once(f"what_object('couch table', Obj), has_type(ObjInst, Obj), what_object('living room', Room), has_type(RoomInst, Room), is_inside_of(ObjInst, RoomInst).")
-        q2 = prolog.once(f"what_object('couch table', Obj), has_type(ObjInst, Obj), what_object('living room', Room), has_type(RoomInst, Room), is_inside_of(ObjInst, RoomInst), furniture_rel_pose(ObjInst, 'perceive', Pose).")
+        q1 = prolog.once(f"what_object('couch table', Obj), has_type(ObjInst, Obj), what_object('living room', Room), has_type(RoomInst, Room), is_inside_of(ObjInst, RoomInst), furniture_rel_pose(ObjInst, 'perceive', Pose).")
         checkPose = [['iai_kitchen/couch_table:couch_table:table_center', [-0.875, 0.0, -0.35], [0.0, 0.0, 0.0, 1.0]]]
-        self.assertEquals(q2["Pose"], checkPose)
+        self.assertEquals(q1["Pose"], checkPose)
 
 ###################################################################################################
 ### 20: check_existence_of_instance
