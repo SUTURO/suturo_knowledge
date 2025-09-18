@@ -1,7 +1,7 @@
 :- module(room_relations,
           [ is_entry_to(r,r),
             is_exit_from(r,r),
-            room_entry(r,-),
+            room_entry(r,-),  
             room_exit(r,-),
             is_inside_of(r,r),
             rsp(r,-),
@@ -25,48 +25,65 @@
 
 :- use_module(library(clpfd)).
 
+% returns the entry
 is_entry_to(Location, Room) ?+>
     triple(Location, suturo:isEntryTo, Room).
 
+% returns the exit
 is_exit_from(Location, Room) ?+>
     triple(Location, suturo:isExitFrom, Room).
 
+% returns the pose of an entry 
 room_entry(Room, Pose) ?>
     is_entry_to(Entry, Room),
     is_at(Entry, Pose).
 
+% returns the pose of an exit 
 room_exit(Room, Pose) ?>
     is_exit_from(Exit, Room),
     is_at(Exit, Pose).
 
+% returns all objects in a room 
 is_inside_of(Object, Room) ?+>
     triple(Object, soma:isInsideOf, Room).
 
+% returns the room middle 
 is_room_middle(Room, Pose) ?>
     is_at(Room, Pose).
 
+% returns the entry pose of a room in the given format
 entry_pose(Room, [map, X,Y]):-
     triple(Location, suturo:isEntryTo, Room),
     object_pose(Location, [map, X,Y]).
 
+% returns the exit pose of a room in the given format
 exit_pose(Room, [map,X,Y]):-
     triple(Location, suturo:isExitFrom, Room),
     object_pose(Location, [map, X,Y]).
 
-% Object = 'table'
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% nav_pose_in_room(+, r, -)
+%
+% returns poses in the given room in front of an object (perceive pose)
+% i.e. Object = 'table'
 nav_pose_in_room(Object, Room, Poses) :-
     what_object(Object, Obj),
-    findall(F, has_type(F, Obj), Objects),  % Alle Instanzen des Objekttyps sammeln
-    has_type(RoomInst, Room),               % Room muss eine Instanz eines Raums sein
+    findall(F, has_type(F, Obj), Objects),  
+    has_type(RoomInst, Room),               
     findall(Pose,
         (
-            member(F, Objects),             % Iteration über alle Instanzen
-            is_inside_of(F, RoomInst),      % Prüfen, ob das Objekt im Raum ist
-            furniture_rel_pose(F, 'perceive', Pose)  % Pose des Objekts abrufen
+            member(F, Objects),             
+            is_inside_of(F, RoomInst),      
+            furniture_rel_pose(F, 'perceive', Pose)  
         ),
         Poses
     ).
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% perceive_pose_in_room(+,r,-)
+%
+% returns the perceive pose when navigating to a room 
+% purpose: go to a room and find something (former stickler to teh rules challenge)
 perceive_pose_in_room(Object, Room, [Frame, [NewX,Y,Z], Rotation]) :-
     what_object(Object, Obj),
     has_type(RoomInst, Room),
@@ -77,8 +94,9 @@ perceive_pose_in_room(Object, Room, [Frame, [NewX,Y,Z], Rotation]) :-
     NewX is X - ((LSize/2) + 0.8).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-% find a starting point that does not collide with any objects in the room
+% rsp(r, -)
+%
+% finds a starting point that does not collide with any objects in the room
 rsp(Room, Pose) :-
     findall((X,Y), 
     (   
@@ -165,10 +183,10 @@ my_between(Lower, Upper, X) :-
 format_pose((X, Y), ['map', [X, Y, 0], [0, 0, 0, 1]]).
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % determine neighbouring rooms using entry and exit points
-% setof könnte verwendet werden, um distinct zu machen, je nachdem, ob gerichtete Kanten oder not
-% Cost ggf noch anpassen, aktuell: Anzahl an Exits die nacheinander angesteuert werden müssen
+% setof could be used to be distinct 
+% Cost could be updated; currently: amount of exits needed to pass in a row
 
 % are_neighbours(-,-,-,-)
 are_neighbours(Room, Boom, E, Distance) :-
@@ -185,9 +203,6 @@ are_neighbours3(Room, Boom, E) :-
     is_room_2(Boom),
     is_exit_from(E, Room),
     check_inside_room(E, Boom).
-
-
-
 % are_neighbours2(-)
 are_neighbours2(Results) :-
     findall([Room, Boom, E], (
