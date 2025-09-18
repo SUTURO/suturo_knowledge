@@ -22,7 +22,7 @@ def extract_test_functions_from_code(code_text):
     return [fn.replace('test_', '') for fn in tests]
 
 def compare_coverage(checklist, tests):
-    print("Test Coverage Report:\n" + "=" * 25)
+    print("Test Specification Coverage Report:\n" + "=" * 25)
     for f in sorted(checklist):
         if f in tests:
             print(f". {f}")
