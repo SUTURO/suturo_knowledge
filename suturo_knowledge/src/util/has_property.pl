@@ -38,7 +38,7 @@
 %% what_object(+ ObjName, r Object)
 %
 % get the Object that has the predefined name "ObjName"
-%what_object(+,-)
+% what_object(+,-)
 what_object(ObjName, Object) :-
 	triple(O,_, suturo:hasPredefinedName),
 	triple(O, owl:hasValue, ObjName), 
@@ -48,7 +48,6 @@ what_object(ObjName, Object) :-
 %
 % Get the Class that has the predefined name "ObjName",
 % and all subclasses of that class
-%what_object_transitive(+,-)
 what_object_transitive(ObjName, Class) :-
 	atom(ObjName),
 	var(Class),
@@ -81,7 +80,6 @@ what_object_transitive(ObjName, Class) :-
 %% have_same_class(+, +)
 %
 % check, if two objects belong to the same class
-%have_same_class(+,+)
 have_same_class(ObjName1, ObjName2) :-
 	what_object(ObjName1, X),
 	what_object(ObjName2, Y),
@@ -89,7 +87,7 @@ have_same_class(ObjName1, ObjName2) :-
 	subclass_of(Y, Z),
 	!.
 
-%has_value(+,r,-)	
+%% has_value(+,r,-)	
 has_value(ObjName, Property, Value) :-
 	what_object(ObjName, Object),
 	triple(Object, transitive(rdfs:'subClassOf'), X),
@@ -98,8 +96,8 @@ has_value(ObjName, Property, Value) :-
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% go up all superclasses of an object till you find a superclass with property 'Fragility' 
 %% is_fragile(r ObjName)
+% go up all superclasses of an object till you find a superclass with property 'Fragility' 
 is_fragile(ObjName) :-
 	triple(O,_, suturo:hasPredefinedName), 
 	triple(O, owl:hasValue, ObjName), 
@@ -120,8 +118,7 @@ transitivee(Object) :-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 %% is_light_or_heavy(r Object, ?Weight)
-%
-% is an object heavy or light
+% returns if an object is heavy or light
 is_light_or_heavy(ObjName, Weight):-
 	what_object(ObjName, Object),
 	triple(Object, transitive(rdfs:'subClassOf'), X),
@@ -131,8 +128,7 @@ is_light_or_heavy(ObjName, Weight):-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 %% is_perishable(+ObjName)
-% 
-% ask if object is perishable
+% returns whether an object is perishable
 is_perishable(ObjName):-
 	what_object(ObjName, Object),
 	triple(Object, transitive(rdfs:'subClassOf'), X),
@@ -148,15 +144,17 @@ preorlo_check(ObjName, Object):-
 	!.
 
 
+
+%% grasp_pose(+,-)
 % returns the grasping pose for toya to grasp a certain object
-%grasp_pose(+,-)
 grasp_pose(ObjName , Pose) :-
 	what_object(ObjName, Object),
 	triple(Object, transitive(rdfs:'subClassOf'), X),
 	triple(X, _, suturo:hasGraspPose),
 	triple(X, owl:hasValue, Pose).
 
-%has_position(+,-)
+%% has_position(+,-)
+% returns the pose fo an object on the map
 has_position(ObjName, PoseStamped):-
 	what_object(ObjName, Object), 
 	triple(Object, transitive(rdfs:'subClassOf'), Q),
@@ -176,19 +174,17 @@ has_position(ObjName, PoseStamped):-
 	).
 	
 
-
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Saves the data with an ID 
-% If the string is empty and there was already an information for this ID it just updates the changes.
 %% save_person_data(+ID, +Name, +Drink, +Interest, +Profession)
+% saves the data of a person with an ID 
+% if the string is empty and there was already an information for this ID it just updates the changes.
 save_person_data(ID, Name, Drink, Interest, Profession):-
     save_field(ID, 'http://www.ease-crc.org/ont/SUTURO.owl#hasCustomerName', Name),
     save_drink(ID, Drink),
     save_field(ID, 'http://www.ease-crc.org/ont/SUTURO.owl#hasInterest', Interest),
     save_field(ID, 'http://www.ease-crc.org/ont/SUTURO.owl#hasProfession', Profession).
 
-%save_field(+,r,+)
+%% save_field(+,r,+)
 save_field(ID, Predicate, Value) :-
     (Value \= '' ->  
         kb_unproject(triple(ID, Predicate, _)), 
@@ -199,7 +195,7 @@ save_field(ID, Predicate, Value) :-
     ; 
         true).
 
-% save_drink(+,+)
+%% save_drink(+,+)
 save_drink(ID, Drink) :-
     (Drink \= '' ->  
         what_object(Drink, OwlDrink),
@@ -233,12 +229,11 @@ call_person_data_with_options(ID, Name, Drink, Option, Interest, Profession) :-
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% has_likely_location(+Object, -Location, -LocObject, -Pose)
+%% has_likely_location(+Object, -Location, -LocObject, -Pose)
 % likely robocup locations for objects:
 %   fruits --> billy shelf
 % 	cutlery --> on the dishwasher  
 % no shelf layers -> must be fixed
-
 has_likely_location(Object, Location, LocObj, Pose) :-
 	(has_predefined_location(Object, Loc),
 	 Loc = 'http://www.ease-crc.org/ont/SOMA.owl#Dishwasher' ->
@@ -281,8 +276,7 @@ check_shelf_layers_for_frame([S | Next], ShelfLayer) :-
 	).
 
 
-% has_likely_location_in_room(+Object, +Room, -Location, -Pose)
-% 
+%% has_likely_location_in_room(+Object, +Room, -Location, -Pose)
 has_likely_location_in_room(Object, Room, Location, Pose) :-
 	(has_likely_location(Object, LLocation, _LocObj, LPose) -> 
 		writeln(LPose),
@@ -307,7 +301,7 @@ has_likely_location_in_room(Object, Room, Location, Pose) :-
     
 
 
-% has_predefined_location(+Object, -Location)
+%% has_predefined_location(+Object, -Location)
 has_predefined_location(Object, Location) :-
 	what_object(Object, Obj),
 	triple(Obj, transitive(rdfs:'subClassOf'), Type),
@@ -326,7 +320,7 @@ map_entry_pose_on_rooms([Room|Rest]) :-
     ),
     map_entry_pose_on_rooms(Rest).
 
-% has_likely_room_location(+Object, -Room)
+%% has_likely_room_location(+Object, -Room)
 % Room is a predefined RoomType where an object should be it is defined by the suturo.owl
 has_likely_room_location(Object, RoomType) :-
 	what_object(Object, Obj),
@@ -336,7 +330,7 @@ has_likely_room_location(Object, RoomType) :-
 	has_type(RoomType, Room).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% navigability(+Room, -Navigability)
+%% navigability(+Room, -Navigability)
 % Navigability is a number. Lower is better. Defined by suturo.owl	 
 navigability(Room, Navigability) :-
 	has_type(Room, RoomType),
@@ -345,7 +339,7 @@ navigability(Room, Navigability) :-
 	triple(Type, owl:hasValue, Navigability).
 
 
-% path_to_room(+,+,+,-) 
+%% path_to_room(+,+,+,-) 
 % move from StartRoom to Room while path through a Room where the Object could be
 path_to_room(StartRoom, Room, Object, Path) :-
 	has_likely_room_location(Object, LikelyRoom),
@@ -357,9 +351,7 @@ path_to_room(StartRoom, Room, Object, Path) :-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Some attempts to implement a function which should build a path and run through rooms where different objects should be found 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-% path_through_all_object_rooms(+StartRoom, +ObjectList, -BestPath, -TotalCost)
+%% path_through_all_object_rooms(+StartRoom, +ObjectList, -BestPath, -TotalCost)
 path_through_all_object_rooms(StartRoom, ObjectList, BestPath, TotalCost) :-
     findall(Room,
         (member(Obj, ObjectList), has_likely_room_location(Obj, Room)),
@@ -384,7 +376,7 @@ first_valid_path(StartRoom, ObjectList, BestPath, BestCost) :-
     !.
 
 
-% build_path_sequence(+Start, +RoomsToVisit, -FullPath, -TotalCost)
+%% build_path_sequence(+Start, +RoomsToVisit, -FullPath, -TotalCost)
 build_path_sequence(Start, [], [Start], 0).
 build_path_sequence(Start, [Next|Rest], FullPath, TotalCost) :-
     astar(Start, Next, PathToNext, CostToNext),
@@ -404,7 +396,7 @@ remove_consecutive_duplicates([X,Y|Rest], [X|Result]) :-
 
 
 %%%%%%% 1. %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% greedy_nn_path(+StartRoom, +ObjectList, -Path, -Cost)
+%% greedy_nn_path(+StartRoom, +ObjectList, -Path, -Cost)
 greedy_nn_path(Start, Objects, Path, TotalCost) :-
     findall(Room,
         (member(Obj, Objects), has_likely_room_location(Obj, Room)),
@@ -414,14 +406,14 @@ greedy_nn_path(Start, Objects, Path, TotalCost) :-
     build_path_sequence(Start, VisitOrder, Path, TotalCost).
 
 
-% greedy_nearest_neighbor(+Current, +RoomsLeft, -Order)
+%% greedy_nearest_neighbor(+Current, +RoomsLeft, -Order)
 greedy_nearest_neighbor(_, [], []).
 greedy_nearest_neighbor(Current, Rooms, [Next|Rest]) :-
     select_closest_room(Current, Rooms, Next),
     delete(Rooms, Next, Remaining),
     greedy_nearest_neighbor(Next, Remaining, Rest).
 
-% select_closest_room(+From, +Rooms, -Closest)
+%% select_closest_room(+From, +Rooms, -Closest)
 select_closest_room(From, Rooms, Closest) :-
     findall((Dist, R),
         (member(R, Rooms), heuristic(From, R, Dist)),
@@ -429,7 +421,7 @@ select_closest_room(From, Rooms, Closest) :-
     sort(DistPairs, [(_, Closest)|_]).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%% 2. %%%%%%%%%%%%%%%%%%%%%%
-% two_opt_path_for_objects(+StartRoom, +ObjectList, -BestPath, -BestCost)
+%% two_opt_path_for_objects(+StartRoom, +ObjectList, -BestPath, -BestCost)
 two_opt_path_for_objects(StartRoom, ObjectList, BestPath, BestCost) :-
     findall(Room,
         (member(Obj, ObjectList), has_likely_room_location(Obj, Room)),
@@ -437,12 +429,12 @@ two_opt_path_for_objects(StartRoom, ObjectList, BestPath, BestCost) :-
     sort(RawRooms, TargetRooms),
     two_opt_improvement(StartRoom, TargetRooms, BestPath, BestCost).
 
-% two_opt_improvement(+Start, +Rooms, -BestOrder, -BestCost)
+%% two_opt_improvement(+Start, +Rooms, -BestOrder, -BestCost)
 two_opt_improvement(Start, Rooms, BestOrder, BestCost) :-
     build_path_sequence(Start, Rooms, InitPath, InitCost),
     two_opt_loop(Start, Rooms, InitPath, InitCost, BestOrder, BestCost).
 
-% loop until no improvement
+%% loop until no improvement
 two_opt_loop(Start, CurrentOrder, _, OldCost, FinalOrder, FinalCost) :-
     two_opt_once(Start, CurrentOrder, NewOrder, NewCost),
     NewCost < OldCost,
@@ -450,7 +442,7 @@ two_opt_loop(Start, CurrentOrder, _, OldCost, FinalOrder, FinalCost) :-
     two_opt_loop(Start, NewOrder, _, NewCost, FinalOrder, FinalCost).
 two_opt_loop(_, Order, _, Cost, Order, Cost).
 
-% one iteration of 2-opt
+%% one iteration of 2-opt
 two_opt_once(Start, Order, BestNew, BestCost) :-
     findall((Cost, NewOrder),
         (two_opt_swap(Order, NewOrder),
@@ -458,7 +450,7 @@ two_opt_once(Start, Order, BestNew, BestCost) :-
         AllOrders),
     sort(AllOrders, [(BestCost, BestNew)|_]).
 
-% two_opt_swap(+List, -Swapped)
+%% two_opt_swap(+List, -Swapped)
 two_opt_swap(List, Swapped) :-
     length(List, Len),
     Len >= 4,
@@ -477,7 +469,7 @@ suffix(S, L, N) :- length(P, N), append(P, S, L).
 slice(L, I, J, S) :- suffix(Suf, L, I), prefix(S, Suf, J-I).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 3. %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% simulated_annealing_path_for_objects(+StartRoom, +ObjectList, -BestPath, -BestCost)
+%% simulated_annealing_path_for_objects(+StartRoom, +ObjectList, -BestPath, -BestCost)
 simulated_annealing_path_for_objects(StartRoom, ObjectList, BestPath, BestCost) :-
     findall(Room,
         (member(Obj, ObjectList), has_likely_room_location(Obj, Room)),
@@ -485,7 +477,7 @@ simulated_annealing_path_for_objects(StartRoom, ObjectList, BestPath, BestCost) 
     sort(RawRooms, TargetRooms),
     simulated_annealing_path(StartRoom, TargetRooms, BestPath, BestCost).
 
-% simulated_annealing_path(+Start, +Rooms, -BestOrder, -BestCost)
+%% simulated_annealing_path(+Start, +Rooms, -BestOrder, -BestCost)
 simulated_annealing_path(Start, Rooms, BestOrder, BestCost) :-
     InitialTemp = 10.0,
     MinTemp = 0.1,
