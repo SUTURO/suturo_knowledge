@@ -83,3 +83,12 @@ The Knowledge Team contributes to:
 * integrating semantic knowledge with CRAM / PyCRAM planning
 * building reusable semantic assets for the entire SUTURO project
 Our goal is to give the robot a **structured understanding of the world**, enabling robust and intelligent behavior in complex environments.
+
+<div class="overview-footer" >
+  <a href="https://www.uni-bremen.de/">
+    <img src="assets/images/uni-bremen-logo-footer.png">
+  </a>
+  <a href="https://github.com/suturo">
+    <img src="assets/images/suturo-logo-footer.png">
+  </a>
+</div>
