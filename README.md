@@ -13,6 +13,7 @@ The SUTURO Knowledge stack is based on [KnowRob](https://github.com/knowrob/know
 ### Installation guide
 Follow the [installation guide](https://github.com/suturo21-22/suturo-installation) to set up the SUTURO Knowledge system on your computer.  
 _TODO: Provide updated installation guide_
+The new installation guide can be found [here](https://github.com/SUTURO/SUTURO-documentation/wiki/Knowledge:-Quick-Beginner's-Guide)
 
 ### Documentation
 There is a number of README files formatted in markup description that are part of the SUTURO Knowledge repository. They document the organization of the knowledge modules, their different sub-components and what interfaces they provide.
