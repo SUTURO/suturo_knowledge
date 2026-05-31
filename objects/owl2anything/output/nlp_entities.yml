@@ -1,0 +1,116 @@
+Drink:
+  entities:
+  - milk coffee
+  - cola
+  - mineral water
+  - tea
+  - coffee
+  - low fat long lasting milk
+  - ice tea
+  - iced coffee
+  - juice
+  - raspberry juice
+  - apple juice
+  - beer
+  - lemonade
+  - mulled wine tea
+  - ginger ale
+  - gin tonic
+  - milk
+  - mineral water
+  - sprite
+Food:
+  entities:
+  - milk coffee
+  - cola
+  - mineral water
+  - sandwich
+  - soup
+  - tea
+  - peach
+  - steak
+  - coffee
+  - apple
+  - low fat long lasting milk
+  - ice tea
+  - banana
+  - iced coffee
+  - juice
+  - lemon
+  - raspberry juice
+  - apple juice
+  - tomato soup
+  - beer
+  - chili
+  - lemonade
+  - mulled wine tea
+  - orange
+  - plum
+  - ginger ale
+  - mueslibox
+  - meat
+  - grapes
+  - chili con carne
+  - gin tonic
+  - milk
+  - pear
+  - strawberry
+  - mineral water
+  - chili sin carne
+  - sprite
+NaturalPerson:
+  entities: []
+PhysicalArtifact:
+  entities:
+  - cola can
+  - ice tea bottle
+  - milk glass
+  - chili
+  - wine bottle
+  - knife
+  - pill box
+  - metal mug
+  - wine glass
+  - plastic knife
+  - mueslibox
+  - mug
+  - chili con carne
+  - spoon
+  - kitchen knife
+  - bib
+  - master chef can
+  - scrub cleaner
+  - red metal cup
+  - dinner plate
+  - pasta bowl
+  - cup blue
+  - cup green
+  - breakfast plate
+  - salad bowl
+  - chili sin carne
+  - metal bowl
+  - pickles jar
+  - soup
+  - water glass
+  - metal plate
+  - milk jug
+  - jug
+  - tiger cup
+  - cereal bowl
+  - spatula
+  - sandwich
+  - toast
+  - cup small
+  - shampoo
+  - soap
+  - red bowl
+  - tomato soup
+  - plate
+  - milkpack ja
+  - cutting board
+  - towel
+  - scissors
+  - bowl
+  - glass
+PhysicalPlace:
+  entities: []
